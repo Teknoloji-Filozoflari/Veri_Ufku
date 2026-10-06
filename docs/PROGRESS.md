@@ -8,11 +8,11 @@ Ana kayıt [REQUIREMENTS_MATRIX](REQUIREMENTS_MATRIX.md). Tarih 2026-10-06. Bu �
 | 01 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F01 |
 | 02 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F02 |
 | 03 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F03 |
-| 04 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F04 |
-| 05 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F05 |
-| 06 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F06 |
-| 07 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F07 |
-| 08 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F08 |
+| 04 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F04 |
+| 05 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F05 |
+| 06 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F06 |
+| 07 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F07 |
+| 08 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F08 |
 | 09 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F09 |
 | 10 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F10 |
 | 11 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F11 |
@@ -39,4 +39,20 @@ Faz02 gerçek QML kabuğu ve ortak tokenlar uygulandı: sekiz alanın kullanıla
 
 Kullanıcı tema, Tab gezinmesi ve F1 yardım kontrolünü başarılı bildirdi (F02-USER-SHELL, ENV-USER-02, 2026-10-06). Faz02 uzak CI koşusu [37504698665](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37504698665), linux işi112410240655 üzerinde 36 saniyede başarıyla tamamlandı (F02-CI-REMOTE, ENV-CI-02). Faz02 kabul kaydı tamamlandı; olgunluk deneysel.
 
-Faz03 çevrimdışı öğrenme uygulandı/doğrulandı/deneysel: 13 sürümlü Türkçe makale, üç açıklama derinliği, bağlama bağlı F1 paneli, arama/kategori/dokuz kavram sözlüğü ve isteğe bağlı atomik yerel okundu/yer imi. Uygulamada dene yalnız gerçek yardım aramasını ayrı geçici örnek öğrenme projesinde açar. [Kanıt](evidence/PHASE03.md): 54 test, başsız ve gerçek Wayland GUI, her modda11 ekran; CI yardım bağı doğrulayıcısı eklendi. Faz03 uzak CI henüz yok. Kullanıcı ayrı örnek öğrenme penceresinin açıldığını ve küçük örneği gördüğünü doğruladı (F03-USER-EXAMPLE, ENV-USER-03, 2026-10-06); diğer manuel yardım kontrolleri henüz bildirilmedi. Faz04 başlamadı.
+Faz03 çevrimdışı öğrenme uygulandı/doğrulandı/deneysel: 13 sürümlü Türkçe makale, üç açıklama derinliği, bağlama bağlı F1 paneli, arama/kategori/dokuz kavram sözlüğü ve isteğe bağlı atomik yerel okundu/yer imi. Uygulamada dene yalnız gerçek yardım aramasını ayrı geçici örnek öğrenme projesinde açar. [Kanıt](evidence/PHASE03.md): 54 test, başsız ve gerçek Wayland GUI, her modda11 ekran; CI yardım bağı doğrulayıcısı eklendi. Faz03 uzak CI [37511231471](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37511231471) linux işi112432592915 üzerinde38 saniyede başarılı (F03-CI-REMOTE, ENV-CI-03). Kullanıcı ayrı örnek öğrenme penceresinin açıldığını ve küçük örneği gördüğünü doğruladı (F03-USER-EXAMPLE, ENV-USER-03, 2026-10-06); diğer manuel yardım kontrolleri henüz bildirilmedi. Bu Faz03 kabul kaydı sırasında Faz04 başlamamıştı.
+
+Faz04 proje deposu ve gerçek QML akışları uygulandı: SQLite + şema1 manifest + gerektiğinde gerçek Parquet; kaynak referansı/kopyası, yeniden bağlama ve sonuç veri sürümleri; ACTIVE yayın noktası, ayrı AUTOSAVE, dirty kapanış, salt okunur ikinci örnek ve kontrollü eski kilit kurtarma. [Kanıt](evidence/PHASE04.md): yerel Btrfs/başsız Qt, 30 gerçek SIGKILL senaryosu, iki süreç ve iki Qt pencere, şema0 fixture migrasyonu. Ağ/sync klasöründe dayanıklılık, gerçek yeni masaüstü/native dosya seçici ve yeni remote CI doğrulanmadı. Faz04 doğrulandı/deneysel/zorunlu; Faz05 başlamadı.
+
+Faz04 kullanıcı bildirimi: kendi kullanıcı klasöründe oluştur/aç/isim değişikliği kaydet/kapat geçti (F04-USER-PROJECTS, ENV-USER-04); native seçici ve diğer manuel akışlar ayrı açık. Yanlış proje yolundaki genel hata açıklayıcı mesajlara ayrıldı; Klasör seç ve diyalog içinde hata/düzeltme akışı eklendi (F04-FIX-PATH). [Kayıt](evidence/PHASE04.md#e04-path-fix).
+
+Faz05 CSV/TSV sihirbazı, değişmez kopyadan ortak preview/full parser, türler/karantina, UUID kimlikler ve şema2 atomik yayın uygulandı. Yerel parser/proje/Qt ve kurulu wheel kontrolleri geçti; gerçek native/remote/minimum donanım ayrı açık. [Kanıt](evidence/PHASE05.md). Faz06+ başlamadı.
+
+Faz05 kullanıcı temel CSV/kaydet/yeniden aç akışını başarılı bildirdi (F05-USER-ROUNDTRIP, ENV-USER-05, 2026-10-06). Native seçim/bırakma yöntemi, tür/karantina/iptal kontrolleri ayrıca kullanıcı tarafından bildirilmedi. [Kayıt](evidence/PHASE05.md#e05-user-roundtrip).
+
+Faz06 JSON/JSONL/NDJSON/XLSX/Parquet adaptörleri uygulandı/doğrulandı/deneysel. Ortak worker/snapshot/yayın; ayrı JSON flatten/list açma; bounded makrosuz OOXML ve native Parquet tür koruma; manifest3/migration. 188 pytest ve9 unittest, check_docs/artifacts/learning, Ruff, entry smoke, kurulu Linux wheel dört format/yeniden açma geçti. [Kanıt](evidence/PHASE06.md). Native masaüstü/minimum donanım/remote CI ayrı doğrulanmadı. Faz07 başlamadı.
+
+Faz07 tablo/profil/rol uygulandı/doğrulandı/deneysel: 206 pytest,9 unittest, kilitli belge/artefact/yardım/Ruff/entry smoke, kurulu Linux wheel import/sayfa/profil/metadata roundtrip. 100.000 kayıt16 sayfa ve kaynak hash kontrolü; [kanıt](evidence/PHASE07.md). Bu Faz07 kaydı sırasında Faz08 başlamamıştı.
+
+Faz07 kullanıcı tablo açma/yenileme işlemini başarılı bildirdi (F07-USER-TABLE, ENV-USER-07, 2026-10-06). Diğer manuel akışlar ayrıca bildirilmedi. [Kayıt](evidence/PHASE07.md#e07-user-table).
+
+Faz08 kalite merkezi uygulandı/doğrulandı/deneysel: 212 pytest,9 unittest, belge/artefact/yardım/Ruff/entry smoke ve kurulu Linux wheel100.000 kayıt kalite/örneklem/iptal/rapor roundtrip geçti. Tarama kaynak/dataset değiştirmez; bilgi önerileri çalıştırma eylemi üretmez. Yeni masaüstü/minimum donanım/remote CI ayrı doğrulanmadı. Faz09 başlamadı. [Kanıt](evidence/PHASE08.md).

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs
 
 ApplicationWindow {
     id: window
@@ -99,7 +100,18 @@ ApplicationWindow {
             else infoDrawer.open()
         }
     }
+    property bool discardOnExit: false
+    property bool closeAfterSave: false
     onClosing: function(event) {
+        if (projects.busy) {
+            event.accepted = false
+            return
+        }
+        if (projects.dirty && !discardOnExit) {
+            event.accepted = false
+            unsavedDialog.open()
+            return
+        }
         learningExample.close()
         if (bridge && !bridge.closed) {
             event.accepted = false
@@ -126,7 +138,7 @@ ApplicationWindow {
                 Label {
                     objectName: "datasetContext"
                     Layout.fillWidth: true
-                    text: qsTranslate("Shell", "No project open · No dataset loaded")
+                    text: projects.context
                     color: Theme.secondary
                     wrapMode: Text.WordWrap
                 }
@@ -264,13 +276,48 @@ ApplicationWindow {
                     heading: qsTranslate("Shell", "Display preferences")
                     detail: preferences ? preferences.errorText : ""
                 }
+                TabBar {
+                    id: dataTabs
+                    objectName: "datasetTabs"
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.selectedSection === 1
+                    currentIndex: 1
+                    TabButton { text: "Veri tablosu"; checked: dataTabs.currentIndex === 0; onClicked: dataTabs.setCurrentIndex(0) }
+                    TabButton { text: "Dosya içe aktar"; checked: dataTabs.currentIndex === 1; onClicked: dataTabs.setCurrentIndex(1) }
+                    TabButton { text: "Veri kalitesi"; checked: dataTabs.currentIndex === 2; onClicked: dataTabs.setCurrentIndex(2) }
+                }
+                Connections { target: imports; function onChanged() { if (imports.busy) dataTabs.currentIndex = 1 } }
+                DatasetPanel {
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.selectedSection === 1 && dataTabs.currentIndex === 0
+                    onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                }
+                QualityPanel {
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.selectedSection === 1 && dataTabs.currentIndex === 2
+                    onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                }
+                ImportPanel {
+                    id: importPanel
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.selectedSection === 1 && dataTabs.currentIndex === 1
+                    onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                }
                 // Future sections contain honest availability information, no simulated data.
                 StateNotice {
                     objectName: "availabilityNotice"
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.selectedSection !== 0 && window.selectedSection !== 7
+                    visible: window.selectedSection !== 0 && window.selectedSection !== 1 && window.selectedSection !== 7
                     kind: "unavailable"
                     heading: qsTranslate("Shell", "Not available yet")
                     detail: window.descriptions[window.selectedSection]
@@ -281,6 +328,10 @@ ApplicationWindow {
                     Layout.rightMargin: Theme.xl
                     visible: window.selectedSection === 0
                     spacing: Theme.xl
+                    ProjectPanel {
+                        Layout.fillWidth: true
+                        onHelpRequested: function(origin) { window.openInformation(origin, "", "project") }
+                    }
                     Label { text: qsTranslate("Shell", "Start with your data"); font.pixelSize: Theme.heading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.WordWrap }
                     Label {
                         text: qsTranslate("Shell", "A calm place to understand your data, one step at a time.")
@@ -300,8 +351,8 @@ ApplicationWindow {
                             ColumnLayout {
                                 width: parent.width
                                 spacing: Theme.md
-                                UiButton { objectName: "openFileButton"; primary: true; text: qsTranslate("Shell", "Open file"); glyph: "▤"; Layout.fillWidth: true; enabled: false; multiline: true; Accessible.description: qsTranslate("Shell", "File import is not available yet.") }
-                                Label { text: qsTranslate("Shell", "File import is not available yet."); Layout.fillWidth: true; wrapMode: Text.WordWrap; color: Theme.secondary }
+                                UiButton { objectName: "openFileButton"; primary: true; text: qsTranslate("Shell", "Open file"); glyph: "▤"; Layout.fillWidth: true; enabled: !projects.busy; multiline: true; onClicked: { window.selectedSection = 1; importPanel.openPicker() } Accessible.description: "CSV/TSV dosyası seç" }
+                                Label { text: "CSV/TSV içe aktarma ve sınırlı önizleme hazır. Önce proje oluşturun."; Layout.fillWidth: true; wrapMode: Text.WordWrap; color: Theme.secondary }
                             }
                         }
                         Frame {
@@ -452,6 +503,25 @@ ApplicationWindow {
             onCloseRequested: window.closeInformation()
         }
     }
+    Dialog {
+        id: unsavedDialog
+        objectName: "unsavedProjectDialog"
+        title: "Kaydedilmemiş değişiklikler"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(520, window.width - 40)
+        ColumnLayout {
+            anchors.fill: parent
+            Label { text: "Kapanmadan önce proje değişikliklerini kaydetmek ister misiniz?"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+            Label { text: projects.errorText; visible: text.length > 0; color: Theme.error; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+            UiButton { text: "Kaydet ve kapat"; Layout.fillWidth: true; onClicked: { window.closeAfterSave = true; projects.request("save") } }
+            UiButton { text: "Değişiklikleri bırak ve kapat"; Layout.fillWidth: true; onClicked: { window.discardOnExit = true; unsavedDialog.close(); window.close() } }
+            UiButton { text: "Çalışmaya dön"; Layout.fillWidth: true; onClicked: unsavedDialog.close() }
+        }
+    }
+    Connections { target: projects; function onSaveFinished(success) { if (window.closeAfterSave) { window.closeAfterSave = false; if (success) { unsavedDialog.close(); window.close() } } } }
+    Shortcut { sequence: "Ctrl+S"; onActivated: projects.request("save") }
+    Shortcut { sequence: "Ctrl+O"; onActivated: { window.selectedSection = 0; window.findVisibleItem(window.contentItem, "openProjectButton").clicked() } }
     ExampleWindow {
         id: learningExample
         library: learning.exampleLibrary

@@ -41,3 +41,21 @@ F1 yardım, Escape panel kapatma/odak dönüşü; Ctrl+1..8 nav, nav Up/Down ve 
 ## Faz03 öğrenme bileşenleri
 
 LearningCenter, ArticleView ve örnek öğrenme penceresi aynı Theme tokenlarını kullanır. Arama ve derinlik seçicisinde görünür odak; ortak FocusScroll arama/combobox/düğmeyi ilgili kaydırmalı alana alır. Kritik uyarı ! Dikkat + metin + warning tokenlarıyla, yalnız renge bağlı olmadan her derinlikte görünür. Yerel kayıt açık/kapalı ve okundu/yer imi durumları metin+sembolle açıklanır. [Gerçek ekranlar ve testler](evidence/PHASE03.md).
+
+## Faz04 proje kartı
+
+ProjectPanel mevcut Frame/UiButton/Theme tokenlarını kullanır; Flow düğmeleri mevcut genişliğe sarılır, ad/seed alanlarının görünür etiketleri vardır. Kart yüksekliği içerik implicitHeight hesabına bağlıdır, sonraki içerikle üst üste gelmez. Proje/kaynak/kurtarma F1 bağları ortak çevrimdışı katalogdadır. Geniş açık ve dar koyu %200 başsız render [Faz04 kaydı](evidence/PHASE04.md); gerçek masaüstü ve assistive teknoloji kontrolü değildir.
+
+## Faz05 uygulama bağı
+
+Faz05 ImportPanel Theme tokenları ve UiButton, CSV TableView/QAbstractTableModel kullanır. Dar alanda ayar formu tek sütundur, başlık/düğmeler sarılır; sütun türleri sanal ListView ve preview hücreleri yalnız görünür TableView delegate ile üretilir. Kesilmiş hücre değerleri hover tooltip ile tam gösterilir. Aynı yardım/focus scroll sözleşmesi korunur; gerçek render [Faz05](evidence/PHASE05.md), native/assistive teknoloji kabulü değildir.
+
+Faz06 StructuredOptions mevcut ColumnLayout/Theme tokenlarını ve kapsama bağlı alan görünürlüğünü kullanır. Yeni formatlar aynı Veri ekranının dosya/önizleme/kaydet akışında; native ayarlarda Türkçe davranış etiketleri, kendi kaynak ve sınırlı örnek açıklamaları vardır. Başsız dar/geniş render kanıtı [Faz06](evidence/PHASE06.md#e06-gui).
+
+## Faz07 katkısı
+
+Faz07: mevcut Theme/UiButton/layout tokenlarıyla Veri tablosu sekmesi; TableView delegate reuse, sabit200 sayfa, bounded frekans ve ayrı sütun detayı. 1366 açık/720 koyu scroll tabloları [kanıt](evidence/PHASE07.md).
+
+## Faz08 katkısı
+
+QualityPanel mevcut Theme/UiCombo/UiButton/StateNotice tokenlarını ve dar ekranda tek sütun düzenini kullanır. Bulgular düz metin ve açıklamalı karttır; renk tek başına durum taşımaz. Teknik işlem/RowId kimlikleri gelişmiş görünümde açılır. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).

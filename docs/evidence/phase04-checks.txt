@@ -1,0 +1,246 @@
+$ uv --cache-dir /tmp/veri-ufku-uv sync --locked --group dev --offline
+Resolved 18 packages in 0.91ms
+Checked 17 packages in 0.33ms
+EXIT 0
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+EXIT 0
+
+$ python3 -m unittest discover -s tests -v
+test_config (unittest.loader._FailedTest.test_config) ... ERROR
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+test_gui (unittest.loader._FailedTest.test_gui) ... ERROR
+test_jobs (unittest.loader._FailedTest.test_jobs) ... ERROR
+test_learning (unittest.loader._FailedTest.test_learning) ... ERROR
+test_learning_gui (unittest.loader._FailedTest.test_learning_gui) ... ERROR
+test_presentation_preferences (unittest.loader._FailedTest.test_presentation_preferences) ... ERROR
+test_project_gui (unittest.loader._FailedTest.test_project_gui) ... ERROR
+test_projects (unittest.loader._FailedTest.test_projects) ... ERROR
+
+======================================================================
+ERROR: test_config (unittest.loader._FailedTest.test_config)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_config
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_config.py", line 5, in <module>
+    from veri_ufku.config import AppPaths, load_settings
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_gui (unittest.loader._FailedTest.test_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_gui.py", line 9, in <module>
+    from veri_ufku.app import create_application
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_jobs (unittest.loader._FailedTest.test_jobs)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_jobs
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_jobs.py", line 6, in <module>
+    from veri_ufku.domain.contracts import (
+    ...<5 lines>...
+    )
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_learning (unittest.loader._FailedTest.test_learning)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_learning
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_learning.py", line 7, in <module>
+    from veri_ufku.learning.catalog import Catalog, validate, validate_bindings
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_learning_gui (unittest.loader._FailedTest.test_learning_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_learning_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_learning_gui.py", line 9, in <module>
+    from veri_ufku.app import create_application
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_presentation_preferences (unittest.loader._FailedTest.test_presentation_preferences)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_presentation_preferences
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_presentation_preferences.py", line 5, in <module>
+    from veri_ufku.config import AppPaths, load_settings
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_project_gui (unittest.loader._FailedTest.test_project_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_project_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_project_gui.py", line 4, in <module>
+    from test_gui import spin
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_gui.py", line 9, in <module>
+    from veri_ufku.app import create_application
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_projects (unittest.loader._FailedTest.test_projects)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_projects
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_projects.py", line 12, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.236s
+
+FAILED (errors=8)
+EXIT 1
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_learning.py
+PASS: 14 offline articles; 19 UI bindings; all capability links
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff check src tests scripts
+All checks passed!
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff format --check src tests scripts
+44 files already formatted
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen pytest -q --basetemp /home/s-oktay/Belgeler/Veri_Ufku/.phase04-checks-rmxtt77v/pytest
+........................................................................ [ 72%]
+............................                                             [100%]
+100 passed in 23.69s
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.240s
+
+OK
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen veri-ufku --smoke-test
+GUI_SMOKE PASS
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/measure_phase04.py
+PHASE04_HEADLESS PASS
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv build --wheel --offline --no-build-isolation
+Building wheel...
+Successfully built dist/veri_ufku-0.1.0-py3-none-any.whl
+EXIT 0
+
+Final targeted regression: preserve additional help preferences; scrolled screenshot added.
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen pytest -q tests/test_project_gui.py
+...                                                                      [100%]
+3 passed in 0.85s
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_learning.py
+PASS: 14 offline articles; 19 UI bindings; all capability links
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff check src tests scripts
+All checks passed!
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff format --check src tests scripts
+44 files already formatted
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/measure_phase04.py
+PHASE04_HEADLESS PASS
+EXIT 0
+
+$ uv --cache-dir /tmp/veri-ufku-uv build --wheel --offline --no-build-isolation
+Building wheel...
+Successfully built dist/veri_ufku-0.1.0-py3-none-any.whl
+EXIT 0
+
+WHEEL_CONTENT PASS: project store, controller, QML panel and offline help match source bytes

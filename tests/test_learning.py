@@ -26,7 +26,7 @@ def test_catalog_offline_search_turkish_categories_glossary_and_sources():
     assert [a["id"] for a in catalog.search("MEDYAN", "Özetler")] == ["mean-median"]
     assert [a["id"] for a in catalog.search("SIZINTI", "Modelleme")] == ["leakage"]
     assert catalog.search("şu içerikte olmayan sözcükler") == []
-    assert len(catalog.search(glossary=True)) == 9
+    assert len(catalog.search(glossary=True)) == 18
     # Independent editorial fixtures: no statistics engine called to check them.
     article = catalog.articles["mean-median"]
     assert article["example"]["before"] == "Tutarlar: 10, 20, 90."

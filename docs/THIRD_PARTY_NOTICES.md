@@ -10,3 +10,5 @@
 | Python / build ve transitif dev paketleri | Dağıtılan artefactın dist-info lisansları korunmalı; tam uygulama bundle lisans envanteri paketleme fazında doğrulanacak. |
 
 Marka, ikon veya referans uygulama varlıkları alınmadı. QML native controls ve metin kullanır. Bu kayıt tüm gelecekteki analitik paketlerin lisans kabulü değildir.
+
+Faz04: Polars 2.0.0 ve polars-runtime-32 2.0.0, kurulu dist-info/licenses/LICENSE içinde MIT izin/bildirim metni taşır. Ritchie Vink ve NVIDIA katkı bildirimleri korunur. uv.lock tam sürüm/hash kaydıdır; Parquet roundtrip gerçek kurulu paketle geçti. Uygulama wheel’i dependency wheel’lerinin yerine geçmez; dağıtım bundle lisans envanteri sonraki paketleme fazında tamamlanacaktır.

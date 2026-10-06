@@ -1,0 +1,57 @@
+2026-10-07 ENV-08; isolated XDG, offscreen/software
+
+$ uv sync --locked --group dev
+Resolved 18 packages in 1ms
+Checked 17 packages in 0.17ms
+
+exit=0
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+
+exit=0
+
+$ uv run --frozen python scripts/check_learning.py
+PASS: 35 offline articles; 38 UI bindings; all capability links
+
+exit=0
+
+$ uv run --frozen ruff check src tests scripts
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/measure_phase08.py:15:1
+   |
+13 |   os.environ.setdefault("QT_QUICK_BACKEND", "software")
+14 |
+15 | / import polars as pl  # noqa: E402
+16 | | from PySide6.QtCore import QObject, QPointF  # noqa: E402
+17 | | from PySide6.QtTest import QTest  # noqa: E402
+18 | |
+19 | | import veri_ufku  # noqa: E402
+20 | | from veri_ufku.app import create_application  # noqa: E402
+21 | | from measure_phase07 import wait  # noqa: E402
+   | |________________________________^
+help: Organize imports
+   |
+15 | import polars as pl  # noqa: E402
+16 + from measure_phase07 import wait  # noqa: E402
+17 | from PySide6.QtCore import QObject, QPointF  # noqa: E402
+--------------------------------------------------------------------------------
+21 | from veri_ufku.app import create_application  # noqa: E402
+   - from measure_phase07 import wait  # noqa: E402
+22 |
+   |
+
+Found 1 error.
+[*] 1 fixable with the `--fix` option.
+
+exit=1

@@ -64,3 +64,23 @@ UI tercihleri PresentationPreferences QObject’unda; tema/görünüm/yazı boyu
 ## Faz03 öğrenme sınırı
 
 Learning Catalog paket JSON şema1 ve düz metin bloklarını Qt/analitik kodundan bağımsız doğrular. LearningController arama, kategori, sözlük, makale/derinlik state'i ve isteğe bağlı atomik okuma işaretlerini QML'ye aktarır. InfoPanel/ArticleView aynı katalogdan okur. Ayrı ExampleWindow ve bağımsız LearningController yalnız geçici örnek öğrenme projesini açar; gerçek proje deposu veya analitik yetenek oluşturmaz. Capability help_links ve QML helpContext bağları CI'da zorunlu doğrulanır. [İçerik sözleşmesi](LEARNING_CONTENT.md).
+
+## Faz04 proje deposu
+
+SQLite/manifest/Parquet yayını, ACTIVE ve ayrı AUTOSAVE, single-writer flock, salt okunur ikinci örnek, şema0→1 kopya migrasyonu ve descriptor kontrollü yollar uygulandı. Gerçek proje state UI/controller I/O sınırında tutulur; kaynak doğrulaması metadata açılışından ayrıdır. [ADR-007](adr/007-project-store-phase04.md), [kanıt](evidence/PHASE04.md). Import ve analitik motor sonraki fazlardadır.
+
+## Faz05 uygulama bağı
+
+Faz05 importers/delimited ortak parser ve değişmez kopya, importers/worker spawn işlemi, ui/imports QObject + QAbstractTableModel/TableView, storage.publish_import parent yayın servisi eklendi. Worker ACTIVE/SQLite yazmaz; proje I/O executor tamamlanan çıktıyı doğrulayarak tek yayında kaydeder. Shared ComputeBudget/Capability/Provenance kullanılır; ayar revizyonu ve dataset/snapshot kimlikleri saklanır. Proje şema2; şema1 açılışta yazılmaz, sonraki açık kayıt migrasyon kaydını ekler. [ADR-008](adr/008-delimited-import-phase05.md).
+
+## Faz06 adaptörler
+
+importers/registry.py tek SourceAdapter registry; worker validate/inspect/preview/import_data aynı snapshot/settings ile çağırır. JSON/JSONL stdlib exact Decimal, bounded OOXML XLSX, Polars native Parquet. Yeni bağımlılık yok. Parent aynı SQLite/artifact/manifest/ACTIVE protokolüyle şema3 ve full diagnostics/provenance yayınlar. [ADR-009](adr/009-structured-import-phase06.md).
+
+## Faz07 katkısı
+
+Faz07: analytics/contracts.py/dataset.py ve worker.py, UI dataset.py/QML TableView; shared jobs/limits.py. Salt okunur200 kayıt sayfa; disk SQLite exact profil; metadata DatasetVersion4. [ADR-010](adr/010-dataset-view-phase07.md).
+
+## Faz08 katkısı
+
+Faz08: analytics/quality.py Qt bağımsız disk sayım motoru, mevcut spawn/binding/bütçe/iptal; QualityPanel.qml aynı Veri ekranında. Raporlar açık eylemle mevcut result kaydına girer; yeni şema yok. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).

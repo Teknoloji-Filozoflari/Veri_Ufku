@@ -100,3 +100,23 @@ FinalTestLedger v1: project_id, dataset_version/hash, protocol_id/hash, split_me
 ## Faz 01 bağlama
 
 `domain/contracts.py` ve `domain/capabilities.py` tek asgari Python kayıtlarıdır. Demo provenance scope=infrastructure_demo, kaynak/lineage boş, seed kullanılmama gerekçesi deterministiktir; veri analizi gibi kaydedilmez. Demo-session sürüm etiketi import edilmiş kalıcı DatasetVersionId değildir. Manager bütçe ve capability'yi submit sırasında doğrular; worker çıktısı original dataset/config bağıyla JobResult olur. `result_for` yalnız başarılı ve her iki sürümü eşleşen sonucu açar. Metot birimleri ölçülebilirken progress done/total, bilinmiyorsa total=None. Ölçülen RSS/temp örneklenir; fiziksel peak garantisi değildir. [ADR-005](adr/005-runtime-jobs-lock.md).
+
+## Faz04 kalıcı durum bağı
+
+`storage/project_model.py` ProjectManifest format_version=1 ve bounded JSON state doğrulayıcısıdır. Dataset kimlikleri/sürümleri, işlem/sonuçların dataset_version_ids bağı ve seed değerleri kalıcıdır; tam Dataset/Operation yürütme modelinin yerini almaz. Source fingerprint sha256+size; immutable artifact URI/hash/size ve Parquet rows/schema ayrı. `storage/project_store.py` ACTIVE ile yayınlar; AUTOSAVE parent_commit bağını kontrol eder. Sonuç uyumu kaynak doğrulaması bilinmediğinde güncel sayılmaz. [Uygulama kararı](adr/007-project-store-phase04.md).
+
+## Faz05 uygulama bağı
+
+Faz05: ImportSettings/v1 tek preview/full parser girdisidir; varsayılan metin/null seçimi açık, float yaklaşık/Decimal(38,6) sınırı kesin. SourceSnapshotId yeni importta, SourceRecordId her veri kaydında, RowId her kabul edilen kayıtta UUIDv4; locator fiziksel satır başlangıcı/bitişi. ColumnId metadata listesinde; kabul haritası dataset Parquet, karantina kendi kaynak kimlik/konum/raw/reason Parquet dosyasında. Shared Provenance full/config_revision/seed/parameters_hash/backend taşır; source fingerprint metadata ile bağlanır. Manifest2 dataset import_metadata/quarantine_uri doğrular; metadata count/schema artifact ile uyuşmalı. [ADR-008](adr/008-delimited-import-phase05.md).
+
+## Faz06 native import bağı
+
+StructuredSettings/v1 ve data-only native_schema; manifest3. JSON/JSONL eksik/null recursive rapor, Decimal≤38/kayıpsız açık metin sınırı; XLSX1900/1904/naive us/serial; Parquet native nullable/list/struct/Decimal/UInt64/ms-us-ns/timezone korunur. Native saklama ortak analitik us normalizasyonuna sessiz dönüşüm yapmaz. JSON liste açmada ortak SourceRecordId, her çıktı ayrı RowId/expansion_index/locator. [Kesin davranış ve destek sınırları](adr/009-structured-import-phase06.md).
+
+## Faz07 katkısı
+
+Faz07: Role fiziksel type değildir. ColumnId semantik metadata ve parent dv; aynı immutable snapshot metadata sürümleri. RowId görüntü sırası değildir. Profil açık dataset/view/full/firstN kapsamı, null/NaN/±inf ayrı sayımları, ddof0/1, linear quantile, Decimal80 aritmetik ve provenance taşır. Integer/Decimal tam; timezone/ns native range; nested unique destek sınırı açık. [ADR-010](adr/010-dataset-view-phase07.md).
+
+## Faz08 katkısı
+
+Faz08 kalite: full/filtered/sample ve used/population/dataset n ayrı; bulgu observation/candidate/violation, ilk5 RowId örnekleri ve taranan kayıt paydası. İhlal açık kullanıcı kuralına göredir. Öneri deterministik id/reason/precondition/impact/operation_id/learning_id/available taşır; olmayan işlem available=false. Tek puan ve otomatik veri değişikliği yok. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).

@@ -46,3 +46,25 @@ Arama Türkçe İ/ı ve aksanları sorgu için normalize eder; veri sıralama s�
 4. `uv run --frozen python scripts/check_learning.py` ve pytest çalıştır. CI aynı kapıyı zorunlu koşar. Bozuk QML/capability/makale bağları için testler var; çalışma zamanında bilinmeyen bağ anlaşılır hata verir.
 
 İlk içerikler: Veri nedir, satır/sütun, veri türü, eksik değer, ortalama/medyan, örneklem, korelasyon, tahmin, veri sızıntısı; ayrıca dört gerçek kabuk/yardım/görev/paylaşım rehberi. NIST ve scikit-learn kaynakları geliştirme sırasında incelendi; Türkçe açıklamalar özgün sade anlatımdır. Çalışma sırasında kaynağa erişim gerektirmez. Bilimsel/kullanılabilirlik uzman incelemesi ve sıfır bilgi kullanıcı testi Faz25'te ayrıca yapılır.
+
+## Faz04 içerik katkısı
+
+Katalog içerik sürümü2, 14 makale. projects makalesi v1; project/project.source/project.recovery ekran ve işlem bağları, uygunluk/yanlış kullanım, kaynak referansı ve taşınabilir kopya örneği, sonuç sürümü/kilit/otomatik kurtarma sınırlamaları eklendi. Proje yardımı yeni analiz veya deneme allowlist eylemi oluşturmaz. Proje yardım derinliği manifestte saklanır; makineye ait okuma işaretleri taşınmaz. [Faz04](evidence/PHASE04.md).
+
+Faz04 yol düzeltmesi: katalog içerik sürümü3, projects makalesi v2. Var olan üst klasör seçme ve yeni proje dizininin yolu açıklaması güncellendi.
+
+## Faz05 uygulama bağı
+
+Faz05 katalog içerik sürümü4/toplam21 makale. import-csv ve ayraç, encoding, başlık, tarih/saat dilimi, ondalık/binlik/null, bozuk kayıt/karantina rehberleri; import.csv/import.tsv capability bağları ve seçeneklere F1 bağları eklendi. Tür önerisi/sample sınırı, kaynak kopyası, bilgi kaybı ve karantina kapsamı her ilgili kritik açıklamada görünür. Yeni try_action yok; [kanıt](evidence/PHASE05.md).
+
+## Faz06 katkısı
+
+İçerik sürümü5/toplam26 makale. Dört native import capability ve JSON liste/nesne, JSONL, düzleştirme/liste açma, Excel sayfa/formül/tarih sistemi, Parquet tür koruma rehberleri; seçimlere F1 bağları. Yeni try_action yok. [Kanıt](evidence/PHASE06.md#e06-help).
+
+## Faz07 katkısı
+
+Faz07: içerik sürümü6/toplam31 makale; sözlük14 kavram. Tür/rol, unique, standart sapma/ddof, yüzdelik/linear ve veri profili/firstN kapsamı. dataset.view/profile/roles capability/F1 bağları. try_action eklenmedi. [Kanıt](evidence/PHASE07.md#e07-help).
+
+## Faz08 katkısı
+
+İçerik7: kalite, meşru tekrar, eksik veri mekanizması, aykırı gözlem için dört makale (toplam35); dataset.quality ve dört kavram bağı. Yardım hiçbir tarama/düzeltme başlatmaz; yeni try_action yok. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).

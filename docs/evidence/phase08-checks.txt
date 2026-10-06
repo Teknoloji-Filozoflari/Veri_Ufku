@@ -1,0 +1,110 @@
+2026-10-07 ENV-08; isolated XDG, offscreen/software
+
+$ uv --cache-dir /tmp/veri-ufku-uv sync --locked --group dev
+Resolved 18 packages in 1ms
+Checked 17 packages in 0.15ms
+
+exit=0
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_learning.py
+PASS: 35 offline articles; 38 UI bindings; all capability links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff check src tests scripts
+All checks passed!
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff format --check src tests scripts
+72 files already formatted
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen pytest -q
+........................................................................ [ 33%]
+........................................................................ [ 67%]
+....................................................................     [100%]
+212 passed in 31.51s
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.318s
+
+OK
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen veri-ufku --smoke-test
+GUI_SMOKE PASS
+
+exit=0
+
+$ git diff --check
+
+exit=0
+
+Final capability schemas/boolean-date reference refinements and final installed wheel; 2026-10-07 Europe/Istanbul, UTC2026-10-06
+
+$ cwd=/home/s-oktay/Belgeler/Veri_Ufku uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff check src tests scripts
+All checks passed!
+
+exit=0
+
+$ cwd=/home/s-oktay/Belgeler/Veri_Ufku uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff format --check src tests scripts
+72 files already formatted
+
+exit=0
+
+$ cwd=/home/s-oktay/Belgeler/Veri_Ufku uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ cwd=/home/s-oktay/Belgeler/Veri_Ufku uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_learning.py
+PASS: 35 offline articles; 38 UI bindings; all capability links
+
+exit=0
+
+$ cwd=/home/s-oktay/Belgeler/Veri_Ufku uv --cache-dir /tmp/veri-ufku-uv run --frozen pytest -q tests/test_quality.py tests/test_quality_gui.py tests/test_learning.py
+.....................                                                    [100%]
+21 passed in 2.37s
+
+exit=0
+
+$ cwd=/home/s-oktay/Belgeler/Veri_Ufku uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/measure_phase08.py
+{"environment": "ENV-08", "date": "2026-10-07", "python": "3.13.15", "polars": "2.0.0", "platform": "Linux-7.2.9-1-cachyos-x86_64-with-glibc2.44", "backend": "offscreen/software", "rows": 100000, "n": 1, "peak_parent_worker_rss_bytes": 538542080, "max_tick_gap_ms": 42.751220000354806, "screenshots": ["/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase08-1366-light-form.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase08-1366-light-findings.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase08-720-dark-form.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase08-720-dark-findings.png"], "wheel_package": null, "lock_sha256": "a5628bd92d7676520d13e4a244021ea6b22cd5aad3944eb718c2af624cded9a4", "full_scan_ms": 3472.757878000266, "expected_counts": {"missing": 25000, "whitespace": 25000, "category_similarity": 50000, "invalid_date": 1, "outlier": 1, "duplicates_selected": 100000}, "findings": 6, "sample_n": 10000, "source_sha256_unchanged": "12920e4fe52b6677254f35bf055500687e54f03734a54cb0764de6ddf8e6edde", "cancel_no_result": true}
+
+exit=0
+
+$ cwd=/tmp /home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python /home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase08.py --package-root /tmp/veri-ufku-phase08-verified-installed --output /home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase08-wheel.json
+{"environment": "ENV-08", "date": "2026-10-07", "python": "3.13.15", "polars": "2.0.0", "platform": "Linux-7.2.9-1-cachyos-x86_64-with-glibc2.44", "backend": "offscreen/software", "rows": 100000, "n": 1, "peak_parent_worker_rss_bytes": 538660864, "max_tick_gap_ms": 44.99254899928928, "screenshots": ["/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase08-wheel-1366-light-form.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase08-wheel-1366-light-findings.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase08-wheel-720-dark-form.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase08-wheel-720-dark-findings.png"], "wheel_package": "/tmp/veri-ufku-phase08-verified-installed/veri_ufku/__init__.py", "lock_sha256": "a5628bd92d7676520d13e4a244021ea6b22cd5aad3944eb718c2af624cded9a4", "full_scan_ms": 3499.1166750005505, "expected_counts": {"missing": 25000, "whitespace": 25000, "category_similarity": 50000, "invalid_date": 1, "outlier": 1, "duplicates_selected": 100000}, "findings": 6, "sample_n": 10000, "source_sha256_unchanged": "12920e4fe52b6677254f35bf055500687e54f03734a54cb0764de6ddf8e6edde", "cancel_no_result": true}
+
+exit=0

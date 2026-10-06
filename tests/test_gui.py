@@ -190,7 +190,7 @@ def test_phase02_keyboard_preferences_and_view_preserve_session(tmp_path, monkey
         assert not window.findChild(QQuickItem, "technicalSettings").isVisible()
         assert bridge.resultText == result
         assert window.findChild(QQuickItem, "resultLabel").isVisible()
-        assert not window.findChild(QQuickItem, "openFileButton").isEnabled()
+        assert window.findChild(QQuickItem, "openFileButton").isEnabled()
         assert not window.findChild(QQuickItem, "sampleButton").isEnabled()
         # Preferences survive a new process and select the same QML presentation.
         source = (
@@ -282,6 +282,10 @@ def test_phase02_resize_help_navigation_and_system_theme(tmp_path, monkeypatch):
         QTest.keyClick(window, Qt.Key.Key_Space)
         spin(app, lambda: window.property("selectedSection") == 1)
         notice = window.findChild(QQuickItem, "availabilityNotice")
+        assert not notice.isVisible()
+        assert window.findChild(QQuickItem, "chooseCsvButton").isVisible()
+        window.setProperty("selectedSection", 2)
+        app.processEvents()
         assert notice.isVisible()
         assert notice.property("heading") == "Henüz mevcut değil"
         QTest.keyClick(window, Qt.Key.Key_1, Qt.KeyboardModifier.ControlModifier)

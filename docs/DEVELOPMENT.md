@@ -1,10 +1,10 @@
 # Veri_Ufku — geliştirme ve doğrulama
 
-Faz 01/02/03 komutları [README](../README.md)'de. `.python-version` CPython 3.13.15; `pyproject.toml` ve `uv.lock` sabit runtime/dev bağımlılıklarıdır. Sistem Python'una yazılmaz. `uv sync --locked --group dev` kilit değişikliğini reddeder; çalıştırmada `--frozen` yeniden çözümleme yapmaz. Ruff geliştirme wheel'i kaynak ağacında, hash ve RECORD doğrulaması `scripts/check_artifacts.py` ile yapılır. Ayrıntı [ADR-005](adr/005-runtime-jobs-lock.md).
+Faz 01/02/03/04/05 komutları [README](../README.md)'de. `.python-version` CPython 3.13.15; `pyproject.toml` ve `uv.lock` sabit runtime/dev bağımlılıklarıdır. Sistem Python'una yazılmaz. `uv sync --locked --group dev` kilit değişikliğini reddeder; çalıştırmada `--frozen` yeniden çözümleme yapmaz. Ruff geliştirme wheel'i kaynak ağacında, hash ve RECORD doğrulaması `scripts/check_artifacts.py` ile yapılır. Ayrıntı [ADR-005](adr/005-runtime-jobs-lock.md).
 
 ## Yerel geliştirme
 
-`src/veri_ufku/app.py` tek giriş noktasıdır. Domain Qt'sizdir; services demo kullanımını, jobs görev/süreç/iptali, ui ana thread QObject/QML aktarımını üstlenir. importers ve storage proje deposu uygulaması içermez; sonraki faz sözleşmeleri ve görev geçici alanı ayrıdır. learning paketinde çevrimdışı Qt çevirisi ve Faz03 sürümlü Türkçe öğrenme içeriği vardır.
+`src/veri_ufku/app.py` tek giriş noktasıdır. Domain Qt'sizdir; services demo kullanımını, jobs görev/süreç/iptali, ui ana thread QObject/QML aktarımını üstlenir. importers Faz05 CSV/TSV ortak parser/worker içerir. storage proje deposu Faz04 ile eklendi; görev geçici alanı ayrı kalır. learning paketinde çevrimdışı Qt çevirisi ve Faz03 sürümlü Türkçe öğrenme içeriği vardır.
 
 Türkçe kaynak: `src/veri_ufku/learning/i18n/tr.ts`. Güncellemeden sonra `.venv/bin/pyside6-lrelease src/veri_ufku/learning/i18n/tr.ts -qm src/veri_ufku/learning/i18n/tr.qm`. QML qsTr ve Python QCoreApplication.translate aynı katalogda. Varsayılan tr; XDG config altında veri içermeyen settings.json ile locale en seçilebilir. Config hatası iş başlatmayı kapatır ve anlaşılır mesaj verir.
 
@@ -31,3 +31,25 @@ Başsız boyut/klavye/state ekranları: `uv run --frozen python scripts/measure_
 ## Faz03 yardım geliştirme
 
 [İçerik şeması ve her yeni faz katkısı](LEARNING_CONTENT.md). `uv run --frozen python scripts/check_learning.py` içerik, QML/capability bağları ve deneme allowlist kapısıdır; CI belge/artefact adımında koşar. Paket JSON kaynakları wheel içinde taşınır; yeni bağımlılık gerekmedi. `uv run --frozen python scripts/measure_phase03.py` başsız, aynı komut `--desktop` ile gerçek masaüstü render/girdi kanıtını üretir. Geçici izole XDG, Python bağlantı/urlopen fail-fast; OS ağ arayüzünün kapatıldığı iddiası değildir. Renderer PlainText ve ağ bileşeni içermez. [Faz03 kanıtı](evidence/PHASE03.md).
+
+## Faz04 proje geliştirme
+
+Depo Qt'siz `storage/project_model.py` ve `project_store.py`; tek yayın noktası ACTIVE. UI QObject `ui/projects.py`, dosya I/O thread'inden dönen state'i main thread'de uygular. Kayıt sürerken ekran değişiklik ve kapanışı durdurur; worker Qt nesnesi değiştirmez. `ProjectPanel.qml` gerçek proje yollarını açar. `Polars==2.0.0` ve runtime-32 exact lock'ta; yalnız Parquet depolama/metadata doğrulamasında kullanılır.
+
+README kilitli kontrolleri korunur. `uv run --frozen python scripts/measure_phase04.py` izole geçici Btrfs projeleriyle GUI render/kaydet/aç/eksik kaynak/kurtarma/farklı kaydet akışını kaydeder. Depo testleri `uv run --frozen pytest -q tests/test_projects.py tests/test_project_gui.py`; tüm regresyonlar için standart pytest komutu. SIGKILL alt süreçleri kernel kilidini terk eder, hiçbir worker ACTIVE'yi atlayarak metadata'yı güncel saymaz. [Ayrıntılı protokol ve sınırlar](adr/007-project-store-phase04.md), [gerçek kanıt](evidence/PHASE04.md). Native dosya seçici ve yeni masaüstü/remote CI ayrıca yapılmalıdır.
+
+## Faz05 uygulama bağı
+
+Faz05 testleri tests/test_delimited.py ve test_import_gui.py; CSV/TSV UTF8/cp1254 fixture, değişmez kaynak, sınır/karantina, kimlik, şema1→2 migrasyon,16 gerçek import SIGKILL, Qt drop ve gerçek süreç iptali. `uv run --frozen python scripts/measure_phase05.py` Btrfs izole projede gerçek full import/preview/iptal/render ve RSS/disk/tick örnekler. İlk import için wheel build/install ve paket içinden gerçek spawn import smoke yapılır; yalnız source tree smoke ile kabul edilmez. Standart kilitli kontroller korunur. [ADR-008](adr/008-delimited-import-phase05.md), [kanıt](evidence/PHASE05.md).
+
+## Faz06 kontrolleri
+
+`uv run --frozen pytest -q tests/test_structured_import.py tests/test_import_gui.py` dört format değer/tür ve gerçek worker/QML kontrolleridir. Standard kilitli check_docs/check_artifacts/check_learning/Ruff/pytest/offscreen giriş noktası korunur. `scripts/smoke_structured_wheel.py --package-root TARGET --fixtures ABS_PATH` ayrı /tmp cwd içinde kurulu wheel ve locked runtime ile dört formatın gerçek worker/yayın/reopen yolunu doğrular. `scripts/measure_phase06.py` başsız render ve ölçüm üretir. [Kanıt](evidence/PHASE06.md).
+
+## Faz07 katkısı
+
+Faz07: tests/test_dataset.py ve test_dataset_gui.py referans istatistik/ID/scope/proje roundtrip/spawn/iptal kontrolleri. scripts/measure_phase07.py büyük tablo RSS ve gerçek QML ekranları; --package-root TARGET --output JSON kurulu wheel içinde aynı işi doğrular. Standart kilitli kapılar korunur. [Kanıt](evidence/PHASE07.md).
+
+## Faz08 katkısı
+
+Faz08 gerçek kontroller: tests/test_quality.py ve test_quality_gui.py bağımsız değer/RowId/kapsam/snapshot/deterministik öneri, gerçek QML/spawn/iptal/roundtrip. `uv run --frozen python scripts/measure_phase08.py`100.000 kayıt, kaynak hash ve dar/geniş gerçek render ölçer; --package-root TARGET --output JSON aynı kurulu wheel yolunu çalıştırır. Standart kilitli kapılar korunur. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).

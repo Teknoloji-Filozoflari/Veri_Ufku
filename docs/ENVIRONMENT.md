@@ -48,3 +48,23 @@ Qt offscreen/software ekran ve worker testi geçti. Wayland wl_display Operation
 Kullanıcı yerel uygulamada CPU, I/O ve belirsiz ilerleme iptal/tamamlanma denemelerini bildirdi. Masaüstü backend, tam çalıştırma komutu, Python/Qt/binary hash ayrıca bildirilmedi; ENV-01 ile birebir ortam eşitliği varsayılmaz. Bu kanıt bildirilen eylemlerle sınırlı manuel kullanıcı kontrolüdür; performans veya bağımsız ajan masaüstü testi değildir. [Kanıt](evidence/PHASE01.md#e01-user-desktop).
 
 ENV-USER-01 devam bildirimi: kullanıcı görev sırasında yapılandırma/eski sonuç, anlaşılır hata/takip kimliği ve aktif görevde kapanış için verilen üç kontrolün hepsinin çalıştığını bildirdi. Bu senaryolar manuel kabul kaydına eklendi; runtime/backend/hash belirsizliği korunur.
+
+## ENV-04 — 2026-10-06
+
+CachyOS x86_64 Linux7.2.9/glibc2.44; CPython3.13.15, PySide6/Qt6.11.2, SQLite3.53.1, Polars/runtime-32 2.0.0. Btrfs NVMe üzerinde izole proje testleri ve offscreen/software Qt; geliştirme testleri tmpfs üzerinde de geçti. Tam lock/fixture hash, runtime ve fs [phase04-headless.json](evidence/phase04-headless.json); [kabul sınırları](evidence/PHASE04.md). Yeni remote/gerçek masaüstü/ağ FS/güç kaybı deneyi yapılmadı.
+
+## Faz05 uygulama bağı
+
+ENV-05 mevcut locked CPython3.13.15/PySide6 6.11.2/Polars2.0.0 üzerinde ilk gerçek CSV/TSV import, Qt offscreen/software, yerel Btrfs GUI ölçümü ve /tmp pytest. Kaynak resmi Python CSV/Polars sink_parquet belgeleri incelendi; yeni dependency yok. [Kanıt](evidence/PHASE05.md), [ham ölçüm](evidence/phase05-headless.json). Minimum donanım/native masaüstü/uzak CI ayrı açıktır.
+
+ENV-06: ENV-05 locked Linux/CPython3.13.15/Qt6.11.2/Polars2.0.0 aynı; native import için ek paket yok. Wheel target kurulum /tmp/veri-ufku-phase06-installed, runtime locked .venv. [Ham ortam/ölçüm](evidence/phase06-headless.json), [kanıt](evidence/PHASE06.md#e06-environment).
+
+## Faz07 katkısı
+
+ENV-07 (2026-10-06): aynı yerel Linux7.2.9 CachyOS/glibc2.44/Btrfs; CPython3.13.15/Qt6.11.2/Polars2.0.0, offscreen/software. 100.000 kayıt16 sayfa/full profil ve kurulu Linux wheel worker. Minimum donanım/native masaüstü/remote CI ayrıca doğrulanmadı. [Ham kayıt](evidence/phase07-headless.json).
+
+ENV-USER-07 (2026-10-06): kullanıcı masaüstünde Veri tablosunun açılması ve yenilenmesi başarılı bildirildi. Dosya/ortam ayrıntısı verilmedi; diğer manuel kabul kapsamlarına genellenmez. [Kayıt](evidence/PHASE07.md#e07-user-table).
+
+## Faz08 katkısı
+
+ENV-08, 2026-10-07: locked CPython3.13.15/PySide6Qt6.11.2/Polars2.0.0, Linux7.2.9/glibc2.44 geliştirici Btrfs ve /tmp tmpfs; offscreen/software. Yeni bağımlılık yok; gerçek masaüstü, minimum donanım ve remote CI ayrı doğrulanmadı. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).

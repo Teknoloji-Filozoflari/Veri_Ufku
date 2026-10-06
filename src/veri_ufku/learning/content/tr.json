@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "content_version": 1,
+  "content_version": 7,
   "locale": "tr",
   "articles": [
     {
@@ -527,6 +527,892 @@
       ],
       "critical": "Kritik uyarılar her derinlikte ve gelişmiş görünümde kalır.",
       "try_action": "learn.example"
+    },
+    {
+      "id": "projects",
+      "content_version": 2,
+      "locale": "tr",
+      "title": "Projeyi kaydet, güvenle yeniden aç",
+      "category": "Uygulama",
+      "summary": "Proje; kaynak bağlarını, ayarlarını, veri ve sonuç sürümlerini aynı kayıtta tutar.",
+      "purpose": "Çalışmanı kapatıp açtığında kaldığın durumdan devam etmek ve veri kökenini korumak.",
+      "when": "Yeni proje oluştururken, kaydederken, başka bir yere taşırken veya eksik kaynağı yeniden bağlarken.",
+      "when_not": "Proje açmak, değişmiş bir kaynak dosyayı yeniden içe aktarmak veya yeni analiz çalıştırmak değildir.",
+      "example": {
+        "before": "Kaynak referansı: /Belgeler/ölçümler.csv. Projede dosya kopyası yok.",
+        "after": "Taşınabilir kopyayı seçersen dosya sources dizinine eklenir. Özgün dosya aynı kalır."
+      },
+      "interpretation": "Sonucun yanında veri sürümü görünür. Kaynak değişmiş veya eksikse eski sonuç güncel sayılmaz; kayıtlı snapshot geçmiş veriyi korur.",
+      "common_mistake": "Proje metadata açılışını, kaynağın yeniden işlenmiş veya sonuçların yenilenmiş olduğu sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Yeni proje için Klasör seç ile var olan bir üst klasör seç veya tam yerel yolu yaz. Yolun sonundaki yeni proje klasörü henüz mevcut olmamalı. /home/Belgeler yerine kendi kullanıcı klasöründeki konumu kullan. Kaydet aynı projeye yeni değişmez kayıt ekler; Farklı kaydet yeni bir dizinde kopya üretir. Mevcut hedefler reddedilir."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Yalnız kaynak referansı daha az disk kullanır; dosyayı ayrıca taşımalısın. Taşınabilir kopya daha çok disk kullanır. Yeniden bağla yalnız içerik izi aynı dosyayı kabul eder; değişmiş veri ileride yeni içe aktarma gerektirir."
+        },
+        {
+          "kind": "note",
+          "text": "Otomatik kayıt 60 saniyede ayrı kurtarma dalına yazılır. Manuel kaydı değiştirmez. Kurtarma kaydını yükle ardından inceleyip Kaydet seç. Aynı projeye ikinci uygulama salt okunur açılır; aktif yazıcının kilidi kaldırılamaz."
+        }
+      ],
+      "related": [
+        "learn",
+        "leakage"
+      ],
+      "contexts": [
+        "project",
+        "project.source",
+        "project.recovery"
+      ],
+      "sources": [
+        {
+          "title": "Proje yayınlama ve kaynak bütünlüğü",
+          "reference": "docs/adr/003-storage-publication-lock.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Kaynak dosyanın değişmesi eski analizleri yenilemez. Ağ ve eşzamanlı senkronizasyon dizinlerinde dayanıklılık doğrulanmadı; yerel bir dizin kullan.",
+      "try_action": null
+    },
+    {
+      "id": "import-csv",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "CSV/TSV içe aktarma",
+      "category": "Uygulama",
+      "summary": "Dosyayı seç, önerileri kontrol et ve tam okumayı başlat.",
+      "purpose": "CSV/TSV dosyasını bilgi kaybı olmadan içe aktarmana yardımcı olur.",
+      "when": "Dosya seçip içe aktarma ayarlarını düzenlerken.",
+      "when_not": "Kaynağın anlamını doğrulamadan analiz sonucu çıkarmak için.",
+      "example": {
+        "before": "Kimlik: 0012; tutar: 1.234,50; tarih: 06.10.2026.",
+        "after": "Kimliği metin koru, tutarı açık sayı ayarıyla, tarihi seçilen biçimle oku."
+      },
+      "interpretation": "Önizleme en fazla 200 kayıt içerir. Tüm sütunlar metin başlar; tür önerisi kesin değildir. Tam okumada tür ve satır hataları yeniden doğrulanır. Dataset yalnız tamamlanınca yayımlanır. Doğrulanmış değişmez kopya kullanılır; dosya değiştiyse yeni sürümü almak için yeniden seç.",
+      "common_mistake": "Sınırlı örneği bütün dosyanın garantisi sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Önizleme en fazla 200 kayıt içerir. Tüm sütunlar metin başlar; tür önerisi kesin değildir. Tam okumada tür ve satır hataları yeniden doğrulanır. Dataset yalnız tamamlanınca yayımlanır. Doğrulanmış değişmez kopya kullanılır; dosya değiştiyse yeni sürümü almak için yeniden seç."
+        }
+      ],
+      "related": [
+        "import-delimiter",
+        "import-encoding",
+        "import-header",
+        "import-date",
+        "import-decimal",
+        "import-bad-rows"
+      ],
+      "contexts": [
+        "import.csv",
+        "import.tsv"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku CSV/TSV sözleşmesi",
+          "reference": "docs/adr/008-delimited-import-phase05.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Kaynak değişse bile yakalanmış kopyanın zamanı ve fingerprint’i görünür; karışık sürümden dataset üretilmez.",
+      "try_action": null
+    },
+    {
+      "id": "import-delimiter",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Ayraç",
+      "category": "Uygulama",
+      "summary": "Ayraç bir kaydın sütunlarını ayırır.",
+      "purpose": "CSV/TSV dosyasını bilgi kaybı olmadan içe aktarmana yardımcı olur.",
+      "when": "Dosya seçip içe aktarma ayarlarını düzenlerken.",
+      "when_not": "Kaynağın anlamını doğrulamadan analiz sonucu çıkarmak için.",
+      "example": {
+        "before": "Kimlik: 0012; tutar: 1.234,50; tarih: 06.10.2026.",
+        "after": "Kimliği metin koru, tutarı açık sayı ayarıyla, tarihi seçilen biçimle oku."
+      },
+      "interpretation": "Virgül, noktalı virgül, sekme veya dik çizgi seç. Tırnak içindeki ayraç ve satır sonu aynı hücrede kalır. Otomatik algılama yalnız öneridir. TSV genellikle sekme kullanır.",
+      "common_mistake": "Virgüllü ondalık içeren noktalı virgüllü dosyada virgülü sütun ayracı seçmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Virgül, noktalı virgül, sekme veya dik çizgi seç. Tırnak içindeki ayraç ve satır sonu aynı hücrede kalır. Otomatik algılama yalnız öneridir. TSV genellikle sekme kullanır."
+        }
+      ],
+      "related": [
+        "import-csv"
+      ],
+      "contexts": [
+        "import-delimiter"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku CSV/TSV sözleşmesi",
+          "reference": "docs/adr/008-delimited-import-phase05.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Yanlış ayraç sütun sayısını değiştirir; yeniden önizle.",
+      "try_action": null
+    },
+    {
+      "id": "import-encoding",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Encoding",
+      "category": "Uygulama",
+      "summary": "Encoding baytların hangi karakterleri temsil ettiğini belirler.",
+      "purpose": "CSV/TSV dosyasını bilgi kaybı olmadan içe aktarmana yardımcı olur.",
+      "when": "Dosya seçip içe aktarma ayarlarını düzenlerken.",
+      "when_not": "Kaynağın anlamını doğrulamadan analiz sonucu çıkarmak için.",
+      "example": {
+        "before": "Kimlik: 0012; tutar: 1.234,50; tarih: 06.10.2026.",
+        "after": "Kimliği metin koru, tutarı açık sayı ayarıyla, tarihi seçilen biçimle oku."
+      },
+      "interpretation": "UTF-8 (BOM dahil), Windows Türkçe cp1254 ve ISO-8859-9 seçilebilir. Türkçe ğ, ş, ı gibi karakterleri önizlemede kontrol et. Okunamayan baytlar değiştirilmez; işlem durur.",
+      "common_mistake": "Türkçe karakterler bozukken içe aktarmaya devam etmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "UTF-8 (BOM dahil), Windows Türkçe cp1254 ve ISO-8859-9 seçilebilir. Türkçe ğ, ş, ı gibi karakterleri önizlemede kontrol et. Okunamayan baytlar değiştirilmez; işlem durur."
+        }
+      ],
+      "related": [
+        "import-csv"
+      ],
+      "contexts": [
+        "import-encoding"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku CSV/TSV sözleşmesi",
+          "reference": "docs/adr/008-delimited-import-phase05.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Eski encoding algılaması kesin değildir; doğru seçimi kullanıcı doğrular.",
+      "try_action": null
+    },
+    {
+      "id": "import-header",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Başlık kaydı",
+      "category": "Uygulama",
+      "summary": "Başlık sütunlara isim verir; veri kaydı değildir.",
+      "purpose": "CSV/TSV dosyasını bilgi kaybı olmadan içe aktarmana yardımcı olur.",
+      "when": "Dosya seçip içe aktarma ayarlarını düzenlerken.",
+      "when_not": "Kaynağın anlamını doğrulamadan analiz sonucu çıkarmak için.",
+      "example": {
+        "before": "Kimlik: 0012; tutar: 1.234,50; tarih: 06.10.2026.",
+        "after": "Kimliği metin koru, tutarı açık sayı ayarıyla, tarihi seçilen biçimle oku."
+      },
+      "interpretation": "0 seçimi başlıksız dosya içindir; Sütun_1 gibi adlar üretilir. 1–100 mantıksal CSV kaydı içinden başlık seçebilirsin. Öncesindeki kayıtlar açık seçimle önsöz kabul edilir. Boş ve tekrar başlıklar benzersiz adlandırılır; özgün adlar saklanır.",
+      "common_mistake": "İlk veri kaydını başlık kabul ederek kaybetmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "0 seçimi başlıksız dosya içindir; Sütun_1 gibi adlar üretilir. 1–100 mantıksal CSV kaydı içinden başlık seçebilirsin. Öncesindeki kayıtlar açık seçimle önsöz kabul edilir. Boş ve tekrar başlıklar benzersiz adlandırılır; özgün adlar saklanır."
+        }
+      ],
+      "related": [
+        "import-csv"
+      ],
+      "contexts": [
+        "import-header"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku CSV/TSV sözleşmesi",
+          "reference": "docs/adr/008-delimited-import-phase05.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Çok satırlı hücrede fiziksel satır ile CSV kaydı farklıdır.",
+      "try_action": null
+    },
+    {
+      "id": "import-date",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Tarih biçimi ve saat dilimi",
+      "category": "Uygulama",
+      "summary": "Tarih türü açık biçimle yorumlanır.",
+      "purpose": "CSV/TSV dosyasını bilgi kaybı olmadan içe aktarmana yardımcı olur.",
+      "when": "Dosya seçip içe aktarma ayarlarını düzenlerken.",
+      "when_not": "Kaynağın anlamını doğrulamadan analiz sonucu çıkarmak için.",
+      "example": {
+        "before": "Kimlik: 0012; tutar: 1.234,50; tarih: 06.10.2026.",
+        "after": "Kimliği metin koru, tutarı açık sayı ayarıyla, tarihi seçilen biçimle oku."
+      },
+      "interpretation": "Örneğin %d.%m.%Y gün.ay.yıl; %Y-%m-%d %H:%M tarih ve saat içindir. datetime için Europe/Istanbul gibi IANA saat dilimi seç; boş alan saat dilimsiz yerel saat saklar. Yaz saati geçişindeki belirsiz/olmayan saatler bozuk kayıttır.",
+      "common_mistake": "01/02 tarihini hangi gün/ay düzeninde olduğunu bilmeden kesin kabul etmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Örneğin %d.%m.%Y gün.ay.yıl; %Y-%m-%d %H:%M tarih ve saat içindir. datetime için Europe/Istanbul gibi IANA saat dilimi seç; boş alan saat dilimsiz yerel saat saklar. Yaz saati geçişindeki belirsiz/olmayan saatler bozuk kayıttır."
+        }
+      ],
+      "related": [
+        "import-csv"
+      ],
+      "contexts": [
+        "import-date"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku CSV/TSV sözleşmesi",
+          "reference": "docs/adr/008-delimited-import-phase05.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Saat dilimi sessizce UTC varsayılmaz. date seçiminde yalnız tarih saklanır.",
+      "try_action": null
+    },
+    {
+      "id": "import-decimal",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Ondalık, binlik ve null",
+      "category": "Uygulama",
+      "summary": "Sayı işaretleri ölçümü doğru okumayı sağlar.",
+      "purpose": "CSV/TSV dosyasını bilgi kaybı olmadan içe aktarmana yardımcı olur.",
+      "when": "Dosya seçip içe aktarma ayarlarını düzenlerken.",
+      "when_not": "Kaynağın anlamını doğrulamadan analiz sonucu çıkarmak için.",
+      "example": {
+        "before": "Kimlik: 0012; tutar: 1.234,50; tarih: 06.10.2026.",
+        "after": "Kimliği metin koru, tutarı açık sayı ayarıyla, tarihi seçilen biçimle oku."
+      },
+      "interpretation": "1.234,50 için ondalık virgül ve binlik nokta seç. Tür seçimi olmadan metin korunur. Decimal(38,6) yuvarlama yapmaz; sınır dışı değer hatadır. Baştaki sıfırlı kimlikler metin kalmalıdır; uzun numaralar Float64 ile kayıp riski varsa reddedilir. Null işaretlerini | ile ayır; boş alan varsayılan olarak boş metindir. |NA boş metni ve NA değerini null kabul eder.",
+      "common_mistake": "Kimlik numarasını ölçüm gibi sayıya çevirmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "1.234,50 için ondalık virgül ve binlik nokta seç. Tür seçimi olmadan metin korunur. Decimal(38,6) yuvarlama yapmaz; sınır dışı değer hatadır. Baştaki sıfırlı kimlikler metin kalmalıdır; uzun numaralar Float64 ile kayıp riski varsa reddedilir. Null işaretlerini | ile ayır; boş alan varsayılan olarak boş metindir. |NA boş metni ve NA değerini null kabul eder."
+        }
+      ],
+      "related": [
+        "import-csv"
+      ],
+      "contexts": [
+        "import-decimal"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku CSV/TSV sözleşmesi",
+          "reference": "docs/adr/008-delimited-import-phase05.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Null eksik veri demektir; sıfırla veya boş metinle aynı değildir.",
+      "try_action": null
+    },
+    {
+      "id": "import-bad-rows",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Bozuk kayıt ve karantina",
+      "category": "Uygulama",
+      "summary": "Bozuk kayıt sessizce atlanmaz.",
+      "purpose": "CSV/TSV dosyasını bilgi kaybı olmadan içe aktarmana yardımcı olur.",
+      "when": "Dosya seçip içe aktarma ayarlarını düzenlerken.",
+      "when_not": "Kaynağın anlamını doğrulamadan analiz sonucu çıkarmak için.",
+      "example": {
+        "before": "Kimlik: 0012; tutar: 1.234,50; tarih: 06.10.2026.",
+        "after": "Kimliği metin koru, tutarı açık sayı ayarıyla, tarihi seçilen biçimle oku."
+      },
+      "interpretation": "Durdur politikası ilk hatada dataset oluşturmaz. Raporlu karantina geçerli kayıtları alır; bozuk kayıtların özgün metnini, SourceRecordId kimliğini, kayıt numarasını, kaynak satır aralığını ve sebebini ayrı Parquet artifact’ta tutar. Açık kalan tırnak dosya sonuna kadar bir bozuk aralık oluşturabilir; içerideki satırları bağımsız kabul etmeyiz.",
+      "common_mistake": "Karantinadaki kayıtları analize dahil sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Durdur politikası ilk hatada dataset oluşturmaz. Raporlu karantina geçerli kayıtları alır; bozuk kayıtların özgün metnini, SourceRecordId kimliğini, kayıt numarasını, kaynak satır aralığını ve sebebini ayrı Parquet artifact’ta tutar. Açık kalan tırnak dosya sonuna kadar bir bozuk aralık oluşturabilir; içerideki satırları bağımsız kabul etmeyiz."
+        }
+      ],
+      "related": [
+        "import-csv"
+      ],
+      "contexts": [
+        "import-bad-rows"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku CSV/TSV sözleşmesi",
+          "reference": "docs/adr/008-delimited-import-phase05.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Raporlanan bozuk sayısı tam okumaya aittir; önizlemedeki sayı örnekle sınırlıdır.",
+      "try_action": null
+    },
+    {
+      "id": "import-json",
+      "content_version": 5,
+      "locale": "tr",
+      "title": "JSON nesnesi ve liste",
+      "category": "Uygulama",
+      "summary": "JSON nesnesi adlandırılmış alanlar; liste sıralı değerler taşır.",
+      "purpose": "Kaynak yapısını ve dönüşümün etkisini kontrol ederek içe aktarmak.",
+      "when": "Bu formatı projeye eklerken.",
+      "when_not": "Sınırlı örneği tam dosya kabulü saymak için.",
+      "example": {
+        "before": "Kaynak dosyada iç içe alan, boş hücre veya tarih değeri.",
+        "after": "Seçilen ayarlara göre doğrulanmış tablo ve kaynak sürümüyle bağlı rapor."
+      },
+      "interpretation": "Önizleme sınırlı örnektir. Aynı değişmez kopya import edilir; tam veri şeması yeniden doğrulanır.",
+      "common_mistake": "Algılanan türü kesin saymak veya dönüşümün satır sayısını değiştirmediğini varsaymak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "JSON nesnesi adlandırılmış alanlar; liste sıralı değerler taşır. Kök kayıt listesi veya /payload/records gibi JSON Pointer kayıt yolu seçin. Eksik alan ile açık null ayrı sayılır. Alan sırası kimlik değildir. Sayılar kesin Decimal veya integer olur; 38 hane sınırı ve karışık tür açık json_text seçimi gerektirir."
+        }
+      ],
+      "related": [
+        "data-types",
+        "sample",
+        "import-flatten"
+      ],
+      "contexts": [
+        "import.json",
+        "import-json-path"
+      ],
+      "sources": [
+        {
+          "title": "Faz06 veri ve adaptör sözleşmesi",
+          "reference": "docs/adr/009-structured-import-phase06.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Kaynak değiştirilmez. İptalde dataset yayımlanmaz. Destek sınırında açık seçim gerekir.",
+      "try_action": null
+    },
+    {
+      "id": "import-jsonl",
+      "content_version": 5,
+      "locale": "tr",
+      "title": "JSONL / NDJSON",
+      "category": "Uygulama",
+      "summary": "Her fiziksel satır bir JSON nesnesidir.",
+      "purpose": "Kaynak yapısını ve dönüşümün etkisini kontrol ederek içe aktarmak.",
+      "when": "Bu formatı projeye eklerken.",
+      "when_not": "Sınırlı örneği tam dosya kabulü saymak için.",
+      "example": {
+        "before": "Kaynak dosyada iç içe alan, boş hücre veya tarih değeri.",
+        "after": "Seçilen ayarlara göre doğrulanmış tablo ve kaynak sürümüyle bağlı rapor."
+      },
+      "interpretation": "Önizleme sınırlı örnektir. Aynı değişmez kopya import edilir; tam veri şeması yeniden doğrulanır.",
+      "common_mistake": "Algılanan türü kesin saymak veya dönüşümün satır sayısını değiştirmediğini varsaymak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Her fiziksel satır bir JSON nesnesidir. Anahtar sırası değişebilir; tam dosyada alan birliği doğrulanır. Bozuk ve boş satır numarası, sebebi, ham kayıt ve kaynak konumu karantinada korunur. Durdur veya raporlu karantina seçin."
+        }
+      ],
+      "related": [
+        "data-types",
+        "sample",
+        "import-flatten"
+      ],
+      "contexts": [
+        "import.jsonl"
+      ],
+      "sources": [
+        {
+          "title": "Faz06 veri ve adaptör sözleşmesi",
+          "reference": "docs/adr/009-structured-import-phase06.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Kaynak değiştirilmez. İptalde dataset yayımlanmaz. Destek sınırında açık seçim gerekir.",
+      "try_action": null
+    },
+    {
+      "id": "import-flatten",
+      "content_version": 5,
+      "locale": "tr",
+      "title": "Düzleştirme ve liste açma",
+      "category": "Uygulama",
+      "summary": "Düzleştirme iç nesneleri /adres/il gibi alan yollarına taşır; listeleri açmaz.",
+      "purpose": "Kaynak yapısını ve dönüşümün etkisini kontrol ederek içe aktarmak.",
+      "when": "Bu formatı projeye eklerken.",
+      "when_not": "Sınırlı örneği tam dosya kabulü saymak için.",
+      "example": {
+        "before": "Kaynak dosyada iç içe alan, boş hücre veya tarih değeri.",
+        "after": "Seçilen ayarlara göre doğrulanmış tablo ve kaynak sürümüyle bağlı rapor."
+      },
+      "interpretation": "Önizleme sınırlı örnektir. Aynı değişmez kopya import edilir; tam veri şeması yeniden doğrulanır.",
+      "common_mistake": "Algılanan türü kesin saymak veya dönüşümün satır sayısını değiştirmediğini varsaymak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Düzleştirme iç nesneleri /adres/il gibi alan yollarına taşır; listeleri açmaz. Liste açma ayrı seçimdir. İki ve üç elemanlı bağımsız listeler birlikte açılırsa bir kayıt altı satır olur. Önizleme en fazla 200 kaynak kaydına dayanır; tam dosya sayısı farklı olabilir. Boş/null listeler bir dış satır korunur. Her çıktı RowId, aynı kaynağın çıktıları ortak SourceRecordId alır."
+        }
+      ],
+      "related": [
+        "data-types",
+        "sample",
+        "import-json"
+      ],
+      "contexts": [
+        "import-flatten"
+      ],
+      "sources": [
+        {
+          "title": "Faz06 veri ve adaptör sözleşmesi",
+          "reference": "docs/adr/009-structured-import-phase06.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Kaynak değiştirilmez. İptalde dataset yayımlanmaz. Destek sınırında açık seçim gerekir.",
+      "try_action": null
+    },
+    {
+      "id": "import-xlsx",
+      "content_version": 5,
+      "locale": "tr",
+      "title": "Excel sayfası ve formül",
+      "category": "Uygulama",
+      "summary": "Sayfa, fiziksel başlık satırı (0: yok) ve A1:D100 aralığını seçin.",
+      "purpose": "Kaynak yapısını ve dönüşümün etkisini kontrol ederek içe aktarmak.",
+      "when": "Bu formatı projeye eklerken.",
+      "when_not": "Sınırlı örneği tam dosya kabulü saymak için.",
+      "example": {
+        "before": "Kaynak dosyada iç içe alan, boş hücre veya tarih değeri.",
+        "after": "Seçilen ayarlara göre doğrulanmış tablo ve kaynak sürümüyle bağlı rapor."
+      },
+      "interpretation": "Önizleme sınırlı örnektir. Aynı değişmez kopya import edilir; tam veri şeması yeniden doğrulanır.",
+      "common_mistake": "Algılanan türü kesin saymak veya dönüşümün satır sayısını değiştirmediğini varsaymak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Sayfa, fiziksel başlık satırı (0: yok) ve A1:D100 aralığını seçin. anchor birleşik hücrede yalnız sol üstü tutar; yaymaz. keep boş satırları korur; skip açıkça çıkarır. formula =formül, text formül metni, cached dosyada kayıtlı değerdir. Formül/makro çalışmaz; önbellek yoksa sonuç üretilmez. Makrolu dosya reddedilir. 1900/1904 tarih sistemi kullanılır; sahte 1900-02-29 reddedilir. Excel tarihi saat dilimsizdir, UTC varsayılmaz. Mikrosaniyeye tam çevrilemeyen tarih için serial asıl sayıyı tutar. Dosyada zaten kaybolan Excel hassasiyeti geri üretilemez."
+        }
+      ],
+      "related": [
+        "data-types",
+        "sample",
+        "import-flatten"
+      ],
+      "contexts": [
+        "import.xlsx",
+        "import-excel-sheet"
+      ],
+      "sources": [
+        {
+          "title": "Faz06 veri ve adaptör sözleşmesi",
+          "reference": "docs/adr/009-structured-import-phase06.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Kaynak değiştirilmez. İptalde dataset yayımlanmaz. Destek sınırında açık seçim gerekir.",
+      "try_action": null
+    },
+    {
+      "id": "import-parquet",
+      "content_version": 5,
+      "locale": "tr",
+      "title": "Parquet ve tür koruma",
+      "category": "Uygulama",
+      "summary": "Parquet sütun türlerini saklayan veri formatıdır.",
+      "purpose": "Kaynak yapısını ve dönüşümün etkisini kontrol ederek içe aktarmak.",
+      "when": "Bu formatı projeye eklerken.",
+      "when_not": "Sınırlı örneği tam dosya kabulü saymak için.",
+      "example": {
+        "before": "Kaynak dosyada iç içe alan, boş hücre veya tarih değeri.",
+        "after": "Seçilen ayarlara göre doğrulanmış tablo ve kaynak sürümüyle bağlı rapor."
+      },
+      "interpretation": "Önizleme sınırlı örnektir. Aynı değişmez kopya import edilir; tam veri şeması yeniden doğrulanır.",
+      "common_mistake": "Algılanan türü kesin saymak veya dönüşümün satır sayısını değiştirmediğini varsaymak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Parquet sütun türlerini saklayan veri formatıdır. Nullable, Date, Time, timezone ve ms/us/ns Datetime, Decimal ölçeği, UInt64, Binary, list ve struct bu adaptörde korunur; nested alanlar kendiliğinden açılmaz. Duration, Array ve categorical/enum gibi kapsam dışı türler hata verir. Ns değeri mikrosaniyeye yuvarlanmaz; NaN/Inf null yapılmaz."
+        }
+      ],
+      "related": [
+        "data-types",
+        "sample",
+        "import-flatten"
+      ],
+      "contexts": [
+        "import.parquet"
+      ],
+      "sources": [
+        {
+          "title": "Faz06 veri ve adaptör sözleşmesi",
+          "reference": "docs/adr/009-structured-import-phase06.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Kaynak değiştirilmez. İptalde dataset yayımlanmaz. Destek sınırında açık seçim gerekir.",
+      "try_action": null
+    },
+    {
+      "id": "column-role",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Fiziksel tür ve sütun rolü",
+      "category": "Veri profili",
+      "summary": "String nasıl saklandığını; kimlik rolü nasıl yorumlanacağını belirtir. Rolü değiştirmek hücreleri dönüştürmez.",
+      "purpose": "00123 metin türünde ve kimlik rolünde korunur. Kimlik numaralarından ortalama veya korelasyon bulgusu çıkarılmaz. Ölçüm birimi, ordinal sıra ve bir satırın analiz birimi metadata olarak kaydedilir.",
+      "when": "Veri tablosunda sütunları ve hesap kapsamını incelerken.",
+      "when_not": "Sınırlı örneği tüm veri hakkında kesin bulgu saymak için.",
+      "example": {
+        "before": "1,2,3,4 ve ayrı sayılan null/NaN/sonsuz değerler.",
+        "after": "Kapsamı ve veri sürümü belli, fiziksel türü koruyan profil."
+      },
+      "interpretation": "00123 metin türünde ve kimlik rolünde korunur. Kimlik numaralarından ortalama veya korelasyon bulgusu çıkarılmaz. Ölçüm birimi, ordinal sıra ve bir satırın analiz birimi metadata olarak kaydedilir.",
+      "common_mistake": "Rolü fiziksel türle veya tablo görünümünü analiz dataset’iyle karıştırmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "00123 metin türünde ve kimlik rolünde korunur. Kimlik numaralarından ortalama veya korelasyon bulgusu çıkarılmaz. Ölçüm birimi, ordinal sıra ve bir satırın analiz birimi metadata olarak kaydedilir."
+        }
+      ],
+      "critical": "Örnek profili tüm veriye genelleme. Veri sürümü, filtre kapsamı ve yöntem sonuçla birlikte görünür.",
+      "related": [
+        "data-types",
+        "sample",
+        "mean-median"
+      ],
+      "contexts": [
+        "column-role",
+        "dataset.roles"
+      ],
+      "sources": [
+        {
+          "title": "Faz07 tablo ve profil sözleşmesi",
+          "reference": "docs/adr/010-dataset-view-phase07.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "profile-unique",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Unique: farklı değer sayısı",
+      "category": "Veri profili",
+      "summary": "Unique sütundaki birbirinden farklı değerleri sayar.",
+      "purpose": "A,A,B,null için null hariç unique=2. NaN tek farklı değer sayılır; +∞ ve −∞ ayrı değerlerdir. En fazla20 frekans gösterilir; diğer kayıtların sayısı ayrıca verilir.",
+      "when": "Veri tablosunda sütunları ve hesap kapsamını incelerken.",
+      "when_not": "Sınırlı örneği tüm veri hakkında kesin bulgu saymak için.",
+      "example": {
+        "before": "1,2,3,4 ve ayrı sayılan null/NaN/sonsuz değerler.",
+        "after": "Kapsamı ve veri sürümü belli, fiziksel türü koruyan profil."
+      },
+      "interpretation": "A,A,B,null için null hariç unique=2. NaN tek farklı değer sayılır; +∞ ve −∞ ayrı değerlerdir. En fazla20 frekans gösterilir; diğer kayıtların sayısı ayrıca verilir.",
+      "common_mistake": "Rolü fiziksel türle veya tablo görünümünü analiz dataset’iyle karıştırmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "A,A,B,null için null hariç unique=2. NaN tek farklı değer sayılır; +∞ ve −∞ ayrı değerlerdir. En fazla20 frekans gösterilir; diğer kayıtların sayısı ayrıca verilir."
+        }
+      ],
+      "critical": "Örnek profili tüm veriye genelleme. Veri sürümü, filtre kapsamı ve yöntem sonuçla birlikte görünür.",
+      "related": [
+        "data-types",
+        "sample",
+        "mean-median"
+      ],
+      "contexts": [
+        "profile-unique"
+      ],
+      "sources": [
+        {
+          "title": "Faz07 tablo ve profil sözleşmesi",
+          "reference": "docs/adr/010-dataset-view-phase07.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "profile-std",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Standart sapma",
+      "category": "Veri profili",
+      "summary": "Standart sapma ölçümlerin ortalama etrafındaki yayılımını anlatır.",
+      "purpose": "1,2,3,4 için ortalama2,5; ddof=1 standart sapma yaklaşık1,291; ddof=0 yaklaşık1,118. Null, NaN ve sonsuz değerler hesap dışında ayrı sayılır. n≤ddof ise std tanımsızdır.",
+      "when": "Veri tablosunda sütunları ve hesap kapsamını incelerken.",
+      "when_not": "Sınırlı örneği tüm veri hakkında kesin bulgu saymak için.",
+      "example": {
+        "before": "1,2,3,4 ve ayrı sayılan null/NaN/sonsuz değerler.",
+        "after": "Kapsamı ve veri sürümü belli, fiziksel türü koruyan profil."
+      },
+      "interpretation": "1,2,3,4 için ortalama2,5; ddof=1 standart sapma yaklaşık1,291; ddof=0 yaklaşık1,118. Null, NaN ve sonsuz değerler hesap dışında ayrı sayılır. n≤ddof ise std tanımsızdır.",
+      "common_mistake": "Rolü fiziksel türle veya tablo görünümünü analiz dataset’iyle karıştırmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "1,2,3,4 için ortalama2,5; ddof=1 standart sapma yaklaşık1,291; ddof=0 yaklaşık1,118. Null, NaN ve sonsuz değerler hesap dışında ayrı sayılır. n≤ddof ise std tanımsızdır."
+        }
+      ],
+      "critical": "Örnek profili tüm veriye genelleme. Veri sürümü, filtre kapsamı ve yöntem sonuçla birlikte görünür.",
+      "related": [
+        "data-types",
+        "sample",
+        "mean-median"
+      ],
+      "contexts": [
+        "profile-std"
+      ],
+      "sources": [
+        {
+          "title": "Faz07 tablo ve profil sözleşmesi",
+          "reference": "docs/adr/010-dataset-view-phase07.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "profile-quantile",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Yüzdelik ve medyan",
+      "category": "Veri profili",
+      "summary": "Yüzdelik sıralı ölçümlerin belirli bir oranındaki sınırı anlatır.",
+      "purpose": "1,2,3,4 için medyan2,5 ve %25 yüzdelik1,75. Linear h=(n−1)q yöntemi iki komşu arasını hesaplar. Yöntem ve dışlamalar sonuçla kaydedilir.",
+      "when": "Veri tablosunda sütunları ve hesap kapsamını incelerken.",
+      "when_not": "Sınırlı örneği tüm veri hakkında kesin bulgu saymak için.",
+      "example": {
+        "before": "1,2,3,4 ve ayrı sayılan null/NaN/sonsuz değerler.",
+        "after": "Kapsamı ve veri sürümü belli, fiziksel türü koruyan profil."
+      },
+      "interpretation": "1,2,3,4 için medyan2,5 ve %25 yüzdelik1,75. Linear h=(n−1)q yöntemi iki komşu arasını hesaplar. Yöntem ve dışlamalar sonuçla kaydedilir.",
+      "common_mistake": "Rolü fiziksel türle veya tablo görünümünü analiz dataset’iyle karıştırmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "1,2,3,4 için medyan2,5 ve %25 yüzdelik1,75. Linear h=(n−1)q yöntemi iki komşu arasını hesaplar. Yöntem ve dışlamalar sonuçla kaydedilir."
+        }
+      ],
+      "critical": "Örnek profili tüm veriye genelleme. Veri sürümü, filtre kapsamı ve yöntem sonuçla birlikte görünür.",
+      "related": [
+        "data-types",
+        "sample",
+        "mean-median"
+      ],
+      "contexts": [
+        "profile-quantile"
+      ],
+      "sources": [
+        {
+          "title": "Faz07 tablo ve profil sözleşmesi",
+          "reference": "docs/adr/010-dataset-view-phase07.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "dataset-profile",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Veri profili ve tablo kapsamı",
+      "category": "Veri profili",
+      "summary": "Profil veri yapısını ve seçili sütunun dağılımını tanımaya yardımcı olur.",
+      "purpose": "Tam profil tüm kapsamı tarar. Örnek profil ilk10.000 kaydı kullanır; rastgele veya temsili değildir. Görünüm filtresi yalnız açıkça görünüm profili seçildiğinde uygulanır. Sıralama, gizleme ve filtre fiziksel veriyi değiştirmez. Tablo en fazla200 kayıt taşır ve salt okunurdur.",
+      "when": "Veri tablosunda sütunları ve hesap kapsamını incelerken.",
+      "when_not": "Sınırlı örneği tüm veri hakkında kesin bulgu saymak için.",
+      "example": {
+        "before": "1,2,3,4 ve ayrı sayılan null/NaN/sonsuz değerler.",
+        "after": "Kapsamı ve veri sürümü belli, fiziksel türü koruyan profil."
+      },
+      "interpretation": "Tam profil tüm kapsamı tarar. Örnek profil ilk10.000 kaydı kullanır; rastgele veya temsili değildir. Görünüm filtresi yalnız açıkça görünüm profili seçildiğinde uygulanır. Sıralama, gizleme ve filtre fiziksel veriyi değiştirmez. Tablo en fazla200 kayıt taşır ve salt okunurdur.",
+      "common_mistake": "Rolü fiziksel türle veya tablo görünümünü analiz dataset’iyle karıştırmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Tam profil tüm kapsamı tarar. Örnek profil ilk10.000 kaydı kullanır; rastgele veya temsili değildir. Görünüm filtresi yalnız açıkça görünüm profili seçildiğinde uygulanır. Sıralama, gizleme ve filtre fiziksel veriyi değiştirmez. Tablo en fazla200 kayıt taşır ve salt okunurdur."
+        }
+      ],
+      "critical": "Örnek profili tüm veriye genelleme. Veri sürümü, filtre kapsamı ve yöntem sonuçla birlikte görünür.",
+      "related": [
+        "data-types",
+        "sample",
+        "mean-median"
+      ],
+      "contexts": [
+        "dataset.profile",
+        "dataset.view"
+      ],
+      "sources": [
+        {
+          "title": "Faz07 tablo ve profil sözleşmesi",
+          "reference": "docs/adr/010-dataset-view-phase07.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "quality",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Veri kalitesi",
+      "category": "Veri kalitesi",
+      "summary": "Kalite, verinin soruna uygunluğudur; tek puan güvence vermez.",
+      "purpose": "Bulguyu bağlamıyla incelemenizi sağlar.",
+      "when": "Veriyi inceleme ve analize hazırlık sırasında.",
+      "when_not": "Örnek sonuçlarını tüm veriye genellemek veya otomatik düzeltme için.",
+      "example": {
+        "before": "3 eksik değer ve 2 aralık ihlali var.",
+        "after": "Eksikler gözlem, açık aralık kuralına uymayanlar ihlaldir."
+      },
+      "interpretation": "Tarama yalnız seçili kapsamı okur; kayıtları düzeltmez.",
+      "common_mistake": "Adayı kesin veri hatası sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Eksik, boş metin, NaN ve sonsuz farklıdır. Tür veya tarih kontrolü için açık kullanıcı kuralı gerekir. Türkçe I/ı ve İ/i karşılaştırması benzer kategori adayı üretir; otomatik birleşme yapılmaz."
+        }
+      ],
+      "critical": "Tarama yalnız seçili kapsamı okur; kayıtları düzeltmez.",
+      "related": [
+        "dataset-profile",
+        "column-role"
+      ],
+      "contexts": [
+        "quality"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku veri ve kapsam sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "duplicates",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Tekrar mı, meşru tekrar mı?",
+      "category": "Veri kalitesi",
+      "summary": "Aynı değerleri taşıyan kayıtlar farklı olayları anlatabilir.",
+      "purpose": "Bulguyu bağlamıyla incelemenizi sağlar.",
+      "when": "Veriyi inceleme ve analize hazırlık sırasında.",
+      "when_not": "Örnek sonuçlarını tüm veriye genellemek veya otomatik düzeltme için.",
+      "example": {
+        "before": "Ada aynı ürünü iki kez satın aldı.",
+        "after": "İki satış meşru olabilir; seçili kişi sütunu benzersiz olmak zorunda değildir."
+      },
+      "interpretation": "Tekrar grubunun tüm üyeleri sayılır; sayım silinecek kayıt sayısı değildir.",
+      "common_mistake": "Adayı kesin veri hatası sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Tam tekrar bütün fiziksel sütunları, seçili tekrar yalnız açık anahtar sütunlarını karşılaştırır. Null anahtarı tekrar gruplarında eşittir; benzersizlik kuralında null hariç tutulur."
+        }
+      ],
+      "critical": "Tekrar grubunun tüm üyeleri sayılır; sayım silinecek kayıt sayısı değildir.",
+      "related": [
+        "dataset-profile",
+        "column-role"
+      ],
+      "contexts": [
+        "duplicates"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku veri ve kapsam sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "missing-mechanism",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Eksik veri mekanizması",
+      "category": "Veri kalitesi",
+      "summary": "Eksikliğin nedeni analiz kararını değiştirir; tarama bu nedeni kanıtlayamaz.",
+      "purpose": "Bulguyu bağlamıyla incelemenizi sağlar.",
+      "when": "Veriyi inceleme ve analize hazırlık sırasında.",
+      "when_not": "Örnek sonuçlarını tüm veriye genellemek veya otomatik düzeltme için.",
+      "example": {
+        "before": "Bazı kişiler gelir sorusunu yanıtlamadı.",
+        "after": "Yanıt vermeme gelirle ilişkili olabilir."
+      },
+      "interpretation": "MCAR, MAR veya MNAR olduğuna yalnız tablo taramasıyla karar verilmez.",
+      "common_mistake": "Adayı kesin veri hatası sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "MCAR eksikliğin gözlenen/gözlenmeyen değerlerden bağımsızlığı; MAR gözlenen bilgiye koşullu bağımsızlık; MNAR gözlenmeyen değerle ilişki varsayımıdır. Kaynak ve toplama sürecini inceleyin. Otomatik doldurma yapılmaz."
+        }
+      ],
+      "critical": "MCAR, MAR veya MNAR olduğuna yalnız tablo taramasıyla karar verilmez.",
+      "related": [
+        "dataset-profile",
+        "column-role"
+      ],
+      "contexts": [
+        "missing-mechanism"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku veri ve kapsam sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "outliers",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Aykırı gözlem",
+      "category": "Veri kalitesi",
+      "summary": "Uç değer sıra dışı adaydır; hata olduğu kesin değildir.",
+      "purpose": "Bulguyu bağlamıyla incelemenizi sağlar.",
+      "when": "Veriyi inceleme ve analize hazırlık sırasında.",
+      "when_not": "Örnek sonuçlarını tüm veriye genellemek veya otomatik düzeltme için.",
+      "example": {
+        "before": "Ölçümler 1,2,3,4,100.",
+        "after": "100 incelenir; gerçek büyük olay olabilir."
+      },
+      "interpretation": "Adayı otomatik silmeyin; birim, kaynak ve bağlamı kontrol edin.",
+      "common_mistake": "Adayı kesin veri hatası sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Yalnız ölçüm rolü ve en az4 sonlu gözlem için 1.5×IQR sınırı kullanılır. Linear yüzdelik yöntemi ve örnek kapsamı kayıtlıdır. Çarpık dağılımda meşru uçlar çok olabilir."
+        }
+      ],
+      "critical": "Adayı otomatik silmeyin; birim, kaynak ve bağlamı kontrol edin.",
+      "related": [
+        "dataset-profile",
+        "column-role"
+      ],
+      "contexts": [
+        "outliers"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku veri ve kapsam sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        },
+        {
+          "title": "NIST: Box Plot",
+          "reference": "https://www.itl.nist.gov/div898/handbook/eda/section3/boxplot.htm",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
     }
   ],
   "contexts": {
@@ -543,7 +1429,37 @@
     "demo.unknown": "tasks",
     "demo.failure": "tasks",
     "learn.search": "learn",
-    "learn.example": "learn"
+    "learn.example": "learn",
+    "project": "projects",
+    "project.source": "projects",
+    "project.recovery": "projects",
+    "import.csv": "import-csv",
+    "import-delimiter": "import-delimiter",
+    "import-encoding": "import-encoding",
+    "import-header": "import-header",
+    "import-date": "import-date",
+    "import-decimal": "import-decimal",
+    "import-bad-rows": "import-bad-rows",
+    "import.tsv": "import-csv",
+    "import.json": "import-json",
+    "import.jsonl": "import-jsonl",
+    "import.xlsx": "import-xlsx",
+    "import.parquet": "import-parquet",
+    "import-json-path": "import-json",
+    "import-flatten": "import-flatten",
+    "import-excel-sheet": "import-xlsx",
+    "column-role": "column-role",
+    "dataset.roles": "column-role",
+    "profile-unique": "profile-unique",
+    "profile-std": "profile-std",
+    "profile-quantile": "profile-quantile",
+    "dataset.profile": "dataset-profile",
+    "dataset.view": "dataset-profile",
+    "quality": "quality",
+    "duplicates": "duplicates",
+    "missing-mechanism": "missing-mechanism",
+    "outliers": "outliers",
+    "dataset.quality": "quality"
   },
   "actions": {
     "learn.example": {

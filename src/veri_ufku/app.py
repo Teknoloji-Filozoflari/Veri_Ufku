@@ -21,8 +21,11 @@ def create_application():
     from veri_ufku.logging_setup import EventLog
     from veri_ufku.services.demo import DemoSession
     from veri_ufku.ui.controller import ShellController, tr
+    from veri_ufku.ui.dataset import DatasetController
+    from veri_ufku.ui.imports import ImportController
     from veri_ufku.ui.learning import LearningController
     from veri_ufku.ui.preferences import PresentationPreferences
+    from veri_ufku.ui.projects import ProjectController
 
     if QGuiApplication.instance() is None:
         QQuickStyle.setStyle("Basic")
@@ -55,6 +58,19 @@ def create_application():
     engine = QQmlApplicationEngine()
     preferences = PresentationPreferences(paths.config)
     learning = LearningController(paths.config, engine)
+    projects = ProjectController(paths.config, learning, engine)
+    imports = ImportController(
+        projects, paths.cache / "imports", settings.budget, engine
+    )
+    data_view = DatasetController(
+        projects, paths.cache / "dataset", settings.budget, engine
+    )
+    engine._dataset_resources = data_view
+    engine.rootContext().setContextProperty("dataView", data_view)
+    engine._imports_resources = imports
+    engine.rootContext().setContextProperty("imports", imports)
+    engine._projects_resources = projects
+    engine.rootContext().setContextProperty("projects", projects)
     engine._learning_resources = learning
     engine.rootContext().setContextProperty("learning", learning)
     engine.rootContext().setContextProperty("preferences", preferences)
@@ -76,6 +92,9 @@ def create_application():
         controller.shutdownReady.connect(window.close)
 
     def cleanup():
+        data_view.shutdown()
+        imports.shutdown()
+        projects.shutdown()
         if manager:
             manager.shutdown()
         if log:

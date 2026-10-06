@@ -63,3 +63,23 @@ Başlangıç/gelişmiş tercihi sunum state’idir: sonuç/hata/iptal iki görü
 ## Faz03 gerçek öğrenme akışı
 
 Öğren ekranı çevrimdışı Türkçe arama, kategori ve dokuz kavramlık sözlük sunar. Makale seçimi sağ bilgi panelini açar; özet/örnek/rehber seçimi aynı makaleyi okutur. Kritik uyarı her derinlikte ve gelişmiş görünümde katlanmadan kalır. Panel kapanması mevcut işi/sonucu/aramayı değiştirmez. İsteğe bağlı okundu/yer imi kaydı varsayılan kapalı ve yalnız açık kullanıcı eylemiyle yereldir. Uygulamada dene yalnız yardım araması için bağımsız geçici örnek öğrenme projesini açar; veri/model denemesi sunmaz. [Sözleşme](LEARNING_CONTENT.md).
+
+## Faz04 gerçek proje akışı
+
+Başlangıçtaki Projen kartı Yeni proje/Proje aç/Kaydet/Farklı kaydet/Projeyi kapat ve son projeleri sunar. Yeni hedef mevcut olmayan dizindir; mevcut hedefler korunur. Proje adı, isteğe bağlı seed, kaynak referansı/taşınabilir kopya açıklaması, dosya seçimi ve yeniden bağlama aynı karttadır. Kaynak durumu ile sonuçların veri sürümü görünürdür. Metadata açılışı yeniden işlem yapmaz. Kapanış dirty kararını açık sorar; otomatik kurtarma kaydını yükleme ekrandaki draft yerine geçmeden karar ister. I/O sürerken kayıt kontrolleri ve kapanış bekler, Qt olayları devam eder. İkinci örnek salt okunur, eski kilit kurtarma açık eylemdir. F1 proje/kaynak/kurtarma rehberini açar. [Kanıt](evidence/PHASE04.md).
+
+## Faz05 uygulama bağı
+
+Faz05 Veri ekranında Dosya seç/yerel tek dosya DropArea, algılama önerisi ve düzenlenebilir bütün import ayarları vardır. Önizleme200 kayıtla sınırlı sanal tablo; sütun türünü kullanıcı seçer. Bozuk kayıt Durdur/Raporlu karantina; kaynak kopyası zamanı/SHA256 ve güncel kaynak için yeniden seçim açıklaması açık. İçe aktar ve projeye kaydet draft değişikliklerini de kaydeder; tamamlanma sonrası dataset sürümü/kayıt ve karantina sayısı görünür. İptal ve aktif görevde proje geçişi engeli vardır. Dar/%200 ekranda tek sütun/sarılan düğmeler; tablo yatay/dikey kayar. [Kanıt](evidence/PHASE05.md).
+
+## Faz06 import
+
+Veri ekranı tüm altı adaptörü alır; format elle düzeltilebilir. JSON path/flatten ve liste açma ayrı; kartesyen büyüme önizlemede. Excel sayfa/aralık/başlık ve merged/blank/formula/date politikası görünür. Parquet tür değiştirme kapalı, native types öneri yanında görünür. Aynı kopyayı önizle; türleri sıfırla; iptal ve projeye kaydet ortak. [Kanıt](evidence/PHASE06.md#e06-gui).
+
+## Faz07 katkısı
+
+Faz07: Veri → Veri tablosu → Tabloyu aç/yenile. Sütun arama/gizle/seç; global sıralama ve en fazla8 AND filtre. Salt okunur, aktif filtre/kapsam ve200 kayıt sayfa görünür. Sütun detayında rol/birim/ordinal sıra/analiz birimi taslağa uygulanır; Projeyi kaydet kalıcıdır. Profil hedefi ve first10.000/tam seçimi açıktır; görünüm filtresi dataset’i değiştirmez. [Kanıt](evidence/PHASE07.md).
+
+## Faz08 katkısı
+
+Veri → Veri kalitesi → dataset/miktar/kapsam/amaç → isteğe bağlı seçili tekrar anahtarı ve kurallar → Kaliteyi tara. Bulgu gerekçesi, sayım/oran, örnek, seçenek ve yardım aynı kartta; aday/gözlem/ihlal metinle ayrılır. Raporu proje taslağına ekle → Projeyi kaydet; yeniden açıldığında aynı sürümün raporu görünür. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).

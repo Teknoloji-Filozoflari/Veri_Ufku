@@ -48,3 +48,17 @@ Benchmark fixture'ları sabit seed/digest, UTF8 Türkçe, yüksek cardinality, n
 | Artakalan görev dizini | 0 | Ölçüm sonu |
 
 Önizleme/import henüz yok ve ölçülmedi. Gerçek desktop, soğuk açılış, minimum donanım ve büyük veri kabul bütçeleri açık kalır.
+
+## ENV-05 ilk gerçek import ölçümü
+
+[Ham JSON](evidence/phase05-headless.json), scripts/measure_phase05.py, 2026-10-06; NVMe Btrfs, offscreen/software, geliştirici donanımı, sıcak cache ve n=1. Küçük fixture yakalama+200 sınırına kadar önizleme 219.67ms; 180000 kayıt/2340006 byte CSV tam import/yayın 1896.61ms. İptal feedback 0.49ms, süreç çıkışı 40.61ms; normal shutdown artakalan private worker dizini0. Örneklenmiş parent+worker RSS peak 527642624 byte (shared sayfa iki kez sayılabilir); worker alanı disk peak 18780098 byte (proje staging dahil değildir). Yaklaşık10ms örneklerde Qt tick max gap 49.96ms; fiziksel input→frame latency veya100 olay p95 değildir. Snapshot/GUI kaynak SHA256 korundu. Minimum8GB/soğuk cache/1GiB veri/remote/native masaüstü bütçe kabulü açık; n=1 gözlem genel hız garantisi değildir.
+
+Faz06: JSON belge64MiB tam parse, XLSX XML parça64MiB/toplam256MiB bounded tam parse; streaming desteği bu ikisinde kapalı. JSONL tam şema profili+chunk ikinci okuma; Parquet native lazy sink. n=1 sıcak geliştirici örneklerinin RSS/disk/UI tick ve süreleri [ham ölçüm](evidence/phase06-headless.json); minimum donanım/p95 kabulü yok.
+
+## Faz07 katkısı
+
+Faz07: 100.000 kayıt,16 sayfa, model≤200 kayıt; parent RSS steady aralığı ve worker+parent peak, sıcak n1 sayfa/profil süreleri scripts/measure_phase07.py ile gerçek ölçülür. 8MiB SQLite spool cache,4MiB görünür sayfa metni. Global sort mevcut ComputeBudget ve OS limit kapsamındadır. Minimum donanım/soğuk cache iddiası yok. [Ölçüm](evidence/phase07-headless.json).
+
+## Faz08 kalite ölçümü
+
+ENV-08, 2026-10-07 Europe/Istanbul; kurulu wheel100.000 kayıt tam kalite3499.1ms, örneklenmiş parent+worker peak513.71MiB, max UI tick45.0ms. N=1 sıcak geliştirici makinesi; minimum donanım veya tüm dosya/türlerde performans kabulü değildir. SQLite disk spool ve bounded5 örnek kullanılır. [Ham kayıt](evidence/phase08-wheel.json).
