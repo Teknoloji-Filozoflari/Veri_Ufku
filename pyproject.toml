@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling==1.32.3", "packaging==26.3", "pathspec==1.1.1", "pluggy==1.6.0", "tomlkit==0.15.1", "trove-classifiers==2026.6.1.19"]
+build-backend = "hatchling.build"
+
+[project]
+name = "veri-ufku"
+version = "0.1.0"
+description = "Yerel Linux veri bilimi masaüstü uygulaması"
+requires-python = ">=3.13,<3.14"
+dependencies = ["PySide6==6.11.2"]
+
+[project.scripts]
+veri-ufku = "veri_ufku.app:main"
+
+[dependency-groups]
+dev = ["pytest==9.1.1", "ruff==0.16.10", "hatchling==1.32.3", "pathspec==1.1.1", "tomlkit==0.15.1", "trove-classifiers==2026.6.1.19"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/veri_ufku"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.uv.sources]
+ruff = { path = "tools/wheels/ruff-0.16.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl" }

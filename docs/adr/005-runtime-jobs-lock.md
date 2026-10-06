@@ -1,0 +1,13 @@
+# ADR-005 — Faz 01 runtime, kilit ve görev yürütme
+
+2026-10-06; kabul edilen uygulama kararı, masaüstü/remote CI kabulü açık. ADR-001'in Python 3.13 tercihi korunur. Ortamda sonradan bulunan CPython 3.13.15 kullanılır; sistem 3.14.7 değiştirilmez. PySide6 6.11.2 metadata Python >=3.10,<3.15 ile uyumludur. Qt Core/QML/Quick/Controls headless gerçek engine ile çalıştı. Analitik paketler henüz kurulmadı; uyumları doğrulandı sayılmaz.
+
+Resmî kaynaklar: [Qt kurulum](https://doc.qt.io/qtforpython-6/gettingstarted.html), [PySide6 metadata](https://pypi.org/pypi/PySide6/6.11.2/json), [Ruff metadata](https://pypi.org/pypi/ruff/0.16.10/json), [uv kilit/sync](https://docs.astral.sh/uv/concepts/projects/sync/), [Python multiprocessing](https://docs.python.org/3/library/multiprocessing.html). Kaynaklar 2026-10-06 incelendi; spawn açık seçilir, platform varsayılanına güvenilmez.
+
+PySide6 6.11.2 / pytest 9.1.1 / Ruff 0.16.10 / uv 0.12.23 gerçek kurulu metadata ve cache ile seçildi. Registry DNS terminalde erişilemedi. Eski Ruff index kaydı x86_64 indirilebilir wheel'i göstermediğinden mevcut resmi cache wheel açılımı yeniden paketlendi. Orijinal 9 RECORD hash'i doğrulandı, LICENSE korundu; ZIP byte'ları resmi wheel ile aynı olduğu iddia edilmez. Yerel wheel ve manifest repository içinde, hash uv.lock'ta; artefact kontrolü CI'da zorunludur. Kalan bağımlılıklar gerçek uv offline resolver ile hash'li kilitlendi. Cache tüm platformlar için offline installer değildir.
+
+I/O için Qt'siz sınırlı cooperative Python thread, CPU için spawn process ve küçük güvenilir IPC kullanılır. QThreadPool yerine bu tercih domain/jobs'in Qt bağımsızlığını korur; UI QTimer ile güncellemeleri yalnız ana thread'de aktarır. Varsayılan 1 CPU/2 I/O, kuyruk32, geçmiş64. Ölçülemeyen progress total=null olur. Sonuç hem DatasetVersion hem config_revision eşleşmesiyle yayınlanır; iptal edilen iş sonuç taşımaz. Kapanış yeni işleri reddeder, iptal/cleanup bitince pencereyi kapatır.
+
+Linux CPU affinity/thread env ve RLIMIT_AS, wall time, disk rezervasyonu, örneklenmiş toplam RSS/temp bütçesi uygulanır. RSS ortak sayfaları mükerrer sayabilir ve sampling aşımı anında engellemez; cgroup garantisi değildir. I/O metotları kontrollü kısa parçalarla çalışmalıdır; Python thread keyfî kilitlenen I/O'yu zorla öldüremez. CPU grace sonrası terminate/kill mümkündür. Gözetici hata yolu sessiz thread çökmesi yerine güvenli hata ve kontrollü kapanış üretir.
+
+Qt LGPLv3/GPL/commercial seçenekleri ve paket içindeki lisanslar dağıtım öncesi incelenmeli; dinamik Qt, bildirim, lisans metni ve değiştirme imkânı korunmalı. Bu faz Python wheel smoke üretir, bağımsız Linux kurulum paketi veya dağıtım adayı değildir. [Lisans kayıtları](../THIRD_PARTY_NOTICES.md).

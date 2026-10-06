@@ -1,0 +1,38 @@
+ENV-00 / 2026-10-06 / phase 00 local verification
+
+$ python3 scripts/check_docs.py
+
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit_code=0
+
+$ python3 -m unittest discover -s tests -v
+
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.128s
+
+OK
+
+exit_code=0
+
+$ ruff check --isolated scripts tests
+
+All checks passed!
+
+exit_code=0
+
+$ ruff format --isolated --check scripts tests
+
+3 files already formatted
+
+exit_code=0
