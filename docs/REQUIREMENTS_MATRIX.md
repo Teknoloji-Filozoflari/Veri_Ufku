@@ -7,7 +7,7 @@
 | Faz | Ad | Bağımlılıklar | Durum | Olgunluk | Kapsam | Engel/karar |
 |---|---|---|---|---|---|---|
 | 00 | Kapsam, mimari ve geliştirme planı | — | doğrulandı | kararlı | zorunlu | Belge kapsamı doğrulandı; uygulama henüz mevcut değil |
-| 01 | Çalışan proje iskeleti ve görev altyapısı | 00 | engelli | deneysel | zorunlu | Masaüstü kabulü tamamlandı; ilk remote CI failure, workflow düzeltmesinin koşusu bekleniyor |
+| 01 | Çalışan proje iskeleti ve görev altyapısı | 00 | engelli | deneysel | zorunlu | Masaüstü kabulü tamamlandı; ikinci remote CI 37500010786 Qt importunda libEGL.so.1 eksik; sistem paket kurulumu eklendi, yeni uzak başarı bekleniyor |
 | 02 | Sade modern arayüz ve amaç odaklı gezinme | 01 | başlanmadı | mevcut değil | zorunlu | Erteleme kararı yok; henüz başlatılmadı |
 | 03 | Öğren merkezi ve bağlama bağlı bilgi paneli | 02 | başlanmadı | mevcut değil | zorunlu | Erteleme kararı yok; henüz başlatılmadı |
 | 04 | Proje kaydı, veri sürümleri ve kurtarma temeli | 01 | başlanmadı | mevcut değil | zorunlu | Erteleme kararı yok; henüz başlatılmadı |

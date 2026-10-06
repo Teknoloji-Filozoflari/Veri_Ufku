@@ -12,6 +12,10 @@ jobs:
       QT_QUICK_BACKEND: software
     steps:
       - uses: actions/checkout@v4
+      - name: Install Qt native runtime libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y libegl1 libgl1
       - name: Configure isolated local paths
         run: |
           printf 'XDG_CONFIG_HOME=%s\n' "$RUNNER_TEMP/veri-ufku/config" >> "$GITHUB_ENV"

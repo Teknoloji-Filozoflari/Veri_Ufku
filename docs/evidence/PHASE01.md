@@ -113,3 +113,21 @@ Normal kullanıcı terminalinde kimlik doğrulama, boş .git yedeği, proje yoll
 Statik incelemede kesin workflow hatası: jobs.linux.env alanında runner.temp kullanılmış; bu alanda runner context desteklenmez. [Resmî context tablosu](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#context-availability) doğrular. XDG yolları artık ilk run adımında RUNNER_TEMP ile GITHUB_ENV dosyasına yazılıyor. Uzak log olmadan ilk koşunun tek/kesin hata nedeni iddiası yok. Bu düzeltmenin sunucuda geçmesi henüz doğrulanmadı; yeni push ve CI koşusu gerekir. Başarısız önceki koşu kabul kanıtı değildir.
 
 Workflow düzeltmesi yerel doğrulama: üç XDG değişkeninin gerçek Bash adımından beklenen geçici yollara yazılması geçti; publish betiği bash -n geçti; check_docs, Ruff check/format ve 32 test geçti. GitHub API erişimi yok; yeni remote koşusu başarılı diye raporlanmaz.
+
+## İkinci remote CI koşusu — test adımı başarısız
+
+2026-10-06; kullanıcı çıktısı: [commit 4200acb9b33911c192bd64c2a6c6d739ac28b7ce](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/commit/4200acb9b33911c192bd64c2a6c6d739ac28b7ce), [koşu 37500010786](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37500010786), linux job112394305969. Kurulum, XDG ayarı, kilitli bağımlılıklar, belge/artefact ve lint geçti; Core correctness and headless QML test exit2 ile başarısız; entry smoke çalışmadı. Bu nedenle F01-CI-REMOTE doğrulanmadı. Node20 checkout bildirimi warning'dir; eldeki çıktı test hatasının sebebini göstermez.
+
+Ajan gh run view --log-failed denemesi api.github.com bağlantı hatası verdi. Test ayrıntı günlüğü henüz alınamadı; import/native library/collection/başka sebeplerden biri olduğu tahmin edilerek kod değiştirilmez. İlk workflow context düzeltmesi artık runner üzerinde geçmiş; sonraki teşhis test günlüğünü gerektirir.
+
+<a id="e01-egl-fix"></a>
+
+## İkinci koşunun ayrıntı günlüğü ve Qt sistem kitaplığı düzeltmesi
+
+2026-10-06; F01-CI-REMOTE; ENV-CI-01. Kullanıcının bu oturumda gönderdiği gerçek log: 2026-10-06T16:59:34Z, `uv run --frozen pytest -q`, offscreen/software; `tests/test_gui.py:7` satırında `from PySide6.QtTest import QTest` importu `ImportError: libEGL.so.1: cannot open shared object file: No such file or directory` verdi. Test toplama 1 hata ile kesildi; exit2. Testler çalışmadı; başsız QML davranışı bu koşuda doğrulanmadı. Önceki günlüğün beklenmesi kaydı tarihsel; hata nedeni artık bu logla belirli.
+
+Kod yolu `.github/workflows/docs.yml`: Python kurulumundan ve testlerden önce `sudo apt-get update`, ardından `sudo apt-get install --no-install-recommends -y libegl1 libgl1` eklendi. [Ubuntu 24.04 libegl1](https://packages.ubuntu.com/noble/libegl1) sistem EGL paketidir. Yerel kilitli PySide6 wheel'inin `libQt6Quick.so.6` bağımlılıkları `ldd` ile incelendi: libGL.so.1 ve libEGL.so.1 sistemden çözülüyor. Software backend seçimi Qt importundaki bu dinamik bağlantı gereksinimini kaldırmıyor. Python/Qt sürümleri, kilit ve GUI testleri korunuyor.
+
+2026-10-06; ENV-01; yerel doğrulama: [phase01-egl-checks.txt](phase01-egl-checks.txt). `uv sync --locked --group dev`, check_docs/check_artifacts, Ruff check/format, 32 pytest testi ve `veri-ufku --smoke-test` exit0. İzole XDG yolları ve offscreen/software kullanıldı. Sistem Python 3.14 ile `python3 -m unittest discover -s tests -v` paket kurulu olmadığı için 3 import hatasıyla başarısız oldu; kilitli CPython 3.13.15 ortamında unittest discovery 9 belge testini geçti (pytest işlev testlerini unittest çalıştırmaz). Test günlüğü bu ayrımı korur.
+
+Ubuntu apt kurulumu yerel CachyOS ortamında çalıştırılmadı. Yeni push/remote koşusu bu oturumda gerçekleşmedi; F01-CI-REMOTE doğrulanmadı ve Faz01 engelli kalır. README, DEVELOPMENT, matris ve ilerleme özeti eksik kitaplık teşhisini yansıtır. Sonraki faz başlatılmadı.

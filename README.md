@@ -4,6 +4,8 @@ Yerel Linux masaüstü uygulaması. Faz 01'de gerçek Qt Quick ekranı ve görev
 
 CPython 3.13.15 ve uv 0.12.23 ile:
 
+Ubuntu 24.04'te Qt'nin sistem kitaplıklarını önce kurun: `sudo apt-get update` ve `sudo apt-get install --no-install-recommends -y libegl1 libgl1`. Offscreen/software testleri de bu kitaplıkları gerektirir; Python paket kilidi sistem kitaplıklarını kurmaz.
+
 ```sh
 uv sync --locked --group dev
 uv run --offline --frozen veri-ufku
@@ -22,7 +24,7 @@ QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software uv run --frozen pytest -q
 QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software uv run --frozen veri-ufku --smoke-test
 ```
 
-Başsız ekran çalıştırma doğrulandı. Ajan ortamının Wayland/X11 bağlantısı reddedildi. Kullanıcı kendi masaüstünde CPU/I/O ve belirsiz ilerleme iptal/tamamlanmasını denedi; kalan masaüstü kontrollerini de başarılı bildirdi. GitHub gönderimi tamamlandı; ilk uzak CI koşusu başarısız oldu, workflow düzeltmesinin yeni koşusu henüz doğrulanmadı; Faz 01 kabul durumu **engelli**, altyapı olgunluğu deneysel. Sonraki faz başlamadı.
+Başsız ekran çalıştırma doğrulandı. Ajan ortamının Wayland/X11 bağlantısı reddedildi. Kullanıcı kendi masaüstünde CPU/I/O ve belirsiz ilerleme iptal/tamamlanmasını denedi; kalan masaüstü kontrollerini de başarılı bildirdi. GitHub gönderimi tamamlandı; workflow düzeltmesi ikinci uzak koşuda geçti, ancak çekirdek/başsız test adımı eksik `libEGL.so.1` nedeniyle exit2 ile başarısız oldu. Workflow’a `libegl1`/`libgl1` kurulumu eklendi; yeni uzak koşu bekleniyor; Faz 01 kabul durumu **engelli**, altyapı olgunluğu deneysel. Sonraki faz başlamadı.
 
 [Ürün](docs/PRODUCT.md), [ekran akışı](docs/UX.md), [mimari](docs/ARCHITECTURE.md), [çekirdek sözleşmeler](docs/CORE_CONTRACTS.md), [fazlar](docs/PHASE_PLAN.md), [gereksinimler](docs/REQUIREMENTS_MATRIX.md), [ilerleme](docs/PROGRESS.md), [geliştirme](docs/DEVELOPMENT.md), [tasarım kuralları](docs/UI_DESIGN_BRIEF.md), [referanslar](docs/UI_REFERENCES.md), [kabul](docs/ACCEPTANCE_POLICY.md), [Faz 01 kanıtları](docs/evidence/PHASE01.md).
 
