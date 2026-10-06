@@ -74,7 +74,11 @@ git add -- .gitignore .python-version .github AGENTS.md README.md \
     Veri_Ufku_Birlestirilmis_Gelistirme_Promptlari.md \
     pyproject.toml uv.lock src tests scripts docs tools/wheels
 if ! git diff --cached --quiet; then
-    git commit -m 'feat: bootstrap Veri_Ufku desktop and phase 01 infrastructure'
+    if git rev-parse --verify HEAD >/dev/null 2>&1; then
+        git commit -m 'fix: correct CI configuration and update phase 01 evidence'
+    else
+        git commit -m 'feat: bootstrap Veri_Ufku desktop and phase 01 infrastructure'
+    fi
 fi
 commit_id="$(git rev-parse HEAD)"
 printf '\nProje GitHub main dalına gönderiliyor.\n'

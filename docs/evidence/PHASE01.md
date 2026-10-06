@@ -78,7 +78,7 @@ KULLANICI MASAÜSTÜ KONTROLÜ DOĞRULANDI. Kullanıcı açılış/CPU/I/O/belir
 
 ## remote
 
-DOĞRULANMADI. .git boş/salt okunur, geçerli repository/remote yok; remote CI koşusu üretilemedi. Workflow ve yerel koşu remote başarı kanıtı değildir.
+BAŞARILI KOŞU DOĞRULANMADI. Kullanıcı projeyi b356f1ebe6e67299590e9568eccd33da6c9236ef commit kimliğiyle GitHub main dalına gönderdiğini bildirdi. CI koşusu 37499686960 failure ile bitti. Git metaverisi ve origin artık mevcut; .git ajan için salt okunur. Workflow ve yerel koşu remote başarı kanıtı değildir.
 
 İlgili komut/log kanıtı: `phase01-checks.txt`. Yerel geliştirme wheel lisansı/hash kaydı tools/wheels/manifest.json ve ADR-005. Kaynak promptu değiştirilmedi.
 
@@ -105,3 +105,11 @@ Kullanıcı tarafından bildirilen işlevsel masaüstü kabulü kapandı. Erişi
 Kullanıcı projeyi https://github.com/Teknoloji-Filozoflari/Veri_Ufku.git deposuna göndermeyi açıkça yetkilendirdi. Uzak URL yapılandırma hedefidir; erişim doğrulanmadı. Git ls-remote exit128: Could not resolve host github.com. gh auth status exit1: mevcut hesabın oturumu geçersiz. Workspace .git boş ve salt okunur; Git geçmişi yok. Bu girişimde push veya remote CI koşusu gerçekleşmedi. Erişim anahtarı okunmadı/yazdırılmadı.
 
 Normal kullanıcı terminalinde kimlik doğrulama, boş .git yedeği, proje yollarını açık seçerek commit/push ve CI izleme için scripts/publish_github.sh hazırlandı. bash -n geçti. Ağ/kimlik doğrulama ve push bölümü bu ortamda çalıştırılamadığı için başarılı sayılmaz. Force push yok; mevcut uzak geçmiş farklıysa push reddedilerek korunur. F01-CI-REMOTE açık kalır.
+
+## İlk remote CI başarısızlığı ve workflow düzeltmesi
+
+2026-10-06. Kullanıcı kanıtı: [commit](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/commit/b356f1ebe6e67299590e9568eccd33da6c9236ef), [başarısız koşu](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37499686960). ENV-CI-01: hedef Ubuntu24.04; jobların fiilen çalışıp çalışmadığı ve runtime metadata log olmadan doğrulanmadı. gh run view --log-failed bu ortamda api.github.com bağlantı hatası verdi; web erişimi de log sağlamadı.
+
+Statik incelemede kesin workflow hatası: jobs.linux.env alanında runner.temp kullanılmış; bu alanda runner context desteklenmez. [Resmî context tablosu](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#context-availability) doğrular. XDG yolları artık ilk run adımında RUNNER_TEMP ile GITHUB_ENV dosyasına yazılıyor. Uzak log olmadan ilk koşunun tek/kesin hata nedeni iddiası yok. Bu düzeltmenin sunucuda geçmesi henüz doğrulanmadı; yeni push ve CI koşusu gerekir. Başarısız önceki koşu kabul kanıtı değildir.
+
+Workflow düzeltmesi yerel doğrulama: üç XDG değişkeninin gerçek Bash adımından beklenen geçici yollara yazılması geçti; publish betiği bash -n geçti; check_docs, Ruff check/format ve 32 test geçti. GitHub API erişimi yok; yeni remote koşusu başarılı diye raporlanmaz.

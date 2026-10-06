@@ -10,11 +10,13 @@ jobs:
     env:
       QT_QPA_PLATFORM: offscreen
       QT_QUICK_BACKEND: software
-      XDG_CONFIG_HOME: ${{ runner.temp }}/veri-ufku/config
-      XDG_STATE_HOME: ${{ runner.temp }}/veri-ufku/state
-      XDG_CACHE_HOME: ${{ runner.temp }}/veri-ufku/cache
     steps:
       - uses: actions/checkout@v4
+      - name: Configure isolated local paths
+        run: |
+          printf 'XDG_CONFIG_HOME=%s\n' "$RUNNER_TEMP/veri-ufku/config" >> "$GITHUB_ENV"
+          printf 'XDG_STATE_HOME=%s\n' "$RUNNER_TEMP/veri-ufku/state" >> "$GITHUB_ENV"
+          printf 'XDG_CACHE_HOME=%s\n' "$RUNNER_TEMP/veri-ufku/cache" >> "$GITHUB_ENV"
       - name: Install fixed uv tool
         run: python3 -m pip install uv==0.12.23
       - name: Resolve fixed Python and install locked dependencies
