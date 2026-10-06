@@ -67,4 +67,8 @@ ENV-USER-07 (2026-10-06): kullanıcı masaüstünde Veri tablosunun açılması 
 
 ## Faz08 katkısı
 
-ENV-08, 2026-10-07: locked CPython3.13.15/PySide6Qt6.11.2/Polars2.0.0, Linux7.2.9/glibc2.44 geliştirici Btrfs ve /tmp tmpfs; offscreen/software. Yeni bağımlılık yok; gerçek masaüstü, minimum donanım ve remote CI ayrı doğrulanmadı. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).
+ENV-08, 2026-10-07: locked CPython3.13.15/PySide6Qt6.11.2/Polars2.0.0, Linux7.2.9/glibc2.44 geliştirici Btrfs ve /tmp tmpfs; offscreen/software. Yeni bağımlılık yok; gerçek masaüstü ve minimum donanım ayrı doğrulanmadı; uzak CI başarı kaydı ENV-CI-08 içindedir. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).
+
+## ENV-CI-08 — kullanıcı uzak CI bildirimi
+
+Kayıt 2026-10-06 UTC / 2026-10-07 Europe/Istanbul. Linux işi112505393392, koşu37532581621,1m12s,success. Yerel workflow Ubuntu24.04/offscreen/software/izole XDG hedefler; fiilî runner metadata/runtime sürümleri/lock hash özette yoktur. Başarı kullanıcı çıktısı ve sonradan gh API sorgusuyla doğrulandı; headSha e9fd13f41afb83daaca1c3790e8dc1e14a58d3cb Faz08 dosyalarını içerir. [Kayıt](evidence/PHASE08.md#e08-ci-remote).

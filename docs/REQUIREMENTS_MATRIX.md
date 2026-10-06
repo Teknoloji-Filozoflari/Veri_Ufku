@@ -14,7 +14,7 @@
 | 05 | CSV ve TSV içe aktarma sihirbazı | 03,04 | doğrulandı | deneysel | zorunlu | Yerel parser/proje/Qt/paket kanıtı PHASE05.md; native/remote/minimum donanım ayrı açık |
 | 06 | JSON, JSONL, Excel ve Parquet | 05 | doğrulandı | deneysel | zorunlu | Yerel çekirdek/QML/kurulu paket kanıtı; native masaüstü ayrı açık |
 | 07 | Veri tablosu, profil ve sütun rolleri | 05,06 | doğrulandı | deneysel | zorunlu | Faz07 yerel doğrulama doğrulandı |
-| 08 | Veri kalitesi ve gerekçeli öneriler | 07 | doğrulandı | deneysel | zorunlu | Faz08 yerel ve kurulu wheel doğrulaması tamamlandı |
+| 08 | Veri kalitesi ve gerekçeli öneriler | 07 | doğrulandı | deneysel | zorunlu | Faz08 yerel/kurulu wheel ve uzak CI37532581621 doğrulandı |
 | 09 | İşlem motoru, önizleme ve geri alma | 04,07,08 | başlanmadı | mevcut değil | zorunlu | Erteleme kararı yok; henüz başlatılmadı |
 | 10 | Temizleme ve eksik veri işlemleri | 09 | başlanmadı | mevcut değil | zorunlu | Erteleme kararı yok; henüz başlatılmadı |
 | 11 | Dönüştürme, birleştirme ve diğer yerel kaynaklar | 09,10 | başlanmadı | mevcut değil | zorunlu | Erteleme kararı yok; henüz başlatılmadı |
@@ -680,3 +680,9 @@ Kapsam ertelemesi kullanıcı kararıyla tarih/gerekçe/bağımlılık kaydı is
 | F08-S002.UNIQUE | 08 | Açık benzersizlik kuralı; null hariç grup üyeleri | zorunlu | deneysel | doğrulandı | src/veri_ufku/analytics/quality.py; tests/test_quality.py | docs/evidence/PHASE08.md#e08-findings | ENV-08 | 2026-10-06 |
 | F08-S002.RULES | 08 | Gerekli/aralık/izinli etiket kuralı; null politikasının ayrımı | zorunlu | deneysel | doğrulandı | src/veri_ufku/analytics/quality.py; tests/test_quality.py | docs/evidence/PHASE08.md#e08-findings | ENV-08 | 2026-10-06 |
 | F08-S002.OUTLIER | 08 | Measurement sonlu n>=4 linear1.5IQR adayı; kimlikte bastırma | zorunlu | deneysel | doğrulandı | src/veri_ufku/analytics/quality.py; tests/test_quality.py | docs/evidence/PHASE08.md#e08-findings | ENV-08 | 2026-10-06 |
+
+## Faz08 uzak CI kabulü
+
+| ID | Faz | Gereksinim | Kapsam | Olgunluk | Doğrulama | Yol | Kanıt | Ortam | Tarih (UTC) |
+|---|---|---|---|---|---|---|---|---|---|
+| F08-CI-REMOTE | 08 | Uzak Linux CI belge/artefact/yardım, lint, çekirdek/başsız QML ve kurulu giriş noktası smoke başarısı | zorunlu | deneysel | doğrulandı | .github/workflows/docs.yml | docs/evidence/PHASE08.md#e08-ci-remote | ENV-CI-08 | 2026-10-06 |

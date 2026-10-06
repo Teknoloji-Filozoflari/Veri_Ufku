@@ -1,6 +1,6 @@
 # Faz08 — veri kalitesi merkezi kanıtı
 
-2026-10-07 Europe/Istanbul (2026-10-06 UTC), ENV-08: yerel Linux geliştirici Btrfs/tmpfs, CPython3.13.15/PySide6Qt6.11.2/Polars2.0.0; offscreen/software. Kapsam yalnız Faz08, olgunluk deneysel. Gerçek masaüstü/minimum donanım/remote CI doğrulanmadı. Yerel kontroller ve kurulu wheel akışı doğrulandı. Matris tarih sütunu gerçek UTC günü2026-10-06; yerel takvim günü2026-10-07 ayrı belirtilir.
+2026-10-07 Europe/Istanbul (2026-10-06 UTC), ENV-08: yerel Linux geliştirici Btrfs/tmpfs, CPython3.13.15/PySide6Qt6.11.2/Polars2.0.0; offscreen/software. Kapsam yalnız Faz08, olgunluk deneysel. Gerçek masaüstü/minimum donanım doğrulanmadı; uzak CI başarısı aşağıda ayrı kayıtlıdır. Yerel kontroller ve kurulu wheel akışı doğrulandı. Matris tarih sütunu gerçek UTC günü2026-10-06; yerel takvim günü2026-10-07 ayrı belirtilir.
 
 <a id="e08-center"></a>
 ## F08-S001 — gerçek merkez
@@ -40,3 +40,23 @@ Beş Faz02 resmi cache görüntüsü bu oturumda gerçekten yeniden görüldü (
 ## Kurulu Linux wheel
 
 Offline/no-build-isolation wheel/sdist /tmp/veri-ufku-phase08-verified-dist; offline/no-deps target /tmp/veri-ufku-phase08-verified-installed. Ayrı /tmp cwd ve PYTHONPATH target ile module __file__ target doğrulanır. Gerçek kurulu QML/spawn100.000 kayıt kalite→save/reopen→sample→cancel akışı geçti; kaynak hash değişmedi. [Paket kanıtı](phase08-wheel.json). Locked runtime ve mevcut sistem Qt kullanılır; bağımsız temiz Linux kurulum kabulü değildir.
+
+<a id="e08-ci-remote"></a>
+
+## F08-CI-REMOTE — başarılı uzak Linux CI
+
+Kayıt 2026-10-06 UTC / 2026-10-07 Europe/Istanbul, ENV-CI-08. Kullanıcının paylaştığı gerçek GitHub Actions sonuç özeti: [koşu37532581621](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37532581621), [Linux işi112505393392](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37532581621/job/112505393392), **success**,1 dakika12 saniye. [Ham kullanıcı çıktısı](phase08-ci-37532581621.txt).
+
+Qt native runtime kitaplıkları, izole yollar, sabit uv/Python ve kilitli bağımlılıklar, belge/artefact, lint, çekirdek/başsız QML ve kurulu giriş noktası Qt/process smoke adımları başarılı bildirildi. Yol .github/workflows/docs.yml; mevcut workflow belge adımında check_learning.py yardım bağ kapısını içerir. İlk kullanıcı özetinde commit SHA/test sayısı/ayrıntılı runtime metadata yoktu. Sonraki gh API kontrolü aşağıda commit eşlemesini doğruladı; test sayısı ve fiilî runner/runtime metadata ayrıca verilmedi. Kayıt tarihi koşunun başlangıç tarihi olarak sunulmaz.
+
+Node.js20 kullanımdan kaldırma ve actions/checkout@v4'ün Node.js24 üzerinde çalıştırılması annotation'ı uyarıdır; bütün adımlar success. Workflow değiştirilmedi. Gerçek masaüstü/minimum donanım bu CI sonucu ile doğrulanmış sayılmaz.
+
+Bu koşu önce yanlışlıkla Faz03'e bağlanmıştı. Kullanıcının düzeltmesiyle Faz08'e kaydedildi; Faz03'ün önceki37511231471 kanıtı korundu. Faz08 doğrulandı/deneysel/zorunlu; Faz09 başlamadı.
+
+### Commit eşlemesinin bağımsız doğrulanması
+
+`gh run view 37532581621 --repo Teknoloji-Filozoflari/Veri_Ufku --json headSha,conclusion,status,url,createdAt` gerçek GitHub API sonucu: [ham JSON](phase08-ci-37532581621.json), completed/success, headSha `e9fd13f41afb83daaca1c3790e8dc1e14a58d3cb`, createdAt2026-10-06T21:15:31Z. Sandbox ilk API bağlantısı başarısızdı; izinli tekrar başarılı oldu. Web sayfası fetch denemesi erişim sağlamadı; doğrulama gh API çıktısına dayanır.
+
+Yerel Git aynı committe analytics/quality.py, ui/qml/QualityPanel.qml, tests/test_quality.py, tests/test_quality_gui.py ve docs/evidence/PHASE08.md dosyalarını içeriyor. `git show HEAD:docs/PROGRESS.md` Faz08 doğrulandı kaydını içerir. Committeki ve çalışma ağacındaki kalite motorunun SHA256'sı aynı: `26614e90d24781175ee63e890ea820abdc3ba71a338c0a8eac68973ab4f91002`. Böylece bu başarılı CI koşusunun Faz08 kodunu içerdiği commit düzeyinde doğrulandı.
+
+Commit mesajı `feat: add phase 03 offline learning center` olarak kalmış; mesaj faz içeriğini doğru özetlemiyor. Geçmiş değiştirilmedi. Faz08 atfı commit başlığına değil doğrulanan commit ağacına dayanır.

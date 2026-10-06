@@ -55,4 +55,9 @@ Faz07 tablo/profil/rol uygulandı/doğrulandı/deneysel: 206 pytest,9 unittest, 
 
 Faz07 kullanıcı tablo açma/yenileme işlemini başarılı bildirdi (F07-USER-TABLE, ENV-USER-07, 2026-10-06). Diğer manuel akışlar ayrıca bildirilmedi. [Kayıt](evidence/PHASE07.md#e07-user-table).
 
-Faz08 kalite merkezi uygulandı/doğrulandı/deneysel: 212 pytest,9 unittest, belge/artefact/yardım/Ruff/entry smoke ve kurulu Linux wheel100.000 kayıt kalite/örneklem/iptal/rapor roundtrip geçti. Tarama kaynak/dataset değiştirmez; bilgi önerileri çalıştırma eylemi üretmez. Yeni masaüstü/minimum donanım/remote CI ayrı doğrulanmadı. Faz09 başlamadı. [Kanıt](evidence/PHASE08.md).
+Faz08 kalite merkezi uygulandı/doğrulandı/deneysel: 212 pytest,9 unittest, belge/artefact/yardım/Ruff/entry smoke ve kurulu Linux wheel100.000 kayıt kalite/örneklem/iptal/rapor roundtrip geçti. Tarama kaynak/dataset değiştirmez; bilgi önerileri çalıştırma eylemi üretmez. Yeni masaüstü/minimum donanım ayrı doğrulanmadı; uzak CI37532581621 başarısı kullanıcı bildirimiyle kayıtlı. Faz09 başlamadı. [Kanıt](evidence/PHASE08.md).
+
+
+Faz08 uzak CI (2026-10-06 UTC / 2026-10-07 Europe/Istanbul): [37532581621](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37532581621), Linux işi112505393392,1m12s, tüm adımlar success. F08-CI-REMOTE / ENV-CI-08; [kanıt](evidence/PHASE08.md#e08-ci-remote).
+
+Faz08 CI commit eşlemesi gh API ile doğrulandı:37532581621 → e9fd13f41afb83daaca1c3790e8dc1e14a58d3cb. Commit mesajında Faz03 yazsa da commit ağacı Faz08 kalite motoru/ekranı/testlerini içeriyor. [Kanıt](evidence/PHASE08.md#e08-ci-remote).
