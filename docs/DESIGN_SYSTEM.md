@@ -1,10 +1,10 @@
-# Veri_Ufku — ortak tasarım sistemi v0.1
+# Veri_Ufku — ortak tasarım sistemi v0.2
 
-Faz 00 tasarım önerisi, uygulanmış QML tema değil. [Brief](UI_DESIGN_BRIEF.md), [UX](UX.md), [referans kısıtları](UI_REFERENCES.md). Üç tasarım aynı sistemde [SVG prototip](prototypes/triptych.svg).
+Faz00 önerisi Faz02 QML kabuğunda uygulanmıştır; veri/analitik ekranları gelecek fazların planıdır. [Brief](UI_DESIGN_BRIEF.md), [UX](UX.md), [referans kısıtları](UI_REFERENCES.md). Üç tasarım aynı sistemde [SVG prototip](prototypes/triptych.svg).
 
 ## Yapı ve tokenlar
 
-Üst şerit: Veri_Ufku / proje / kaynak ve sürüm / hesap kapsamı. Sol sabit amaç navigasyonu; merkez tab/seçili işlem, sağ 320px bağlam paneli. Alt durum şeridi job/iptal/kayıt durumu. 1366×768 hedef, 1024px altında sağ panel overlay drawer; ana işi kapatmaz. Gelecek fazların nav öğeleri çıkarılır veya açık “henüz mevcut değil”; yanıltıcı CTA yok.
+Üst şerit: Veri_Ufku / proje / kaynak ve sürüm / hesap kapsamı. Sol sabit amaç navigasyonu; merkez tab/seçili işlem, sağ 320px bağlam paneli. Alt durum şeridi job/iptal/kayıt durumu. 1366×900 doğrulama, minimum720×560; 1100×yazı ölçeği altında sağ panel overlay drawer; ana işi kapatmaz. Gelecek fazların nav öğeleri çıkarılır veya açık “henüz mevcut değil”; yanıltıcı CTA yok.
 
 | Token | Açık | Koyu |
 |---|---|---|
@@ -31,3 +31,9 @@ Preview etki sayısı, kayıp/yeni null, önce/sonra aynı RowId. Uygula publica
 Tab/ShiftTab sıra görsel akışla uyumlu; 2px focus ring+offset, Escape yardım drawer kapatır ve açan kontrole odak döner; Ctrl+O dosya, Ctrl+S proje, Ctrl+Z yalnız işlem undo context, kontrol içinde metin undo ayrılır. Ekran okuyucu accessible names/roles, sayı ve graph text summary, tooltips keyboard ile. Qt erişilebilirlik gerçek assistive teknolojiyle test edilir; başsız Qt load bunu doğrulamaz.
 
 100/125/150/200% scale; 1366×768 ve 1024 genişlik; light/dark/system; uzun Türkçe ve çeviri alanları. Kontrast token hesabı yalnız renk çiftleri; çizilmiş tüm kontrollerin erişilebilirliği değil. Faz02 ortak tasarım uygulanmadan önce üç temsilî ekran kontrolü, Faz25 gerçek kullanıcı denetimi.
+
+## Faz02 uygulama ve kanıt
+
+Tek token kaynağı `src/veri_ufku/ui/qml/Theme.qml`; Basic Controls paleti, UiButton/UiCombo/StateNotice/InfoPanel aynı renkleri kullanır. Hata açık #991B1B/#FEF2F2, koyu #FECACA/#450A0A. Sistem şeması Qt Application.styleHints, bilinmiyorsa SystemPalette; canlı uygulama paleti fallback testi var. Sidebar en az150px ve yazı büyüyünce genişler; merkez ve sidebar ayrı dikey kayar. %100/125/150/200 yerel yazı tercihi kaydedilir; OS DPI bağımsızdır. Gövde max(14,sistem font pikseli)×tercih, yardımcı12×tercih; controls max(40,gövde+24).
+
+F1 yardım, Escape panel kapatma/odak dönüşü; Ctrl+1..8 nav, nav Up/Down ve Space, Tab/ShiftTab standart Qt zinciri. Odaklanan düğme ilgili scroll alanına alınır. Gelecek eylemler disabled + görünür neden, gelecek nav ekranları kullanılabilirlik bilgisi. Boş/yükleniyor/hata/iptal StateNotice ile sembol/metin taşır. [Faz02](evidence/PHASE02.md), [kontrast](evidence/phase02-contrast.json). Ekran okuyucu ve gerçek OS tema değiştirme ayrı doğrulanmadı; otomatik Qt palette notification kontrolü fiziksel OS davranışı kanıtı değildir.

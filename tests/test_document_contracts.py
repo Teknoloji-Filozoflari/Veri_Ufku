@@ -84,6 +84,16 @@ class DocumentContracts(unittest.TestCase):
         self.assertTrue(any("Dependency cycle" in e for e in CHECKER.check(self.root)))
 
     def test_unverified_dependency_is_rejected(self):
+        row = next(
+            line
+            for line in (self.root / "docs/REQUIREMENTS_MATRIX.md")
+            .read_text()
+            .splitlines()
+            if line.startswith("| 01 |")
+        )
+        fields = row.split("|")
+        fields[4] = " sürüyor "
+        self.mutate("docs/REQUIREMENTS_MATRIX.md", row, "|".join(fields))
         self.mutate(
             "docs/REQUIREMENTS_MATRIX.md",
             "| 00 | Kapsam, mimari ve geliştirme planı | — |",

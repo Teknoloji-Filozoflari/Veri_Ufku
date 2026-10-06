@@ -1,6 +1,6 @@
 # Veri_Ufku — mimari
 
-Durum: Faz 00 tasarımı + Faz 01 görev/arayüz iskeleti. [Kurallar](PROJECT_RULES.md), [tasarım brief'i](UI_DESIGN_BRIEF.md), [UX](UX.md), [sözleşmeler](CORE_CONTRACTS.md), [teknik ortam](ENVIRONMENT.md).
+Durum: Faz00 tasarımı + Faz01 görev iskeleti + Faz02 gerçek uygulama kabuğu. [Kurallar](PROJECT_RULES.md), [tasarım brief'i](UI_DESIGN_BRIEF.md), [UX](UX.md), [sözleşmeler](CORE_CONTRACTS.md), [teknik ortam](ENVIRONMENT.md).
 
 ## Sınırlar ve bağımlılık yönü
 
@@ -56,3 +56,7 @@ Domain/hesap tests Qt'siz; importer elle yazılmış fixture; depo fault injecti
 ## Faz 01 uygulanan sınır
 
 UI/controller, domain/contracts/capabilities, services/demo, jobs/manager/workers, storage/workspace ve learning/i18n gerçek uygulamadır. Import/proje depolama/analitik/öğrenme içerikleri bu fazda mevcut değildir. Görev geçici alanı proje yayınlama protokolü yerine geçmez. Uygulama yapılandırması ve güvenli log tek giriş noktasından kurulur. [Runtime ve worker kararı](adr/005-runtime-jobs-lock.md), [kanıt](evidence/PHASE01.md).
+
+## Faz02 sunum sınırı
+
+UI tercihleri PresentationPreferences QObject’unda; tema/görünüm/yazı boyutu ayrı atomik ui-preferences.json içindedir. Mod/tema değişimi DemoSession Binding veya JobSpec’i değiştirmez. Theme.qml tek token kaynağı, Main.qml tek pencere kabuğu, ortak bileşenler UiButton/UiCombo/StateNotice/InfoPanel. Henüz dataset olmadığı için üst bağlam bunu açık söyler; gelecek navigasyon yalnız kullanılabilirlik ekranıdır. Panel açıklaması kabuk yardımıdır, Faz03 Öğren merkezi değildir. [Faz02 kanıtı](evidence/PHASE02.md).

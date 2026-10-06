@@ -1,0 +1,67 @@
+2026-10-06; ENV-02-HEADLESS; CachyOS/CPython3.13.15/PySide6 6.11.2
+QT_QPA_PLATFORM=offscreen; QT_QUICK_BACKEND=software; isolated XDG paths /tmp/veri-ufku-phase02-checks
+UV_CACHE_DIR=/tmp/veri-ufku-ci-cache
+
+$ uv sync --locked --group dev
+Resolved 16 packages in 0.93ms
+Checked 15 packages in 0.14ms
+
+exit=0
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+
+exit=0
+
+$ uv run --frozen ruff check src tests scripts
+All checks passed!
+
+exit=0
+
+$ uv run --frozen ruff format --check src tests scripts
+32 files already formatted
+
+exit=0
+
+$ uv run --frozen pytest -q
+.....................................                                    [100%]
+37 passed in 9.49s
+
+exit=0
+
+$ uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.194s
+
+OK
+
+exit=0
+
+$ uv run --frozen veri-ufku --smoke-test
+GUI_SMOKE PASS
+
+exit=0
+
+$ uv build --wheel --offline --no-build-isolation --out-dir /tmp/veri-ufku-phase02-wheel
+exit=0
+Wheel ZIP resource inspection: PASS; new presentation module, QML components, qmldir and tr.qm present. No standalone Linux installer claim.

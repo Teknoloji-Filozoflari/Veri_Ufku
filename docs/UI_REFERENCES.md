@@ -4,7 +4,7 @@ Tarih: 2026-10-06. Referanslar kullanım ilkeleri içindir; ekran/marka/ikon kop
 
 ## İnceleme yöntemi ve sınır
 
-Beş uygulamanın resmî sayfa metinleri ve ekran akışı açıklamaları okundu. Resmî görsel bağlantılarına erişim ve PDF screenshot denemesi yapıldı; bu oturumda araç görselleri yorumlanabilir image payload olarak göstermedi. Bu nedenle **piksel düzeyinde hiçbir referans ekranı görsel olarak doğrulanmış sayılmıyor**. Aşağıdaki “incelenen” alanı ekranın resmî belge açıklaması anlamındadır. Uygulamalar çalıştırılmadı, videolar izlenmedi; hız, odak, klavye, tema kontrastı ve tüm gelişmiş seçenek davranışları tahmin edilmedi. Görsel referans kontrolü UI-REF-VIS kaydıyla açık, Faz02 tasarımı yaymadan önce kapanmalıdır.
+Beş uygulamanın resmî sayfa metinleri ve ekran akışı açıklamaları okundu. Resmî görsel bağlantılarına erişim ve PDF screenshot denemesi yapıldı; bu oturumda araç görselleri yorumlanabilir image payload olarak göstermedi. Faz00 kaydında **piksel düzeyinde hiçbir referans ekranı görsel olarak doğrulanmış sayılmıyor**; Faz02’de aşağıdaki yeni görsel kanıtla bu kapı kapandı. Aşağıdaki “incelenen” alanı ekranın resmî belge açıklaması anlamındadır. Uygulamalar çalıştırılmadı, videolar izlenmedi; hız, odak, klavye, tema kontrastı ve tüm gelişmiş seçenek davranışları tahmin edilmedi. Görsel referans kontrolü UI-REF-VIS kaydıyla açık, Faz02 tasarımı yaymadan önce kapanmalıdır.
 
 | Uygulama / erişilen resmî kaynak | Gerçekten okunan ekran/akış açıklaması | Seçilen ilke ve Veri_Ufku kararı |
 |---|---|---|
@@ -21,3 +21,17 @@ Orange ana visual-programming adresi erişilemedi; proje ReadTheDocs sayfası er
 ## Tasarım gerekçesi
 
 Başlangıç kullanıcısına dosya→amaç→önizleme→inceleme→seçili işlem→sonuç→kaydet yolu verilir. Ortak soldaki navigasyon, merkez çalışma alanı, sağ bağlama bağlı yardım/parametre paneli ve üstte veri sürümü her ekranda aynı kalır. Referansların renk/ikon/menu kümeleri birleştirilmez. Üç temsilî tasarım [triptych](prototypes/triptych.svg) ve değerlendirme [DESIGN_REVIEW](DESIGN_REVIEW.md); bunlar referans ekranlarının görsel incelemesini veya gerçek kullanıcı testini ikame etmez.
+
+## Faz02 gerçek görsel inceleme — 2026-10-06
+
+Beş resmî görsel indirildi, view_image ile görüldü; URL/hash/boyut [kayıtta](evidence/phase02-references.json). Önceki erişim başarısızlıkları tarihsel olarak korunur. UI-REF-VIS doğrulandı; uygulamalar çalıştırılmadı, animasyon/klavye/tema davranışları bu görüntülerden çıkarılmaz.
+
+| Referans / görülen statik ekran | Gerçek görsel gözlem | Veri_Ufku kararı |
+|---|---|---|
+| [Orange File](https://orange3.readthedocs.io/projects/orange-visual-programming/en/latest/_images/File-stamped.png) | Üstte dosya seçimi, ortada veri boyutu ve kolon tür/rol listesi, altta örnek/veri ve rapor eylemleri | Dosya bağlamı sürekli üstte; başta dosya/örnek girişleri. Tür/rol yolu Faz07’ye kalır. |
+| [KNIME modern layout](https://docs.knime.com/assets/04_knime_modern_ui_general_layout.BnLLqhkG.avif) | Açıklamalı görselde dar sol araç şeridi, yan panel, merkez workflow, üst sekmeler, alt node monitor | Dar sabit alan navigasyonu + merkez iş alanı; düğüm/workflow editörü bu faza alınmadı. |
+| [jamovi analiz](https://www.jamovi.org/media/gs-03-analysis-poster.jpg) | Üstte metinli analiz ikonları, solda değişken/parametreler, sağda tablo/grafik sonucu | İkon yanında metin, parametre değişiminden bağımsız görünür sonuç. Çok sayıda analiz düğmesi kopyalanmadı. |
+| [JASP ana ekran](https://jasp-stats.org/wp-content/uploads/2026/07/front.page_.0.98.1-scaled.png) | Üst araç şeridi, sol analiz parametreleri, sağ sonuçlar; sağ alt kısım tanıtım rozetiyle örtülü | Teknik ayrıntılar görünüm tercihiyle açılır; sonuç her iki görünümde kalır. Örtülü kısımlar değerlendirilmedi, marka/mascot alınmadı. |
+| [LabPlot temel grafikler](https://labplot.org/images/gallerie-section/01_basic_plots_linux.png) | Sol proje ağacı, merkez çoklu grafik worksheet, sağ Fit özellik/sonuç paneli | Proje bağlamı ve ayrı kapanabilir bilgi paneli. Grafik/fit/DAG bu fazda geliştirilmedi. |
+
+Referanslardan yalnız kullanım ilkeleri seçildi; tokenlar Veri_Ufku’nun kendi sisteminden gelir. Orijinal resimler /tmp içinde incelendi; ürün varlıklarına veya repo görsellerine kopyalanmadı. KNIME AVIF yerel Pillow ile PNG’ye çevrilerek görüldü. [Kanıt](evidence/PHASE02.md#e02-references).

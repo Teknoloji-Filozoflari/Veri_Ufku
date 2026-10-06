@@ -1,6 +1,6 @@
 # ADR-005 — Faz 01 runtime, kilit ve görev yürütme
 
-2026-10-06; kabul edilen uygulama kararı, masaüstü/remote CI kabulü açık. ADR-001'in Python 3.13 tercihi korunur. Ortamda sonradan bulunan CPython 3.13.15 kullanılır; sistem 3.14.7 değiştirilmez. PySide6 6.11.2 metadata Python >=3.10,<3.15 ile uyumludur. Qt Core/QML/Quick/Controls headless gerçek engine ile çalıştı. Analitik paketler henüz kurulmadı; uyumları doğrulandı sayılmaz.
+2026-10-06; kabul edilen uygulama kararı; masaüstü ve remote CI kabulü tamamlandı (koşu 37500721689; PHASE01.md#e01-remote-success). ADR-001'in Python 3.13 tercihi korunur. Ortamda sonradan bulunan CPython 3.13.15 kullanılır; sistem 3.14.7 değiştirilmez. PySide6 6.11.2 metadata Python >=3.10,<3.15 ile uyumludur. Qt Core/QML/Quick/Controls headless gerçek engine ile çalıştı. Analitik paketler henüz kurulmadı; uyumları doğrulandı sayılmaz.
 
 Resmî kaynaklar: [Qt kurulum](https://doc.qt.io/qtforpython-6/gettingstarted.html), [PySide6 metadata](https://pypi.org/pypi/PySide6/6.11.2/json), [Ruff metadata](https://pypi.org/pypi/ruff/0.16.10/json), [uv kilit/sync](https://docs.astral.sh/uv/concepts/projects/sync/), [Python multiprocessing](https://docs.python.org/3/library/multiprocessing.html). Kaynaklar 2026-10-06 incelendi; spawn açık seçilir, platform varsayılanına güvenilmez.
 

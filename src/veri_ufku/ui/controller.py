@@ -48,6 +48,10 @@ class ShellController(QObject):
         self._timer.start()
 
     @Property(str, notify=changed)
+    def stateCode(self):
+        return self._state
+
+    @Property(str, notify=changed)
     def stateText(self):
         return tr(STATES[self._state])
 
@@ -82,6 +86,10 @@ class ShellController(QObject):
     @Property(int, notify=changed)
     def revision(self):
         return self.session.binding.config_revision
+
+    @Property(str, notify=changed)
+    def sessionVersion(self):
+        return self.session.binding.dataset_version
 
     @Slot(str)
     def start(self, capability_id):

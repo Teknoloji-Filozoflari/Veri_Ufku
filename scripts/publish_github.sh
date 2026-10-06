@@ -75,7 +75,7 @@ git add -- .gitignore .python-version .github AGENTS.md README.md \
     pyproject.toml uv.lock src tests scripts docs tools/wheels
 if ! git diff --cached --quiet; then
     if git rev-parse --verify HEAD >/dev/null 2>&1; then
-        git commit -m 'fix: correct CI configuration and update phase 01 evidence'
+        git commit -m 'feat: add phase 02 application shell and design tokens'
     else
         git commit -m 'feat: bootstrap Veri_Ufku desktop and phase 01 infrastructure'
     fi
@@ -99,4 +99,4 @@ if [[ -z "$run_id" ]]; then
 fi
 printf 'CI: https://github.com/%s/actions/runs/%s\n' "$repository" "$run_id"
 gh run watch "$run_id" --repo "$repository" --exit-status
-printf '\nCI başarılı. Yukarıdaki CI bağlantısını paylaşın; Faz 01 kabul kaydını tamamlayalım.\n'
+printf '\nCI başarılı. Yukarıdaki CI bağlantısını paylaşın; Faz 02 uzak CI kanıtını kaydedelim.\n'

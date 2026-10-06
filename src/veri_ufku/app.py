@@ -13,6 +13,7 @@ def create_application():
     from PySide6.QtCore import QTranslator, QUrl
     from PySide6.QtGui import QGuiApplication
     from PySide6.QtQml import QQmlApplicationEngine
+    from PySide6.QtQuickControls2 import QQuickStyle
 
     from veri_ufku.config import AppPaths, Settings, load_settings
     from veri_ufku.domain.contracts import AppError
@@ -20,7 +21,10 @@ def create_application():
     from veri_ufku.logging_setup import EventLog
     from veri_ufku.services.demo import DemoSession
     from veri_ufku.ui.controller import ShellController, tr
+    from veri_ufku.ui.preferences import PresentationPreferences
 
+    if QGuiApplication.instance() is None:
+        QQuickStyle.setStyle("Basic")
     app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
     app.setApplicationName("Veri_Ufku")
     app.setOrganizationName("Veri_Ufku")
@@ -48,6 +52,8 @@ def create_application():
             raise RuntimeError("Bundled Turkish translation is missing")
         app.installTranslator(translator)
     engine = QQmlApplicationEngine()
+    preferences = PresentationPreferences(paths.config)
+    engine.rootContext().setContextProperty("preferences", preferences)
     controller = None
     if not startup_error:
         manager = JobManager(paths.cache, settings.budget, log)
@@ -73,7 +79,15 @@ def create_application():
 
     app.aboutToQuit.connect(cleanup)
     # Retain Python/Qt objects until the event loop ends.
-    app._veri_ufku_resources = (engine, controller, translator, manager, log, cleanup)
+    app._veri_ufku_resources = (
+        engine,
+        controller,
+        translator,
+        manager,
+        log,
+        preferences,
+        cleanup,
+    )
     return app, window, controller
 
 

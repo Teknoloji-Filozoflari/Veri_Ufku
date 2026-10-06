@@ -15,4 +15,6 @@ Kullanıcı talimatları önceliklidir. Kaynak dosyayı koru; otomatik veri değ
 
 Faz 00 kontrolü: `python3 scripts/check_docs.py` ve `python3 -m unittest discover -s tests -v`. Analitik veya uygulama iskeleti Faz 00 kapsamında değildir. Sonraki fazlarda bu kontroller korunur, gereken gerçek testlerle genişletilir.
 
-Faz 01 ve sonraki oturumlarda gerçek kontroller README/docs/DEVELOPMENT.md komutlarıdır: kilitli dev kurulumu, check_docs/check_artifacts, Ruff check/format, pytest ve offscreen/software kurulu giriş noktası smoke. İlgili son kayıt docs/evidence/PHASE01.md ve ADR-005 okunmalı. Faz 01 kullanıcı masaüstü kabulü tamamlandı; remote CI kapısı açık; sonraki fazı kendiliğinden başlatma.
+Faz 01 ve sonraki oturumlarda gerçek kontroller README/docs/DEVELOPMENT.md komutlarıdır: kilitli dev kurulumu, check_docs/check_artifacts, Ruff check/format, pytest ve offscreen/software kurulu giriş noktası smoke. İlgili son kayıt docs/evidence/PHASE01.md ve ADR-005 okunmalı. Faz 01 kullanıcı masaüstü kabulü tamamlandı; remote CI 37500721689 başarı kanıtıyla kabul tamamlandı; sonraki fazı kendiliğinden başlatma.
+
+Faz02 gerçek kabuk, UI tercihleri, referans görsel incelemesi ve headless/Wayland kontrolleri uygulandı; son kayıt docs/evidence/PHASE02.md. Faz03 ve sonraki fazları kendiliğinden başlatma.

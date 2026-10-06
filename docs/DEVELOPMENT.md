@@ -1,6 +1,6 @@
 # Veri_Ufku — geliştirme ve doğrulama
 
-Faz 01 komutları [README](../README.md)'de. `.python-version` CPython 3.13.15; `pyproject.toml` ve `uv.lock` sabit runtime/dev bağımlılıklarıdır. Sistem Python'una yazılmaz. `uv sync --locked --group dev` kilit değişikliğini reddeder; çalıştırmada `--frozen` yeniden çözümleme yapmaz. Ruff geliştirme wheel'i kaynak ağacında, hash ve RECORD doğrulaması `scripts/check_artifacts.py` ile yapılır. Ayrıntı [ADR-005](adr/005-runtime-jobs-lock.md).
+Faz 01/02 komutları [README](../README.md)'de. `.python-version` CPython 3.13.15; `pyproject.toml` ve `uv.lock` sabit runtime/dev bağımlılıklarıdır. Sistem Python'una yazılmaz. `uv sync --locked --group dev` kilit değişikliğini reddeder; çalıştırmada `--frozen` yeniden çözümleme yapmaz. Ruff geliştirme wheel'i kaynak ağacında, hash ve RECORD doğrulaması `scripts/check_artifacts.py` ile yapılır. Ayrıntı [ADR-005](adr/005-runtime-jobs-lock.md).
 
 ## Yerel geliştirme
 
@@ -12,12 +12,18 @@ Yerel log XDG_STATE_HOME/veri_ufku altında, üç adet en fazla 256KiB dosya ve 
 
 ## Test ve CI
 
-32 test: bağımsız elle hesaplı 435 toplamı, CPU ayrı PID, I/O temizliği, CPU/I/O iptal, zorunlu sonlandırma, eski veri/config sonucu, bütçe/admission/kuyruk, gözetici dosya hatası, güvenli log, gerçek QML sinyali ve kapanış, locale, config, belge tutarlılığı. Offscreen/software bir başsız GUI kanıtıdır; gerçek masaüstü ve sıfır bilgi kullanıcı testi yerine geçmez.
+Faz01’de 32, Faz02’de toplam37 test: bağımsız elle hesaplı 435 toplamı, CPU ayrı PID, I/O temizliği, CPU/I/O iptal, zorunlu sonlandırma, eski veri/config sonucu, bütçe/admission/kuyruk, gözetici dosya hatası, güvenli log, gerçek QML sinyali ve kapanış, locale, config, belge tutarlılığı. Offscreen/software bir başsız GUI kanıtıdır; gerçek masaüstü ve sıfır bilgi kullanıcı testi yerine geçmez.
 
-`.github/workflows/docs.yml` Ubuntu 24.04 üzerinde kilitli kurulum, belge/artefact, Ruff, pytest ve kurulu giriş noktası smoke adımlarını tanımlar. Testlerden önce `sudo apt-get update` ve `sudo apt-get install --no-install-recommends -y libegl1 libgl1` ile Qt sistem kitaplıkları kurulur; offscreen/software seçimi import sırasındaki dinamik kitaplık gereksinimini kaldırmaz. Aynı kontroller yerelde çalıştırıldı. Kullanıcı GitHub gönderimini ve masaüstü kontrollerini tamamladı. İlk sunucu CI koşusu 37499686960 failure ile sonuçlandı. Job env alanındaki desteklenmeyen runner context kullanımı düzeltildi; ikinci koşu 37500010786 QtTest importunda eksik libEGL.so.1 nedeniyle test toplamada başarısız oldu. Sistem kitaplığı kurulumu workflow’a eklendi; yeni başarılı koşu henüz doğrulanmadı. Ajan API bağlantısı başarısız; .git salt okunur. Yerel testler workflow context geçerliliğini tek başına doğrulamaz; resmî context tablosu ayrıca incelendi.
+`.github/workflows/docs.yml` Ubuntu 24.04 üzerinde kilitli kurulum, belge/artefact, Ruff, pytest ve kurulu giriş noktası smoke adımlarını tanımlar. Testlerden önce `sudo apt-get update` ve `sudo apt-get install --no-install-recommends -y libegl1 libgl1` ile Qt sistem kitaplıkları kurulur; offscreen/software seçimi import sırasındaki dinamik kitaplık gereksinimini kaldırmaz. Aynı kontroller yerelde çalıştırıldı. Kullanıcı GitHub gönderimini ve masaüstü kontrollerini tamamladı. İlk sunucu CI koşusu 37499686960 failure ile sonuçlandı. Job env alanındaki desteklenmeyen runner context kullanımı düzeltildi; ikinci koşu 37500010786 QtTest importunda eksik libEGL.so.1 nedeniyle test toplamada başarısız oldu. Sistem kitaplığı kurulumu workflow’a eklendi; üçüncü koşu 37500721689 tüm adımlarıyla başarılı. Kullanıcının paylaştığı CI çıktısı ve commit bağlantısı PHASE01.md#e01-remote-success içinde kayıtlı. Faz01 kabulü tamamlandı; olgunluk deneysel. Ajan API bağlantısı başarısız; .git salt okunur. Yerel testler workflow context geçerliliğini tek başına doğrulamaz; resmî context tablosu ayrıca incelendi.
 
 Ölçüm: `QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software .venv/bin/python scripts/measure_phase01.py`. Geliştirici makinesinde 20 sıcak açılış, 100 Qt fare olayı, 1 CPU/2 I/O, örneklenmiş RAM/disk ve tek iptal deneyi kaydedilir. Soğuk cache ve minimum hedef ölçümü değildir.
 
 ## İlerleyen fazların test planı
 
 Import fixture'ları Türkçe/quoted/newline/bozuk satır ve kaynak değişimini; depo crash/fail adımları, iki yazıcı, samefile/symlink durumlarını; işlemler kimlik/lineage ve kaynak hash'ini doğrulayacak. Model testleri fold-içi fit, grup+zaman, final test defteri ve güvenli formatı kapsayacak. Gerçek import/grafik/export geldiğinde erken Linux paket smoke; tüm paket sorunları son faza bırakılmaz. Bu özellikler bu fazda uygulanmadı.
+
+## Faz02 kabuk ve doğrulama
+
+QML Theme singleton ortak tokenları tanımlar; Qt Quick Controls Basic ile palet tutarlı kalır. Main kabuk düzeni, UiButton/UiCombo/StateNotice/InfoPanel ortak etkileşimlerdir. PresentationPreferences, dataset/ComputeBudget’dan ayrı atomik UI tercihi deposudur. Yeni Türkçe metinler mevcut çevrimdışı tr.ts/tr.qm kataloğunda, İngilizce aynı QML yolunda.
+
+Başsız boyut/klavye/state ekranları: `uv run --frozen python scripts/measure_phase02.py`. Gerçek masaüstü: `uv run --frozen python scripts/measure_phase02.py --desktop` (QT_QPA_PLATFORM offscreen verilmeden). Betik geçici XDG alanlarını kendi oluşturur; kullanıcı tercihlerini değiştirmez. Çıktılar docs/evidence/phase02-headless.json veya phase02-desktop.json ve screenshot’larıdır. Betik GUI’yi açar, küçük/büyük pencereleri, tema/yazı ölçeklerini, nav/yardım klavyesini ve gerçek iş loading/canceled/error durumlarını denetler; analiz/import testi değildir. [PHASE02](evidence/PHASE02.md).
