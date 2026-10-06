@@ -7,7 +7,7 @@ Ana kayıt [REQUIREMENTS_MATRIX](REQUIREMENTS_MATRIX.md). Tarih 2026-10-06. Bu �
 | 00 | doğrulandı | kararlı | zorunlu | REQUIREMENTS_MATRIX.md:F00 |
 | 01 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F01 |
 | 02 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F02 |
-| 03 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F03 |
+| 03 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F03 |
 | 04 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F04 |
 | 05 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F05 |
 | 06 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F06 |
@@ -37,4 +37,6 @@ Faz00 belge ve plan kabulü doğrulandı; F00-001..017 ve F00-S001..S007 kanıt�
 
 Faz02 gerçek QML kabuğu ve ortak tokenlar uygulandı: sekiz alanın kullanılabilirlik açıklaması, başlangıç amaçları, tema/görünüm/yazı boyutu kalıcılığı, sağ bilgi paneli ve klavye gezinmesi. [Faz02 kanıtları](evidence/PHASE02.md): başsız ve gerçek Wayland GUI, küçük/büyük pencere ve %100–200 yazı ölçeği, 37 test. UI-REF-VIS beş resmî görselin gerçekten incelenmesiyle doğrulandı. Faz02 doğrulandı/deneysel/zorunlu; Faz03 ve sonrası başlamadı. Veri açma/örnek veri eylemleri henüz mevcut değil; UI bunu açık gösterir.
 
-Kullanıcı tema, Tab gezinmesi ve F1 yardım kontrolünü başarılı bildirdi (F02-USER-SHELL, ENV-USER-02, 2026-10-06). Faz02 uzak CI sonucu bekleniyor.
+Kullanıcı tema, Tab gezinmesi ve F1 yardım kontrolünü başarılı bildirdi (F02-USER-SHELL, ENV-USER-02, 2026-10-06). Faz02 uzak CI koşusu [37504698665](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37504698665), linux işi112410240655 üzerinde 36 saniyede başarıyla tamamlandı (F02-CI-REMOTE, ENV-CI-02). Faz02 kabul kaydı tamamlandı; olgunluk deneysel.
+
+Faz03 çevrimdışı öğrenme uygulandı/doğrulandı/deneysel: 13 sürümlü Türkçe makale, üç açıklama derinliği, bağlama bağlı F1 paneli, arama/kategori/dokuz kavram sözlüğü ve isteğe bağlı atomik yerel okundu/yer imi. Uygulamada dene yalnız gerçek yardım aramasını ayrı geçici örnek öğrenme projesinde açar. [Kanıt](evidence/PHASE03.md): 54 test, başsız ve gerçek Wayland GUI, her modda11 ekran; CI yardım bağı doğrulayıcısı eklendi. Faz03 uzak CI henüz yok. Kullanıcı ayrı örnek öğrenme penceresinin açıldığını ve küçük örneği gördüğünü doğruladı (F03-USER-EXAMPLE, ENV-USER-03, 2026-10-06); diğer manuel yardım kontrolleri henüz bildirilmedi. Faz04 başlamadı.

@@ -33,6 +33,7 @@ ApplicationWindow {
     readonly property bool advanced: preferences && preferences.view === "advanced"
     readonly property bool darkTheme: Theme.dark
     property var helpOrigin: null
+    property string helpOriginName: ""
     readonly property var sections: [
         qsTranslate("Shell", "Home"), qsTranslate("Shell", "Data"),
         qsTranslate("Shell", "Prepare"), qsTranslate("Shell", "Explore"),
@@ -47,23 +48,50 @@ ApplicationWindow {
         qsTranslate("Shell", "Understand differences between groups. Comparison tools are not available yet."),
         qsTranslate("Shell", "Make predictions with a model and understand its limits. Modeling is not available yet."),
         qsTranslate("Shell", "Save and share your findings. Report generation is not available yet."),
-        qsTranslate("Shell", "Learn at your own pace. The learning center is not available yet; this panel explains the current screen.")
+        "Merak ettiğin konuyu çevrimdışı ara; özet, örnek veya rehber olarak oku."
     ]
     function navigate(index, origin) {
         selectedSection = index
+        if (infoOpen) learning.openContext(learning.screenContexts[index])
         if (origin) origin.forceActiveFocus()
         workspace.contentItem.contentY = 0
     }
-    function openInformation(origin) {
+    function openInformation(origin, articleId, context) {
         helpOrigin = origin || helpButton
+        helpOriginName = helpOrigin.objectName
+        if (articleId) learning.openArticle(articleId)
+        else learning.openContext(context || learning.screenContexts[selectedSection])
         infoOpen = true
         if (!dockInfo) infoDrawer.open()
         else dockPanel.focusFirst()
     }
+    function focusedHelpContext() {
+        let item = activeFocusItem
+        while (item) {
+            if (item.helpContext) return item.helpContext
+            item = item.parent
+        }
+        return learning.screenContexts[selectedSection]
+    }
+    function findVisibleItem(item, name) {
+        if (!item.visible) return null
+        if (item.objectName === name) return item
+        for (let child of item.children) {
+            let found = findVisibleItem(child, name)
+            if (found) return found
+        }
+        return null
+    }
+    function restoreHelpFocus() {
+        let origin = helpOriginName ? findVisibleItem(window.contentItem, helpOriginName) : helpOrigin
+        if (!origin && selectedSection === 7) origin = findVisibleItem(window.contentItem, "learningSearch")
+        if (!origin || !origin.visible || !origin.enabled) origin = helpButton
+        origin.forceActiveFocus()
+    }
     function closeInformation() {
         infoOpen = false
         infoDrawer.close()
-        if (helpOrigin) helpOrigin.forceActiveFocus()
+        restoreHelpFocus()
     }
     onDockInfoChanged: {
         if (infoOpen) {
@@ -72,12 +100,13 @@ ApplicationWindow {
         }
     }
     onClosing: function(event) {
+        learningExample.close()
         if (bridge && !bridge.closed) {
             event.accepted = false
             bridge.shutdown()
         }
     }
-    Shortcut { sequence: "F1"; onActivated: window.openInformation(helpButton) }
+    Shortcut { sequence: "F1"; onActivated: window.openInformation(window.activeFocusItem || helpButton, "", window.focusedHelpContext()) }
     Shortcut { sequence: "Escape"; enabled: window.infoOpen && window.dockInfo; onActivated: window.closeInformation() }
 
     header: Rectangle {
@@ -176,7 +205,7 @@ ApplicationWindow {
                             multiline: true
                             quiet: true
                             checked: window.selectedSection === index
-                            Accessible.description: index ? qsTranslate("Shell", "Not available yet. Open the availability information.") : qsTranslate("Shell", "Home")
+                            Accessible.description: (index > 0 && index < 7) ? qsTranslate("Shell", "Not available yet. Open the availability information.") : modelData
                             onClicked: window.navigate(index, this)
                             Keys.onDownPressed: nextItemInFocusChain().forceActiveFocus()
                             Keys.onUpPressed: nextItemInFocusChain(false).forceActiveFocus()
@@ -241,7 +270,7 @@ ApplicationWindow {
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.selectedSection !== 0
+                    visible: window.selectedSection !== 0 && window.selectedSection !== 7
                     kind: "unavailable"
                     heading: qsTranslate("Shell", "Not available yet")
                     detail: window.descriptions[window.selectedSection]
@@ -324,6 +353,15 @@ ApplicationWindow {
                         }
                     }
                 }
+                LearningCenter {
+                    objectName: "learningCenter"
+                    visible: window.selectedSection === 7
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    library: learning
+                    onArticleRequested: function(articleId, origin) { window.openInformation(origin, articleId) }
+                }
                 // Results and errors remain visible in either view, even if trial controls are collapsed.
                 ColumnLayout {
                     Layout.fillWidth: true
@@ -369,9 +407,9 @@ ApplicationWindow {
                             Flow {
                                 Layout.fillWidth: true
                                 spacing: Theme.sm
-                                UiButton { objectName: "cpuButton"; width: Math.min(implicitWidth, parent.width); multiline: true; text: qsTranslate("Main", "Run CPU test"); enabled: bridge && !bridge.active && !bridge.closing; onClicked: bridge.start("demo.cpu") }
-                                UiButton { objectName: "ioButton"; width: Math.min(implicitWidth, parent.width); multiline: true; text: qsTranslate("Main", "Run I/O test"); enabled: bridge && !bridge.active && !bridge.closing; onClicked: bridge.start("demo.io") }
-                                UiButton { objectName: "unknownButton"; width: Math.min(implicitWidth, parent.width); multiline: true; text: qsTranslate("Main", "Test unknown progress"); enabled: bridge && !bridge.active && !bridge.closing; onClicked: bridge.start("demo.unknown") }
+                                UiButton { objectName: "cpuButton"; helpContext: "demo.cpu"; width: Math.min(implicitWidth, parent.width); multiline: true; text: qsTranslate("Main", "Run CPU test"); enabled: bridge && !bridge.active && !bridge.closing; onClicked: bridge.start("demo.cpu") }
+                                UiButton { objectName: "ioButton"; helpContext: "demo.io"; width: Math.min(implicitWidth, parent.width); multiline: true; text: qsTranslate("Main", "Run I/O test"); enabled: bridge && !bridge.active && !bridge.closing; onClicked: bridge.start("demo.io") }
+                                UiButton { objectName: "unknownButton"; helpContext: "demo.unknown"; width: Math.min(implicitWidth, parent.width); multiline: true; text: qsTranslate("Main", "Test unknown progress"); enabled: bridge && !bridge.active && !bridge.closing; onClicked: bridge.start("demo.unknown") }
                             }
                         }
                     }
@@ -393,10 +431,11 @@ ApplicationWindow {
                                 Layout.fillWidth: true
                                 spacing: Theme.sm
                                 UiButton { objectName: "contextButton"; width: Math.min(implicitWidth, parent.width); multiline: true; text: qsTranslate("Main", "Change test configuration"); enabled: bridge && !bridge.closing; onClicked: bridge.changeConfiguration() }
-                                UiButton { objectName: "failureButton"; width: Math.min(implicitWidth, parent.width); multiline: true; text: qsTranslate("Main", "Test error transfer"); enabled: bridge && !bridge.active && !bridge.closing; onClicked: bridge.start("demo.failure") }
+                                UiButton { objectName: "failureButton"; helpContext: "demo.failure"; width: Math.min(implicitWidth, parent.width); multiline: true; text: qsTranslate("Main", "Test error transfer"); enabled: bridge && !bridge.active && !bridge.closing; onClicked: bridge.start("demo.failure") }
                             }
                         }
                     }
+                    UiButton { objectName: "taskHelpButton"; helpContext: "demo.cpu"; text: "Görevler ne işe yarar?"; glyph: "?"; multiline: true; Layout.fillWidth: true; onClicked: window.openInformation(this, "", helpContext) }
                     UiButton { objectName: "closeButton"; text: qsTranslate("Main", "Close"); glyph: "×"; onClicked: window.close() }
                 }
                 Item { Layout.preferredHeight: Theme.xl }
@@ -413,6 +452,12 @@ ApplicationWindow {
             onCloseRequested: window.closeInformation()
         }
     }
+    ExampleWindow {
+        id: learningExample
+        library: learning.exampleLibrary
+        onClosing: { window.requestActivate(); window.restoreHelpFocus() }
+    }
+    Connections { target: learning; function onExampleRequested() { learningExample.show(); learningExample.requestActivate() } }
     Drawer {
         id: infoDrawer
         objectName: "informationDrawer"

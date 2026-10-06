@@ -29,6 +29,7 @@ jobs:
         run: |
           uv run --frozen python scripts/check_docs.py
           uv run --frozen python scripts/check_artifacts.py
+          uv run --frozen python scripts/check_learning.py
       - name: Lint
         run: |
           uv run --frozen ruff check src tests scripts

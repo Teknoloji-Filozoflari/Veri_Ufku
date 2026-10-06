@@ -8,7 +8,7 @@
 
 ENV-02-HEADLESS: CachyOS x86_64, Linux7.2.9-1-cachyos/glibc2.44, CPython3.13.15, PySide6/Qt6.11.2; offscreen/software, geçici izole XDG yolları. ENV-02-DESKTOP: aynı makine/kilit, gerçek Wayland bağlantısı ve software renderer; GUI çalıştırma izniyle masaüstünde açıldı. Ekranlar gerçek QQuickWindow.grabWindow çıktısıdır. [Başsız kayıt](phase02-headless.json), [masaüstü kayıt](phase02-desktop.json); çalışma komutu `uv run --frozen python scripts/measure_phase02.py` ve masaüstü için `.venv/bin/python scripts/measure_phase02.py --desktop`. Makine donanımı/dosya sistemi önceki [ENV-01](../ENVIRONMENT.md) kaydındadır; minimum hedef donanım veya performans bütçesi kabulü değildir.
 
-Kilit SHA256: 0dd1307806957482d1a4c531837750f879d235f909d46a24ed5e698caf59068c. Kaynak hash kaydı phase02-source.sha256. Genel kontroller ve sonuçlar phase02-checks.txt. Aşağıdaki kanıtlar otomatik gerçek Qt girdileri + ajan tarafından screenshot incelemesidir; yeni kullanıcı/ekran okuyucu testi değildir. Uzak Faz02 CI koşusu yapılmadı; Faz01 uzak kanıtı kendi commit'iyle ayrı kalır.
+Kilit SHA256: 0dd1307806957482d1a4c531837750f879d235f909d46a24ed5e698caf59068c. Kaynak hash kaydı phase02-source.sha256. Genel kontroller ve sonuçlar phase02-checks.txt. Aşağıdaki kanıtlar otomatik gerçek Qt girdileri + ajan tarafından screenshot incelemesidir; yeni kullanıcı/ekran okuyucu testi değildir. Uzak Faz02 CI başarısı aşağıdaki e02-ci-remote kaydındadır; Faz01 uzak kanıtı ayrı kalır.
 
 <a id="e02-references"></a>
 
@@ -66,4 +66,10 @@ Son yerel kontrol: kilitli dev sync, doğrudan python3 check_docs ve kilitli che
 
 ## F02-USER-SHELL — kullanıcı masaüstü kontrolü
 
-2026-10-06, ENV-USER-02: kullanıcı mevcut Linux masaüstünde kontrolün ardından “tema tab f1 tamam” bildirdi. Tema seçimi, Tab ile temel gezinme ve F1 yardım açma kullanıcı tarafından başarılı bildirildi. Uygulama yolu src/veri_ufku/ui/qml/Main.qml. Bu bildirim yeniden başlatma sonrası kalıcılık, Escape veya işletim sistemi tema değişimi için ek manuel kanıt sayılmaz. Uzak Faz02 CI sonucu henüz alınmadı.
+2026-10-06, ENV-USER-02: kullanıcı mevcut Linux masaüstünde kontrolün ardından “tema tab f1 tamam” bildirdi. Tema seçimi, Tab ile temel gezinme ve F1 yardım açma kullanıcı tarafından başarılı bildirildi. Uygulama yolu src/veri_ufku/ui/qml/Main.qml. Bu bildirim yeniden başlatma sonrası kalıcılık, Escape veya işletim sistemi tema değişimi için ek manuel kanıt sayılmaz. Uzak Faz02 CI başarısı aşağıda ayrı kayıtlıdır.
+
+<a id="e02-ci-remote"></a>
+
+## F02-CI-REMOTE — uzak CI
+
+2026-10-06, ENV-CI-02: kullanıcı GitHub Actions sonuç çıktısını paylaştı. [Koşu 37504698665](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37504698665), Veri_Ufku core and Qt smoke, success. Linux işi 112410240655, 36 saniye: Qt native runtime kitaplıkları, izole yollar, sabit uv/Python ve kilitli bağımlılıklar, belge/artefact doğrulaması, lint, çekirdek/başsız QML testleri ve kurulu giriş noktası Qt/process smoke adımları başarılı. Kanıt kaynağı kullanıcının paylaştığı gerçek CI çıktısıdır; uzak API ayrıca sorgulanmadı. Yerel yayımlama sonrası HEAD: 64214abb76e366782425da313d9f61d33872b4da; koşunun commit eşlemesi uzak API üzerinden ayrıca doğrulanmadı. İş akışı yolu .github/workflows/docs.yml. Faz02 yerel, masaüstü, kullanıcı tema/Tab/F1 ve uzak CI kanıtları kaydedildi; olgunluk deneysel kalır.

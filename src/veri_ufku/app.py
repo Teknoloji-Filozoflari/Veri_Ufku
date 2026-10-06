@@ -21,6 +21,7 @@ def create_application():
     from veri_ufku.logging_setup import EventLog
     from veri_ufku.services.demo import DemoSession
     from veri_ufku.ui.controller import ShellController, tr
+    from veri_ufku.ui.learning import LearningController
     from veri_ufku.ui.preferences import PresentationPreferences
 
     if QGuiApplication.instance() is None:
@@ -53,6 +54,9 @@ def create_application():
         app.installTranslator(translator)
     engine = QQmlApplicationEngine()
     preferences = PresentationPreferences(paths.config)
+    learning = LearningController(paths.config, engine)
+    engine._learning_resources = learning
+    engine.rootContext().setContextProperty("learning", learning)
     engine.rootContext().setContextProperty("preferences", preferences)
     controller = None
     if not startup_error:
@@ -85,6 +89,7 @@ def create_application():
         translator,
         manager,
         log,
+        learning,
         preferences,
         cleanup,
     )

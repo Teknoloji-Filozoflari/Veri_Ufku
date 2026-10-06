@@ -1,8 +1,10 @@
 import QtQuick
 import QtQuick.Controls
+import "FocusScroll.js" as FocusScroll
 
 Button {
     id: control
+    property string helpContext: ""
     property bool primary: false
     property bool quiet: false
     property string glyph: ""
@@ -13,20 +15,9 @@ Button {
     spacing: 8
     focusPolicy: Qt.StrongFocus
     Accessible.name: text
-    onActiveFocusChanged: if (activeFocus) Qt.callLater(function() {
-        let container = control.parent
-        while (container) {
-            if (container.contentY !== undefined && container.contentHeight !== undefined) {
-                const top = control.mapToItem(container.contentItem, 0, 0).y
-                if (top < container.contentY) container.contentY = top
-                else if (top + control.height > container.contentY + container.height)
-                    container.contentY = Math.min(container.contentHeight - container.height, top + control.height - container.height)
-                break
-            }
-            container = container.parent
-        }
-    })
+    onActiveFocusChanged: if (activeFocus) Qt.callLater(function() { FocusScroll.reveal(control) })
     contentItem: Text {
+        textFormat: Text.PlainText
         text: (control.glyph ? control.glyph + "  " : "") + control.text
         color: control.primary && control.enabled ? Theme.onAccent : Theme.text
         font.pixelSize: Theme.body

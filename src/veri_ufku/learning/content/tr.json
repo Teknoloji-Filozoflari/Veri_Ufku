@@ -1,0 +1,555 @@
+{
+  "schema_version": 1,
+  "content_version": 1,
+  "locale": "tr",
+  "articles": [
+    {
+      "id": "data",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Veri nedir?",
+      "category": "Temeller",
+      "summary": "Veri, bir soruyu anlamak için topladığımız kayıtlardır.",
+      "purpose": "Elindeki listenin neyi anlattığını düşünmeni sağlar.",
+      "when": "Bir listeye ilk kez baktığında.",
+      "when_not": "Kayıtların nasıl toplandığını bilmeden kesin sonuç çıkarmak için.",
+      "example": {
+        "before": "Üç satış notu: pazartesi 10, salı 20, çarşamba 30.",
+        "after": "Gün ve tutar başlıkları olan üç kayıt olarak okuyabilirsin."
+      },
+      "interpretation": "Bu üç kayıt yalnız bu satışları anlatır; bütün mağazaları temsil etmeyebilir.",
+      "common_mistake": "Bir listedeki her sayıyı ölçüm sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Verinin birimi, zamanı ve kaynağı önemlidir. Kayıt hataları olabilir; açıklamasını kontrol et."
+        }
+      ],
+      "related": [
+        "rows-columns",
+        "data-types",
+        "sample"
+      ],
+      "contexts": [
+        "data",
+        "home"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku ürün ve veri sözleşmeleri",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Kaynağını bilmediğin veriden kesin sonuç çıkarma.",
+      "try_action": null
+    },
+    {
+      "id": "rows-columns",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Satır ve sütun",
+      "category": "Temeller",
+      "summary": "Satır bir kaydı, sütun o kaydın bir özelliğini taşır.",
+      "purpose": "Tablonun düzenini anlamanı sağlar.",
+      "when": "Başlıkları ve kayıtları okurken.",
+      "when_not": "Satırın neyi temsil ettiği belli değilken sayımları kişi sayısı gibi yorumlamak için.",
+      "example": {
+        "before": "Ada: 10; Ece: 20 şeklinde iki satış notu.",
+        "after": "Ad ve tutar sütunları; her satış için bir satır."
+      },
+      "interpretation": "Aynı kişi iki alışveriş yaptıysa iki satır olabilir.",
+      "common_mistake": "Satır sırasını kalıcı kayıt kimliği sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Bir satırın birimi satış, kişi veya gün olabilir. Önce bu birimi öğren."
+        }
+      ],
+      "related": [
+        "data",
+        "data-types"
+      ],
+      "contexts": [
+        "data"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku kayıt kimliği sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "İki satır her zaman iki farklı kişi demek değildir.",
+      "try_action": null
+    },
+    {
+      "id": "data-types",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Veri türü",
+      "category": "Temeller",
+      "summary": "Veri türü, bir değerin sayı, metin veya tarih gibi nasıl okunacağını anlatır.",
+      "purpose": "Yanlış hesap veya dönüşümü fark etmene yardımcı olur.",
+      "when": "Sütunları ilk kez okurken.",
+      "when_not": "Sadece birkaç örneğe bakıp bütün sütunun türünü kesin ilan etmek için.",
+      "example": {
+        "before": "0012 bir ürün kodu; 12,5 bir ağırlık.",
+        "after": "Ürün kodu metin olarak, ağırlık sayı ve birimiyle yorumlanır."
+      },
+      "interpretation": "Sayı gibi görünen kodların ortalamasını almak anlamlı olmayabilir.",
+      "common_mistake": "Kodun başındaki sıfırı silmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Teknik tür ve kullanım rolü ayrıdır. Sayı sütunu kimlik olabilir; tarih biçimini de kontrol et."
+        }
+      ],
+      "related": [
+        "rows-columns",
+        "mean-median"
+      ],
+      "contexts": [
+        "data"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku tür ve rol sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Sayısal kimliği ölçüm olarak kullanma.",
+      "try_action": null
+    },
+    {
+      "id": "missing",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Eksik değer",
+      "category": "Hazırlık",
+      "summary": "Eksik değer, bir kayıtta beklenen bilginin bulunmamasıdır.",
+      "purpose": "Hangi kayıtların hesap dışında kaldığını fark etmeni sağlar.",
+      "when": "Boş hücreler veya bilinmeyen değerlerle karşılaştığında.",
+      "when_not": "Nedeni bilinmeden bütün boşlukları sıfırla doldurmak için.",
+      "example": {
+        "before": "Tutarlar: 10, boş, 20.",
+        "after": "İki tutar biliniyor, bir tutar eksik; boş olan sıfır sayılmaz."
+      },
+      "interpretation": "Eksikler rastgele olmayabilir; sonucu etkileyebilir.",
+      "common_mistake": "Boş değer ile gerçek sıfırı aynı sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Önce eksikliğin nedenini araştır. Silme veya doldurma bir karardır; kaynak veriyi otomatik değiştirme."
+        }
+      ],
+      "related": [
+        "data-types",
+        "mean-median",
+        "leakage"
+      ],
+      "contexts": [
+        "prepare",
+        "data"
+      ],
+      "sources": [
+        {
+          "title": "scikit-learn — Imputation of missing values",
+          "reference": "https://scikit-learn.org/stable/modules/impute.html",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Eksik bilgiyi doldurmak yeni bir varsayım ekler.",
+      "try_action": null
+    },
+    {
+      "id": "mean-median",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Ortalama ve medyan",
+      "category": "Özetler",
+      "summary": "Ortalama toplamı paylaştırır; medyan sıralı listenin ortasını gösterir.",
+      "purpose": "Sayıların merkezini iki farklı yolla özetler.",
+      "when": "Aynı birimdeki ölçümleri özetlerken.",
+      "when_not": "Kimlik kodlarına uygulamak veya tek sayıyla bütün dağılımı anlatmak için.",
+      "example": {
+        "before": "Tutarlar: 10, 20, 90.",
+        "after": "Ortalama 40; sıralı listenin ortasındaki medyan 20."
+      },
+      "interpretation": "Büyük tutar ortalamayı yukarı çekti; iki özet farklı sorulara yardımcı olur.",
+      "common_mistake": "Medyanı her durumda en iyi özet ilan etmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Çift sayıda değer varsa ortadaki iki değerin ortalaması alınır. Örneğin 10, 20, 30, 40 için medyan 25. Kayıt sayısını ve dışlanan eksikleri de belirt."
+        }
+      ],
+      "related": [
+        "missing",
+        "sample"
+      ],
+      "contexts": [
+        "explore",
+        "compare"
+      ],
+      "sources": [
+        {
+          "title": "NIST — Measures of Location",
+          "reference": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda351.htm",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Özet sayı tek başına dağılımı veya bütün grupları anlatmaz.",
+      "try_action": null
+    },
+    {
+      "id": "sample",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Örneklem",
+      "category": "Özetler",
+      "summary": "Örneklem, daha büyük bir topluluğun incelemek için seçtiğimiz bölümüdür.",
+      "purpose": "Sonucun kimler için geçerli olabileceğini düşünmeni sağlar.",
+      "when": "Bütün kayıtları inceleyemediğinde.",
+      "when_not": "Sadece kolay ulaştığın kişilerden herkesi temsil eden sonuç çıkarmak için.",
+      "example": {
+        "before": "Bir mağazanın 100 satışından ilk 10 satışa bakıldı.",
+        "after": "Sonuç 10 satışlık seçili bölüm diye etiketlenir."
+      },
+      "interpretation": "İlk satışlar günün geri kalanından farklı olabilir.",
+      "common_mistake": "Çok kayıt olunca seçimin yanlılığının yok olduğunu sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Kimlerin seçilmediğini sor. Seçim yöntemi ve büyüklüğü sonuçla birlikte belirtilmeli."
+        }
+      ],
+      "related": [
+        "data",
+        "mean-median",
+        "prediction"
+      ],
+      "contexts": [
+        "explore",
+        "compare"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku örneklem ve kapsam sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Örneklem sonucu tüm veri sonucu diye sunma.",
+      "try_action": null
+    },
+    {
+      "id": "correlation",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Korelasyon",
+      "category": "İlişkiler",
+      "summary": "Korelasyon, iki ölçümün birlikte değişme biçimini özetler.",
+      "purpose": "Birlikte değişen ölçümleri araştırmana yardımcı olur.",
+      "when": "İki ölçüm aynı kayıtlarda bulunduğunda.",
+      "when_not": "Birinin diğerine neden olduğunu kanıtlamak için.",
+      "example": {
+        "before": "Sıcak günlerde dondurma satışı ve denize girenlerin sayısı artıyor.",
+        "after": "İki ölçüm birlikte artıyor diye bir ilişki tarif edilebilir."
+      },
+      "interpretation": "Sıcaklık ikisini de etkileyebilir; ilişki nedenin kanıtı değildir.",
+      "common_mistake": "İlişki bulunca neden bulunduğunu sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Grafiği, aykırı kayıtları ve kullanılan çift sayısını incele. Doğrusal ilişki zayıf olsa da başka bir ilişki olabilir."
+        }
+      ],
+      "related": [
+        "sample",
+        "prediction"
+      ],
+      "contexts": [
+        "explore",
+        "compare"
+      ],
+      "sources": [
+        {
+          "title": "NIST — Scatter Plot",
+          "reference": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda33q.htm",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Korelasyon nedensellik değildir.",
+      "try_action": null
+    },
+    {
+      "id": "prediction",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Tahmin",
+      "category": "Modelleme",
+      "summary": "Tahmin, geçmiş kayıtlardan yararlanarak bilinmeyen bir sonuç için kestirim yapmaktır.",
+      "purpose": "Belirsiz bir durum için ölçülebilir bir beklenti oluşturur.",
+      "when": "Tahmin anında gerçekten bilinen bilgilerle bir soru sorulduğunda.",
+      "when_not": "Kesin sonuç sözü vermek veya gelecekte öğrenilecek bilgiyi girdi yapmak için.",
+      "example": {
+        "before": "Yarın kaç sipariş geleceğini bilmiyoruz.",
+        "after": "Bir model bir sayı önerebilir; gerçekleşen sayı farklı olabilir."
+      },
+      "interpretation": "Hata payını ve yeni verinin eski veriye benzerliğini sorgula.",
+      "common_mistake": "Eğitimde iyi görünen sonucu gelecekte de aynı sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Denenmemiş kayıtlarda değerlendirme gerekir. Zamanı ve aynı kişiye ait kayıtları dikkate al; uygun ayrım olmadan başarı iddiası kurma."
+        }
+      ],
+      "related": [
+        "sample",
+        "leakage",
+        "correlation"
+      ],
+      "contexts": [
+        "model"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku model değerlendirme sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Tahmin kesin sonuç değildir; model araçları henüz mevcut değil.",
+      "try_action": null
+    },
+    {
+      "id": "leakage",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Veri sızıntısı",
+      "category": "Modelleme",
+      "summary": "Veri sızıntısı, tahmin sırasında bilinmeyecek bilginin modele veya değerlendirmeye karışmasıdır.",
+      "purpose": "Gerçekçi görünmeyen model başarısını fark etmene yardımcı olur.",
+      "when": "Veriyi hazırlarken ve modeli değerlendirirken.",
+      "when_not": "Yüksek puanın tek başına güvenilirliği kanıtladığını söylemek için.",
+      "example": {
+        "before": "Test kayıtlarını da kullanarak eksik değer doldurma kuralı seçildi.",
+        "after": "Kural yalnız eğitim bölümünden öğrenilir; test bölümüne sonradan uygulanır."
+      },
+      "interpretation": "Testten bilgi alınmışsa başarı olduğundan iyi görünebilir.",
+      "common_mistake": "Önce bütün veriyi hazırlayıp sonra ayırmanın hep güvenli olduğunu sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Doldurma, kodlama, ölçekleme ve özellik seçimi her eğitim katında öğrenilmeli. Teste tekrar tekrar bakarak ayar seçmek de ayrı değerlendirme gerektirir."
+        }
+      ],
+      "related": [
+        "missing",
+        "prediction",
+        "sample"
+      ],
+      "contexts": [
+        "model",
+        "prepare"
+      ],
+      "sources": [
+        {
+          "title": "scikit-learn — Common pitfalls",
+          "reference": "https://scikit-learn.org/stable/common_pitfalls.html#data-leakage",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Test verisiyle ayar seçme; hedefe veya geleceğe ait bilgiyi girdi yapma.",
+      "try_action": null
+    },
+    {
+      "id": "home",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Başlangıçta ne yapabilirim?",
+      "category": "Uygulama",
+      "summary": "Bir alan seçebilir, görünümü değiştirebilir veya çevrimdışı yardım okuyabilirsin.",
+      "purpose": "Mevcut araçları ve sonraki adımı bulmanı sağlar.",
+      "when": "Uygulamayı ilk açtığında.",
+      "when_not": "Henüz olmayan dosya veya analiz araçlarının çalıştığını varsaymak için.",
+      "example": {
+        "before": "Bir dosyam var ama yükleme eylemi kapalı.",
+        "after": "Yardımı okuyabilir, tema seçebilir ve altyapı denemesini çalıştırabilirsin."
+      },
+      "interpretation": "Yardım örnekleri gerçek dosyanın analizi değildir.",
+      "common_mistake": "Planlanan alanı mevcut yetenek sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Dosya yükleme ve kalıcı proje kaydı daha sonraki fazlardadır. Tema ve görünüm mevcut oturumu değiştirmez."
+        }
+      ],
+      "related": [
+        "data",
+        "learn",
+        "tasks"
+      ],
+      "contexts": [
+        "home"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku kullanım sözleşmesi",
+          "reference": "docs/UX.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Dosya açma ve analitik hesaplar henüz mevcut değil.",
+      "try_action": null
+    },
+    {
+      "id": "tasks",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Görev, ilerleme ve iptal",
+      "category": "Uygulama",
+      "summary": "Uzun iş arka planda sürer; ilerlemeyi izleyebilir veya iptal isteyebilirsin.",
+      "purpose": "Çalışan işi takip etmene yardımcı olur.",
+      "when": "Altyapı denemesini çalıştırırken.",
+      "when_not": "Deneme sonucunu veri analizi gibi yorumlamak için.",
+      "example": {
+        "before": "Bir I/O denemesi çalışıyor.",
+        "after": "Yardım açılıp kapansa da aynı iş sürer; İptal işi durdurma isteğidir."
+      },
+      "interpretation": "Toplam bilinmiyorsa yüzde gösterilmez; tamamlanan iş ve iptal ayrı durumlardır.",
+      "common_mistake": "Paneli kapatmanın işi iptal ettiğini sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "CPU ve I/O denemeleri altyapıyı sınar. Yapılandırma değişirse eski iş sonucu güncel sonuç gibi uygulanmaz."
+        }
+      ],
+      "related": [
+        "home"
+      ],
+      "contexts": [
+        "home",
+        "demo.cpu",
+        "demo.io",
+        "demo.unknown",
+        "demo.failure"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku kullanım sözleşmesi",
+          "reference": "docs/UX.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Deneme sonucu istatistik veya model sonucu değildir.",
+      "try_action": null
+    },
+    {
+      "id": "report",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Sonucu paylaşmadan önce",
+      "category": "Uygulama",
+      "summary": "Bir sonucu paylaşırken kapsamını ve sınırlamalarını da anlat.",
+      "purpose": "Sonucun yanlış anlaşılmasını azaltmana yardımcı olur.",
+      "when": "Bir bulguyu başka birine anlatırken.",
+      "when_not": "Belirsizliği gizleyip kesin sonuç izlenimi vermek için.",
+      "example": {
+        "before": "Sadece “ortalama 40” yazıyor.",
+        "after": "“Üç satışın ortalaması 40; tutarlar 10, 20, 90” diye bağlam eklenir."
+      },
+      "interpretation": "Kayıt sayısı ve kapsam olmadan aynı sayı farklı anlamlara gelebilir.",
+      "common_mistake": "Seçili kayıtları bütün veri gibi sunmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Veri sürümü, filtre, yöntem ve dışlanan kayıtlar sonuçla birlikte bulunmalı. Rapor üretme aracı henüz mevcut değil."
+        }
+      ],
+      "related": [
+        "mean-median",
+        "sample"
+      ],
+      "contexts": [
+        "report"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku kullanım sözleşmesi",
+          "reference": "docs/UX.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Rapor oluşturma henüz mevcut değil; bu metin bir rehberdir.",
+      "try_action": null
+    },
+    {
+      "id": "learn",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Yardımı kendi hızında oku",
+      "category": "Uygulama",
+      "summary": "Bir konuyu arayıp özet, örnek veya ayrıntılı rehber olarak okuyabilirsin.",
+      "purpose": "İşin yanında merak ettiğin kavramı öğrenmeni sağlar.",
+      "when": "Bir terimi veya ekranı anlamadığında.",
+      "when_not": "Bir analizin doğruluğunu yalnız bu kısa metinlerle onaylamak için.",
+      "example": {
+        "before": "Aramaya “medyan” yaz.",
+        "after": "Ortalama ve medyan makalesini aç; Bir dakikalık örnek görünümünü seç."
+      },
+      "interpretation": "Bulduğun açıklama bir öğrenme desteğidir; yöntem seçimi veri bağlamına bağlıdır.",
+      "common_mistake": "Yardımın zorunlu bir ders olduğunu düşünmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "F1 ilgili ekranı açar. Özet, örnek ve rehber aynı makaleyi farklı derinlikte gösterir. İstersen okundu ve yer imi kaydını yerel olarak açabilirsin."
+        }
+      ],
+      "related": [
+        "data",
+        "mean-median",
+        "leakage"
+      ],
+      "contexts": [
+        "learn",
+        "learn.search",
+        "learn.example"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku kullanım sözleşmesi",
+          "reference": "docs/UX.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "critical": "Kritik uyarılar her derinlikte ve gelişmiş görünümde kalır.",
+      "try_action": "learn.example"
+    }
+  ],
+  "contexts": {
+    "home": "home",
+    "data": "data",
+    "prepare": "missing",
+    "explore": "mean-median",
+    "compare": "sample",
+    "model": "prediction",
+    "report": "report",
+    "learn": "learn",
+    "demo.cpu": "tasks",
+    "demo.io": "tasks",
+    "demo.unknown": "tasks",
+    "demo.failure": "tasks",
+    "learn.search": "learn",
+    "learn.example": "learn"
+  },
+  "actions": {
+    "learn.example": {
+      "article_id": "learn",
+      "feature": "learn.search",
+      "label": "Uygulamada dene"
+    }
+  }
+}

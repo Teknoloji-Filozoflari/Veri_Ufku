@@ -3,10 +3,18 @@
 from veri_ufku.domain.contracts import Capability, ExecutionKind
 
 CAPABILITIES = {
-    "demo.cpu": Capability("demo.cpu", ExecutionKind.CPU, "integer_sum"),
-    "demo.io": Capability("demo.io", ExecutionKind.IO, "bounded_file_write"),
-    "demo.unknown": Capability("demo.unknown", ExecutionKind.IO, "unknown_total"),
-    "demo.failure": Capability("demo.failure", ExecutionKind.IO, "controlled_failure"),
+    "demo.cpu": Capability(
+        "demo.cpu", ExecutionKind.CPU, "integer_sum", help_links=("tasks",)
+    ),
+    "demo.io": Capability(
+        "demo.io", ExecutionKind.IO, "bounded_file_write", help_links=("tasks",)
+    ),
+    "demo.unknown": Capability(
+        "demo.unknown", ExecutionKind.IO, "unknown_total", help_links=("tasks",)
+    ),
+    "demo.failure": Capability(
+        "demo.failure", ExecutionKind.IO, "controlled_failure", help_links=("tasks",)
+    ),
 }
 
 

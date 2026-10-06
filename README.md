@@ -1,6 +1,6 @@
 # Veri_Ufku
 
-Yerel Linux masaüstü uygulaması. Faz 02'de tema/görünüm tercihi korunan gerçek Qt Quick uygulama kabuğu ve görev altyapısı kullanılabilir; veri içe aktarma, analiz ve proje kaydı henüz mevcut değil. Görünen ad Veri_Ufku, Python paketi `veri_ufku`, dağıtım/giriş komutu `veri-ufku`.
+Yerel Linux masaüstü uygulaması. Faz 03'te çevrimdışı Öğren merkezi, bağlama bağlı yardım, tema/görünüm tercihi korunan Qt Quick kabuğu ve görev altyapısı kullanılabilir; veri içe aktarma, analiz ve proje kaydı henüz mevcut değil. Görünen ad Veri_Ufku, Python paketi `veri_ufku`, dağıtım/giriş komutu `veri-ufku`.
 
 CPython 3.13.15 ve uv 0.12.23 ile:
 
@@ -30,8 +30,12 @@ Başsız ekran çalıştırma doğrulandı. Ajan ortamının Wayland/X11 bağlan
 
 GitHub'a ilk gönderim için normal masaüstü terminalinde `bash scripts/publish_github.sh` çalıştırın. Betik GitHub oturumu gerektiğinde tarayıcı doğrulaması başlatır, boş eski .git dizinini yedekler, main dalını gönderir ve CI sonucunu izler. Sanal ortamlar ve yerel loglar gönderilmez. Uzakta farklı bir geçmiş varsa force push yapmaz; hata metniyle durur. Kullanıcı ilk gönderimi normal terminalde tamamladı. İlk CI koşusu başarısız oldu; aynı betik yerel düzeltmeleri yeni commit ile gönderip yeni koşuyu izlemek için tekrar çalıştırılabilir. Ajanın GitHub API bağlantısı hâlâ başarısız.
 
-Faz02: solda Başlangıç/Veri/Hazırla/İncele/Karşılaştır/Model/Rapor/Öğren alanları, üstte proje/veri bağlamı, ortada kaydırılabilir çalışma alanı ve gerektiğinde sağ bilgi paneli. Dosya aç/Örnek veriyle dene henüz mevcut değil; düğme nedenleri görünürdür. Gelecek alanlar yalnız kullanılabilirlik bilgisini açar. Amaç kartları analiz çalıştırmaz.
+Faz02: solda Başlangıç/Veri/Hazırla/İncele/Karşılaştır/Model/Rapor/Öğren alanları, üstte proje/veri bağlamı, ortada kaydırılabilir çalışma alanı ve gerektiğinde sağ bilgi paneli. Dosya aç/Örnek veriyle dene henüz mevcut değil; düğme nedenleri görünürdür. Veri/analitik için gelecek alanlar kullanılabilirlik bilgisini açar; Öğren Faz03 ile çalışır. Amaç kartları analiz çalıştırmaz.
 
 Tema (açık/koyu/sistem), görünüm (başlangıç/gelişmiş) ve yazı boyutu (%100–200) üstten seçilir ve `XDG_CONFIG_HOME/veri_ufku/ui-preferences.json` içine kaydedilir. Başlangıç görünümü sonuç/hata/iptal bilgisini korur. Bozuk tercih dosyası otomatik ezilmez; görünür uyarı verir. F1 veya “Bu ne işe yarar?” paneli açar; Escape kapatıp odağı geri verir. Tab/ShiftTab, nav okları/Space ve Ctrl+1..8 temel gezinme yollarıdır.
 
-Faz02 [kanıt kaydı](docs/evidence/PHASE02.md): 720×560–1366×900, %100–200 yazı, başsız ve gerçek Wayland GUI kontrolleri; [masaüstü açık ekran](docs/evidence/phase02-desktop-1366-light-1.0-0.png), [koyu ekran](docs/evidence/phase02-desktop-1366-dark-1.0-0.png). Faz02 doğrulandı, olgunluk deneysel; Faz03 başlamadı. Uzak CI bağlantısı yukarıdaki Faz01 commit’ine aittir; Faz02 henüz uzakta çalıştırılmadı.
+Faz02 [kanıt kaydı](docs/evidence/PHASE02.md): 720×560–1366×900, %100–200 yazı, başsız ve gerçek Wayland GUI kontrolleri; [masaüstü açık ekran](docs/evidence/phase02-desktop-1366-light-1.0-0.png), [koyu ekran](docs/evidence/phase02-desktop-1366-dark-1.0-0.png). Faz02 doğrulandı, olgunluk deneysel; [Faz02 uzak CI](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37504698665) başarılı.
+
+Faz03: Öğren alanında internet olmadan konu ara, kategori veya sözlük seç; makaleyi açıp Tek cümle / Bir dakikalık örnek / Ayrıntılı rehber derinliklerini dene. F1 ilgili ekran veya odaklı işlemi açıklar; Escape yardımı kapatır. Okundu/yer imi kaydı isteğe bağlı ve yereldir. Yardım rehberindeki Uygulamada dene ayrı geçici örnek öğrenme projesi açar; analitik araçlar henüz mevcut değil. [İçerik ve katkı sözleşmesi](docs/LEARNING_CONTENT.md). Ek CI kontrolü: `uv run --frozen python scripts/check_learning.py`.
+
+Faz03 [kanıt kaydı](docs/evidence/PHASE03.md): 54 test ve gerçek Wayland kontrolü geçti; [Öğren ekranı](docs/evidence/phase03-desktop-search.png). Faz03 doğrulandı/deneysel; uzak Faz03 CI henüz koşulmadı.

@@ -17,4 +17,6 @@ Faz 00 kontrolü: `python3 scripts/check_docs.py` ve `python3 -m unittest discov
 
 Faz 01 ve sonraki oturumlarda gerçek kontroller README/docs/DEVELOPMENT.md komutlarıdır: kilitli dev kurulumu, check_docs/check_artifacts, Ruff check/format, pytest ve offscreen/software kurulu giriş noktası smoke. İlgili son kayıt docs/evidence/PHASE01.md ve ADR-005 okunmalı. Faz 01 kullanıcı masaüstü kabulü tamamlandı; remote CI 37500721689 başarı kanıtıyla kabul tamamlandı; sonraki fazı kendiliğinden başlatma.
 
-Faz02 gerçek kabuk, UI tercihleri, referans görsel incelemesi ve headless/Wayland kontrolleri uygulandı; son kayıt docs/evidence/PHASE02.md. Faz03 ve sonraki fazları kendiliğinden başlatma.
+Faz02 gerçek kabuk, UI tercihleri, referans görsel incelemesi ve headless/Wayland kontrolleri uygulandı; son kayıt docs/evidence/PHASE02.md. Faz04 ve sonraki fazları kendiliğinden başlatma.
+
+Faz03 ve sonraki her yeni ekran/capability yardımı docs/LEARNING_CONTENT.md sözleşmesiyle eklenir; `uv run --frozen python scripts/check_learning.py` gerçek kontrol listesine dahildir. İlgili son kanıt docs/evidence/PHASE03.md. Faz04 kendiliğinden başlatılmaz.

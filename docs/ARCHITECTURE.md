@@ -1,6 +1,6 @@
 # Veri_Ufku — mimari
 
-Durum: Faz00 tasarımı + Faz01 görev iskeleti + Faz02 gerçek uygulama kabuğu. [Kurallar](PROJECT_RULES.md), [tasarım brief'i](UI_DESIGN_BRIEF.md), [UX](UX.md), [sözleşmeler](CORE_CONTRACTS.md), [teknik ortam](ENVIRONMENT.md).
+Durum: Faz00 tasarımı + Faz01 görev iskeleti + Faz02 kabuk + Faz03 çevrimdışı öğrenme. [Kurallar](PROJECT_RULES.md), [tasarım brief'i](UI_DESIGN_BRIEF.md), [UX](UX.md), [sözleşmeler](CORE_CONTRACTS.md), [teknik ortam](ENVIRONMENT.md).
 
 ## Sınırlar ve bağımlılık yönü
 
@@ -59,4 +59,8 @@ UI/controller, domain/contracts/capabilities, services/demo, jobs/manager/worker
 
 ## Faz02 sunum sınırı
 
-UI tercihleri PresentationPreferences QObject’unda; tema/görünüm/yazı boyutu ayrı atomik ui-preferences.json içindedir. Mod/tema değişimi DemoSession Binding veya JobSpec’i değiştirmez. Theme.qml tek token kaynağı, Main.qml tek pencere kabuğu, ortak bileşenler UiButton/UiCombo/StateNotice/InfoPanel. Henüz dataset olmadığı için üst bağlam bunu açık söyler; gelecek navigasyon yalnız kullanılabilirlik ekranıdır. Panel açıklaması kabuk yardımıdır, Faz03 Öğren merkezi değildir. [Faz02 kanıtı](evidence/PHASE02.md).
+UI tercihleri PresentationPreferences QObject’unda; tema/görünüm/yazı boyutu ayrı atomik ui-preferences.json içindedir. Mod/tema değişimi DemoSession Binding veya JobSpec’i değiştirmez. Theme.qml tek token kaynağı, Main.qml tek pencere kabuğu, ortak bileşenler UiButton/UiCombo/StateNotice/InfoPanel. Henüz dataset olmadığı için üst bağlam bunu açık söyler; gelecek navigasyon yalnız kullanılabilirlik ekranıdır. Faz02 dönemindeki panel açıklaması yalnız kabuk yardımıydı; Faz03 ortak katalog render'ına taşındı. [Faz02 kanıtı](evidence/PHASE02.md).
+
+## Faz03 öğrenme sınırı
+
+Learning Catalog paket JSON şema1 ve düz metin bloklarını Qt/analitik kodundan bağımsız doğrular. LearningController arama, kategori, sözlük, makale/derinlik state'i ve isteğe bağlı atomik okuma işaretlerini QML'ye aktarır. InfoPanel/ArticleView aynı katalogdan okur. Ayrı ExampleWindow ve bağımsız LearningController yalnız geçici örnek öğrenme projesini açar; gerçek proje deposu veya analitik yetenek oluşturmaz. Capability help_links ve QML helpContext bağları CI'da zorunlu doğrulanır. [İçerik sözleşmesi](LEARNING_CONTENT.md).

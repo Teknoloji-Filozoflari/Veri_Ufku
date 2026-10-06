@@ -1,6 +1,6 @@
 # Veri_Ufku — ekran haritası ve kullanım akışı
 
-Faz00 ekran planı; Faz02 gerçek kabuk aşağıda kayıtlı. Veri/analiz akışları ilgili fazlara ait planlardır. [Ürün senaryoları](PRODUCT.md), [brief](UI_DESIGN_BRIEF.md), [sistem](DESIGN_SYSTEM.md), [referanslar](UI_REFERENCES.md), [üç prototip](prototypes/triptych.svg).
+Faz00 ekran planı; Faz02 gerçek kabuk ve Faz03 öğrenme akışı aşağıda kayıtlı. Veri/analiz akışları ilgili fazlara ait planlardır. [Ürün senaryoları](PRODUCT.md), [brief](UI_DESIGN_BRIEF.md), [sistem](DESIGN_SYSTEM.md), [referanslar](UI_REFERENCES.md), [üç prototip](prototypes/triptych.svg).
 
 ```mermaid
 flowchart TD
@@ -59,3 +59,7 @@ Dosya preview, tablo kalite ve analiz sonucu aynı tokenlarla tasarlandı: [SVG]
 Sekiz nav alanı yerleşimi gerçek Qt’de uygulanır; gelecek alanların merkezinde “Henüz mevcut değil” ve amaç açıklaması vardır. Başlangıçta veri açma/örnek kartları görünür fakat import hazır olmadığı için devre dışıdır; kısa amaç kartları aynı kullanılabilirlik ekranını açar. UI dosyaya dokunmaz.
 
 Başlangıç/gelişmiş tercihi sunum state’idir: sonuç/hata/iptal iki görünümde ortak, teknik kimlik/config denemeleri yalnız gelişmişte. Tema/görünüm/yazı tercihi yeniden açılışta geri gelir. Sağ panel genişte dock, darda modal Drawer; Escape/kapama odağı açana döndürür. Nav Ctrl+1..8/oklar/Space, genel Tab/ShiftTab; uzun içerik klavye odağına kaydırılır. [Gerçek ekran/Qt kanıtı](evidence/PHASE02.md).
+
+## Faz03 gerçek öğrenme akışı
+
+Öğren ekranı çevrimdışı Türkçe arama, kategori ve dokuz kavramlık sözlük sunar. Makale seçimi sağ bilgi panelini açar; özet/örnek/rehber seçimi aynı makaleyi okutur. Kritik uyarı her derinlikte ve gelişmiş görünümde katlanmadan kalır. Panel kapanması mevcut işi/sonucu/aramayı değiştirmez. İsteğe bağlı okundu/yer imi kaydı varsayılan kapalı ve yalnız açık kullanıcı eylemiyle yereldir. Uygulamada dene yalnız yardım araması için bağımsız geçici örnek öğrenme projesini açar; veri/model denemesi sunmaz. [Sözleşme](LEARNING_CONTENT.md).
