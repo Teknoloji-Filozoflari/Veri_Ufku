@@ -413,7 +413,9 @@ class ProjectController(QObject):
 
     def _result_statuses(self):
         versions = {d["version_id"]: d for d in self.draft["datasets"]}
-        latest = {d["dataset_id"]: d["version_id"] for d in self.draft["datasets"]}
+        from veri_ufku.operations.contracts import heads
+
+        latest = heads(self.draft)
         return [
             dict(
                 r,

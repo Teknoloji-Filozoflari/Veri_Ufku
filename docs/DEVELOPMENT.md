@@ -53,3 +53,7 @@ Faz07: tests/test_dataset.py ve test_dataset_gui.py referans istatistik/ID/scope
 ## Faz08 katkısı
 
 Faz08 gerçek kontroller: tests/test_quality.py ve test_quality_gui.py bağımsız değer/RowId/kapsam/snapshot/deterministik öneri, gerçek QML/spawn/iptal/roundtrip. `uv run --frozen python scripts/measure_phase08.py`100.000 kayıt, kaynak hash ve dar/geniş gerçek render ölçer; --package-root TARGET --output JSON aynı kurulu wheel yolunu çalıştırır. Standart kilitli kapılar korunur. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).
+
+## Faz09 kontrolleri
+
+`tests/test_operations.py` elle belirlenmiş değer/RowId, branch/redo/reopen, hatalı/iptal/eski/tampered çıktı, disk yayın fault injection ve gerçek SIGKILL; `tests/test_operations_gui.py` gerçek QML düğmesi/spawn/apply/undo/redo/reopen ve eski sonuç etiketi. `uv run --frozen python scripts/measure_phase09.py`100.000 kayıt full preview/apply/filtre/kaynak hash/iptal ve dar/geniş başsız render üretir; --package-root TARGET --output JSON aynı işi kurulu wheel içinde denetler. Standart kilitli kapılar korunur. [Karar](adr/012-versioned-operations-phase09.md), [kanıt](evidence/PHASE09.md).

@@ -84,3 +84,7 @@ Faz07: analytics/contracts.py/dataset.py ve worker.py, UI dataset.py/QML TableVi
 ## Faz08 katkısı
 
 Faz08: analytics/quality.py Qt bağımsız disk sayım motoru, mevcut spawn/binding/bütçe/iptal; QualityPanel.qml aynı Veri ekranında. Raporlar açık eylemle mevcut result kaydına girer; yeni şema yok. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).
+
+## Faz09 katkısı
+
+Qt bağımsız operations/contracts/engine/worker; UI operations.py ve OperationsPanel/OperationTable.qml. Tek full hesap çıktısı önce preview, sonra hash kontrollü atomik publication. Proje şema5 heads/redo kalıcı; rol metadata da tipli tarif. Result binding aktif sürüme göre güncellik gösterir. [ADR-012](adr/012-versioned-operations-phase09.md).

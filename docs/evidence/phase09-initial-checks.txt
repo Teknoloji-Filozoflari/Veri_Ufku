@@ -1,0 +1,259 @@
+2026-10-07 UTC/Europe/Istanbul ENV-09; isolated XDG, offscreen/software
+
+$ uv --cache-dir /tmp/veri-ufku-uv sync --locked --group dev
+Resolved 18 packages in 0.97ms
+Checked 17 packages in 0.16ms
+
+exit=0
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_learning.py
+PASS: 38 offline articles; 42 UI bindings; all capability links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff check src tests scripts
+All checks passed!
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff format --check src tests scripts
+80 files already formatted
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen pytest -q
+..........................................................F............. [ 31%]
+..F..................................................................... [ 63%]
+........................................................................ [ 94%]
+........FF..                                                             [100%]
+=================================== FAILURES ===================================
+________ test_schema1_fixture_open_does_not_migrate_until_explicit_save ________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-6/test_schema1_fixture_open_does0')
+
+    def test_schema1_fixture_open_does_not_migrate_until_explicit_save(tmp_path):
+        import sqlite3
+    
+        from veri_ufku.storage.project_model import decode, digest, encode
+    
+        fixture = decode(
+            (Path(__file__).parent / "fixtures/projects/schema1.json").read_bytes()
+        )
+        store = ProjectStore.create(tmp_path / "legacy")
+        root = store.root
+        store.close()
+        raw = encode(fixture)
+        commit = root / "commits" / fixture["commit_id"]
+        commit.mkdir()
+        (commit / "manifest.json").write_bytes(raw)
+        with sqlite3.connect(root / "metadata.sqlite") as db:
+            db.execute(
+                "INSERT INTO commits VALUES (?,?,?)",
+                (fixture["commit_id"], digest(raw), raw),
+            )
+        pointer = encode(
+            dict(
+                commit_id=fixture["commit_id"],
+                manifest_sha256=digest(raw),
+                format_version=1,
+            )
+        )
+        (root / "ACTIVE").write_bytes(pointer)
+        before_db = (root / "metadata.sqlite").read_bytes()
+        reader = ProjectStore.open(root, writable=False)
+        assert reader.read_only and reader.state["seed"] == 42
+        reader.close()
+        assert (root / "ACTIVE").read_bytes() == pointer
+        assert (root / "metadata.sqlite").read_bytes() == before_db
+        writer = ProjectStore.open(root)
+        assert not writer.read_only and writer.manifest["format_version"] == 1
+        assert (root / "ACTIVE").read_bytes() == pointer
+        writer.save()
+>       assert writer.manifest["format_version"] == 4
+E       assert 5 == 4
+
+tests/test_delimited.py:410: AssertionError
+_____________ test_phase02_resize_help_navigation_and_system_theme _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-6/test_phase02_resize_help_navig0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f6b7dd12f10>
+
+    def test_phase02_resize_help_navigation_and_system_theme(tmp_path, monkeypatch):
+        from PySide6.QtCore import QPointF, Qt
+        from PySide6.QtQuick import QQuickItem
+    
+        for name in ("CONFIG", "STATE", "CACHE"):
+            monkeypatch.setenv(f"XDG_{name}_HOME", str(tmp_path / name.lower()))
+        app, window, bridge = create_application()
+        preferences = app._veri_ufku_resources[-2]
+        from PySide6.QtGui import QColor, QPalette
+    
+        original_palette = app.palette()
+        try:
+            spin(app, lambda: not window.grabWindow().isNull())
+            for width, height, scale in [
+                (720, 560, 1.0),
+                (1366, 900, 1.0),
+                (720, 560, 2.0),
+            ]:
+                window.setWidth(width)
+                window.setHeight(height)
+                preferences.setTextScale(scale)
+                app.processEvents()
+                QTest.qWait(60)
+                workspace = window.findChild(QQuickItem, "workspace")
+                assert workspace.width() >= 320
+                assert workspace.height() >= 200
+                help_button = window.findChild(QQuickItem, "helpButton")
+                point = help_button.mapToScene(
+                    QPointF(help_button.width() / 2, help_button.height() / 2)
+                )
+                assert 0 <= point.x() <= window.width()
+                assert 0 <= point.y() <= window.height()
+                QTest.mouseClick(window, Qt.MouseButton.LeftButton, pos=point.toPoint())
+                spin(app, lambda: window.property("infoOpen"))
+                QTest.keyClick(window, Qt.Key.Key_Escape)
+                spin(app, lambda: not window.property("infoOpen"))
+                assert help_button.hasActiveFocus()
+            preferences.setTextScale(1.0)
+            preferences.setTheme("system")
+            # Offscreen has no OS color scheme; exercise the real palette fallback.
+            assert app.styleHints().colorScheme() == Qt.ColorScheme.Unknown
+            palette = QPalette(original_palette)
+            palette.setColor(QPalette.ColorRole.Window, QColor("#111827"))
+            app.setPalette(palette)
+            spin(app, lambda: window.property("darkTheme"))
+            palette.setColor(QPalette.ColorRole.Window, QColor("#ffffff"))
+            app.setPalette(palette)
+            spin(app, lambda: not window.property("darkTheme"))
+            first = visual_item(window.contentItem(), "nav0")
+            first.forceActiveFocus()
+            QTest.keyClick(window, Qt.Key.Key_Tab)
+            assert visual_item(window.contentItem(), "nav1").hasActiveFocus()
+            QTest.keyClick(window, Qt.Key.Key_Tab, Qt.KeyboardModifier.ShiftModifier)
+            assert first.hasActiveFocus()
+            QTest.keyClick(window, Qt.Key.Key_Down)
+            QTest.keyClick(window, Qt.Key.Key_Space)
+            spin(app, lambda: window.property("selectedSection") == 1)
+            notice = window.findChild(QQuickItem, "availabilityNotice")
+            assert not notice.isVisible()
+            assert window.findChild(QQuickItem, "chooseCsvButton").isVisible()
+            window.setProperty("selectedSection", 2)
+            app.processEvents()
+>           assert notice.isVisible()
+E           assert False
+E            +  where False = <built-in method isVisible of PySide6.QtQuick.QQuickItem object at 0x7f6b7c1cfcc0>()
+E            +    where <built-in method isVisible of PySide6.QtQuick.QQuickItem object at 0x7f6b7c1cfcc0> = <PySide6.QtQuick.QQuickItem(0x2b54a090, name="availabilityNotice", parent=0x2d6eebe0, geometry=0,0 1042x80) at 0x7f6b7c1cfcc0>.isVisible
+
+tests/test_gui.py:289: AssertionError
+______________ test_schema2_open_unchanged_explicit_migration_to3 ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-6/test_schema2_open_unchanged_ex0')
+
+    def test_schema2_open_unchanged_explicit_migration_to3(tmp_path):
+        import sqlite3
+    
+        from veri_ufku.storage.project_model import decode, digest, encode
+    
+        fixture = decode(
+            (Path(__file__).parent / "fixtures/projects/schema2.json").read_bytes()
+        )
+        store = ProjectStore.create(tmp_path / "legacy2")
+        root = store.root
+        store.close()
+        raw = encode(fixture)
+        commit = root / "commits" / fixture["commit_id"]
+        commit.mkdir()
+        (commit / "manifest.json").write_bytes(raw)
+        with sqlite3.connect(root / "metadata.sqlite") as db:
+            db.execute(
+                "INSERT INTO commits VALUES (?,?,?)",
+                (fixture["commit_id"], digest(raw), raw),
+            )
+        pointer = encode(
+            dict(
+                commit_id=fixture["commit_id"],
+                manifest_sha256=digest(raw),
+                format_version=2,
+            )
+        )
+        (root / "ACTIVE").write_bytes(pointer)
+        before = (root / "metadata.sqlite").read_bytes()
+        with closing(ProjectStore.open(root, writable=False)) as reader:
+            assert reader.manifest["format_version"] == 2
+        assert (root / "ACTIVE").read_bytes() == pointer and (
+            root / "metadata.sqlite"
+        ).read_bytes() == before
+        with closing(ProjectStore.open(root)) as writer:
+            writer.save()
+>           assert writer.manifest["format_version"] == 4
+E           assert 5 == 4
+
+tests/test_structured_import.py:491: AssertionError
+______________ test_schema3_open_unchanged_explicit_migration_to4 ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-6/test_schema3_open_unchanged_ex0')
+
+    def test_schema3_open_unchanged_explicit_migration_to4(tmp_path):
+        import sqlite3
+    
+        from veri_ufku.storage.project_model import decode, digest, encode
+    
+        fixture = decode(
+            (Path(__file__).parent / "fixtures/projects/schema3.json").read_bytes()
+        )
+        store = ProjectStore.create(tmp_path / "legacy3")
+        root = store.root
+        store.close()
+        raw = encode(fixture)
+        commit = root / "commits" / fixture["commit_id"]
+        commit.mkdir()
+        (commit / "manifest.json").write_bytes(raw)
+        with sqlite3.connect(root / "metadata.sqlite") as db:
+            db.execute(
+                "INSERT INTO commits VALUES (?,?,?)",
+                (fixture["commit_id"], digest(raw), raw),
+            )
+        pointer = encode(
+            dict(
+                commit_id=fixture["commit_id"],
+                manifest_sha256=digest(raw),
+                format_version=3,
+            )
+        )
+        (root / "ACTIVE").write_bytes(pointer)
+        before = (root / "metadata.sqlite").read_bytes()
+        with closing(ProjectStore.open(root, writable=False)) as reader:
+            assert reader.manifest["format_version"] == 3
+        assert (root / "ACTIVE").read_bytes() == pointer and (
+            root / "metadata.sqlite"
+        ).read_bytes() == before
+        with closing(ProjectStore.open(root)) as writer:
+            writer.save()
+>           assert writer.manifest["format_version"] == 4
+E           assert 5 == 4
+
+tests/test_structured_import.py:534: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_delimited.py::test_schema1_fixture_open_does_not_migrate_until_explicit_save
+FAILED tests/test_gui.py::test_phase02_resize_help_navigation_and_system_theme
+FAILED tests/test_structured_import.py::test_schema2_open_unchanged_explicit_migration_to3
+FAILED tests/test_structured_import.py::test_schema3_open_unchanged_explicit_migration_to4
+4 failed, 224 passed in 35.09s
+
+exit=1

@@ -79,11 +79,9 @@ class DatasetTableModel(QAbstractTableModel):
 
 
 def latest_datasets(state):
-    latest = {}
-    for d in state["datasets"]:
-        if d.get("import_metadata"):
-            latest[d["dataset_id"]] = d
-    return list(latest.values())
+    from veri_ufku.operations.contracts import active_datasets
+
+    return [d for d in active_datasets(state) if d.get("import_metadata")]
 
 
 class DatasetController(QObject):
@@ -451,19 +449,42 @@ class DatasetController(QObject):
                 order.split("|") if order else [],
                 analysis_unit,
             )
+            from veri_ufku.operations.contracts import activate, build
+
+            spec = build(
+                dict(
+                    columns=d["import_metadata"]["columns"], version_id=d["version_id"]
+                ),
+                "roles",
+                [self.column_id],
+                dict(
+                    semantic_metadata=result["semantic_metadata"],
+                    analysis_unit=analysis_unit,
+                ),
+            )
+            artifact = self.projects.store.manifest["artifacts"][d["snapshot_uri"]]
+            result.update(operation_id=spec.id, output_schema=artifact["schema"])
             self.projects.draft["datasets"].append(result)
             self.projects.draft["operations"].append(
                 dict(
-                    id="op:" + uid(),
-                    dataset_version_ids=[result["version_id"]],
-                    seed=self.projects.draft["seed"],
+                    id=spec.id,
+                    dataset_version_ids=[d["version_id"], result["version_id"]],
+                    seed=None,
                     capability_id="dataset.roles",
-                    parent_version=d["version_id"],
-                    column_id=self.column_id,
-                    semantic_metadata=result["semantic_metadata"],
-                    analysis_unit=analysis_unit,
+                    spec=spec.data(),
+                    output_version_id=result["version_id"],
+                    status="succeeded",
+                    applicability={"applicable": True},
+                    validation={"valid": True},
+                    impact={
+                        "scope": "full",
+                        "changed_rows": 0,
+                        "changed_columns": 1,
+                        "changed_cells": 0,
+                    },
                 )
             )
+            activate(self.projects.draft, result)
             chosen = self.column_id
             self.projects.changed.emit()
             self.column_id = chosen

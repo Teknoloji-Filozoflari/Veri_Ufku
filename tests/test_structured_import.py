@@ -452,7 +452,7 @@ store.publish_import(result,portable=True,checkpoint=die)
             assert store.commit_id == previous and not store.state["datasets"]
 
 
-def test_schema2_open_unchanged_explicit_migration_to3(tmp_path):
+def test_schema2_open_unchanged_explicit_migration_to_current(tmp_path):
     import sqlite3
 
     from veri_ufku.storage.project_model import decode, digest, encode
@@ -488,14 +488,14 @@ def test_schema2_open_unchanged_explicit_migration_to3(tmp_path):
     ).read_bytes() == before
     with closing(ProjectStore.open(root)) as writer:
         writer.save()
-        assert writer.manifest["format_version"] == 4
+        assert writer.manifest["format_version"] == 5
         assert writer.manifest["migration"][-1] == dict(
-            from_version=2, to_version=4, original_commit="legacy-v2"
+            from_version=2, to_version=5, original_commit="legacy-v2"
         )
     assert (commit / "manifest.json").read_bytes() == raw
 
 
-def test_schema3_open_unchanged_explicit_migration_to4(tmp_path):
+def test_schema3_open_unchanged_explicit_migration_to_current(tmp_path):
     import sqlite3
 
     from veri_ufku.storage.project_model import decode, digest, encode
@@ -531,9 +531,9 @@ def test_schema3_open_unchanged_explicit_migration_to4(tmp_path):
     ).read_bytes() == before
     with closing(ProjectStore.open(root)) as writer:
         writer.save()
-        assert writer.manifest["format_version"] == 4
+        assert writer.manifest["format_version"] == 5
         assert writer.manifest["migration"][-1] == dict(
-            from_version=3, to_version=4, original_commit="legacy-v3"
+            from_version=3, to_version=5, original_commit="legacy-v3"
         )
     assert (commit / "manifest.json").read_bytes() == raw
 

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "content_version": 7,
+  "content_version": 8,
   "locale": "tr",
   "articles": [
     {
@@ -1413,12 +1413,127 @@
         }
       ],
       "try_action": null
+    },
+    {
+      "id": "operation-preview",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "İşlem önizlemesi",
+      "category": "Uygulama",
+      "summary": "Uygulamadan önce yeni çalışma verisinin etkisini incele.",
+      "purpose": "Uygulamadan önce yeni çalışma verisinin etkisini incele.",
+      "when": "Veriyi değiştirmeden önce ve işlem geçmişini incelerken.",
+      "when_not": "Eski sonucu yeni veri üzerinden hesaplanmış saymak için.",
+      "example": {
+        "before": "Tutar başlığı ve üç kayıt vardır.",
+        "after": "Başlık Satış olur; aynı üç RowId korunur."
+      },
+      "interpretation": "Aynı kayıtların RowId kimlikleri korunur; görüntü sırası kimlik değildir.",
+      "common_mistake": "Görünüm filtresini kalıcı veri işlemi veya örnek tabloyu tam veri saymak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → işlem seç → Önizle → önce/sonra tablo, şema ve tam veri etkisi → Uygula ve projeye kaydet. Geçmişte adımın öncesine dönüp yeni parametrelerle yeni dal açabilirsin."
+        }
+      ],
+      "critical": "Tablolar ilk200 kayıtla sınırlıdır; etki sayımları tam veri üzerinden hesaplanır. Önizleme kaynağı değiştirmez.",
+      "related": [
+        "operation-history",
+        "source-working"
+      ],
+      "contexts": [
+        "operation-preview"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "operation-history",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "İşlem geçmişi ve geri alma",
+      "category": "Uygulama",
+      "summary": "Geri alma önceki sürümü, yineleme aynı kayıtlı sürümü açar.",
+      "purpose": "Geri alma önceki sürümü, yineleme aynı kayıtlı sürümü açar.",
+      "when": "Veriyi değiştirmeden önce ve işlem geçmişini incelerken.",
+      "when_not": "Eski sonucu yeni veri üzerinden hesaplanmış saymak için.",
+      "example": {
+        "before": "Kaynak → yeniden adlandır → filtre.",
+        "after": "Geri al filtre öncesine döner; yinele aynı RowId üyeliğini geri getirir."
+      },
+      "interpretation": "Aynı kayıtların RowId kimlikleri korunur; görüntü sırası kimlik değildir.",
+      "common_mistake": "Görünüm filtresini kalıcı veri işlemi veya örnek tabloyu tam veri saymak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → işlem seç → Önizle → önce/sonra tablo, şema ve tam veri etkisi → Uygula ve projeye kaydet. Geçmişte adımın öncesine dönüp yeni parametrelerle yeni dal açabilirsin."
+        }
+      ],
+      "critical": "Önceki adımda yeni işlem açmak yineleme zincirini temizler; eski dal ve sonuçlar silinmez. Sonuç sürümleri yeni veriye taşınmaz.",
+      "related": [
+        "operation-preview"
+      ],
+      "contexts": [
+        "operation-history"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "source-working",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Kaynak ve çalışma verisi",
+      "category": "Uygulama",
+      "summary": "Kaynak değişmez, seçtiğin dönüşümler yeni çalışma sürümleri üretir.",
+      "purpose": "Kaynak değişmez, seçtiğin dönüşümler yeni çalışma sürümleri üretir.",
+      "when": "Veriyi değiştirmeden önce ve işlem geçmişini incelerken.",
+      "when_not": "Eski sonucu yeni veri üzerinden hesaplanmış saymak için.",
+      "example": {
+        "before": "Özgün CSV ve ilk içe aktarma snapshotı vardır.",
+        "after": "Filtrelenmiş çalışma snapshotı ayrı saklanır."
+      },
+      "interpretation": "Aynı kayıtların RowId kimlikleri korunur; görüntü sırası kimlik değildir.",
+      "common_mistake": "Görünüm filtresini kalıcı veri işlemi veya örnek tabloyu tam veri saymak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → işlem seç → Önizle → önce/sonra tablo, şema ve tam veri etkisi → Uygula ve projeye kaydet. Geçmişte adımın öncesine dönüp yeni parametrelerle yeni dal açabilirsin."
+        }
+      ],
+      "critical": "Uygula ve geri al/yinele proje taslağını da kaydeder. Kaynak dosyaya yazılmaz. Eski analiz güncel değil etiketiyle korunur.",
+      "related": [
+        "operation-preview"
+      ],
+      "contexts": [
+        "source-working"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-06"
+        }
+      ],
+      "try_action": null
     }
   ],
   "contexts": {
     "home": "home",
     "data": "data",
-    "prepare": "missing",
+    "prepare": "operation-preview",
     "explore": "mean-median",
     "compare": "sample",
     "model": "prediction",
@@ -1459,7 +1574,13 @@
     "duplicates": "duplicates",
     "missing-mechanism": "missing-mechanism",
     "outliers": "outliers",
-    "dataset.quality": "quality"
+    "dataset.quality": "quality",
+    "operation-preview": "operation-preview",
+    "operation-history": "operation-history",
+    "source-working": "source-working",
+    "operation.rename": "operation-preview",
+    "operation.drop": "operation-preview",
+    "operation.filter": "operation-preview"
   },
   "actions": {
     "learn.example": {

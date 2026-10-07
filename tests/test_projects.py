@@ -336,9 +336,9 @@ def test_legacy_fixture_migrates_to_copy_and_preserves_original(tmp_path):
     assert legacy.state["seed"] is None
     migrated = legacy.save_as(tmp_path / "migrated")
     assert migrated.state["name"] == "Eski proje"
-    assert migrated.manifest["format_version"] == 4
+    assert migrated.manifest["format_version"] == 5
     assert migrated.manifest["migration"] == [
-        {"from_version": 0, "to_version": 4, "original_commit": "legacy-0001"}
+        {"from_version": 0, "to_version": 5, "original_commit": "legacy-0001"}
     ]
     migrated.close()
     legacy.close()

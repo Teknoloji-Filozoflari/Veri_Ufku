@@ -6,7 +6,7 @@ import re
 import uuid
 from pathlib import PurePosixPath
 
-SCHEMA_VERSION = 4
+SCHEMA_VERSION = 5
 MAX_MANIFEST = 4 * 1024 * 1024
 MAX_ARTIFACT = 4 * 1024**3
 
@@ -108,7 +108,7 @@ def new_state(name="Adsız proje"):
 
 
 def validate_state(state):
-    if not isinstance(state, dict) or set(state) != set(new_state()):
+    if not isinstance(state, dict) or set(state) - {"workflow"} != set(new_state()):
         raise ProjectError("Proje durum alanları eksik veya bilinmiyor.")
     if not isinstance(state["name"], str) or not 1 <= len(state["name"]) <= 200:
         raise ProjectError("Proje adı 1–200 karakter olmalı.")
@@ -167,6 +167,8 @@ def validate_state(state):
                 "semantic_metadata",
                 "analysis_unit",
                 "parent_version_ids",
+                "operation_id",
+                "output_schema",
             }
         ):
             raise ProjectError("Dataset alanları geçersiz.")
@@ -230,14 +232,34 @@ def validate_state(state):
         validate_semantics(dataset)
         for parent in dataset.get("parent_version_ids", []):
             old = previous.get(parent)
-            if not old or any(
-                old.get(k) != dataset.get(k)
-                for k in ("dataset_id", "source_id", "snapshot_uri", "import_metadata")
+            if (
+                not old
+                or old["dataset_id"] != dataset["dataset_id"]
+                or (
+                    not dataset.get("operation_id")
+                    and any(
+                        old.get(k) != dataset.get(k)
+                        for k in (
+                            "dataset_id",
+                            "source_id",
+                            "snapshot_uri",
+                            "import_metadata",
+                        )
+                    )
+                )
             ):
                 raise ProjectError(
                     "Metadata parent önceki aynı dataset ve fiziksel snapshot sürümü olmalı."
                 )
         previous[dataset["version_id"]] = dataset
+    from veri_ufku.operations.contracts import OperationSpec, validate_workflow
+
+    validate_workflow(state)
+    for d in state["datasets"]:
+        if d.get("operation_id"):
+            entity_id(d["operation_id"], "op")
+            if not isinstance(d.get("output_schema"), dict):
+                raise ProjectError("İşlem çıktı şeması eksik.")
     for key in ("operations", "results"):
         ids = set()
         for record in state[key]:
@@ -251,6 +273,10 @@ def validate_state(state):
             if record["id"] in ids:
                 raise ProjectError("İşlem/sonuç kimliği tekrarlandı.")
             ids.add(record["id"])
+            if "spec" in record:
+                spec = OperationSpec.from_dict(record["spec"])
+                if spec.id != record["id"] or spec.input_version_id not in versions:
+                    raise ProjectError("İşlem tarifi sürüm bağı geçersiz.")
             if (
                 not isinstance(record["dataset_version_ids"], list)
                 or not set(record["dataset_version_ids"]) <= versions
@@ -260,6 +286,33 @@ def validate_state(state):
                 type(record["seed"]) is not int or not 0 <= record["seed"] < 2**32
             ):
                 raise ProjectError("İşlem/sonuç seed geçersiz.")
+    from veri_ufku.operations.contracts import validate
+
+    by_version = {d["version_id"]: d for d in state["datasets"]}
+    by_operation = {o["id"]: o for o in state["operations"]}
+    for d in state["datasets"]:
+        if d.get("operation_id"):
+            op = by_operation.get(d["operation_id"])
+            parents = d.get("parent_version_ids", [])
+            if (
+                not op
+                or len(parents) != 1
+                or op.get("output_version_id") != d["version_id"]
+            ):
+                raise ProjectError("İşlem çıktısının kalıcı tarif bağı eksik.")
+            parent = by_version[parents[0]]
+            spec = validate(
+                op.get("spec", {}),
+                dict(
+                    columns=parent["import_metadata"]["columns"],
+                    version_id=parent["version_id"],
+                ),
+            )
+            if (
+                list(spec.output_schema) != d["import_metadata"]["columns"]
+                or d["source_id"] != parent["source_id"]
+            ):
+                raise ProjectError("İşlem çıktı kolon/kaynak bağı uyuşmuyor.")
     if len(encode(state)) > MAX_MANIFEST // 2:
         raise ProjectError("Proje durum boyutu sınırı aşıldı.")
 
@@ -268,7 +321,7 @@ def _validate_manifest(manifest):
     if not isinstance(manifest, dict):
         raise ProjectError("Manifest nesne olmalı.")
     version = manifest.get("format_version")
-    if type(version) is not int or version not in (0, 1, 2, 3, SCHEMA_VERSION):
+    if type(version) is not int or version not in (0, 1, 2, 3, 4, SCHEMA_VERSION):
         raise ProjectError(
             "Bilinmeyen proje şema sürümü. Uyumlu bir Veri_Ufku sürümüyle açın; proje değiştirilmedi."
         )
@@ -310,6 +363,10 @@ def _validate_manifest(manifest):
         for d in state["datasets"]
     ):
         raise ProjectError("Sütun rolü metadata şema4 gerektirir.")
+    if version < 5 and (
+        "workflow" in state or any("operation_id" in d for d in state["datasets"])
+    ):
+        raise ProjectError("İşlem geçmişi proje şema5 gerektirir.")
     artifacts = manifest["artifacts"]
     if not isinstance(artifacts, dict) or len(artifacts) > 10000:
         raise ProjectError("Artifact listesi geçersiz.")
@@ -367,6 +424,25 @@ def _validate_manifest(manifest):
                 raise ProjectError(
                     "Dataset/karantina kayıt sayıları metadata ile uyuşmuyor."
                 )
+            if dataset.get("operation_id"):
+                if dataset["output_schema"] != artifacts[uri]["schema"]:
+                    raise ProjectError("İşlem çıktı şeması artifact ile uyuşmuyor.")
+                parents = dataset.get("parent_version_ids", [])
+                operation = next(
+                    (
+                        o
+                        for o in state["operations"]
+                        if o["id"] == dataset["operation_id"]
+                    ),
+                    None,
+                )
+                if (
+                    not operation
+                    or operation.get("spec", {}).get("input_version_id") not in parents
+                    or operation.get("output_version_id") != dataset["version_id"]
+                ):
+                    raise ProjectError("İşlem çıktı/giriş sürüm bağı geçersiz.")
+                continue
             from veri_ufku.importers.delimited import (
                 INTERNAL,
                 TYPES,

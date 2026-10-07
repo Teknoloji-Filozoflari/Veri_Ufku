@@ -147,3 +147,29 @@ CAPABILITIES["dataset.quality"] = Capability(
     requirement_ids=tuple("F08-S00" + str(i) for i in range(1, 7)),
     evidence_refs=("docs/evidence/PHASE08.md",),
 )
+
+for action in ("rename", "drop", "filter"):
+    CAPABILITIES["operation." + action] = Capability(
+        "operation." + action,
+        ExecutionKind.CPU,
+        "versioned_" + action,
+        kind="transform",
+        maturity="deneysel",
+        backend="polars",
+        input_schema="DatasetVersion/v5",
+        output_type="DatasetVersion/v5",
+        parameter_schema="OperationSpec/v1",
+        deterministic_policy="preserve identities; immutable input; full-data preview artifact publication",
+        supports=(
+            ("null", True),
+            ("decimal", True),
+            ("tz", True),
+            ("streaming", True),
+            ("cancel", True),
+            ("safe_serialization", True),
+        ),
+        limits=(("columns", 256), ("preview_rows", 200)),
+        help_links=("operation-preview", "operation-history", "source-working"),
+        requirement_ids=tuple("F09-S00" + str(i) for i in range(1, 8)),
+        evidence_refs=("docs/evidence/PHASE09.md",),
+    )

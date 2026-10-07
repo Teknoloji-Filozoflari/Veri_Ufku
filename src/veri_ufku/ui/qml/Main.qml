@@ -311,13 +311,20 @@ ApplicationWindow {
                     visible: window.selectedSection === 1 && dataTabs.currentIndex === 1
                     onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                 }
+                OperationsPanel {
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.selectedSection === 2
+                    onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                }
                 // Future sections contain honest availability information, no simulated data.
                 StateNotice {
                     objectName: "availabilityNotice"
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.selectedSection !== 0 && window.selectedSection !== 1 && window.selectedSection !== 7
+                    visible: window.selectedSection !== 0 && window.selectedSection !== 1 && window.selectedSection !== 2 && window.selectedSection !== 7
                     kind: "unavailable"
                     heading: qsTranslate("Shell", "Not available yet")
                     detail: window.descriptions[window.selectedSection]

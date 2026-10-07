@@ -13,7 +13,7 @@ Ana kayıt [REQUIREMENTS_MATRIX](REQUIREMENTS_MATRIX.md). Tarih 2026-10-06. Bu �
 | 06 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F06 |
 | 07 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F07 |
 | 08 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F08 |
-| 09 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F09 |
+| 09 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F09 |
 | 10 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F10 |
 | 11 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F11 |
 | 12 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F12 |
@@ -61,3 +61,5 @@ Faz08 kalite merkezi uygulandı/doğrulandı/deneysel: 212 pytest,9 unittest, be
 Faz08 uzak CI (2026-10-06 UTC / 2026-10-07 Europe/Istanbul): [37532581621](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37532581621), Linux işi112505393392,1m12s, tüm adımlar success. F08-CI-REMOTE / ENV-CI-08; [kanıt](evidence/PHASE08.md#e08-ci-remote).
 
 Faz08 CI commit eşlemesi gh API ile doğrulandı:37532581621 → e9fd13f41afb83daaca1c3790e8dc1e14a58d3cb. Commit mesajında Faz03 yazsa da commit ağacı Faz08 kalite motoru/ekranı/testlerini içeriyor. [Kanıt](evidence/PHASE08.md#e08-ci-remote).
+
+Faz09 uygulandı/doğrulandı/deneysel: tipli OperationSpec1, immutable rename/drop/filter, full preview çıktısının aynı hash kontrollü yayını, şema5 kalıcı heads/redo ve eski sonuç güncelliği. 228 pytest/9 unittest, kilitli kapılar ve kurulu Linux wheel100.000 kayıt işlem/filtre/iptal/undo/redo/reopen geçti. Beş gerçek SIGKILL ve beş yayın fault injection eski veya tam yeni sürümü korudu. Elle düzenleme D-01 seçilmedi; future sort/join/explode/aggregate/dedup yalnız köken sözleşmesi. Yeni kullanıcı masaüstü/remote CI/minimum donanım ayrı doğrulanmadı. [Kanıt](evidence/PHASE09.md). Faz10 başlamadı.

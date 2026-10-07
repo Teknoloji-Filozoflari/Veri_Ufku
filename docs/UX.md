@@ -83,3 +83,7 @@ Faz07: Veri → Veri tablosu → Tabloyu aç/yenile. Sütun arama/gizle/seç; gl
 ## Faz08 katkısı
 
 Veri → Veri kalitesi → dataset/miktar/kapsam/amaç → isteğe bağlı seçili tekrar anahtarı ve kurallar → Kaliteyi tara. Bulgu gerekçesi, sayım/oran, örnek, seçenek ve yardım aynı kartta; aday/gözlem/ihlal metinle ayrılır. Raporu proje taslağına ekle → Projeyi kaydet; yeniden açıldığında aynı sürümün raporu görünür. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).
+
+## Faz09 gerçek işlem akışı
+
+Hazırla → dataset/rename/drop/filter → Önizle → tam veri etki sayısı, önce/sonra şema ve first200 tablo → Uygula ve projeye kaydet. Kalıcı filtre koşulları Veri tablosunda hazırlanır; görünüm sıralaması kalıcı filtre hesabına karışmaz. Geçmişte Geri al/Yinele veya adımın öncesine dön; yeni işlem eski dalı korur, redo zinciri temizlenir. Sonuçların veri sürümü ve “güncel değil” etiketi aynı ekrandadır. Kaynak farkı/önizleme/geçmiş yardımı bağlamlıdır. [Karar](adr/012-versioned-operations-phase09.md).

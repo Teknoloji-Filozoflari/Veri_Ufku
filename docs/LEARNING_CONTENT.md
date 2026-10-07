@@ -68,3 +68,7 @@ Faz07: içerik sürümü6/toplam31 makale; sözlük14 kavram. Tür/rol, unique, 
 ## Faz08 katkısı
 
 İçerik7: kalite, meşru tekrar, eksik veri mekanizması, aykırı gözlem için dört makale (toplam35); dataset.quality ve dört kavram bağı. Yardım hiçbir tarama/düzeltme başlatmaz; yeni try_action yok. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).
+
+## Faz09 katkısı
+
+İçerik8/toplam38 makale; önizleme, işlem geçmişi/geri alma ve kaynak/çalışma verisi farkı. prepare/operation.rename/drop/filter bağları; yeni try_action yok, sözlük18 korunur. [Kanıt](evidence/PHASE09.md#e09-help).

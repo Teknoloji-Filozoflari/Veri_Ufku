@@ -24,6 +24,7 @@ def create_application():
     from veri_ufku.ui.dataset import DatasetController
     from veri_ufku.ui.imports import ImportController
     from veri_ufku.ui.learning import LearningController
+    from veri_ufku.ui.operations import OperationsController
     from veri_ufku.ui.preferences import PresentationPreferences
     from veri_ufku.ui.projects import ProjectController
 
@@ -65,6 +66,11 @@ def create_application():
     data_view = DatasetController(
         projects, paths.cache / "dataset", settings.budget, engine
     )
+    operations = OperationsController(
+        data_view, projects, paths.cache / "operations", settings.budget, engine
+    )
+    engine._operations_resources = operations
+    engine.rootContext().setContextProperty("operations", operations)
     engine._dataset_resources = data_view
     engine.rootContext().setContextProperty("dataView", data_view)
     engine._imports_resources = imports
@@ -92,6 +98,7 @@ def create_application():
         controller.shutdownReady.connect(window.close)
 
     def cleanup():
+        operations.shutdown()
         data_view.shutdown()
         imports.shutdown()
         projects.shutdown()

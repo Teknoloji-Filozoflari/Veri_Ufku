@@ -548,6 +548,100 @@ class ProjectStore:
         self.pending[uri] = (path, info)
         return uri
 
+    def publish_operation(self, result, *, checkpoint=lambda point: None):
+        """Adopt a completed preview through the existing sole ACTIVE publication path."""
+        self._guard()
+        import polars as pl
+
+        from veri_ufku.operations.contracts import activate, active_datasets
+        from veri_ufku.operations.engine import transformed_dataset
+
+        previous, pending = copy.deepcopy(self.state), dict(self.pending)
+        try:
+            parent = next(
+                (
+                    d
+                    for d in active_datasets(self.state)
+                    if d["version_id"] == result["spec"]["input_version_id"]
+                ),
+                None,
+            )
+            if not parent:
+                raise ProjectError(
+                    "Önizleme eski veri sürümüne bağlı; yeniden önizleyin."
+                )
+            source_artifact = self.manifest["artifacts"][parent["snapshot_uri"]]
+            if file_hash(self.path(parent["snapshot_uri"])) != {
+                k: source_artifact[k] for k in ("sha256", "size")
+            }:
+                raise ProjectError("Giriş snapshot değişmiş; işlem uygulanmadı.")
+            path = Path(result["path"])
+            if path.is_symlink() or file_hash(path) != result["fingerprint"]:
+                raise ProjectError("Önizleme çıktısı değişmiş; işlem uygulanmadı.")
+            if (
+                path.stat().st_size > MAX_ARTIFACT
+                or shutil.disk_usage(self.base).free
+                < path.stat().st_size * 2 + 64 * 1024**2
+            ):
+                raise ProjectError("İşlem yayını için disk alanı yetersiz.")
+            tx = self.path("staging") / uid()
+            tx.mkdir(mode=0o700)
+            output = tx / "operation.parquet"
+            with open(path, "rb") as stream, open(output, "xb") as target:
+                while block := stream.read(1024 * 1024):
+                    target.write(block)
+                    checkpoint("operation_copy_chunk")
+            if file_hash(output) != result["fingerprint"]:
+                raise ProjectError("İşlem çıktısı kopyalama sırasında değişti.")
+            schema = {k: str(v) for k, v in pl.read_parquet_schema(output).items()}
+            count = (
+                pl.scan_parquet(output)
+                .select(pl.len())
+                .collect(engine="streaming")
+                .item()
+            )
+            if (
+                schema != result["output_schema"]
+                or count != result["impact"]["after_rows"]
+            ):
+                raise ProjectError("İşlem çıktı şeması/sayımı doğrulanamadı.")
+            uri = "snapshots/" + uid() + ".parquet"
+            self.pending[uri] = (
+                output,
+                dict(
+                    **result["fingerprint"], kind="parquet", rows=count, schema=schema
+                ),
+            )
+            dataset = transformed_dataset(parent, result, uri)
+            self.state["datasets"].append(dataset)
+            self.state["operations"].append(
+                dict(
+                    id=result["spec"]["id"],
+                    dataset_version_ids=[parent["version_id"], dataset["version_id"]],
+                    seed=None,
+                    spec=result["spec"],
+                    output_version_id=dataset["version_id"],
+                    capability_id="operation." + result["spec"]["kind"],
+                    status="succeeded",
+                    applicability=result["applicability"],
+                    validation=result["validation"],
+                    impact=result["impact"],
+                    lineage=result["lineage"],
+                    provenance=result["provenance"],
+                )
+            )
+            activate(self.state, dataset)
+            self.save(checkpoint=checkpoint)
+            return dataset
+        except BaseException:
+            pointer = decode(self._read("ACTIVE", 4096))
+            if pointer["commit_id"] != self.commit_id:
+                self._load("ACTIVE")
+                self.pending.clear()
+            else:
+                self.state, self.pending = previous, pending
+            raise
+
     def publish_import(self, result, *, portable=False, checkpoint=lambda point: None):
         """Publish only a completed immutable import; retain prior state on failure."""
         self._guard()
@@ -731,7 +825,9 @@ class ProjectStore:
     def results_status(self):
         statuses = self.source_statuses()
         versions = {d["version_id"]: d for d in self.state["datasets"]}
-        latest = {d["dataset_id"]: d["version_id"] for d in self.state["datasets"]}
+        from veri_ufku.operations.contracts import heads
+
+        latest = heads(self.state)
         return [
             dict(
                 result,

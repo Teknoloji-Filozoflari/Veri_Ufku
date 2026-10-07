@@ -120,3 +120,7 @@ Faz07: Role fiziksel type değildir. ColumnId semantik metadata ve parent dv; ay
 ## Faz08 katkısı
 
 Faz08 kalite: full/filtered/sample ve used/population/dataset n ayrı; bulgu observation/candidate/violation, ilk5 RowId örnekleri ve taranan kayıt paydası. İhlal açık kullanıcı kuralına göredir. Öneri deterministik id/reason/precondition/impact/operation_id/learning_id/available taşır; olmayan işlem available=false. Tek puan ve otomatik veri değişikliği yok. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).
+
+## Faz09 uygulama bağı
+
+OperationSpec/v1 + RowLineageSpec/v1 `operations/contracts.py`; full preview/apply ortak çıktı `operations/engine.py`. applicability/validation/impact/status/provenance yürütme kaydında, yöntem/schema/input/ColumnId/output_schema tarifte. DatasetVersion5 operation_id/output_schema ve immutable parent; workflow.heads/redo state içinde kalıcı. Rename/drop/filter çalışır, roles aynı metadata geçmişindedir. Future sort/join/explode/aggregate/dedup yalnız tipli köken sözleşmesidir. [ADR-012](adr/012-versioned-operations-phase09.md), [kanıt](evidence/PHASE09.md).

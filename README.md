@@ -1,6 +1,6 @@
 # Veri_Ufku
 
-Yerel Linux masaüstü uygulaması. Faz 06'da CSV/TSV, JSON, JSONL/NDJSON, XLSX ve Parquet dosya seçme, sürükleyip bırakma, ayarlı önizleme ve doğrulanmış içe aktarma; Faz 04'te proje oluşturma/açma/kaydetme/farklı kaydetme/son projeler; çevrimdışı Öğren merkezi, tema/görünüm tercihi korunan Qt Quick kabuğu ve görev altyapısı kullanılabilir. Analiz yetenekleri henüz mevcut değil. Görünen ad Veri_Ufku, Python paketi `veri_ufku`, dağıtım/giriş komutu `veri-ufku`.
+Yerel Linux masaüstü uygulaması. Faz09 sürümlü işlem motoru, önizleme ve geri alma; Faz08 kalite merkezi ve Faz07 veri tablosu/profil kullanılabilir. Faz 06'da CSV/TSV, JSON, JSONL/NDJSON, XLSX ve Parquet dosya seçme, sürükleyip bırakma, ayarlı önizleme ve doğrulanmış içe aktarma; Faz 04'te proje oluşturma/açma/kaydetme/farklı kaydetme/son projeler; çevrimdışı Öğren merkezi, tema/görünüm tercihi korunan Qt Quick kabuğu ve görev altyapısı kullanılabilir. Analiz yetenekleri henüz mevcut değil. Görünen ad Veri_Ufku, Python paketi `veri_ufku`, dağıtım/giriş komutu `veri-ufku`.
 
 CPython 3.13.15 ve uv 0.12.23 ile:
 
@@ -58,3 +58,5 @@ Faz06: Veri ekranında CSV/TSV yanında JSON, JSONL/NDJSON, XLSX ve Parquet dosy
 Faz07: **Veri → Veri tablosu → Tabloyu aç / yenile**. Sütunu seçerek sıralama, filtre, gizleme, rol/birim ve profil kapsamını düzenleyin. Rol/profil taslağı için **Projeyi kaydet** kullanın. Tablo salt okunur; filtre analiz dataset’ini değiştirmez. [Kapsam ve kanıt](docs/evidence/PHASE07.md).
 
 Faz08: **Veri → Veri kalitesi**. Tarama miktarı/kapsamı/amacı seçin; isteğe bağlı tekrar anahtarı ve açık kurallar ekleyin. **Kaliteyi tara**, sonra bulgu gerekçesi ve yardımını inceleyin. **Raporu proje taslağına ekle → Projeyi kaydet** raporu saklar. Tarama ve öneriler veriyi değiştirmez; düzeltme işlemleri henüz mevcut değil. [Kanıt](docs/evidence/PHASE08.md).
+
+Faz09: **Hazırla → Sütunu yeniden adlandır / Sütunu çıkar / Görünüm filtrelerini veriye uygula → Önizle → Uygula ve projeye kaydet**. Filtreyi önce Veri → Veri tablosunda hazırlayın. Önce/sonra tablolar ilk200 kayıttır; etki sayımları tam veri üzerindendir. **Geri al / Yinele** kalıcı sürümleri açar; eski adımın öncesine dönüp yeni işlem oluşturmak eski dalı korur, redo zincirini temizler. Eski sonuçlar güncel değil etiketiyle kalır. Bu eylemler proje taslağını da kaydeder; kaynak değiştirilmez, elle hücre/satır düzenleme seçilmediği için tablo salt okunur kalır. [Faz09 kanıtı](docs/evidence/PHASE09.md).

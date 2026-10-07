@@ -286,6 +286,10 @@ def test_phase02_resize_help_navigation_and_system_theme(tmp_path, monkeypatch):
         assert window.findChild(QQuickItem, "chooseCsvButton").isVisible()
         window.setProperty("selectedSection", 2)
         app.processEvents()
+        assert not notice.isVisible()
+        assert window.findChild(QQuickItem, "operationPreview").isVisible()
+        window.setProperty("selectedSection", 3)
+        app.processEvents()
         assert notice.isVisible()
         assert notice.property("heading") == "Henüz mevcut değil"
         QTest.keyClick(window, Qt.Key.Key_1, Qt.KeyboardModifier.ControlModifier)

@@ -40,7 +40,7 @@ def test_catalog_offline_search_turkish_categories_glossary_and_sources():
     )
     assert all(a["critical"] and a["sources"] for a in catalog.articles.values())
     assert catalog.article_for("model") == "prediction"
-    assert catalog.article_for("prepare") == "missing"
+    assert catalog.article_for("prepare") == "operation-preview"
     assert catalog.article_for("demo.io") == "tasks"
     assert validate_bindings(ROOT, catalog) >= 6
 
