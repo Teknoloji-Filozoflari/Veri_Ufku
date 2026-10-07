@@ -6,7 +6,7 @@ import re
 import uuid
 from pathlib import PurePosixPath
 
-SCHEMA_VERSION = 5
+SCHEMA_VERSION = 7
 MAX_MANIFEST = 4 * 1024 * 1024
 MAX_ARTIFACT = 4 * 1024**3
 
@@ -167,8 +167,11 @@ def validate_state(state):
                 "semantic_metadata",
                 "analysis_unit",
                 "parent_version_ids",
+                "input_version_ids",
                 "operation_id",
                 "output_schema",
+                "lineage_uri",
+                "forked_from_version_id",
             }
         ):
             raise ProjectError("Dataset alanları geçersiz.")
@@ -176,11 +179,24 @@ def validate_state(state):
         entity_id(dataset["version_id"], "dv")
         if dataset["version_id"] in versions or dataset["source_id"] not in seen:
             raise ProjectError("Dataset sürümü veya kaynak bağı geçersiz.")
+        if "input_version_ids" in dataset:
+            inputs = dataset["input_version_ids"]
+            if (
+                not isinstance(inputs, list)
+                or not 1 <= len(inputs) <= 2
+                or any(v not in versions for v in inputs)
+                or not dataset.get("operation_id")
+            ):
+                raise ProjectError(
+                    "Dataset girdileri önceki değişmez sürümlere bağlı olmalı."
+                )
         versions.add(dataset["version_id"])
         if dataset["snapshot_uri"] is not None:
             relative(dataset["snapshot_uri"])
         if dataset.get("quarantine_uri"):
             relative(dataset["quarantine_uri"])
+        if dataset.get("lineage_uri"):
+            relative(dataset["lineage_uri"])
         if "import_metadata" in dataset:
             m = dataset["import_metadata"]
             if not isinstance(m, dict) or set(m) != {
@@ -251,6 +267,27 @@ def validate_state(state):
                 raise ProjectError(
                     "Metadata parent önceki aynı dataset ve fiziksel snapshot sürümü olmalı."
                 )
+        if dataset.get("forked_from_version_id"):
+            source = previous.get(dataset["forked_from_version_id"])
+            if (
+                not source
+                or dataset.get("parent_version_ids")
+                or dataset.get("operation_id")
+                or source["dataset_id"] == dataset["dataset_id"]
+                or any(
+                    dataset.get(k) != source.get(k)
+                    for k in (
+                        "snapshot_uri",
+                        "source_id",
+                        "import_metadata",
+                        "semantic_metadata",
+                        "analysis_unit",
+                    )
+                )
+            ):
+                raise ProjectError(
+                    "Kopya dataset kökü değişmez giriş sürümünü tam korumalı."
+                )
         previous[dataset["version_id"]] = dataset
     from veri_ufku.operations.contracts import OperationSpec, validate_workflow
 
@@ -301,13 +338,41 @@ def validate_state(state):
             ):
                 raise ProjectError("İşlem çıktısının kalıcı tarif bağı eksik.")
             parent = by_version[parents[0]]
+            binding_parent = parent
+            if op.get("spec", {}).get("destination") == "copy":
+                if (
+                    parent.get("forked_from_version_id")
+                    != op["spec"]["input_version_id"]
+                ):
+                    raise ProjectError("Kopya işlem giriş bağı geçersiz.")
+                binding_parent = by_version[parent["forked_from_version_id"]]
             spec = validate(
                 op.get("spec", {}),
                 dict(
-                    columns=parent["import_metadata"]["columns"],
-                    version_id=parent["version_id"],
+                    columns=binding_parent["import_metadata"]["columns"],
+                    settings=binding_parent["import_metadata"]["settings"],
+                    version_id=binding_parent["version_id"],
+                    **(
+                        {
+                            "secondary": {
+                                "version_id": other["version_id"],
+                                "columns": other["import_metadata"]["columns"],
+                                "settings": other["import_metadata"]["settings"],
+                            }
+                        }
+                        if (
+                            other := by_version.get(
+                                op.get("spec", {})
+                                .get("parameters", {})
+                                .get("secondary_version_id")
+                            )
+                        )
+                        else {}
+                    ),
                 ),
             )
+            if list(spec.input_version_ids) != d.get("input_version_ids", []):
+                raise ProjectError("Dataset giriş sürümü ilişkileri uyuşmuyor.")
             if (
                 list(spec.output_schema) != d["import_metadata"]["columns"]
                 or d["source_id"] != parent["source_id"]
@@ -321,7 +386,7 @@ def _validate_manifest(manifest):
     if not isinstance(manifest, dict):
         raise ProjectError("Manifest nesne olmalı.")
     version = manifest.get("format_version")
-    if type(version) is not int or version not in (0, 1, 2, 3, 4, SCHEMA_VERSION):
+    if type(version) is not int or version not in (0, 1, 2, 3, 4, 5, 6, SCHEMA_VERSION):
         raise ProjectError(
             "Bilinmeyen proje şema sürümü. Uyumlu bir Veri_Ufku sürümüyle açın; proje değiştirilmedi."
         )
@@ -367,6 +432,20 @@ def _validate_manifest(manifest):
         "workflow" in state or any("operation_id" in d for d in state["datasets"])
     ):
         raise ProjectError("İşlem geçmişi proje şema5 gerektirir.")
+    if version < 6 and any(
+        d.get("lineage_uri") or d.get("forked_from_version_id")
+        for d in state["datasets"]
+    ):
+        raise ProjectError("Kopya dataset/köken ilişkisi şema6 gerektirir.")
+    if version < 7 and (
+        any(d.get("input_version_ids") for d in state["datasets"])
+        or any(
+            d.get("import_metadata", {}).get("settings", {}).get("adapter_id")
+            in ("ods", "sqlite", "ipc", "ipc_stream")
+            for d in state["datasets"]
+        )
+    ):
+        raise ProjectError("Çoklu girdi/yeni adaptör proje şema7 gerektirir.")
     artifacts = manifest["artifacts"]
     if not isinstance(artifacts, dict) or len(artifacts) > 10000:
         raise ProjectError("Artifact listesi geçersiz.")
@@ -392,7 +471,7 @@ def _validate_manifest(manifest):
     refs = [s["copy_uri"] for s in state["sources"]] + [
         uri
         for d in state["datasets"]
-        for uri in (d["snapshot_uri"], d.get("quarantine_uri"))
+        for uri in (d["snapshot_uri"], d.get("quarantine_uri"), d.get("lineage_uri"))
     ]
     if any(uri and uri not in artifacts for uri in refs):
         raise ProjectError("Bağlı artifact bulunamadı.")
@@ -413,6 +492,11 @@ def _validate_manifest(manifest):
             raise ProjectError("Karantina türü Parquet olmalı.")
         if uri and artifacts[uri]["kind"] != "parquet":
             raise ProjectError("Dataset snapshot türü Parquet olmalı.")
+        if (
+            dataset.get("lineage_uri")
+            and artifacts[dataset["lineage_uri"]]["kind"] != "parquet"
+        ):
+            raise ProjectError("Satır kökeni artifact türü Parquet olmalı.")
         if "import_metadata" in dataset:
             m = dataset["import_metadata"]
             q = dataset.get("quarantine_uri")
@@ -424,6 +508,17 @@ def _validate_manifest(manifest):
                 raise ProjectError(
                     "Dataset/karantina kayıt sayıları metadata ile uyuşmuyor."
                 )
+            if dataset.get("forked_from_version_id"):
+                source = next(
+                    d
+                    for d in state["datasets"]
+                    if d["version_id"] == dataset["forked_from_version_id"]
+                )
+                if artifacts[uri] != artifacts[source["snapshot_uri"]]:
+                    raise ProjectError(
+                        "Kopya dataset snapshotı kaynak sürümle aynı olmalı."
+                    )
+                continue
             if dataset.get("operation_id"):
                 if dataset["output_schema"] != artifacts[uri]["schema"]:
                     raise ProjectError("İşlem çıktı şeması artifact ile uyuşmuyor.")
@@ -438,7 +533,15 @@ def _validate_manifest(manifest):
                 )
                 if (
                     not operation
-                    or operation.get("spec", {}).get("input_version_id") not in parents
+                    or (
+                        operation.get("spec", {}).get("input_version_id") not in parents
+                        and not any(
+                            d["version_id"] in parents
+                            and d.get("forked_from_version_id")
+                            == operation.get("spec", {}).get("input_version_id")
+                            for d in state["datasets"]
+                        )
+                    )
                     or operation.get("output_version_id") != dataset["version_id"]
                 ):
                     raise ProjectError("İşlem çıktı/giriş sürüm bağı geçersiz.")

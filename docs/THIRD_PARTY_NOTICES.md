@@ -12,3 +12,5 @@
 Marka, ikon veya referans uygulama varlıkları alınmadı. QML native controls ve metin kullanır. Bu kayıt tüm gelecekteki analitik paketlerin lisans kabulü değildir.
 
 Faz04: Polars 2.0.0 ve polars-runtime-32 2.0.0, kurulu dist-info/licenses/LICENSE içinde MIT izin/bildirim metni taşır. Ritchie Vink ve NVIDIA katkı bildirimleri korunur. uv.lock tam sürüm/hash kaydıdır; Parquet roundtrip gerçek kurulu paketle geçti. Uygulama wheel’i dependency wheel’lerinin yerine geçmez; dağıtım bundle lisans envanteri sonraki paketleme fazında tamamlanacaktır.
+
+Faz11: DuckDB1.5.6 yalnız kilitli dev karşılaştırma bağımlılığıdır; runtime uygulama wheel'ine paketlenmez. Kurulu `duckdb-1.5.6.dist-info/licenses/LICENSE` MIT metni içerir; yeniden dağıtılırsa bildirim korunmalıdır. ODS/SQLite stdlib, IPC Polars okuyucusu kullanır; odfpy/PyArrow/pandas bağımlılığı eklenmedi. [ADR-014](adr/014-transformations-phase11.md).

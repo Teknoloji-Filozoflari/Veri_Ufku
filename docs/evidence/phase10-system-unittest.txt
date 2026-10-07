@@ -1,0 +1,330 @@
+$ python3 -m unittest discover -s tests -v
+test_cleaning (unittest.loader._FailedTest.test_cleaning) ... ERROR
+test_cleaning_gui (unittest.loader._FailedTest.test_cleaning_gui) ... ERROR
+test_config (unittest.loader._FailedTest.test_config) ... ERROR
+test_dataset (unittest.loader._FailedTest.test_dataset) ... ERROR
+test_dataset_gui (unittest.loader._FailedTest.test_dataset_gui) ... ERROR
+test_delimited (unittest.loader._FailedTest.test_delimited) ... ERROR
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+test_gui (unittest.loader._FailedTest.test_gui) ... ERROR
+test_import_gui (unittest.loader._FailedTest.test_import_gui) ... ERROR
+test_jobs (unittest.loader._FailedTest.test_jobs) ... ERROR
+test_learning (unittest.loader._FailedTest.test_learning) ... ERROR
+test_learning_gui (unittest.loader._FailedTest.test_learning_gui) ... ERROR
+test_operations (unittest.loader._FailedTest.test_operations) ... ERROR
+test_operations_gui (unittest.loader._FailedTest.test_operations_gui) ... ERROR
+test_presentation_preferences (unittest.loader._FailedTest.test_presentation_preferences) ... ERROR
+test_project_gui (unittest.loader._FailedTest.test_project_gui) ... ERROR
+test_projects (unittest.loader._FailedTest.test_projects) ... ERROR
+test_quality (unittest.loader._FailedTest.test_quality) ... ERROR
+test_quality_gui (unittest.loader._FailedTest.test_quality_gui) ... ERROR
+test_structured_import (unittest.loader._FailedTest.test_structured_import) ... ERROR
+
+======================================================================
+ERROR: test_cleaning (unittest.loader._FailedTest.test_cleaning)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_cleaning
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_cleaning.py", line 9, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_cleaning_gui (unittest.loader._FailedTest.test_cleaning_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_cleaning_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_cleaning_gui.py", line 6, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_config (unittest.loader._FailedTest.test_config)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_config
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_config.py", line 5, in <module>
+    from veri_ufku.config import AppPaths, load_settings
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_dataset (unittest.loader._FailedTest.test_dataset)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_dataset
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_dataset.py", line 9, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_dataset_gui (unittest.loader._FailedTest.test_dataset_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_dataset_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_dataset_gui.py", line 7, in <module>
+    from test_import_gui import setup, spin, teardown
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_import_gui.py", line 6, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_delimited (unittest.loader._FailedTest.test_delimited)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_delimited
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_delimited.py", line 13, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_gui (unittest.loader._FailedTest.test_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_gui.py", line 9, in <module>
+    from veri_ufku.app import create_application
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_import_gui (unittest.loader._FailedTest.test_import_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_import_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_import_gui.py", line 6, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_jobs (unittest.loader._FailedTest.test_jobs)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_jobs
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_jobs.py", line 6, in <module>
+    from veri_ufku.domain.contracts import (
+    ...<5 lines>...
+    )
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_learning (unittest.loader._FailedTest.test_learning)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_learning
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_learning.py", line 7, in <module>
+    from veri_ufku.learning.catalog import Catalog, validate, validate_bindings
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_learning_gui (unittest.loader._FailedTest.test_learning_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_learning_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_learning_gui.py", line 9, in <module>
+    from veri_ufku.app import create_application
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_operations (unittest.loader._FailedTest.test_operations)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_operations
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_operations.py", line 8, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_operations_gui (unittest.loader._FailedTest.test_operations_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_operations_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_operations_gui.py", line 5, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_presentation_preferences (unittest.loader._FailedTest.test_presentation_preferences)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_presentation_preferences
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_presentation_preferences.py", line 5, in <module>
+    from veri_ufku.config import AppPaths, load_settings
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_project_gui (unittest.loader._FailedTest.test_project_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_project_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_project_gui.py", line 4, in <module>
+    from test_gui import spin
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_gui.py", line 9, in <module>
+    from veri_ufku.app import create_application
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_projects (unittest.loader._FailedTest.test_projects)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_projects
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_projects.py", line 12, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_quality (unittest.loader._FailedTest.test_quality)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_quality
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_quality.py", line 7, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_quality_gui (unittest.loader._FailedTest.test_quality_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_quality_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_quality_gui.py", line 6, in <module>
+    from test_dataset_gui import load
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_dataset_gui.py", line 7, in <module>
+    from test_import_gui import setup, spin, teardown
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_import_gui.py", line 6, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_structured_import (unittest.loader._FailedTest.test_structured_import)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_structured_import
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_structured_import.py", line 11, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+----------------------------------------------------------------------
+Ran 28 tests in 0.371s
+
+FAILED (errors=19)
+EXIT=1

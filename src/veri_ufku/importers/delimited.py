@@ -125,6 +125,12 @@ def capture(
         not any_format and source.suffix.lower() not in {".csv", ".tsv"}
     ) or not source.is_file():
         raise ProjectError("Yalnız yerel CSV/TSV dosyası seçin.")
+    with open(source, "rb") as probe:
+        sqlite_source = probe.read(16) == b"SQLite format 3\x00"
+    if sqlite_source:
+        from veri_ufku.importers.sqlite_source import reject_live_companions
+
+        reject_live_companions(source)
     before = source.stat()
     if before.st_size > min(1024**3, control.budget.temp_disk_bytes // 4):
         raise ProjectError(
@@ -140,12 +146,16 @@ def capture(
             control.progress("Kaynak kopyası", copied.tell(), before.st_size)
             control.disk(workspace)
             checkpoint("copy_chunk")
+            if sqlite_source:
+                reject_live_companions(source)
     second = hashlib.sha256()
     with open(source, "rb") as original:
         while chunk := original.read(1024 * 1024):
             control.check()
             second.update(chunk)
     after = source.stat()
+    if sqlite_source:
+        reject_live_companions(source)
 
     def identity(s):
         return (s.st_dev, s.st_ino, s.st_size, s.st_mtime_ns, s.st_ctime_ns)

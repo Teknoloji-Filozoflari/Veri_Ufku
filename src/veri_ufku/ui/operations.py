@@ -1,6 +1,7 @@
 """Explicit preview/apply and persisted history, with compute off the GUI thread."""
 
 import copy
+import json
 import multiprocessing as mp
 import os
 import shutil
@@ -10,9 +11,9 @@ from pathlib import Path
 
 from PySide6.QtCore import Property, QObject, QTimer, Signal, Slot
 
-from veri_ufku.operations.contracts import activate, build, move
+from veri_ufku.operations.contracts import activate, active_datasets, build, move
 from veri_ufku.operations.worker import process_entry
-from veri_ufku.storage.project_model import ProjectError, decode
+from veri_ufku.storage.project_model import ProjectError, decode, uid
 from veri_ufku.ui.dataset import DatasetTableModel
 from veri_ufku.ui.projects import project_error_text
 
@@ -107,6 +108,66 @@ class OperationsController(QObject):
         notify=changed,
     )
 
+    leakageHistory = Property(
+        "QVariantList",
+        lambda self: [
+            dict(
+                kind=o.get("spec", {}).get("kind", ""),
+                input_version=o.get("spec", {}).get("input_version_id", ""),
+                method=o.get("spec", {}).get("parameters", {}).get("method", ""),
+                scope=o.get("spec", {}).get("learned_scope", ""),
+                output_version=o.get("output_version_id", ""),
+            )
+            for o in self.projects.draft["operations"]
+            if o.get("leakage_review_required")
+        ],
+        notify=changed,
+    )
+
+    def native_columns(self, d):
+        if not d or not self.projects.store:
+            return []
+        schema = self.projects.store.manifest["artifacts"][d["snapshot_uri"]]["schema"]
+        return [
+            dict(c, type=schema[c["name"]]) for c in d["import_metadata"]["columns"]
+        ]
+
+    transformColumns = Property(
+        "QVariantList",
+        lambda self: self.native_columns(self.data.dataset()),
+        notify=changed,
+    )
+
+    secondaryDatasets = Property(
+        "QVariantList",
+        lambda self: [
+            dict(
+                version_id=d["version_id"],
+                label=Path(
+                    next(
+                        (
+                            s["path"]
+                            for s in self.projects.draft["sources"]
+                            if s["id"] == d["source_id"]
+                        ),
+                        "Dataset",
+                    )
+                ).name
+                + " · "
+                + str(d["import_metadata"]["row_count"])
+                + " kayıt · "
+                + d["version_id"][-8:],
+                columns=self.native_columns(d),
+            )
+            for d in active_datasets(self.projects.draft)
+        ],
+        notify=changed,
+    )
+
+    @Slot(str, str, str, str)
+    def previewTransform(self, kind, column_ids_json, parameters_json, destination):
+        self.previewCleaning(kind, column_ids_json, parameters_json, destination)
+
     def current_binding(self):
         d = self.data.dataset()
         return (
@@ -165,8 +226,34 @@ class OperationsController(QObject):
         self._state = "failed"
         self.changed.emit()
 
+    @Slot(result=str)
+    def newColumnId(self):
+        return "col:" + uid()
+
     @Slot(str, str, str)
     def previewOperation(self, kind, column_id="", name=""):
+        self.start_preview(kind, column_id, name)
+
+    @Slot(str, str, str, str)
+    def previewCleaning(self, kind, column_ids_json, parameters_json, destination):
+        try:
+            columns = json.loads(column_ids_json)
+            parameters = json.loads(parameters_json)
+            self.start_preview(kind, "", "", columns, parameters, destination)
+        except (ValueError, TypeError):
+            self.fail(
+                ProjectError("Temizlik seçimleri geçersiz; parametreleri kontrol edin.")
+            )
+
+    def start_preview(
+        self,
+        kind,
+        column_id="",
+        name="",
+        cleaning_columns=None,
+        cleaning_parameters=None,
+        destination="chain",
+    ):
         if self.busy or self.projects.busy or self.projects.readOnly:
             return self.fail(
                 ProjectError("Devam eden işi bekleyin; proje yazılabilir olmalı.")
@@ -188,7 +275,34 @@ class OperationsController(QObject):
                 source_snapshot_id=d["import_metadata"]["source_snapshot_id"],
                 config_revision=self.data.revision,
             )
-            if kind == "filter":
+            if kind in ("join", "append") and cleaning_parameters:
+                other = next(
+                    (
+                        item
+                        for item in active_datasets(self.projects.draft)
+                        if item["version_id"]
+                        == cleaning_parameters.get("secondary_version_id")
+                    ),
+                    None,
+                )
+                if not other:
+                    raise ProjectError("İkinci dataset sürümünü seçin.")
+                info = self.projects.store.manifest["artifacts"][other["snapshot_uri"]]
+                request["secondary"] = dict(
+                    path=str(self.projects.store.path(other["snapshot_uri"])).replace(
+                        "/proc/self/", f"/proc/{os.getpid()}/", 1
+                    ),
+                    fingerprint={k: info[k] for k in ("sha256", "size")},
+                    columns=copy.deepcopy(other["import_metadata"]["columns"]),
+                    row_count=other["import_metadata"]["row_count"],
+                    version_id=other["version_id"],
+                    source_snapshot_id=other["import_metadata"]["source_snapshot_id"],
+                )
+            if cleaning_columns is not None:
+                spec = build(
+                    request, kind, cleaning_columns, cleaning_parameters, destination
+                )
+            elif kind == "filter":
                 cols = {c["id"]: c for c in request["columns"]}
                 filters = [
                     dict(
@@ -328,6 +442,13 @@ class OperationsController(QObject):
                 self.projects.draft = state
                 self.projects.saved = copy.deepcopy(state)
                 self.projects.store.state = state
+                if self.preview and self.preview["spec"].get("destination") == "copy":
+                    output = next(
+                        d
+                        for d in state["datasets"]
+                        if d["version_id"] == self.preview["version_id"]
+                    )
+                    self.data.dataset_id = output["dataset_id"]
                 self._state = "succeeded"
                 self._message = (
                     "İşlem/geçmiş kaydedildi. Eski sonuçların sürüm bağları korunur."

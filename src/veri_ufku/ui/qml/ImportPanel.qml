@@ -6,7 +6,7 @@ import QtQuick.Dialogs
 ColumnLayout {
     id: panel
     objectName: "csvImportPanel"
-    property string helpContext: imports.formatId === "json" ? "import.json" : imports.formatId === "jsonl" ? "import.jsonl" : imports.formatId === "xlsx" ? "import.xlsx" : imports.formatId === "parquet" ? "import.parquet" : "import.csv"
+    property string helpContext: ["ods", "sqlite", "ipc", "ipc_stream"].indexOf(imports.formatId) >= 0 ? "import.phase11" : imports.formatId === "json" ? "import.json" : imports.formatId === "jsonl" ? "import.jsonl" : imports.formatId === "xlsx" ? "import.xlsx" : imports.formatId === "parquet" ? "import.parquet" : "import.csv"
     signal helpRequested(var origin, string context)
     Layout.minimumWidth: 0
     spacing: Theme.md
@@ -14,7 +14,7 @@ ColumnLayout {
         id: picker
         objectName: "csvFileDialog"
         title: "Veri dosyası seç"
-        nameFilters: ["Veri (*.csv *.tsv *.json *.jsonl *.ndjson *.xlsx *.parquet)", "Tüm dosyalar (*)"]
+        nameFilters: ["Veri (*.csv *.tsv *.json *.jsonl *.ndjson *.xlsx *.parquet *.ods *.sqlite *.db *.feather *.arrow *.ipc *.arrows)", "Tüm dosyalar (*)"]
         onAccepted: imports.choose(selectedFile.toString())
     }
     function openPicker() { picker.open() }
@@ -34,7 +34,7 @@ ColumnLayout {
         Label { anchors.fill: parent; anchors.margins: Theme.md; text: imports.sourcePath || "Tek bir yerel veri dosyasını buraya bırakın."; wrapMode: Text.Wrap; elide: Text.ElideMiddle; verticalAlignment: Text.AlignVCenter }
         DropArea { id: drop; objectName: "csvDropArea"; anchors.fill: parent; onDropped: function(event) { imports.dropFiles(event.urls.map(function(url) { return url.toString() })); event.acceptProposedAction() } }
     }
-    ComboBox { objectName: "importFormat"; model: ["csv", "tsv", "json", "jsonl", "xlsx", "parquet"]; currentIndex: model.indexOf(imports.formatId); enabled: !imports.busy; onActivated: imports.setFormat(currentText); Layout.fillWidth: true }
+    ComboBox { objectName: "importFormat"; model: ["csv", "tsv", "json", "jsonl", "xlsx", "parquet", "ods", "sqlite", "ipc", "ipc_stream"]; currentIndex: model.indexOf(imports.formatId); enabled: !imports.busy; onActivated: imports.setFormat(currentText); Layout.fillWidth: true }
     StructuredOptions { visible: imports.formatId !== "csv" && imports.formatId !== "tsv"; Layout.fillWidth: true; onHelpRequested: function(origin, context) { panel.helpRequested(origin, context) } }
     Label { visible: imports.formatId === "csv" || imports.formatId === "tsv"; text: "Algılama yalnız öneridir. Kimlikleri ve uzun numaraları korumak için tüm sütunlar başlangıçta metindir. Ayar veya tür değiştiğinde yeniden önizleyin."; Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
     GridLayout {
@@ -83,7 +83,7 @@ ColumnLayout {
             required property int index
             width: ListView.view.width
             Label { Layout.minimumWidth: 0; text: modelData.name + " · öneri: " + modelData.suggestion; Layout.fillWidth: true; elide: Text.ElideRight }
-            ComboBox { Layout.maximumWidth: panel.width / 2; model: imports.formatId === "csv" || imports.formatId === "tsv" ? ["text", "int64", "float64", "decimal", "date", "datetime", "boolean"] : ["auto", "text", "int64", "float64", "decimal", "date", "datetime", "boolean"]; currentIndex: model.indexOf(modelData.type); enabled: !imports.busy && imports.formatId !== "parquet"; onActivated: imports.setType(columnDelegate.index, currentText) }
+            ComboBox { Layout.maximumWidth: panel.width / 2; model: imports.formatId === "csv" || imports.formatId === "tsv" ? ["text", "int64", "float64", "decimal", "date", "datetime", "boolean"] : ["auto", "text", "int64", "float64", "decimal", "date", "datetime", "boolean"]; currentIndex: model.indexOf(modelData.type); enabled: !imports.busy && ["parquet", "ipc", "ipc_stream"].indexOf(imports.formatId) < 0; onActivated: imports.setType(columnDelegate.index, currentText) }
         }
     }
     UiButton { text: "Sütun türlerini sıfırla"; enabled: !imports.busy; onClicked: imports.resetTypes(); Layout.fillWidth: true }

@@ -72,3 +72,12 @@ ENV-08, 2026-10-07: locked CPython3.13.15/PySide6Qt6.11.2/Polars2.0.0, Linux7.2.
 ## ENV-CI-08 — kullanıcı uzak CI bildirimi
 
 Kayıt 2026-10-06 UTC / 2026-10-07 Europe/Istanbul. Linux işi112505393392, koşu37532581621,1m12s,success. Yerel workflow Ubuntu24.04/offscreen/software/izole XDG hedefler; fiilî runner metadata/runtime sürümleri/lock hash özette yoktur. Başarı kullanıcı çıktısı ve sonradan gh API sorgusuyla doğrulandı; headSha e9fd13f41afb83daaca1c3790e8dc1e14a58d3cb Faz08 dosyalarını içerir. [Kayıt](evidence/PHASE08.md#e08-ci-remote).
+
+## ENV-10 — 2026-10-07 temizlik araçları
+
+Aynı yerel CachyOS/Ryzen7/32GB/Btrfs/tmpfs; kilitli CPython3.13.15/PySide6Qt6.11.2/Polars2.0.0, offscreen/software. Şema6, kaynak ve lock SHA256, gerçek wheel ve fixture hashleri [ortam kaydında](evidence/phase10-environment.json). Sistem Python3.14 ortamındaki unittest import hataları ayrı başarısız kayıt; kilitli kontroller ve gerçek paket akışı [Faz10 kanıtında](evidence/PHASE10.md). Yeni masaüstü/remote CI/minimum donanım kabulü değildir.
+
+
+## Faz11 katkısı
+
+ENV-11 /2026-10-07: aynı yerel CachyOS Linux7.2.9/Ryzen7/32GB/Btrfs/tmpfs, locked CPython3.13.15/PySide6Qt6.11.2/Polars2.0.0/DuckDB1.5.6(dev), offscreen/software. Şema7. Kaynak/lock/fixture/wheel hashleri ve gerçek kapılar Faz11 kanıtında; yeni masaüstü/remote/minimum donanım ayrı açık. [Karar](adr/014-transformations-phase11.md), [kanıt](evidence/PHASE11.md).

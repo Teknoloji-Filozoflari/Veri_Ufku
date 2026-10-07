@@ -72,3 +72,12 @@ Faz07: içerik sürümü6/toplam31 makale; sözlük14 kavram. Tür/rol, unique, 
 ## Faz09 katkısı
 
 İçerik8/toplam38 makale; önizleme, işlem geçmişi/geri alma ve kaynak/çalışma verisi farkı. prepare/operation.rename/drop/filter bağları; yeni try_action yok, sözlük18 korunur. [Kanıt](evidence/PHASE09.md#e09-help).
+
+## Faz10 katkısı
+
+İçerik9/toplam51 makale, sözlük18. On üç yöntem yardımı küçük önce/sonra örnekleri ve riskleri açıklar; fill ve ordered_fill alt yöntemleri dinamik yardım bağlarıyla açılır. Dokuz capability bağı ve check_learning kapısı; yeni try_action yok. [Karar](adr/013-cleaning-phase10.md), [kanıt](evidence/PHASE10.md).
+
+
+## Faz11 katkısı
+
+İçerik10/toplam61 makale, sözlük18. Dokuz dönüşüm yöntemi ve yerel adaptör yardımı; küçük önce/sonra ve sakıncalı durumlar. join günlük müşteri/sipariş örneği, dört join türü ve n:n; grouping/pivot/long-wide/güvenli AST/null/tür/timezone açıklamaları. 13 capability bağı, yeni try_action yok. [Karar](adr/014-transformations-phase11.md), [kanıt](evidence/PHASE11.md).

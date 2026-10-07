@@ -21,7 +21,18 @@ from veri_ufku.importers.structured import (
 from veri_ufku.importers.xlsx import Workbook
 from veri_ufku.storage.project_model import ProjectError
 
-FORMATS = ("csv", "tsv", "json", "jsonl", "xlsx", "parquet")
+FORMATS = (
+    "csv",
+    "tsv",
+    "json",
+    "jsonl",
+    "xlsx",
+    "parquet",
+    "ods",
+    "sqlite",
+    "ipc",
+    "ipc_stream",
+)
 
 
 def settings_from_dict(data):
@@ -43,8 +54,23 @@ def detect(snapshot):
         raw = stream.read(65536)
     if raw.startswith(b"PAR1"):
         return "parquet"
+    if raw.startswith(b"SQLite format 3\x00"):
+        return "sqlite"
+    if raw.startswith(b"ARROW1"):
+        return "ipc"
+    if raw.startswith(b"\xff\xff\xff\xff"):
+        return "ipc_stream"
     if raw.startswith(b"PK"):
-        return "xlsx"
+        import zipfile
+
+        with zipfile.ZipFile(snapshot["path"]) as archive:
+            return (
+                "ods"
+                if "mimetype" in archive.namelist()
+                and archive.read("mimetype")
+                == b"application/vnd.oasis.opendocument.spreadsheet"
+                else "xlsx"
+            )
     suffix = Path(snapshot["original"]).suffix.lower()
     if suffix in (".jsonl", ".ndjson"):
         return "jsonl"
@@ -72,8 +98,16 @@ class Adapter:
         if request.adapter_id != self.adapter_id or not request.path.is_file():
             raise ProjectError("Adaptör/kaynak bağı geçersiz.")
         # Validation is parsing/magic based, never extension-only.
-        if self.adapter_id == "parquet":
-            parquet_schema({"path": str(request.path)})
+        if self.adapter_id in ("parquet", "ipc", "ipc_stream"):
+            parquet_schema({"path": str(request.path)}, self.adapter_id)
+        elif self.adapter_id == "ods":
+            from veri_ufku.importers.ods import document
+
+            document(request.path)
+        elif self.adapter_id == "sqlite":
+            from veri_ufku.importers.sqlite_source import tables
+
+            tables({"path": str(request.path)})
         elif self.adapter_id == "xlsx":
             book = Workbook(request.path)
             book.close()
@@ -107,6 +141,21 @@ class Adapter:
                 )
             except ProjectError:
                 choices["list_paths"] = []
+        elif self.adapter_id == "sqlite":
+            from veri_ufku.importers.sqlite_source import tables
+
+            choices = dict(
+                sheets=tables(snapshot),
+                formula_behavior="SQLite yalnız ordinary tablolar: mode=ro, immutable, query_only; extension yüklenmez. BLOB, view/virtual table ve etkin WAL/journal desteklenmez. Türler gerçek değerlerden çıkarılır; tarih otomatik parse edilmez.",
+            )
+        elif self.adapter_id == "ods":
+            from veri_ufku.importers.ods import document
+
+            choices = dict(
+                sheets=list(document(snapshot["path"])),
+                date_system="ISO 8601",
+                formula_behavior="ODS formülleri çalıştırılmaz; cached yalnız dosyadaki değer. Tüm sayfa okunur; duration ve256'dan geniş tekrarlar reddedilir.",
+            )
         elif self.adapter_id == "xlsx":
             book = Workbook(snapshot["path"], control)
             choices = dict(
@@ -120,7 +169,7 @@ class Adapter:
     def preview(self, snapshot, settings, control=None):
         if self.adapter_id in ("csv", "tsv"):
             return preview(snapshot, settings, control)
-        if self.adapter_id == "parquet":
+        if self.adapter_id in ("parquet", "ipc", "ipc_stream"):
             return preview_parquet(snapshot, settings, control)
         return preview_structured(snapshot, settings, control)
 
@@ -129,7 +178,7 @@ class Adapter:
             result = import_snapshot(snapshot, settings, workspace, control)
             result["adapter_id"] = self.adapter_id
             return result
-        if self.adapter_id == "parquet":
+        if self.adapter_id in ("parquet", "ipc", "ipc_stream"):
             return import_parquet(snapshot, settings, workspace, control)
         return import_structured(snapshot, settings, workspace, control)
 

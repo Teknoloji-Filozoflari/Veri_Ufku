@@ -54,7 +54,9 @@ def process_entry(
         adapter = get_adapter(adapter_id)
         choices = adapter.inspect(snapshot, settings, control)
         connection.send(("inspected", choices))
-        if adapter_id == "xlsx" and not settings.sheet:
+        if adapter_id in ("xlsx", "ods", "sqlite") and not settings.sheet:
+            if not choices["sheets"]:
+                raise ProjectError("Okunabilir sayfa/tablo yok.")
             settings = replace(settings, sheet=choices["sheets"][0])
             connection.send(("captured", (snapshot, dict(settings.__dict__))))
         result = (

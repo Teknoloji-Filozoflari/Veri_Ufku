@@ -407,10 +407,10 @@ def test_schema1_fixture_open_does_not_migrate_until_explicit_save(tmp_path):
     assert not writer.read_only and writer.manifest["format_version"] == 1
     assert (root / "ACTIVE").read_bytes() == pointer
     writer.save()
-    assert writer.manifest["format_version"] == 5
+    assert writer.manifest["format_version"] == 7
     assert writer.manifest["environment"]["application"] == "0.1.0"
     assert writer.manifest["migration"][-1] == dict(
-        from_version=1, to_version=5, original_commit="legacy-v1"
+        from_version=1, to_version=7, original_commit="legacy-v1"
     )
     assert (commit / "manifest.json").read_bytes() == raw
     writer.close()

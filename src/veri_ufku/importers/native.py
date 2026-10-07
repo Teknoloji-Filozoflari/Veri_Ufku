@@ -1,6 +1,7 @@
 """Data-only native type descriptors and exact structured scalar semantics."""
 
 import json
+import math
 import re
 from dataclasses import asdict, dataclass, field
 from datetime import date, datetime, time
@@ -131,7 +132,16 @@ class StructuredSettings:
     native_schema: dict = field(default_factory=dict)
 
     def __post_init__(self):
-        if self.adapter_id not in ("json", "jsonl", "xlsx", "parquet"):
+        if self.adapter_id not in (
+            "json",
+            "jsonl",
+            "xlsx",
+            "parquet",
+            "ods",
+            "sqlite",
+            "ipc",
+            "ipc_stream",
+        ):
             raise ProjectError("Adaptör bulunamadı.")
         if any(
             not isinstance(getattr(self, k), str) or len(getattr(self, k)) > 4096
@@ -190,7 +200,7 @@ class StructuredSettings:
             if not isinstance(key, str) or len(key) > 4096:
                 raise ProjectError("Native sütun adı geçersiz.")
             restore(value)
-        if self.adapter_id == "parquet" and (
+        if self.adapter_id in ("parquet", "ipc", "ipc_stream") and (
             self.types or self.flatten or self.expand_lists
         ):
             raise ProjectError(
@@ -222,6 +232,8 @@ def canonical(value):
         return "false"
     if isinstance(value, (int, Decimal)):
         return str(value)
+    if isinstance(value, float) and math.isfinite(value):
+        return repr(value)
     if isinstance(value, (datetime, date, time)):
         return json.dumps(value.isoformat(), ensure_ascii=False)
     if isinstance(value, str):
@@ -271,6 +283,10 @@ class TypeProfile:
             self.integer_min = min(self.integer_min, value)
             self.integer_max = max(self.integer_max, value)
             self.digits = max(self.digits, len(str(abs(value))))
+        elif isinstance(value, float):
+            if not math.isfinite(value):
+                raise ProjectError("Yapılandırılmış nonfinite float desteklenmez.")
+            kind = "float"
         elif isinstance(value, Decimal):
             kind = "decimal"
             self.scale = max(self.scale, max(0, -value.as_tuple().exponent))
@@ -338,6 +354,7 @@ class TypeProfile:
                 v[1] for v in resolved.values()
             )
         return {
+            "float": pl.Float64,
             "text": pl.String,
             "boolean": pl.Boolean,
             "date": pl.Date,

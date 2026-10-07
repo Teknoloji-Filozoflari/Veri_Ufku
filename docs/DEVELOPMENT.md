@@ -57,3 +57,12 @@ Faz08 gerçek kontroller: tests/test_quality.py ve test_quality_gui.py bağıms�
 ## Faz09 kontrolleri
 
 `tests/test_operations.py` elle belirlenmiş değer/RowId, branch/redo/reopen, hatalı/iptal/eski/tampered çıktı, disk yayın fault injection ve gerçek SIGKILL; `tests/test_operations_gui.py` gerçek QML düğmesi/spawn/apply/undo/redo/reopen ve eski sonuç etiketi. `uv run --frozen python scripts/measure_phase09.py`100.000 kayıt full preview/apply/filtre/kaynak hash/iptal ve dar/geniş başsız render üretir; --package-root TARGET --output JSON aynı işi kurulu wheel içinde denetler. Standart kilitli kapılar korunur. [Karar](adr/012-versioned-operations-phase09.md), [kanıt](evidence/PHASE09.md).
+
+## Faz10 katkısı
+
+`tests/test_cleaning.py` bağımsız değer/kimlik/hassasiyet/grup/disk fault kontrolleri; `tests/test_cleaning_gui.py` gerçek dokuz yöntem formu/spawn/yayın/undo/redo/reopen ve tarih hata/iptal. `uv run --frozen python scripts/measure_phase10.py`100.000 kayıt dokuz yöntem ve render; `--package-root TARGET --output JSON` kurulu wheel içinde aynı işi çalıştırır. Standart locked sync/check_docs/check_artifacts/check_learning/Ruff/pytest/unittest/offscreen giriş noktası kapıları korunur. [Karar](adr/013-cleaning-phase10.md), [kanıt](evidence/PHASE10.md).
+
+
+## Faz11 katkısı
+
+`tests/test_relational.py`, `test_relational_gui.py`, `test_relational_backends.py`, `test_phase11_formats.py` gerçek hesap/üyelik/AST, QML/spawn/üç adımlı join, readonly format fixture ve DuckDB karşılaştırmalarını kapsar. DuckDB1.5.6 yalnız locked dev bağımlılığı; üretim Polars2.0.0. `uv run --frozen python scripts/measure_phase11.py`100.000 kayıt dokuz yöntem, tam n:n tahmin ve undo/redo/reopen/render; `--package-root TARGET --output JSON` kurulu wheel yolunu çalıştırır. Standart kontroller korunur. [Karar](adr/014-transformations-phase11.md), [kanıt](evidence/PHASE11.md).

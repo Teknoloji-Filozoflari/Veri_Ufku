@@ -4,6 +4,12 @@ import copy
 from dataclasses import asdict, dataclass
 
 from veri_ufku.analytics.contracts import ViewSpec
+from veri_ufku.operations.cleaning_contracts import KINDS, learned, validate_parameters
+from veri_ufku.operations.relational_contracts import KINDS as RELATIONAL
+from veri_ufku.operations.relational_contracts import input_versions
+from veri_ufku.operations.relational_contracts import (
+    validate_parameters as relational_parameters,
+)
 from veri_ufku.storage.project_model import ProjectError, entity_id, uid
 
 # Future kinds have a lineage contract, but are deliberately not executable.
@@ -14,10 +20,11 @@ LINEAGE = {
     "sort": "preserve RowId/SourceRecordId; ties use immutable input order then RowId",
     "join": "new RowId per left/right/occurrence tuple; absent side has no source",
     "explode": "new RowId per parent/list-path/occurrence; equal elements stay distinct",
-    "aggregate": "new RowId per group; lazy membership references immutable input/spec",
+    "aggregate": "new RowId per group; Parquet edges reference all immutable member RowIds",
     "dedup": "retain first/last stable RowId; persist duplicate-group membership separately",
 }
-IMPLEMENTED = {"rename", "drop", "filter", "roles"}
+
+IMPLEMENTED = {"rename", "drop", "filter", "roles"} | KINDS | RELATIONAL
 
 
 def heads(state):
@@ -77,11 +84,14 @@ class OperationSpec:
     schema_version: int = 1
     method_version: int = 1
     learned_scope: str = "none"
+    destination: str = "chain"
+    input_version_ids: tuple = ()
 
     def data(self):
         data = asdict(self)
         data["column_ids"] = list(self.column_ids)
         data["output_schema"] = list(self.output_schema)
+        data["input_version_ids"] = list(self.input_version_ids)
         return data
 
     @classmethod
@@ -95,7 +105,8 @@ class OperationSpec:
                 or spec.schema_version != 1
                 or type(spec.method_version) is not int
                 or spec.method_version != 1
-                or spec.learned_scope != "none"
+                or spec.learned_scope not in ("none", "dataset")
+                or spec.destination not in ("chain", "copy")
                 or spec.kind not in IMPLEMENTED
                 or not isinstance(spec.column_ids, (list, tuple))
                 or len(set(spec.column_ids)) != len(spec.column_ids)
@@ -103,6 +114,10 @@ class OperationSpec:
                 or not isinstance(spec.output_schema, (list, tuple))
             ):
                 raise ProjectError("İşlem türü/sürümü/alanları desteklenmiyor.")
+            if not isinstance(spec.input_version_ids, (tuple, list)):
+                raise ProjectError("Giriş sürümü listesi geçersiz.")
+            for version in spec.input_version_ids:
+                entity_id(version, "dv")
             for col in spec.column_ids:
                 entity_id(col, "col")
             return spec
@@ -110,13 +125,19 @@ class OperationSpec:
             raise ProjectError("Tipli işlem alanları geçersiz.") from error
 
 
-def build(request, kind, column_ids=(), parameters=None):
+def build(request, kind, column_ids=(), parameters=None, destination="chain"):
     columns = copy.deepcopy(request["columns"])
     ids = {c["id"] for c in columns}
     parameters = copy.deepcopy(parameters or {})
     if not set(column_ids) <= ids or len(set(column_ids)) != len(column_ids):
         raise ProjectError("İşlem bilinmeyen/tekrarlanan ColumnId içeriyor.")
-    if kind == "rename":
+    if destination not in ("chain", "copy"):
+        raise ProjectError("İşlem hedefi mevcut zincir veya kopya dataset olmalı.")
+    if kind in RELATIONAL:
+        columns = relational_parameters(request, kind, column_ids, parameters)
+    elif kind in KINDS:
+        columns = validate_parameters(kind, column_ids, parameters, columns)
+    elif kind == "rename":
         name = parameters.get("name")
         if (
             set(parameters) != {"name"}
@@ -184,6 +205,11 @@ def build(request, kind, column_ids=(), parameters=None):
         tuple(column_ids),
         parameters,
         tuple(columns),
+        learned_scope=learned(kind, parameters) if kind in KINDS else "none",
+        destination=destination,
+        input_version_ids=input_versions(request, kind, parameters)
+        if kind in RELATIONAL
+        else (),
     )
 
 
@@ -193,7 +219,13 @@ def validate(spec, request):
     )
     if spec.input_version_id != request["version_id"]:
         raise ProjectError("İşlem eski giriş sürümüne bağlı; tekrar önizleyin.")
-    expected = build(request, spec.kind, spec.column_ids, spec.parameters)
+    expected = build(
+        request, spec.kind, spec.column_ids, spec.parameters, spec.destination
+    )
+    if tuple(spec.input_version_ids) != tuple(expected.input_version_ids):
+        raise ProjectError("İşlem giriş sürümü bağları uyuşmuyor.")
+    if spec.learned_scope != expected.learned_scope:
+        raise ProjectError("Öğrenme kapsamı yöntemle uyuşmuyor.")
     if list(spec.output_schema) != list(expected.output_schema):
         raise ProjectError("İşlem çıktı şeması tarifle uyuşmuyor.")
     return spec

@@ -124,3 +124,12 @@ Faz08 kalite: full/filtered/sample ve used/population/dataset n ayrı; bulgu obs
 ## Faz09 uygulama bağı
 
 OperationSpec/v1 + RowLineageSpec/v1 `operations/contracts.py`; full preview/apply ortak çıktı `operations/engine.py`. applicability/validation/impact/status/provenance yürütme kaydında, yöntem/schema/input/ColumnId/output_schema tarifte. DatasetVersion5 operation_id/output_schema ve immutable parent; workflow.heads/redo state içinde kalıcı. Rename/drop/filter çalışır, roles aynı metadata geçmişindedir. Future sort/join/explode/aggregate/dedup yalnız tipli köken sözleşmesidir. [ADR-012](adr/012-versioned-operations-phase09.md), [kanıt](evidence/PHASE09.md).
+
+## Faz10 katkısı
+
+OperationSpec/v1 cleaning tarifleri destination chain/copy ile aynı full preview/yayın yolunda. DatasetVersion6 forked_from_version_id ve dedup lineage_uri; immutable survivor RowId, tam üyelik Parquet. Açık null/NaN, mod/order/equality, hassasiyet ve DST politikaları; hata/null etkileri. learned_scope=dataset ve leakage_review_required geçmişi genel temizliği gelecekte fold-içi ML fit dönüşümünden ayırır. [Karar](adr/013-cleaning-phase10.md), [kanıt](evidence/PHASE10.md).
+
+
+## Faz11 katkısı
+
+Faz11: OperationSpec/v1 input_version_ids gerçek girdiler, parent_version_ids birincil undo imleci. Yeni join/group/pivot satırları tek SourceRecordId taşımaz; üyelik kenarları bütün gerçek girdi RowId ilişkilerini saklar. Full tahmin, explicit eşitlik/null/sıra/Decimal/tarih politikası; readonly kaynak ve çıktı hedef koruması. Nested hesap yapılmaz, seçilmeyen alanlar ve strict append/join alanları native korunabilir. [Karar](adr/014-transformations-phase11.md), [kanıt](evidence/PHASE11.md).

@@ -149,8 +149,8 @@ CAPABILITIES["dataset.quality"] = Capability(
 )
 
 for action in ("rename", "drop", "filter"):
-    CAPABILITIES["operation." + action] = Capability(
-        "operation." + action,
+    CAPABILITIES["operation." + action.replace("_", "-")] = Capability(
+        "operation." + action.replace("_", "-"),
         ExecutionKind.CPU,
         "versioned_" + action,
         kind="transform",
@@ -172,4 +172,124 @@ for action in ("rename", "drop", "filter"):
         help_links=("operation-preview", "operation-history", "source-working"),
         requirement_ids=tuple("F09-S00" + str(i) for i in range(1, 8)),
         evidence_refs=("docs/evidence/PHASE09.md",),
+    )
+
+for action in (
+    "missing_rows",
+    "missing_columns",
+    "fill",
+    "dedup",
+    "trim",
+    "map_categories",
+    "convert",
+    "ordered_fill",
+    "outlier",
+):
+    CAPABILITIES["operation." + action.replace("_", "-")] = Capability(
+        "operation." + action.replace("_", "-"),
+        ExecutionKind.CPU,
+        "versioned_cleaning_" + action,
+        kind="transform",
+        maturity="deneysel",
+        backend="polars/sqlite/decimal",
+        input_schema="DatasetVersion/v6",
+        output_type="DatasetVersion/v6",
+        parameter_schema="OperationSpec/v1:cleaning",
+        deterministic_policy="explicit policies; immutable identities; full preview; stable order; training pipeline is separate",
+        supports=(
+            ("null", True),
+            ("nan", True),
+            ("decimal", True),
+            ("tz", True),
+            ("streaming", True),
+            ("cancel", True),
+            ("safe_serialization", True),
+        ),
+        limits=(
+            ("columns", 256),
+            ("batch_rows", 4096),
+            ("preview_rows", 200),
+            ("mapping_pairs", 1000),
+        ),
+        help_links=tuple(
+            [
+                "clean-fill-constant",
+                "clean-fill-mean",
+                "clean-fill-median",
+                "clean-fill-mode",
+            ]
+            if action == "fill"
+            else ["clean-ordered-fill-forward", "clean-ordered-fill-backward"]
+            if action == "ordered_fill"
+            else ["clean-" + action.replace("_", "-")]
+        ),
+        requirement_ids=tuple("F10-S00" + str(i) for i in range(1, 9)),
+        evidence_refs=("docs/evidence/PHASE10.md",),
+    )
+
+for action in (
+    "computed",
+    "text_split",
+    "text_combine",
+    "date_parts",
+    "aggregate",
+    "pivot",
+    "unpivot",
+    "append",
+    "join",
+):
+    key = action.replace("_", "-")
+    CAPABILITIES["operation." + key] = Capability(
+        "operation." + key,
+        ExecutionKind.CPU,
+        "versioned_transform_" + action,
+        kind="transform",
+        maturity="deneysel",
+        backend="polars/sqlite/decimal",
+        input_schema="DatasetVersion/v7",
+        output_type="DatasetVersion/v7",
+        parameter_schema="OperationSpec/v1:transform",
+        deterministic_policy="explicit null/equality/type/order; persistent output UUIDs; immutable input edges; exact full preview",
+        supports=(
+            ("null", True),
+            ("decimal", True),
+            ("tz", True),
+            ("cancel", True),
+            ("safe_serialization", True),
+        ),
+        limits=(
+            ("columns", 256),
+            ("batch_rows", 4096),
+            ("output_rows", 10000000),
+            ("preview_rows", 200),
+        ),
+        help_links=("transform-" + key,),
+        requirement_ids=tuple("F11-S00" + str(i) for i in range(1, 8)),
+        evidence_refs=("docs/evidence/PHASE11.md",),
+    )
+
+for adapter in ("ods", "sqlite", "ipc", "ipc_stream"):
+    key = adapter.replace("_", "-")
+    CAPABILITIES["import." + key] = Capability(
+        "import." + key,
+        ExecutionKind.IO,
+        "validated_snapshot_" + adapter,
+        kind="import",
+        maturity="deneysel",
+        backend="python-stdlib/polars",
+        input_schema="StructuredSettings/v1",
+        output_type="DatasetVersion/v7",
+        parameter_schema="StructuredSettings/v1",
+        deterministic_policy="immutable capture; readonly SQLite; no extensions; native IPC; explicit support limits",
+        supports=(
+            ("null", True),
+            ("decimal", True),
+            ("cancel", True),
+            ("safe_serialization", True),
+            ("streaming", adapter in ("sqlite", "ipc")),
+        ),
+        limits=(("columns", 256), ("source_bytes", 1073741824), ("preview_rows", 200)),
+        help_links=("import-phase11",),
+        requirement_ids=("F11-S004", "F11-S006", "F11-S007"),
+        evidence_refs=("docs/evidence/PHASE11.md",),
     )

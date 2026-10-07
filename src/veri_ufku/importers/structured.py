@@ -292,6 +292,14 @@ def transformed(records, settings, control):
 def rows_for(snapshot, settings, control):
     if settings.adapter_id in ("json", "jsonl"):
         return transformed(json_records(snapshot, settings, control), settings, control)
+    if settings.adapter_id == "ods":
+        from veri_ufku.importers.ods import records
+
+        return records(snapshot, settings, control)
+    if settings.adapter_id == "sqlite":
+        from veri_ufku.importers.sqlite_source import records
+
+        return records(snapshot, settings, control)
     from veri_ufku.importers.xlsx import excel_records
 
     return excel_records(snapshot, settings, control)
@@ -348,7 +356,11 @@ def profile(snapshot, settings, control, limited=False):
             f"Veri alanı yok; {bad_count} bozuk kayıt. Dataset oluşturulmadı."
         )
     # XLSX physical column order is meaningful; JSON key order is never used.
-    originals = list(profiles) if settings.adapter_id == "xlsx" else sorted(profiles)
+    originals = (
+        list(profiles)
+        if settings.adapter_id in ("xlsx", "ods", "sqlite")
+        else sorted(profiles)
+    )
     if (
         settings.types
         and settings.column_names

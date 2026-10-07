@@ -520,7 +520,13 @@ class DatasetController(QObject):
     def selectRow(self, index):
         if self.model.result and 0 <= index < self.model.rowCount():
             result = self.model.result
-            self._selection = f"Görüntü sırası {result['offset'] + index + 1} · RowId {result['row_ids'][index]} · SourceRecordId {result['source_record_ids'][index]}"
+            source_id = result["source_record_ids"][index]
+            origin = (
+                "SourceRecordId " + source_id
+                if source_id
+                else "Tek bir kaynak kayıt kimliği yok; bu satırın tüm girdileri işlem kökeni Parquet'inde kayıtlı."
+            )
+            self._selection = f"Görüntü sırası {result['offset'] + index + 1} · RowId {result['row_ids'][index]} · {origin}"
             self.changed.emit()
 
     def start(self, action, parameters):

@@ -268,7 +268,7 @@ class ImportController(QObject):
         if self.busy or not self.result:
             return
         if (
-            self.formatId == "parquet"
+            self.formatId in ("parquet", "ipc", "ipc_stream")
             or kind not in TYPES + ("auto",)
             or not 0 <= index < len(self.result["schema"]["names"])
         ):

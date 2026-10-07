@@ -59,3 +59,12 @@ Faz07: mevcut Theme/UiButton/layout tokenlarıyla Veri tablosu sekmesi; TableVie
 ## Faz08 katkısı
 
 QualityPanel mevcut Theme/UiCombo/UiButton/StateNotice tokenlarını ve dar ekranda tek sütun düzenini kullanır. Bulgular düz metin ve açıklamalı karttır; renk tek başına durum taşımaz. Teknik işlem/RowId kimlikleri gelişmiş görünümde açılır. [Karar](adr/011-quality-phase08.md), [kanıt](evidence/PHASE08.md).
+
+## Faz10 katkısı
+
+Hazırla temizlik formunda yalnız seçili yöntemin seçenekleri görünür. Tam etki ve uyarılar saklanmaz; önce/sonra tabloları ve geçmiş ayrıntıları isteğe bağlı açılır. Geri al/yinele daima erişilebilir. Faz02 ortak Theme/UiCombo/UiButton tokenları korunur; dar/%200 ekranda kaydırma gerekir. [Karar](adr/013-cleaning-phase10.md), [kanıt](evidence/PHASE10.md).
+
+
+## Faz11 katkısı
+
+Faz11 TransformationOptions ortak Theme/UiCombo/UiButton ve seçime bağlı form kullanır. Join üç aşamalı, append eşleme onaylı; ham JSON kullanıcıya gösterilmez. Faz02 ortak tasarım korunur; yeni referans marka varlığı alınmadı. Başsız dar/büyük, koyu/açık render kanıtı ayrıca kaydedilir; gerçek kullanıcı masaüstü kabulü açık. [Karar](adr/014-transformations-phase11.md), [kanıt](evidence/PHASE11.md).

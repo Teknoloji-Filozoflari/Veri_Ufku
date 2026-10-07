@@ -1,0 +1,579 @@
+ENV-11 / 2026-10-07T18:28:30.472281+00:00 / QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software
+
+$ uv --cache-dir /tmp/veri-ufku-uv sync --locked --group dev --offline
+Resolved 19 packages in 0.86ms
+Checked 18 packages in 0.16ms
+exit=0
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_learning.py
+PASS: 61 offline articles; 43 UI bindings; all capability links
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff check src tests scripts
+All checks passed!
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff format --check src tests scripts
+96 files already formatted
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen pytest -q
+........................................................................ [ 24%]
+........................................................................ [ 48%]
+........................................................................ [ 72%]
+........................................................................ [ 96%]
+.........                                                                [100%]
+297 passed in 49.04s
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.384s
+
+OK
+exit=0
+
+$ python3 -m unittest discover -s tests -v
+test_cleaning (unittest.loader._FailedTest.test_cleaning) ... ERROR
+test_cleaning_gui (unittest.loader._FailedTest.test_cleaning_gui) ... ERROR
+test_config (unittest.loader._FailedTest.test_config) ... ERROR
+test_dataset (unittest.loader._FailedTest.test_dataset) ... ERROR
+test_dataset_gui (unittest.loader._FailedTest.test_dataset_gui) ... ERROR
+test_delimited (unittest.loader._FailedTest.test_delimited) ... ERROR
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+test_gui (unittest.loader._FailedTest.test_gui) ... ERROR
+test_import_gui (unittest.loader._FailedTest.test_import_gui) ... ERROR
+test_jobs (unittest.loader._FailedTest.test_jobs) ... ERROR
+test_learning (unittest.loader._FailedTest.test_learning) ... ERROR
+test_learning_gui (unittest.loader._FailedTest.test_learning_gui) ... ERROR
+test_operations (unittest.loader._FailedTest.test_operations) ... ERROR
+test_operations_gui (unittest.loader._FailedTest.test_operations_gui) ... ERROR
+test_phase11_formats (unittest.loader._FailedTest.test_phase11_formats) ... ERROR
+test_presentation_preferences (unittest.loader._FailedTest.test_presentation_preferences) ... ERROR
+test_project_gui (unittest.loader._FailedTest.test_project_gui) ... ERROR
+test_projects (unittest.loader._FailedTest.test_projects) ... ERROR
+test_quality (unittest.loader._FailedTest.test_quality) ... ERROR
+test_quality_gui (unittest.loader._FailedTest.test_quality_gui) ... ERROR
+test_relational (unittest.loader._FailedTest.test_relational) ... ERROR
+test_relational_backends (unittest.loader._FailedTest.test_relational_backends) ... ERROR
+test_relational_gui (unittest.loader._FailedTest.test_relational_gui) ... ERROR
+test_structured_import (unittest.loader._FailedTest.test_structured_import) ... ERROR
+
+======================================================================
+ERROR: test_cleaning (unittest.loader._FailedTest.test_cleaning)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_cleaning
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_cleaning.py", line 9, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_cleaning_gui (unittest.loader._FailedTest.test_cleaning_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_cleaning_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_cleaning_gui.py", line 6, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_config (unittest.loader._FailedTest.test_config)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_config
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_config.py", line 5, in <module>
+    from veri_ufku.config import AppPaths, load_settings
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_dataset (unittest.loader._FailedTest.test_dataset)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_dataset
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_dataset.py", line 9, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_dataset_gui (unittest.loader._FailedTest.test_dataset_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_dataset_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_dataset_gui.py", line 7, in <module>
+    from test_import_gui import setup, spin, teardown
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_import_gui.py", line 6, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_delimited (unittest.loader._FailedTest.test_delimited)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_delimited
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_delimited.py", line 13, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_gui (unittest.loader._FailedTest.test_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_gui.py", line 9, in <module>
+    from veri_ufku.app import create_application
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_import_gui (unittest.loader._FailedTest.test_import_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_import_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_import_gui.py", line 6, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_jobs (unittest.loader._FailedTest.test_jobs)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_jobs
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_jobs.py", line 6, in <module>
+    from veri_ufku.domain.contracts import (
+    ...<5 lines>...
+    )
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_learning (unittest.loader._FailedTest.test_learning)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_learning
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_learning.py", line 7, in <module>
+    from veri_ufku.learning.catalog import Catalog, validate, validate_bindings
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_learning_gui (unittest.loader._FailedTest.test_learning_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_learning_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_learning_gui.py", line 9, in <module>
+    from veri_ufku.app import create_application
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_operations (unittest.loader._FailedTest.test_operations)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_operations
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_operations.py", line 8, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_operations_gui (unittest.loader._FailedTest.test_operations_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_operations_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_operations_gui.py", line 5, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_phase11_formats (unittest.loader._FailedTest.test_phase11_formats)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_phase11_formats
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_phase11_formats.py", line 9, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_presentation_preferences (unittest.loader._FailedTest.test_presentation_preferences)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_presentation_preferences
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_presentation_preferences.py", line 5, in <module>
+    from veri_ufku.config import AppPaths, load_settings
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_project_gui (unittest.loader._FailedTest.test_project_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_project_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_project_gui.py", line 4, in <module>
+    from test_gui import spin
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_gui.py", line 9, in <module>
+    from veri_ufku.app import create_application
+ModuleNotFoundError: No module named 'veri_ufku'
+
+
+======================================================================
+ERROR: test_projects (unittest.loader._FailedTest.test_projects)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_projects
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_projects.py", line 12, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_quality (unittest.loader._FailedTest.test_quality)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_quality
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_quality.py", line 7, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_quality_gui (unittest.loader._FailedTest.test_quality_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_quality_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_quality_gui.py", line 6, in <module>
+    from test_dataset_gui import load
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_dataset_gui.py", line 7, in <module>
+    from test_import_gui import setup, spin, teardown
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_import_gui.py", line 6, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_relational (unittest.loader._FailedTest.test_relational)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_relational
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_relational.py", line 8, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_relational_backends (unittest.loader._FailedTest.test_relational_backends)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_relational_backends
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_relational_backends.py", line 7, in <module>
+    import duckdb
+ModuleNotFoundError: No module named 'duckdb'
+
+
+======================================================================
+ERROR: test_relational_gui (unittest.loader._FailedTest.test_relational_gui)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_relational_gui
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_relational_gui.py", line 5, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+======================================================================
+ERROR: test_structured_import (unittest.loader._FailedTest.test_structured_import)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_structured_import
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_structured_import.py", line 11, in <module>
+    import polars as pl
+ModuleNotFoundError: No module named 'polars'
+
+
+----------------------------------------------------------------------
+Ran 32 tests in 0.386s
+
+FAILED (errors=23)
+exit=1
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen veri-ufku --smoke-test
+cwd=/home/s-oktay/Belgeler/Veri_Ufku
+exit=2
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen veri-ufku --smoke-test
+cwd=/home/s-oktay/Belgeler/Veri_Ufku
+GUI_SMOKE PASS
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/measure_phase11.py
+cwd=/home/s-oktay/Belgeler/Veri_Ufku
+{"environment": "ENV-11", "date": "2026-10-07", "python": "3.13.15", "polars": "2.0.0", "platform": "Linux-7.2.9-1-cachyos-x86_64-with-glibc2.44", "backend": "offscreen/software", "rows": 100000, "n": 1, "peak_parent_worker_rss_bytes": 1398009856, "max_tick_gap_ms": 45.06233299980522, "package": "/home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/__init__.py", "methods": {"computed": {"preview_ms": 1117.9395750004915, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 100000, "removed_rows": 0, "changed_rows": 100000, "added_rows": 0, "before_columns": 5, "after_columns": 6, "changed_columns": 1, "removed_columns": 0, "added_columns": 1, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:19fb308c-45fe-4118-a6fd-5b6b93ce107c", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": ["Formül izinli AST ile yorumlanır; null yayılır, coalesce/ifelse açık istisnadır. Bölme reject/null politikasındadır. Exact hedefe uymayan kesir/Decimal/Float64 reddedilir; round() açık half-even seçimi ve sayımıdır."], "new_nulls": 0, "changed_cells": 0, "modified_rows": 100000, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 0, "changed_columns": 1, "new_row_ids": false}}, "text_split": {"preview_ms": 572.0224769993365, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 100000, "removed_rows": 0, "changed_rows": 100000, "added_rows": 0, "before_columns": 5, "after_columns": 7, "changed_columns": 2, "removed_columns": 0, "added_columns": 2, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:19fb308c-45fe-4118-a6fd-5b6b93ce107c", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": [], "new_nulls": 0, "changed_cells": 0, "modified_rows": 100000, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 0, "changed_columns": 2, "new_row_ids": false}}, "text_combine": {"preview_ms": 573.9437020001787, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 100000, "removed_rows": 0, "changed_rows": 100000, "added_rows": 0, "before_columns": 5, "after_columns": 6, "changed_columns": 1, "removed_columns": 0, "added_columns": 1, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:19fb308c-45fe-4118-a6fd-5b6b93ce107c", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": [], "new_nulls": 0, "changed_cells": 0, "modified_rows": 100000, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 0, "changed_columns": 1, "new_row_ids": false}}, "date_parts": {"preview_ms": 372.95367700062343, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 100000, "removed_rows": 0, "changed_rows": 100000, "added_rows": 0, "before_columns": 5, "after_columns": 6, "changed_columns": 1, "removed_columns": 0, "added_columns": 1, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:19fb308c-45fe-4118-a6fd-5b6b93ce107c", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": ["Tarih parçaları seçili timezone'da hesaplanır; naive zaman UTC sayılmaz. ISO hafta günü Pazartesi1–Pazar7. Kaynak an/tür değişmez."], "new_nulls": 0, "changed_cells": 0, "modified_rows": 100000, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 0, "changed_columns": 1, "new_row_ids": false}}, "aggregate": {"preview_ms": 2038.1634879995545, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 50000, "removed_rows": 100000, "changed_rows": 100000, "added_rows": 50000, "before_columns": 5, "after_columns": 2, "changed_columns": 5, "removed_columns": 3, "added_columns": 0, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:19fb308c-45fe-4118-a6fd-5b6b93ce107c", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": [], "new_nulls": 0, "changed_cells": 0, "modified_rows": 0, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 100000, "predicted_rows": 50000, "group_count": 50000, "pivot_collisions": 0, "changed_columns": 5, "new_row_ids": true}}, "pivot": {"preview_ms": 1985.2111380005226, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 50000, "removed_rows": 100000, "changed_rows": 100000, "added_rows": 50000, "before_columns": 5, "after_columns": 3, "changed_columns": 6, "removed_columns": 2, "added_columns": 0, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:19fb308c-45fe-4118-a6fd-5b6b93ce107c", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": [], "new_nulls": 0, "changed_cells": 0, "modified_rows": 0, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 100000, "predicted_rows": 50000, "group_count": 50000, "pivot_collisions": 0, "changed_columns": 6, "new_row_ids": true}}, "unpivot": {"preview_ms": 1615.3280589987844, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 200000, "removed_rows": 100000, "changed_rows": 100000, "added_rows": 200000, "before_columns": 5, "after_columns": 2, "changed_columns": 7, "removed_columns": 3, "added_columns": 0, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:19fb308c-45fe-4118-a6fd-5b6b93ce107c", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": ["Satır sayısı artıyor; bu etki örneklemden tahmin edilmedi, tam veri anahtar/alan sayımıdır."], "new_nulls": 0, "changed_cells": 0, "modified_rows": 0, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 200000, "predicted_rows": 200000, "changed_columns": 7, "new_row_ids": true}}, "append": {"preview_ms": 1728.8985300001514, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 200000, "removed_rows": 100000, "changed_rows": 100000, "added_rows": 200000, "before_columns": 5, "after_columns": 5, "changed_columns": 10, "removed_columns": 0, "added_columns": 0, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:19fb308c-45fe-4118-a6fd-5b6b93ce107c", "rows": 100000, "side": "primary"}, {"version_id": "dv:19fb308c-45fe-4118-a6fd-5b6b93ce107c", "rows": 100000, "side": "secondary"}], "total_input_occurrences": 200000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": ["Append açık eşlemeyle sol kayıtlar ardından sağ kayıtları ekler. Eksik taraf yalnız seçilen null alanlarla tamamlanır; tür dönüşümü veya sütun düşürme yok.", "Satır sayısı artıyor; bu etki örneklemden tahmin edilmedi, tam veri anahtar/alan sayımıdır."], "new_nulls": 0, "changed_cells": 0, "modified_rows": 0, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 200000, "predicted_rows": 200000, "changed_columns": 10, "new_row_ids": true}}, "join": {"preview_ms": 2208.078179999575, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 200000, "removed_rows": 100000, "changed_rows": 100000, "added_rows": 200000, "before_columns": 5, "after_columns": 10, "changed_columns": 5, "removed_columns": 0, "added_columns": 5, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:19fb308c-45fe-4118-a6fd-5b6b93ce107c", "rows": 100000, "side": "primary"}, {"version_id": "dv:19fb308c-45fe-4118-a6fd-5b6b93ce107c", "rows": 100000, "side": "secondary"}], "total_input_occurrences": 200000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": ["Join n:n: tam anahtar sayımlarından 200000 çıktı; sol eşleşmeyen 0, sağ eşleşmeyen 0. İki kaynağa bağlı yeni satırlar; tek SourceRecordId yok.", "Satır sayısı artıyor; bu etki örneklemden tahmin edilmedi, tam veri anahtar/alan sayımıdır."], "new_nulls": 0, "changed_cells": 0, "modified_rows": 0, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 400000, "predicted_rows": 200000, "relationship": "n:n", "left_unmatched": 0, "right_unmatched": 0, "matched_pairs": 200000, "nulls_equal": false, "ordering": "left_then_right_input", "changed_columns": 5, "new_row_ids": true}}}, "screenshots": ["/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase11-headless-1366-light.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase11-headless-1366-light-after.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase11-headless-720-dark.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase11-headless-720-dark-after.png"], "fixture_sha256": "0ff9fe1467c79542607400aa6b347f2ac97fe3149d80b7d77531ce7e6ca7f888", "format_fixtures": {"ods": {"sha256": "4eb301cb538c39be7c544939deaed08a8dafd55603afc7d71ac19c268324f94e", "rows": 2, "values_types_equal": true}, "sqlite": {"sha256": "6137640534071e093cdea4a707ff79997bb5340f304e198d224cfd3c8e705b62", "rows": 2, "values_types_equal": true}, "ipc": {"sha256": "3a7b90facab33a7d1d7145723a9b45c3218078cdba3570b88f5040fce614823d", "rows": 2, "values_types_equal": true}, "ipc_stream": {"sha256": "15870f723a741bbdf134b8f201f3cb4d46998ee1d6090239e0def84cd8cda843", "rows": 2, "values_types_equal": true}}, "source_unchanged": true, "undo_redo_equal": true, "reopen_equal": true, "cancel_preserved": true, "scope": "full; tables first200 only", "cache": "warm developer host; minimum hardware unverified"}
+exit=0
+
+$ /home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python -m veri_ufku.app --smoke-test
+cwd=/tmp
+PYTHONPATH=/tmp/veri-ufku-phase11-final-installed
+GUI_SMOKE PASS
+exit=0
+
+$ /home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python /home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase11.py --package-root /tmp/veri-ufku-phase11-final-installed --output /home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase11-wheel.json
+cwd=/tmp
+PYTHONPATH=/tmp/veri-ufku-phase11-final-installed
+{"environment": "ENV-11", "date": "2026-10-07", "python": "3.13.15", "polars": "2.0.0", "platform": "Linux-7.2.9-1-cachyos-x86_64-with-glibc2.44", "backend": "offscreen/software", "rows": 100000, "n": 1, "peak_parent_worker_rss_bytes": 1393254400, "max_tick_gap_ms": 47.93380900082411, "package": "/tmp/veri-ufku-phase11-final-installed/veri_ufku/__init__.py", "methods": {"computed": {"preview_ms": 1152.346684000804, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 100000, "removed_rows": 0, "changed_rows": 100000, "added_rows": 0, "before_columns": 5, "after_columns": 6, "changed_columns": 1, "removed_columns": 0, "added_columns": 1, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:b19bb6a7-c01e-4ca2-95be-9fd43b05af4a", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": ["Formül izinli AST ile yorumlanır; null yayılır, coalesce/ifelse açık istisnadır. Bölme reject/null politikasındadır. Exact hedefe uymayan kesir/Decimal/Float64 reddedilir; round() açık half-even seçimi ve sayımıdır."], "new_nulls": 0, "changed_cells": 0, "modified_rows": 100000, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 0, "changed_columns": 1, "new_row_ids": false}}, "text_split": {"preview_ms": 581.4592750011798, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 100000, "removed_rows": 0, "changed_rows": 100000, "added_rows": 0, "before_columns": 5, "after_columns": 7, "changed_columns": 2, "removed_columns": 0, "added_columns": 2, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:b19bb6a7-c01e-4ca2-95be-9fd43b05af4a", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": [], "new_nulls": 0, "changed_cells": 0, "modified_rows": 100000, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 0, "changed_columns": 2, "new_row_ids": false}}, "text_combine": {"preview_ms": 595.4702679991897, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 100000, "removed_rows": 0, "changed_rows": 100000, "added_rows": 0, "before_columns": 5, "after_columns": 6, "changed_columns": 1, "removed_columns": 0, "added_columns": 1, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:b19bb6a7-c01e-4ca2-95be-9fd43b05af4a", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": [], "new_nulls": 0, "changed_cells": 0, "modified_rows": 100000, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 0, "changed_columns": 1, "new_row_ids": false}}, "date_parts": {"preview_ms": 385.68751999991946, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 100000, "removed_rows": 0, "changed_rows": 100000, "added_rows": 0, "before_columns": 5, "after_columns": 6, "changed_columns": 1, "removed_columns": 0, "added_columns": 1, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:b19bb6a7-c01e-4ca2-95be-9fd43b05af4a", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": ["Tarih parçaları seçili timezone'da hesaplanır; naive zaman UTC sayılmaz. ISO hafta günü Pazartesi1–Pazar7. Kaynak an/tür değişmez."], "new_nulls": 0, "changed_cells": 0, "modified_rows": 100000, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 0, "changed_columns": 1, "new_row_ids": false}}, "aggregate": {"preview_ms": 2102.55360300107, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 50000, "removed_rows": 100000, "changed_rows": 100000, "added_rows": 50000, "before_columns": 5, "after_columns": 2, "changed_columns": 5, "removed_columns": 3, "added_columns": 0, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:b19bb6a7-c01e-4ca2-95be-9fd43b05af4a", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": [], "new_nulls": 0, "changed_cells": 0, "modified_rows": 0, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 100000, "predicted_rows": 50000, "group_count": 50000, "pivot_collisions": 0, "changed_columns": 5, "new_row_ids": true}}, "pivot": {"preview_ms": 2012.4949179989926, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 50000, "removed_rows": 100000, "changed_rows": 100000, "added_rows": 50000, "before_columns": 5, "after_columns": 3, "changed_columns": 6, "removed_columns": 2, "added_columns": 0, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:b19bb6a7-c01e-4ca2-95be-9fd43b05af4a", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": [], "new_nulls": 0, "changed_cells": 0, "modified_rows": 0, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 100000, "predicted_rows": 50000, "group_count": 50000, "pivot_collisions": 0, "changed_columns": 6, "new_row_ids": true}}, "unpivot": {"preview_ms": 1662.720647000242, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 200000, "removed_rows": 100000, "changed_rows": 100000, "added_rows": 200000, "before_columns": 5, "after_columns": 2, "changed_columns": 7, "removed_columns": 3, "added_columns": 0, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:b19bb6a7-c01e-4ca2-95be-9fd43b05af4a", "rows": 100000, "side": "primary"}], "total_input_occurrences": 100000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": ["Satır sayısı artıyor; bu etki örneklemden tahmin edilmedi, tam veri anahtar/alan sayımıdır."], "new_nulls": 0, "changed_cells": 0, "modified_rows": 0, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 200000, "predicted_rows": 200000, "changed_columns": 7, "new_row_ids": true}}, "append": {"preview_ms": 1710.4744280004525, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 200000, "removed_rows": 100000, "changed_rows": 100000, "added_rows": 200000, "before_columns": 5, "after_columns": 5, "changed_columns": 10, "removed_columns": 0, "added_columns": 0, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:b19bb6a7-c01e-4ca2-95be-9fd43b05af4a", "rows": 100000, "side": "primary"}, {"version_id": "dv:b19bb6a7-c01e-4ca2-95be-9fd43b05af4a", "rows": 100000, "side": "secondary"}], "total_input_occurrences": 200000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": ["Append açık eşlemeyle sol kayıtlar ardından sağ kayıtları ekler. Eksik taraf yalnız seçilen null alanlarla tamamlanır; tür dönüşümü veya sütun düşürme yok.", "Satır sayısı artıyor; bu etki örneklemden tahmin edilmedi, tam veri anahtar/alan sayımıdır."], "new_nulls": 0, "changed_cells": 0, "modified_rows": 0, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 200000, "predicted_rows": 200000, "changed_columns": 10, "new_row_ids": true}}, "join": {"preview_ms": 2173.3151509997697, "impact": {"scope": "full", "population_n": 100000, "used_n": 100000, "before_rows": 100000, "after_rows": 200000, "removed_rows": 100000, "changed_rows": 100000, "added_rows": 200000, "before_columns": 5, "after_columns": 10, "changed_columns": 5, "removed_columns": 0, "added_columns": 5, "changed_cells": 0, "new_nulls": 0, "parse_errors": 0, "outlier_candidates": 0, "input_populations": [{"version_id": "dv:b19bb6a7-c01e-4ca2-95be-9fd43b05af4a", "rows": 100000, "side": "primary"}, {"version_id": "dv:b19bb6a7-c01e-4ca2-95be-9fd43b05af4a", "rows": 100000, "side": "secondary"}], "total_input_occurrences": 200000, "table_scope": "first200_display_only"}, "diagnostics": {"warnings": ["Join n:n: tam anahtar sayımlarından 200000 çıktı; sol eşleşmeyen 0, sağ eşleşmeyen 0. İki kaynağa bağlı yeni satırlar; tek SourceRecordId yok.", "Satır sayısı artıyor; bu etki örneklemden tahmin edilmedi, tam veri anahtar/alan sayımıdır."], "new_nulls": 0, "changed_cells": 0, "modified_rows": 0, "zero_divisions": 0, "rounded_values": 0, "examples": [], "parse_errors": 0, "relation_rows": 400000, "predicted_rows": 200000, "relationship": "n:n", "left_unmatched": 0, "right_unmatched": 0, "matched_pairs": 200000, "nulls_equal": false, "ordering": "left_then_right_input", "changed_columns": 5, "new_row_ids": true}}}, "screenshots": ["/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase11-wheel-1366-light.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase11-wheel-1366-light-after.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase11-wheel-720-dark.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase11-wheel-720-dark-after.png"], "fixture_sha256": "0ff9fe1467c79542607400aa6b347f2ac97fe3149d80b7d77531ce7e6ca7f888", "format_fixtures": {"ods": {"sha256": "18a6c043e71fa58e9c150b622497bd47569eed12640c44e4b77bc5fd925473a2", "rows": 2, "values_types_equal": true}, "sqlite": {"sha256": "6137640534071e093cdea4a707ff79997bb5340f304e198d224cfd3c8e705b62", "rows": 2, "values_types_equal": true}, "ipc": {"sha256": "3a7b90facab33a7d1d7145723a9b45c3218078cdba3570b88f5040fce614823d", "rows": 2, "values_types_equal": true}, "ipc_stream": {"sha256": "15870f723a741bbdf134b8f201f3cb4d46998ee1d6090239e0def84cd8cda843", "rows": 2, "values_types_equal": true}}, "source_unchanged": true, "undo_redo_equal": true, "reopen_equal": true, "cancel_preserved": true, "scope": "full; tables first200 only", "cache": "warm developer host; minimum hardware unverified"}
+exit=0
+
+$ git diff --check
+cwd=/home/s-oktay/Belgeler/Veri_Ufku
+exit=0
+
+
+Final package execution: QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software
+
+build actual final log:
+Building source distribution...
+Building wheel from source distribution...
+Successfully built /tmp/veri-ufku-phase11-dist/veri_ufku-0.1.0.tar.gz
+Successfully built /tmp/veri-ufku-phase11-dist/veri_ufku-0.1.0-py3-none-any.whl
+
+install actual final log:
+Using CPython 3.13.15 interpreter at: .venv/bin/python
+Resolved 1 package in 1ms
+Prepared 1 package in 4ms
+Uninstalled 1 package in 0.75ms
+Installed 1 package in 1ms
+ ~ veri-ufku==0.1.0 (from file:///tmp/veri-ufku-phase11-dist/veri_ufku-0.1.0-py3-none-any.whl)
+
+wheel-entry actual final log:
+GUI_SMOKE PASS
+
+Installed measurement: cwd=/tmp; PYTHONPATH=/tmp/veri-ufku-phase11-installed; .venv/bin/python scripts/measure_phase11.py --package-root /tmp/veri-ufku-phase11-installed --output docs/evidence/phase11-wheel.json
+Source and installed measurement completed; actual results in phase11-headless.json and phase11-wheel.json. Installed entry isolated XDG=/tmp/vu-phase11-entry/{config,state,cache}.
+
+Post-recovery doc reconciliation: first check_docs and locked unittest failed (duplicate F11 rows and missing package anchor); repeated added subsection removed, existing method IDs retained, package anchor restored. Final checks below.
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_learning.py
+PASS: 61 offline articles; 43 UI bindings; all capability links
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.398s
+
+OK
+exit=0
+
+$ git diff --check
+docs/REQUIREMENTS_MATRIX.md:738: new blank line at EOF.
+exit=2
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_learning.py
+PASS: 61 offline articles; 43 UI bindings; all capability links
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.398s
+
+OK
+exit=0
+
+$ git diff --check
+exit=0

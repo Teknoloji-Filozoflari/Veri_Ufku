@@ -16,7 +16,15 @@ dependencies = [
 veri-ufku = "veri_ufku.app:main"
 
 [dependency-groups]
-dev = ["pytest==9.1.1", "ruff==0.16.10", "hatchling==1.32.3", "pathspec==1.1.1", "tomlkit==0.15.1", "trove-classifiers==2026.6.1.19"]
+dev = [
+    "pytest==9.1.1",
+    "ruff==0.16.10",
+    "hatchling==1.32.3",
+    "pathspec==1.1.1",
+    "tomlkit==0.15.1",
+    "trove-classifiers==2026.6.1.19",
+    "duckdb==1.5.6",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/veri_ufku"]

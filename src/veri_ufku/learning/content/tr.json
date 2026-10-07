@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "content_version": 8,
+  "content_version": 10,
   "locale": "tr",
   "articles": [
     {
@@ -1528,6 +1528,943 @@
         }
       ],
       "try_action": null
+    },
+    {
+      "id": "clean-missing-rows",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Eksik satır kaldırma",
+      "category": "Uygulama",
+      "summary": "Seçilen alanlarında eksik olan kayıtları açık seçimle çıkarır.",
+      "purpose": "Seçilen alanlarında eksik olan kayıtları açık seçimle çıkarır.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "a=[1,null,3], b=[A,B,C]",
+        "after": "a=[1,3], b=[A,C]; bir kayıt çıkarıldı."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "Eksiklik sistematikse örneklem yanlılığı büyür; kayıt sayısı ve temsil gücü azalır.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.missing-rows"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-missing-columns",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Eksik sütun kaldırma",
+      "category": "Uygulama",
+      "summary": "Bir alandaki eksiklik kuralına göre o alanı çıkarır.",
+      "purpose": "Bir alandaki eksiklik kuralına göre o alanı çıkarır.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "a=[null,null], b=[1,2]",
+        "after": "Yalnız tümü eksik a kaldırılır; b kalır."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "Herhangi eksik kuralı bir tek null nedeniyle dolu değerlerin tamamını da kaldırabilir.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.missing-columns"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-fill-constant",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Sabit değerle doldurma",
+      "category": "Uygulama",
+      "summary": "Eksik hücreye kullanıcı seçimi olan sabiti koyar.",
+      "purpose": "Eksik hücreye kullanıcı seçimi olan sabiti koyar.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "[1,null,3], sabit=0",
+        "after": "[1,0,3]; bir hücre değişti."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "0 gerçek ölçüm gibi görünebilir. Null+NaN birlikte değişimi ayrıca seçilmelidir. Fiziksel türü Null olan tamamen boş sütunda önce açık tür dönüşümü gerekir; bilinen Int64/Decimal/metin türü varsa sabit doğrudan kullanılabilir.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.fill.constant"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-fill-mean",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Ortalama ile doldurma",
+      "category": "Uygulama",
+      "summary": "Geçerli sonlu ölçümlerin ortalamasını eksik hücreye koyar.",
+      "purpose": "Geçerli sonlu ölçümlerin ortalamasını eksik hücreye koyar.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "[1,2,6,null]",
+        "after": "[1,2,6,3]; ortalama=(1+2+6)/3=3."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "Aykırı değer etkisine açıktır, varyansı azaltır. Tam veri ortalaması ML test bilgisine bakabilir.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.fill.mean"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-fill-median",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Medyan ile doldurma",
+      "category": "Uygulama",
+      "summary": "Sıralı geçerli değerlerin ortasını eksik hücreye koyar.",
+      "purpose": "Sıralı geçerli değerlerin ortasını eksik hücreye koyar.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "[1,2,6,null]",
+        "after": "[1,2,6,2]; medyan=2."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "Dağılımın yapısını değiştirir. Çift n medyanı kesirliyse mevcut integer/decimal ölçeğine tam uymalıdır.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.fill.median"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-fill-mode",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "En sık değerle doldurma",
+      "category": "Uygulama",
+      "summary": "En sık gözlenen geçerli değeri kullanır; eşitlik açık seçim ister.",
+      "purpose": "En sık gözlenen geçerli değeri kullanır; eşitlik açık seçim ister.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "[A,B,A,B,null]",
+        "after": "Mod eşitliğinde durur; B seçersen [A,B,A,B,B]."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "Eşitlikte ilk gördüğünü sessiz seçmek yok. Seçilen değer en sık adaylardan biri olmalı.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.fill.mode"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-dedup",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Açık sıra ile tekrar kaldırma",
+      "category": "Uygulama",
+      "summary": "Seçilen kolonlara göre eşit kayıtların açık ilk/son kaydını tutar.",
+      "purpose": "Seçilen kolonlara göre eşit kayıtların açık ilk/son kaydını tutar.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "sıra=[3,1,2], anahtar=[A,A,B]",
+        "after": "Artan sırada ilk: özgün ikinci A ve üçüncü B kalır."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "Tekrar meşru ayrı olay olabilir. Null=null, NaN=NaN fakat null≠NaN; metin tam eşitliktir. Eliminasyon kökeni saklanır.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.dedup"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-trim",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Metin uçlarını kırpma",
+      "category": "Uygulama",
+      "summary": "Metnin uçlarındaki whitespace karakterlerini seçilen taraftan kaldırır.",
+      "purpose": "Metnin uçlarındaki whitespace karakterlerini seçilen taraftan kaldırır.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "[\" Ankara \",\"Ankara\",null]",
+        "after": "[\"Ankara\",\"Ankara\",null]; bir hücre değişti, üç kayıt kaldı."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "Anlamlı boşluklar kaybolabilir. İç boşluk/harf değiştirilmez; boş metin null yapılmaz.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.trim"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-map-categories",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Güvenli kategori eşleme",
+      "category": "Uygulama",
+      "summary": "Kullanıcının açık eski-yeni metin çiftlerini uygular.",
+      "purpose": "Kullanıcının açık eski-yeni metin çiftlerini uygular.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "[Ankara,Ankra,İzmir], Ankra→Ankara",
+        "after": "[Ankara,Ankara,İzmir]."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "Benzer yazımlar otomatik birleştirilmez. İki meşru kategori aynı hedefte ayrım kaybedebilir.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.map-categories"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-convert",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Kayıpsız tür ve tarih dönüştürme",
+      "category": "Uygulama",
+      "summary": "Açık hedef tür/biçim/hata/DST politikasına göre dönüştürür.",
+      "purpose": "Açık hedef tür/biçim/hata/DST politikasına göre dönüştürür.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "Decimal(10,2): [\"1.25\",\"1.234\",\"bad\"]; yeni null seçimi",
+        "after": "[1.25,null,null]; iki dönüşüm hatası ve iki yeni null."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "Sessiz yuvarlama yok. 2024-02-30 düzeltilmez; DST olmayan saat reddedilir. Çift saatte reject/earliest/latest açık seçimdir. Float64 kesin 0.1 için uygun değildir; Decimal seç.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.convert"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        },
+        {
+          "title": "Python timezone ve fold",
+          "reference": "https://docs.python.org/3.13/library/zoneinfo.html",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-ordered-fill-forward",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Grup içinde ileri doldurma",
+      "category": "Uygulama",
+      "summary": "Seçilen zaman sırasındaki önceki geçerli değeri aynı grupta taşır.",
+      "purpose": "Seçilen zaman sırasındaki önceki geçerli değeri aynı grupta taşır.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "A zaman1..3: [null,10,null]; B: [null,20,null]",
+        "after": "A:[null,10,10]; B:[null,20,20]."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "Başta dayanak yoksa eksik kalır. Gruplar arası taşıma yok; azalan sırada ileri doldurma geleceği kullanabilir.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.ordered-fill.forward"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-ordered-fill-backward",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "Grup içinde geri doldurma",
+      "category": "Uygulama",
+      "summary": "Seçilen zaman sırasındaki sonraki geçerli değeri aynı grupta taşır.",
+      "purpose": "Seçilen zaman sırasındaki sonraki geçerli değeri aynı grupta taşır.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "A:[null,10,null]; B:[null,20,null]",
+        "after": "A:[10,10,null]; B:[20,20,null]."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "Sonraki gözlem tahmin anında bilinmiyorsa veri sızıntısı oluşturur. ML pipeline işlemi gibi sızıntısız sayılmaz.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.ordered-fill.backward"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "clean-outlier",
+      "content_version": 1,
+      "locale": "tr",
+      "title": "IQR ile aykırı adayını işaretleme",
+      "category": "Uygulama",
+      "summary": "Q1−1.5×IQR ve Q3+1.5×IQR dışındaki sonlu değerleri aday olarak gösterir.",
+      "purpose": "Q1−1.5×IQR ve Q3+1.5×IQR dışındaki sonlu değerleri aday olarak gösterir.",
+      "when": "Açık yöntem ve kayıp politikasını seçip önizlemeyi incelediğinde.",
+      "when_not": "Kaynağı değiştirmek veya ML eğitim/test sınırı kurulmadan sonucu sızıntısız saymak için.",
+      "example": {
+        "before": "[1,2,3,4,100]; Q1=2, Q3=4, IQR=2",
+        "after": "Eşik[-1,7]; yalnız100 aday, varsayılan beş kayıt da kalır."
+      },
+      "interpretation": "Tam veri etki sayımı, değişen hücreler, çıkarılan kayıtlar ve yeni null sayıları ayrı gösterilir. Tablolar ilk200 kayıt görünümüdür.",
+      "common_mistake": "Bir öneriyi otomatik silme sanmak, NaN ile null değerlerini sessizce aynı kabul etmek veya kesir/tarihi sessiz düzeltmek.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Hazırla → Temizlik araçları → yöntem ve hedef → Önizle → tam veri etkisi ve uyarılar → Uygula. Kopya dataset mevcut zinciri değiştirmez; her iki hedefte geri alma mümkündür."
+        }
+      ],
+      "critical": "İstatistiksel aday hatalı kayıt kanıtı değildir. Filtreleme açık seçilmelidir; sıfır IQR sabit kolonda aday üretmez, kuyruk varsa sınır dışı değer aday olabilir.",
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "leakage"
+      ],
+      "contexts": [
+        "clean.outlier"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku hesap ve işlem sözleşmesi",
+          "reference": "docs/CORE_CONTRACTS.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "try_action": null
+    },
+    {
+      "id": "transform-computed",
+      "content_version": 10,
+      "locale": "tr",
+      "title": "Güvenli hesaplanmış kolon",
+      "category": "Uygulama",
+      "summary": "Güvenli hesaplanmış kolon işlemini önce tam veri önizlemesinde inceleyin.",
+      "purpose": "Kaynağı koruyarak yeni çalışma sürümü oluşturmanıza yardım eder.",
+      "when": "Bu dönüşüm verinin anlamı ve seçtiğiniz alanlarla uyumluysa.",
+      "when_not": "Eşitlik, sıra, tür veya kaynak ilişkisi belirsizken otomatik sonuç almak için.",
+      "example": {
+        "before": "Fiyat [2,4,null] ve miktar [3,0,5].",
+        "after": "Fiyat × miktar → [6,0,null]."
+      },
+      "interpretation": "Etki tam veri üzerinde hesaplanır; önce/sonra tabloları yalnız ilk200 kayıt örneğidir.",
+      "common_mistake": "Önizleme örnek tablosunu bütün veri veya tek kaynak ilişkisi sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Kolonu adıyla ekleyin; kayıtlı formül kalıcı ColumnId ile bağlıdır. Null yayılır. coalesce eksikliği açık değiştirir. Sıfıra bölmede durdur veya yeni null seçin; null sayısı raporlanır. Decimal ölçeğine sığmayan sonuç durur. round(x,2) açık half-even seçimidir. Python kodu, attribute, dosya/ağ çağrısı ve eval/exec çalıştırılmaz."
+        }
+      ],
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "source-working"
+      ],
+      "contexts": [
+        "transform.computed",
+        "operation.computed"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku dönüşüm sözleşmesi",
+          "reference": "docs/adr/014-transformations-phase11.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "critical": "Önizleme sonrası Uygula yeni sürüm yayımlar; undo/redo kimlikleri korur, eski analizler yeni sürüme taşınmaz.",
+      "try_action": null
+    },
+    {
+      "id": "transform-text-split",
+      "content_version": 10,
+      "locale": "tr",
+      "title": "Metni bölme",
+      "category": "Uygulama",
+      "summary": "Metni bölme işlemini önce tam veri önizlemesinde inceleyin.",
+      "purpose": "Kaynağı koruyarak yeni çalışma sürümü oluşturmanıza yardım eder.",
+      "when": "Bu dönüşüm verinin anlamı ve seçtiğiniz alanlarla uyumluysa.",
+      "when_not": "Eşitlik, sıra, tür veya kaynak ilişkisi belirsizken otomatik sonuç almak için.",
+      "example": {
+        "before": "A-B-C; D; null.",
+        "after": "İki alan → [A,B-C], [D,null], [null,null]."
+      },
+      "interpretation": "Etki tam veri üzerinde hesaplanır; önce/sonra tabloları yalnız ilk200 kayıt örneğidir.",
+      "common_mistake": "Önizleme örnek tablosunu bütün veri veya tek kaynak ilişkisi sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Ayraç literal metindir; regex çalışmaz. Son parça kalan metni korur. Boş metin ile null farklıdır; asıl alan korunur."
+        }
+      ],
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "source-working"
+      ],
+      "contexts": [
+        "transform.text-split",
+        "operation.text-split"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku dönüşüm sözleşmesi",
+          "reference": "docs/adr/014-transformations-phase11.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "critical": "Önizleme sonrası Uygula yeni sürüm yayımlar; undo/redo kimlikleri korur, eski analizler yeni sürüme taşınmaz.",
+      "try_action": null
+    },
+    {
+      "id": "transform-text-combine",
+      "content_version": 10,
+      "locale": "tr",
+      "title": "Metin birleştirme",
+      "category": "Uygulama",
+      "summary": "Metin birleştirme işlemini önce tam veri önizlemesinde inceleyin.",
+      "purpose": "Kaynağı koruyarak yeni çalışma sürümü oluşturmanıza yardım eder.",
+      "when": "Bu dönüşüm verinin anlamı ve seçtiğiniz alanlarla uyumluysa.",
+      "when_not": "Eşitlik, sıra, tür veya kaynak ilişkisi belirsizken otomatik sonuç almak için.",
+      "example": {
+        "before": "Ad [Ada,Ece]; soyad [Yılmaz,null].",
+        "after": "Null yayılımı → [Ada Yılmaz,null]; null atlama → [Ada Yılmaz,Ece]."
+      },
+      "interpretation": "Etki tam veri üzerinde hesaplanır; önce/sonra tabloları yalnız ilk200 kayıt örneğidir.",
+      "common_mistake": "Önizleme örnek tablosunu bütün veri veya tek kaynak ilişkisi sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Seçim sırası ve ayraç kaydedilir. Null atlama eksik soyadın görünmesini gizleyebilir; tümü null ise boş metin oluşur."
+        }
+      ],
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "source-working"
+      ],
+      "contexts": [
+        "transform.text-combine",
+        "operation.text-combine"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku dönüşüm sözleşmesi",
+          "reference": "docs/adr/014-transformations-phase11.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "critical": "Önizleme sonrası Uygula yeni sürüm yayımlar; undo/redo kimlikleri korur, eski analizler yeni sürüme taşınmaz.",
+      "try_action": null
+    },
+    {
+      "id": "transform-date-parts",
+      "content_version": 10,
+      "locale": "tr",
+      "title": "Tarih parçaları",
+      "category": "Uygulama",
+      "summary": "Tarih parçaları işlemini önce tam veri önizlemesinde inceleyin.",
+      "purpose": "Kaynağı koruyarak yeni çalışma sürümü oluşturmanıza yardım eder.",
+      "when": "Bu dönüşüm verinin anlamı ve seçtiğiniz alanlarla uyumluysa.",
+      "when_not": "Eşitlik, sıra, tür veya kaynak ilişkisi belirsizken otomatik sonuç almak için.",
+      "example": {
+        "before": "2024-01-01; 2024-03-15; null.",
+        "after": "Ay → [1,3,null]; ISO hafta günü → [1,5,null]."
+      },
+      "interpretation": "Etki tam veri üzerinde hesaplanır; önce/sonra tabloları yalnız ilk200 kayıt örneğidir.",
+      "common_mistake": "Önizleme örnek tablosunu bütün veri veya tek kaynak ilişkisi sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Naive tarih UTC sayılmaz. Aware tarihte timezone değişimi gün/saat parçasını değiştirebilir; asıl an değişmez. ISO hafta yılı yıl parçasıyla sınırda farklı olabilir. Saat dilimsiz veriye timezone atamak için açık tür dönüşümü gerekir."
+        }
+      ],
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "source-working"
+      ],
+      "contexts": [
+        "transform.date-parts",
+        "operation.date-parts"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku dönüşüm sözleşmesi",
+          "reference": "docs/adr/014-transformations-phase11.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "critical": "Önizleme sonrası Uygula yeni sürüm yayımlar; undo/redo kimlikleri korur, eski analizler yeni sürüme taşınmaz.",
+      "try_action": null
+    },
+    {
+      "id": "transform-aggregate",
+      "content_version": 10,
+      "locale": "tr",
+      "title": "Gruplama ve toplulaştırma",
+      "category": "Uygulama",
+      "summary": "Gruplama ve toplulaştırma işlemini önce tam veri önizlemesinde inceleyin.",
+      "purpose": "Kaynağı koruyarak yeni çalışma sürümü oluşturmanıza yardım eder.",
+      "when": "Bu dönüşüm verinin anlamı ve seçtiğiniz alanlarla uyumluysa.",
+      "when_not": "Eşitlik, sıra, tür veya kaynak ilişkisi belirsizken otomatik sonuç almak için.",
+      "example": {
+        "before": "Mağaza A: 2 ve4; mağaza B: 8.",
+        "after": "Mağazaya toplam → A:6, B:8; sayım → A:2, B:1."
+      },
+      "interpretation": "Etki tam veri üzerinde hesaplanır; önce/sonra tabloları yalnız ilk200 kayıt örneğidir.",
+      "common_mistake": "Önizleme örnek tablosunu bütün veri veya tek kaynak ilişkisi sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Grup başına yeni kayıt bütün kaynak üyelerine bağlıdır. Sayım null dahil kayıt sayısıdır; geçerli değer sayımı nullu dışlar. Sum/mean/min/max tümü null grupta null verir. Kesin Decimal veya tam sayı sonuç sığmazsa durur; açık Float64 yaklaşık sonuçları sayar. Gruplama ayrıntılı olay bilgisini azaltır."
+        }
+      ],
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "source-working"
+      ],
+      "contexts": [
+        "transform.aggregate",
+        "operation.aggregate"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku dönüşüm sözleşmesi",
+          "reference": "docs/adr/014-transformations-phase11.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "critical": "Önizleme sonrası Uygula yeni sürüm yayımlar; undo/redo kimlikleri korur, eski analizler yeni sürüme taşınmaz.",
+      "try_action": null
+    },
+    {
+      "id": "transform-pivot",
+      "content_version": 10,
+      "locale": "tr",
+      "title": "Pivot: uzun veriden geniş veriye",
+      "category": "Uygulama",
+      "summary": "Pivot: uzun veriden geniş veriye işlemini önce tam veri önizlemesinde inceleyin.",
+      "purpose": "Kaynağı koruyarak yeni çalışma sürümü oluşturmanıza yardım eder.",
+      "when": "Bu dönüşüm verinin anlamı ve seçtiğiniz alanlarla uyumluysa.",
+      "when_not": "Eşitlik, sıra, tür veya kaynak ilişkisi belirsizken otomatik sonuç almak için.",
+      "example": {
+        "before": "Ada: ocak2, şubat3; Ece: ocak4.",
+        "after": "Kişi × ay → Ada [2,3], Ece [4,null]."
+      },
+      "interpretation": "Etki tam veri üzerinde hesaplanır; önce/sonra tabloları yalnız ilk200 kayıt örneğidir.",
+      "common_mistake": "Önizleme örnek tablosunu bütün veri veya tek kaynak ilişkisi sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Aynı kişi ve ayda iki kayıt varsa hangi agregasyon kullanılacağını seçin; varsayılan çakışmada durur. Yeni kolonlar ilk başlık görünüm sırasıyla önizlemede sabitlenir; null başlık ve kolon sınırı reddedilir. Toplam ile ortalamanın anlamı farklıdır."
+        }
+      ],
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "source-working"
+      ],
+      "contexts": [
+        "transform.pivot",
+        "operation.pivot"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku dönüşüm sözleşmesi",
+          "reference": "docs/adr/014-transformations-phase11.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "critical": "Önizleme sonrası Uygula yeni sürüm yayımlar; undo/redo kimlikleri korur, eski analizler yeni sürüme taşınmaz.",
+      "try_action": null
+    },
+    {
+      "id": "transform-unpivot",
+      "content_version": 10,
+      "locale": "tr",
+      "title": "Unpivot: geniş veriden uzun veriye",
+      "category": "Uygulama",
+      "summary": "Unpivot: geniş veriden uzun veriye işlemini önce tam veri önizlemesinde inceleyin.",
+      "purpose": "Kaynağı koruyarak yeni çalışma sürümü oluşturmanıza yardım eder.",
+      "when": "Bu dönüşüm verinin anlamı ve seçtiğiniz alanlarla uyumluysa.",
+      "when_not": "Eşitlik, sıra, tür veya kaynak ilişkisi belirsizken otomatik sonuç almak için.",
+      "example": {
+        "before": "Ada: ocak2, şubat3; Ece: ocak4, şubatnull.",
+        "after": "[Ada,ocak,2], [Ada,şubat,3], [Ece,ocak,4], [Ece,şubat,null]."
+      },
+      "interpretation": "Etki tam veri üzerinde hesaplanır; önce/sonra tabloları yalnız ilk200 kayıt örneğidir.",
+      "common_mistake": "Önizleme örnek tablosunu bütün veri veya tek kaynak ilişkisi sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Her kaynak kayıt ve değer kolonu ayrı yeni satır üretir; ilişki ikisine bağlıdır. Null değer satırı korunur. Seçili değer türleri aynı olmalıdır; farklı ölçüm birimlerini bir alana karıştırmayın."
+        }
+      ],
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "source-working"
+      ],
+      "contexts": [
+        "transform.unpivot",
+        "operation.unpivot"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku dönüşüm sözleşmesi",
+          "reference": "docs/adr/014-transformations-phase11.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "critical": "Önizleme sonrası Uygula yeni sürüm yayımlar; undo/redo kimlikleri korur, eski analizler yeni sürüme taşınmaz.",
+      "try_action": null
+    },
+    {
+      "id": "transform-append",
+      "content_version": 10,
+      "locale": "tr",
+      "title": "Alt alta ekleme",
+      "category": "Uygulama",
+      "summary": "Alt alta ekleme işlemini önce tam veri önizlemesinde inceleyin.",
+      "purpose": "Kaynağı koruyarak yeni çalışma sürümü oluşturmanıza yardım eder.",
+      "when": "Bu dönüşüm verinin anlamı ve seçtiğiniz alanlarla uyumluysa.",
+      "when_not": "Eşitlik, sıra, tür veya kaynak ilişkisi belirsizken otomatik sonuç almak için.",
+      "example": {
+        "before": "Ocak satışları [2,4]; şubat satışları [8].",
+        "after": "Eşleme onayından sonra [2,4,8]."
+      },
+      "interpretation": "Etki tam veri üzerinde hesaplanır; önce/sonra tabloları yalnız ilk200 kayıt örneğidir.",
+      "common_mistake": "Önizleme örnek tablosunu bütün veri veya tek kaynak ilişkisi sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Her alanın sol/sağ eşlemesini inceleyin. Eksik alan açık null olur; uyuşmayan türü önce dönüştürün. Bütün alanlar kapsanmalıdır; otomatik sütun düşürme yok. Aynı içerikli kayıtlar ayrı yeni RowId taşır. Undo sol giriş sürümüne döner; sağ kaynak değişmez."
+        }
+      ],
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "source-working"
+      ],
+      "contexts": [
+        "transform.append",
+        "operation.append"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku dönüşüm sözleşmesi",
+          "reference": "docs/adr/014-transformations-phase11.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "critical": "Önizleme sonrası Uygula yeni sürüm yayımlar; undo/redo kimlikleri korur, eski analizler yeni sürüme taşınmaz.",
+      "try_action": null
+    },
+    {
+      "id": "transform-join",
+      "content_version": 10,
+      "locale": "tr",
+      "title": "Join: günlük örneklerle eşleme",
+      "category": "Uygulama",
+      "summary": "Join: günlük örneklerle eşleme işlemini önce tam veri önizlemesinde inceleyin.",
+      "purpose": "Kaynağı koruyarak yeni çalışma sürümü oluşturmanıza yardım eder.",
+      "when": "Bu dönüşüm verinin anlamı ve seçtiğiniz alanlarla uyumluysa.",
+      "when_not": "Eşitlik, sıra, tür veya kaynak ilişkisi belirsizken otomatik sonuç almak için.",
+      "example": {
+        "before": "Müşteri listesi Ada,Ece; siparişler Ada10,Ada20,Can30.",
+        "after": "Inner: Ada10,Ada20; left: bunlar ve Ece-null; right: bunlar ve null-Can30; full: bütün eşleşen ve eşleşmeyenler."
+      },
+      "interpretation": "Etki tam veri üzerinde hesaplanır; önce/sonra tabloları yalnız ilk200 kayıt örneğidir.",
+      "common_mistake": "Önizleme örnek tablosunu bütün veri veya tek kaynak ilişkisi sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "Müşteri kimliğiyle eşleyin. Sol Ada iki, sağ Ada üç kez varsa 2×3=6 çift oluşur: n:n ilişki. Önizleme tam anahtar frekanslarından satır sayısı/ilişki/eşleşmeyenleri hesaplar. Null varsayılan eşleşmez; açık null eşitliğinde çoğalabilir. Sağ kolon adı eki çakışmayı çözer. Çıktı iki gerçek girdi RowId ilişkisini taşır; tek kaynak uydurulmaz."
+        }
+      ],
+      "related": [
+        "operation-preview",
+        "operation-history",
+        "source-working"
+      ],
+      "contexts": [
+        "transform.join",
+        "operation.join"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku dönüşüm sözleşmesi",
+          "reference": "docs/adr/014-transformations-phase11.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "critical": "Önizleme sonrası Uygula yeni sürüm yayımlar; undo/redo kimlikleri korur, eski analizler yeni sürüme taşınmaz.",
+      "try_action": null
+    },
+    {
+      "id": "import-phase11",
+      "content_version": 10,
+      "locale": "tr",
+      "title": "ODS, SQLite ve Arrow kaynağı",
+      "category": "Uygulama",
+      "summary": "Yeni yerel formatların destek sınırlarını görün.",
+      "purpose": "Doğru sayfa/tabloyu ve native tür korumasını seçmek.",
+      "when": "ODS, salt okunur SQLite ordinary tablo veya Feather V2/Arrow IPC açarken.",
+      "when_not": "SQLite canlı WAL/journal, virtual table/view/BLOB; Feather V1; ODS duration veya256 üstü sütun için.",
+      "example": {
+        "before": "SQLite satış tablosu: (Ada,2), (Ece,4).",
+        "after": "Tablo seçimi → değişmez kaynak kopyasından2 yeni kaynak kimliği ve2 veri kaydı."
+      },
+      "interpretation": "SQLite dosyası değişmez; extension yüklenmez. ODS formülleri çalıştırılmaz. Arrow Decimal/timezone/ns/list/struct native korunur.",
+      "common_mistake": "Dosya uzantısını format doğrulaması veya SQLite declared type bilgisini gerçek tüm değer türü sanmak.",
+      "guide": [
+        {
+          "kind": "paragraph",
+          "text": "ODS Python stdlib ZIP/XML ile okunur; tam content.xml64MiB ve toplam arşiv256MiB. Sayfa/başlık seçilir, aralık ve duration desteklenmez; formül cached güncellik garantisi vermez. SQLite stdlib sqlite3 mode=ro+immutable+query_only kullanır; etkin WAL/journal önce kaynak uygulamada kapatılmalıdır. Arrow IPC file/Feather V2 Polars2 native lazy okuyucusudur; IPC stream64MiB encoded/256MiB decoded ile eager açılır. PyArrow, pandas, odfpy ve SQLite extension gerekmez. Kaynak boyutu1GiB ve256 alan sınırı sürer."
+        }
+      ],
+      "related": [
+        "source-working",
+        "import-parquet"
+      ],
+      "contexts": [
+        "import.phase11",
+        "import.ods",
+        "import.sqlite",
+        "import.ipc",
+        "import.ipc-stream"
+      ],
+      "sources": [
+        {
+          "title": "Veri_Ufku adaptör sözleşmesi",
+          "reference": "docs/adr/014-transformations-phase11.md",
+          "reviewed": "2026-10-07"
+        }
+      ],
+      "critical": "Uyumsuz tür sessiz yuvarlanmaz veya düzeltilmez; hatada eski dataset korunur.",
+      "try_action": null
     }
   ],
   "contexts": {
@@ -1580,7 +2517,55 @@
     "source-working": "source-working",
     "operation.rename": "operation-preview",
     "operation.drop": "operation-preview",
-    "operation.filter": "operation-preview"
+    "operation.filter": "operation-preview",
+    "clean.missing-rows": "clean-missing-rows",
+    "clean.missing-columns": "clean-missing-columns",
+    "clean.fill.constant": "clean-fill-constant",
+    "clean.fill.mean": "clean-fill-mean",
+    "clean.fill.median": "clean-fill-median",
+    "clean.fill.mode": "clean-fill-mode",
+    "clean.dedup": "clean-dedup",
+    "clean.trim": "clean-trim",
+    "clean.map-categories": "clean-map-categories",
+    "clean.convert": "clean-convert",
+    "clean.ordered-fill.forward": "clean-ordered-fill-forward",
+    "clean.ordered-fill.backward": "clean-ordered-fill-backward",
+    "clean.outlier": "clean-outlier",
+    "clean.fill": "clean-fill-constant",
+    "clean.ordered-fill": "clean-ordered-fill-forward",
+    "operation.missing-rows": "clean-missing-rows",
+    "operation.missing-columns": "clean-missing-columns",
+    "operation.fill": "clean-fill-constant",
+    "operation.dedup": "clean-dedup",
+    "operation.trim": "clean-trim",
+    "operation.map-categories": "clean-map-categories",
+    "operation.convert": "clean-convert",
+    "operation.ordered-fill": "clean-ordered-fill-forward",
+    "operation.outlier": "clean-outlier",
+    "transform.computed": "transform-computed",
+    "operation.computed": "transform-computed",
+    "transform.text-split": "transform-text-split",
+    "operation.text-split": "transform-text-split",
+    "transform.text-combine": "transform-text-combine",
+    "operation.text-combine": "transform-text-combine",
+    "transform.date-parts": "transform-date-parts",
+    "operation.date-parts": "transform-date-parts",
+    "transform.aggregate": "transform-aggregate",
+    "operation.aggregate": "transform-aggregate",
+    "transform.pivot": "transform-pivot",
+    "operation.pivot": "transform-pivot",
+    "transform.unpivot": "transform-unpivot",
+    "operation.unpivot": "transform-unpivot",
+    "transform.append": "transform-append",
+    "operation.append": "transform-append",
+    "transform.join": "transform-join",
+    "operation.join": "transform-join",
+    "import.phase11": "import-phase11",
+    "transform.methods": "transform-computed",
+    "import.ods": "import-phase11",
+    "import.sqlite": "import-phase11",
+    "import.ipc": "import-phase11",
+    "import.ipc-stream": "import-phase11"
   },
   "actions": {
     "learn.example": {

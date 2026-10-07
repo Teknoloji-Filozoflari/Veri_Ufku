@@ -68,6 +68,12 @@ def run(args):
             wait(app, data, record)
             data.saveProfile()
             window.setProperty("selectedSection", 2)
+            window.findChild(QObject, "operationCompareTables").setProperty(
+                "checked", True
+            )
+            window.findChild(QObject, "operationShowHistory").setProperty(
+                "checked", True
+            )
             window.findChild(QObject, "operationName").setProperty("text", "sales")
             window.findChild(QObject, "operationPreview").clicked.emit()
             record["preview_ms"] = wait(app, ops, record)

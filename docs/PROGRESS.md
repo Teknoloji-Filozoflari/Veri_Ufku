@@ -14,8 +14,8 @@ Ana kayıt [REQUIREMENTS_MATRIX](REQUIREMENTS_MATRIX.md). Tarih 2026-10-06. Bu �
 | 07 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F07 |
 | 08 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F08 |
 | 09 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F09 |
-| 10 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F10 |
-| 11 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F11 |
+| 10 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F10 |
+| 11 | doğrulandı | deneysel | zorunlu | REQUIREMENTS_MATRIX.md:F11 |
 | 12 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F12 |
 | 13 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F13 |
 | 14 | başlanmadı | mevcut değil | zorunlu | REQUIREMENTS_MATRIX.md:F14 |
@@ -63,3 +63,7 @@ Faz08 uzak CI (2026-10-06 UTC / 2026-10-07 Europe/Istanbul): [37532581621](https
 Faz08 CI commit eşlemesi gh API ile doğrulandı:37532581621 → e9fd13f41afb83daaca1c3790e8dc1e14a58d3cb. Commit mesajında Faz03 yazsa da commit ağacı Faz08 kalite motoru/ekranı/testlerini içeriyor. [Kanıt](evidence/PHASE08.md#e08-ci-remote).
 
 Faz09 uygulandı/doğrulandı/deneysel: tipli OperationSpec1, immutable rename/drop/filter, full preview çıktısının aynı hash kontrollü yayını, şema5 kalıcı heads/redo ve eski sonuç güncelliği. 228 pytest/9 unittest, kilitli kapılar ve kurulu Linux wheel100.000 kayıt işlem/filtre/iptal/undo/redo/reopen geçti. Beş gerçek SIGKILL ve beş yayın fault injection eski veya tam yeni sürümü korudu. Elle düzenleme D-01 seçilmedi; future sort/join/explode/aggregate/dedup yalnız köken sözleşmesi. Yeni kullanıcı masaüstü/remote CI/minimum donanım ayrı doğrulanmadı. [Kanıt](evidence/PHASE09.md). Faz10 başlamadı.
+
+Faz10 uygulandı/doğrulandı/deneysel: dokuz tipli temizlik işlemi, açık yöntem/kayıp/politika, tam veri etki sayımları, güvenli Decimal/tarih/DST ve null/NaN ayrımı. Şema6 kopya dataset, dedup survivor/köken Parquet ve veri bağımlı sızıntı geçmişi; kaynak immutable. 261 pytest/9 locked unittest, gerçek QML/spawn ve kurulu wheel100.000 kayıt preview/apply/undo/redo/reopen geçti. Kullanıcının isteğiyle manuel denemeler ileride toplu yapılacak; yeni masaüstü/remote CI doğrulanmadı. [Kanıt](evidence/PHASE10.md). Bu Faz10 kaydı sırasında Faz11 başlamamıştı.
+
+Faz11 uygulandı/doğrulandı/deneysel: dokuz tipli dönüşüm, izinli AST, üç adımlı join, açık append eşleme ve pivot agregasyonu. Şema7 çoklu immutable giriş ve gerçek kaynak üyelikleri; ODS, salt okunur SQLite, Feather V2/Arrow IPC file/stream. 297 pytest/9 locked unittest, Polars–DuckDB sözleşme fixture'ları, gerçek QML/spawn ve kurulu wheel100.000 kayıt preview/apply/undo/redo/reopen geçti; n:n join200.000 satır/400.000 üyelik. Kaynak değişmedi; hata/iptal ve iki SIGKILL sonrası atomiklik doğrulandı. Manuel kullanıcı denemeleri daha sonra toplu; yeni masaüstü/remote CI ayrı açık. [Kanıt](evidence/PHASE11.md). Faz12 başlamadı.

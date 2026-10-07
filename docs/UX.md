@@ -87,3 +87,12 @@ Veri → Veri kalitesi → dataset/miktar/kapsam/amaç → isteğe bağlı seçi
 ## Faz09 gerçek işlem akışı
 
 Hazırla → dataset/rename/drop/filter → Önizle → tam veri etki sayısı, önce/sonra şema ve first200 tablo → Uygula ve projeye kaydet. Kalıcı filtre koşulları Veri tablosunda hazırlanır; görünüm sıralaması kalıcı filtre hesabına karışmaz. Geçmişte Geri al/Yinele veya adımın öncesine dön; yeni işlem eski dalı korur, redo zinciri temizlenir. Sonuçların veri sürümü ve “güncel değil” etiketi aynı ekrandadır. Kaynak farkı/önizleme/geçmiş yardımı bağlamlıdır. [Karar](adr/012-versioned-operations-phase09.md).
+
+## Faz10 katkısı
+
+Hazırla → Temizlik araçları → yöntem ve sütunlar → mevcut zincir veya ayrı kopya → Önizle → Uygula. Tam etki, şema, hata/yeni null ve uyarılar görünür. Tablolar/geçmiş ayrıntıları kullanıcı açar; undo/redo sürekli erişilebilir. Açık sıra/grup, dedup first/last, mod ve DST politikaları sessiz seçim yapmaz. Kullanıcı manuel testleri daha sonra toplamak istedi; otomatik faz kontrolleri sürer, manuel kabul yapılmış sayılmaz. [Karar](adr/013-cleaning-phase10.md), [kanıt](evidence/PHASE10.md).
+
+
+## Faz11 katkısı
+
+Hazırla → Yeni kolon / tablo dönüşümleri tek yöntem seçicisi; sadece seçili yöntem alanları. Join üç adım: anahtarlar, eşleşme/adlar, tam etki. Append öneri/alan düzeltme ve açık onay. İlk200 karşılaştırma/geçmiş isteğe bağlı; tam etki ve undo/redo görünür. Yeni kaynaklar Veri → Dosya içe aktarma içinde; SQLite tablo seçimi aynı sayfa seçicisiyle. [Karar](adr/014-transformations-phase11.md), [kanıt](evidence/PHASE11.md).

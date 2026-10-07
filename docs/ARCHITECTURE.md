@@ -88,3 +88,12 @@ Faz08: analytics/quality.py Qt bağımsız disk sayım motoru, mevcut spawn/bind
 ## Faz09 katkısı
 
 Qt bağımsız operations/contracts/engine/worker; UI operations.py ve OperationsPanel/OperationTable.qml. Tek full hesap çıktısı önce preview, sonra hash kontrollü atomik publication. Proje şema5 heads/redo kalıcı; rol metadata da tipli tarif. Result binding aktif sürüme göre güncellik gösterir. [ADR-012](adr/012-versioned-operations-phase09.md).
+
+## Faz10 katkısı
+
+operations/cleaning_contracts ve cleaning Qt bağımsız tipli politikalar/batch4096/SQLite istatistik/dedup kökenini uygular. Şema6 copy başlangıcı+dönüşüm+lineage tek atomik publication. QML CleaningOptions tek seçili yöntemi gösterir; OperationsPanel isteğe bağlı tablo/geçmiş ve görünür undo/redo sunar. [Karar](adr/013-cleaning-phase10.md), [kanıt](evidence/PHASE10.md).
+
+
+## Faz11 katkısı
+
+Faz11: relational/formula kapalı AST motoru, immutable secondary girdiler, Parquet üyelik kenarları ve manifest7. Polars üretim, DuckDB yalnız dev fixture referansı. Yeni kaynaklar aynı capture/worker/yayın sınırında; SQLite salt okunur, ODS stdlib, IPC native Polars. [Karar](adr/014-transformations-phase11.md), [kanıt](evidence/PHASE11.md).

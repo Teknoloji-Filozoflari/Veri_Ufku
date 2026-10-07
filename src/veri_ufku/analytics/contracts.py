@@ -66,6 +66,7 @@ def validate_semantics(dataset):
 
 def metadata_version(dataset, column_id, role, unit, order, analysis_unit):
     result = copy.deepcopy(dataset)
+    result.pop("input_version_ids", None)
     result["version_id"] = "dv:" + uid()
     result["parent_version_ids"] = [dataset["version_id"]]
     result["analysis_unit"] = analysis_unit

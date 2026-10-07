@@ -15,7 +15,33 @@ from veri_ufku.importers.native import EXTRA, RESERVED, describe
 from veri_ufku.storage.project_model import ProjectError, uid
 
 
-def parquet_schema(snapshot):
+def native_query(snapshot, adapter="parquet"):
+    if adapter == "ipc":
+        return pl.scan_ipc(snapshot["path"])
+    if adapter == "ipc_stream":
+        # Polars has no lazy IPC-stream reader. Bound decoded allocation at the adapter boundary.
+        if Path(snapshot["path"]).stat().st_size > 64 * 1024**2:
+            raise ProjectError(
+                "Arrow IPC stream64MiB sınırı aşıldı; IPC file/Parquet kullanın."
+            )
+        frame = pl.read_ipc_stream(snapshot["path"])
+        if frame.estimated_size() > 256 * 1024**2:
+            raise ProjectError("Arrow IPC stream decoded256MiB sınırı aşıldı.")
+        return frame.lazy()
+    return pl.scan_parquet(snapshot["path"])
+
+
+def parquet_schema(snapshot, adapter="parquet"):
+    if adapter != "parquet":
+        try:
+            schema = native_query(snapshot, adapter).collect_schema()
+            if not 1 <= len(schema) <= 256:
+                raise ProjectError("Arrow sütun sınırı1–256.")
+            for dt in schema.values():
+                describe(dt)
+            return schema
+        except pl.exceptions.PolarsError as error:
+            raise ProjectError("Arrow IPC içeriği/şeması okunamadı.") from error
     with open(snapshot["path"], "rb") as stream:
         magic = stream.read(4)
         if stream.seek(0, 2) < 8:
@@ -56,10 +82,14 @@ def names_for(originals):
 def preview_parquet(snapshot, settings, control=None):
     control = control or Control()
     verify_capture(snapshot, control)
-    original = parquet_schema(snapshot)
+    original = parquet_schema(snapshot, settings.adapter_id)
     names, warnings = names_for(list(original))
     try:
-        frame = pl.scan_parquet(snapshot["path"]).head(200).collect(engine="streaming")
+        frame = (
+            native_query(snapshot, settings.adapter_id)
+            .head(200)
+            .collect(engine="streaming")
+        )
     except pl.exceptions.PolarsError as error:
         raise ProjectError("Parquet sayfası okunamadı.") from error
     rows = []
@@ -113,7 +143,7 @@ def preview_parquet(snapshot, settings, control=None):
 def import_parquet(snapshot, settings, workspace, control=None):
     control = control or Control()
     verify_capture(snapshot, control)
-    original = parquet_schema(snapshot)
+    original = parquet_schema(snapshot, settings.adapter_id)
     names, warnings = names_for(list(original))
     rename = dict(zip(original, names, strict=True))
     schema = {rename[n]: t for n, t in original.items()}
@@ -126,7 +156,7 @@ def import_parquet(snapshot, settings, workspace, control=None):
             **EXTRA,
         }
     )
-    source = pl.scan_parquet(snapshot["path"])
+    source = native_query(snapshot, settings.adapter_id)
     count = source.select(pl.len()).collect(engine="streaming").item()
     if not 1 <= count <= 10000000:
         raise ProjectError("Parquet kayıt sayısı1–10000000 sınırında olmalı.")
@@ -154,7 +184,8 @@ def import_parquet(snapshot, settings, workspace, control=None):
             pl.Series("__vu_source_record_id", source_ids, dtype=pl.String),
             pl.col("__vu_start_line").alias("__vu_end_line"),
             pl.concat_str(
-                pl.lit("parquet:row:"), pl.col("__vu_start_line").cast(pl.String)
+                pl.lit(settings.adapter_id + ":row:"),
+                pl.col("__vu_start_line").cast(pl.String),
             ).alias("__vu_source_locator"),
             pl.lit([], dtype=pl.List(pl.String)).alias("__vu_missing_fields"),
             pl.lit("{}").alias("__vu_expansion_index"),
@@ -194,7 +225,7 @@ def import_parquet(snapshot, settings, workspace, control=None):
         source_snapshot_id="snapshot:" + uid(),
         settings=saved.data(),
         capture=snapshot,
-        adapter_id="parquet",
+        adapter_id=settings.adapter_id,
         diagnostics=dict(source_records=count, output_rows=count, scope="full"),
-        backend="polars-native-parquet",
+        backend="polars-native-" + settings.adapter_id,
     )

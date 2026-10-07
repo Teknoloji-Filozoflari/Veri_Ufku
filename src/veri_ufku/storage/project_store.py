@@ -570,6 +570,26 @@ class ProjectStore:
                 raise ProjectError(
                     "Önizleme eski veri sürümüne bağlı; yeniden önizleyin."
                 )
+            secondary = None
+            if result["spec"].get("kind") in ("join", "append"):
+                secondary = next(
+                    (
+                        d
+                        for d in active_datasets(self.state)
+                        if d["version_id"]
+                        == result["spec"]["parameters"]["secondary_version_id"]
+                    ),
+                    None,
+                )
+                if not secondary:
+                    raise ProjectError(
+                        "İkinci dataset sürümü değişmiş; tekrar önizleyin."
+                    )
+                artifact = self.manifest["artifacts"][secondary["snapshot_uri"]]
+                if file_hash(self.path(secondary["snapshot_uri"])) != {
+                    k: artifact[k] for k in ("sha256", "size")
+                }:
+                    raise ProjectError("İkinci giriş snapshot değişmiş.")
             source_artifact = self.manifest["artifacts"][parent["snapshot_uri"]]
             if file_hash(self.path(parent["snapshot_uri"])) != {
                 k: source_artifact[k] for k in ("sha256", "size")
@@ -612,20 +632,184 @@ class ProjectStore:
                     **result["fingerprint"], kind="parquet", rows=count, schema=schema
                 ),
             )
-            dataset = transformed_dataset(parent, result, uri)
+            from veri_ufku.operations.relational_contracts import NEW_ROWS
+            from veri_ufku.operations.types import dtype_of
+
+            if result["spec"]["kind"] in NEW_ROWS and not result.get("lineage_path"):
+                raise ProjectError("Yeni satır üreten işlemde kalıcı köken zorunlu.")
+            primary_types = self.manifest["artifacts"][parent["snapshot_uri"]]["schema"]
+            by_id = {c["id"]: c["name"] for c in parent["import_metadata"]["columns"]}
+            for c in result["spec"]["output_schema"]:
+                expected = (
+                    primary_types[by_id[c["id"]]]
+                    if c["id"] in by_id
+                    and not (
+                        result["spec"]["kind"] == "convert"
+                        and c["id"] in result["spec"]["column_ids"]
+                    )
+                    else str(dtype_of(c["type"]))
+                )
+                if schema.get(c["name"]) != expected:
+                    raise ProjectError("Çıktı sütunu fiziksel türü tarifle uyuşmuyor.")
+            if (
+                pl.scan_parquet(output)
+                .select(pl.col("__vu_row_id").n_unique())
+                .collect()
+                .item()
+                != count
+            ):
+                raise ProjectError("Çıktı RowId tekilliği bozulmuş.")
+            relation_uri = None
+            if result.get("lineage_path"):
+                relation_path = Path(result["lineage_path"])
+                if (
+                    relation_path.is_symlink()
+                    or file_hash(relation_path) != result["lineage_fingerprint"]
+                ):
+                    raise ProjectError("Tekrar grubu köken çıktısı değişmiş.")
+                if (
+                    relation_path.stat().st_size > MAX_ARTIFACT
+                    or shutil.disk_usage(self.base).free
+                    < relation_path.stat().st_size * 2 + 64 * 1024**2
+                ):
+                    raise ProjectError("Köken yayını için disk alanı yetersiz.")
+                relation_copy = tx / "lineage.parquet"
+                with open(relation_path, "rb") as inp, open(relation_copy, "xb") as out:
+                    while block := inp.read(1024 * 1024):
+                        out.write(block)
+                        checkpoint("lineage_copy_chunk")
+                if file_hash(relation_copy) != result["lineage_fingerprint"]:
+                    raise ProjectError("Tekrar grubu köken kopyası değişmiş.")
+                relation_schema = {
+                    k: str(v) for k, v in pl.read_parquet_schema(relation_copy).items()
+                }
+                relation_count = (
+                    pl.scan_parquet(relation_copy)
+                    .select(pl.len())
+                    .collect(engine="streaming")
+                    .item()
+                )
+                if relation_count != result.get("diagnostics", {}).get(
+                    "relation_rows", parent["import_metadata"]["row_count"]
+                ):
+                    raise ProjectError(
+                        "Dedup kökeni giriş kayıtlarının tamamını içermeli."
+                    )
+                if result["spec"]["kind"] in NEW_ROWS:
+                    from veri_ufku.operations.relational import EDGE_SCHEMA
+
+                    if relation_schema != {k: str(v) for k, v in EDGE_SCHEMA.items()}:
+                        raise ProjectError("İşlem köken şeması geçersiz.")
+                    edges = pl.scan_parquet(relation_copy)
+                    if (
+                        edges.join(
+                            pl.scan_parquet(output).select(
+                                pl.col("__vu_row_id").alias("output_row_id")
+                            ),
+                            on="output_row_id",
+                            how="anti",
+                        )
+                        .select(pl.len())
+                        .collect()
+                        .item()
+                    ):
+                        raise ProjectError("Köken var olmayan çıktı satırına bağlı.")
+                    inputs = [parent] + ([secondary] if secondary else [])
+                    valid = pl.concat(
+                        [
+                            pl.scan_parquet(self.path(d["snapshot_uri"])).select(
+                                pl.lit(d["version_id"]).alias("input_version_id"),
+                                pl.col("__vu_row_id").alias("input_row_id"),
+                                pl.col("__vu_source_record_id").alias(
+                                    "source_record_id"
+                                ),
+                            )
+                            for d in inputs
+                        ]
+                    )
+                    if (
+                        edges.join(
+                            valid,
+                            on=["input_version_id", "input_row_id", "source_record_id"],
+                            how="anti",
+                            nulls_equal=True,
+                        )
+                        .select(pl.len())
+                        .collect()
+                        .item()
+                    ):
+                        raise ProjectError("Köken gerçek giriş kimliğiyle uyuşmuyor.")
+                    if (
+                        count
+                        and relation_count
+                        and pl.scan_parquet(output)
+                        .select(pl.col("__vu_row_id").alias("output_row_id"))
+                        .join(
+                            edges.select("output_row_id"),
+                            on="output_row_id",
+                            how="anti",
+                        )
+                        .select(pl.len())
+                        .collect()
+                        .item()
+                    ):
+                        raise ProjectError("Çıktı kaydının kaynak üyeliği eksik.")
+                relation_uri = "snapshots/" + uid() + ".parquet"
+                self.pending[relation_uri] = (
+                    relation_copy,
+                    dict(
+                        **result["lineage_fingerprint"],
+                        kind="parquet",
+                        rows=relation_count,
+                        schema=relation_schema,
+                    ),
+                )
+            dataset = transformed_dataset(parent, result, uri, secondary)
+            if result["spec"].get("destination", "chain") == "copy":
+                base = copy.deepcopy(parent)
+                base.update(
+                    dataset_id="dataset:" + uid(),
+                    version_id="dv:" + uid(),
+                    forked_from_version_id=parent["version_id"],
+                )
+                for field in (
+                    "parent_version_ids",
+                    "operation_id",
+                    "input_version_ids",
+                ):
+                    base.pop(field, None)
+                self.state["datasets"].append(base)
+                activate(self.state, base)
+                dataset.update(
+                    dataset_id=base["dataset_id"],
+                    parent_version_ids=[base["version_id"]],
+                )
+                dataset.pop("forked_from_version_id", None)
+            dataset.pop("lineage_uri", None)
+            if relation_uri:
+                dataset["lineage_uri"] = relation_uri
+                result["lineage"]["relation_uri"] = relation_uri
             self.state["datasets"].append(dataset)
             self.state["operations"].append(
                 dict(
                     id=result["spec"]["id"],
-                    dataset_version_ids=[parent["version_id"], dataset["version_id"]],
+                    dataset_version_ids=list(
+                        result["spec"].get("input_version_ids")
+                        or [parent["version_id"]]
+                    )
+                    + [dataset["version_id"]],
                     seed=None,
                     spec=result["spec"],
                     output_version_id=dataset["version_id"],
-                    capability_id="operation." + result["spec"]["kind"],
+                    capability_id="operation."
+                    + result["spec"]["kind"].replace("_", "-"),
                     status="succeeded",
                     applicability=result["applicability"],
                     validation=result["validation"],
                     impact=result["impact"],
+                    diagnostics=result.get("diagnostics", {}),
+                    leakage_review_required=result["spec"].get("learned_scope")
+                    == "dataset",
                     lineage=result["lineage"],
                     provenance=result["provenance"],
                 )
@@ -752,7 +936,7 @@ class ProjectStore:
                 + result.get(
                     "adapter_id",
                     "tsv" if source["original"].lower().endswith(".tsv") else "csv",
-                ),
+                ).replace("_", "-"),
                 parameters_hash=digest(encode(result["settings"])),
                 environment=(
                     ("python", platform.python_version()),
@@ -766,7 +950,7 @@ class ProjectStore:
                 row_lineage_ref=snapshot_uri,
                 column_lineage_ref=dataset["dataset_id"],
                 exclusions=(quarantine_uri,) if quarantine_uri else (),
-                learning_content_version="5",
+                learning_content_version="10",
             )
             self.state["operations"].append(
                 dict(

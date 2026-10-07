@@ -5,7 +5,7 @@ ColumnLayout {
     id: panel
     signal helpRequested(var origin, string context)
     property bool json: imports.formatId === "json" || imports.formatId === "jsonl"
-    property bool excel: imports.formatId === "xlsx"
+    property bool excel: imports.formatId === "xlsx" || imports.formatId === "ods"
     enabled: !imports.busy
     Label { text: "Seçimler aynı değişmez kopyaya uygulanır. Önizleme en fazla 200 kaynak kaydıdır; tam import türleri yeniden doğrular. JSON sayıları Decimal/büyük integer olarak incelenir. json_text açık ve kayıpsız JSON metni dönüşümüdür; metin değerleri de tırnaklarıyla saklanır."; wrapMode: Text.Wrap; Layout.fillWidth: true }
     Label { visible: panel.json; text: "Kayıt yolu: kök liste için boş, nested için JSON Pointer (ör. /payload/records)."; wrapMode: Text.Wrap; Layout.fillWidth: true }
@@ -14,8 +14,9 @@ ColumnLayout {
     CheckBox { id: flattenOption; Layout.fillWidth: true; Layout.minimumWidth: 0; contentItem: Label { text: flattenOption.text; leftPadding: flattenOption.indicator.width + flattenOption.spacing; wrapMode: Text.Wrap; verticalAlignment: Text.AlignVCenter } objectName: "jsonFlatten"; property string helpContext: "import-flatten"; visible: panel.json; text: "Nesne alanlarını düzleştir (listeleri açmaz)"; checked: imports.settings.flatten || false; onClicked: imports.setOption("flatten", checked) }
     Label { visible: panel.json; text: "Liste yolları: " + (imports.choices.list_paths || []).join(", ") + "\nAçılacak yolları | ile ayırın. İki listenin uzunluğu 2 ve 3 ise tek kayıt 6 satır üretir. Boş/null liste bir satır korunur. Seçimden sonra yeniden önizleyin."; wrapMode: Text.Wrap; Layout.fillWidth: true }
     TextField { objectName: "jsonExpandLists"; visible: panel.json; text: (imports.settings.expand_lists || []).join("|"); placeholderText: "/items|/tags"; onEditingFinished: imports.setOption("expand_lists", text); Layout.fillWidth: true }
-    Label { visible: panel.excel; text: "Excel sayfası · tarih sistemi " + (imports.choices.date_system || "?"); Layout.fillWidth: true }
-    ComboBox { objectName: "excelSheet"; property string helpContext: "import-excel-sheet"; visible: panel.excel; model: imports.choices.sheets || []; currentIndex: Math.max(0, model.indexOf(imports.settings.sheet || "")); onActivated: imports.setOption("sheet", currentText); Layout.fillWidth: true }
+    Label { visible: panel.excel; text: (imports.formatId === "ods" ? "ODS sayfası · tarih sistemi " : "Excel sayfası · tarih sistemi ") + (imports.choices.date_system || "?"); Layout.fillWidth: true }
+    ComboBox { objectName: "excelSheet"; property string helpContext: "import-excel-sheet"; visible: panel.excel || imports.formatId === "sqlite"; model: imports.choices.sheets || []; currentIndex: Math.max(0, model.indexOf(imports.settings.sheet || "")); onActivated: imports.setOption("sheet", currentText); Layout.fillWidth: true }
+    Label { visible: imports.formatId === "sqlite"; text: "Salt okunur SQLite tablosu. " + (imports.choices.formula_behavior || ""); wrapMode: Text.WordWrap; Layout.fillWidth: true }
     Label { visible: panel.excel; text: "Veri aralığı (ör. A1:D100; boş: sayfa boyutu)"; wrapMode: Text.Wrap; Layout.fillWidth: true }
     TextField { objectName: "excelRange"; visible: panel.excel; text: imports.settings.cell_range || ""; placeholderText: "Veri aralığı: A1:D100 (boş: sayfa boyutu)"; onEditingFinished: imports.setOption("cell_range", text); Layout.fillWidth: true }
     Label { visible: panel.excel; text: "Başlık satırı (0: başlıksız)"; Layout.fillWidth: true }
@@ -37,5 +38,5 @@ ColumnLayout {
     TextField { visible: panel.json || panel.excel; text: imports.settings.date_format || ""; placeholderText: "Açık tarih dönüşümü: %Y-%m-%d"; onEditingFinished: imports.setOption("date_format", text); Layout.fillWidth: true }
     Label { visible: panel.json || panel.excel; text: "Açık datetime dönüşümü için saat dilimi (boş: saat dilimsiz)"; wrapMode: Text.Wrap; Layout.fillWidth: true }
     TextField { visible: panel.json || panel.excel; text: imports.settings.timezone || ""; placeholderText: "Açık datetime dönüşümü: Europe/Istanbul; boş: naive"; onEditingFinished: imports.setOption("timezone", text); Layout.fillWidth: true }
-    Label { visible: imports.formatId === "parquet"; text: "Parquet nullable, Decimal, integer, tarih, zaman birimi, timezone ve list/struct türleri korunur. Desteklenmeyen tür hata verir. Nested alanları bu adaptör açmaz. Naive tarih UTC kabul edilmez."; wrapMode: Text.Wrap; Layout.fillWidth: true }
+    Label { visible: ["parquet", "ipc", "ipc_stream"].indexOf(imports.formatId) >= 0; text: "Parquet nullable, Decimal, integer, tarih, zaman birimi, timezone ve list/struct türleri korunur. Desteklenmeyen tür hata verir. Nested alanları bu adaptör açmaz. Naive tarih UTC kabul edilmez."; wrapMode: Text.Wrap; Layout.fillWidth: true }
 }
