@@ -1,0 +1,109 @@
+{
+  "rows": 1000001,
+  "seed": 42,
+  "fixture": {
+    "sha256": "d64981315c80a82510dbf75efb783c33c929d6311d73b8997b89a7379355be9d",
+    "size": 5743522
+  },
+  "records": [
+    {
+      "stage": "import_capture_parse_publish",
+      "seconds": 5.753260212999521,
+      "scope": "full",
+      "population_n": 1000001,
+      "used_n": 1000001,
+      "error": null,
+      "rss_bytes": 758738944,
+      "temp_bytes": 45545607,
+      "threads": 17
+    },
+    {
+      "stage": "page_200",
+      "seconds": 0.05695436499991047,
+      "scope": "bounded_page",
+      "population_n": 1000001,
+      "used_n": 200,
+      "error": null,
+      "rss_bytes": 671322112,
+      "temp_bytes": 55539325,
+      "threads": 17
+    },
+    {
+      "stage": "profile_exact",
+      "seconds": 4.649936970999988,
+      "scope": "full",
+      "population_n": 1000001,
+      "used_n": 1000001,
+      "error": null,
+      "rss_bytes": 640458752,
+      "temp_bytes": 55675093,
+      "threads": 18
+    },
+    {
+      "stage": "filter_write_verify",
+      "seconds": 0.46515800599991053,
+      "scope": "full",
+      "population_n": 1000001,
+      "used_n": 1000001,
+      "error": null,
+      "rss_bytes": 625094656,
+      "temp_bytes": 70376036,
+      "threads": 18
+    },
+    {
+      "stage": "join_lazy_lineage",
+      "seconds": 9.161437038999793,
+      "scope": "full",
+      "population_n": 1000001,
+      "used_n": 1000001,
+      "error": null,
+      "rss_bytes": 1734180864,
+      "temp_bytes": 238266679,
+      "threads": 22
+    },
+    {
+      "stage": "chart_compute_render",
+      "seconds": 0.28750931000104174,
+      "scope": "explicit_first_N_sample",
+      "population_n": 1000001,
+      "used_n": 10000,
+      "error": null,
+      "rss_bytes": 479186944,
+      "temp_bytes": 170587888,
+      "threads": 22
+    },
+    {
+      "stage": "report_html_publish",
+      "seconds": 0.06299988499995379,
+      "scope": "full_counts_table_first_100",
+      "population_n": 1000001,
+      "used_n": 100,
+      "error": null,
+      "rss_bytes": 352784384,
+      "temp_bytes": 170654103,
+      "threads": 22
+    },
+    {
+      "stage": "model_preflight_full",
+      "seconds": 0.023486604999561678,
+      "scope": "full",
+      "population_n": 1000001,
+      "used_n": 1000001,
+      "error": "Model hazırlığı kapsamı boş veya bütçeyi aşıyor:100000 kayıt/100 sütun. Sessiz örnekleme yapılmaz.",
+      "rss_bytes": 344285184,
+      "temp_bytes": 171713333,
+      "threads": 22
+    },
+    {
+      "stage": "model_fit_cv",
+      "seconds": 1.1594807490000676,
+      "scope": "explicit_first_N_sample",
+      "population_n": 1000001,
+      "used_n": 10000,
+      "error": null,
+      "rss_bytes": 525590528,
+      "temp_bytes": 178634175,
+      "threads": 22
+    }
+  ]
+}

@@ -47,66 +47,66 @@ ColumnLayout {
         }
         operations.previewCleaning(kind, JSON.stringify(ids), JSON.stringify(p), destination.currentIndex === 0 ? "chain" : "copy")
     }
-    UiCombo { id: method; objectName: "cleaningMethod"; Layout.fillWidth: true; model: ["Eksik değer doldur", "Eksik satır kaldır", "Eksik sütun kaldır", "Tekrar kaldır", "Metin kırp", "Kategori eşle", "Tür / tarih dönüştür", "Grup içinde ileri / geri doldur", "Aykırı adayı işaretle / filtrele"]; enabled: !operations.busy; onActivated: { root.selected = []; root.groups = []; allColumns.checked = false; multi.checked = false; root.invalidate() } }
-    Label { text: root.advice[root.kind]; Layout.fillWidth: true; wrapMode: Text.WordWrap; color: Theme.secondary }
-    Label { text: "İşlem hedefi" }
-    UiCombo { id: destination; objectName: "cleaningDestination"; Layout.fillWidth: true; model: ["Mevcut zincirde yeni sürüm", "Ayrı kopya dataset'te yeni zincir"]; onActivated: root.invalidate() }
-    Label { text: destination.currentIndex === 0 ? "Eski sürüm korunur; çalışma verisi yeni sürüme geçer." : "Mevcut dataset değişmez; ayrı dataset seçilir. Kopyada geri alma, kopyanın başlangıcına döner."; Layout.fillWidth: true; wrapMode: Text.WordWrap }
-    CheckBox { id: allColumns; objectName: "cleaningAllColumns"; text: "Tüm veri sütunlarını anahtar olarak kullan"; visible: root.kind === "dedup"; onToggled: root.invalidate() }
-    CheckBox { id: multi; text: "Birden çok sütun seç"; visible: root.kind !== "outlier" && !allColumns.checked; onToggled: root.invalidate() }
-    UiCombo { id: column; objectName: "cleaningColumn"; model: dataView.datasetColumns; textRole: "name"; valueRole: "id"; Layout.fillWidth: true; visible: !multi.checked && !(allColumns.checked && root.kind === "dedup"); onActivated: root.invalidate() }
+    UiCombo { accessibleLabel: "Temizlik yöntemi"; id: method; objectName: "cleaningMethod"; Layout.fillWidth: true; model: ["Eksik değer doldur", "Eksik satır kaldır", "Eksik sütun kaldır", "Tekrar kaldır", "Metin kırp", "Kategori eşle", "Tür / tarih dönüştür", "Grup içinde ileri / geri doldur", "Aykırı adayı işaretle / filtrele"]; enabled: !operations.busy; onActivated: { root.selected = []; root.groups = []; allColumns.checked = false; multi.checked = false; root.invalidate() } }
+    UiLabel { text: root.advice[root.kind]; Layout.fillWidth: true; wrapMode: Text.WordWrap; color: Theme.secondary }
+    UiLabel { text: "İşlem hedefi" }
+    UiCombo { accessibleLabel: "Yeni sürümün yeri"; id: destination; objectName: "cleaningDestination"; Layout.fillWidth: true; model: ["Mevcut zincirde yeni sürüm", "Ayrı kopya dataset'te yeni zincir"]; onActivated: root.invalidate() }
+    UiLabel { text: destination.currentIndex === 0 ? "Eski sürüm korunur; çalışma verisi yeni sürüme geçer." : "Mevcut dataset değişmez; ayrı dataset seçilir. Kopyada geri alma, kopyanın başlangıcına döner."; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+    UiCheckBox { id: allColumns; objectName: "cleaningAllColumns"; text: "Tüm veri sütunlarını anahtar olarak kullan"; visible: root.kind === "dedup"; onToggled: root.invalidate() }
+    UiCheckBox { id: multi; text: "Birden çok sütun seç"; visible: root.kind !== "outlier" && !allColumns.checked; onToggled: root.invalidate() }
+    UiCombo { accessibleLabel: "Temizlik sütunu"; id: column; objectName: "cleaningColumn"; model: dataView.datasetColumns; textRole: "name"; valueRole: "id"; Layout.fillWidth: true; visible: !multi.checked && !(allColumns.checked && root.kind === "dedup"); onActivated: root.invalidate() }
     Repeater {
         model: multi.checked && root.kind !== "outlier" && !allColumns.checked ? dataView.datasetColumns : []
-        delegate: CheckBox {
+        delegate: UiCheckBox {
             required property var modelData
             text: modelData.name; checked: root.selected.indexOf(modelData.id) >= 0
             onToggled: { let ids = root.selected.filter(id => id !== modelData.id); if (checked) ids.push(modelData.id); root.selected = ids; root.invalidate() }
         }
     }
-    UiCombo { id: missingMode; objectName: "cleaningMissing"; model: ["Yalnız null — eksik değer", "Null ve NaN — açık birlikte seçim"]; Layout.fillWidth: true; visible: ["fill", "missing_rows", "missing_columns", "ordered_fill"].indexOf(root.kind) >= 0; onActivated: root.invalidate() }
-    UiCombo { id: missingRule; model: ["Seçili alanların / değerlerin tümü eksikse", "Seçili alanların / değerlerin herhangi biri eksikse"]; Layout.fillWidth: true; visible: root.kind === "missing_rows" || root.kind === "missing_columns"; onActivated: root.invalidate() }
+    UiCombo { accessibleLabel: "Eksik değer türü"; id: missingMode; objectName: "cleaningMissing"; model: ["Yalnız null — eksik değer", "Null ve NaN — açık birlikte seçim"]; Layout.fillWidth: true; visible: ["fill", "missing_rows", "missing_columns", "ordered_fill"].indexOf(root.kind) >= 0; onActivated: root.invalidate() }
+    UiCombo { accessibleLabel: "Eksik kayıt kuralı"; id: missingRule; model: ["Seçili alanların / değerlerin tümü eksikse", "Seçili alanların / değerlerin herhangi biri eksikse"]; Layout.fillWidth: true; visible: root.kind === "missing_rows" || root.kind === "missing_columns"; onActivated: root.invalidate() }
     ColumnLayout {
         visible: root.kind === "fill"; Layout.fillWidth: true
-        UiCombo { id: fillMethod; objectName: "cleaningFillMethod"; model: ["Sabit değer", "Ortalama", "Medyan", "En sık değer — mod"]; Layout.fillWidth: true; onActivated: root.invalidate() }
-        Label { text: "Sabit değer veya eşit modda seçilecek değer"; visible: fillMethod.currentIndex === 0 || fillMethod.currentIndex === 3 }
-        TextField { id: fillValue; objectName: "cleaningValue"; Accessible.name: "Doldurma değeri"; maximumLength: 4096; Layout.fillWidth: true; visible: fillMethod.currentIndex === 0 || fillMethod.currentIndex === 3; onTextEdited: root.invalidate() }
-        UiCombo { id: modeTie; objectName: "cleaningModeTie"; model: ["Mod eşitliğinde durdur", "Yazdığım mod adayını seç"]; visible: fillMethod.currentIndex === 3; Layout.fillWidth: true; onActivated: root.invalidate() }
-        Label { text: "Tümü eksikse ortalama/medyan/mod durur; sabit seçilebilir. Kesirli sonuç tam sayı veya decimal ölçeğine tam uymuyorsa işlem reddedilir. Önce açık tür dönüşümü seçin. Sayısal kimliklere ortalama uygulamayın."; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+        UiCombo { accessibleLabel: "Doldurma yöntemi"; id: fillMethod; objectName: "cleaningFillMethod"; model: ["Sabit değer", "Ortalama", "Medyan", "En sık değer — mod"]; Layout.fillWidth: true; onActivated: root.invalidate() }
+        UiLabel { text: "Sabit değer veya eşit modda seçilecek değer"; visible: fillMethod.currentIndex === 0 || fillMethod.currentIndex === 3 }
+        UiTextField { id: fillValue; objectName: "cleaningValue"; Accessible.name: "Doldurma değeri"; maximumLength: 4096; Layout.fillWidth: true; visible: fillMethod.currentIndex === 0 || fillMethod.currentIndex === 3; onTextEdited: root.invalidate() }
+        UiCombo { accessibleLabel: "En sık değerde eşitlik seçimi"; id: modeTie; objectName: "cleaningModeTie"; model: ["Mod eşitliğinde durdur", "Yazdığım mod adayını seç"]; visible: fillMethod.currentIndex === 3; Layout.fillWidth: true; onActivated: root.invalidate() }
+        UiLabel { text: "Tümü eksikse ortalama/medyan/mod durur; sabit seçilebilir. Kesirli sonuç tam sayı veya decimal ölçeğine tam uymuyorsa işlem reddedilir. Önce açık tür dönüşümü seçin. Sayısal kimliklere ortalama uygulamayın."; Layout.fillWidth: true; wrapMode: Text.WordWrap }
     }
-    UiCombo { id: trimSide; model: ["İki uç", "Sol", "Sağ"]; visible: root.kind === "trim"; Layout.fillWidth: true; onActivated: root.invalidate() }
+    UiCombo { accessibleLabel: "Boşluk temizleme yönü"; id: trimSide; model: ["İki uç", "Sol", "Sağ"]; visible: root.kind === "trim"; Layout.fillWidth: true; onActivated: root.invalidate() }
     ColumnLayout {
         visible: root.kind === "map_categories"; Layout.fillWidth: true
-        TextField { id: fromValue; objectName: "cleaningFrom"; placeholderText: "Eski kategori (tam metin)"; Accessible.name: "Eski kategori"; Layout.fillWidth: true }
-        TextField { id: toValue; objectName: "cleaningTo"; placeholderText: "Yeni kategori"; Accessible.name: "Yeni kategori"; Layout.fillWidth: true }
+        UiTextField { id: fromValue; objectName: "cleaningFrom"; placeholderText: "Eski kategori (tam metin)"; Accessible.name: "Eski kategori"; Layout.fillWidth: true }
+        UiTextField { id: toValue; objectName: "cleaningTo"; placeholderText: "Yeni kategori"; Accessible.name: "Yeni kategori"; Layout.fillWidth: true }
         UiButton { objectName: "cleaningAddMapping"; text: "Eşleme çiftini ekle"; onClicked: { root.mapping = root.mapping.concat([{from: fromValue.text, to: toValue.text}]); root.invalidate() } }
-        Repeater { model: root.mapping; delegate: Label { required property var modelData; text: modelData.from + " → " + modelData.to; Layout.fillWidth: true; wrapMode: Text.WordWrap } }
+        Repeater { model: root.mapping; delegate: UiLabel { required property var modelData; text: modelData.from + " → " + modelData.to; Layout.fillWidth: true; wrapMode: Text.WordWrap } }
         UiButton { text: "Eşleme listesini temizle"; onClicked: { root.mapping = []; root.invalidate() } }
-        UiCombo { id: unmapped; model: ["Eşlenmeyeni koru", "Eşlenmeyen varsa durdur"]; Layout.fillWidth: true; onActivated: root.invalidate() }
+        UiCombo { accessibleLabel: "Eşlenmeyen kategori politikası"; id: unmapped; model: ["Eşlenmeyeni koru", "Eşlenmeyen varsa durdur"]; Layout.fillWidth: true; onActivated: root.invalidate() }
     }
     ColumnLayout {
         visible: root.kind === "convert"; Layout.fillWidth: true
-        UiCombo { id: targetType; objectName: "cleaningTarget"; model: ["Metin", "Tam sayı — Int64", "Pozitif tam sayı — UInt64", "Kayan sayı — Float64", "Doğru/yanlış", "Kesin ondalık — Decimal", "Tarih", "Tarih ve saat"]; Layout.fillWidth: true; onActivated: root.invalidate() }
-        Label { text: "Decimal toplam basamak / ondalık basamak"; visible: targetType.currentIndex === 5 }
-        RowLayout { visible: targetType.currentIndex === 5; SpinBox { id: precision; from: 1; to: 38; value: 38; onValueModified: root.invalidate() } SpinBox { id: scale; from: 0; to: precision.value; value: 6; onValueModified: root.invalidate() } }
-        Label { text: "Tarih biçimi (boş: ISO); örnek %Y-%m-%d"; visible: targetType.currentIndex >= 6 }
-        TextField { id: dateFormat; objectName: "cleaningDateFormat"; Accessible.name: "Tarih biçimi"; Layout.fillWidth: true; visible: targetType.currentIndex >= 6; maximumLength: 100; onTextEdited: root.invalidate() }
-        TextField { id: timezone; placeholderText: "IANA timezone (örn. Europe/Istanbul); boş: saat dilimsiz"; Accessible.name: "Saat dilimi"; Layout.fillWidth: true; visible: targetType.currentIndex === 7; maximumLength: 100; onTextEdited: root.invalidate() }
-        UiCombo { id: dst; model: ["DST belirsizliğinde durdur", "Çift zamanın erken anını seç", "Çift zamanın geç anını seç"]; visible: targetType.currentIndex === 7; Layout.fillWidth: true; onActivated: root.invalidate() }
-        UiCombo { id: onError; objectName: "cleaningOnError"; model: ["Hata varsa bütün işlemi durdur", "Hataları açıkça yeni null yap ve raporla"]; Layout.fillWidth: true; onActivated: root.invalidate() }
-        Label { text: "Var olmayan DST saati düzeltilmez. 0.1 gibi binary float'ta tam temsil edilmeyen kesin değerler için Decimal seçin. ns → us hassasiyet kaybı ve saat dilimi silme reddedilir."; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+        UiCombo { accessibleLabel: "Hedef veri türü"; id: targetType; objectName: "cleaningTarget"; model: ["Metin", "Tam sayı — Int64", "Pozitif tam sayı — UInt64", "Kayan sayı — Float64", "Doğru/yanlış", "Kesin ondalık — Decimal", "Tarih", "Tarih ve saat"]; Layout.fillWidth: true; onActivated: root.invalidate() }
+        UiLabel { text: "Decimal toplam basamak / ondalık basamak"; visible: targetType.currentIndex === 5 }
+        RowLayout { visible: targetType.currentIndex === 5; UiSpinBox { Accessible.name: "Decimal toplam basamak / ondalık basamak"; id: precision; from: 1; to: 38; value: 38; onValueModified: root.invalidate() } UiSpinBox { Accessible.name: "Decimal toplam basamak / ondalık basamak"; id: scale; from: 0; to: precision.value; value: 6; onValueModified: root.invalidate() } }
+        UiLabel { text: "Tarih biçimi (boş: ISO); örnek %Y-%m-%d"; visible: targetType.currentIndex >= 6 }
+        UiTextField { id: dateFormat; objectName: "cleaningDateFormat"; Accessible.name: qsTr("Tarih biçimi"); Layout.fillWidth: true; visible: targetType.currentIndex >= 6; maximumLength: 100; onTextEdited: root.invalidate() }
+        UiTextField { id: timezone; placeholderText: "IANA timezone (örn. Europe/Istanbul); boş: saat dilimsiz"; Accessible.name: qsTr("Saat dilimi"); Layout.fillWidth: true; visible: targetType.currentIndex === 7; maximumLength: 100; onTextEdited: root.invalidate() }
+        UiCombo { accessibleLabel: "Saat değişiminde çift saat politikası"; id: dst; model: ["DST belirsizliğinde durdur", "Çift zamanın erken anını seç", "Çift zamanın geç anını seç"]; visible: targetType.currentIndex === 7; Layout.fillWidth: true; onActivated: root.invalidate() }
+        UiCombo { accessibleLabel: "Dönüşüm hata politikası"; id: onError; objectName: "cleaningOnError"; model: ["Hata varsa bütün işlemi durdur", "Hataları açıkça yeni null yap ve raporla"]; Layout.fillWidth: true; onActivated: root.invalidate() }
+        UiLabel { text: "Var olmayan DST saati düzeltilmez. 0.1 gibi binary float'ta tam temsil edilmeyen kesin değerler için Decimal seçin. ns → us hassasiyet kaybı ve saat dilimi silme reddedilir."; Layout.fillWidth: true; wrapMode: Text.WordWrap }
     }
     ColumnLayout {
         visible: root.kind === "ordered_fill" || root.kind === "dedup"; Layout.fillWidth: true
-        Label { text: "Tutulacak kaydı / zaman akışını belirleyen sıra sütunu"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
-        UiCombo { id: orderColumn; objectName: "cleaningOrder"; model: dataView.datasetColumns; textRole: "name"; valueRole: "id"; currentIndex: -1; onModelChanged: currentIndex = -1; Layout.fillWidth: true; onActivated: root.invalidate() }
-        CheckBox { id: descending; text: "Azalan sıra (geleceği kullanma riskini kontrol edin)"; onToggled: root.invalidate() }
-        UiCombo { id: keep; objectName: "cleaningKeep"; model: ["Seçilen sıranın ilk kaydını tut", "Seçilen sıranın son kaydını tut"]; visible: root.kind === "dedup"; Layout.fillWidth: true; onActivated: root.invalidate() }
-        Label { text: "Eşit sıra anahtarında özgün giriş sırası + RowId. Null/NaN/inf sıra anahtarı reddedilir. Dedup: null=null, NaN=NaN fakat null≠NaN; +0=−0; decimal sayısal; timezone aynı an; metin tam eşitlik, otomatik kırpma yok."; Layout.fillWidth: true; wrapMode: Text.WordWrap }
-        UiCombo { id: direction; objectName: "cleaningDirection"; model: ["İleri — önceki değer", "Geri — sonraki değer"]; visible: root.kind === "ordered_fill"; Layout.fillWidth: true; onActivated: root.invalidate() }
-        Label { text: "Grup sütunlarını açıkça seç (en az bir)"; visible: root.kind === "ordered_fill"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+        UiLabel { text: "Tutulacak kaydı / zaman akışını belirleyen sıra sütunu"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+        UiCombo { accessibleLabel: "Sıra sütunu"; id: orderColumn; objectName: "cleaningOrder"; model: dataView.datasetColumns; textRole: "name"; valueRole: "id"; currentIndex: -1; onModelChanged: currentIndex = -1; Layout.fillWidth: true; onActivated: root.invalidate() }
+        UiCheckBox { id: descending; text: "Azalan sıra (geleceği kullanma riskini kontrol edin)"; onToggled: root.invalidate() }
+        UiCombo { accessibleLabel: "Tekrarda tutulacak kayıt"; id: keep; objectName: "cleaningKeep"; model: ["Seçilen sıranın ilk kaydını tut", "Seçilen sıranın son kaydını tut"]; visible: root.kind === "dedup"; Layout.fillWidth: true; onActivated: root.invalidate() }
+        UiLabel { text: "Eşit sıra anahtarında özgün giriş sırası + RowId. Null/NaN/inf sıra anahtarı reddedilir. Dedup: null=null, NaN=NaN fakat null≠NaN; +0=−0; decimal sayısal; timezone aynı an; metin tam eşitlik, otomatik kırpma yok."; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+        UiCombo { accessibleLabel: "Doldurma yönü"; id: direction; objectName: "cleaningDirection"; model: ["İleri — önceki değer", "Geri — sonraki değer"]; visible: root.kind === "ordered_fill"; Layout.fillWidth: true; onActivated: root.invalidate() }
+        UiLabel { text: "Grup sütunlarını açıkça seç (en az bir)"; visible: root.kind === "ordered_fill"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
         Repeater {
             model: root.kind === "ordered_fill" ? dataView.datasetColumns : []
-            delegate: CheckBox {
+            delegate: UiCheckBox {
                 required property var modelData
                 text: modelData.name; checked: root.groups.indexOf(modelData.id) >= 0
                 onToggled: { let ids = root.groups.filter(id => id !== modelData.id); if (checked) ids.push(modelData.id); root.groups = ids; root.invalidate() }
@@ -115,10 +115,10 @@ ColumnLayout {
     }
     ColumnLayout {
         visible: root.kind === "outlier"; Layout.fillWidth: true
-        UiCombo { id: outlierAction; objectName: "cleaningOutlierAction"; model: ["Yalnız aday sütunuyla işaretle", "Adayları açık seçimle filtrele"]; Layout.fillWidth: true; onActivated: root.invalidate() }
-        Label { text: "IQR çarpanı" }
-        TextField { id: multiplier; text: "1.5"; Accessible.name: "IQR çarpanı"; Layout.fillWidth: true; onTextEdited: root.invalidate() }
-        TextField { id: flagName; text: "Aykırı_adayı"; Accessible.name: "Aday sütunu adı"; visible: outlierAction.currentIndex === 0; Layout.fillWidth: true; onTextEdited: root.invalidate() }
+        UiCombo { accessibleLabel: "Uç değer adayı eylemi"; id: outlierAction; objectName: "cleaningOutlierAction"; model: ["Yalnız aday sütunuyla işaretle", "Adayları açık seçimle filtrele"]; Layout.fillWidth: true; onActivated: root.invalidate() }
+        UiLabel { text: "IQR çarpanı" }
+        UiTextField { id: multiplier; text: "1.5"; Accessible.name: "IQR çarpanı"; Layout.fillWidth: true; onTextEdited: root.invalidate() }
+        UiTextField { id: flagName; text: "Aykırı_adayı"; Accessible.name: "Aday sütunu adı"; visible: outlierAction.currentIndex === 0; Layout.fillWidth: true; onTextEdited: root.invalidate() }
     }
-    UiButton { text: "Yöntem ne işe yarar?"; onClicked: root.helpRequested(this, root.helpContext) }
+    UiButton { tone: "mint"; text: "Yöntem ne işe yarar?"; onClicked: root.helpRequested(this, root.helpContext) }
 }

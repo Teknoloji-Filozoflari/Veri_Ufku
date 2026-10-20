@@ -1,0 +1,272 @@
+{
+  "environment": "ENV-33",
+  "date": "2026-10-11",
+  "gates": [
+    {
+      "id": "docs",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_docs.py"
+      ],
+      "started": "2026-10-11T09:31:37.116929+00:00",
+      "exit": 0,
+      "seconds": 0.12039908499900775,
+      "output": "docs.txt"
+    },
+    {
+      "id": "artifacts",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_artifacts.py"
+      ],
+      "started": "2026-10-11T09:31:37.237351+00:00",
+      "exit": 0,
+      "seconds": 0.12857668899960117,
+      "output": "artifacts.txt"
+    },
+    {
+      "id": "learning",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_learning.py"
+      ],
+      "started": "2026-10-11T09:31:37.365954+00:00",
+      "exit": 0,
+      "seconds": 0.06838639399938984,
+      "output": "learning.txt"
+    },
+    {
+      "id": "usability",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_usability.py"
+      ],
+      "started": "2026-10-11T09:31:37.434373+00:00",
+      "exit": 0,
+      "seconds": 0.09705901100096526,
+      "output": "usability.txt"
+    },
+    {
+      "id": "ruff-check",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "started": "2026-10-11T09:31:37.531479+00:00",
+      "exit": 0,
+      "seconds": 0.008507534001182648,
+      "output": "ruff-check.txt"
+    },
+    {
+      "id": "ruff-format",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "started": "2026-10-11T09:31:37.540006+00:00",
+      "exit": 0,
+      "seconds": 0.007882867999796872,
+      "output": "ruff-format.txt"
+    },
+    {
+      "id": "unittest",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_document_contracts.py"
+      ],
+      "started": "2026-10-11T09:31:37.547908+00:00",
+      "exit": 0,
+      "seconds": 6.033945938001125,
+      "output": "unittest.txt"
+    },
+    {
+      "id": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started": "2026-10-11T09:31:43.581880+00:00",
+      "exit": 0,
+      "seconds": 0.01605519399890909,
+      "output": "diff.txt"
+    }
+  ],
+  "wheel_entry": {
+    "command": [
+      "/tmp/veri-ufku-f33-delivery-installed/bin/veri-ufku",
+      "--smoke-test"
+    ],
+    "cwd": "/tmp/veri-ufku-f33-entry",
+    "exit": 0,
+    "output": "wheel-entry.txt",
+    "isolated_XDG": true,
+    "package_root": "/tmp/veri-ufku-f33-delivery-installed"
+  },
+  "full_pytest": {
+    "command": "QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software .venv/bin/python -m pytest -q --junitxml=docs/evidence/phase33/pytest.xml",
+    "exit": 0,
+    "output": "pytest.txt",
+    "junit": "pytest.xml",
+    "tests": 853,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds_console": 540.64,
+    "note": "Started before last QML label polish, survey Qt numeric scalar correction, and strengthened test witness; final36 and final source/wheel14 separately passed."
+  },
+  "final_targeted": {
+    "command": "QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software .venv/bin/python -m pytest -q tests/test_missing_sampling.py tests/test_missing_sampling_gui.py --junitxml=docs/evidence/phase33/final-targeted.xml",
+    "exit": 0,
+    "tests": 36,
+    "seconds_console": 60.19,
+    "output": "final-targeted.txt",
+    "junit": "final-targeted.xml"
+  },
+  "walkthroughs": {
+    "source-gui": {
+      "exit": 0,
+      "cases": 14,
+      "screenshots": 6,
+      "package_file": "/home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/__init__.py",
+      "started": "2026-10-11T09:42:53.133218+00:00",
+      "completed": "2026-10-11T09:43:56.383883+00:00",
+      "evidence": "source-gui/walkthrough.json"
+    },
+    "wheel-gui": {
+      "exit": 0,
+      "cases": 14,
+      "screenshots": 6,
+      "package_file": "/tmp/veri-ufku-f33-delivery-installed/veri_ufku/__init__.py",
+      "started": "2026-10-11T09:42:53.164634+00:00",
+      "completed": "2026-10-11T09:43:56.958722+00:00",
+      "evidence": "wheel-gui/walkthrough.json"
+    }
+  },
+  "final_gates": [
+    {
+      "id": "docs",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_docs.py"
+      ],
+      "started": "2026-10-11T09:45:32.107397+00:00",
+      "exit": 0,
+      "seconds": 0.10859400700064725,
+      "output": "docs.txt"
+    },
+    {
+      "id": "artifacts",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_artifacts.py"
+      ],
+      "started": "2026-10-11T09:45:32.216015+00:00",
+      "exit": 0,
+      "seconds": 0.11796947500079114,
+      "output": "artifacts.txt"
+    },
+    {
+      "id": "learning",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_learning.py"
+      ],
+      "started": "2026-10-11T09:45:32.334014+00:00",
+      "exit": 0,
+      "seconds": 0.06663276700055576,
+      "output": "learning.txt"
+    },
+    {
+      "id": "usability",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_usability.py"
+      ],
+      "started": "2026-10-11T09:45:32.400676+00:00",
+      "exit": 0,
+      "seconds": 0.09195174500018766,
+      "output": "usability.txt"
+    },
+    {
+      "id": "ruff-check",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "started": "2026-10-11T09:45:32.492657+00:00",
+      "exit": 0,
+      "seconds": 0.009681776999059366,
+      "output": "ruff-check.txt"
+    },
+    {
+      "id": "ruff-format",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "started": "2026-10-11T09:45:32.502364+00:00",
+      "exit": 0,
+      "seconds": 0.00905975500063505,
+      "output": "ruff-format.txt"
+    },
+    {
+      "id": "unittest",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_document_contracts.py"
+      ],
+      "started": "2026-10-11T09:45:32.511442+00:00",
+      "exit": 0,
+      "seconds": 5.69486486400092,
+      "output": "unittest.txt"
+    },
+    {
+      "id": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started": "2026-10-11T09:45:38.206330+00:00",
+      "exit": 0,
+      "seconds": 0.01605506499981857,
+      "output": "diff.txt"
+    }
+  ],
+  "survey_scalar_correction": {
+    "passed": true,
+    "behavior": "Native Python float across Qt boundary; computed design effect unchanged; actual GUI value assertion",
+    "evidence": [
+      "final-targeted.xml",
+      "source-gui/walkthrough.json",
+      "wheel-gui/walkthrough.json"
+    ]
+  }
+}

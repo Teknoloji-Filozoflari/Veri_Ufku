@@ -1,0 +1,846 @@
+........F..F.........FFFFFFF.F                                           [100%]
+=================================== FAILURES ===================================
+__________ test_saved_result_survives_missing_plugin_no_code_loading ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-11/test_saved_result_survives_mis0')
+
+    def test_saved_result_survives_missing_plugin_no_code_loading(tmp_path):
+        root, store, ref, work, p = setup_run(tmp_path)
+        ident = None
+        with closing(store):
+            before = file_hash(tmp_path / "source.parquet")
+            req = storage.request_for(store, store.state, p)
+>           value = calculate(req)
+                    ^^^^^^^^^^^^^^
+
+tests/test_plugins.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/veri_ufku/plugins/runtime.py:91: in calculate
+    data, ids = input_data(request, control)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = {'inspection_hash': '1fc43aee64d9bbf9ddf41ab129c7f821317c65f15b168ead1300cd51eb73489d', 'version': 'dv:e0330a50-610b-4bff-b6e6-2534ebc1f890', 'columns': ['col:00a237da-7b12-44e4-9c58-958992736beb'], 'params': {}, ...}
+control = <veri_ufku.importers.delimited.Control object at 0x7fcef2c822c0>
+
+    def input_data(request, control):
+        import pyarrow.parquet as pq
+    
+        ref = request["source"]
+        selected = request["columns"]
+        if (
+            ref["row_count"] > 10000
+            or ref["fingerprint"]["size"] > 32 * 1024**2
+            or not 1 <= len(selected) <= 16
+        ):
+            raise ProjectError("Plugin dataset10000row/32MiB/16column sınırı.")
+        if file_hash(Path(ref["path"])) != ref["fingerprint"]:
+            raise ProjectError("Plugin source hash değişmiş.")
+        columns = {c["id"]: c for c in ref["columns"]}
+        if not set(selected) <= columns.keys() or len(selected) != len(set(selected)):
+            raise ProjectError("Plugin ColumnId seçim hatası.")
+        records = []
+        ids = []
+        for batch in pq.ParquetFile(ref["path"]).iter_batches(
+            batch_size=256,
+            columns=[columns[c]["name"] for c in selected]
+            + ["__vu_row_id", "__vu_source_record_id"],
+        ):
+            control.check()
+            for row in batch.to_pylist():
+                values = {c: row[columns[c]["name"]] for c in selected}
+                # No silent float/decimal/datetime coercion; authors see only finite JSON scalar values.
+                json_data(values, 65536)
+                records.append(
+                    dict(
+                        row_id=row["__vu_row_id"],
+                        source_record_id=row["__vu_source_record_id"],
+                        values=values,
+                    )
+                )
+                ids.append(row["__vu_row_id"])
+        data = dict(
+            schema="PluginInput/v1",
+            api_version=1,
+            kind=request["inspection"]["manifest"]["capability"]["kind"],
+            dataset_version=ref["version_id"],
+            source_snapshot_id=ref["source_snapshot_id"],
+            columns=[columns[c] for c in selected],
+            records=records,
+            params=request["params"],
+            seed=request["seed"],
+        )
+>       input_contract(data, data["kind"])
+        ^^^^^^^^^^^^^^
+E       NameError: name 'input_contract' is not defined
+
+src/veri_ufku/plugins/runtime.py:67: NameError
+_ test_failure_isolated_no_publish_secret_not_in_error[import os\nos._exit(17)\n-crashed] _
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-11/test_failure_isolated_no_publi1')
+code = 'import os\nos._exit(17)\n', expected = 'crashed'
+
+    @pytest.mark.parametrize(
+        "code,expected",
+        [
+            (
+                'def run(request,context):\n raise RuntimeError("SECRET=DO_NOT_LOG")\n',
+                "error",
+            ),
+            ("import os\nos._exit(17)\n", "crashed"),
+            ('def run(request,context):\n return {"not":"the output contract"}\n', "error"),
+        ],
+    )
+    def test_failure_isolated_no_publish_secret_not_in_error(tmp_path, code, expected):
+        root, store, ref, work, p = setup_run(tmp_path, code)
+        with closing(store):
+            before = store.commit_id
+            req = storage.request_for(store, store.state, p)
+            kind, value = spawn(req, work)
+>           assert kind == expected and "DO_NOT_LOG" not in str(value)
+E           AssertionError: assert ('error' == 'crashed'
+E             
+E             - crashed
+E             + error)
+
+tests/test_plugins.py:233: AssertionError
+_____ test_each_sdk_kind_executes_and_archives_its_data_contract[importer] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-11/test_each_sdk_kind_executes_an0')
+kind = 'importer'
+
+    @pytest.mark.parametrize(
+        "kind", ["importer", "transform", "stat", "model", "chart", "lesson"]
+    )
+    def test_each_sdk_kind_executes_and_archives_its_data_contract(tmp_path, kind):
+        root, store, ref, work, p = setup_run(tmp_path)
+        with closing(store):
+            source = """def run(request,context):
+        ids=[r['row_id'] for r in request['records']]
+        kind=request['kind']
+        data={
+            'stat':dict(metrics=dict(n=len(ids))),
+            'model':dict(metrics=dict(n=len(ids)),state=dict(coefficients=[1.]),prediction_supported=False),
+            'chart':dict(x=[1.,2.],y=[3.,4.],x_label='x',y_label='y'),
+            'importer':dict(columns=['x'],rows=[[1.],[2.]],source_record_ids=['record-1','record-2']),
+            'transform':dict(columns=['x'],rows=[[1.],[2.]],parent_row_ids=ids[:2]),
+            'lesson':dict(title='Örnek ders',paragraphs=['Hesap ve sınırlar']),
+        }[kind]
+        return dict(schema='PluginOutput/v1',kind=kind,summary='Gerçek fixture çıktısı',data=data,used_row_ids=ids,warnings=[])
+    """
+            (root / "plugin.py").write_text(source)
+            m = json.loads((root / "manifest.json").read_text())
+            m["capability"]["kind"] = kind
+            m["code_sha256"] = hashlib.sha256(source.encode()).hexdigest()
+            (root / "manifest.json").write_text(json.dumps(m))
+            info, _ = inspect(root / "manifest.json")
+            p["inspection_hash"] = info["inspection_hash"]
+            req = storage.request_for(store, store.state, p)
+>           value = calculate(req)
+                    ^^^^^^^^^^^^^^
+
+tests/test_plugins.py:334: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/veri_ufku/plugins/runtime.py:91: in calculate
+    data, ids = input_data(request, control)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = {'inspection_hash': 'ae3d58631b3bdafee08e6a02042c661c73631eaa859ea2e9147bb4193cac6deb', 'version': 'dv:033272db-19f0-47ee-862e-db3cd010c8c8', 'columns': ['col:312d98b6-b251-4168-af48-4662e086835d'], 'params': {}, ...}
+control = <veri_ufku.importers.delimited.Control object at 0x7fcef2b89450>
+
+    def input_data(request, control):
+        import pyarrow.parquet as pq
+    
+        ref = request["source"]
+        selected = request["columns"]
+        if (
+            ref["row_count"] > 10000
+            or ref["fingerprint"]["size"] > 32 * 1024**2
+            or not 1 <= len(selected) <= 16
+        ):
+            raise ProjectError("Plugin dataset10000row/32MiB/16column sınırı.")
+        if file_hash(Path(ref["path"])) != ref["fingerprint"]:
+            raise ProjectError("Plugin source hash değişmiş.")
+        columns = {c["id"]: c for c in ref["columns"]}
+        if not set(selected) <= columns.keys() or len(selected) != len(set(selected)):
+            raise ProjectError("Plugin ColumnId seçim hatası.")
+        records = []
+        ids = []
+        for batch in pq.ParquetFile(ref["path"]).iter_batches(
+            batch_size=256,
+            columns=[columns[c]["name"] for c in selected]
+            + ["__vu_row_id", "__vu_source_record_id"],
+        ):
+            control.check()
+            for row in batch.to_pylist():
+                values = {c: row[columns[c]["name"]] for c in selected}
+                # No silent float/decimal/datetime coercion; authors see only finite JSON scalar values.
+                json_data(values, 65536)
+                records.append(
+                    dict(
+                        row_id=row["__vu_row_id"],
+                        source_record_id=row["__vu_source_record_id"],
+                        values=values,
+                    )
+                )
+                ids.append(row["__vu_row_id"])
+        data = dict(
+            schema="PluginInput/v1",
+            api_version=1,
+            kind=request["inspection"]["manifest"]["capability"]["kind"],
+            dataset_version=ref["version_id"],
+            source_snapshot_id=ref["source_snapshot_id"],
+            columns=[columns[c] for c in selected],
+            records=records,
+            params=request["params"],
+            seed=request["seed"],
+        )
+>       input_contract(data, data["kind"])
+        ^^^^^^^^^^^^^^
+E       NameError: name 'input_contract' is not defined
+
+src/veri_ufku/plugins/runtime.py:67: NameError
+____ test_each_sdk_kind_executes_and_archives_its_data_contract[transform] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-11/test_each_sdk_kind_executes_an1')
+kind = 'transform'
+
+    @pytest.mark.parametrize(
+        "kind", ["importer", "transform", "stat", "model", "chart", "lesson"]
+    )
+    def test_each_sdk_kind_executes_and_archives_its_data_contract(tmp_path, kind):
+        root, store, ref, work, p = setup_run(tmp_path)
+        with closing(store):
+            source = """def run(request,context):
+        ids=[r['row_id'] for r in request['records']]
+        kind=request['kind']
+        data={
+            'stat':dict(metrics=dict(n=len(ids))),
+            'model':dict(metrics=dict(n=len(ids)),state=dict(coefficients=[1.]),prediction_supported=False),
+            'chart':dict(x=[1.,2.],y=[3.,4.],x_label='x',y_label='y'),
+            'importer':dict(columns=['x'],rows=[[1.],[2.]],source_record_ids=['record-1','record-2']),
+            'transform':dict(columns=['x'],rows=[[1.],[2.]],parent_row_ids=ids[:2]),
+            'lesson':dict(title='Örnek ders',paragraphs=['Hesap ve sınırlar']),
+        }[kind]
+        return dict(schema='PluginOutput/v1',kind=kind,summary='Gerçek fixture çıktısı',data=data,used_row_ids=ids,warnings=[])
+    """
+            (root / "plugin.py").write_text(source)
+            m = json.loads((root / "manifest.json").read_text())
+            m["capability"]["kind"] = kind
+            m["code_sha256"] = hashlib.sha256(source.encode()).hexdigest()
+            (root / "manifest.json").write_text(json.dumps(m))
+            info, _ = inspect(root / "manifest.json")
+            p["inspection_hash"] = info["inspection_hash"]
+            req = storage.request_for(store, store.state, p)
+>           value = calculate(req)
+                    ^^^^^^^^^^^^^^
+
+tests/test_plugins.py:334: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/veri_ufku/plugins/runtime.py:91: in calculate
+    data, ids = input_data(request, control)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = {'inspection_hash': 'c63a80c658ec6f9bfb1fe6ac204eeb9426b35c9491cef237d2e11bf62f101d20', 'version': 'dv:91ed6558-8852-4864-961d-63b60104b7ec', 'columns': ['col:52b33972-e9fa-4d68-b3e9-355c4e8a65bb'], 'params': {}, ...}
+control = <veri_ufku.importers.delimited.Control object at 0x7fcef2b8be50>
+
+    def input_data(request, control):
+        import pyarrow.parquet as pq
+    
+        ref = request["source"]
+        selected = request["columns"]
+        if (
+            ref["row_count"] > 10000
+            or ref["fingerprint"]["size"] > 32 * 1024**2
+            or not 1 <= len(selected) <= 16
+        ):
+            raise ProjectError("Plugin dataset10000row/32MiB/16column sınırı.")
+        if file_hash(Path(ref["path"])) != ref["fingerprint"]:
+            raise ProjectError("Plugin source hash değişmiş.")
+        columns = {c["id"]: c for c in ref["columns"]}
+        if not set(selected) <= columns.keys() or len(selected) != len(set(selected)):
+            raise ProjectError("Plugin ColumnId seçim hatası.")
+        records = []
+        ids = []
+        for batch in pq.ParquetFile(ref["path"]).iter_batches(
+            batch_size=256,
+            columns=[columns[c]["name"] for c in selected]
+            + ["__vu_row_id", "__vu_source_record_id"],
+        ):
+            control.check()
+            for row in batch.to_pylist():
+                values = {c: row[columns[c]["name"]] for c in selected}
+                # No silent float/decimal/datetime coercion; authors see only finite JSON scalar values.
+                json_data(values, 65536)
+                records.append(
+                    dict(
+                        row_id=row["__vu_row_id"],
+                        source_record_id=row["__vu_source_record_id"],
+                        values=values,
+                    )
+                )
+                ids.append(row["__vu_row_id"])
+        data = dict(
+            schema="PluginInput/v1",
+            api_version=1,
+            kind=request["inspection"]["manifest"]["capability"]["kind"],
+            dataset_version=ref["version_id"],
+            source_snapshot_id=ref["source_snapshot_id"],
+            columns=[columns[c] for c in selected],
+            records=records,
+            params=request["params"],
+            seed=request["seed"],
+        )
+>       input_contract(data, data["kind"])
+        ^^^^^^^^^^^^^^
+E       NameError: name 'input_contract' is not defined
+
+src/veri_ufku/plugins/runtime.py:67: NameError
+_______ test_each_sdk_kind_executes_and_archives_its_data_contract[stat] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-11/test_each_sdk_kind_executes_an2')
+kind = 'stat'
+
+    @pytest.mark.parametrize(
+        "kind", ["importer", "transform", "stat", "model", "chart", "lesson"]
+    )
+    def test_each_sdk_kind_executes_and_archives_its_data_contract(tmp_path, kind):
+        root, store, ref, work, p = setup_run(tmp_path)
+        with closing(store):
+            source = """def run(request,context):
+        ids=[r['row_id'] for r in request['records']]
+        kind=request['kind']
+        data={
+            'stat':dict(metrics=dict(n=len(ids))),
+            'model':dict(metrics=dict(n=len(ids)),state=dict(coefficients=[1.]),prediction_supported=False),
+            'chart':dict(x=[1.,2.],y=[3.,4.],x_label='x',y_label='y'),
+            'importer':dict(columns=['x'],rows=[[1.],[2.]],source_record_ids=['record-1','record-2']),
+            'transform':dict(columns=['x'],rows=[[1.],[2.]],parent_row_ids=ids[:2]),
+            'lesson':dict(title='Örnek ders',paragraphs=['Hesap ve sınırlar']),
+        }[kind]
+        return dict(schema='PluginOutput/v1',kind=kind,summary='Gerçek fixture çıktısı',data=data,used_row_ids=ids,warnings=[])
+    """
+            (root / "plugin.py").write_text(source)
+            m = json.loads((root / "manifest.json").read_text())
+            m["capability"]["kind"] = kind
+            m["code_sha256"] = hashlib.sha256(source.encode()).hexdigest()
+            (root / "manifest.json").write_text(json.dumps(m))
+            info, _ = inspect(root / "manifest.json")
+            p["inspection_hash"] = info["inspection_hash"]
+            req = storage.request_for(store, store.state, p)
+>           value = calculate(req)
+                    ^^^^^^^^^^^^^^
+
+tests/test_plugins.py:334: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/veri_ufku/plugins/runtime.py:91: in calculate
+    data, ids = input_data(request, control)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = {'inspection_hash': 'a5237bb8b6d1e84f0582dcff6a8a18da2a4b767a591936f3ed12af9af631b3ec', 'version': 'dv:233b2562-a0ff-43b3-a4e9-3244470676f5', 'columns': ['col:e31c4d88-beed-4646-9f7b-98dcdfe36d8a'], 'params': {}, ...}
+control = <veri_ufku.importers.delimited.Control object at 0x7fcef2b25450>
+
+    def input_data(request, control):
+        import pyarrow.parquet as pq
+    
+        ref = request["source"]
+        selected = request["columns"]
+        if (
+            ref["row_count"] > 10000
+            or ref["fingerprint"]["size"] > 32 * 1024**2
+            or not 1 <= len(selected) <= 16
+        ):
+            raise ProjectError("Plugin dataset10000row/32MiB/16column sınırı.")
+        if file_hash(Path(ref["path"])) != ref["fingerprint"]:
+            raise ProjectError("Plugin source hash değişmiş.")
+        columns = {c["id"]: c for c in ref["columns"]}
+        if not set(selected) <= columns.keys() or len(selected) != len(set(selected)):
+            raise ProjectError("Plugin ColumnId seçim hatası.")
+        records = []
+        ids = []
+        for batch in pq.ParquetFile(ref["path"]).iter_batches(
+            batch_size=256,
+            columns=[columns[c]["name"] for c in selected]
+            + ["__vu_row_id", "__vu_source_record_id"],
+        ):
+            control.check()
+            for row in batch.to_pylist():
+                values = {c: row[columns[c]["name"]] for c in selected}
+                # No silent float/decimal/datetime coercion; authors see only finite JSON scalar values.
+                json_data(values, 65536)
+                records.append(
+                    dict(
+                        row_id=row["__vu_row_id"],
+                        source_record_id=row["__vu_source_record_id"],
+                        values=values,
+                    )
+                )
+                ids.append(row["__vu_row_id"])
+        data = dict(
+            schema="PluginInput/v1",
+            api_version=1,
+            kind=request["inspection"]["manifest"]["capability"]["kind"],
+            dataset_version=ref["version_id"],
+            source_snapshot_id=ref["source_snapshot_id"],
+            columns=[columns[c] for c in selected],
+            records=records,
+            params=request["params"],
+            seed=request["seed"],
+        )
+>       input_contract(data, data["kind"])
+        ^^^^^^^^^^^^^^
+E       NameError: name 'input_contract' is not defined
+
+src/veri_ufku/plugins/runtime.py:67: NameError
+______ test_each_sdk_kind_executes_and_archives_its_data_contract[model] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-11/test_each_sdk_kind_executes_an3')
+kind = 'model'
+
+    @pytest.mark.parametrize(
+        "kind", ["importer", "transform", "stat", "model", "chart", "lesson"]
+    )
+    def test_each_sdk_kind_executes_and_archives_its_data_contract(tmp_path, kind):
+        root, store, ref, work, p = setup_run(tmp_path)
+        with closing(store):
+            source = """def run(request,context):
+        ids=[r['row_id'] for r in request['records']]
+        kind=request['kind']
+        data={
+            'stat':dict(metrics=dict(n=len(ids))),
+            'model':dict(metrics=dict(n=len(ids)),state=dict(coefficients=[1.]),prediction_supported=False),
+            'chart':dict(x=[1.,2.],y=[3.,4.],x_label='x',y_label='y'),
+            'importer':dict(columns=['x'],rows=[[1.],[2.]],source_record_ids=['record-1','record-2']),
+            'transform':dict(columns=['x'],rows=[[1.],[2.]],parent_row_ids=ids[:2]),
+            'lesson':dict(title='Örnek ders',paragraphs=['Hesap ve sınırlar']),
+        }[kind]
+        return dict(schema='PluginOutput/v1',kind=kind,summary='Gerçek fixture çıktısı',data=data,used_row_ids=ids,warnings=[])
+    """
+            (root / "plugin.py").write_text(source)
+            m = json.loads((root / "manifest.json").read_text())
+            m["capability"]["kind"] = kind
+            m["code_sha256"] = hashlib.sha256(source.encode()).hexdigest()
+            (root / "manifest.json").write_text(json.dumps(m))
+            info, _ = inspect(root / "manifest.json")
+            p["inspection_hash"] = info["inspection_hash"]
+            req = storage.request_for(store, store.state, p)
+>           value = calculate(req)
+                    ^^^^^^^^^^^^^^
+
+tests/test_plugins.py:334: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/veri_ufku/plugins/runtime.py:91: in calculate
+    data, ids = input_data(request, control)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = {'inspection_hash': 'f0af591ea3a6c424ddf1ef4d152f612b6d76be68a84bda0cff6a2235c0b6a80c', 'version': 'dv:a8cf73a5-243f-4c34-ba6e-809a093871a5', 'columns': ['col:233e65a3-46ea-4d5e-9da1-9bd01c8d3065'], 'params': {}, ...}
+control = <veri_ufku.importers.delimited.Control object at 0x7fcef2b243d0>
+
+    def input_data(request, control):
+        import pyarrow.parquet as pq
+    
+        ref = request["source"]
+        selected = request["columns"]
+        if (
+            ref["row_count"] > 10000
+            or ref["fingerprint"]["size"] > 32 * 1024**2
+            or not 1 <= len(selected) <= 16
+        ):
+            raise ProjectError("Plugin dataset10000row/32MiB/16column sınırı.")
+        if file_hash(Path(ref["path"])) != ref["fingerprint"]:
+            raise ProjectError("Plugin source hash değişmiş.")
+        columns = {c["id"]: c for c in ref["columns"]}
+        if not set(selected) <= columns.keys() or len(selected) != len(set(selected)):
+            raise ProjectError("Plugin ColumnId seçim hatası.")
+        records = []
+        ids = []
+        for batch in pq.ParquetFile(ref["path"]).iter_batches(
+            batch_size=256,
+            columns=[columns[c]["name"] for c in selected]
+            + ["__vu_row_id", "__vu_source_record_id"],
+        ):
+            control.check()
+            for row in batch.to_pylist():
+                values = {c: row[columns[c]["name"]] for c in selected}
+                # No silent float/decimal/datetime coercion; authors see only finite JSON scalar values.
+                json_data(values, 65536)
+                records.append(
+                    dict(
+                        row_id=row["__vu_row_id"],
+                        source_record_id=row["__vu_source_record_id"],
+                        values=values,
+                    )
+                )
+                ids.append(row["__vu_row_id"])
+        data = dict(
+            schema="PluginInput/v1",
+            api_version=1,
+            kind=request["inspection"]["manifest"]["capability"]["kind"],
+            dataset_version=ref["version_id"],
+            source_snapshot_id=ref["source_snapshot_id"],
+            columns=[columns[c] for c in selected],
+            records=records,
+            params=request["params"],
+            seed=request["seed"],
+        )
+>       input_contract(data, data["kind"])
+        ^^^^^^^^^^^^^^
+E       NameError: name 'input_contract' is not defined
+
+src/veri_ufku/plugins/runtime.py:67: NameError
+______ test_each_sdk_kind_executes_and_archives_its_data_contract[chart] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-11/test_each_sdk_kind_executes_an4')
+kind = 'chart'
+
+    @pytest.mark.parametrize(
+        "kind", ["importer", "transform", "stat", "model", "chart", "lesson"]
+    )
+    def test_each_sdk_kind_executes_and_archives_its_data_contract(tmp_path, kind):
+        root, store, ref, work, p = setup_run(tmp_path)
+        with closing(store):
+            source = """def run(request,context):
+        ids=[r['row_id'] for r in request['records']]
+        kind=request['kind']
+        data={
+            'stat':dict(metrics=dict(n=len(ids))),
+            'model':dict(metrics=dict(n=len(ids)),state=dict(coefficients=[1.]),prediction_supported=False),
+            'chart':dict(x=[1.,2.],y=[3.,4.],x_label='x',y_label='y'),
+            'importer':dict(columns=['x'],rows=[[1.],[2.]],source_record_ids=['record-1','record-2']),
+            'transform':dict(columns=['x'],rows=[[1.],[2.]],parent_row_ids=ids[:2]),
+            'lesson':dict(title='Örnek ders',paragraphs=['Hesap ve sınırlar']),
+        }[kind]
+        return dict(schema='PluginOutput/v1',kind=kind,summary='Gerçek fixture çıktısı',data=data,used_row_ids=ids,warnings=[])
+    """
+            (root / "plugin.py").write_text(source)
+            m = json.loads((root / "manifest.json").read_text())
+            m["capability"]["kind"] = kind
+            m["code_sha256"] = hashlib.sha256(source.encode()).hexdigest()
+            (root / "manifest.json").write_text(json.dumps(m))
+            info, _ = inspect(root / "manifest.json")
+            p["inspection_hash"] = info["inspection_hash"]
+            req = storage.request_for(store, store.state, p)
+>           value = calculate(req)
+                    ^^^^^^^^^^^^^^
+
+tests/test_plugins.py:334: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/veri_ufku/plugins/runtime.py:91: in calculate
+    data, ids = input_data(request, control)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = {'inspection_hash': '6a6a249fafc2848006468f17a9c50a8a4081926453b064fc24da29863d23a685', 'version': 'dv:8f60f9be-c7f7-4d1c-bd22-ef7ca68002f8', 'columns': ['col:c6cda725-6d76-4c6a-81cc-6fda60c75fa8'], 'params': {}, ...}
+control = <veri_ufku.importers.delimited.Control object at 0x7fcef2b8b550>
+
+    def input_data(request, control):
+        import pyarrow.parquet as pq
+    
+        ref = request["source"]
+        selected = request["columns"]
+        if (
+            ref["row_count"] > 10000
+            or ref["fingerprint"]["size"] > 32 * 1024**2
+            or not 1 <= len(selected) <= 16
+        ):
+            raise ProjectError("Plugin dataset10000row/32MiB/16column sınırı.")
+        if file_hash(Path(ref["path"])) != ref["fingerprint"]:
+            raise ProjectError("Plugin source hash değişmiş.")
+        columns = {c["id"]: c for c in ref["columns"]}
+        if not set(selected) <= columns.keys() or len(selected) != len(set(selected)):
+            raise ProjectError("Plugin ColumnId seçim hatası.")
+        records = []
+        ids = []
+        for batch in pq.ParquetFile(ref["path"]).iter_batches(
+            batch_size=256,
+            columns=[columns[c]["name"] for c in selected]
+            + ["__vu_row_id", "__vu_source_record_id"],
+        ):
+            control.check()
+            for row in batch.to_pylist():
+                values = {c: row[columns[c]["name"]] for c in selected}
+                # No silent float/decimal/datetime coercion; authors see only finite JSON scalar values.
+                json_data(values, 65536)
+                records.append(
+                    dict(
+                        row_id=row["__vu_row_id"],
+                        source_record_id=row["__vu_source_record_id"],
+                        values=values,
+                    )
+                )
+                ids.append(row["__vu_row_id"])
+        data = dict(
+            schema="PluginInput/v1",
+            api_version=1,
+            kind=request["inspection"]["manifest"]["capability"]["kind"],
+            dataset_version=ref["version_id"],
+            source_snapshot_id=ref["source_snapshot_id"],
+            columns=[columns[c] for c in selected],
+            records=records,
+            params=request["params"],
+            seed=request["seed"],
+        )
+>       input_contract(data, data["kind"])
+        ^^^^^^^^^^^^^^
+E       NameError: name 'input_contract' is not defined
+
+src/veri_ufku/plugins/runtime.py:67: NameError
+______ test_each_sdk_kind_executes_and_archives_its_data_contract[lesson] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-11/test_each_sdk_kind_executes_an5')
+kind = 'lesson'
+
+    @pytest.mark.parametrize(
+        "kind", ["importer", "transform", "stat", "model", "chart", "lesson"]
+    )
+    def test_each_sdk_kind_executes_and_archives_its_data_contract(tmp_path, kind):
+        root, store, ref, work, p = setup_run(tmp_path)
+        with closing(store):
+            source = """def run(request,context):
+        ids=[r['row_id'] for r in request['records']]
+        kind=request['kind']
+        data={
+            'stat':dict(metrics=dict(n=len(ids))),
+            'model':dict(metrics=dict(n=len(ids)),state=dict(coefficients=[1.]),prediction_supported=False),
+            'chart':dict(x=[1.,2.],y=[3.,4.],x_label='x',y_label='y'),
+            'importer':dict(columns=['x'],rows=[[1.],[2.]],source_record_ids=['record-1','record-2']),
+            'transform':dict(columns=['x'],rows=[[1.],[2.]],parent_row_ids=ids[:2]),
+            'lesson':dict(title='Örnek ders',paragraphs=['Hesap ve sınırlar']),
+        }[kind]
+        return dict(schema='PluginOutput/v1',kind=kind,summary='Gerçek fixture çıktısı',data=data,used_row_ids=ids,warnings=[])
+    """
+            (root / "plugin.py").write_text(source)
+            m = json.loads((root / "manifest.json").read_text())
+            m["capability"]["kind"] = kind
+            m["code_sha256"] = hashlib.sha256(source.encode()).hexdigest()
+            (root / "manifest.json").write_text(json.dumps(m))
+            info, _ = inspect(root / "manifest.json")
+            p["inspection_hash"] = info["inspection_hash"]
+            req = storage.request_for(store, store.state, p)
+>           value = calculate(req)
+                    ^^^^^^^^^^^^^^
+
+tests/test_plugins.py:334: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/veri_ufku/plugins/runtime.py:91: in calculate
+    data, ids = input_data(request, control)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = {'inspection_hash': 'e68e23a28cd5b374b88fe8be56129b8e63fb3f4ee4b1ab8e144a3b4b5ab9000a', 'version': 'dv:7f81d3d9-6551-41cc-9361-2b9407fdbc7a', 'columns': ['col:0db2a601-2d56-41e2-8e38-03a73c6c077d'], 'params': {}, ...}
+control = <veri_ufku.importers.delimited.Control object at 0x7fceab416750>
+
+    def input_data(request, control):
+        import pyarrow.parquet as pq
+    
+        ref = request["source"]
+        selected = request["columns"]
+        if (
+            ref["row_count"] > 10000
+            or ref["fingerprint"]["size"] > 32 * 1024**2
+            or not 1 <= len(selected) <= 16
+        ):
+            raise ProjectError("Plugin dataset10000row/32MiB/16column sınırı.")
+        if file_hash(Path(ref["path"])) != ref["fingerprint"]:
+            raise ProjectError("Plugin source hash değişmiş.")
+        columns = {c["id"]: c for c in ref["columns"]}
+        if not set(selected) <= columns.keys() or len(selected) != len(set(selected)):
+            raise ProjectError("Plugin ColumnId seçim hatası.")
+        records = []
+        ids = []
+        for batch in pq.ParquetFile(ref["path"]).iter_batches(
+            batch_size=256,
+            columns=[columns[c]["name"] for c in selected]
+            + ["__vu_row_id", "__vu_source_record_id"],
+        ):
+            control.check()
+            for row in batch.to_pylist():
+                values = {c: row[columns[c]["name"]] for c in selected}
+                # No silent float/decimal/datetime coercion; authors see only finite JSON scalar values.
+                json_data(values, 65536)
+                records.append(
+                    dict(
+                        row_id=row["__vu_row_id"],
+                        source_record_id=row["__vu_source_record_id"],
+                        values=values,
+                    )
+                )
+                ids.append(row["__vu_row_id"])
+        data = dict(
+            schema="PluginInput/v1",
+            api_version=1,
+            kind=request["inspection"]["manifest"]["capability"]["kind"],
+            dataset_version=ref["version_id"],
+            source_snapshot_id=ref["source_snapshot_id"],
+            columns=[columns[c] for c in selected],
+            records=records,
+            params=request["params"],
+            seed=request["seed"],
+        )
+>       input_contract(data, data["kind"])
+        ^^^^^^^^^^^^^^
+E       NameError: name 'input_contract' is not defined
+
+src/veri_ufku/plugins/runtime.py:67: NameError
+_________ test_parameter_contract_versions_and_source_change_rejection _________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-11/test_parameter_contract_versio0')
+
+    def test_parameter_contract_versions_and_source_change_rejection(tmp_path):
+        root, store, ref, work, p = setup_run(tmp_path)
+        with closing(store):
+            req = storage.request_for(store, store.state, p)
+>           value = calculate(req)
+                    ^^^^^^^^^^^^^^
+
+tests/test_plugins.py:346: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/veri_ufku/plugins/runtime.py:91: in calculate
+    data, ids = input_data(request, control)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = {'inspection_hash': '1fc43aee64d9bbf9ddf41ab129c7f821317c65f15b168ead1300cd51eb73489d', 'version': 'dv:0c1929f5-ecea-469a-b022-2f665bcbeb64', 'columns': ['col:aba02b5e-300d-457a-8e1d-6229789e399d'], 'params': {}, ...}
+control = <veri_ufku.importers.delimited.Control object at 0x7fcef2c447d0>
+
+    def input_data(request, control):
+        import pyarrow.parquet as pq
+    
+        ref = request["source"]
+        selected = request["columns"]
+        if (
+            ref["row_count"] > 10000
+            or ref["fingerprint"]["size"] > 32 * 1024**2
+            or not 1 <= len(selected) <= 16
+        ):
+            raise ProjectError("Plugin dataset10000row/32MiB/16column sınırı.")
+        if file_hash(Path(ref["path"])) != ref["fingerprint"]:
+            raise ProjectError("Plugin source hash değişmiş.")
+        columns = {c["id"]: c for c in ref["columns"]}
+        if not set(selected) <= columns.keys() or len(selected) != len(set(selected)):
+            raise ProjectError("Plugin ColumnId seçim hatası.")
+        records = []
+        ids = []
+        for batch in pq.ParquetFile(ref["path"]).iter_batches(
+            batch_size=256,
+            columns=[columns[c]["name"] for c in selected]
+            + ["__vu_row_id", "__vu_source_record_id"],
+        ):
+            control.check()
+            for row in batch.to_pylist():
+                values = {c: row[columns[c]["name"]] for c in selected}
+                # No silent float/decimal/datetime coercion; authors see only finite JSON scalar values.
+                json_data(values, 65536)
+                records.append(
+                    dict(
+                        row_id=row["__vu_row_id"],
+                        source_record_id=row["__vu_source_record_id"],
+                        values=values,
+                    )
+                )
+                ids.append(row["__vu_row_id"])
+        data = dict(
+            schema="PluginInput/v1",
+            api_version=1,
+            kind=request["inspection"]["manifest"]["capability"]["kind"],
+            dataset_version=ref["version_id"],
+            source_snapshot_id=ref["source_snapshot_id"],
+            columns=[columns[c] for c in selected],
+            records=records,
+            params=request["params"],
+            seed=request["seed"],
+        )
+>       input_contract(data, data["kind"])
+        ^^^^^^^^^^^^^^
+E       NameError: name 'input_contract' is not defined
+
+src/veri_ufku/plugins/runtime.py:67: NameError
+__________ test_readonly_project_missing_plugin_artifact_can_be_read ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-11/test_readonly_project_missing_0')
+
+    def test_readonly_project_missing_plugin_artifact_can_be_read(tmp_path):
+        root, store, ref, work, p = setup_run(tmp_path)
+        with closing(store):
+            req = storage.request_for(store, store.state, p)
+>           storage.publish(store, store.state, calculate(req))
+                                                ^^^^^^^^^^^^^^
+
+tests/test_plugins.py:375: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/veri_ufku/plugins/runtime.py:91: in calculate
+    data, ids = input_data(request, control)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = {'inspection_hash': '1fc43aee64d9bbf9ddf41ab129c7f821317c65f15b168ead1300cd51eb73489d', 'version': 'dv:3ed01614-9a4d-4fb5-b9ff-1ce5decc5105', 'columns': ['col:3adb0cba-bdc1-49f8-9e56-f425d9da7b61'], 'params': {}, ...}
+control = <veri_ufku.importers.delimited.Control object at 0x7fcef2ba9350>
+
+    def input_data(request, control):
+        import pyarrow.parquet as pq
+    
+        ref = request["source"]
+        selected = request["columns"]
+        if (
+            ref["row_count"] > 10000
+            or ref["fingerprint"]["size"] > 32 * 1024**2
+            or not 1 <= len(selected) <= 16
+        ):
+            raise ProjectError("Plugin dataset10000row/32MiB/16column sınırı.")
+        if file_hash(Path(ref["path"])) != ref["fingerprint"]:
+            raise ProjectError("Plugin source hash değişmiş.")
+        columns = {c["id"]: c for c in ref["columns"]}
+        if not set(selected) <= columns.keys() or len(selected) != len(set(selected)):
+            raise ProjectError("Plugin ColumnId seçim hatası.")
+        records = []
+        ids = []
+        for batch in pq.ParquetFile(ref["path"]).iter_batches(
+            batch_size=256,
+            columns=[columns[c]["name"] for c in selected]
+            + ["__vu_row_id", "__vu_source_record_id"],
+        ):
+            control.check()
+            for row in batch.to_pylist():
+                values = {c: row[columns[c]["name"]] for c in selected}
+                # No silent float/decimal/datetime coercion; authors see only finite JSON scalar values.
+                json_data(values, 65536)
+                records.append(
+                    dict(
+                        row_id=row["__vu_row_id"],
+                        source_record_id=row["__vu_source_record_id"],
+                        values=values,
+                    )
+                )
+                ids.append(row["__vu_row_id"])
+        data = dict(
+            schema="PluginInput/v1",
+            api_version=1,
+            kind=request["inspection"]["manifest"]["capability"]["kind"],
+            dataset_version=ref["version_id"],
+            source_snapshot_id=ref["source_snapshot_id"],
+            columns=[columns[c] for c in selected],
+            records=records,
+            params=request["params"],
+            seed=request["seed"],
+        )
+>       input_contract(data, data["kind"])
+        ^^^^^^^^^^^^^^
+E       NameError: name 'input_contract' is not defined
+
+src/veri_ufku/plugins/runtime.py:67: NameError
+=========================== short test summary info ============================
+FAILED tests/test_plugins.py::test_saved_result_survives_missing_plugin_no_code_loading
+FAILED tests/test_plugins.py::test_failure_isolated_no_publish_secret_not_in_error[import os\nos._exit(17)\n-crashed]
+FAILED tests/test_plugins.py::test_each_sdk_kind_executes_and_archives_its_data_contract[importer]
+FAILED tests/test_plugins.py::test_each_sdk_kind_executes_and_archives_its_data_contract[transform]
+FAILED tests/test_plugins.py::test_each_sdk_kind_executes_and_archives_its_data_contract[stat]
+FAILED tests/test_plugins.py::test_each_sdk_kind_executes_and_archives_its_data_contract[model]
+FAILED tests/test_plugins.py::test_each_sdk_kind_executes_and_archives_its_data_contract[chart]
+FAILED tests/test_plugins.py::test_each_sdk_kind_executes_and_archives_its_data_contract[lesson]
+FAILED tests/test_plugins.py::test_parameter_contract_versions_and_source_change_rejection
+FAILED tests/test_plugins.py::test_readonly_project_missing_plugin_artifact_can_be_read
+10 failed, 20 passed in 4.80s

@@ -297,6 +297,29 @@ def test_snapshot_mutation_rejects_results_and_metadata_validation(tmp_path):
         c = column(req, "value")
         with pytest.raises(ProjectError):
             metadata_version(store.state["datasets"][-1], c, "ordinal", "", [], "")
+        for description in ("x" * 2001, 42):
+            with pytest.raises(ProjectError, match="açıklaması"):
+                metadata_version(
+                    store.state["datasets"][-1],
+                    c,
+                    "measurement",
+                    "",
+                    [],
+                    "",
+                    description,
+                )
+        described = metadata_version(
+            store.state["datasets"][-1],
+            c,
+            "measurement",
+            "TL",
+            [],
+            "satış",
+            "Satış tutarı",
+        )
+        updated = metadata_version(described, c, "measurement", "TL", [], "satış")
+        assert updated["semantic_metadata"][c]["description"] == "Satış tutarı"
+        assert "semantic_metadata" not in store.state["datasets"][-1]
         invalid = copy.deepcopy(store.state)
         invalid["datasets"][-1]["semantic_metadata"] = {"unknown": {}}
         with pytest.raises(ProjectError):

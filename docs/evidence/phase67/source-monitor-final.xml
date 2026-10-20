@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="17" time="6.011" timestamp="2026-10-16T09:53:34.030916+03:00" hostname="s-oktay"><testcase classname="tests.test_monitoring" name="test_drift_fixture_no_labels_snapshot_identity_and_reopen" time="0.828" /><testcase classname="tests.test_monitoring" name="test_psi_manual_js_support_constant_missing_and_ks" time="0.021" /><testcase classname="tests.test_monitoring" name="test_model_no_labels_and_window_selection" time="0.271" /><testcase classname="tests.test_monitoring" name="test_delayed_labels_shuffled_unique_keys_and_reference_metrics" time="0.291" /><testcase classname="tests.test_monitoring" name="test_evaluation_probability_label_order_reference_and_unseen" time="0.028" /><testcase classname="tests.test_monitoring" name="test_shadow_and_real_route_rollback_preserves_artifacts_lineage" time="0.589" /><testcase classname="tests.test_monitoring" name="test_closed_recipe_rejects_invalid[changes0]" time="0.000" /><testcase classname="tests.test_monitoring" name="test_closed_recipe_rejects_invalid[changes1]" time="0.001" /><testcase classname="tests.test_monitoring" name="test_closed_recipe_rejects_invalid[changes2]" time="0.001" /><testcase classname="tests.test_monitoring" name="test_closed_recipe_rejects_invalid[changes3]" time="0.000" /><testcase classname="tests.test_monitoring" name="test_closed_recipe_rejects_invalid[changes4]" time="0.000" /><testcase classname="tests.test_monitoring" name="test_closed_recipe_rejects_invalid[changes5]" time="0.000" /><testcase classname="tests.test_monitoring" name="test_closed_recipe_rejects_invalid[changes6]" time="0.000" /><testcase classname="tests.test_monitoring" name="test_closed_recipe_rejects_invalid[changes7]" time="0.000" /><testcase classname="tests.test_monitoring" name="test_actual_cli_scoring_explicit_opt_in" time="2.893" /><testcase classname="tests.test_monitoring" name="test_schema_missing_column_and_quality_contract" time="0.041" /><testcase classname="tests.test_monitoring" name="test_reference_current_label_key_overlap_rejected_and_route_scoring" time="0.286"><failure message="NameError: name 'copy' is not defined. Did you forget to import 'copy'?">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-40/test_reference_current_label_k0')
+
+    def test_reference_current_label_key_overlap_rejected_and_route_scoring(tmp_path):
+        store, r, w, work, s = trained_fixture(tmp_path)
+        with closing(store):
+            storage.activate(store, store.state, s.champion, "manual_selection")
+            routed = replace(s, champion="", use_champion_route=True)
+            request = storage.request_for(store, store.state, routed.data())
+            out = calculate(request, routed.data(), work)
+            assert out["models"][0]["record_id"] == s.champion
+            assert out["route_event_id"] == storage.route(store.state)["id"]
+            storage.publish(store, store.state, out)
+&gt;           original = copy.deepcopy(store.state)
+                       ^^^^
+E           NameError: name 'copy' is not defined. Did you forget to import 'copy'?
+
+tests/test_monitoring.py:458: NameError</failure></testcase></testsuite></testsuites>

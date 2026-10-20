@@ -1,0 +1,93 @@
+{
+  "id": "E52-GATES",
+  "date": "2026-10-13T20:10:00.378371+00:00",
+  "environment": "ENV-52",
+  "records": [
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_docs.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 76 phases, source requirements, evidence, progress and local links\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_artifacts.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_learning.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 358 offline articles; 164 UI bindings; all capability links\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_usability.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 358 articles; 728 named fields; 189 finished core English messages\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "stdout": "370 files already formatted\n",
+      "stderr": ""
+    }
+  ],
+  "document_unit": {
+    "argv": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_document_contracts.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok\ntest_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok\ntest_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok\ntest_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok\ntest_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok\ntest_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok\ntest_professional_dependency_plan_loss_is_rejected (test_document_contracts.DocumentContracts.test_professional_dependency_plan_loss_is_rejected) ... ok\ntest_professional_method_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_professional_method_scope_loss_is_rejected) ... ok\ntest_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok\ntest_source_revision_cannot_hide_another_insertion (test_document_contracts.DocumentContracts.test_source_revision_cannot_hide_another_insertion) ... ok\ntest_source_revision_cannot_replace_original_digest (test_document_contracts.DocumentContracts.test_source_revision_cannot_replace_original_digest) ... ok\ntest_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok\ntest_unrecorded_source_edit_is_rejected (test_document_contracts.DocumentContracts.test_unrecorded_source_edit_is_rejected) ... ok\ntest_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 13.155s\n\nOK\n",
+    "date": "2026-10-13T20:12:16.485536+00:00"
+  },
+  "not_run": [
+    "physical desktop",
+    "human/AT",
+    "minimum hardware",
+    "clean offline installation",
+    "remote CI",
+    "full repository aggregate"
+  ]
+}

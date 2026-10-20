@@ -1,0 +1,102 @@
+[
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/test_data_workspace_gui.py",
+      "-q"
+    ],
+    "start": "2026-10-10T10:57:22.643500+00:00",
+    "end": "2026-10-10T10:57:30.111062+00:00",
+    "exit": 0,
+    "log": "gui.txt",
+    "environment": "locked .venv, Qt offscreen/software"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_docs.py"
+    ],
+    "start": "2026-10-10T10:57:30.111201+00:00",
+    "end": "2026-10-10T10:57:30.200395+00:00",
+    "exit": 1,
+    "log": "docs.txt",
+    "environment": "locked .venv, Qt offscreen/software"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_artifacts.py"
+    ],
+    "start": "2026-10-10T10:57:30.200494+00:00",
+    "end": "2026-10-10T10:57:30.314406+00:00",
+    "exit": 0,
+    "log": "artifacts.txt",
+    "environment": "locked .venv, Qt offscreen/software"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_learning.py"
+    ],
+    "start": "2026-10-10T10:57:30.314592+00:00",
+    "end": "2026-10-10T10:57:30.363815+00:00",
+    "exit": 0,
+    "log": "learning.txt",
+    "environment": "locked .venv, Qt offscreen/software"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_usability.py"
+    ],
+    "start": "2026-10-10T10:57:30.363998+00:00",
+    "end": "2026-10-10T10:57:30.438204+00:00",
+    "exit": 0,
+    "log": "usability.txt",
+    "environment": "locked .venv, Qt offscreen/software"
+  },
+  {
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "start": "2026-10-10T10:57:30.438408+00:00",
+    "end": "2026-10-10T10:57:30.447671+00:00",
+    "exit": 0,
+    "log": "ruff.txt",
+    "environment": "locked .venv, Qt offscreen/software"
+  },
+  {
+    "command": [
+      ".venv/bin/ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "start": "2026-10-10T10:57:30.447773+00:00",
+    "end": "2026-10-10T10:57:30.455543+00:00",
+    "exit": 0,
+    "log": "format.txt",
+    "environment": "locked .venv, Qt offscreen/software"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/measure_data_inspection.py",
+      "--output",
+      "docs/evidence/ui-profile-type-columns/screens"
+    ],
+    "start": "2026-10-10T10:57:30.455704+00:00",
+    "end": "2026-10-10T10:57:38.330116+00:00",
+    "exit": 0,
+    "log": "screens.txt",
+    "environment": "locked .venv, Qt offscreen/software"
+  }
+]

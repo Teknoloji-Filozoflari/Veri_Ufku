@@ -35,3 +35,10 @@ Beş resmî görsel indirildi, view_image ile görüldü; URL/hash/boyut [kayıt
 | [LabPlot temel grafikler](https://labplot.org/images/gallerie-section/01_basic_plots_linux.png) | Sol proje ağacı, merkez çoklu grafik worksheet, sağ Fit özellik/sonuç paneli | Proje bağlamı ve ayrı kapanabilir bilgi paneli. Grafik/fit/DAG bu fazda geliştirilmedi. |
 
 Referanslardan yalnız kullanım ilkeleri seçildi; tokenlar Veri_Ufku’nun kendi sisteminden gelir. Orijinal resimler /tmp içinde incelendi; ürün varlıklarına veya repo görsellerine kopyalanmadı. KNIME AVIF yerel Pillow ile PNG’ye çevrilerek görüldü. [Kanıt](evidence/PHASE02.md#e02-references).
+
+2026-10-09 Faz19: [Orange DBSCAN](https://orangedatamining.com/widget-catalog/unsupervised/DBSCAN/)
+resmî kullanım sayfası gerçekten incelendi: normalization, komşuluk yarıçapı,
+çekirdek komşu açıklamaları ve cluster-label metadata çıktısı. Veri_Ufku bu
+ilkeleri ortak mevcut Model formu/UiCombo/UiCheckBox/StateNotice ve açık
+kaynak/aday sınırıyla uygular; otomatik commit veya referans görünümü kopyalanmadı.
+[ADR-022](adr/022-unsupervised-phase19.md), [gerçek render](evidence/PHASE19.md).

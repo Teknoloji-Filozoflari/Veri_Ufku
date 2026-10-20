@@ -24,6 +24,8 @@ Tarih: 2026-10-06. Ortam: ENV-00 (CachyOS, Python3.14.7, Qt6.11.2; ayrıntı ENV
 
 **F00-003:** PRODUCT US-01/02/03 adım-girdi-çıktı/başarı senaryoları incelendi; 580 toplam/58 ortalama/45 medyan elle kontrolü. Bunlar gelecek kabul örnekleri. Sonuç: Faz00 belge kapsamı doğrulandı.
 
+**Düzeltme — 2026-10-07 UTC /2026-10-08 Europe/Istanbul:** Yukarıdaki580/58 ve “elle kontrolü” iddiası hatalıydı. Liste10,20,20,30,40,50,60,70,80,100 toplam480/ortalama48/medyan45 verir. Ürün belgesi düzeltildi; gerçek paket fixture'ı ve GUI import/profil/grafik/export kontrolü [yeni kanıtta](AUDIT_00_13.md#e-audit-reference). İlk metin tarihsel hata olarak korunur, güncel F00-003 kanıt bağı yeni kaydı gösterir. Gerçek kullanıcı görevi ayrıca açık kalır.
+
 <a id="e00-004"></a>
 
 **F00-004:** UX SCR-01..08 ve navigation/state/geri dönüş çizelgesi; sekiz ekran listesi, başlangıç/uzman aynı state tasarımı. Sonuç: Faz00 belge kapsamı doğrulandı.

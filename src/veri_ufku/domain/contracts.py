@@ -1,6 +1,7 @@
 """Shared v1 job, capability, provenance and compute contracts; no Qt imports."""
 
 import math
+import os
 from dataclasses import dataclass, field
 from enum import StrEnum
 from uuid import uuid4
@@ -36,6 +37,11 @@ class ComputeBudget:
     sample_limit_rows: int = 10_000
     cancel_grace_ms: int = 2000
     reserve_disk_bytes: int = 1024**3
+    threads_per_process: int = 1
+    max_processes: int = 1
+    max_tasks: int = 32
+    device_memory_bytes: int = 1024**3
+    transfer_bytes: int = 128 * 1024**2
 
     def __post_init__(self):
         for name in self.__dataclass_fields__:
@@ -47,8 +53,16 @@ class ComputeBudget:
                 raise ValueError(f"Invalid budget field: {name}")
             if name != "max_wall_seconds" and not isinstance(value, int):
                 raise ValueError(f"Integer budget required: {name}")
-        if self.device != "cpu":
-            raise ValueError("Only CPU is supported")
+        if self.device not in {"cpu", "cuda:0"}:
+            raise ValueError("Unsupported device; method admission is also required")
+        # A settings file cannot request more native threads than visible CPUs.
+        # Store the effective budget so later estimator/threadpool calls agree.
+        available = len(os.sched_getaffinity(0))
+        object.__setattr__(self, "cpu_threads", min(self.cpu_threads, available))
+
+    @property
+    def worker_threads(self):
+        return min(self.cpu_threads, self.threads_per_process)
 
 
 @dataclass(frozen=True)
@@ -64,6 +78,61 @@ class Binding:
             or self.config_revision < 0
         ):
             raise ValueError("Invalid binding")
+
+
+@dataclass(frozen=True)
+class InputRole:
+    name: str
+    dtypes: tuple[str, ...]
+    required: bool = True
+    meaning: str = ""
+
+
+@dataclass(frozen=True)
+class InputSchema:
+    schema_id: str
+    roles: tuple[InputRole, ...] = ()
+    storage: str = "unknown"
+
+
+@dataclass(frozen=True)
+class Parameter:
+    name: str
+    value_type: str
+    default: object = None
+    choices: tuple = ()
+    minimum: float | None = None
+    maximum: float | None = None
+
+
+@dataclass(frozen=True)
+class MethodSupport:
+    name: str
+    status: str = "unknown"
+    condition: str = "Henüz yöntem düzeyinde doğrulanmadı."
+
+    def __post_init__(self):
+        if self.status not in {"supported", "conditional", "unsupported", "unknown"}:
+            raise ValueError("Invalid support status")
+
+
+@dataclass(frozen=True)
+class LearningLink:
+    article_id: str
+    purpose: str = "method"
+
+
+@dataclass(frozen=True)
+class ResultArtifact:
+    artifact_id: str
+    kind: str
+    title: str
+    content: str = ""
+    uri: str | None = None
+
+    def __post_init__(self):
+        if self.kind not in {"text", "table", "chart", "model", "log"}:
+            raise ValueError("Invalid result artifact kind")
 
 
 @dataclass(frozen=True)
@@ -101,6 +170,18 @@ class Capability:
     requirement_ids: tuple[str, ...] = ("F01-S003", "F01-S006")
     help_links: tuple[str, ...] = ()
     evidence_refs: tuple[str, ...] = ()
+    contract_version: int = 2
+    inputs: InputSchema | None = None
+    parameters: tuple[Parameter, ...] = ()
+    assumptions: tuple[str, ...] = ()
+    support_details: tuple[MethodSupport, ...] = ()
+    operations: tuple[MethodSupport, ...] = ()
+    artifact_kinds: tuple[str, ...] = ()
+    learning: tuple[LearningLink, ...] = ()
+    dependencies: tuple[str, ...] = ()
+    execution_memory: str = "in-memory; out-of-core/lazy/chunk fit not validated"
+    device_support: tuple[str, ...] = ("cpu",)
+    cost: str = "Mevcut ComputeBudget ve capability limits geçerlidir; kesin RAM tahmini değildir."
 
 
 @dataclass(frozen=True)

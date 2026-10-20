@@ -1,0 +1,94 @@
+{
+  "id": "E55-GATES",
+  "date": "2026-10-14T17:34:43.976920+00:00",
+  "environment": "ENV-55",
+  "status": "passed",
+  "records": [
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_docs.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 76 phases, source requirements, evidence, progress and local links\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_artifacts.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_learning.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 371 offline articles; 169 UI bindings; all capability links\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_usability.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 371 articles; 796 named fields; 189 finished core English messages\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "stdout": "386 files already formatted\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_document_contracts.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..............\n----------------------------------------------------------------------\nRan 14 tests in 13.352s\n\nOK\n"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_docs.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 76 phases, source requirements, evidence, progress and local links\n",
+      "stderr": "",
+      "note": "Final evidence-link and targeted-token-assertion record update"
+    }
+  ]
+}

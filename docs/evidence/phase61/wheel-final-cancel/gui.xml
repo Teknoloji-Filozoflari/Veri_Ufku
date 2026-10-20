@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="106.468" timestamp="2026-10-15T20:32:22.473089+03:00" hostname="s-oktay"><testcase classname="tests.test_graphs_gui" name="test_real_graph_cancel_and_view_failure" time="106.439"><failure message="AssertionError: Import GUI condition timed out">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-57/test_real_graph_cancel_and_vie0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f984d137360&gt;
+
+    def test_real_graph_cancel_and_view_failure(tmp_path, monkeypatch):
+        app, window, projects, controller, _ = imported(tmp_path, monkeypatch)
+        try:
+            window.findChild(QObject, "graphRun").clicked.emit()
+&gt;           spin(
+                app,
+                lambda: (
+                    controller.stage == "checkpoint"
+                    and controller._incoming["status"] == "running"
+                ),
+                timeout=90000,
+            )
+
+tests/test_graphs_gui.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+app = &lt;PySide6.QtGui.QGuiApplication(0x3f1d0840) at 0x7f9830423d00&gt;
+predicate = &lt;function test_real_graph_cancel_and_view_failure.&lt;locals&gt;.&lt;lambda&gt; at 0x7f984d4105e0&gt;
+timeout = 90000
+
+    def spin(app, predicate, timeout=20000):
+        deadline = time.monotonic() + timeout / 1000
+        while time.monotonic() &lt; deadline:
+            app.processEvents()
+            if predicate():
+                return
+            QTest.qWait(10)
+&gt;       raise AssertionError("Import GUI condition timed out")
+E       AssertionError: Import GUI condition timed out
+
+tests/test_import_gui.py:35: AssertionError</failure></testcase></testsuite></testsuites>

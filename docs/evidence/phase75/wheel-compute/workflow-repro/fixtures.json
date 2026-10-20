@@ -1,0 +1,1939 @@
+{
+  "exitstatus": 0,
+  "cases": [
+    {
+      "nodeid": "tests/test_workflow.py::test_ports_cycles_dry_run",
+      "outcome": "passed",
+      "seconds": 0.046303868999530096,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert value[\"status\"] == \"dry_run\"",
+        "assert all(n[\"status\"] == \"planned\" for n in value[\"nodes\"])",
+        "assert not (tmp_path / \"cache\").exists()"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "503d35b3ca594b1d9a3531fa5685796d11bbcafe811ad655df41516a8c93c84b"
+        },
+        {
+          "path": "project/commits/6234ea5c-8ea5-461a-8932-ce86d69564cc/manifest.json",
+          "bytes": 467,
+          "sha256": "5388701e951344ba8440a37ae2920993d458c5ea7cb0e1ab143157acf66964ea"
+        },
+        {
+          "path": "project/commits/6bbbab25-08e1-4091-8c5d-906e8fc98244/manifest.json",
+          "bytes": 6361,
+          "sha256": "617794ba83d89a69f82c2129361efd502e8b6c40886539b29c69406d37d629c6"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "c2192e8d20b5306ae649b22efbcbc9d75708b15825ad7d60e5a9026d581e5b27"
+        },
+        {
+          "path": "project/snapshots/9558a876-45db-4661-9267-d7622a7ca041.parquet",
+          "bytes": 4350,
+          "sha256": "2497ad741a62a9b815c6ac23f1acbf6b5fe03167b24efb2536305274f9d645a9"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 840,
+          "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4"
+        },
+        {
+          "path": "work/92f2a3de-7777-453b-9cb5-52ab2641fafa.source",
+          "bytes": 840,
+          "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4"
+        },
+        {
+          "path": "work/e0b5b843-ffad-43d2-bc27-8b4b0972648f.dataset.parquet",
+          "bytes": 4350,
+          "sha256": "2497ad741a62a9b815c6ac23f1acbf6b5fe03167b24efb2536305274f9d645a9"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_compute_cache_and_branch_failure",
+      "outcome": "passed",
+      "seconds": 0.09323770599985437,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert first[\"status\"] == \"partial\"",
+        "assert entries[\"quality\"][\"status\"] == \"failed\"",
+        "assert entries[\"blocked\"][\"status\"] == \"blocked\"",
+        "assert float(entries[\"summary\"][\"value\"][\"report\"][\"numeric\"][\"mean\"]) == 2.5",
+        "assert (\n            next(n for n in second[\"nodes\"] if n[\"node\"] == \"summary\")[\"status\"]\n            == \"cached\"\n        )",
+        "assert (\n            next(n for n in third[\"nodes\"] if n[\"node\"] == \"summary\")[\"status\"]\n            == \"completed\"\n        )",
+        "assert (\n            next(n for n in third[\"nodes\"] if n[\"node\"] == \"source\")[\"status\"]\n            == \"cached\"\n        )",
+        "assert loaded[\"status\"] == \"partial\"",
+        "assert state[\"datasets\"] == store.state[\"datasets\"]"
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/01df8ef4bd9b33389505d0f18a9a8744ca0329c20348f885d8a5fc14b07214d4/entry.json",
+          "bytes": 1489,
+          "sha256": "64e491da989aaa8455e00e192f914155d33e539184d580cbb52492e7f4509dd0"
+        },
+        {
+          "path": "cache/workflow-v1/0aac1ef63ea41746c87e26e5c7c25b19061ab1d8c3e526c8250a5494267c9880/entry.json",
+          "bytes": 1189,
+          "sha256": "ad4ce651b4fa07b8e8a45eb31d42339d8d896e0b0b8c2f963dacdeef464b7f8f"
+        },
+        {
+          "path": "cache/workflow-v1/6cd19e1247ff169407d7bbfd63a5b35708fc0b8a3c46d90fc059ddf07ad297b0/entry.json",
+          "bytes": 1189,
+          "sha256": "0864b5c8e6dc86013a3df8051354895e53e871f9829deb419d2a3592de68ba94"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "a2d0cbff42eca1202701cb61970befe4c8a258a692ed9f14c6061ff08a389658"
+        },
+        {
+          "path": "project/commits/229fc93b-4820-4e35-b9a0-bc41596b42e9/manifest.json",
+          "bytes": 6366,
+          "sha256": "a57c75a6cded1143c5856ea42de856956e538783a81a9658b0123ffd6e53213b"
+        },
+        {
+          "path": "project/commits/771747c2-c5ff-43d4-8844-22b6127d8b9c/manifest.json",
+          "bytes": 27441,
+          "sha256": "976ea5f552d667607e7d033685c40de90e52713a194ff14f14b159c5001c1aa3"
+        },
+        {
+          "path": "project/commits/b62a21a4-7b78-46c0-aed8-09d20a2f9aaa/manifest.json",
+          "bytes": 467,
+          "sha256": "9ab4df7be3d7308775aabe56860a8c6aaa81d7b5eb5f1b11bc1515d7dc873390"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 49152,
+          "sha256": "cc3d77534336bcb8c00dfb4e6ed94ec0b6017d939ee60736aff01c89816a3bb1"
+        },
+        {
+          "path": "project/snapshots/b3642602-17b2-488d-a6f8-7d4a19b99a32.parquet",
+          "bytes": 4348,
+          "sha256": "789c9b2d39ec513aa9e6bce045126c601efa4f849b88c1c7c511b5ebb32e63e1"
+        },
+        {
+          "path": "project/sources/b87da539-9556-4629-9cf6-a663562500e3.bin",
+          "bytes": 24603,
+          "sha256": "f44c88c04cbcec3a1e07277ec5bf8853a2a4d869af755c4677e409f9a8e16778"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 838,
+          "sha256": "3b307d3def0de97a5c37c845add8a7a67805e181d63ce49c889b06e9f9b2d705"
+        },
+        {
+          "path": "work/17db511a-511c-4b1c-a498-05f06a00bb13.source",
+          "bytes": 838,
+          "sha256": "3b307d3def0de97a5c37c845add8a7a67805e181d63ce49c889b06e9f9b2d705"
+        },
+        {
+          "path": "work/e34a91d1-eaeb-4636-b60d-70fb40fa6406.dataset.parquet",
+          "bytes": 4348,
+          "sha256": "789c9b2d39ec513aa9e6bce045126c601efa4f849b88c1c7c511b5ebb32e63e1"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_full_native_train_predict_export_and_idempotency",
+      "outcome": "passed",
+      "seconds": 1.270700148999822,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert first[\"status\"] == \"completed\", first[\"nodes\"]",
+        "assert full[\"export_receipts\"][0][\"status\"] == \"exported\"",
+        "assert exported.height == 6 and exported[\n            \"prediction\"\n        ].to_list() == pytest.approx([2.0, 4.0, 6.0, 8.0, 10.0, 12.0], abs=0.1)",
+        "assert (\n            load(store, state[\"results\"][-1])[\"export_receipts\"][0][\"status\"]\n            == \"already_published\"\n        )",
+        "assert load(store, state[\"results\"][-1])[\"status\"] == \"partial\"",
+        "assert file.read_bytes() == b\"owned by user now\""
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/033017729bc9e8b3c18a6a4f595aa63bf1c6d51c34b9d8b543299e3a04caf85b/entry.json",
+          "bytes": 1489,
+          "sha256": "d3299a6ca18f8db44c374dae15ebdaea54447372f234d5045c6608ae689d44ca"
+        },
+        {
+          "path": "cache/workflow-v1/04fa47571959debc0a5c76d51ae48f76337135a0f3c8de89ea78cb7dba4c51bf/0.parquet",
+          "bytes": 1230,
+          "sha256": "a8cf58a5ac2fcfb38982fc66ab177eb33f04bbb0b317b2a3121442d65bb3e895"
+        },
+        {
+          "path": "cache/workflow-v1/04fa47571959debc0a5c76d51ae48f76337135a0f3c8de89ea78cb7dba4c51bf/entry.json",
+          "bytes": 774,
+          "sha256": "aa068608d95f9a5281d9c50d909a8ac67f8a22872108abe62c84cb7c3ec408b3"
+        },
+        {
+          "path": "cache/workflow-v1/255b4e6eabb8dba542c8dc78479fc7a25fc00351aea5d1f2c29acbb92f7f2258/entry.json",
+          "bytes": 5187,
+          "sha256": "81e0e098e3881dcb098c218f644544914a03ce966495bb06d9be5d142a1e9223"
+        },
+        {
+          "path": "cache/workflow-v1/3b1408edf87c744d7211bf3a1eb1472f3bbc65a937d7fbe5ef7459cc4e2e1b58/entry.json",
+          "bytes": 1189,
+          "sha256": "b0797686331e72ee7cb9646f5a6f2fe13a6b7b909a979e13091afa1d0e577c14"
+        },
+        {
+          "path": "cache/workflow-v1/721b7202024d90236039d31c92daa0cbf43dfa6ef372c5acd139e5c157be5a08/0.parquet",
+          "bytes": 4841,
+          "sha256": "4074b40ef74671bc6da28c9b06c56621809f92999835da02b7e517a87f80e62d"
+        },
+        {
+          "path": "cache/workflow-v1/721b7202024d90236039d31c92daa0cbf43dfa6ef372c5acd139e5c157be5a08/entry.json",
+          "bytes": 1896,
+          "sha256": "ac67217e3625fdc694bd67a2217cc9626beef527212feb2d0e85eb8ca3769a80"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "cache/workflow-v1/ae884a970f1fa0fff30c82519df36c109e59026745bdbfa66bd0c5ed085fc607/entry.json",
+          "bytes": 1542,
+          "sha256": "2c6d374244675a2a8e6dc0180747e4463743837571c0f009126757152d6af099"
+        },
+        {
+          "path": "out/54bdf071-43f8-4d19-b841-dc40a9a3aaae-default-export.parquet",
+          "bytes": 17,
+          "sha256": "0bc2c2049228140361d87705fbf56264af8bd5a8eb1d31472ce9b7b455b79176"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "fb1113f0bd03d67550443322903eb0914d27d5f3d789b39f48ca6d516b955df6"
+        },
+        {
+          "path": "project/commits/1137a1d0-3bb5-419f-8c1e-d412f4494a27/manifest.json",
+          "bytes": 467,
+          "sha256": "1d6aa2fe8c498e25254c903b58ce47934f0bcdc5bac12e4f5512554dfa1adf9c"
+        },
+        {
+          "path": "project/commits/b81866a2-91fc-4c34-ba89-9c8b86c433fd/manifest.json",
+          "bytes": 55778,
+          "sha256": "87242b800738eb0b5b01d577a531689519b0b3eb0056b45886e353a0ae21825a"
+        },
+        {
+          "path": "project/commits/b9914a14-42bd-4bfe-ae7a-b8f4e7ca1441/manifest.json",
+          "bytes": 31068,
+          "sha256": "2a9f67ffddcd1476fad209fd5710f9335d8a329c70ea4225c94963bb40d29f72"
+        },
+        {
+          "path": "project/commits/c6f53b2a-0b69-4896-84b8-dfa68355509e/manifest.json",
+          "bytes": 80022,
+          "sha256": "bc449b56137b903ccea1b6aa6aea71abfee47c370be99405ae04193913995bf0"
+        },
+        {
+          "path": "project/commits/e133a0f7-8648-4065-9ccc-d9f14b64c6f0/manifest.json",
+          "bytes": 6366,
+          "sha256": "5fd59d6092d2e38238e0f1e46c6135ea8def1357e0d677e6c07d82890cd30a12"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 192512,
+          "sha256": "5a561f879a69c4701cd2083c874cc60432d12f6e719cd304689e089c5e1d702c"
+        },
+        {
+          "path": "project/snapshots/3a24bb84-437b-4a86-8c5a-64846b97b106.parquet",
+          "bytes": 4473,
+          "sha256": "cb1c743e21c8dbf70f32365a0b3d453693b1f04f160bbe8ca034db76df52cf10"
+        },
+        {
+          "path": "project/sources/1109544b-e4ff-4e5b-89cd-ed291a4dfe3c.bin",
+          "bytes": 39036,
+          "sha256": "454f2b9567574d4b334b3cc4333d8e2dd3d7e698ea6ee19f6aad713c05928360"
+        },
+        {
+          "path": "project/sources/29b84c21-7a40-4cbd-89f7-3ff4cc9e31ae.parquet",
+          "bytes": 4841,
+          "sha256": "4074b40ef74671bc6da28c9b06c56621809f92999835da02b7e517a87f80e62d"
+        },
+        {
+          "path": "project/sources/4cb69bda-0da4-44c5-a300-03c65625402b.parquet",
+          "bytes": 1230,
+          "sha256": "a8cf58a5ac2fcfb38982fc66ab177eb33f04bbb0b317b2a3121442d65bb3e895"
+        },
+        {
+          "path": "project/sources/9f135e79-f200-43fb-86a8-43f1f150e03b.parquet",
+          "bytes": 1230,
+          "sha256": "a8cf58a5ac2fcfb38982fc66ab177eb33f04bbb0b317b2a3121442d65bb3e895"
+        },
+        {
+          "path": "project/sources/be39dc35-37e8-45f8-83f7-b67443234afd.bin",
+          "bytes": 39824,
+          "sha256": "b5489e33df2055388629ccc86314f876c73467a83fed66be292b345d43006af2"
+        },
+        {
+          "path": "project/sources/c8f19120-0d72-4705-92c5-8f966a79a202.parquet",
+          "bytes": 1230,
+          "sha256": "a8cf58a5ac2fcfb38982fc66ab177eb33f04bbb0b317b2a3121442d65bb3e895"
+        },
+        {
+          "path": "project/sources/ca0a5431-3509-49d6-9ac8-182e953a9086.parquet",
+          "bytes": 4841,
+          "sha256": "4074b40ef74671bc6da28c9b06c56621809f92999835da02b7e517a87f80e62d"
+        },
+        {
+          "path": "project/sources/e229cd9b-373e-42c4-b051-718b4572155a.bin",
+          "bytes": 39938,
+          "sha256": "14a5f15642fed4520ef3307c30ba849ac76b643d062765a602678eed9ebc43fe"
+        },
+        {
+          "path": "project/sources/e43afa44-1042-46c4-91ca-dae5e677d67a.parquet",
+          "bytes": 4841,
+          "sha256": "4074b40ef74671bc6da28c9b06c56621809f92999835da02b7e517a87f80e62d"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 862,
+          "sha256": "eb50887d348d581ee1f31b9dac2c950604aba376fa73058874a1d9e9c2ec1ae1"
+        },
+        {
+          "path": "work/974fe000-0836-4de0-a87c-7e93c1d60fca.dataset.parquet",
+          "bytes": 4473,
+          "sha256": "cb1c743e21c8dbf70f32365a0b3d453693b1f04f160bbe8ca034db76df52cf10"
+        },
+        {
+          "path": "work/c20f9fb6-4a46-499d-8d57-efc8949568b0.source",
+          "bytes": 862,
+          "sha256": "eb50887d348d581ee1f31b9dac2c950604aba376fa73058874a1d9e9c2ec1ae1"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_headless_shared_worker",
+      "outcome": "passed",
+      "seconds": 1.9232266359995265,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert full[\"status\"] == \"completed\"",
+        "assert (\n            float(\n                next(n for n in full[\"nodes\"] if n[\"node\"] == \"summary\")[\"value\"][\n                    \"report\"\n                ][\"numeric\"][\"mean\"]\n            )\n            == 2.5\n        )"
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/41db85ca0f8531945272d80d381d4aa50fb25ab87de41375eac64ee4df26b00c/entry.json",
+          "bytes": 1542,
+          "sha256": "4ff5643ec9252410875959d3b27eb76081125315e09d6def221fb6fe2dfc020f"
+        },
+        {
+          "path": "cache/workflow-v1/7e8eed15b5dfafe6c1ea089a758a54c2a1e6e96915c4ba5fe45b571ade5e1d00/entry.json",
+          "bytes": 1489,
+          "sha256": "228b928ac761d63741c994cea200dfad0e00a7f261955f201f11bf37716b8593"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "cache/workflow-v1/c1d787509530aac6f5be8c1f6313e72a9131c1ae5cc8ed8c9b59a372bbeaab70/entry.json",
+          "bytes": 1189,
+          "sha256": "12cb3e4dfdfa66bf5b5a848d8f98a3c9ec21485ecac9822d817cb209a4550469"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "cbd1671854836c91e634fb21455acc07eca562987d5d200fef5fe9dd8cef0848"
+        },
+        {
+          "path": "project/commits/299286d5-3ad7-49d2-ac77-2d3e0ef46338/manifest.json",
+          "bytes": 467,
+          "sha256": "0e8566102950afeda0930d1eb0db530c0f51078d3a03b9ec96f7713ff45a8ac9"
+        },
+        {
+          "path": "project/commits/43153de5-1aae-400c-883f-d10e64536a7f/manifest.json",
+          "bytes": 26706,
+          "sha256": "5b079e8f33013e897da4180ab69c93958b78216eeb0cc8c74264ec56617e24e4"
+        },
+        {
+          "path": "project/commits/466f97b2-583c-4ca9-b804-20ba48db4267/manifest.json",
+          "bytes": 6363,
+          "sha256": "8c4987689bb8537c467ac0fe33690151792c6943540a567aec1fc76cb4cf76b0"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 49152,
+          "sha256": "1937faab4dab4fdb8b0274de5cdc62f6fdc583c452516967dcfc21470679af8f"
+        },
+        {
+          "path": "project/snapshots/38fbdc4b-7537-4f89-b773-66de3488c618.parquet",
+          "bytes": 4348,
+          "sha256": "daa17b140a6a47d9ebb70d931fe33301f349cc5ab7709d46ce255aacbf4d24e5"
+        },
+        {
+          "path": "project/sources/7453322c-bfe2-4d19-a90f-b0a1c903e96f.bin",
+          "bytes": 25976,
+          "sha256": "5a4e2a05db27fe669bcec7221d8969cc4f58ced2f1c363a2593a14f40f2ce010"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 840,
+          "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4"
+        },
+        {
+          "path": "work/2bc16cfb-7b1d-4eba-9b2c-e0b949efb8c1.source",
+          "bytes": 840,
+          "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4"
+        },
+        {
+          "path": "work/d86433a7-c592-40d6-a8ed-59d1cd7d1c54.dataset.parquet",
+          "bytes": 4348,
+          "sha256": "daa17b140a6a47d9ebb70d931fe33301f349cc5ab7709d46ce255aacbf4d24e5"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_source_mutation_rejects_cached_descendants",
+      "outcome": "passed",
+      "seconds": 0.04550432700125384,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert result[\"status\"] == \"partial\"",
+        "assert result[\"nodes\"][0][\"status\"] == \"failed\"",
+        "assert all(n[\"status\"] == \"blocked\" for n in result[\"nodes\"][1:])",
+        "assert all(n.get(\"value\") is None for n in result[\"nodes\"])"
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/1d356c5c1dc9f5fa32f8a7940ab05b97164a12cab3d00c289c80ec8a7846bf1c/entry.json",
+          "bytes": 1111,
+          "sha256": "3c73aa1b66476922db7e6544ef609a980b48732b8bc18d0b8d74b67a61347ef9"
+        },
+        {
+          "path": "cache/workflow-v1/5559b812f999924795c9bd92b60a6e440b7282823a3ade49c9943ee1cfa3a830/entry.json",
+          "bytes": 1542,
+          "sha256": "6d13fd9aa3d5389beea81db02fcdc67c78d66eecf802aeb0065d65e588a29032"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "cache/workflow-v1/c0496247c533df7a4e55204ceed8236f5e8736c8f47be8990e19b3dc853dc0b8/entry.json",
+          "bytes": 1489,
+          "sha256": "63cdbcc57a5b4f7eb60c99779725cf83e7d804bc8d133f066d0f5d88c9607095"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "b20acc410ce66478e64e6ebe6634856889b4908031bbf6f195b45071f00577f4"
+        },
+        {
+          "path": "project/commits/0d31bfb4-012f-48b7-9485-82361669275e/manifest.json",
+          "bytes": 467,
+          "sha256": "ca0a711c96286e66600f97d0625e867113e2a4db9ebdd26fa4e63dabfd500106"
+        },
+        {
+          "path": "project/commits/e0c3205c-7f51-4400-bbbc-599c42130cb8/manifest.json",
+          "bytes": 6366,
+          "sha256": "d79e35f4ec977763d0077c735acbbf33b6ff2bdd3cc380c7cfa9e38587ad647b"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "f9b1fb7a929cc5348a6e9a043b33248bd3ba000501fea689f590d8a7131bf525"
+        },
+        {
+          "path": "project/snapshots/c8649960-aff7-4f75-af98-5aa464cd3ada.parquet",
+          "bytes": 4299,
+          "sha256": "95e1f920a48c6ce25f5b6a19e6046e99ba9237d9768709b87bcf4767c03bcd5e"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/499a6755-7392-4787-b6da-1b41c2ada3c2.source",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/5824ef06-5df0-46f9-b7a4-0b058e20a04b.dataset.parquet",
+          "bytes": 4299,
+          "sha256": "95e1f920a48c6ce25f5b6a19e6046e99ba9237d9768709b87bcf4767c03bcd5e"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_corrupt_cache_recomputed_and_owned_temp_cleanup",
+      "outcome": "passed",
+      "seconds": 0.04845610600023065,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert current[\"status\"] == \"completed\" and current[\"cache_invalidated\"]",
+        "assert not orphan.exists()"
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/33541db135c0b666df0f16cdc4659cb666705be8c97e998723156392cd4fd91a/entry.json",
+          "bytes": 1489,
+          "sha256": "02ef345e41c7b216f1588f965ade460371cfbbee22585744b7e76c9955308bb3"
+        },
+        {
+          "path": "cache/workflow-v1/9cc5138a74418394b68fbdb21cdd5aee516da95965fb997924472f97af800511/entry.json",
+          "bytes": 1542,
+          "sha256": "150b5264bbad827cfba7aa92f1bae5e25e491790c9cb02e63cb0e7c17b041f05"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "cache/workflow-v1/d7b4dcd92963af06619916f76dab6e36925fbfa042ae758b24a27463004c68c1/entry.json",
+          "bytes": 1111,
+          "sha256": "436065a40e838ba8436fe7bad540a00bbc9b3d6cc5fd0dded884ef8e69f2d09c"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "9f27af3e5ba8b8b2b1398df4e208065e122b3f2b1bc75a8ec8a1f744fc7ae8bb"
+        },
+        {
+          "path": "project/commits/24823312-d812-49ad-b6d7-6ee58017a656/manifest.json",
+          "bytes": 6366,
+          "sha256": "d8eb590c63009e63d75b8307ef4d79b29bf95e0ec6023e3185cab2d316050c71"
+        },
+        {
+          "path": "project/commits/37df9ee6-fed5-464d-9308-df56a6dc163f/manifest.json",
+          "bytes": 467,
+          "sha256": "183b2c3d6d6e88b65f4a1f95acbcff6f879312adfc5b07c25811a7dde92f9fe9"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "df7f7cc84517a7cbc5e93628278e7c8574aca74fdf546d15d2b8dd56c55abef5"
+        },
+        {
+          "path": "project/snapshots/34a24e02-a6d9-491b-aa24-f96840facc59.parquet",
+          "bytes": 4302,
+          "sha256": "78ae5143b37abb1c140eb4b6e3c74e99ac6e04830e83bf89f86b050d817b06f3"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/634e1d8a-1f1d-4684-9441-3074d2cbc20f.dataset.parquet",
+          "bytes": 4302,
+          "sha256": "78ae5143b37abb1c140eb4b6e3c74e99ac6e04830e83bf89f86b050d817b06f3"
+        },
+        {
+          "path": "work/de9f38bb-9dad-4329-b233-d1be93e0f179.source",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_batch_dataset_mapping_sweep_and_native_ids",
+      "outcome": "passed",
+      "seconds": 0.07245867699930386,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert value[\"status\"] == \"completed\"",
+        "assert means == {\"one-s0\": 2.0, \"one-s1\": 2.0, \"two-s0\": 20.0, \"two-s1\": 20.0}",
+        "assert set(state[\"results\"][-1][\"dataset_version_ids\"]) == {\n            r[\"version_id\"],\n            d[\"version_id\"],\n        }",
+        "assert load(store, state[\"results\"][-1])[\"status\"] == \"completed\""
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/0ec800cb53c4b7f92a4d730b7dbe2b01ce9a3474736ee56610cd3485f9730215/entry.json",
+          "bytes": 1111,
+          "sha256": "8e883f3e9778b61dc56a4c6c4f8ae41eb7d69967b7799a90d9f93c4095f7ec3c"
+        },
+        {
+          "path": "cache/workflow-v1/16dc45a2639d05dbbe7b2bba1328c913d58841752a81abbd2395d0dcc0ea8112/entry.json",
+          "bytes": 1542,
+          "sha256": "0d0313100064309b335fc611509b759437499fb0b8b8665c7b9b636756466262"
+        },
+        {
+          "path": "cache/workflow-v1/4865130bca2e411e0c3934dd15c98f9a372e2f058becb468600b360bdb528abd/entry.json",
+          "bytes": 1117,
+          "sha256": "1f228a1a85edea875c4cd398917cf3a344e33e64824fa2446f4747dd40243f65"
+        },
+        {
+          "path": "cache/workflow-v1/540d1ee59c3219b0b7b770bafff1c92da3fdde6ccc0a147f929ffe966adc2ad9/entry.json",
+          "bytes": 1542,
+          "sha256": "b50ac5517f307abc91d7bab9c375a9e35a912563f292bad0f2fcd57978c174ca"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "cache/workflow-v1/c3b92672770e680ad38dcbf3324c611c0e829807c5ebb6dba48bcb0233958ee1/entry.json",
+          "bytes": 1489,
+          "sha256": "befa23ef5886649b14ec602d67dd404767f462557b1626bcf5caa6a4a5c2583a"
+        },
+        {
+          "path": "cache/workflow-v1/dcd170b2c66962c2f9e0b334e777aced47e230b763203a82e5edee665e55cc77/entry.json",
+          "bytes": 1196,
+          "sha256": "9355e729d4a49c18c55c9d92f78165d3ec25fc77907a973d23f108c681220845"
+        },
+        {
+          "path": "cache/workflow-v1/ebbc6b334e700257d4de8cb56e5ab77c9f143a3594cddbee3eea3080bc01fcfc/entry.json",
+          "bytes": 1190,
+          "sha256": "40337dba52af2ae8a5b67f6b709e233cee878805f19a3570adf174841d53bb89"
+        },
+        {
+          "path": "cache/workflow-v1/ed2b62a0b1f109e250b1bfaf548f1d8ccb2548f27f87f968263aa4450f3a2ba2/entry.json",
+          "bytes": 1489,
+          "sha256": "6356e856820f0faea3b3b2164dc6db9fa6a3ac716a80881e23f005bebc013104"
+        },
+        {
+          "path": "other.parquet",
+          "bytes": 836,
+          "sha256": "5c7c4a46632f0f218bddc03d504d0ce3f05574eb6f9b0a15952571578ba6bb1a"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "eaffbc013e79e25ec3bb243f27e2b8b8575a7a77557cdbca694f418639506884"
+        },
+        {
+          "path": "project/commits/3044101a-5e71-4ea2-836e-0bb793f9ce24/manifest.json",
+          "bytes": 467,
+          "sha256": "0119c57e895693c0f32505ba988416fbc3ff1b3b4c3dbdd6d2321ebf78ca8fdf"
+        },
+        {
+          "path": "project/commits/70cc2a71-a32d-439c-beb0-07c60d3d1d34/manifest.json",
+          "bytes": 6366,
+          "sha256": "f4f32bb0ede475d0adfea0c127f5e1a4a397cdaa318003216bb683ddb57105be"
+        },
+        {
+          "path": "project/commits/762ce723-003c-4b44-a68f-d89bfc58c985/manifest.json",
+          "bytes": 41085,
+          "sha256": "988f6833251287fe47254eaaa2eeacba96f0eb6cea198a65a55e461560695ec1"
+        },
+        {
+          "path": "project/commits/e396ee00-de70-403a-8341-d6b1c88ebfb5/manifest.json",
+          "bytes": 12240,
+          "sha256": "b52ab98f8e30c138c1bba5e84e7dcdb89fc43dd15712f65f55371076eca16b40"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 69632,
+          "sha256": "71149a9c639e5ed0b2e270fff75a692fef8dce38867d2fde379300e87e55d07a"
+        },
+        {
+          "path": "project/snapshots/d7ff3e0e-6c9d-4cd8-9c48-a6d14ecffa0f.parquet",
+          "bytes": 4300,
+          "sha256": "1c4f9478fc5c44684eeb38ada897462043469292bab58e138382eb05eb964211"
+        },
+        {
+          "path": "project/snapshots/f7083334-d52e-471d-bc4d-a28bb2210731.parquet",
+          "bytes": 4297,
+          "sha256": "416944100c8367cb9dfb9347c95d137cc2ecfd0137a993236ca8f1fae76aa8e3"
+        },
+        {
+          "path": "project/sources/a05b8c88-d5d7-49bd-b2cb-9801de5124bd.bin",
+          "bytes": 53073,
+          "sha256": "718d522da78be4c96cb91b7cf9f447cadd31cb62236568e6d7e3169ff101fa31"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/1ceb58a3-0a5c-4e71-a766-daa0d491aae6.source",
+          "bytes": 836,
+          "sha256": "5c7c4a46632f0f218bddc03d504d0ce3f05574eb6f9b0a15952571578ba6bb1a"
+        },
+        {
+          "path": "work/6d492f4b-478a-49dd-b18e-286efa980aed.dataset.parquet",
+          "bytes": 4300,
+          "sha256": "1c4f9478fc5c44684eeb38ada897462043469292bab58e138382eb05eb964211"
+        },
+        {
+          "path": "work/c475900b-431d-493f-997d-a27416028a8f.source",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/dc1f27ca-d14b-4438-bcb1-e18bac7915fe.dataset.parquet",
+          "bytes": 4297,
+          "sha256": "416944100c8367cb9dfb9347c95d137cc2ecfd0137a993236ca8f1fae76aa8e3"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_retry_pure_io_and_cancel_never_publishes_export",
+      "outcome": "passed",
+      "seconds": 0.44931924999946204,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert value[\"status\"] == \"completed\"",
+        "assert (\n            next(n for n in value[\"nodes\"] if n[\"node\"] == \"summary\")[\"attempts\"] == 2\n        )",
+        "assert not list(out.iterdir())",
+        "assert load(store, state[\"results\"][-1])[\"status\"] == \"canceled\"",
+        "assert not list((tmp_path / \"dagwork\").glob(\"dag-node-*\"))"
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/120cec02a12bebaa65e03f1d62b3b35f89fcec9f2f4636ea750356ccb212a4e6/entry.json",
+          "bytes": 1542,
+          "sha256": "4eaf245bac07b02c49994a10d783282448dc5212da3e8a1c2fc6efae07d50a5d"
+        },
+        {
+          "path": "cache/workflow-v1/1394a8c9e1e2fea93f68b796a0a835fede1eb1076aa86ae1ac02bb858f33cff2/0.parquet",
+          "bytes": 1207,
+          "sha256": "db31270372560f704fc3dcb0d5a8e054caae181e99097be7aac2045bec0684a1"
+        },
+        {
+          "path": "cache/workflow-v1/1394a8c9e1e2fea93f68b796a0a835fede1eb1076aa86ae1ac02bb858f33cff2/entry.json",
+          "bytes": 774,
+          "sha256": "fe5f570e376744dece351b4f22d8dea2b54303805d14fb7db2ff33214a2d767e"
+        },
+        {
+          "path": "cache/workflow-v1/8211dd131c176864bb85d4e211ac89a517e2f32c71e8566351e80cd65312f621/0.parquet",
+          "bytes": 4815,
+          "sha256": "ab36eeef1a1c500207f793e174fa801464d6873bef38578cf99aa4b234843e57"
+        },
+        {
+          "path": "cache/workflow-v1/8211dd131c176864bb85d4e211ac89a517e2f32c71e8566351e80cd65312f621/entry.json",
+          "bytes": 1896,
+          "sha256": "bcbbca9fdd0ba853a8928ccc1c023d2be46ddebc5b9b4791101e057f1a865d59"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "cache/workflow-v1/a46b2cf67fc28fbfb24e4ed001fd0f584263d78bf7052f867cb7a3e5e7f11ab0/entry.json",
+          "bytes": 5131,
+          "sha256": "852d01038a796f27c7c42fd966bb0d4223c60f35e18e136f6da1a035c9a1ad42"
+        },
+        {
+          "path": "cache/workflow-v1/dec908ac1988f06ef7e1682096506977dfc9018a8cf9f58603871f72ba88326c/entry.json",
+          "bytes": 1189,
+          "sha256": "6cec4f594e0de2f00daf43ad5ac4cdec1625d2036cc600e793bb6f761c7ca25a"
+        },
+        {
+          "path": "cache/workflow-v1/efc85591bd0e8ff9d6bdf2b6214b9227eb245421c9fcd50bde1867854864a183/entry.json",
+          "bytes": 1489,
+          "sha256": "e5983cdc55b95fbde9e1c54e2ea4a33ca23b530835ff52d4a77237cb8bb11a21"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "4343be677d32a89fd1ed5b23bc8cd30b0d9f0db96e6c7b61caea0164a9952408"
+        },
+        {
+          "path": "project/commits/2af62822-f860-4950-99f1-f502c40824f7/manifest.json",
+          "bytes": 30616,
+          "sha256": "db366a6ad0a397574c2d6d268bfcb500de6b70a731624d5759a88c51489c59b4"
+        },
+        {
+          "path": "project/commits/55b28ccf-f70c-4a9a-8f24-e2ed8c7b9e38/manifest.json",
+          "bytes": 6366,
+          "sha256": "1eb48a7a5cc384cc4172910cc175f42494333e185d83c23a39a02d14028c3833"
+        },
+        {
+          "path": "project/commits/f1ee24e9-9327-4ad3-8870-3bacfcb9ac9a/manifest.json",
+          "bytes": 467,
+          "sha256": "1c4c456e23933cf8318b4a2a2d9f9a278ddd308201505e7bd10a85d56d177784"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 53248,
+          "sha256": "3c6c8e71a00f69a84d1e66040d3ff0515527a3fcd4011ee02447d4db8e37669a"
+        },
+        {
+          "path": "project/snapshots/037ce782-7af7-4c1a-affd-e3a66b0acc22.parquet",
+          "bytes": 4460,
+          "sha256": "f87c4e93276e9642738f2339c12b36e1e97a289268ee8da792ef99a62e8334d5"
+        },
+        {
+          "path": "project/sources/0df16427-5751-43c5-ac68-138ae3e9008b.bin",
+          "bytes": 38911,
+          "sha256": "77ad6a4aa46aff2053cb25df2b15497cff98833fc826bb46aa934a3e8dabe4e0"
+        },
+        {
+          "path": "project/sources/afe376b8-6f05-458a-a527-bcd98841a886.parquet",
+          "bytes": 4815,
+          "sha256": "ab36eeef1a1c500207f793e174fa801464d6873bef38578cf99aa4b234843e57"
+        },
+        {
+          "path": "project/sources/ffdb6866-a02d-4711-bdb5-fdcc21075ef2.parquet",
+          "bytes": 1207,
+          "sha256": "db31270372560f704fc3dcb0d5a8e054caae181e99097be7aac2045bec0684a1"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 852,
+          "sha256": "09e14c6c82a3323f970967278b5ffaec3c74eedf72f56a49d52e126ce7e8444e"
+        },
+        {
+          "path": "work/57eee15d-f109-4bf4-8463-ff5cc8d8d03e.dataset.parquet",
+          "bytes": 4460,
+          "sha256": "f87c4e93276e9642738f2339c12b36e1e97a289268ee8da792ef99a62e8334d5"
+        },
+        {
+          "path": "work/d4d8b9a6-86f4-43e9-bbac-3a86286a818c.source",
+          "bytes": 852,
+          "sha256": "09e14c6c82a3323f970967278b5ffaec3c74eedf72f56a49d52e126ce7e8444e"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_transform_row_identity_and_artifact_corruption",
+      "outcome": "passed",
+      "seconds": 0.06621026799984975,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert frame.select(ROW_ID, SOURCE_ID).equals(\n            original.select(ROW_ID, SOURCE_ID)\n        )",
+        "assert \"renamed\" in frame.columns and \"x\" not in frame.columns",
+        "assert entry[\"cache_invalidated\"] and entry[\"status\"] == \"completed\"",
+        "assert (\n            pl.read_parquet(entry[\"value\"][\"request\"][\"path\"])\n            .select(ROW_ID, SOURCE_ID)\n            .equals(original.select(ROW_ID, SOURCE_ID))\n        )"
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/7f92474dbba61f29b952488c066b08a9259d8ab443f77cffbaaac24f10b9dbbf/entry.json",
+          "bytes": 1542,
+          "sha256": "2efd488b879a4f10657e4455d0b2e5d9f80d9caeae260eb3fc5be9c7e5a656bf"
+        },
+        {
+          "path": "cache/workflow-v1/84c7e594adf7ade8e9409e9eed8f9bcca1012eae99951299c66bce34b88cb26c/entry.json",
+          "bytes": 1189,
+          "sha256": "05f45f8bd3c0cfd6e27e993b0a3214c801cbdbb815e7a4cd5ac04bec20df5ead"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "cache/workflow-v1/cd032fcdb8cf88742d15bbf7a39d6417a76c96d5368b97e9519f622c3efa236a/entry.json",
+          "bytes": 1489,
+          "sha256": "6168fcbd73bad7f1a36d38ed2d1c69ad6a0f198abe75cd29bda5d160e3d1f739"
+        },
+        {
+          "path": "cache/workflow-v1/e351d40ac4002a5acd9a256c5535a50541db2516862b2b5bca46b0cbc353cf36/0.parquet",
+          "bytes": 4377,
+          "sha256": "1825b9b0cb0cc3785a49c97dc25b97565c6419eaa3ec8a4dcbedfe3ae50cb5bf"
+        },
+        {
+          "path": "cache/workflow-v1/e351d40ac4002a5acd9a256c5535a50541db2516862b2b5bca46b0cbc353cf36/entry.json",
+          "bytes": 3156,
+          "sha256": "7b42106eb9e0f0acde7fe6693018ab31f14d504243014db06556449a9254b315"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "7f727a23a4e7afb3d0cecd622e70f67dfaf98b80ce684da7531de8c0c5361768"
+        },
+        {
+          "path": "project/commits/bfef7498-fcc0-42ea-b669-f4cf89be6265/manifest.json",
+          "bytes": 467,
+          "sha256": "34cf481624044314acb9458b4fa69eb36124c9f376e365b24c7dae96c6d614a9"
+        },
+        {
+          "path": "project/commits/daaedf4e-4cd7-4e83-a19a-da26e867ff1c/manifest.json",
+          "bytes": 6366,
+          "sha256": "f04c99bd42323a9eda16170d111d807b40cb7dcb237e3e00d0482d6ff29116b6"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "6503fc2c31e087b5bafd36dfa0e2439dc668cdd2e6a36c7102405d558b062ec7"
+        },
+        {
+          "path": "project/snapshots/488f0317-d3b5-417d-b618-417f534b90ea.parquet",
+          "bytes": 4351,
+          "sha256": "a317e6aa2f755d583dff39550acd05d9aa9332069cb718bbd0c4fae43d54c83a"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 840,
+          "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4"
+        },
+        {
+          "path": "work/72aacced-61a1-4ca3-a7db-47f80ecacf31.dataset.parquet",
+          "bytes": 4351,
+          "sha256": "a317e6aa2f755d583dff39550acd05d9aa9332069cb718bbd0c4fae43d54c83a"
+        },
+        {
+          "path": "work/cf30b09f-d658-41b0-a81a-0d3ba9aaa0df.source",
+          "bytes": 840,
+          "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_environment_and_schema_metadata_invalidate_cache",
+      "outcome": "passed",
+      "seconds": 0.07308781199935765,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert all(n[\"status\"] == \"completed\" for n in second[\"nodes\"])",
+        "assert [n[\"cache_key\"] for n in first[\"nodes\"]] != [\n            n[\"cache_key\"] for n in second[\"nodes\"]\n        ]",
+        "assert changed[\"nodes\"][0][\"status\"] == \"completed\""
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/218699b6027f3f0c0ec7acb11e8f387dd3764ebe91a7e5809dd0d98632311a13/entry.json",
+          "bytes": 1111,
+          "sha256": "97bfed4577635e09330ae571db8d2aca0a42e01ba54fd2613855d22ee333db2d"
+        },
+        {
+          "path": "cache/workflow-v1/2f56a49e7fde90d38594284635ac7e3ebe904ab778c6a73f8fb65f9534943972/entry.json",
+          "bytes": 1542,
+          "sha256": "685be5fbf2b992d3857ac81ebe1a2decfbefce0dd7f935f07554723e8a0a6ed3"
+        },
+        {
+          "path": "cache/workflow-v1/37eb5adef99c025160a17c2f7f5d624945282dca6fd3ef75536017fb3cb59eb2/entry.json",
+          "bytes": 1542,
+          "sha256": "df0a578cfb79a4b179a29385cac92b6edeafbaf7735e1ac338ad541a21efa051"
+        },
+        {
+          "path": "cache/workflow-v1/42b806130084e4ee52d32088efe04663b1ad34837731e43e5acbd0f8f4385532/entry.json",
+          "bytes": 1489,
+          "sha256": "2470b1d598c4871f39a63ef7369ffa7da4091cc9192d0d3a1a97bb77a126cbcf"
+        },
+        {
+          "path": "cache/workflow-v1/6a15cc3cb8cbeda7391e7a182c4fcafa8a575b1440dc3167e04801eced5cfedc/entry.json",
+          "bytes": 1608,
+          "sha256": "e061d89142bcb6e7dc9fe58802f3a99d689a543c555ab7dcfe75f5526b719655"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "cache/workflow-v1/a562d802d04d93c8e12ff8ba3cdee06b119ab735e602d488f0462b3a9482542c/entry.json",
+          "bytes": 1661,
+          "sha256": "6b39b5ad45454d612a4c0c043a91f2deef316b029b6760134594f05d22c51cbc"
+        },
+        {
+          "path": "cache/workflow-v1/a8210f79b2105622b140aa5ed409ac317979c4cc42c283809c3869adb1786e04/entry.json",
+          "bytes": 1489,
+          "sha256": "b7e679b8fd5e2565bcfe1cfdc40bafab6edea6498b17b82610159370fc150407"
+        },
+        {
+          "path": "cache/workflow-v1/d6822d0c3de7aa7b4a4faacf90b55d12c8f4c9800d1fe8384b1e0163cba548ce/entry.json",
+          "bytes": 1111,
+          "sha256": "880eb226a5aa0f8b0fb8a53ad40fb078c79046d3d2ae6e59d4ac56437bc2a5b6"
+        },
+        {
+          "path": "cache/workflow-v1/f81ca176ebdb9fadaae7ab69a4068f95e638b5d5ecabdbf1be52a491328cef93/entry.json",
+          "bytes": 1111,
+          "sha256": "3a2a839a736550b2f595f9aed28264e0546d086156b80b9b5a75c1b7ce695fe6"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "4352d9acd4507349d070c109476c100902e8b8e2b673e9c3a525a4a6b9407a58"
+        },
+        {
+          "path": "project/commits/8059d81b-7b67-4077-a870-4f3eeb062c0b/manifest.json",
+          "bytes": 467,
+          "sha256": "67758cd4ce3ae8bcdb1a86f5d7bd49f1850a4dd86b4c11a83f43c74aa6904178"
+        },
+        {
+          "path": "project/commits/931a8d68-b4e7-416d-a480-296e216ef0f7/manifest.json",
+          "bytes": 6366,
+          "sha256": "9e8f3beecff600c09e50a0bba61138118793199aa52760a5e467a80abf2fc1dc"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "0c487b16107e13961ea71eb85db7cb53b30e227eb34b14b95e77169b913edefe"
+        },
+        {
+          "path": "project/snapshots/e9443071-1f99-41b6-a763-19619f409cc5.parquet",
+          "bytes": 4301,
+          "sha256": "15de34707c2af396e31c237ef3721299c8e299bdcef3775086e0ac6db985e88e"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/76ab2e60-fc2d-49f7-bb1e-75e061c3602c.dataset.parquet",
+          "bytes": 4301,
+          "sha256": "15de34707c2af396e31c237ef3721299c8e299bdcef3775086e0ac6db985e88e"
+        },
+        {
+          "path": "work/ea73d0bb-bff7-4cff-87b2-0e43a2d2909a.source",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_batch_exports_unique_and_foreign_collision",
+      "outcome": "passed",
+      "seconds": 0.04875029399954656,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert full[\"status\"] == \"partial\"",
+        "assert collision.read_bytes() == b\"other run or source\"",
+        "assert pl.read_parquet(out / (token + \"-second-export.parquet\")).height == 3",
+        "assert (\n            next(\n                n\n                for n in full[\"nodes\"]\n                if n[\"node\"] == \"summary\" and n[\"case\"] == \"first\"\n            )[\"status\"]\n            == \"completed\"\n        )"
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/1c2c2665b03d99e3b2bec61bec23415b574eac6aee9136b5cf74f51325fecb7d/entry.json",
+          "bytes": 1489,
+          "sha256": "bd2a56e664896f803e5d20c3d2bfeec4a415c8cd7d8ec1e49c0653a352193798"
+        },
+        {
+          "path": "cache/workflow-v1/3588818bb884994d2402642eb30e3ecf1771c68049b92e21e4a1b09a741152e5/entry.json",
+          "bytes": 1111,
+          "sha256": "1b91721e884bf93f44020f739175f9e2cf66a38b3067fe095d905557f4fcebf9"
+        },
+        {
+          "path": "cache/workflow-v1/87c2ad582bad604e126568a1dbb71c3180e5352181206edafae62e3d77e051e9/0.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "cache/workflow-v1/87c2ad582bad604e126568a1dbb71c3180e5352181206edafae62e3d77e051e9/entry.json",
+          "bytes": 773,
+          "sha256": "0362825ff86fc9c12d05eefec15b765750f5744ec9767b8b7c445b40d9cfbfee"
+        },
+        {
+          "path": "cache/workflow-v1/8b08c4e63f030cb5a259264446825299e62cfa5bbd6f2e4bce989b9a55d04c72/entry.json",
+          "bytes": 1542,
+          "sha256": "6659e9ca0a7fe0f0998660b6121ad6b63aa8c12e8f9e3f04fd188c3f4edd35cb"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "out/0675f639-24b2-4f6c-a9f1-522d95093741-first-export.parquet",
+          "bytes": 19,
+          "sha256": "dd079f5dd13aa546f54cf9d07be0a0bca844ef976f02e07adf54d0c8b0012811"
+        },
+        {
+          "path": "out/0675f639-24b2-4f6c-a9f1-522d95093741-second-export.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "ca2255509ae887e368d1f138e1f1d0485d4facf2c18bddcbff075d79df34e61a"
+        },
+        {
+          "path": "project/commits/08df31a0-da1b-4f9d-867a-efd1ffb2dded/manifest.json",
+          "bytes": 467,
+          "sha256": "40320955b58a8bdd295bbcc6d080d4155c264c488721ba0a0908c784a728227c"
+        },
+        {
+          "path": "project/commits/512d3b7f-0b9d-4781-b1de-9d732c7f7ca4/manifest.json",
+          "bytes": 6366,
+          "sha256": "3451a526cb8e4265180f6adafff4f1293570d4d1c4c9745104d6840a3a7b0c73"
+        },
+        {
+          "path": "project/commits/7ef857f3-12ca-48d5-a2f6-48c86167b201/manifest.json",
+          "bytes": 31686,
+          "sha256": "c1cc12a6265f59f01f4ff1ee0f4d172e633592d8625dbbfee22f965636d46168"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 53248,
+          "sha256": "00074f428ff6487dd1bbd4ca8b455dd9f51d311510412be00998bdee7d3a12cb"
+        },
+        {
+          "path": "project/snapshots/322bd636-123d-4079-b975-b1feedcc3c1e.parquet",
+          "bytes": 4302,
+          "sha256": "c6219963579e2561972ce68119c82953848b6adb498627fdf83bba02c2e33fce"
+        },
+        {
+          "path": "project/sources/416ec382-770c-45ca-aa57-663c061a59cf.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "project/sources/96c5efbf-98dd-4c6a-b0a8-542f4c241a12.bin",
+          "bytes": 39517,
+          "sha256": "98de61dd0bfb50489c0ac62fd1c30953748bb7a9a70d629dec234a0d592c40e8"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/4caea9d5-5cbc-48a7-ba7d-a012fc30cca0.source",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/c812e1cb-1a1d-4fa6-b1b1-e1ed9d24c923.dataset.parquet",
+          "bytes": 4302,
+          "sha256": "c6219963579e2561972ce68119c82953848b6adb498627fdf83bba02c2e33fce"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_budget_cancel_and_closed_methods",
+      "outcome": "passed",
+      "seconds": 0.027954075998422923,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert result[\"status\"] == \"canceled\" and not result[\"nodes\"]",
+        "assert not availability(get_capability(\"workflow.schedule\"))[0]"
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "abc5b235d0ba8c95dba8a81251de8c93b3cd233359e596be7a289f347998e8fb"
+        },
+        {
+          "path": "project/commits/4aad2369-cf09-4034-9df5-8ee2f3b01b54/manifest.json",
+          "bytes": 6366,
+          "sha256": "0bf4f2e2b979f5e356a74a11032df216c32216a5d2a11acaa7960de35f7c2c15"
+        },
+        {
+          "path": "project/commits/568c03f2-13e5-4948-b53a-eccd56dc80ae/manifest.json",
+          "bytes": 467,
+          "sha256": "a983966d9c486287614f3e4fa2a3de9c109a1b6ea4ca2b4b5f0ae1adcb6766ac"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "bf7ab498e436df5827fe276047884f5d7cdaa794d2fc8d4705af419095f4a8a8"
+        },
+        {
+          "path": "project/snapshots/3f7a5193-7768-4bcb-8f62-dfee59ddfe78.parquet",
+          "bytes": 4299,
+          "sha256": "f47a701f4acbb41ddf53144b60ba2f653d51576222b0d6f9495db944a3f3be1f"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/25357afb-e625-429e-893f-0c4b3cd1f90f.source",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/cea57541-2080-4551-b86b-e2ad5954b468.dataset.parquet",
+          "bytes": 4299,
+          "sha256": "f47a701f4acbb41ddf53144b60ba2f653d51576222b0d6f9495db944a3f3be1f"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_workflow.py::test_ledger_publication_barrier_precedes_external_effect",
+      "outcome": "passed",
+      "seconds": 0.03545131600003515,
+      "test_file_sha256": "ae525b666f074ffb5ebea737693eaa205646d56d694757b2e115cf22dac45fdb",
+      "reference_assertions": [
+        "assert not list(out.iterdir()) and store.state == previous"
+      ],
+      "fixture_files": [
+        {
+          "path": "cache/workflow-v1/636daee04c49ae24389992ba98b82bb4925407b85c8f7268ef4c2fb2571b6f75/entry.json",
+          "bytes": 1111,
+          "sha256": "dce462d6c03c81abcc1bf152fed4d00f14322f7c1dfb59b2e0cf8db571fd71e3"
+        },
+        {
+          "path": "cache/workflow-v1/7431e71c163207ab56f636641a94b3e7083b5a4caf92d887712f03ef88ab7cda/0.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "cache/workflow-v1/7431e71c163207ab56f636641a94b3e7083b5a4caf92d887712f03ef88ab7cda/entry.json",
+          "bytes": 773,
+          "sha256": "127639650f5c3b332de3691f8707ccc51df061b20de4a9bace7fa50cfd32a72b"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "cache/workflow-v1/e1c07126ad2081d4f5ab09a2d1f2dacc8f14152a2dddd55a2abef83f43bfbd36/entry.json",
+          "bytes": 1542,
+          "sha256": "9aa99c36bfa07bb3b0b04a7ea45f5def95a9a709ebb3e8ec1d2d6f7bb99d9c0b"
+        },
+        {
+          "path": "cache/workflow-v1/f5b46e61f1b1ea21ee5e0bd9a94dc04243c11fae5ca6f6e769c82180ef2dd5e5/entry.json",
+          "bytes": 1489,
+          "sha256": "93ee5a2cd00f66d1fa82659c07316e2b153b3fc0ef87410b4d616004c5f34524"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "81d16ffd01ad1a30e49de7e9fb8bb6112fbf79eaf426430da4b137ddfa9508ad"
+        },
+        {
+          "path": "project/commits/94ad65c1-2c25-4f9e-ac12-a8def2d85a8d/manifest.json",
+          "bytes": 6366,
+          "sha256": "5e5d3f1cf60174f5607ea9d3cccc012dc5f900e27906bf89cefe10d9633f6453"
+        },
+        {
+          "path": "project/commits/ac7e3737-92a5-4b10-8c2e-c94481985e39/manifest.json",
+          "bytes": 467,
+          "sha256": "15c4d0c53f68146ec75b7d606796fc7c014eddebccfc134276443ed75cf5fbe3"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "3234c38f3782ea937a77db60ed0aa67dab76eadcddce32fb7f30434d72743425"
+        },
+        {
+          "path": "project/snapshots/ddaa6769-89b5-44a5-b777-831f21fe11ae.parquet",
+          "bytes": 4301,
+          "sha256": "a884e4e88c73ffcda1b653ba1e1c1f96da1bdc2369df913ccb30f206233e7037"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/578e886d-612f-4fd3-ba5f-120f24bbe756.dataset.parquet",
+          "bytes": 4301,
+          "sha256": "a884e4e88c73ffcda1b653ba1e1c1f96da1bdc2369df913ccb30f206233e7037"
+        },
+        {
+          "path": "work/eb5f353c-9d27-42f5-acfb-9e02131ed0c8.source",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_repro.py::test_profile_reference_bundle_exact_and_reopen_hash",
+      "outcome": "passed",
+      "seconds": 0.3142292929987889,
+      "test_file_sha256": "8607bc708646d3510a346c8813d6a1e880e55c08d458b33c8521ff6ca85fe845",
+      "reference_assertions": [
+        "assert p[\"rerun_supported\"] and not p[\"include_data\"]",
+        "assert opened[\"manifest\"][\"focus\"] == ident and receipt[\"member_count\"] >= 8",
+        "assert not any(n.startswith(\"data/\") for n in opened[\"manifest\"][\"members\"])",
+        "assert result[\"status\"] == \"matched\" and result[\"difference_count\"] == 0",
+        "assert json.loads((verify / \"reference-report.json\").read_text()) == json.loads(\n            (verify / \"actual-report.json\").read_text()\n        )"
+      ],
+      "fixture_files": [
+        {
+          "path": "45c146ef-303c-4a23-8215-7a2f3732dae0.vurepro",
+          "bytes": 6865,
+          "sha256": "7f9a5fa3d06550cd06345160653690692959ff4458a79f7828d5a654a3d8b462"
+        },
+        {
+          "path": "bundlework/repro.vurepro",
+          "bytes": 6865,
+          "sha256": "7f9a5fa3d06550cd06345160653690692959ff4458a79f7828d5a654a3d8b462"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "0af69e4b080f927fcfcbba8fb07fd94fc7804c0b1b62168430c4ed8a5852f92f"
+        },
+        {
+          "path": "project/commits/5b774c53-6cea-4613-a48e-7c526984b421/manifest.json",
+          "bytes": 6366,
+          "sha256": "e01545f4a435399d2190cb442472e4db689356b9b3bbb56b0ce5f8a61e9a7aed"
+        },
+        {
+          "path": "project/commits/a8b89ed5-62cb-42d3-86bc-66e0095ef599/manifest.json",
+          "bytes": 467,
+          "sha256": "94de9f22edf596d64f8063944edeb9d18df8eec37cf5904196d4acc18550b03a"
+        },
+        {
+          "path": "project/commits/e8dd8bae-34cb-49a0-af33-3957b0cff1ca/manifest.json",
+          "bytes": 9132,
+          "sha256": "87442ef1e1b048cb7b1956e5c31e9e12f474cefd9c45f3c59507332e77f83cc9"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 24576,
+          "sha256": "3b0fb6aca3ab4d07b6563773830ec387c55e9887ad82d61e14d82ee63948af7d"
+        },
+        {
+          "path": "project/snapshots/c12dc726-5df7-4060-8c87-0e80ea5f816d.parquet",
+          "bytes": 4351,
+          "sha256": "dae81fb309a34e5900793e32dd9558eb6b8778855df882814a529b658ebec687"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 840,
+          "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4"
+        },
+        {
+          "path": "verify/actual-report.json",
+          "bytes": 621,
+          "sha256": "b609940b1f77623e33ddc9febdb66cbfad957fa9196d0809f0f1cf8b7e3957f7"
+        },
+        {
+          "path": "verify/comparison.json",
+          "bytes": 1336,
+          "sha256": "02f7215b30da89d04f03d1cceb92d4bc32bdd13a745db0187aecd4ae623c01f2"
+        },
+        {
+          "path": "verify/reference-report.json",
+          "bytes": 621,
+          "sha256": "b609940b1f77623e33ddc9febdb66cbfad957fa9196d0809f0f1cf8b7e3957f7"
+        },
+        {
+          "path": "work/53d33ce1-08d4-4264-8ad4-607b90f281ec.source",
+          "bytes": 840,
+          "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4"
+        },
+        {
+          "path": "work/5d45aa6b-e362-4234-8f78-404cabcf8cea.dataset.parquet",
+          "bytes": 4351,
+          "sha256": "dae81fb309a34e5900793e32dd9558eb6b8778855df882814a529b658ebec687"
+        },
+        {
+          "path": "work/repro.vurepro",
+          "bytes": 6866,
+          "sha256": "3192649abe15956c2b7cb7a959bcd7a7e1a58d48c2a102505b1db2ab07b00689"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_repro.py::test_corruption_schema_and_environment_fail_closed",
+      "outcome": "passed",
+      "seconds": 0.30755848399894603,
+      "test_file_sha256": "8607bc708646d3510a346c8813d6a1e880e55c08d458b33c8521ff6ca85fe845",
+      "reference_assertions": [],
+      "fixture_files": [
+        {
+          "path": "a068cc74-b0d9-49e1-a86e-cc248eb4dc48.vurepro",
+          "bytes": 6747,
+          "sha256": "30d0ec959a86b85aa983862d6e12b155cf48f986efa06e1c144da426ff3cff8c"
+        },
+        {
+          "path": "bad.vurepro",
+          "bytes": 11258,
+          "sha256": "b700ccda2691b98d0e4f3210322417c7ef5c7b547aff745ff705ae2f13366332"
+        },
+        {
+          "path": "bundlework/repro.vurepro",
+          "bytes": 6747,
+          "sha256": "30d0ec959a86b85aa983862d6e12b155cf48f986efa06e1c144da426ff3cff8c"
+        },
+        {
+          "path": "future.vurepro",
+          "bytes": 12060,
+          "sha256": "48f31aa0c76f066481bd51467698743c34a7d78b2d59d0530f31f949b7c05e89"
+        },
+        {
+          "path": "newenv.vurepro",
+          "bytes": 12057,
+          "sha256": "84df014f746bf8812f05b85dc768fc1147b0ef4c472792e485d7e93490b3da7c"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "1cda3935f98aad91e65cc5e8232f54c1cf59c5d3b7a80df2fa89ae1189599001"
+        },
+        {
+          "path": "project/commits/451dfe15-ee6e-48ab-bfce-9a42f0a11d65/manifest.json",
+          "bytes": 467,
+          "sha256": "7ff10bbcb5b76e1c27d46fd349d6a1592c32ef49e051e21208283b457ff1fe91"
+        },
+        {
+          "path": "project/commits/500ed81b-bc67-4cf6-a5eb-9baa0bc8d41a/manifest.json",
+          "bytes": 6366,
+          "sha256": "faa2754b6ac7c0bd0b598e0024fcbfc5c6f773a940b949cf120df2da90109254"
+        },
+        {
+          "path": "project/commits/e97b7ad1-7184-489d-b17d-688bd024ac3f/manifest.json",
+          "bytes": 8987,
+          "sha256": "7934e914791ea31634e85de96b42ba06e26a27bb37bbf9eb68e77da0c33e1ea9"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 24576,
+          "sha256": "992114cda0b98a470d4972b2f9bd206335cb5c3a24807ec8d1e1ecaabb0953c4"
+        },
+        {
+          "path": "project/snapshots/c8e6e1e4-52e4-4a14-98b7-69adddfc697c.parquet",
+          "bytes": 4302,
+          "sha256": "6ebccfbad50b1293b1af962273c20b6e818c08f80de26dd013d5e2452ed4e763"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/0b30683d-308d-468f-8315-b769f1cfd978.source",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/2aeada8f-89b2-418b-92d8-2a2dfcacbac4.dataset.parquet",
+          "bytes": 4302,
+          "sha256": "6ebccfbad50b1293b1af962273c20b6e818c08f80de26dd013d5e2452ed4e763"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_repro.py::test_workflow_safe_model_artifact_and_numeric_policy",
+      "outcome": "passed",
+      "seconds": 1.107106080999074,
+      "test_file_sha256": "8607bc708646d3510a346c8813d6a1e880e55c08d458b33c8521ff6ca85fe845",
+      "reference_assertions": [
+        "assert p[\"rerun_supported\"], p[\"redactions\"]",
+        "assert result[\"status\"] == \"matched\", result",
+        "assert (\n            compare(reference, actual, dict(kind=\"workflow\"), \"numeric\")[\"status\"]\n            == \"matched\"\n        )",
+        "assert (\n            compare(reference, actual, dict(kind=\"workflow\"), \"exact\")[\"status\"]\n            == \"different\"\n        )",
+        "assert (\n            compare(reference, actual, dict(kind=\"workflow\"), \"numeric\")[\"status\"]\n            == \"different\"\n        )"
+      ],
+      "fixture_files": [
+        {
+          "path": "3bb5bf09-4ba3-49ec-bc8e-18b884c95372.vurepro",
+          "bytes": 16523,
+          "sha256": "17b325d589d29250c12102984255e9b06c2a1cf516cb7dd3ee8f4a9d16592963"
+        },
+        {
+          "path": "bundlework/repro.vurepro",
+          "bytes": 16523,
+          "sha256": "17b325d589d29250c12102984255e9b06c2a1cf516cb7dd3ee8f4a9d16592963"
+        },
+        {
+          "path": "cache/workflow-v1/33f1e3a22514454510c9fc1126faf2d0bcf805d7e49514580ddfc5c13475b4e0/entry.json",
+          "bytes": 1542,
+          "sha256": "208803a70cb1a1df737790c3df258bd04940a04588e8633e3f8c3c4961935112"
+        },
+        {
+          "path": "cache/workflow-v1/439f0c3d8564582cd3a14330947b42670b68b93fc2349e7edd561a4f5f3de4ce/0.parquet",
+          "bytes": 1230,
+          "sha256": "a8cf58a5ac2fcfb38982fc66ab177eb33f04bbb0b317b2a3121442d65bb3e895"
+        },
+        {
+          "path": "cache/workflow-v1/439f0c3d8564582cd3a14330947b42670b68b93fc2349e7edd561a4f5f3de4ce/entry.json",
+          "bytes": 774,
+          "sha256": "24e04928e9a9bbf6b90c91f9120c38126b61e9c4823828519f2c91a6710d8c31"
+        },
+        {
+          "path": "cache/workflow-v1/4a3504a0981e7822e00fe671ae62da1693a1736e01a1b800254694a0bad2eff7/entry.json",
+          "bytes": 1489,
+          "sha256": "adef9fb564e79e4712ab26e8681b3a28484af53f3ac26ba0426d6f5fa2a25ad6"
+        },
+        {
+          "path": "cache/workflow-v1/814756b725dfb03dd14ee7f2138751832faecfed2827a605140e965b2606bae5/entry.json",
+          "bytes": 5187,
+          "sha256": "7b3b0352d957a15a8d8e10b50ae7108b739ebb5fb5332beca02d69eba0d6c17a"
+        },
+        {
+          "path": "cache/workflow-v1/8bab5ddda8a03619d05dea110f12e0827bd107e20d881a4e7002b914068f92cc/0.parquet",
+          "bytes": 4841,
+          "sha256": "149206e62c8d17fbf7ede10885065dcd277aa97f09c4cf0dd33044b56e8ca3c8"
+        },
+        {
+          "path": "cache/workflow-v1/8bab5ddda8a03619d05dea110f12e0827bd107e20d881a4e7002b914068f92cc/entry.json",
+          "bytes": 1896,
+          "sha256": "9c7cfc29ef988e62115a2cf1a35464bef692d05af591be5651f4f5917519096e"
+        },
+        {
+          "path": "cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "cache/workflow-v1/f859d11b96f12fe3eb43ffcb33981e5c47d806da9d7491decb69f608a8231815/entry.json",
+          "bytes": 1189,
+          "sha256": "c24cb83d7a1cef1b9c75ed1632491ed075a6bc12442b525e7029777ec3bf8a4e"
+        },
+        {
+          "path": "export/a88c634a-da24-4d8a-b78a-8abd8e434591-default-export.parquet",
+          "bytes": 1230,
+          "sha256": "a8cf58a5ac2fcfb38982fc66ab177eb33f04bbb0b317b2a3121442d65bb3e895"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "0e568694d212ddaa9d4289abb10f7c6272a881ea9ab6f79730a1febbcbe88294"
+        },
+        {
+          "path": "project/commits/c61ece27-737b-4682-9c78-4e807f991075/manifest.json",
+          "bytes": 31075,
+          "sha256": "3009efc81cb4b494a0ba15c016cd953d0da4249684bd21ef571f860869a4aa8e"
+        },
+        {
+          "path": "project/commits/f9587002-1076-414b-afa1-c8ae04471ff4/manifest.json",
+          "bytes": 6366,
+          "sha256": "c2e7f7a9c642e579cecb0dad58d6d019c0c29e8ca7f4d9bc7398e71fb5eedaac"
+        },
+        {
+          "path": "project/commits/fa64c67b-eef1-4eff-bda4-c34632679186/manifest.json",
+          "bytes": 467,
+          "sha256": "1c6ee6639d89407702fca932d788e84c3aa6678aed04688bb7a9e1d9f2dfc487"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 53248,
+          "sha256": "780171c3f3e56c9aeb75de6e259a592a7d162c6af1bb91e63d835286594abe89"
+        },
+        {
+          "path": "project/snapshots/9bedaa7a-e19d-431e-b524-d053fb42cfe7.parquet",
+          "bytes": 4473,
+          "sha256": "958df5182a92f315d302bacedc7e4bee82ad7208f120e5769fd254517e2f2576"
+        },
+        {
+          "path": "project/sources/5a5495c5-4aee-4779-b0ac-1cbcfb19de15.parquet",
+          "bytes": 4841,
+          "sha256": "149206e62c8d17fbf7ede10885065dcd277aa97f09c4cf0dd33044b56e8ca3c8"
+        },
+        {
+          "path": "project/sources/dd8fd560-ce26-437c-9551-39d10d84389c.parquet",
+          "bytes": 1230,
+          "sha256": "a8cf58a5ac2fcfb38982fc66ab177eb33f04bbb0b317b2a3121442d65bb3e895"
+        },
+        {
+          "path": "project/sources/e2cefe27-1d3f-4e7e-a948-cee1b46fda85.bin",
+          "bytes": 39834,
+          "sha256": "6373dad22cc401f6cda34000b7bd2974c2cc2c286ac05941f0a58667b576b121"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 862,
+          "sha256": "eb50887d348d581ee1f31b9dac2c950604aba376fa73058874a1d9e9c2ec1ae1"
+        },
+        {
+          "path": "verify/actual-report.json",
+          "bytes": 2701,
+          "sha256": "7271e96acbb1582360642f2e294a32c17d0e935f263a855da22b2d3950e3528d"
+        },
+        {
+          "path": "verify/cache/workflow-v1/33f1e3a22514454510c9fc1126faf2d0bcf805d7e49514580ddfc5c13475b4e0/entry.json",
+          "bytes": 1543,
+          "sha256": "e4e4ed1a94e26105ddcae4488ebec7dc1f7a25ab501ae1a83a424c1f0c387d96"
+        },
+        {
+          "path": "verify/cache/workflow-v1/439f0c3d8564582cd3a14330947b42670b68b93fc2349e7edd561a4f5f3de4ce/0.parquet",
+          "bytes": 1230,
+          "sha256": "a8cf58a5ac2fcfb38982fc66ab177eb33f04bbb0b317b2a3121442d65bb3e895"
+        },
+        {
+          "path": "verify/cache/workflow-v1/439f0c3d8564582cd3a14330947b42670b68b93fc2349e7edd561a4f5f3de4ce/entry.json",
+          "bytes": 774,
+          "sha256": "879e45805b68480a4874fd38b5afbe67eae42eede23e4b1db8f3373d28db53a9"
+        },
+        {
+          "path": "verify/cache/workflow-v1/4a3504a0981e7822e00fe671ae62da1693a1736e01a1b800254694a0bad2eff7/entry.json",
+          "bytes": 1490,
+          "sha256": "73c49c802474e486a903ebf75d6dc7cf02162071408c99a60507227ca49bcbe8"
+        },
+        {
+          "path": "verify/cache/workflow-v1/814756b725dfb03dd14ee7f2138751832faecfed2827a605140e965b2606bae5/entry.json",
+          "bytes": 5187,
+          "sha256": "b910c09ef2de918349efdbc49b41afb85a7130ddbe4d7a542b0ad71ade9dc4d4"
+        },
+        {
+          "path": "verify/cache/workflow-v1/8bab5ddda8a03619d05dea110f12e0827bd107e20d881a4e7002b914068f92cc/0.parquet",
+          "bytes": 4841,
+          "sha256": "149206e62c8d17fbf7ede10885065dcd277aa97f09c4cf0dd33044b56e8ca3c8"
+        },
+        {
+          "path": "verify/cache/workflow-v1/8bab5ddda8a03619d05dea110f12e0827bd107e20d881a4e7002b914068f92cc/entry.json",
+          "bytes": 1896,
+          "sha256": "1767280ae76756bf8bf03d220342d2e0587e7c2fb07cf3b425c94dcf9cbf5883"
+        },
+        {
+          "path": "verify/cache/workflow-v1/LOCK",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "verify/cache/workflow-v1/OWNER",
+          "bytes": 25,
+          "sha256": "a9da5acb24f7da14ae5f63251117404adc703c304291f02128e65d4942ea53b7"
+        },
+        {
+          "path": "verify/cache/workflow-v1/f859d11b96f12fe3eb43ffcb33981e5c47d806da9d7491decb69f608a8231815/entry.json",
+          "bytes": 1189,
+          "sha256": "d001196702310f23e1f3ab373c43fb5607f16e534e00f9bbe19998c1542eb5fc"
+        },
+        {
+          "path": "verify/comparison.json",
+          "bytes": 1348,
+          "sha256": "38204d6acabc76b37d16b8375882733c2111d91da5eb05aa3985a17a5cf19ad2"
+        },
+        {
+          "path": "verify/reference-report.json",
+          "bytes": 2701,
+          "sha256": "7271e96acbb1582360642f2e294a32c17d0e935f263a855da22b2d3950e3528d"
+        },
+        {
+          "path": "work/0ac587cd-199e-426c-9dfe-41f216933f87.source",
+          "bytes": 862,
+          "sha256": "eb50887d348d581ee1f31b9dac2c950604aba376fa73058874a1d9e9c2ec1ae1"
+        },
+        {
+          "path": "work/6221aad1-e1cd-4cc0-a123-e8c4cb2b2244.dataset.parquet",
+          "bytes": 4473,
+          "sha256": "958df5182a92f315d302bacedc7e4bee82ad7208f120e5769fd254517e2f2576"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_repro.py::test_secret_redaction_and_data_rejection",
+      "outcome": "passed",
+      "seconds": 0.23188903399932315,
+      "test_file_sha256": "8607bc708646d3510a346c8813d6a1e880e55c08d458b33c8521ff6ca85fe845",
+      "reference_assertions": [
+        "assert secret.encode() not in allbytes and b\"/home/person\" not in allbytes",
+        "assert b\"FAKE_API_TOKEN\" not in allbytes and b\"/proc/\" not in allbytes",
+        "assert not any(Path(tmp_path).glob(\"*.pkl\"))"
+      ],
+      "fixture_files": [
+        {
+          "path": "89c4eeb2-3deb-4b2d-bf47-93f3c89d4b39.vurepro",
+          "bytes": 6774,
+          "sha256": "7a69db2c76688fbfa2c09025071329945c4aeeb820970065acc45a1da007dfa6"
+        },
+        {
+          "path": "bundlework/repro.vurepro",
+          "bytes": 6774,
+          "sha256": "7a69db2c76688fbfa2c09025071329945c4aeeb820970065acc45a1da007dfa6"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "4c6b3e3915e4b334e266f9cf6645c7b45f021799cfbae4520c1c012bc913d452"
+        },
+        {
+          "path": "project/commits/7b0ef894-afa5-4a79-9d5a-34d32aff08c0/manifest.json",
+          "bytes": 467,
+          "sha256": "f474a1620d24232c4247b04b7a26a1c1a00562ab2cdbb548d39aa40306e74cd8"
+        },
+        {
+          "path": "project/commits/843d62bf-abe9-40e8-b057-d6a94100eded/manifest.json",
+          "bytes": 9026,
+          "sha256": "05da721b3c3d36a8304acdd0b98b34501637c798c5d39489c3c8fbfc74fb71b2"
+        },
+        {
+          "path": "project/commits/f030b0c5-ff46-4a77-9ccc-592210080a2b/manifest.json",
+          "bytes": 6405,
+          "sha256": "d91b11084eea09851dc390e2e96f45fcf5722c029b79563b36ba70fa5d12cdc4"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 24576,
+          "sha256": "237c929a75a82f0a961dab084e5e2198e324d31d613a794083f41cced0bf5074"
+        },
+        {
+          "path": "project/snapshots/e8ad49ff-6ba9-4363-919f-cb49352d9f43.parquet",
+          "bytes": 4581,
+          "sha256": "042bbaea4ed1e5250876f3e38918c1ca20d1711fd413e73ac7d8118b50507dab"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1122,
+          "sha256": "ae815b4acefa98d3068a28736aaf5aa53524160f736dd7f26504e1f8ba9f60e8"
+        },
+        {
+          "path": "work/1ebdfa1b-ef6b-425c-99b5-b92f0639f49c.dataset.parquet",
+          "bytes": 4581,
+          "sha256": "042bbaea4ed1e5250876f3e38918c1ca20d1711fd413e73ac7d8118b50507dab"
+        },
+        {
+          "path": "work/33c6d15f-4cd6-49f3-9c85-63b14b71980d.source",
+          "bytes": 1122,
+          "sha256": "ae815b4acefa98d3068a28736aaf5aa53524160f736dd7f26504e1f8ba9f60e8"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_repro.py::test_changed_data_does_not_pass_numeric_tolerance",
+      "outcome": "passed",
+      "seconds": 0.16605888599951868,
+      "test_file_sha256": "8607bc708646d3510a346c8813d6a1e880e55c08d458b33c8521ff6ca85fe845",
+      "reference_assertions": [],
+      "fixture_files": [
+        {
+          "path": "bundlework/repro.vurepro",
+          "bytes": 6755,
+          "sha256": "ef994029f1c4d6510923e463c8a2e6201292656d5f8f1a2d4852192a5a03f633"
+        },
+        {
+          "path": "f7f03fdb-1f63-4814-b757-412ae81c3ab5.vurepro",
+          "bytes": 6755,
+          "sha256": "ef994029f1c4d6510923e463c8a2e6201292656d5f8f1a2d4852192a5a03f633"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "e0f0c2d626eb947746861dc72a6434d1b39e08459f7662d9fe65a0b4e3efebdc"
+        },
+        {
+          "path": "project/commits/12f9e68d-e683-4a07-be11-bb3de7c6f9c6/manifest.json",
+          "bytes": 467,
+          "sha256": "8265ff1b85c2779187df36615b3ec42abc1b79f19601de2bce8f7c52391f9b23"
+        },
+        {
+          "path": "project/commits/625c4fbe-64a3-40bf-b04e-3e3492c16549/manifest.json",
+          "bytes": 8987,
+          "sha256": "5e7f7f00892be1bfa49fef6d9e362834fdf54e3e028029c533982f395d47d040"
+        },
+        {
+          "path": "project/commits/bd9bd3ab-e9c9-46eb-aa17-43c72910ef61/manifest.json",
+          "bytes": 6366,
+          "sha256": "2d7c5d72f0294c04d2739ab87085ff2986fa7bdd1462f2d8db3415a26e84768e"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 24576,
+          "sha256": "4ab0d431fe6f8ffe1a5ef1a0f1b7c76c96b4baeb7045f072e14c9f5e54b12346"
+        },
+        {
+          "path": "project/snapshots/8ea5498b-31e9-493e-9d4c-dcb0118b3824.parquet",
+          "bytes": 4300,
+          "sha256": "25bcd6457602b50e00e7a36c23d8a6be24f0ac8be8ab3a563ec682844f6ca1f6"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/0bd8206c-9c8e-4570-b768-57b87094d890.source",
+          "bytes": 838,
+          "sha256": "cf05cdd4ea1b7f008d8965e148d5efeea784f9716048c70b5befb91fd9a420ec"
+        },
+        {
+          "path": "work/bb6bfbae-9e5f-45b7-b2dc-f18f10d2fc21.dataset.parquet",
+          "bytes": 4300,
+          "sha256": "25bcd6457602b50e00e7a36c23d8a6be24f0ac8be8ab3a563ec682844f6ca1f6"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-16",
+  "environment": "ENV-66 locked CPython3.13.15",
+  "status": "passed",
+  "gates": [
+    {
+      "name": "docs",
+      "cmd": ".venv/bin/python scripts/check_docs.py",
+      "chunk_id": "988f8a",
+      "wall_time_seconds": 0.163014403,
+      "exit_code": 0,
+      "original_token_count": 19,
+      "output": "PASS: 76 phases, source requirements, evidence, progress and local links\n"
+    },
+    {
+      "name": "artifacts",
+      "cmd": ".venv/bin/python scripts/check_artifacts.py",
+      "chunk_id": "a29496",
+      "wall_time_seconds": 0.048265482,
+      "exit_code": 0,
+      "original_token_count": 27,
+      "output": "PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee\n"
+    },
+    {
+      "name": "learning",
+      "cmd": ".venv/bin/python scripts/check_learning.py",
+      "chunk_id": "fb972f",
+      "wall_time_seconds": 0.000008677,
+      "session_id": 27457,
+      "original_token_count": 17,
+      "output": "PASS: 406 offline articles; 190 UI bindings; all capability links\n",
+      "exit_code": 0
+    },
+    {
+      "name": "usability",
+      "cmd": ".venv/bin/python scripts/check_usability.py",
+      "chunk_id": "b6c353",
+      "wall_time_seconds": 0.00001549,
+      "session_id": 49805,
+      "original_token_count": 19,
+      "output": "PASS: 406 articles; 963 named fields; 189 finished core English messages\n",
+      "exit_code": 0
+    },
+    {
+      "name": "ruff-check",
+      "cmd": ".venv/bin/ruff check src tests scripts",
+      "chunk_id": "daed4d",
+      "wall_time_seconds": 0.000008567,
+      "exit_code": 0,
+      "original_token_count": 5,
+      "output": "All checks passed!\n"
+    },
+    {
+      "name": "ruff-format",
+      "cmd": ".venv/bin/ruff format --check src tests scripts",
+      "chunk_id": "925019",
+      "wall_time_seconds": 0.000011652,
+      "exit_code": 0,
+      "original_token_count": 7,
+      "output": "476 files already formatted\n"
+    },
+    {
+      "name": "document-unit",
+      "cmd": ".venv/bin/python -m unittest discover -s tests -p test_document_contracts.py",
+      "chunk_id": "a18d78",
+      "wall_time_seconds": 0.000004909,
+      "session_id": 65204,
+      "original_token_count": 29,
+      "output": "..............\n----------------------------------------------------------------------\nRan 14 tests in 14.734s\n\nOK\n",
+      "exit_code": 0
+    }
+  ]
+}

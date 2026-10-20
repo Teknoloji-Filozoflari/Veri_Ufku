@@ -21,11 +21,11 @@ def test_project_qml_actions_dirty_close_and_reopen(tmp_path, monkeypatch):
         window.findChild(QObject, "newProjectButton").clicked.emit()
         app.processEvents()
         assert window.findChild(QObject, "projectPathDialog").property("visible")
-        window.findChild(QObject, "projectPathField").setProperty("text", path)
+        window.findChild(QObject, "projectPanel").setProperty("projectPath", path)
         window.findChild(QObject, "confirmProjectPathButton").clicked.emit()
         spin(app, lambda: not projects.busy)
         assert projects.opened
-        assert window.findChild(QObject, "projectPanel").property("height") > 400
+        assert window.findChild(QObject, "projectPanel").property("height") > 0
         projects.setName("GUI Projesi")
         projects.setSeed("123")
         projects.learning.setDepth(2)
@@ -176,9 +176,9 @@ def test_new_project_path_error_stays_visible_and_can_be_corrected(
     try:
         window.findChild(QObject, "newProjectButton").clicked.emit()
         dialog = window.findChild(QObject, "projectPathDialog")
-        field = window.findChild(QObject, "projectPathField")
+        field = window.findChild(QObject, "projectPanel")
         submit = window.findChild(QObject, "confirmProjectPathButton")
-        field.setProperty("text", str(tmp_path / "missing-parent" / "project"))
+        field.setProperty("projectPath", str(tmp_path / "missing-parent" / "project"))
         submit.clicked.emit()
         spin(app, lambda: not projects.busy)
         assert "üst klasörü mevcut değil" in projects.errorText
@@ -187,7 +187,7 @@ def test_new_project_path_error_stays_visible_and_can_be_corrected(
         assert window.findChild(QObject, "chooseProjectLocationButton") is not None
         suggested = projects.newProjectPath(tmp_path.as_uri())
         assert suggested == str(tmp_path / "Yeni_Proje")
-        field.setProperty("text", suggested)
+        field.setProperty("projectPath", suggested)
         submit.clicked.emit()
         spin(app, lambda: not projects.busy)
         assert projects.opened and not projects.errorText

@@ -14,7 +14,9 @@ class SourceRequest:
 class SourceAdapter(Protocol):
     adapter_id: str
 
-    def validate_source(self, request: SourceRequest) -> None: ...
+    def validate_source(
+        self, request: SourceRequest, control: object = None
+    ) -> None: ...
 
     def inspect(self, snapshot: dict, settings: object, control: object) -> dict: ...
 

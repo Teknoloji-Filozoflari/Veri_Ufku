@@ -1,0 +1,31 @@
+{
+  "schema": "Veri_UfkuPlugin/v1",
+  "api_version": 1,
+  "id": "example-mean",
+  "version": "1.0.0",
+  "python": "3.13",
+  "entry": "plugin.py:run",
+  "code_sha256": "ae54d85877bfc81e88f34407377c97a6681c87d022fb23c303a647f891d27b02",
+  "permissions": [
+    "dataset.read",
+    "result.emit",
+    "python.same-user"
+  ],
+  "dependencies": {},
+  "capability": {
+    "id": "mean",
+    "kind": "stat",
+    "title": "Örnek aritmetik ortalama",
+    "method_version": 1,
+    "input_schema": "PluginInput/v1",
+    "parameters": {},
+    "output_schema": "PluginOutput/v1"
+  },
+  "learning": {
+    "id": "example-mean-help",
+    "version": 1,
+    "title": "Örnek ortalama eklentisi",
+    "summary": "Seçili sayısal kolonun toplamı gözlem sayısına bölünür; null dışlanır.",
+    "limitations": "Ağırlıksız, finite numeric, en fazla10000satır; güven aralığı/hipotez testi değildir. Kod trusted same-user Python, OS sandbox yok."
+  }
+}

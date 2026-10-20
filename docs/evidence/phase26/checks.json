@@ -1,0 +1,234 @@
+{
+  "environment": "ENV-26",
+  "results": [
+    {
+      "name": "sync",
+      "command": [
+        "uv",
+        "sync",
+        "--locked",
+        "--group",
+        "dev"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:00:42.749083+00:00",
+      "seconds": 0.009371490999910748
+    },
+    {
+      "name": "format",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "format",
+        "src/veri_ufku/logging_setup.py",
+        "src/veri_ufku/importers/ods.py",
+        "src/veri_ufku/importers/registry.py",
+        "src/veri_ufku/storage/project_store.py",
+        "src/veri_ufku/ui/projects.py",
+        "tests/test_security_audit.py",
+        "tests/test_security_gui.py",
+        "scripts/measure_phase26.py"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:00:42.766267+00:00",
+      "seconds": 0.017024329001287697
+    },
+    {
+      "name": "docs",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_docs.py"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:00:42.833227+00:00",
+      "seconds": 0.06681110700083082
+    },
+    {
+      "name": "artifacts",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_artifacts.py"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:00:42.956272+00:00",
+      "seconds": 0.12289545000021462
+    },
+    {
+      "name": "learning",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_learning.py"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:00:43.016448+00:00",
+      "seconds": 0.059881987999688135
+    },
+    {
+      "name": "usability",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_usability.py"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:00:43.098389+00:00",
+      "seconds": 0.0816459859997849
+    },
+    {
+      "name": "ruff",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:00:43.117210+00:00",
+      "seconds": 0.01855429900024319
+    },
+    {
+      "name": "format-check",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:00:43.136537+00:00",
+      "seconds": 0.01916760099993553
+    },
+    {
+      "name": "targeted",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "pytest",
+        "tests/test_security_audit.py",
+        "tests/test_security_gui.py",
+        "tests/test_projects.py",
+        "tests/test_project_gui.py",
+        "tests/test_phase11_formats.py",
+        "tests/test_structured_import.py",
+        "tests/test_delimited.py",
+        "tests/test_jobs.py",
+        "tests/test_exports.py",
+        "tests/test_lifecycle.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:01:05.685033+00:00",
+      "seconds": 22.548329803001252
+    },
+    {
+      "name": "pytest",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "pytest",
+        "-q",
+        "--junitxml=docs/evidence/phase26/pytest.xml"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:05:01.145084+00:00",
+      "seconds": 235.45971295399795
+    },
+    {
+      "name": "reliability",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/audit_reliability.py",
+        "--junit",
+        "docs/evidence/phase26/pytest.xml",
+        "--output",
+        "docs/evidence/phase26/review.json"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:05:01.194225+00:00",
+      "seconds": 0.04893598499984364
+    },
+    {
+      "name": "unittest",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:05:04.441097+00:00",
+      "seconds": 3.246574173001136
+    },
+    {
+      "name": "system-docs",
+      "command": [
+        "python3",
+        "scripts/check_docs.py"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:05:04.502480+00:00",
+      "seconds": 0.06103888500001631
+    },
+    {
+      "name": "system-unittest",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 1,
+      "date": "2026-10-09T22:05:06.090828+00:00",
+      "seconds": 1.588046292999934
+    },
+    {
+      "name": "entry",
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "veri-ufku",
+        "--smoke-test"
+      ],
+      "exit_code": 0,
+      "date": "2026-10-09T22:05:06.844134+00:00",
+      "seconds": 0.7529628449992742
+    }
+  ]
+}

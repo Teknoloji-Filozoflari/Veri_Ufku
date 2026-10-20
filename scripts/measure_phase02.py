@@ -71,18 +71,13 @@ def main():
         try:
             wait(lambda: not window.grabWindow().isNull())
             for width, height, scale, theme, section in [
-                (1366, 900, 1.0, "light", 0),
                 (1366, 900, 1.0, "dark", 0),
-                (720, 560, 1.0, "light", 0),
                 (720, 560, 1.0, "dark", 0),
-                (1024, 768, 1.25, "system", 1),
-                (1024, 768, 1.5, "light", 3),
-                (720, 560, 2.0, "dark", 0),
+                (1024, 768, 1.0, "dark", 1),
+                (1024, 768, 1.0, "dark", 3),
             ]:
                 window.setWidth(width)
                 window.setHeight(height)
-                preferences.setTextScale(scale)
-                preferences.setTheme(theme)
                 window.setProperty("selectedSection", section)
                 QTest.qWait(150)
                 image = window.grabWindow()
@@ -102,7 +97,6 @@ def main():
                         "workspace_height": workspace.height(),
                     }
                 )
-            preferences.setTextScale(1.0)
             window.setWidth(1366)
             window.setHeight(900)
             window.setProperty("selectedSection", 0)

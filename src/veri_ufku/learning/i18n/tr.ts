@@ -1,4 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
 <TS version="2.1" language="tr_TR" sourcelanguage="en_US">
   <context>
     <name>Main</name>
@@ -258,28 +259,8 @@
       <translation>Proje açık değil · Veri yüklenmedi</translation>
     </message>
     <message>
-      <source>Theme</source>
-      <translation>Tema</translation>
-    </message>
-    <message>
       <source>View</source>
       <translation>Görünüm</translation>
-    </message>
-    <message>
-      <source>Text size</source>
-      <translation>Yazı boyutu</translation>
-    </message>
-    <message>
-      <source>System</source>
-      <translation>Sistem</translation>
-    </message>
-    <message>
-      <source>Light</source>
-      <translation>Açık</translation>
-    </message>
-    <message>
-      <source>Dark</source>
-      <translation>Koyu</translation>
     </message>
     <message>
       <source>Beginner</source>
@@ -382,8 +363,8 @@
       <translation>Altyapı denemesi · Veri analizi değildir</translation>
     </message>
     <message>
-      <source>Theme, view and text size are saved on this computer.</source>
-      <translation>Tema, görünüm ve yazı boyutu bu bilgisayarda saklanır.</translation>
+      <source>View is saved on this computer.</source>
+      <translation>Görünüm bu bilgisayarda saklanır.</translation>
     </message>
     <message>
       <source>Task progress</source>
@@ -429,5 +410,8 @@
       <source>Spot unusual records</source>
       <translation>Sıra dışı kayıtları bulmak</translation>
     </message>
+  </context>
+  <context>
+    <name>Main</name>
   </context>
 </TS>

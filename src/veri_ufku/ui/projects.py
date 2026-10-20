@@ -10,12 +10,14 @@ from PySide6.QtCore import (
     Property,
     QFileSystemWatcher,
     QObject,
+    QStandardPaths,
     QTimer,
     QUrl,
     Signal,
     Slot,
 )
 
+from veri_ufku.config import AppPaths
 from veri_ufku.storage.project_model import ProjectError, decode, encode, new_state
 from veri_ufku.storage.project_store import ProjectStore
 
@@ -53,9 +55,10 @@ def project_error_text(error):
     return f"Proje işlemi tamamlanamadı (hata türü: {code}). Mevcut dosyalar korundu; bu hata türünü destek için paylaşabilirsiniz."
 
 
-def project_task(action, store, state, path, source_id, portable):
+def project_task(action, store, state, path, source_id, portable, recovery_commit=None):
     """I/O thread returns plain state; never invokes Qt or publishes GUI properties."""
     candidate = None
+    recovery = None
     try:
         if action == "create":
             candidate = ProjectStore.create(path, state["name"])
@@ -78,11 +81,13 @@ def project_task(action, store, state, path, source_id, portable):
             elif action == "relink":
                 store.relink(source_id, path)
             elif action == "restore":
-                store.restore_autosave()
+                store.restore_autosave(recovery_commit)
+            elif action == "previewRecovery":
+                recovery = store.preview_autosave()
             elif action != "refresh":
                 raise ProjectError("Bilinmeyen proje eylemi.")
         result = candidate or store
-        return result, copy.deepcopy(result.state), result.source_statuses()
+        return result, copy.deepcopy(result.state), result.source_statuses(), recovery
     except BaseException:
         if candidate:
             candidate.close()
@@ -101,6 +106,7 @@ class ProjectController(QObject):
             max_workers=1, thread_name_prefix="project-io"
         )
         self.future = None
+        self._closing = False
         self.import_active = False
         self.dataset_active = False
         self._statuses = {}
@@ -118,22 +124,35 @@ class ProjectController(QObject):
         self._error = ""
         self._message = "Metadata açılışı kaynak veriyi yeniden işlemez."
         self._recent = []
+        self._recent_names = {}
         self._recent_writable = True
         try:
             path = self.config / "recent-projects.json"
             if path.exists():
                 raw = path.read_bytes()
                 data = decode(raw)
-                if (
-                    not isinstance(data, list)
-                    or len(data) > 20
-                    or any(
-                        not isinstance(p, str) or not p.startswith("/") or len(p) > 4096
-                        for p in data
-                    )
-                ):
+                if not isinstance(data, list) or len(data) > 20:
                     raise ProjectError("Son projeler kaydı geçersiz.")
-                self._recent = data
+                loaded_paths, loaded_names = [], {}
+                for entry in data:
+                    item = (
+                        dict(path=entry, name=Path(entry).name[:200] or "Proje")
+                        if isinstance(entry, str)
+                        else entry
+                    )
+                    if (
+                        not isinstance(item, dict)
+                        or set(item) != {"path", "name"}
+                        or not isinstance(item["path"], str)
+                        or not item["path"].startswith("/")
+                        or len(item["path"]) > 4096
+                        or not isinstance(item["name"], str)
+                        or not 1 <= len(item["name"]) <= 200
+                    ):
+                        raise ProjectError("Son projeler kaydı geçersiz.")
+                    loaded_paths.append(item["path"])
+                    loaded_names[item["path"]] = item["name"]
+                self._recent, self._recent_names = loaded_paths, loaded_names
         except (OSError, ValueError):
             self._recent_writable = False
             self._error = "Son projeler okunamadı; mevcut liste dosyası korundu."
@@ -163,7 +182,49 @@ class ProjectController(QObject):
 
     @Slot(str, result=str)
     def newProjectPath(self, folder):
-        return str(self.local(folder) / "Yeni_Proje")
+        parent = self.local(folder)
+        for index in range(1, 1001):
+            candidate = parent / ("Yeni_Proje" if index == 1 else f"Yeni_Proje_{index}")
+            if not candidate.exists() and not candidate.is_symlink():
+                return str(candidate)
+        raise ProjectError(
+            "Bu klasörde çok fazla proje adı var; başka bir konum seçin."
+        )
+
+    @Property("QVariantList", constant=True)
+    def folderPlaces(self):
+        return [
+            dict(
+                name="Uygulama verileri",
+                url=QUrl.fromLocalFile(str(AppPaths.discover().data)).toString(),
+            )
+        ] + [
+            dict(
+                name=name,
+                url=QUrl.fromLocalFile(
+                    QStandardPaths.writableLocation(kind)
+                ).toString(),
+            )
+            for name, kind in (
+                ("Ev klasörü", QStandardPaths.HomeLocation),
+                ("Belgeler", QStandardPaths.DocumentsLocation),
+                ("Masaüstü", QStandardPaths.DesktopLocation),
+                ("İndirilenler", QStandardPaths.DownloadLocation),
+            )
+            if QStandardPaths.writableLocation(kind)
+        ]
+
+    @Slot(str, result=str)
+    def parentFolder(self, value):
+        return QUrl.fromLocalFile(str(self.local(value).parent)).toString()
+
+    @Slot(str, result=str)
+    def folderName(self, value):
+        return self.local(value).name or "/"
+
+    @Slot(str, result=str)
+    def folderDisplay(self, value):
+        return str(self.local(value))
 
     def _run(self, action):
         try:
@@ -181,6 +242,7 @@ class ProjectController(QObject):
     def _remember(self):
         path = str(self.store.root)
         self._recent = [path] + [p for p in self._recent if p != path][:19]
+        self._recent_names[path] = self.saved["name"]
         if not self._recent_writable:
             self._message += " Son projeler dosyası yazılamıyor."
             return
@@ -189,7 +251,12 @@ class ProjectController(QObject):
 
             file = QSaveFile(str(self.config / "recent-projects.json"))
             file.setDirectWriteFallback(False)
-            raw = encode(self._recent)
+            raw = encode(
+                [
+                    dict(path=p, name=self._recent_names.get(p, Path(p).name))
+                    for p in self._recent
+                ]
+            )
             if (
                 not file.open(QIODevice.WriteOnly)
                 or file.write(raw) != len(raw)
@@ -202,6 +269,7 @@ class ProjectController(QObject):
             )
 
     def _adopt(self, store, statuses=None):
+        self._recovery_preview = {}
         previous = self.store
         self.store = store
         self.draft = store.state
@@ -219,8 +287,12 @@ class ProjectController(QObject):
         self._remember()
 
     @Property(bool, notify=changed)
-    def busy(self):
+    def projectTaskBusy(self):
         return self.future is not None or self.import_active or self.dataset_active
+
+    @Property(bool, notify=changed)
+    def busy(self):
+        return self.projectTaskBusy or getattr(self, "external_busy", lambda: False)()
 
     @Property(bool, notify=changed)
     def dirty(self):
@@ -256,9 +328,20 @@ class ProjectController(QObject):
     def message(self):
         return self._message
 
+    @Property(dict, notify=changed)
+    def recoveryPreview(self):
+        return getattr(self, "_recovery_preview", {})
+
     @Property("QStringList", notify=changed)
     def recent(self):
         return self._recent
+
+    @Property("QVariantList", notify=changed)
+    def recentProjects(self):
+        return [
+            dict(path=p, name=self._recent_names.get(p, Path(p).name))
+            for p in self._recent
+        ]
 
     @Property("QVariantList", notify=changed)
     def sources(self):
@@ -270,14 +353,29 @@ class ProjectController(QObject):
             return "Kaynak bağlı değil."
         labels = {
             "unchanged": "aynı veri",
+            "captured": "yerel bağlantı snapshot'ı sağlam; uzak kaynak tazeliği bilinmiyor",
             "missing": "kaynak eksik — yeniden bağlayın",
             "changed": "kaynak değişmiş — eski sonuçlar güncel değil",
             "unavailable": "kaynak doğrulanamadı",
         }
         statuses = self._statuses
+
+        def source_label(source):
+            if not source.get("connector"):
+                return source["path"]
+            spec = source["connector"]["spec"]
+            destination = spec["endpoint"] or spec["bucket"]
+            selection = spec["object_key"] if spec["kind"] == "s3" else spec["table"]
+            return (
+                spec["kind"]
+                + " · "
+                + destination
+                + (" · " + selection if selection else "")
+            )
+
         return (
             "\n".join(
-                f"{s['path']} · {labels[statuses.get(s['id'], 'unavailable')]}"
+                f"{source_label(s)} · {labels[statuses.get(s['id'], 'unavailable')]}"
                 for s in self.sources
             )
             or "Kaynak bağlı değil. CSV/TSV dosyasını Veri ekranında içe aktarın."
@@ -292,7 +390,7 @@ class ProjectController(QObject):
                 f"{r['id']} · Veri sürümü: {', '.join(r['dataset_version_ids'])} · {'kaynakla uyumlu' if r['current'] else 'eski veri / güncel değil'}"
                 for r in self._result_statuses()
             )
-            or "Sonuç yok; analiz motoru henüz mevcut değil."
+            or "Henüz kaydedilmiş sonuç yok. Veri ekranında profil/kalite, İncele ekranında grafik oluşturabilirsiniz."
         )
 
     @Slot(str)
@@ -340,8 +438,10 @@ class ProjectController(QObject):
         def action():
             if not self.store:
                 raise ProjectError("Önce yeni bir proje oluşturun.")
+            self.store.state = copy.deepcopy(self.draft)
             self.store.save()
             self.saved = copy.deepcopy(self.draft)
+            self._remember()
             self._message = "Proje kaydedildi."
 
         return self._run(action)
@@ -351,6 +451,7 @@ class ProjectController(QObject):
         def action():
             if not self.store:
                 raise ProjectError("Önce proje oluşturun veya açın.")
+            self.store.state = copy.deepcopy(self.draft)
             self._adopt(self.store.save_as(self.local(path)))
 
         return self._run(action)
@@ -420,7 +521,8 @@ class ProjectController(QObject):
             dict(
                 r,
                 current=all(
-                    self._statuses.get(versions[v]["source_id"]) == "unchanged"
+                    self._statuses.get(versions[v]["source_id"])
+                    in ("unchanged", "captured")
                     and latest[versions[v]["dataset_id"]] == v
                     for v in r["dataset_version_ids"]
                 ),
@@ -429,6 +531,8 @@ class ProjectController(QObject):
         ]
 
     def _watch_sources(self):
+        if self._closing:
+            return
         current = self.watcher.files() + self.watcher.directories()
         if current:
             self.watcher.removePaths(current)
@@ -443,6 +547,8 @@ class ProjectController(QObject):
             self.watcher.addPaths(sorted(paths))
 
     def _source_changed(self, path):
+        if self._closing:
+            return
         self._statuses = {s["id"]: "unavailable" for s in self.draft["sources"]}
         self._refresh_pending = True
         self.changed.emit()
@@ -451,7 +557,7 @@ class ProjectController(QObject):
             self.request("refresh")
 
     def _scheduled(self):
-        if self.store and not self.busy:
+        if not self._closing and self.store and not self.busy:
             self.request("autosave" if self.dirty and not self.readOnly else "refresh")
 
     @Slot(str)
@@ -459,6 +565,8 @@ class ProjectController(QObject):
     @Slot(str, str, str)
     @Slot(str, str, str, bool)
     def request(self, action, value="", source_id="", portable=False):
+        if self._closing:
+            return
         if self.busy:
             self._error = "Proje işlemi devam ediyor. Tamamlanmasını bekleyin."
             self.changed.emit()
@@ -482,6 +590,7 @@ class ProjectController(QObject):
                 path,
                 source_id,
                 portable,
+                self.recoveryPreview.get("commit_id") if action == "restore" else None,
             )
             self._error = ""
             self._message = "Proje işlemi sürüyor… Kaynak dosyana yazılmıyor."
@@ -490,13 +599,25 @@ class ProjectController(QObject):
         self.changed.emit()
 
     def _poll(self):
+        # Dataset workers publish outside this controller executor. Directory events
+        # arriving while they run must still get a read-only freshness recheck.
+        if (
+            self.future is None
+            and self._refresh_pending
+            and self.store
+            and not self.busy
+        ):
+            self._refresh_pending = False
+            self.request("refresh")
         if self.future is None or not self.future.done():
             return
         future, action = self.future, self._action
         self.future = None
         success = False
         try:
-            result, state, statuses = future.result()
+            result, state, statuses, recovery = future.result()
+            if recovery is not None:
+                self._recovery_preview = recovery
             if action in {"create", "open", "openRecover", "saveAs", "recover"}:
                 self._adopt(result, statuses)
             else:
@@ -511,8 +632,10 @@ class ProjectController(QObject):
                 self.store.state = self.draft
                 if action == "save":
                     self.saved = self._submitted
+                    self._remember()
                 if action == "restore":
                     self.learning.setDepth(state["help_preferences"].get("depth", 0))
+                    self._recovery_preview = {}
                 self._message = {
                     "save": "Proje kaydedildi.",
                     "autosave": "Ayrı kurtarma kaydı güncellendi; manuel kayıt korunuyor.",
@@ -534,6 +657,11 @@ class ProjectController(QObject):
             self.request("refresh")
 
     def shutdown(self):
+        self._closing = True
+        self.watcher.blockSignals(True)
+        paths = self.watcher.files() + self.watcher.directories()
+        if paths:
+            self.watcher.removePaths(paths)
         self.timer.stop()
         self.poller.stop()
         self._refresh_pending = False

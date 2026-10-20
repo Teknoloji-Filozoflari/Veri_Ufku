@@ -1,0 +1,271 @@
+{
+  "id" : "io.qt.PySide.BaseApp",
+  "branch" : "6.11",
+  "runtime" : "org.kde.Platform",
+  "runtime-version" : "6.11",
+  "runtime-commit" : "4da4797cdce707e1db7bc25720ac5e1f56818c087621f3737ea5482b0ed53c18",
+  "sdk" : "org.kde.Sdk",
+  "sdk-commit" : "260215c6d1e480fa1afd8c313e5f7c3cb53987bbd09723455c0f831c9d8cde2d",
+  "base" : "io.qt.qtwebengine.BaseApp",
+  "base-version" : "6.11",
+  "base-commit" : "9f76480c87f311f3dd00d3fcda48b7718544933543d297e95fb9b5045467629c",
+  "build-options" : {
+    "env" : {
+      "LLVM_INSTALL_DIR" : "/usr/lib/sdk/llvm21",
+      "SHIBOKEN_DEBUG_LEVEL" : "full"
+    },
+    "append-path" : "/usr/lib/sdk/llvm21/bin",
+    "append-ld-library-path" : "/usr/lib/sdk/llvm21/lib"
+  },
+  "modules" : [
+    {
+      "name" : "python3-requirements",
+      "buildsystem" : "simple",
+      "modules" : [
+        {
+          "name" : "python3-packaging",
+          "buildsystem" : "simple",
+          "sources" : [
+            {
+              "url" : "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl",
+              "sha256" : "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+              "x-checker-data" : {
+                "type" : "pypi",
+                "name" : "packaging",
+                "packagetype" : "bdist_wheel"
+              },
+              "type" : "file"
+            }
+          ],
+          "cleanup" : [
+            "/bin",
+            "/share/man/man1"
+          ],
+          "build-commands" : [
+            "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"packaging==25.0\" --no-build-isolation --ignore-installed"
+          ]
+        },
+        {
+          "name" : "python3-build",
+          "buildsystem" : "simple",
+          "sources" : [
+            {
+              "url" : "https://files.pythonhosted.org/packages/cb/8c/2b30c12155ad8de0cf641d76a8b396a16d2c36bc6d50b621a62b7c4567c1/build-1.3.0-py3-none-any.whl",
+              "sha256" : "7145f0b5061ba90a1500d60bd1b13ca0a8a4cebdd0cc16ed8adf1c0e739f43b4",
+              "x-checker-data" : {
+                "type" : "pypi",
+                "name" : "build",
+                "packagetype" : "bdist_wheel"
+              },
+              "type" : "file"
+            },
+            {
+              "url" : "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl",
+              "sha256" : "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+              "x-checker-data" : {
+                "type" : "pypi",
+                "name" : "packaging",
+                "packagetype" : "bdist_wheel"
+              },
+              "type" : "file"
+            },
+            {
+              "url" : "https://files.pythonhosted.org/packages/bd/24/12818598c362d7f300f18e74db45963dbcb85150324092410c8b49405e42/pyproject_hooks-1.2.0-py3-none-any.whl",
+              "sha256" : "9e5c6bfa8dcc30091c74b0cf803c81fdd29d94f01992a7707bc97babb1141913",
+              "x-checker-data" : {
+                "type" : "pypi",
+                "name" : "pyproject_hooks",
+                "packagetype" : "bdist_wheel"
+              },
+              "type" : "file"
+            }
+          ],
+          "cleanup" : [
+            "/bin",
+            "/share/man/man1"
+          ],
+          "build-commands" : [
+            "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"build==1.3.0\" --no-build-isolation"
+          ]
+        },
+        {
+          "name" : "python3-distro",
+          "buildsystem" : "simple",
+          "sources" : [
+            {
+              "url" : "https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl",
+              "sha256" : "7bffd925d65168f85027d8da9af6bddab658135b840670a223589bc0c8ef02b2",
+              "x-checker-data" : {
+                "type" : "pypi",
+                "name" : "distro",
+                "packagetype" : "bdist_wheel"
+              },
+              "type" : "file"
+            }
+          ],
+          "cleanup" : [
+            "/bin",
+            "/share/man/man1"
+          ],
+          "build-commands" : [
+            "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"distro==1.9.0\" --no-build-isolation"
+          ]
+        },
+        {
+          "name" : "python3-patchelf",
+          "buildsystem" : "simple",
+          "sources" : [
+            {
+              "only-arches" : [
+                "x86_64"
+              ],
+              "url" : "https://files.pythonhosted.org/packages/2d/d3/92c27afa61ab5259d35f6283f1d401d61019d56a77ca00d29ba77ffd36df/patchelf-0.17.2.0-py2.py3-none-manylinux_2_5_x86_64.manylinux1_x86_64.musllinux_1_1_x86_64.whl",
+              "sha256" : "1b9fd14f300341dc020ae05c49274dd1fa6727eabb4e61dd7fb6fb3600acd26e",
+              "x-checker-data" : {
+                "type" : "pypi",
+                "name" : "patchelf",
+                "packagetype" : "bdist_wheel"
+              },
+              "type" : "file"
+            },
+            {
+              "only-arches" : [
+                "aarch64"
+              ],
+              "url" : "https://files.pythonhosted.org/packages/cb/c8/059d8b660636951f7de76f04920b2ef759f4e1ed354aab452cbdc73d0a0b/patchelf-0.17.2.0-py2.py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.musllinux_1_1_aarch64.whl",
+              "sha256" : "b8d86f32e1414d6964d5d166ddd2cf829d156fba0d28d32a3bd0192f987f4529",
+              "x-checker-data" : {
+                "type" : "pypi",
+                "name" : "patchelf",
+                "packagetype" : "bdist_wheel"
+              },
+              "type" : "file"
+            }
+          ],
+          "cleanup" : [
+            "/bin",
+            "/share/man/man1"
+          ],
+          "build-commands" : [
+            "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"patchelf==0.17.2\" --no-build-isolation"
+          ]
+        },
+        {
+          "name" : "python3-numpy",
+          "buildsystem" : "simple",
+          "sources" : [
+            {
+              "only-arches" : [
+                "x86_64"
+              ],
+              "url" : "https://files.pythonhosted.org/packages/f5/10/ca162f45a102738958dcec8023062dad0cbc17d1ab99d68c4e4a6c45fb2b/numpy-2.3.5-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+              "sha256" : "11e06aa0af8c0f05104d56450d6093ee639e15f24ecf62d417329d06e522e017",
+              "x-checker-data" : {
+                "type" : "pypi",
+                "name" : "numpy",
+                "packagetype" : "bdist_wheel"
+              },
+              "type" : "file"
+            },
+            {
+              "only-arches" : [
+                "aarch64"
+              ],
+              "url" : "https://files.pythonhosted.org/packages/95/03/dc0723a013c7d7c19de5ef29e932c3081df1c14ba582b8b86b5de9db7f0f/numpy-2.3.5-cp313-cp313-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+              "sha256" : "9c75442b2209b8470d6d5d8b1c25714270686f14c749028d2199c54e29f20b4d",
+              "x-checker-data" : {
+                "type" : "pypi",
+                "name" : "numpy",
+                "packagetype" : "bdist_wheel"
+              },
+              "type" : "file"
+            }
+          ],
+          "cleanup" : [
+            "/bin",
+            "/share/man/man1"
+          ],
+          "build-commands" : [
+            "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"numpy==2.3.5\" --no-build-isolation"
+          ]
+        },
+        {
+          "name" : "python3-PyOpenGL",
+          "buildsystem" : "simple",
+          "sources" : [
+            {
+              "url" : "https://files.pythonhosted.org/packages/de/e4/1ba6f44e491c4eece978685230dde56b14d51a0365bc1b774ddaa94d14cd/pyopengl-3.1.10-py3-none-any.whl",
+              "sha256" : "794a943daced39300879e4e47bd94525280685f42dbb5a998d336cfff151d74f",
+              "x-checker-data" : {
+                "type" : "pypi",
+                "name" : "PyOpenGL",
+                "packagetype" : "bdist_wheel"
+              },
+              "type" : "file"
+            }
+          ],
+          "cleanup" : [
+            "/bin",
+            "/share/man/man1"
+          ],
+          "build-commands" : [
+            "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"PyOpenGL\" --no-build-isolation"
+          ]
+        }
+      ],
+      "build-commands" : []
+    },
+    {
+      "name" : "pyside-setup",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "url" : "https://code.qt.io/pyside/pyside-setup.git",
+          "commit" : "bd13ae01c34bd018aa53f29b6044043a255cf9e0",
+          "type" : "git"
+        }
+      ],
+      "build-commands" : [
+        "python3 setup.py build --qtpaths=/usr/bin/qtpaths --ignore-git --parallel=8 --log-level=verbose --flatpak",
+        "python3 create_wheels.py --build-dir ./build/qfp-*-release",
+        "rm -rf ./dist/pyside6*examples*.whl",
+        "pip install ./dist/*.whl --prefix=${FLATPAK_DEST}",
+        "install -Dm755 /usr/lib/sdk/llvm21/lib/libLLVM.so.21.1 ${FLATPAK_DEST}/lib/",
+        "install -Dm755 /usr/lib/sdk/llvm21/lib/libclang-cpp.so.21.1 ${FLATPAK_DEST}/lib/",
+        "install -Dm755 /usr/lib/sdk/llvm21/lib/libclang.so.21.1 ${FLATPAK_DEST}/lib/",
+        "ln -s libLLVM.so.21.1 ${FLATPAK_DEST}/lib/libLLVM.so.21",
+        "ln -s libLLVM.so.21.1 ${FLATPAK_DEST}/lib/libLLVM.so",
+        "ln -s libclang-cpp.so.21.1 ${FLATPAK_DEST}/lib/libclang-cpp.so.21",
+        "ln -s libclang-cpp.so.21.1 ${FLATPAK_DEST}/lib/libclang-cpp.so",
+        "ln -s libclang.so.21.1 ${FLATPAK_DEST}/lib/libclang.so.21",
+        "ln -s libclang.so.21.1 ${FLATPAK_DEST}/lib/libclang.so",
+        "rm -rf ${FLATPAK_DEST}/lib/python*/site-packages/PySide6/examples",
+        "rm -rf ${FLATPAK_DEST}/lib/python*/site-packages/pyside6_examples-*.dist-info"
+      ]
+    },
+    {
+      "name" : "polish",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "path" : "cleanup.sh",
+          "type" : "file"
+        },
+        {
+          "path" : "io.qt.PySide.BaseApp.metainfo.xml",
+          "type" : "file"
+        }
+      ],
+      "build-commands" : [
+        "mv ${FLATPAK_DEST}/cleanup-BaseApp{,-QtWebEngine}.sh",
+        "install -Dm755 cleanup.sh ${FLATPAK_DEST}/cleanup-BaseApp.sh",
+        "install -Dm644 ${FLATPAK_ID}.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo/"
+      ]
+    }
+  ],
+  "separate-locales" : false,
+  "sdk-extensions" : [
+    "org.freedesktop.Sdk.Extension.llvm21"
+  ],
+  "source-date-epoch" : 1321009871
+}

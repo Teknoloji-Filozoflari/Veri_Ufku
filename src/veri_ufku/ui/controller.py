@@ -93,7 +93,11 @@ class ShellController(QObject):
 
     @Slot(str)
     def start(self, capability_id):
-        if self._active or self._closing:
+        if (
+            self._active
+            or self._closing
+            or not getattr(self, "admission", lambda: True)()
+        ):
             return
         self._result, self._error, self._progress = "", "", -1
         try:
@@ -132,6 +136,11 @@ class ShellController(QObject):
         self._closing, self._state = True, "closing"
         self.session.manager.request_shutdown()
         self.changed.emit()
+
+    def dispose(self):
+        """Stop GUI polling before releasing the shell or its Qt engine."""
+        self._timer.stop()
+        self.session.manager.shutdown()
 
     @Slot()
     def poll(self):

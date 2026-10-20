@@ -164,14 +164,11 @@ def run(args):
                 "chain",
             )
             wait(app, ops, record)
-            prefs = engine.rootContext().contextProperty("preferences")
             flick = window.findChild(QObject, "workspace").property("contentItem")
             for width, height, theme, scale in [
-                (1366, 900, "light", 1.0),
-                (720, 560, "dark", 2.0),
+                (1366, 900, "dark", 1.0),
+                (720, 560, "dark", 1.0),
             ]:
-                prefs.setTheme(theme)
-                prefs.setTextScale(scale)
                 window.setWidth(width)
                 window.setHeight(height)
                 flick.setProperty("contentY", 0)

@@ -62,24 +62,30 @@ def test_cleaning_qml_methods_copy_leakage_and_atomic_errors(tmp_path, monkeypat
                 window.findChild(QObject, "cleaningAddMapping").clicked.emit()
             if index == 7:
                 field("cleaningOptions", "groups", [cols["group"]])
+            spin(
+                app,
+                lambda: window.findChild(QObject, "operationPreview").property(
+                    "enabled"
+                ),
+            )
             window.findChild(QObject, "operationPreview").clicked.emit()
-            spin(app, lambda: not ops.busy)
+            spin(app, lambda: not ops.busy and not projects.busy)
             assert not ops.errorText and ops.canApply, (index, ops.errorText)
             assert ops.previewResult["impact"]["scope"] == "full"
             window.findChild(QObject, "operationApply").clicked.emit()
-            spin(app, lambda: not ops.busy)
+            spin(app, lambda: not ops.busy and not projects.busy)
             assert not ops.errorText, ops.errorText
             applied = snapshot()
             ops.historyAction("undo")
-            spin(app, lambda: not ops.busy)
+            spin(app, lambda: not ops.busy and not projects.busy)
             assert snapshot().equals(initial)
             ops.historyAction("redo")
-            spin(app, lambda: not ops.busy)
+            spin(app, lambda: not ops.busy and not projects.busy)
             assert snapshot().equals(applied)
             assert projects.closeProject() and projects.open(str(tmp_path / "project"))
             assert snapshot().equals(applied)
             ops.historyAction("undo")
-            spin(app, lambda: not ops.busy)
+            spin(app, lambda: not ops.busy and not projects.busy)
         # Exercise selectable fill submethods, full-key dedup, backward fill and explicit IQR filtering through the form.
         for method in (1, 2, 3):
             field("cleaningMethod", "currentIndex", 0)
@@ -96,14 +102,20 @@ def test_cleaning_qml_methods_copy_leakage_and_atomic_errors(tmp_path, monkeypat
             )
             field("cleaningModeTie", "currentIndex", 1)
             field("cleaningValue", "text", "3")
+            spin(
+                app,
+                lambda: window.findChild(QObject, "operationPreview").property(
+                    "enabled"
+                ),
+            )
             window.findChild(QObject, "operationPreview").clicked.emit()
-            spin(app, lambda: not ops.busy)
+            spin(app, lambda: not ops.busy and not projects.busy)
             assert ops.canApply, ops.errorText
             ops.apply()
-            spin(app, lambda: not ops.busy)
+            spin(app, lambda: not ops.busy and not projects.busy)
             assert snapshot()["v"].to_list() == [1, 3, 3, 5]
             ops.historyAction("undo")
-            spin(app, lambda: not ops.busy)
+            spin(app, lambda: not ops.busy and not projects.busy)
             assert snapshot().equals(initial)
         for method in (3, 7, 8):
             field("cleaningOrder", "currentIndex", 2)
@@ -117,24 +129,30 @@ def test_cleaning_qml_methods_copy_leakage_and_atomic_errors(tmp_path, monkeypat
                 field("cleaningOptions", "groups", [cols["group"]])
             if method == 8:
                 field("cleaningOutlierAction", "currentIndex", 1)
+            spin(
+                app,
+                lambda: window.findChild(QObject, "operationPreview").property(
+                    "enabled"
+                ),
+            )
             window.findChild(QObject, "operationPreview").clicked.emit()
-            spin(app, lambda: not ops.busy)
+            spin(app, lambda: not ops.busy and not projects.busy)
             assert ops.canApply, ops.errorText
             ops.apply()
-            spin(app, lambda: not ops.busy)
+            spin(app, lambda: not ops.busy and not projects.busy)
             assert not ops.errorText
             ops.historyAction("undo")
-            spin(app, lambda: not ops.busy)
+            spin(app, lambda: not ops.busy and not projects.busy)
             assert snapshot().equals(initial)
         field("cleaningMethod", "currentIndex", 6)
         field("cleaningColumn", "currentIndex", 5)
         field("cleaningTarget", "currentIndex", 6)
         window.findChild(QObject, "operationPreview").clicked.emit()
-        spin(app, lambda: not ops.busy)
+        spin(app, lambda: not ops.busy and not projects.busy)
         assert ops.errorText and not ops.canApply and snapshot().equals(initial)
         field("cleaningOnError", "currentIndex", 1)
         window.findChild(QObject, "operationPreview").clicked.emit()
-        spin(app, lambda: not ops.busy)
+        spin(app, lambda: not ops.busy and not projects.busy)
         assert ops.previewResult["impact"]["parse_errors"] == 1
         assert ops.previewResult["impact"]["new_nulls"] == 1
         assert (
@@ -147,15 +165,15 @@ def test_cleaning_qml_methods_copy_leakage_and_atomic_errors(tmp_path, monkeypat
         p.update(method="mean")
         ops.previewCleaning("fill", json.dumps([cols["v"]]), json.dumps(p), "copy")
         ops.cancel()
-        spin(app, lambda: not ops.busy)
+        spin(app, lambda: not ops.busy and not projects.busy)
         assert projects.draft == before and not ops.previewResult
         # Median is learned on the whole dataset, separately from future ML fold fitting.
         p["method"] = "median"
         ops.previewCleaning("fill", json.dumps([cols["v"]]), json.dumps(p), "copy")
-        spin(app, lambda: not ops.busy)
+        spin(app, lambda: not ops.busy and not projects.busy)
         assert ops.canApply, ops.errorText
         ops.apply()
-        spin(app, lambda: not ops.busy)
+        spin(app, lambda: not ops.busy and not projects.busy)
         assert not ops.errorText and ops.leakageHistory
         version = data.dataset()["version_id"]
         assert projects.closeProject() and projects.open(str(tmp_path / "project"))

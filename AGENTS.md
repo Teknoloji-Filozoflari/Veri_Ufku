@@ -2,21 +2,16 @@
 
 Yalnız kullanıcının açıkça gönderdiği fazı uygula. Kaynak belgenin tamamı gelecek fazları başlatma yetkisi değildir. Ürün adı tam olarak Veri_Ufku. Bu bir Linux masaüstü uygulamasıdır; Python/PySide6/QML korunur.
 
-Her oturumda önce şu dosyaları oku:
-1. docs/PROJECT_RULES.md ve docs/UI_DESIGN_BRIEF.md
-2. docs/PRODUCT.md, docs/ARCHITECTURE.md ve docs/CORE_CONTRACTS.md
-3. docs/UX.md, docs/UI_REFERENCES.md ve docs/DESIGN_SYSTEM.md
-4. docs/ACCEPTANCE_POLICY.md, docs/REQUIREMENTS_MATRIX.md ve docs/PROGRESS.md
-5. docs/PHASE_PLAN.md, docs/DEVELOPMENT.md, ilgili ADR ve son kanıt kayıtları.
+Yeni oturum başlangıcında yalnız `AGENTS.md`, `docs/PROJECT_STATE.md` ve `docs/ROADMAP.md` oku. Projeyi baştan sona tarama; geçmiş bütün fazları ve kanıt dizinlerini yeniden okuma. Hafızadaki son durumu esas al, `git status` ile yerel değişiklikleri kontrol et ve yalnız aktif görev için belirtilen kaynak/test dosyalarını incele. Ayrıntılı kural, tasarım, sözleşme, matris veya ADR'yi ilgili değişiklik gerektirdiğinde hedefli oku.
 
-Profesyonel fazda ayrıca docs/PRO_PROGRESS.md; Faz 28'de üretilecek PRO_PRODUCT, PRO_ARCHITECTURE ve PRO_CAPABILITY_MATRIX belgeleri. Henüz olmayan belgeyi var sayma.
+Son teknik teslim Faz71 bounded yerel review/share: metadata-only/redacted sample/full logical-copy, secret/PII inclusion preview, schema/operation/params/run/learning diff, immutable subject+artifact hash review/checklist ve yalnız yeni ayrı fork restore. RowId/SourceRecordId/ColumnId/kaynak proje origin korunur; identity collisions açık, otomatik merge/ortak yazma yok. Full binary/model artifact taraması unsupported; server/SaaS yok.120source/120wheel odaklı regresyon; son privacy/review fix13source/13wheel ayrı ve2source/2wheel actual GUI; basic2GiB/full explicit4GiB. Default2GiB full generic-cancel ve source close/open ara failures korunur; son GUI tekrarları geçti, root cause kesin kapanmadı.408byte-eşit package. Tek registry/journal/ProjectStore/ComputeBudget/Provenance; immutable worker envelope/pinned paths, Qt/ACTIVE yok. Fork parent GUI executor thread'inde mevcut atomik protocol. Detay docs/PROJECT_STATE.md/E71. Teknik teslim/resmî kabul ayrı; önceki longheap/minHW/fiziksel/insan/AT/offlineinstaller/remoteCI açıkları korunur. Faz72 açık kullanıcı talimatı olmadan başlatılmaz.
 
 Kullanıcı talimatları önceliklidir. Kaynak dosyayı koru; otomatik veri değişikliği yapma. Faz durumu, yetenek olgunluğu, kapsam ve doğrulamayı ayrı tut. Matris ana kayıttır; özetleri eşleştir. Her kabul için kimlik, yol, ortam, tarih ve gerçek kanıt kaydet. Çalıştırılmayan kontrol başarılı değildir. Veri kaybı belirsizliğinde dur; rutin kararlarla ilerle.
 
-Faz 00 kontrolü: `python3 scripts/check_docs.py` ve `python3 -m unittest discover -s tests -v`. Analitik veya uygulama iskeleti Faz 00 kapsamında değildir. Sonraki fazlarda bu kontroller korunur, gereken gerçek testlerle genişletilir.
+Mevcut kullanıcı değişikliklerini silme/geri alma; açık yetki olmadan stage, commit veya push yapma. Hesap değişimi çalışma ağacını otomatik başka makineye taşımaz; untracked dosyalar da teslimin parçasıdır.
 
-Faz 01 ve sonraki oturumlarda gerçek kontroller README/docs/DEVELOPMENT.md komutlarıdır: kilitli dev kurulumu, check_docs/check_artifacts, Ruff check/format, pytest ve offscreen/software kurulu giriş noktası smoke. İlgili son kayıt docs/evidence/PHASE01.md ve ADR-005 okunmalı. Faz 01 kullanıcı masaüstü kabulü tamamlandı; remote CI 37500721689 başarı kanıtıyla kabul tamamlandı; sonraki fazı kendiliğinden başlatma.
+Tek Capability/SourceAdapter registry, ComputeBudget, Provenance ve ProjectStore atomik yayın protokolünü genişlet; ikinci kayıt sistemi oluşturma. Worker Qt nesnesi almaz ve ACTIVE yazmaz. DatasetVersion/ColumnId/RowId/SourceRecordId ve geri alma kökenini koru; salt okunur kaynak veya kullanıcı verisini sessizce dönüştürme.
 
-Faz02 gerçek kabuk, UI tercihleri, referans görsel incelemesi ve headless/Wayland kontrolleri uygulandı; son kayıt docs/evidence/PHASE02.md. Faz04 ve sonraki fazları kendiliğinden başlatma.
+Secret yalnız sistem keyring'inde; log/proje/export içinde gizli değer bulunmaz. Ağ eylemi açık kullanıcı eylemidir; eski snapshot açılışı ağ isteği yapmaz. Mevcut tasarım sistemi ve çevrimdışı yardım bağlarını koru; yeni ekran/yetenekte gerektiğinde `docs/LEARNING_CONTENT.md` sözleşmesini oku.
 
-Faz03 ve sonraki her yeni ekran/capability yardımı docs/LEARNING_CONTENT.md sözleşmesiyle eklenir; `uv run --frozen python scripts/check_learning.py` gerçek kontrol listesine dahildir. İlgili son kanıt docs/evidence/PHASE03.md. Faz04 kendiliğinden başlatılmaz.
+Gerçek kontrol komutları `docs/DEVELOPMENT.md` içinde. Uygulama testlerinde kilitli CPython3.13.15 `.venv` kullan; sistem Python sonucunu onunla karıştırma. İlgili kod değişikliğinde docs/artifacts/learning/usability, Ruff check/format, anlamlı pytest ve gerektiğinde kurulu wheel/offscreen smoke kapılarını çalıştır. Belge devrinde belge kontrolleri yeterlidir; mevcut uygulama test sonuçlarını yeniden çalıştırılmış gibi raporlama. Fiziksel masaüstü, insan/AT, minimum donanım, offline kurulum ve remote CI ayrı kanıtlardır.

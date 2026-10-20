@@ -1,0 +1,150 @@
+# Veri_Ufku — oturum devir hafızası
+
+Güncelleme: 2026-10-11, Europe/Istanbul. Proje: `/home/s-oktay/Belgeler/Veri_Ufku`.
+Bu kayıt hesap devri içindir; Faz32 uygulama yetkisi vermez.
+Yeni oturum önce yalnız [AGENTS](../AGENTS.md), bu dosya ve [ROADMAP](ROADMAP.md)
+ile başlasın; bütün repository/önceki fazlar yeniden taranmasın.
+
+## Son durum
+
+**Son tamamlanan teknik faz: 31.** Kullanıcı tamamlandığını bildirdi;
+F31-S001..005/P001..008 teknik kanıtları mevcut ve doğrulandı.
+Resmî faz kabulü aynı şey değildir: ana [matriste](REQUIREMENTS_MATRIX.md)
+Faz31 **sürüyor / deneysel / zorunlu**; önceki insan/AT/donanım/dağıtım
+kapıları açık. Bu devirde resmî durum değiştirilmedi.
+Faz32 uygulaması başlamadı; matris durumu **engelli / mevcut değil / isteğe bağlı**.
+
+## Faz31 teslimi ve dosyalar
+
+PostgreSQL, MySQL, MariaDB, yerel DuckDB, HTTP/REST ve S3 uyumlu nesne kaynağı
+aynı salt okunur capture → değişmez snapshot → önizleme → atomik import
+akışına bağlandı. TLS/keyring, bağlı sorgular, limit/timeout/iptal,
+pagination/retry/tutarlılık ve source provenance eklendi. Eski snapshot'ın
+import/reopen akışı ağa çıkmaz. Gelişmiş bağlantı formu ve beş çevrimdışı
+konu eklendi; kaynak/kurulu wheel GUI ve temel ağsız uygulama sınandı.
+
+Faz31'e ait doğrulanabilen başlıca yeni/değiştirilen dosyalar (bu liste
+Git diff'in tamamı değildir; çalışma ağacında önceki fazlar da commit edilmemiş):
+
+- Yeni çekirdek: `src/veri_ufku/importers/connector_contracts.py`,
+  `connectors.py`, `credentials.py`, `database_connectors.py`, `http_connectors.py`.
+- Entegrasyon: `src/veri_ufku/importers/registry.py`, `worker.py`,
+  `src/veri_ufku/domain/capabilities.py`, `src/veri_ufku/storage/project_model.py`,
+  `project_store.py`, `src/veri_ufku/ui/imports.py`,
+  `src/veri_ufku/ui/qml/ConnectorPanel.qml`, `ImportPanel.qml`.
+- Yardım: `src/veri_ufku/learning/content/tr.json`, `taxonomy.py`;
+  bağımlılıklar: `pyproject.toml`, `uv.lock` (`connectors` optional extra).
+- Test/ölçüm: `tests/test_connectors.py`, `test_connector_optional_servers.py`,
+  `test_connector_gui.py`, `phase31_servers.py`, `scripts/measure_phase31.py`.
+- Karar/kanıt: [ADR-032](adr/032-connectors-phase31.md),
+  [PHASE31](evidence/PHASE31.md), `docs/evidence/phase31/`,
+  `docs/REQUIREMENTS_MATRIX.md`, `PROGRESS.md`, `PRO_PROGRESS.md`.
+
+## Gerçek test sonuçları
+
+Aşağıdakiler **Faz31'in kayıtlı koşuları**, bu devir oturumunda yeniden
+çalıştırılmadı. JUnit, konsol, JSON ve mevcut kaynak hashleri okunarak doğrulandı.
+Ortam ENV-31: CPython3.13.15/PySide6 6.11.2, Linux x86_64/Btrfs,
+Ryzen7 8845HS/32GiB; offscreen/software ve izole XDG.
+
+| Kontrol | Gerçek sonuç | Kanıt |
+|---|---|---|
+| `.venv/bin/python -m pytest -q` | 795 geçti; 440.687s; 0 hata/skip | [JUnit](evidence/phase31/pytest.xml), [konsol](evidence/phase31/pytest.txt) |
+| Üç connector test modülü | 34 geçti; 49.635s; 0 hata/skip | [JUnit](evidence/phase31/targeted.xml) |
+| Kilitli unittest discover | 14 geçti; 5.391s | [Konsol](evidence/phase31/unittest.txt) |
+| Sistem Python3.14.7 unittest | 79 keşif / 65 import hatası; başarısız | [Konsol](evidence/phase31/system-unittest.txt) |
+| Kaynak ve noneditable wheel GUI | Altı kaynak, 12 render, altı dataset reopen; F1/Escape ve secret/ağ koruması geçti | [Kaynak](evidence/phase31/source-gui/walkthrough.json), [wheel](evidence/phase31/wheel-gui/walkthrough.json) |
+| Wheel bütünlüğü | 218 dosya eşit | [SHA256](evidence/phase31/wheel-integrity.json) |
+| Connector paketleri bulunmayan core, OS ağsız smoke | GUI_SMOKE PASS | [Konsol](evidence/phase31/core-offline-smoke.txt) |
+| Temiz offline uv kurulumu | Başarısız: cache'te PySide6-Addons wheel yok | [Komut/exit](evidence/phase31/checks.json) |
+
+Locked sync/dev/extra, docs/artifacts/learning/usability ve Ruff check/format
+başarıları [faz kanıtında](evidence/PHASE31.md#e31-final) kayıtlıdır.
+Bu devir başlangıcında `phase31/source.sha256` içindeki **326 dosya** mevcut
+kaynakla eşleşti; eksik/değişmiş kayıt yoktu. Son commit `109fd24`
+(2026-10-07); yeni teknik teslim bu commit'in üstündeki çalışma ağacındadır.
+
+## Açık işler, sınırlar ve kararlar
+
+- Önceki F13 kullanıcı kabulü, F25 insan/Orca/AT, F24 minimum donanım/cold/
+  fiziksel input-frame ve kullanıcı tarafından durdurulmuş F27 temiz dağıtım
+  kabulü açık. Faz30 büyük SAS ölçümü yapılmadı. Faz32 geçiş kapısı otomatik açılmaz.
+- Sistem Python'da bağımlılıklar eksik; `.venv` kullan. Tam regresyonda bilinen
+  başarısız test yok; bu, bütün platformların/hizmetlerin doğrulandığı iddiası değildir.
+- Ordinary tablo/null olmayan tek String/Integer source key ve bağlı sınırlı
+  karşılaştırmalar destekli; serbest SQL yok. REST JSON/next URL/bearer;
+  interactive OAuth/cookie/query-auth yok. Token/total olmayan API için
+  tek-an snapshot veya atlanan kayıt garantisi yok.
+- S3 tek nesne/conditional GET/SigV4; test SeaweedFS üzerinde. Canlı AWS
+  hesabı/SLA, fiziksel masaüstü ve temiz offline kurulum doğrulanmadı.
+- ADR-032: Python/PySide6/QML, manifest7 additive metadata, tek registry/bütçe/
+  provenance ve parent ProjectStore ACTIVE protokolü korunur. Credential
+  değeri sistem Secret Service'de; projede yalnız referans. Başka makinede
+  keyring kayıtları yeniden sağlanır; secret bu hafıza dosyalarına yazılmaz.
+- Son teknik düzeltmeler: eksik next alanı ret; libpq ortam/parola fallback
+  engeli; bağlantı formu yeniden açılışında ayar koruma, iş sırasında düzenleme
+  kilidi ve tür değişince credential ref temizliği. Eski başarısız denemeler
+  kanıtta saklıdır; nihai 795 koşusu bunlardan sonradır.
+
+## Faz32 hedefi ve ilk iş
+
+Kaynak: [PHASE_PLAN](PHASE_PLAN.md), [PRO_WORK_PLAN](PRO_WORK_PLAN.md),
+matris **F32-S001..005 / F32-P001..008**. Hedef kesin olarak
+**veri sözlüğü, kalite sözleşmeleri ve varlık eşleme**. Bağımlılıklar 07,08,29,30;
+Faz31 doğrudan önkoşul değildir. Tasarım ayrıntıları henüz uygulanmamıştır.
+
+İlk iş, açık Faz32 yetkisi geldikten sonra: **F32-P001.C** için mevcut
+ColumnId anahtarlı rol/birim/açıklama metadata'sını ve DatasetVersion bağını
+hedefli incele; anlam/birim/ölçüm düzeyi sözleşmesini mevcut tipe additive
+genişletme planını çıkar. Bu başlangıç sırası devir önerisidir; kaynak belge
+Faz32 için zorunlu ilk uygulama sırası belirtmez. Önceki kabul kapılarını
+atlayan bir yetki veya karar kendiliğinden varsayılmasın.
+
+Gerekli ilk kaynaklar: `src/veri_ufku/analytics/contracts.py`,
+`src/veri_ufku/ui/dataset.py`, `src/veri_ufku/storage/project_model.py`,
+`src/veri_ufku/operations/contracts.py`; testler `tests/test_dataset.py`,
+`tests/test_dataset_gui.py`. Kalite/merge dilimine gelince yalnız ilgili
+quality/operations/depo kodu ve testleri ayrıca açılır; tüm repo taranmaz.
+
+Tamamlanma kriterleri: anlam/birim/ölçüm düzeyi ve ordinal sıra; valid range,
+nullable/unique/foreign-key kuralları dataset sürümüne bağlı taşınabilir tarif;
+satır/kolon/tablo/tablolar arası uyarı/hata ve ihlal örnekleri; açık dur/
+karantina/devam politikası; fuzzy/blocking/skor adayları ve manuel onay;
+canonical/source kimlik kökeni ve bağlı sonuçlarla geri alma; yanlış unit/type/
+key ihlali testleri, onaysız merge olmaması, ordinal korunumu; gerçek GUI,
+çevrimdışı yardım ve save/reopen/undo kanıtları. F32-S001..005/P001..008 ayrı
+tanıklarla matrise işlenmeli; genel test toplamı tek başına kabul sayılmaz.
+
+## Git ve hesap devri
+
+Devir öncesi: **97 tracked değişiklik, 329 untracked giriş, 0 staged**;
+untracked girişler dosya ve dizinleri içerir, fiziksel dosya sayısı değildir.
+`git diff --stat`, ilgili gerçek diff'ler ve `git diff --check` incelendi;
+whitespace hatası yoktu. Faz31'e özgü ayrı commit olmadığından bütün Git diff'i
+Faz31 değişikliği diye sunma. Kullanıcı değişiklikleri silinmedi/geri alınmadı;
+stage/commit/push yapılmadı.
+
+Bu devir yalnız `AGENTS.md` günceller, `PROJECT_STATE.md` ve `ROADMAP.md`
+oluşturur. Diğer kaynak/kanıtlar korunur. Yeni hesap aynı yerel proje dizinini
+açmalı; hesap değiştirmek commit edilmemiş/untracked dosyaları uzaktaki başka
+bir çalışma alanına otomatik taşımaz. `/tmp` test sunucuları veya kurulu wheel
+hedeflerinin yeni oturumda mevcut olduğu varsayılmasın.
+
+Devir oturumunda gerçekten çalıştırılan kontroller (2026-10-11):
+`python3 scripts/check_docs.py` **PASS**, exit0;
+`.venv/bin/python -m unittest discover -s tests -p test_document_contracts.py -v`
+**14 test / 5.456s / OK**, exit0; `git diff --check` exit0.
+Yeni iki Markdown dosyasının whitespace kontrolünde hata çıktısı yok.
+Uygulama regresyonu bu belge değişikliği için yeniden çalıştırılmadı.
+Son Git kontrolü: **98 tracked değişiklik / 331 untracked giriş / 0 staged**.
+Bu sayılar önceki fazları da içerir; bu oturumda yalnız üç hafıza dosyası değişti.
+
+Yeni hesapta ilk prompt:
+
+> `/home/s-oktay/Belgeler/Veri_Ufku` projesinde önce yalnız AGENTS.md,
+> docs/PROJECT_STATE.md ve docs/ROADMAP.md dosyalarını oku. Faz31 teknik
+> teslimi tamamlandı; resmî kabul açıklarını koru. git status ile commit
+> edilmemiş ve untracked değişiklikleri kontrol et; silme, geri alma veya
+> commit yapma. Projeyi baştan sona tarama. Faz32 için yalnız hafızada
+> belirtilen sözleşme ve gerekli dosyaları inceleyerek ilk iş ile kabul
+> kriterlerini özetle. Henüz Faz32'yi uygulama; açık talimatımı bekle.

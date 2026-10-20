@@ -132,11 +132,9 @@ if __name__ == "__main__":
                 preview_ms = wait(app, imports, record)
                 assert imports.ready, imports.errorText
                 for width, height, theme, scale in (
-                    (1366, 900, "light", 1.0),
-                    (720, 560, "dark", 2.0),
+                    (1366, 900, "dark", 1.0),
+                    (720, 560, "dark", 1.0),
                 ):
-                    app._veri_ufku_resources[-2].setTheme(theme)
-                    app._veri_ufku_resources[-2].setTextScale(scale)
                     window.setWidth(width)
                     window.setHeight(height)
                     app.processEvents()

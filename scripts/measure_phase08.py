@@ -111,10 +111,9 @@ def run(args):
                 QTest.qWait(10)
                 assert time.monotonic() < deadline
             assert not projects.dirty
-            for width, theme in ((1366, "light"), (720, "dark")):
+            for width, theme in ((1366, "dark"), (720, "dark")):
                 window.setWidth(width)
                 window.setHeight(900 if width == 1366 else 800)
-                app._veri_ufku_resources[-2].setTheme(theme)
                 app.processEvents()
                 QTest.qWait(120)
                 flick = window.findChild(QObject, "workspace").property("contentItem")

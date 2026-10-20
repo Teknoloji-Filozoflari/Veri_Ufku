@@ -55,90 +55,90 @@ ColumnLayout {
         else if (kind === "append") { if (!approved.checked) return; ids=operations.transformColumns.map(c=>c.id); p={secondary_version_id:other.version_id,mapping:mapping,max_output_rows:limit} }
         operations.previewTransform(kind,JSON.stringify(ids),JSON.stringify(p),destination.currentIndex===0 ? "chain" : "copy")
     }
-    UiCombo { id: method; objectName: "transformMethod"; Layout.fillWidth: true; model: ["Hesaplanmış kolon", "Metin böl", "Metin birleştir", "Tarih parçası", "Grupla / toplulaştır", "Pivot — geniş veri", "Unpivot — uzun veri", "Alt alta ekle — append", "Anahtarla birleştir — join"]; onActivated: { selected=[]; groups=[]; metrics=[]; keyPairs=[]; mapping=[]; root.invalidate() } }
-    Label { text: root.advice[root.kind]; Layout.fillWidth: true; wrapMode: Text.WordWrap; color: Theme.secondary }
-    UiCombo { id: destination; objectName: "transformDestination"; Layout.fillWidth: true; model: ["Mevcut işlem zincirinde yeni sürüm", "Ayrı kopya dataset'te yeni zincir"]; onActivated: root.invalidate() }
-    Label { visible: ["computed","text_split","date_parts","aggregate","pivot"].indexOf(root.kind)>=0; text: "Giriş sütunu / ölçüm alanı" }
-    UiCombo { id: column; objectName: "transformColumn"; Layout.fillWidth: true; model: operations.transformColumns; textRole:"name"; valueRole:"id"; visible: ["computed","text_split","date_parts","aggregate","pivot"].indexOf(root.kind)>=0; onActivated: root.invalidate() }
+    UiCombo { accessibleLabel: "Dönüşüm yöntemi"; id: method; objectName: "transformMethod"; Layout.fillWidth: true; model: ["Hesaplanmış kolon", "Metin böl", "Metin birleştir", "Tarih parçası", "Grupla / toplulaştır", "Pivot — geniş veri", "Unpivot — uzun veri", "Alt alta ekle — append", "Anahtarla birleştir — join"]; onActivated: { selected=[]; groups=[]; metrics=[]; keyPairs=[]; mapping=[]; root.invalidate() } }
+    UiLabel { text: root.advice[root.kind]; Layout.fillWidth: true; wrapMode: Text.WordWrap; color: Theme.secondary }
+    UiCombo { accessibleLabel: "Yeni sürümün yeri"; id: destination; objectName: "transformDestination"; Layout.fillWidth: true; model: ["Mevcut işlem zincirinde yeni sürüm", "Ayrı kopya dataset'te yeni zincir"]; onActivated: root.invalidate() }
+    UiLabel { visible: ["computed","text_split","date_parts","aggregate","pivot"].indexOf(root.kind)>=0; text: "Giriş sütunu / ölçüm alanı" }
+    UiCombo { accessibleLabel: "Giriş sütunu"; id: column; objectName: "transformColumn"; Layout.fillWidth: true; model: operations.transformColumns; textRole:"name"; valueRole:"id"; visible: ["computed","text_split","date_parts","aggregate","pivot"].indexOf(root.kind)>=0; onActivated: root.invalidate() }
     ColumnLayout {
         visible: root.kind === "computed"; Layout.fillWidth: true
         UiButton { objectName:"formulaInsertColumn"; text:"Seçili sütunu formüle ekle"; onClicked: { expression.insert(expression.cursorPosition,'col("'+column.currentValue+'")'); root.invalidate() } }
-        TextArea { id: expression; objectName:"formulaExpression"; Layout.fillWidth:true; wrapMode:TextEdit.Wrap; placeholderText:"Örn. col(\"kalıcı kimlik\") * 2"; Accessible.name:"Güvenli formül"; onTextChanged: root.invalidate() }
-        Label { text:"Okunabilir formül: " + root.readableFormula(expression.text); Layout.fillWidth:true; wrapMode:Text.WordWrap }
-        Label { text:"Formül sütunları: "+operations.transformColumns.filter(c=>expression.text.indexOf(c.id)>=0).map(c=>c.name+" = "+c.id).join("; "); Layout.fillWidth:true; wrapMode:Text.WrapAnywhere }
-        UiCombo { id: zeroPolicy; objectName:"formulaZeroPolicy"; Layout.fillWidth:true; model:["Sıfıra bölmede bütün işlemi durdur", "Sıfıra bölmeyi yeni null yap ve say"]; onActivated:root.invalidate() }
+        UiTextArea { id: expression; objectName:"formulaExpression"; Layout.fillWidth:true; wrapMode:TextEdit.Wrap; placeholderText:"Örn. col(\"kalıcı kimlik\") * 2"; Accessible.name:"Güvenli formül"; onTextChanged: root.invalidate() }
+        UiLabel { text:"Okunabilir formül: " + root.readableFormula(expression.text); Layout.fillWidth:true; wrapMode:Text.WordWrap }
+        UiLabel { text:"Formül sütunları: "+operations.transformColumns.filter(c=>expression.text.indexOf(c.id)>=0).map(c=>c.name+" = "+c.id).join("; "); Layout.fillWidth:true; wrapMode:Text.WrapAnywhere }
+        UiCombo { accessibleLabel: "Sıfıra bölme politikası"; id: zeroPolicy; objectName:"formulaZeroPolicy"; Layout.fillWidth:true; model:["Sıfıra bölmede bütün işlemi durdur", "Sıfıra bölmeyi yeni null yap ve say"]; onActivated:root.invalidate() }
     }
-    Label { visible:["computed","text_split","text_combine","date_parts","unpivot"].indexOf(root.kind)>=0; text:root.kind==="unpivot" ? "Değişken alanının adı" : "Yeni alan adı" }
-    TextField { id:outputName; objectName:"transformOutputName"; text:"Yeni_alan"; maximumLength:200; Layout.fillWidth:true; visible:["computed","text_split","text_combine","date_parts","unpivot"].indexOf(root.kind)>=0; onTextEdited:root.invalidate() }
-    TextField { id:secondName; objectName:"transformSecondName"; text:"Yeni_değer"; placeholderText:"İkinci alan adı"; maximumLength:200; Layout.fillWidth:true; visible:root.kind==="text_split" || root.kind==="unpivot"; onTextEdited:root.invalidate() }
-    TextField { id:separator; objectName:"transformSeparator"; text:"-"; placeholderText:"Literal ayraç / birleştirme metni"; Accessible.name:"Ayraç"; Layout.fillWidth:true; visible:root.kind==="text_split" || root.kind==="text_combine"; onTextEdited:root.invalidate() }
-    UiCombo { id:nullPolicy; Layout.fillWidth:true; visible:root.kind==="text_combine"; model:["Null varsa sonuç null", "Null alanları atla"]; onActivated:root.invalidate() }
-    UiCombo { id:datePart; objectName:"transformDatePart"; Layout.fillWidth:true; visible:root.kind==="date_parts"; model:["Yıl","Ay","Gün","Haftanın günü — ISO 1–7","Hafta — ISO","Çeyrek","Saat","Dakika"]; onActivated:root.invalidate() }
-    TextField { id:timezone; visible:root.kind==="date_parts"; Layout.fillWidth:true; placeholderText:"preserve veya aware veride IANA timezone"; text:"preserve"; maximumLength:100; onTextEdited:root.invalidate() }
+    UiLabel { visible:["computed","text_split","text_combine","date_parts","unpivot"].indexOf(root.kind)>=0; text:root.kind==="unpivot" ? "Değişken alanının adı" : "Yeni alan adı" }
+    UiTextField { Accessible.name: "Formül sütunları: "; id:outputName; objectName:"transformOutputName"; text:"Yeni_alan"; maximumLength:200; Layout.fillWidth:true; visible:["computed","text_split","text_combine","date_parts","unpivot"].indexOf(root.kind)>=0; onTextEdited:root.invalidate() }
+    UiTextField { Accessible.name: "Formül sütunları: "; id:secondName; objectName:"transformSecondName"; text:"Yeni_değer"; placeholderText:"İkinci alan adı"; maximumLength:200; Layout.fillWidth:true; visible:root.kind==="text_split" || root.kind==="unpivot"; onTextEdited:root.invalidate() }
+    UiTextField { id:separator; objectName:"transformSeparator"; text:"-"; placeholderText:"Literal ayraç / birleştirme metni"; Accessible.name:qsTr("Ayraç"); Layout.fillWidth:true; visible:root.kind==="text_split" || root.kind==="text_combine"; onTextEdited:root.invalidate() }
+    UiCombo { accessibleLabel: "Eksik değer politikası"; id:nullPolicy; Layout.fillWidth:true; visible:root.kind==="text_combine"; model:["Null varsa sonuç null", "Null alanları atla"]; onActivated:root.invalidate() }
+    UiCombo { accessibleLabel: "Tarih parçası"; id:datePart; objectName:"transformDatePart"; Layout.fillWidth:true; visible:root.kind==="date_parts"; model:["Yıl","Ay","Gün","Haftanın günü — ISO 1–7","Hafta — ISO","Çeyrek","Saat","Dakika"]; onActivated:root.invalidate() }
+    UiTextField { Accessible.name: "Formül sütunları: "; id:timezone; visible:root.kind==="date_parts"; Layout.fillWidth:true; placeholderText:"preserve veya aware veride IANA timezone"; text:"preserve"; maximumLength:100; onTextEdited:root.invalidate() }
     ColumnLayout {
         visible:root.kind==="text_combine" || root.kind==="unpivot"; Layout.fillWidth:true
-        Label { text:"Değer alanları (seçim sırası korunur)" }
-        Repeater { model:root.kind==="text_combine" || root.kind==="unpivot" ? operations.transformColumns : []; delegate:CheckBox { required property var modelData; text:modelData.name; checked:root.selected.indexOf(modelData.id)>=0; onToggled:{root.selected=root.toggle(root.selected,modelData.id,checked);root.invalidate()} } }
+        UiLabel { text:"Değer alanları (seçim sırası korunur)" }
+        Repeater { model:root.kind==="text_combine" || root.kind==="unpivot" ? operations.transformColumns : []; delegate:UiCheckBox { required property var modelData; text:modelData.name; checked:root.selected.indexOf(modelData.id)>=0; onToggled:{root.selected=root.toggle(root.selected,modelData.id,checked);root.invalidate()} } }
     }
     ColumnLayout {
         visible:["aggregate","pivot","unpivot"].indexOf(root.kind)>=0; Layout.fillWidth:true
-        Label { text:root.kind==="unpivot" ? "Korunacak kimlik alanları" : "Grup alanları (toplulaştırmada boş: tüm veri)" }
-        Repeater { model:["aggregate","pivot","unpivot"].indexOf(root.kind)>=0 ? operations.transformColumns : []; delegate:CheckBox { required property var modelData; text:modelData.name; checked:root.groups.indexOf(modelData.id)>=0; onToggled:{root.groups=root.toggle(root.groups,modelData.id,checked);root.invalidate()} } }
+        UiLabel { text:root.kind==="unpivot" ? "Korunacak kimlik alanları" : "Grup alanları (toplulaştırmada boş: tüm veri)" }
+        Repeater { model:["aggregate","pivot","unpivot"].indexOf(root.kind)>=0 ? operations.transformColumns : []; delegate:UiCheckBox { required property var modelData; text:modelData.name; checked:root.groups.indexOf(modelData.id)>=0; onToggled:{root.groups=root.toggle(root.groups,modelData.id,checked);root.invalidate()} } }
     }
     ColumnLayout {
         visible:root.kind==="computed" || root.kind==="aggregate" || root.kind==="pivot"; Layout.fillWidth:true
-        Label { text:"Sonuç türü (sum/mean için de açık seçim)" }
-        UiCombo { id:targetType; objectName:"transformTarget"; model:["Kesin Decimal", "Tam sayı Int64", "Yaklaşık Float64", "Metin", "Boolean"]; Layout.fillWidth:true; onActivated:root.invalidate() }
-        SpinBox { id:scale; from:0; to:38; value:6; visible:targetType.currentIndex===0; onValueModified:root.invalidate() }
+        UiLabel { text:"Sonuç türü (sum/mean için de açık seçim)" }
+        UiCombo { accessibleLabel: "Sonuç veri türü"; id:targetType; objectName:"transformTarget"; model:["Kesin Decimal", "Tam sayı Int64", "Yaklaşık Float64", "Metin", "Boolean"]; Layout.fillWidth:true; onActivated:root.invalidate() }
+        UiSpinBox { Accessible.name: "Sonuç türü (sum/mean için de açık seçim)"; id:scale; from:0; to:38; value:6; visible:targetType.currentIndex===0; onValueModified:root.invalidate() }
     }
     ColumnLayout {
         visible:root.kind==="aggregate"; Layout.fillWidth:true
-        UiCombo { id:metricMethod; objectName:"transformMetric"; model:["Kayıt sayısı","Geçerli değer sayısı","Toplam","Ortalama","En küçük","En büyük"]; Layout.fillWidth:true; onActivated:root.invalidate() }
-        TextField { id:metricName; text:"Ölçüm"; maximumLength:200; Layout.fillWidth:true }
+        UiCombo { accessibleLabel: "Özetleme yöntemi"; id:metricMethod; objectName:"transformMetric"; model:["Kayıt sayısı","Geçerli değer sayısı","Toplam","Ortalama","En küçük","En büyük"]; Layout.fillWidth:true; onActivated:root.invalidate() }
+        UiTextField { Accessible.name: "Sonuç türü (sum/mean için de açık seçim)"; id:metricName; text:"Ölçüm"; maximumLength:200; Layout.fillWidth:true }
         UiButton { objectName:"transformAddMetric"; text:"Ölçümü ekle"; onClicked:{ let m=["count","count_valid","sum","mean","min","max"][metricMethod.currentIndex]; let dt=["count","count_valid"].indexOf(m)>=0 ? {kind:"Int64"} : ["min","max"].indexOf(m)>=0 ? root.descriptor(root.col(column.currentValue).type) : root.target(); root.metrics=root.metrics.concat([{column_id:m==="count" ? null : column.currentValue,method:m,target:dt,output:root.output(metricName.text,root.typeText(dt))}]); root.invalidate() } }
-        Repeater { model:root.metrics; delegate:Label { required property var modelData; text:modelData.output.name+" · "+modelData.method+" · "+(root.col(modelData.column_id).name || "tüm kayıtlar"); Layout.fillWidth:true; wrapMode:Text.WordWrap } }
+        Repeater { model:root.metrics; delegate:UiLabel { required property var modelData; text:modelData.output.name+" · "+modelData.method+" · "+(root.col(modelData.column_id).name || "tüm kayıtlar"); Layout.fillWidth:true; wrapMode:Text.WordWrap } }
         UiButton { text:"Ölçüm listesini temizle"; onClicked:{root.metrics=[];root.invalidate()} }
     }
-    UiCombo { id:header; objectName:"pivotHeader"; visible:root.kind==="pivot"; model:operations.transformColumns; textRole:"name"; valueRole:"id"; Layout.fillWidth:true; onActivated:root.invalidate() }
-    UiCombo { id:aggregation; objectName:"pivotAggregation"; visible:root.kind==="pivot"; Layout.fillWidth:true; model:["Çakışmada durdur — agregasyon seçilmedi","Kayıt sayısı","Toplam","Ortalama","En küçük","En büyük"]; onActivated:root.invalidate() }
+    UiCombo { accessibleLabel: "Geniş tablo başlık sütunu"; id:header; objectName:"pivotHeader"; visible:root.kind==="pivot"; model:operations.transformColumns; textRole:"name"; valueRole:"id"; Layout.fillWidth:true; onActivated:root.invalidate() }
+    UiCombo { accessibleLabel: "Özetleme yöntemi"; id:aggregation; objectName:"pivotAggregation"; visible:root.kind==="pivot"; Layout.fillWidth:true; model:["Çakışmada durdur — agregasyon seçilmedi","Kayıt sayısı","Toplam","Ortalama","En küçük","En büyük"]; onActivated:root.invalidate() }
     ColumnLayout {
         visible:root.kind==="join" || root.kind==="append"; Layout.fillWidth:true
-        Label { text:"İkinci dataset'in değişmez sürümü" }
-        UiCombo { id:secondary; objectName:"transformSecondary"; model:operations.secondaryDatasets; textRole:"label"; valueRole:"version_id"; Layout.fillWidth:true; onActivated:{root.keyPairs=[];root.mapping=[];root.invalidate()} }
+        UiLabel { text:"İkinci dataset'in değişmez sürümü" }
+        UiCombo { accessibleLabel: "İkinci veri kümesi"; id:secondary; objectName:"transformSecondary"; model:operations.secondaryDatasets; textRole:"label"; valueRole:"version_id"; Layout.fillWidth:true; onActivated:{root.keyPairs=[];root.mapping=[];root.invalidate()} }
         ColumnLayout {
             visible:root.kind==="join"; Layout.fillWidth:true
-            Label { text:"Join sihirbazı · " + (root.joinStep + 1) + "/3: " + ["Anahtar çiftleri", "Eşleşme ve kolon adları", "Tam etkiyi incele"][root.joinStep]; Layout.fillWidth:true; wrapMode:Text.WordWrap }
+            UiLabel { text:"Join sihirbazı · " + (root.joinStep + 1) + "/3: " + ["Anahtar çiftleri", "Eşleşme ve kolon adları", "Tam etkiyi incele"][root.joinStep]; Layout.fillWidth:true; wrapMode:Text.WordWrap }
             RowLayout {
                 UiButton { objectName:"joinPreviousStep"; text:"Önceki adım"; enabled:root.joinStep>0; onClicked:root.joinStep-- }
                 UiButton { objectName:"joinNextStep"; text:"Sonraki adım"; enabled:root.joinStep<2; onClicked:root.joinStep++ }
             }
             ColumnLayout { visible:root.joinStep===0; Layout.fillWidth:true
-            Label { text:"Anahtar çifti: sol → sağ (türleri tam aynı olmalı)" }
-            UiCombo { id:leftKey; objectName:"joinLeftKey"; model:operations.transformColumns; textRole:"name"; valueRole:"id"; Layout.fillWidth:true }
-            UiCombo { id:rightKey; objectName:"joinRightKey"; model:root.rightColumns; textRole:"name"; valueRole:"id"; Layout.fillWidth:true }
+            UiLabel { text:"Anahtar çifti: sol → sağ (türleri tam aynı olmalı)" }
+            UiCombo { accessibleLabel: "Sol eşleme anahtarı"; id:leftKey; objectName:"joinLeftKey"; model:operations.transformColumns; textRole:"name"; valueRole:"id"; Layout.fillWidth:true }
+            UiCombo { accessibleLabel: "Sağ eşleme anahtarı"; id:rightKey; objectName:"joinRightKey"; model:root.rightColumns; textRole:"name"; valueRole:"id"; Layout.fillWidth:true }
             UiButton { objectName:"joinAddKey"; text:"Anahtar çiftini ekle"; onClicked:{root.keyPairs=root.keyPairs.concat([{left:leftKey.currentValue,right:rightKey.currentValue}]);root.invalidate()} }
-            Repeater { model:root.keyPairs; delegate:Label { required property var modelData; text:root.col(modelData.left).name+" → "+(root.rightColumns.find(c=>c.id===modelData.right) || {}).name; Layout.fillWidth:true; wrapMode:Text.WordWrap } }
+            Repeater { model:root.keyPairs; delegate:UiLabel { required property var modelData; text:root.col(modelData.left).name+" → "+(root.rightColumns.find(c=>c.id===modelData.right) || {}).name; Layout.fillWidth:true; wrapMode:Text.WordWrap } }
             UiButton { text:"Anahtarları temizle"; onClicked:{root.keyPairs=[];root.invalidate()} }
             }
             ColumnLayout { visible:root.joinStep===1; Layout.fillWidth:true
-            UiCombo { id:joinType; objectName:"joinType"; model:["Inner — yalnız eşleşen","Left — tüm sol kayıtlar","Right — tüm sağ kayıtlar","Full — iki taraftaki tüm kayıtlar"]; Layout.fillWidth:true; onActivated:root.invalidate() }
-            CheckBox { id:nullJoin; objectName:"joinNullEqual"; text:"Null anahtarlar birbirleriyle eşleşsin"; onToggled:root.invalidate() }
-            TextField { id:suffix; objectName:"joinRightSuffix"; text:"_sağ"; placeholderText:"Sağ alan adlarının eki (çakışma çözümü)"; Accessible.name:"Sağ kolon adı eki"; Layout.fillWidth:true; onTextEdited:root.invalidate() }
-            Label { text:"Sağ çıktı alanları: "+root.rightColumns.map(c=>c.name+suffix.text).join(", ")+". Eşleşmeyen tarafın değerleri null olur. Null eşleştirme açık seçilirse null tekrarlar da satırları çoğaltabilir."; Layout.fillWidth:true; wrapMode:Text.WordWrap }
+            UiCombo { accessibleLabel: "Tablo eşleme türü"; id:joinType; objectName:"joinType"; model:["Inner — yalnız eşleşen","Left — tüm sol kayıtlar","Right — tüm sağ kayıtlar","Full — iki taraftaki tüm kayıtlar"]; Layout.fillWidth:true; onActivated:root.invalidate() }
+            UiCheckBox { id:nullJoin; objectName:"joinNullEqual"; text:"Null anahtarlar birbirleriyle eşleşsin"; onToggled:root.invalidate() }
+            UiTextField { id:suffix; objectName:"joinRightSuffix"; text:"_sağ"; placeholderText:"Sağ alan adlarının eki (çakışma çözümü)"; Accessible.name:"Sağ kolon adı eki"; Layout.fillWidth:true; onTextEdited:root.invalidate() }
+            UiLabel { text:"Sağ çıktı alanları: "+root.rightColumns.map(c=>c.name+suffix.text).join(", ")+". Eşleşmeyen tarafın değerleri null olur. Null eşleştirme açık seçilirse null tekrarlar da satırları çoğaltabilir."; Layout.fillWidth:true; wrapMode:Text.WordWrap }
             }
-            Label { visible:root.joinStep===2; text:"Anahtarlar: " + root.keyPairs.map(k=>root.col(k.left).name+" → "+(root.rightColumns.find(c=>c.id===k.right) || {}).name).join(", ")+". " + joinType.currentText + "; null eşitliği " + (nullJoin.checked ? "açık" : "kapalı") + "; sağ ad eki: " + suffix.text + ". Önizle ile tam ilişki/satır sayısı ve eşleşmeyenleri inceleyin; Uygula ile bu önizlemeyi yayımlayın."; Layout.fillWidth:true; wrapMode:Text.WordWrap }
+            UiLabel { visible:root.joinStep===2; text:"Anahtarlar: " + root.keyPairs.map(k=>root.col(k.left).name+" → "+(root.rightColumns.find(c=>c.id===k.right) || {}).name).join(", ")+". " + joinType.currentText + "; null eşitliği " + (nullJoin.checked ? "açık" : "kapalı") + "; sağ ad eki: " + suffix.text + ". Önizle ile tam ilişki/satır sayısı ve eşleşmeyenleri inceleyin; Uygula ile bu önizlemeyi yayımlayın."; Layout.fillWidth:true; wrapMode:Text.WordWrap }
         }
         ColumnLayout {
             visible:root.kind==="append"; Layout.fillWidth:true
             UiButton { objectName:"appendPrepareMapping"; text:"Alan eşleme önerisini hazırla"; onClicked:root.prepareMapping() }
             Repeater { model:root.mapping; delegate:ColumnLayout { required property var modelData; required property int index; Layout.fillWidth:true
-                Label { text:(root.col(modelData.left_column).name || "açık null")+" → "+modelData.output.name+" ← "+((root.rightColumns.find(c=>c.id===modelData.right_column) || {}).name || "açık null"); Layout.fillWidth:true; wrapMode:Text.WordWrap }
-                UiCombo { model:[{id:"",name:"Sağ taraf açık null"}].concat(root.rightColumns); textRole:"name"; valueRole:"id"; currentIndex:model.findIndex(c=>c.id===(modelData.right_column || "")); Layout.fillWidth:true; onActivated:{let items=root.mapping.slice();let item=Object.assign({},items[index]);item.right_column=currentValue || null;items[index]=item;root.mapping=items;approved.checked=false;root.invalidate()} }
+                UiLabel { text:(root.col(modelData.left_column).name || "açık null")+" → "+modelData.output.name+" ← "+((root.rightColumns.find(c=>c.id===modelData.right_column) || {}).name || "açık null"); Layout.fillWidth:true; wrapMode:Text.WordWrap }
+                UiCombo { accessibleLabel: "Anahtarlar: "; model:[{id:"",name:"Sağ taraf açık null"}].concat(root.rightColumns); textRole:"name"; valueRole:"id"; currentIndex:model.findIndex(c=>c.id===(modelData.right_column || "")); Layout.fillWidth:true; onActivated:{let items=root.mapping.slice();let item=Object.assign({},items[index]);item.right_column=currentValue || null;items[index]=item;root.mapping=items;approved.checked=false;root.invalidate()} }
             } }
-            CheckBox { id:approved; objectName:"appendApproveMapping"; text:"Eşleme ve eksik tarafların null olmasını onaylıyorum"; onToggled:root.invalidate() }
+            UiCheckBox { id:approved; objectName:"appendApproveMapping"; text:"Eşleme ve eksik tarafların null olmasını onaylıyorum"; onToggled:root.invalidate() }
         }
     }
-    Label { text:"En fazla üretilecek kayıt (bütçe; aşılırsa eski veri korunur)"; visible:["aggregate","pivot","unpivot","append","join"].indexOf(root.kind)>=0; Layout.fillWidth:true; wrapMode:Text.WordWrap }
-    SpinBox { id:maxRows; objectName:"transformMaxRows"; from:1; to:10000000; value:1000000; editable:true; visible:["aggregate","pivot","unpivot","append","join"].indexOf(root.kind)>=0; onValueModified:root.invalidate() }
+    UiLabel { text:"En fazla üretilecek kayıt (bütçe; aşılırsa eski veri korunur)"; visible:["aggregate","pivot","unpivot","append","join"].indexOf(root.kind)>=0; Layout.fillWidth:true; wrapMode:Text.WordWrap }
+    UiSpinBox { Accessible.name: "En fazla üretilecek kayıt (bütçe; aşılırsa eski veri korunur)"; id:maxRows; objectName:"transformMaxRows"; from:1; to:10000000; value:1000000; editable:true; visible:["aggregate","pivot","unpivot","append","join"].indexOf(root.kind)>=0; onValueModified:root.invalidate() }
     UiButton { text:"Yöntem ve küçük örnek"; property string helpContext:"transform.methods"; onClicked:root.helpRequested(this, "transform."+root.kind.replace(/_/g,"-")) }
 }

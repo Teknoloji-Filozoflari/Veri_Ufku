@@ -1,10 +1,22 @@
 """Real QML/model workflow, isolated process cancellation and Qt drop events."""
 
+import gc
 import hashlib
 import time
+from ctypes import CDLL
 
 import polars as pl
-from PySide6.QtCore import QMimeData, QPointF, Qt, QTimer, QUrl
+import pyarrow as pa
+from PySide6.QtCore import (
+    QCoreApplication,
+    QEvent,
+    QMimeData,
+    QObject,
+    QPointF,
+    Qt,
+    QTimer,
+    QUrl,
+)
 from PySide6.QtGui import QDragEnterEvent, QDropEvent
 from PySide6.QtQuick import QQuickItem
 from PySide6.QtTest import QTest
@@ -23,7 +35,16 @@ def spin(app, predicate, timeout=20000):
     raise AssertionError("Import GUI condition timed out")
 
 
+def release_gui_heap():
+    gc.collect()
+    pa.default_memory_pool().release_unused()
+    trim = getattr(CDLL(None), "malloc_trim", None)
+    if trim is not None:
+        trim(0)
+
+
 def setup(tmp_path, monkeypatch):
+    release_gui_heap()
     for key in ("CONFIG", "STATE", "CACHE"):
         monkeypatch.setenv("XDG_" + key + "_HOME", str(tmp_path / key.lower()))
     app, window, bridge = create_application()
@@ -37,6 +58,11 @@ def teardown(app, window):
     app._veri_ufku_resources[-1]()
     window.deleteLater()
     app.processEvents()
+    # processEvents does not drain DeferredDelete; repeated GUI fixtures must do so.
+    QCoreApplication.sendPostedEvents(None, QEvent.Type.DeferredDelete)
+    QCoreApplication.sendPostedEvents(None, QEvent.Type.DeferredDelete)
+    app._veri_ufku_resources = ()
+    release_gui_heap()
 
 
 def test_qml_preview_setting_types_immutable_source_import_and_reopen(
@@ -52,7 +78,7 @@ def test_qml_preview_setting_types_immutable_source_import_and_reopen(
         assert imports.ready, imports.errorText
         assert imports.model.rowCount() == 2
         assert imports.model.data(imports.model.index(0, 0)) == "001"
-        assert "Değişmez kopya" in imports.message and "200" in imports.message
+        assert "Değişmez kopya" in imports.message and "20" in imports.message
         imports.setType(2, "decimal")
         assert not imports.ready
         imports.refreshPreview()
@@ -88,6 +114,7 @@ def test_actual_qt_drop_routes_one_local_tsv_and_rejects_multiple(
     source.write_text("id\tad\n001\tŞule\n")
     try:
         window.setProperty("selectedSection", 1)
+        window.findChild(QObject, "datasetTabs").setProperty("currentIndex", 1)
         spin(app, lambda: window.findChild(QQuickItem, "csvDropArea").isVisible())
         QTest.qWait(80)
         area = window.findChild(QQuickItem, "csvDropArea")
@@ -228,6 +255,7 @@ def test_phase06_four_formats_real_worker_qml_controls_and_reopen(
         spin(app, lambda: not imports.busy)
         assert imports.formatId == "json" and not imports.ready
         assert "/payload/records" in imports.choices["record_paths"]
+        window.findChild(QObject, "importAdvancedButton").clicked.emit()
         path = window.findChild(QObject, "jsonRecordPath")
         assert path.isVisible()
         path.setProperty("text", "/payload/records")
@@ -300,5 +328,138 @@ def test_jsonl_worker_cancel_keeps_previous_project_and_original(tmp_path, monke
         assert not projects.draft["datasets"] and source.read_bytes() == before
         assert projects.store.path("ACTIVE").read_bytes() == active
         assert "İptal edildi" in imports.message
+    finally:
+        teardown(app, window)
+
+
+def test_basic_import_project_route_advanced_settings_and_success(
+    tmp_path, monkeypatch
+):
+    app, window, _, projects, imports = setup(tmp_path, monkeypatch)
+    source = tmp_path / "beginner.csv"
+    source.write_text("id;amount\n001;1,25\n002;2,50\n", encoding="utf8")
+    original = source.read_bytes()
+    try:
+        window.setProperty("selectedSection", 1)
+        window.findChild(QObject, "datasetTabs").setProperty("currentIndex", 1)
+        app.processEvents()
+        panel = window.findChild(QObject, "csvImportPanel")
+        project_button = window.findChild(QQuickItem, "importProjectButton")
+        assert not project_button.isVisible()
+        assert not window.findChild(QQuickItem, "helpButton").isVisible()
+        assert projects.closeProject()
+        app.processEvents()
+        assert project_button.isVisible()
+        assert window.findChild(QQuickItem, "chooseCsvButton").isVisible()
+        assert window.findChild(QQuickItem, "csvDropArea").isVisible()
+        assert window.findChild(QQuickItem, "importCsvButton").isVisible()
+        assert not window.findChild(QQuickItem, "importCsvButton").isEnabled()
+        imports.choose(str(source))
+        spin(app, lambda: not imports.busy)
+        assert imports.valid and not imports.ready
+        assert imports.model.rowCount() == 2
+        assert window.findChild(QQuickItem, "csvPreviewTable").isVisible()
+        project_button.clicked.emit()
+        assert window.property("selectedSection") == 0
+        assert projects.open(str(tmp_path / "project"))
+        window.setProperty("selectedSection", 1)
+        imports.choose(str(source))
+        spin(app, lambda: not imports.busy)
+        assert imports.ready and not panel.property("showAdvanced")
+        assert not window.findChild(QQuickItem, "importDelimiter").isVisible()
+        assert "sınırlı örnektir" in imports.statusText
+        window.findChild(QObject, "importAdvancedButton").clicked.emit()
+        app.processEvents()
+        assert window.findChild(QQuickItem, "importDelimiter").isVisible()
+        imports.setType(1, "decimal")
+        assert not imports.ready
+        window.findChild(QObject, "previewCsvButton").clicked.emit()
+        spin(app, lambda: not imports.busy)
+        assert imports.ready, imports.errorText
+        settings = imports.settings
+        window.findChild(QObject, "importAdvancedButton").clicked.emit()
+        app.processEvents()
+        assert not panel.property("showAdvanced") and imports.settings == settings
+        window.findChild(QObject, "importCsvButton").clicked.emit()
+        spin(app, lambda: not imports.busy)
+        assert "İçe aktarma kaydedildi: 2 kayıt" in imports.statusText
+        frame = pl.read_parquet(
+            projects.store.path(projects.draft["datasets"][0]["snapshot_uri"])
+        )
+        assert frame["id"].to_list() == ["001", "002"]
+        assert frame["amount"].to_list() == [1.25, 2.5]
+        assert source.read_bytes() == original
+    finally:
+        teardown(app, window)
+
+
+def test_beginner_preview_shows_twenty_and_automatically_imports_real_types(
+    tmp_path, monkeypatch
+):
+    app, window, _, projects, imports = setup(tmp_path, monkeypatch)
+    source = tmp_path / "automatic.csv"
+    source.write_text("id,amount,flag\n" + "001,1.25,true\n" * 30)
+    try:
+        imports.choose(str(source))
+        spin(app, lambda: not imports.busy)
+        assert imports.ready, imports.errorText
+        assert imports.model.rowCount() == 20
+        assert len(imports.result["rows"]) == 30
+        assert imports.settings["types"] == ["text", "decimal", "boolean"]
+        assert "20 kayıt" in imports.statusText
+        imports.importData()
+        spin(app, lambda: not imports.busy)
+        assert not imports.errorText
+        frame = pl.read_parquet(
+            projects.store.path(projects.draft["datasets"][0]["snapshot_uri"])
+        )
+        assert frame.height == 30
+        assert frame.schema["amount"] == pl.Decimal(38, 6)
+        assert frame.schema["flag"] == pl.Boolean
+        assert frame["id"].to_list() == ["001"] * 30
+    finally:
+        teardown(app, window)
+
+
+def test_selecting_csv_format_keeps_automatic_integer_inference(tmp_path, monkeypatch):
+    app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+    source = tmp_path / "integers.csv"
+    source.write_text("id,code\n1,2\n3,4\n")
+    try:
+        imports.choose(str(source))
+        spin(app, lambda: not imports.busy)
+        imports.setFormat("csv")
+        imports.refreshPreview()
+        spin(app, lambda: not imports.busy)
+        assert not imports.errorText
+        assert imports.settings["infer_types"]
+        assert [c["type"] for c in imports.columns] == ["int64", "int64"]
+    finally:
+        teardown(app, window)
+
+
+def test_import_advanced_starts_closed_even_with_advanced_preferences(
+    tmp_path, monkeypatch
+):
+    app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+    try:
+        preferences = (
+            app._veri_ufku_resources[0].rootContext().contextProperty("preferences")
+        )
+        preferences.setView("advanced")
+        window.setProperty("selectedSection", 1)
+        window.setProperty("dataPane", "import")
+        app.processEvents()
+        panel = window.findChild(QObject, "csvImportPanel")
+        assert not panel.property("showAdvanced")
+        window.findChild(QObject, "importAdvancedButton").clicked.emit()
+        assert panel.property("showAdvanced")
+        from test_learning_gui import visual_item
+
+        visual_item(window.contentItem(), "dataHeading_profile").clicked.emit()
+        app.processEvents()
+        visual_item(window.contentItem(), "dataHeading_import").clicked.emit()
+        app.processEvents()
+        assert not panel.property("showAdvanced")
     finally:
         teardown(app, window)

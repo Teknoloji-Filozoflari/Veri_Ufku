@@ -1,0 +1,78 @@
+[
+  {
+    "name": "targeted-final",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "pytest",
+      "-q",
+      "tests/test_data_workspace_gui.py",
+      "tests/test_data_inspection.py",
+      "tests/test_learning.py",
+      "tests/test_document_contracts.py"
+    ],
+    "date": "2026-10-09T23:32:26.196972+00:00",
+    "seconds": 9.786333857999125,
+    "exit_code": 0
+  },
+  {
+    "name": "docs-final",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_docs.py"
+    ],
+    "date": "2026-10-09T23:32:26.297638+00:00",
+    "seconds": 0.1005431600024167,
+    "exit_code": 0
+  },
+  {
+    "name": "learning-final",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_learning.py"
+    ],
+    "date": "2026-10-09T23:32:26.358226+00:00",
+    "seconds": 0.06048505299986573,
+    "exit_code": 0
+  },
+  {
+    "name": "lint-final",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "date": "2026-10-09T23:32:26.376864+00:00",
+    "seconds": 0.018542783996963408,
+    "exit_code": 0
+  },
+  {
+    "name": "format-final",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "date": "2026-10-09T23:32:26.394280+00:00",
+    "seconds": 0.017334772997855907,
+    "exit_code": 0
+  }
+]

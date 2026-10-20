@@ -2,7 +2,7 @@
 
 from veri_ufku.domain.contracts import Progress
 from veri_ufku.importers.delimited import Control
-from veri_ufku.jobs.limits import apply_process_limits
+from veri_ufku.jobs.limits import apply_process_limits, resource_error_text
 from veri_ufku.jobs.workers import Canceled
 from veri_ufku.operations.engine import calculate
 from veri_ufku.storage.project_model import ProjectError
@@ -19,6 +19,7 @@ def process_entry(request, spec, workspace, cancel, connection, budget):
             budget,
         )
         result = calculate(request, spec, workspace, control)
+        control.disk(workspace, force=True)
         control.check()
         connection.send(("result", result))
     except Canceled:
@@ -29,7 +30,10 @@ def process_entry(request, spec, workspace, cancel, connection, budget):
         connection.send(
             (
                 "error",
-                f"İşlem tamamlanamadı ({type(error).__name__}); eski dataset korundu.",
+                resource_error_text(
+                    error,
+                    f"İşlem tamamlanamadı ({type(error).__name__}); eski dataset korundu.",
+                ),
             )
         )
     finally:

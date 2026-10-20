@@ -1,0 +1,230 @@
+{
+  "spec": {
+    "kind": "alluvial",
+    "x": "col:c8c9cf35-068f-4e17-8634-2deca3e765c4",
+    "y": "col:8d83af43-5c7e-4b3d-82ca-432139d91a82",
+    "group": "",
+    "columns": [],
+    "title": "",
+    "xlabel": "",
+    "ylabel": "",
+    "xunit": "",
+    "yunit": "",
+    "legend": true,
+    "bins": 2,
+    "top_n": 20,
+    "aggregation": "sum",
+    "correlation": "pearson",
+    "scatter_mode": "systematic",
+    "point_limit": 10000,
+    "grid_bins": 40,
+    "scope": "sample",
+    "sample_rows": 4,
+    "precision": "reject",
+    "purpose": "distribution",
+    "null_policy": "exclude_nonfinite; category_null_separate; missing_null_only",
+    "view": {
+      "filters": [],
+      "sort_column": "",
+      "descending": false,
+      "hidden": []
+    },
+    "bounds": [],
+    "width": 1000,
+    "height": 650,
+    "dpi": 120,
+    "schema_version": 1,
+    "parent": "",
+    "target": "col:6691353d-5c2d-44f6-95f9-6e8f23e9e0c5",
+    "entity": "",
+    "waterfall_role": "",
+    "missing_category": "include",
+    "funnel_unit": "people",
+    "advanced": false,
+    "radar_scale": "minmax",
+    "size": "",
+    "bubble_encoding": "area",
+    "facet_scale": "shared",
+    "heatmap_scale": "raw",
+    "heatmap_order": "input",
+    "cluster_method": "average",
+    "facet": "",
+    "weight": "",
+    "weight_type": "none",
+    "normalization": "count",
+    "bandwidth": "scott",
+    "bandwidth_factor": 1,
+    "uncertainty": "ci",
+    "confidence": 0.95,
+    "xscale": "linear",
+    "yscale": "linear",
+    "linthresh": 1,
+    "category_order": [],
+    "palette": "accessible",
+    "font": "DejaVu Sans",
+    "font_size": 11,
+    "annotation": "Kaynak korunur · gerçek GUI"
+  },
+  "points": [
+    {
+      "point_id": 0,
+      "x": 0.5,
+      "y": 0.5,
+      "label": "S → M",
+      "n": 2,
+      "value": 10.0,
+      "source": "S",
+      "target": "M",
+      "flow_width": 1.0,
+      "source_bottom": 0,
+      "target_bottom": 0,
+      "source_x": 0.06,
+      "target_x": 0.94
+    },
+    {
+      "point_id": 1,
+      "x": 1.5,
+      "y": 0.25,
+      "label": "M → T1",
+      "n": 1,
+      "value": 5.0,
+      "source": "M",
+      "target": "T1",
+      "flow_width": 0.5,
+      "source_bottom": 0,
+      "target_bottom": 0,
+      "source_x": 1.06,
+      "target_x": 1.94
+    },
+    {
+      "point_id": 2,
+      "x": 1.5,
+      "y": 0.79,
+      "label": "M → T2",
+      "n": 1,
+      "value": 5.0,
+      "source": "M",
+      "target": "T2",
+      "flow_width": 0.5,
+      "source_bottom": 0.5,
+      "target_bottom": 0.58,
+      "source_x": 1.06,
+      "target_x": 1.94
+    }
+  ],
+  "details": {
+    "exclusions": {
+      "col:c8c9cf35-068f-4e17-8634-2deca3e765c4": {
+        "null": 0,
+        "nan": 0,
+        "positive_infinity": 0,
+        "negative_infinity": 0
+      },
+      "col:8d83af43-5c7e-4b3d-82ca-432139d91a82": {
+        "null": 0,
+        "nan": 0,
+        "positive_infinity": 0,
+        "negative_infinity": 0
+      },
+      "col:6691353d-5c2d-44f6-95f9-6e8f23e9e0c5": {
+        "null": 0,
+        "nan": 0,
+        "positive_infinity": 0,
+        "negative_infinity": 0
+      }
+    },
+    "precision_loss_values": 0,
+    "other_categories": 0,
+    "other_rows": 0,
+    "excluded_rows": 0,
+    "composition_version": 1,
+    "input_schema": "X source ID string + target ID string + Y nonnegative adjacent-stage edge amount; balanced DAG",
+    "aggregation": "sum",
+    "normalization": "none",
+    "missing_category": "include",
+    "missing_measure_policy": "excluded, not in denominator; no imputation",
+    "denominator_scope": "selected version + explicit view/sample; included additive values",
+    "structural_rows": 0,
+    "denominator": 10.0,
+    "flow": {
+      "incoming": {
+        "S": 0.0,
+        "M": 10.0,
+        "T1": 5.0,
+        "T2": 5.0
+      },
+      "outgoing": {
+        "S": 10.0,
+        "M": 10.0,
+        "T1": 0.0,
+        "T2": 0.0
+      },
+      "levels": {
+        "S": 0,
+        "M": 1,
+        "T1": 2,
+        "T2": 2
+      },
+      "nodes": {
+        "S": [
+          0,
+          0,
+          1.0
+        ],
+        "M": [
+          1,
+          0,
+          1.0
+        ],
+        "T1": [
+          2,
+          0,
+          0.5
+        ],
+        "T2": [
+          2,
+          0.58,
+          0.5
+        ]
+      },
+      "source_total": 10.0,
+      "sink_total": 10.0,
+      "edge_total": 20.0,
+      "zero_excluded": 0,
+      "balance_tolerance": "rtol1e-9;atol1e-12",
+      "semantics": "aggregated edge quantities; repeated transit counted once per edge, boundary total is denominator; no inferred individual paths"
+    },
+    "included_n": 4,
+    "display": {
+      "xscale": "linear",
+      "yscale": "linear",
+      "linthresh": 1,
+      "clipped": false,
+      "bounds": [],
+      "palette": "accessible",
+      "font": "DejaVu Sans",
+      "font_size": 11,
+      "annotation": "Kaynak korunur · gerçek GUI",
+      "export_dpi": 120
+    }
+  },
+  "used_n": 4,
+  "population_n": 4,
+  "provenance": {
+    "array_source": {},
+    "method": "charts/v1",
+    "backend": "polars/python/Matplotlib Agg",
+    "dataset_versions": [
+      "dv:9e47390b-e17f-408e-8daf-0eee724a7b5d"
+    ],
+    "snapshot_fingerprint": {
+      "size": 4613,
+      "sha256": "cb4e76f691f627c1e12227b18fd8cc68afb1cb9534d9c6a27b797403d7e4f604"
+    },
+    "sampling_method": "firstN",
+    "seed": null,
+    "source_snapshot_ids": [
+      "snapshot:ba5362d2-de1c-47eb-8e37-1d868fda975f"
+    ]
+  }
+}

@@ -1,67 +1,314 @@
-# Veri_Ufku
+<div align="center">
+  <img src="src/veri_ufku/assets/branding/icon-128.png" alt="Veri_Ufku logosu" width="96" height="96">
+  <h1>Veri_Ufku</h1>
+  <p><strong>Veriyi tanı. Sorular sor. Bulgularını anlaşılır ve izlenebilir hâle getir.</strong></p>
+  <p>Linux için yerel, öğrenme odaklı veri bilimi masaüstü uygulaması.</p>
+  <p>
+    <a href="#kurulum">Kurulum</a> ·
+    <a href="#ilk-projen">İlk proje</a> ·
+    <a href="docs/PRO_CAPABILITY_MATRIX.md">Yetenek matrisi</a> ·
+    <a href="docs/INSTALL_EN.md">English installation</a> ·
+    <a href="CONTRIBUTING.md">Katkıda bulun</a>
+  </p>
+</div>
 
-Yerel Linux masaüstü uygulaması. Faz11 dönüşüm/join/append ve ODS/SQLite/Arrow kaynakları; Faz10 temizlik araçları; Faz09 sürümlü işlem motoru, önizleme ve geri alma; Faz08 kalite merkezi ve Faz07 veri tablosu/profil kullanılabilir. Faz 06'da CSV/TSV, JSON, JSONL/NDJSON, XLSX ve Parquet dosya seçme, sürükleyip bırakma, ayarlı önizleme ve doğrulanmış içe aktarma; Faz 04'te proje oluşturma/açma/kaydetme/farklı kaydetme/son projeler; çevrimdışı Öğren merkezi, tema/görünüm tercihi korunan Qt Quick kabuğu ve görev altyapısı kullanılabilir. Analiz yetenekleri henüz mevcut değil. Görünen ad Veri_Ufku, Python paketi `veri_ufku`, dağıtım/giriş komutu `veri-ufku`.
+> **Sürüm durumu: 0.1.0 — deneysel teknik önizleme.** Çalışan ve test edilmiş
+> yollar vardır; bütün yöntemler, isteğe bağlı bağımlılıklar ve Linux dağıtımları
+> için üretim doğrulaması tamamlanmış değildir. Güncel kapsam ve açık işler
+> [yetenek matrisinde](docs/PRO_CAPABILITY_MATRIX.md) ve
+> [sürüm kapsamında](docs/RELEASE_SCOPE_0_1.md) ayrı tutulur.
 
-CPython 3.13.15 ve uv 0.12.23 ile:
+![Veri_Ufku başlangıç ekranı: veri bilimi yol haritası](docs/evidence/ui-journey/final-screens/beginner-home.png)
 
-Ubuntu 24.04'te Qt'nin sistem kitaplıklarını önce kurun: `sudo apt-get update` ve `sudo apt-get install --no-install-recommends -y libegl1 libgl1`. Offscreen/software testleri de bu kitaplıkları gerektirir; Python paket kilidi sistem kitaplıklarını kurmaz.
+## Neden Veri_Ufku?
 
-```sh
-uv sync --locked --group dev
-uv run --offline --frozen veri-ufku
+Veri bilimine başlarken yalnızca bir grafik çizmek veya bir model çalıştırmak
+çoğu zaman yeterli değildir. Önce verinin neyi temsil ettiğini, hangi soruyu
+sorduğunu, hangi işlemin neden gerekli olduğunu ve sonucun nerede geçerli
+olduğunu anlamak gerekir.
+
+**Veri_Ufku'nun amacı, öğrenme ile gerçek veri üzerinde çalışmayı aynı masaüstü
+ortamında birleştirmektir.** Dosyayı içe aktarmaktan bulguları raporlamaya kadar
+verinin yolculuğunu görünür kılar. Kullanıcı bir aracı kullanırken ilgili kavramı
+öğrenebilir; deneyim kazandığında aynı çalışma üzerinde daha ayrıntılı araçlara
+geçebilir.
+
+Projenin merkezinde üç fikir bulunur:
+
+- **Anlayarak çalışmak:** Soruyu, yöntemi, varsayımı ve yorum sınırını birlikte görmek.
+- **Kendi bilgisayarında çalışmak:** Temel iş akışları için bulut hesabı veya sürekli
+  internet bağlantısı gerektirmemek.
+- **Çalışmanın izini korumak:** Kaynağı, veri sürümünü, işlemleri, model değerlendirmesini
+  ve rapor bağlantılarını proje içinde takip etmek.
+
+## Kimler için?
+
+- **Yeni başlayanlar:** Veriyi tanıma, eksik değer, dağılım, karşılaştırma ve modelleme
+  kavramlarını adım adım öğrenmek isteyenler.
+- **Öğrenciler ve eğitmenler:** Küçük örnekler ve çevrimdışı açıklamalarla analiz
+  adımlarını incelemek isteyenler.
+- **Analistler ve araştırmacılar:** Yerel dosyalardan başlayarak keşif, hazırlama,
+  seçilmiş istatistiksel yöntemler ve raporlama yapmak isteyenler.
+- **Deneyimli kullanıcılar ve geliştiriciler:** Gelişmiş yöntemleri, işlem tariflerini,
+  çalışma kayıtlarını ve genişletilebilir altyapıyı değerlendirmek isteyenler.
+
+## Bir uygulama, iki çalışma düzeyi
+
+### Başlangıç: verinin yolculuğunu takip et
+
+İlk kullanım **Başlangıç** düzeyindedir. Ana sayfadaki Veri Bilimi Yol Haritası
+ilgili çalışma alanlarına götürür. Haritanın sonunda proje oluşturma, açma ve
+kaydetme alanı bulunur.
+
+| Çalışma alanı | Sorduğun soru |
+|---|---|
+| Veriyi tanı | Her satır neyi temsil ediyor? Sütunların türü ve anlamı ne? |
+| Veriyi hazırla | Eksik, tekrar veya tutarsız değerlerle nasıl çalışmalıyım? |
+| Desenleri keşfet | Dağılımlar, gruplar ve zaman içindeki değişimler nasıl görünüyor? |
+| Farkları karşılaştır | Gördüğüm fark ne kadar büyük ve ne kadar belirsiz? |
+| Model kur | Yeni kayıtlarda işe yarayan bir tahmin yapabilir miyim? |
+| Bulguları paylaş | Ne buldum; sonucun varsayımları ve sınırlılıkları neler? |
+
+Çalışma sayfaları soru, yapılacak iş, beklenen çıktı ve kısa örneklerle başlar.
+Harita bir sınav veya zorunlu sıra değildir; ihtiyaç duyduğun adıma dönebilirsin.
+Bir başlığa tıklamak hesap başlatmaz veya veriyi değiştirmez.
+
+### Öğren: aynı haritada daha derine in
+
+**Öğren** sekmesi aynı aşamalar üzerinden terimlere, açıklamalara ve örneklere
+ulaştırır. Çevrimdışı arama, sözlük, ilgili konular ve ayrı örnek çalışma alanları
+bulunur. Ders okumak araç kullanmanın önkoşulu değildir.
+
+Örnek laboratuvarlar kendi çalışma alanında açılır; kullanıcının projesini
+öğretim deneyi için değiştirmez. Öğrenme içeriklerinin teknik kontrolleri ile
+bağımsız uzman doğruluk incelemesi ayrı süreçlerdir.
+
+### Gelişmiş: araçlara doğrudan ulaş
+
+Gelişmiş görünüm daha ayrıntılı yöntemleri, parametreleri ve teknik panelleri
+öne çıkarır. Başlangıç anlatısı geri çekilir; işlem akışları, deney kayıtları,
+ortam bilgileri ve desteklenen uzman araçlarına doğrudan erişilebilir.
+
+Seviye değiştirirken form değerleri korunur ve son tercih hatırlanır.
+**Gelişmiş görünüm, güvenlik kontrollerini veya bilimsel önkoşulları kaldırmaz.**
+
+<details>
+<summary>Diğer ekranları gör</summary>
+
+**Veriyi tanıma ekranı**
+
+![Başlangıç düzeyinde veri çalışma alanı](docs/evidence/ui-journey/final-screens/beginner-data.png)
+
+**Haritanın sonunda proje işlemleri**
+
+![Proje oluşturma açma ve kaydetme alanı](docs/evidence/ui-journey/final-screens/project-at-journey-end.png)
+
+**Gerçek hesapla oluşturulmuş histogram**
+
+![Dört kayıt üzerinden hesaplanan histogram](docs/evidence/ui-renewal/final-actual/computed-histogram.png)
+
+Bu görüntüler gerçek QML arayüzünün başsız Qt render'larıdır; tasarım maketi değildir.
+Fiziksel masaüstü ve insan kullanılabilirlik testi yerine geçmez.
+
+</details>
+
+## Neler üzerinde çalışabilirsin?
+
+Aşağıdaki tablo modül kapsamını özetler. Bir modülün bulunması, içindeki her
+alt yöntemin veya her backend'in aynı olgunlukta olduğu anlamına gelmez.
+Yöntem bazındaki destek, sınır ve kanıt için [yetenek matrisini](docs/PRO_CAPABILITY_MATRIX.md) kullan.
+
+| Alan | Kapsam |
+|---|---|
+| Veri kaynakları | CSV/TSV, Excel, JSON/JSONL, Parquet ve seçilmiş diğer yerel biçimler; ayrı veritabanı/HTTP/nesne depolama adaptörleri |
+| Keşif ve kalite | Sayfalı veri tablosu, sütun profili, eksik değer incelemesi, sözlük ve veri sözleşmeleri |
+| Hazırlama | Seçilmiş temizleme, dönüştürme, birleştirme, yeniden şekillendirme ve işlem geçmişi |
+| Görselleştirme | Dağılım, karşılaştırma, ilişki, çok değişkenli ve bileşim grafikleri; desteklenen grafiklerde seçim ve dışa aktarım |
+| İstatistik | Karşılaştırma, ilişki, belirsizlik, örnekleme ve ağırlık türleri; ayrı ileri istatistik/Bayes/nedensel/sağkalım yolları |
+| Makine öğrenmesi | Regresyon, sınıflandırma, kümeleme, anomali, özellik seçimi, doğrulama planları, tuning, kalibrasyon ve açıklama |
+| Uzman veri türleri | Zaman serisi, sinyal, çok boyutlu dizi ve mekânsal veri; seçilmiş metin, görüntü ve ses yolları |
+| Diğer analizler | Öneri sistemleri, ağlar, sepet/event analizi, yerel akış simülasyonu ve sınırlı simülasyon/optimizasyon |
+| Çalışma yönetimi | Deney/model kayıtları, typed DAG iş akışı, lineage, yeniden üretim paketi ve yerel batch monitoring |
+| Rapor ve paylaşım | Başlık/not/yöntem/grafik/tablo içeren raporlar; yerel inceleme paketleri, redaction ve açık dışa aktarma |
+
+İsteğe bağlı bir backend veya yerel model yoksa ilgili özellik kullanılamayabilir.
+Model dosyası indirmek, ağ kaynağına bağlanmak ve kullanıcı kodu çalıştırmak ayrı,
+açık eylemlerdir. Projeyi açmak bunları kendiliğinden başlatmaz.
+
+## Veriye ve sonuçlara yaklaşım
+
+- **Kaynak ve çalışma sürümü ayrıdır.** Dönüşümler özgün dosyayı sessizce değiştirmek
+  yerine proje içindeki veri sürümleri ve işlem kayıtlarıyla yürütülür.
+- **Önizleme, tam veri değildir.** Örneklem, kullanılan kayıt sayısı ve yöntem sınırları
+  sonucun yorumunun parçasıdır.
+- **Değerlendirme planı modelden önce gelir.** Eğitim/validation/final test,
+  grup ve zaman yapısı ile test kullanım geçmişi ayrı ele alınır.
+- **Sonuçların kökeni önemlidir.** Veri sürümü, parametre, yöntem ve artifact
+  bağlantıları desteklenen yollarda saklanır; eski sonuç güncel diye sunulmamalıdır.
+- **Belirsizlik gizlenmez.** Uyarılar, varsayımlar ve diagnostic sorunları sonuçla
+  birlikte değerlendirilir. İlişki veya model açıklaması nedensellik kanıtı değildir.
+- **Yerel çalışma varsayılandır.** Temel uygulama internetsiz kullanılabilir;
+  dış hizmetler ve paylaşım kullanıcı eylemi gerektirir.
+
+## Kurulum
+
+### Gereksinimler
+
+- Linux masaüstü ortamı ve Qt'nin ihtiyaç duyduğu sistem kitaplıkları.
+- Kilitli geliştirme sürümü **CPython 3.13.15**.
+- Bağımlılık kurulumu için **uv**; depoda `pyproject.toml` ve `uv.lock` bulunur.
+
+Ubuntu/Debian ailesinde Qt için gerekli temel kitaplıkları kurmak gerekebilir:
+
+```bash
+sudo apt-get update
+sudo apt-get install --no-install-recommends -y libegl1 libgl1
 ```
 
-İlk kurulum Python ve bağımlılıkları indirebilir. İnternetsiz kurulum ancak uyumlu Python ve tüm kilitli paketlerin yerel uv cache'inde bulunmasıyla denenmiştir: `uv sync --offline --locked --group dev`. Tam dağıtım wheelhouse'u henüz yoktur. Uygulama çalışırken ağ istemez. Kurulumdan sonra `.venv/bin/veri-ufku` da aynı giriş noktasıdır.
+Bu komutlar bütün dağıtımlar için test edilmiş kurulum garantisi değildir.
+[Kurulum ve dağıtım sınırları](docs/INSTALL_TR.md) bölümüne bak.
 
-“Altyapı denemeleri” bölümünü açın; “CPU denemesini başlat” ile ayrı süreçte gerçek deterministik toplamı çalıştırın; “Görevi iptal et” ile durdurun. Görev sürerken yapılandırmayı değiştirin: eski sonuç güncel sonuç alanına yazılmaz. I/O görevi geçici dosyaya yazar ve bitince temizler. Üstten Gelişmiş görünümü seçerek yapılandırma/hata denemelerini açın. Hata denemesi anlaşılır mesaj ve teknik log için takip kimliği gösterir. Bunlar açıkça altyapı denemeleridir.
+### Kaynaktan çalıştır
 
-```sh
+```bash
+git clone https://github.com/Teknoloji-Filozoflari/Veri_Ufku.git
+cd Veri_Ufku
+uv sync --locked --no-dev
+.venv/bin/veri-ufku
+```
+
+İlk kurulum Python ve paketleri indirmek için internet gerektirebilir. Kurulumdan
+sonra temel uygulama ve paketlenmiş yardım çevrimdışı çalışır. Temiz makine için
+bütün bağımlılıkları içeren, doğrulanmış bir offline kurulum paketi henüz sunulmuyor.
+
+### İsteğe bağlı modüller
+
+Yalnız ihtiyacın olan ek bağımlılıkları kurabilirsin. Örneğin:
+
+```bash
+uv sync --locked --no-dev --extra arrays --extra geospatial
+```
+
+Diğer profiller: `formats`, `audio`, `graphs`, `statistics-advanced`, `bayes`,
+`neural`, `connectors`, `privacy`, `audio-speech`. Her profil aynı gereksinimlere
+sahip değildir; yerel model dosyaları ve native kitaplıklar ayrıca gerekebilir.
+GPU zorunlu değildir; her yöntemde GPU desteği olduğu da varsayılmaz.
+
+Flatpak paketleme altyapısı bulunur. Eski yerel paket adayları son arayüzü
+kapsamayabilir; kaynak kodun GitHub'da bulunması güncel, imzalı binary release
+olduğu anlamına gelmez. Ayrıntı: [Türkçe](docs/INSTALL_TR.md) / [English](docs/INSTALL_EN.md).
+
+## İlk projen
+
+1. Uygulamayı aç ve Başlangıç sayfasındaki yol haritasını incele.
+2. Haritanın sonundaki **Yeni proje** ile bir çalışma oluştur veya **Proje aç** ile
+   mevcut projeni seç.
+3. **Veriyi tanı → Veriyi projeye aktar** alanından dosyanı seç; önizleme, türler ve
+   okuma ayarlarını kontrol edip içe aktar.
+4. Tabloyu, sütun profilini ve eksik değerleri incele; araştırmak istediğin soruyu belirle.
+5. Gereken dönüşümleri önce önizle. Grafiğe, karşılaştırmaya veya modellemeye
+   geçerken yöntemin varsayımlarını ve kullanılan veri kapsamını kontrol et.
+6. Bulgularını sınırlılıklarıyla raporla ve projenin güncel durumunu kaydet.
+
+Bir terime takılırsan **Öğren**, **F1** veya **Bu ne işe yarar?** bağlantısını kullan.
+
+| Kısayol | Eylem |
+|---|---|
+| `Ctrl+1 … Ctrl+8` | Çalışma alanları arasında gezinme |
+| `Ctrl+K` | Yöntem ve amaç arama |
+| `F1` / `Esc` | Bağlamsal yardımı açma / kapatma |
+| `Ctrl+O` / `Ctrl+S` | Proje açma / kaydetme |
+| `Ctrl+,` | Görünüm ve dil ayarları |
+
+## Teknik yapı
+
+Python iş mantığı ve **PySide6/QML** arayüzü üzerine kuruludur. **Polars/PyArrow**
+veri işlemede, **Matplotlib** grafiklerde, **SciPy/scikit-learn** seçilmiş bilimsel
+hesap ve modelleme yollarında kullanılır. İleri modüller isteğe bağlı backend'lerle
+genişler.
+
+Arka plan işleri ortak görev/bütçe altyapısını, proje işlemleri ortak depoyu,
+yöntemler ortak capability registry'yi kullanır. Satır/sütun kimliği ve provenance
+sözleşmeleri veri akışının parçalarıdır.
+
+```text
+src/veri_ufku/   Uygulama, QML arayüzü, veri ve analiz modülleri
+tests/         Birim, entegrasyon ve gerçek Qt iş akışı testleri
+scripts/       Doğrulama, ölçüm, paketleme ve yayın araçları
+docs/          Mimari, kullanım, yetenek matrisi ve tarihli kanıtlar
+packaging/     Linux paketleme tanımları
+examples/      Örnek eklenti ve kullanım dosyaları
+```
+
+[Mimari](docs/ARCHITECTURE.md) · [Çekirdek sözleşmeler](docs/CORE_CONTRACTS.md) ·
+[Ürün yaklaşımı](docs/PRODUCT.md) · [Eklenti API rehberi](docs/PLUGIN_API_EN.md)
+
+## Geliştirme ve doğrulama
+
+```bash
+uv sync --locked --group dev
 uv run --frozen python scripts/check_docs.py
 uv run --frozen python scripts/check_artifacts.py
 uv run --frozen python scripts/check_learning.py
+uv run --frozen python scripts/check_usability.py
 uv run --frozen ruff check src tests scripts
 uv run --frozen ruff format --check src tests scripts
-QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software uv run --frozen pytest -q
 QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software uv run --frozen veri-ufku --smoke-test
 ```
 
-Başsız ekran çalıştırma doğrulandı. Ajan ortamının Wayland/X11 bağlantısı reddedildi. Kullanıcı kendi masaüstünde CPU/I/O ve belirsiz ilerleme iptal/tamamlanmasını denedi; kalan masaüstü kontrollerini de başarılı bildirdi. [Uzak CI koşusu 37500721689](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37500721689) tüm adımlarıyla başarılı; Faz 01 kabul durumu **doğrulandı**, altyapı olgunluğu deneysel. Sonraki faz başlamadı.
+Geliştirme ortamındaki odaklı başlangıç kontrolleri:
 
-[Ürün](docs/PRODUCT.md), [ekran akışı](docs/UX.md), [mimari](docs/ARCHITECTURE.md), [çekirdek sözleşmeler](docs/CORE_CONTRACTS.md), [fazlar](docs/PHASE_PLAN.md), [gereksinimler](docs/REQUIREMENTS_MATRIX.md), [ilerleme](docs/PROGRESS.md), [geliştirme](docs/DEVELOPMENT.md), [tasarım kuralları](docs/UI_DESIGN_BRIEF.md), [referanslar](docs/UI_REFERENCES.md), [kabul](docs/ACCEPTANCE_POLICY.md), [Faz 01 kanıtları](docs/evidence/PHASE01.md).
+```bash
+QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software uv run --frozen pytest -q \
+  tests/test_presentation_preferences.py tests/test_journey_gui.py tests/test_publish.py
+```
 
-GitHub'a ilk gönderim için normal masaüstü terminalinde `bash scripts/publish_github.sh` çalıştırın. Betik GitHub oturumu gerektiğinde tarayıcı doğrulaması başlatır, boş eski .git dizinini yedekler, main dalını gönderir ve CI sonucunu izler. Sanal ortamlar ve yerel loglar gönderilmez. Uzakta farklı bir geçmiş varsa force push yapmaz; hata metniyle durur. Kullanıcı ilk gönderimi normal terminalde tamamladı. İlk CI koşusu başarısız oldu; aynı betik yerel düzeltmeleri yeni commit ile gönderip yeni koşuyu izlemek için tekrar çalıştırılabilir. Ajanın GitHub API bağlantısı hâlâ başarısız.
+Tam uzman modül regresyonu ek bağımlılıklar ve bazı testlerde gerçek sunucu/model
+ortamı ister. Gereken ortam olmadan bir connector veya yöntem test edilmiş
+sayılmaz. Komutlar ve kapsam için [geliştirme rehberi](docs/DEVELOPMENT.md).
 
-Faz02: solda Başlangıç/Veri/Hazırla/İncele/Karşılaştır/Model/Rapor/Öğren alanları, üstte proje/veri bağlamı, ortada kaydırılabilir çalışma alanı ve gerektiğinde sağ bilgi paneli. Dosya aç Faz05 ile CSV/TSV için çalışır; Örnek veriyle dene henüz mevcut değil. Veri/analitik için gelecek alanlar kullanılabilirlik bilgisini açar; Öğren Faz03 ile çalışır. Amaç kartları analiz çalıştırmaz.
+Son arayüz tesliminde kaynak ve kurulu wheel üzerinde hedefli GUI kontrolleri
+çalıştırıldı. Test sayıları, ortam, ekran görüntüleri ve başarısız ara koşular
+[UI yenileme](docs/evidence/UI_RENEWAL.md) ve
+[başlangıç yolculuğu](docs/evidence/UI_JOURNEY.md) kayıtlarında bulunur.
+Bu kayıtlar bütün deponun veya bütün platformların yeniden test edildiği anlamına gelmez.
 
-Tema (açık/koyu/sistem), görünüm (başlangıç/gelişmiş) ve yazı boyutu (%100–200) üstten seçilir ve `XDG_CONFIG_HOME/veri_ufku/ui-preferences.json` içine kaydedilir. Başlangıç görünümü sonuç/hata/iptal bilgisini korur. Bozuk tercih dosyası otomatik ezilmez; görünür uyarı verir. F1 veya “Bu ne işe yarar?” paneli açar; Escape kapatıp odağı geri verir. Tab/ShiftTab, nav okları/Space ve Ctrl+1..8 temel gezinme yollarıdır.
+## Bilinen sınırlar ve yol haritası
 
-Faz02 [kanıt kaydı](docs/evidence/PHASE02.md): 720×560–1366×900, %100–200 yazı, başsız ve gerçek Wayland GUI kontrolleri; [masaüstü açık ekran](docs/evidence/phase02-desktop-1366-light-1.0-0.png), [koyu ekran](docs/evidence/phase02-desktop-1366-dark-1.0-0.png). Faz02 doğrulandı, olgunluk deneysel; [Faz02 uzak CI](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37504698665) başarılı.
+Veri_Ufku aktif geliştirmededir. Öncelik, kapsamı büyütürken doğruluğu,
+öğrenilebilirliği ve veri bütünlüğünü korumaktır.
 
-Faz03: Öğren alanında internet olmadan konu ara, kategori veya sözlük seç; makaleyi açıp Tek cümle / Bir dakikalık örnek / Ayrıntılı rehber derinliklerini dene. F1 ilgili ekran veya odaklı işlemi açıklar; Escape yardımı kapatır. Okundu/yer imi kaydı isteğe bağlı ve yereldir. Yardım rehberindeki Uygulamada dene ayrı geçici örnek öğrenme projesi açar; analitik araçlar henüz mevcut değil. [İçerik ve katkı sözleşmesi](docs/LEARNING_CONTENT.md). Ek CI kontrolü: `uv run --frozen python scripts/check_learning.py`.
+- Bazı uzun GUI/hesap zincirlerinde bellek, süreç bütçesi veya timeout sorunları açıktır.
+- Başsız GUI testleri, fiziksel masaüstü, erişilebilirlik teknolojisi ve gerçek
+  yeni başlayan/uzman kullanıcı testinden ayrıdır.
+- Minimum donanım, tüm Linux dağıtımları, bütün optional backend'ler ve offline
+  kurulum senaryoları doğrulanmış değildir.
+- Yerel tek yazıcı proje yaklaşımı, paylaşımlı ağ klasöründe çok kullanıcılı ortak
+  düzenleme garantisi vermez.
+- İleri modüllerin kapsamı sınırlıdır; bütün veri bilimi yöntemlerinin
+  tamamlandığı veya öğrenme içeriklerinin bağımsız uzman onayı aldığı iddia edilmez.
 
-Faz03 [kanıt kaydı](docs/evidence/PHASE03.md): 54 test ve gerçek Wayland kontrolü geçti; [Öğren ekranı](docs/evidence/phase03-desktop-search.png). Faz03 doğrulandı/deneysel; [Faz03 uzak CI](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37511231471) başarılı (Linux38s).
+[Yetenek matrisi](docs/PRO_CAPABILITY_MATRIX.md) ·
+[Bilinen sınırlar](docs/KNOWN_LIMITATIONS.md) ·
+[Güncel proje durumu](docs/PROJECT_STATE.md) ·
+[Yol haritası](docs/ROADMAP.md) ·
+[Değişiklik günlüğü](CHANGELOG.md)
 
-Faz04: Başlangıçtaki Yeni proje → Klasör seç ile var olan bir üst klasör seçin; önerilen Yeni_Proje adını değiştirebilirsiniz. Elle yazarsanız `/home/s-oktay/Belgeler/Projem` gibi kendi kullanıcı klasörünüzde **henüz mevcut olmayan bir proje dizini** belirtin. Proje adı/seed veya yardım derinliğini değiştirin, Kaydet (Ctrl+S), Projeyi kapat ve Proje aç (Ctrl+O) ile aynı dizini açın. Farklı kaydet yeni bir dizinde aktif durumun kopyasını oluşturur; aynı/symlink/mevcut hedefi ezmez. Son projeler listesi açılışlarınızı tutar.
+## Katkıda bulun
 
-Kaynak dosyası bağla, yalnız referans veya taşınabilir dosya kopyası ekler; dosya içe aktarma/analiz çalıştırmaz ve özgün dosyaya yazmaz. Referans yolu kaybolursa dosyayı ayrıca götürüp Yeniden bağla seçin; yalnız aynı SHA256/boyut kabul edilir. Değişmiş kaynak eski sonuçları güncel yapmaz. Proje metadata açılışı yeniden işleme değildir.
+Hata raporları, tekrar üretilebilir küçük örnekler, Türkçe anlatım iyileştirmeleri,
+erişilebilirlik geri bildirimleri ve bilimsel doğruluk incelemeleri değerlidir.
 
-Otomatik kayıt 60 saniyede ayrı kurtarma dalına yazar; manuel kaydı değiştirmez. Kurtarma kaydını yükle ile inceleyip Kaydet seçin. Kapanış kaydedilmemiş değişiklikler için karar ister. İkinci uygulama salt okunur açılır. Temiz kapanmamış projede Önceki kilidi kurtararak aç seçeneğiyle dizini seçin; aktif yazıcının kilidi kaldırılmaz.
+Bir hata bildirirken uygulama/ortam sürümünü, izlenen adımları ve beklenen sonucu
+belirt. Gerçek kişisel verileri, erişim anahtarlarını veya özel proje dosyalarını
+issue içine ekleme; mümkünse küçük sentetik bir örnek kullan.
 
-[Proje saklama kararı](docs/adr/007-project-store-phase04.md), [Faz04 kanıtları](docs/evidence/PHASE04.md). Yazma yerel Btrfs/ext4, geçici deneme tmpfs içindir; bu oturumdaki dayanıklılık testleri Btrfs/tmpfs üzerindedir. Ağ ve eşzamanlı sync klasörlerinde destek yoktur; güç kesintisi garantisi verilmez. Yeni masaüstü/native dosya seçici ve remote CI kontrolü henüz yapılmadı. Başsız proje ölçümü: `uv run --frozen python scripts/measure_phase04.py`.
+Başlamadan önce [CONTRIBUTING.md](CONTRIBUTING.md) ve
+[öğrenme içeriği sözleşmesini](docs/LEARNING_CONTENT.md) incele.
 
-Faz05: Önce proje oluşturun/açın. Veri → Dosya seç veya tek CSV/TSV dosyasını bırakın. Algılama önerilerini (ayraç/encoding/başlık) kontrol edin; sayı/null/tarih/saat dilimi ve sütun türlerini seçin. Değişiklikten sonra Aynı kopyayı yeniden önizle; ardından İçe aktar ve projeye kaydet. Bu eylem mevcut proje değişikliklerini de kaydeder. Tüm sütunlar varsayılan metin; leading-zero kimlikler korunur. Bozuk kayıt için Durdur veya Raporlu karantina seçin; sayım ve özgün satır aralığı/sebep saklanır.
+## Lisans
 
-Önizleme en fazla200 kayıtlık örnektir. İçe aktarma ekranda zamanı/SHA256'sı görünen doğrulanmış kopyadan yapılır; kaynak sonradan değiştiyse güncel veriyi almak için dosyayı tekrar seçin. Özgün kaynak değiştirilmez. Dataset her durumda Parquet saklanır; isteğe bağlı özgün taşınabilir kopya eklenir. Sınırlar1GiB kaynak/256 sütun/1MiB kayıt; chunk/lazy import, süreç iptali ve atomik proje yayını. Proje şema2; eski şema1 açık kayıt sonrasında migrasyonla2 olur, eski commit korunur. [Karar](docs/adr/008-delimited-import-phase05.md), [kanıtlar](docs/evidence/PHASE05.md). `uv run --frozen python scripts/measure_phase05.py` başsız import/render/iptal ölçümü; gerçek masaüstü/native dosya seçici ve yeni remote CI ayrı doğrulanmadı.
-
-Faz06: Veri ekranında CSV/TSV yanında JSON, JSONL/NDJSON, XLSX ve Parquet dosya seçimi/bırakma. JSON iç içe kayıt yolu ve ayrı düzleştirme/liste açma; Excel sayfa/aralık/formül davranışları; native Parquet tür koruma. Kaynak dosya korunur. [Destek sınırları](docs/adr/009-structured-import-phase06.md), [test/paket kanıtı](docs/evidence/PHASE06.md). Faz07 başlatılmadı.
-
-Faz07: **Veri → Veri tablosu → Tabloyu aç / yenile**. Sütunu seçerek sıralama, filtre, gizleme, rol/birim ve profil kapsamını düzenleyin. Rol/profil taslağı için **Projeyi kaydet** kullanın. Tablo salt okunur; filtre analiz dataset’ini değiştirmez. [Kapsam ve kanıt](docs/evidence/PHASE07.md).
-
-Faz08: **Veri → Veri kalitesi**. Tarama miktarı/kapsamı/amacı seçin; isteğe bağlı tekrar anahtarı ve açık kurallar ekleyin. **Kaliteyi tara**, sonra bulgu gerekçesi ve yardımını inceleyin. **Raporu proje taslağına ekle → Projeyi kaydet** raporu saklar. Tarama ve öneriler veriyi değiştirmez; düzeltme işlemleri henüz mevcut değil. [Kanıt](docs/evidence/PHASE08.md).
-
-Faz09: **Hazırla → Sütunu yeniden adlandır / Sütunu çıkar / Görünüm filtrelerini veriye uygula → Önizle → Uygula ve projeye kaydet**. Filtreyi önce Veri → Veri tablosunda hazırlayın. Önce/sonra tablolar ilk200 kayıttır; etki sayımları tam veri üzerindendir. **Geri al / Yinele** kalıcı sürümleri açar; eski adımın öncesine dönüp yeni işlem oluşturmak eski dalı korur, redo zincirini temizler. Eski sonuçlar güncel değil etiketiyle kalır. Bu eylemler proje taslağını da kaydeder; kaynak değiştirilmez, elle hücre/satır düzenleme seçilmediği için tablo salt okunur kalır. [Faz09 kanıtı](docs/evidence/PHASE09.md).
-
-Faz10: **Hazırla → Temizlik araçları**. Eksik satır/sütun, sabit/ortalama/medyan/mod, tekrar kaldırma, kırpma, kategori eşleme, tür/tarih, açık grup+sırada ileri/geri doldurma ve IQR işaretleme/filtreleme. Kullanıcı yöntemi ve mevcut zincir/ayrı kopya hedefini seçer; önizleme olmadan uygulanmaz. IQR varsayılan yalnız işaretler, kaynak korunur. Yeni null/tarih hataları raporlanır; hassasiyet kaybı veya DST düzeltmesi sessiz yapılmaz. Önce/sonra tablo ve geçmiş ayrıntılarını ihtiyacınız olduğunda açabilirsiniz. [Faz10 kanıtı](docs/evidence/PHASE10.md).
-
-
-Faz11: **Hazırla → Yeni kolon / tablo dönüşümleri**. Hesaplanmış kolon, metin böl/birleştir, tarih parçaları, grup/toplulaştırma, pivot/unpivot, append ve üç adımlı join. Önizleme tam veri etki/ilişki/satır büyümesini gösterir; Uygula yeni sürüm, Geri al/Yinele aynı kimliklerle geçmişe döner. SQLite tablo seçimi salt okunurdur; ODS sayfa ve Feather V2/Arrow IPC file/stream açılır. Formül kolonu isimli seçiciden eklenir, izinli ifadelerle çalışır. [Destek sınırları](docs/adr/014-transformations-phase11.md), [kanıt](docs/evidence/PHASE11.md). Kullanıcı manuel denemeleri daha sonra toplu yapabilir.
+Veri_Ufku **GPL-3.0-or-later** lisansıyla sunulur. Tam metin [LICENSE](LICENSE)
+dosyasındadır. Fontlar, örnek veriler ve üçüncü taraf bileşenler için ayrı
+bildirimler geçerlidir: [lisans açıklaması](docs/LICENSING.md) ve
+[üçüncü taraf bildirimleri](docs/THIRD_PARTY_NOTICES.md).

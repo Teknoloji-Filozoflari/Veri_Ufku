@@ -1,0 +1,1124 @@
+{
+  "environment": "ENV-14",
+  "date": "2026-10-08",
+  "state": "complete",
+  "checks": [
+    {
+      "id": "E14-wheel-workflow-A1",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase14.py",
+        "--package-root",
+        "/tmp/veri-ufku-phase14-wheel",
+        "--output",
+        "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase14/wheel.json"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:10:21.703257+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 38.602728896999906,
+      "log": "docs/evidence/phase14/wheel-workflow.txt",
+      "log_sha256": "a29a7a333fa9c59abb2f304dd8c71eef18a898377adcbfd5d6a9f6b26659c92f",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-wheel-workflow"
+    },
+    {
+      "id": "E14-locked-sync-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "sync",
+        "--offline",
+        "--locked",
+        "--group",
+        "dev"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:11:00.306291+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.007887091000156943,
+      "log": "docs/evidence/phase14/locked-sync.txt",
+      "log_sha256": "d7dd00f73de8a060e053502e628941ae2ebd3b4cafacc6f3562e0a0f2a3a10b6",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-locked-sync"
+    },
+    {
+      "id": "E14-system-docs-A1",
+      "command": [
+        "python3",
+        "scripts/check_docs.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:11:00.314398+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.04658497400032502,
+      "log": "docs/evidence/phase14/system-docs.txt",
+      "log_sha256": "9a8eb5528c4a53e5c39069acbefdb05a884fe7113b42b434dbc8cb5e241ab631",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-system-docs"
+    },
+    {
+      "id": "E14-locked-docs-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_docs.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:11:00.361354+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.05454409100002522,
+      "log": "docs/evidence/phase14/locked-docs.txt",
+      "log_sha256": "9a8eb5528c4a53e5c39069acbefdb05a884fe7113b42b434dbc8cb5e241ab631",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-locked-docs"
+    },
+    {
+      "id": "E14-artifacts-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_artifacts.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:11:00.416300+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.12443768699995417,
+      "log": "docs/evidence/phase14/artifacts.txt",
+      "log_sha256": "aadc24fe5bdff7258b7b5371995102f493a1ff92a0f17cefd7958a31a9e6da79",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-artifacts"
+    },
+    {
+      "id": "E14-learning-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_learning.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:11:00.541076+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.04929428200011898,
+      "log": "docs/evidence/phase14/learning.txt",
+      "log_sha256": "46ee8a854b7d924948eb94df70e09ede2d2255022d8868a48c7f48cd0d23cf40",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-learning"
+    },
+    {
+      "id": "E14-ruff-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:11:00.590654+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.017422864999389276,
+      "log": "docs/evidence/phase14/ruff.txt",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-ruff"
+    },
+    {
+      "id": "E14-format-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:11:00.608309+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.016897055999834265,
+      "log": "docs/evidence/phase14/format.txt",
+      "log_sha256": "273e81e5999dffa54a2889cd098e6b1b5fa9937e557bd94fbc92a5cf43b546f0",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-format"
+    },
+    {
+      "id": "E14-pytest-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "pytest",
+        "-q"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:11:00.625553+00:00",
+      "exit_code": 1,
+      "elapsed_seconds": 115.88440945899947,
+      "log": "docs/evidence/phase14/pytest.txt",
+      "log_sha256": "51018f5b3e016c823cef4b349d3b5b67588346e9db6c72368c1769a29d05fb0b",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-pytest"
+    },
+    {
+      "id": "E14-wheel-build-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "build",
+        "--no-build-isolation",
+        "--out-dir",
+        "/tmp/veri-ufku-phase14-dist-v2"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:15:18.790921+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 1.8492368070001248,
+      "log": "docs/evidence/phase14/wheel-build.txt",
+      "log_sha256": "1ebe7d429c0a328e5107e2812ad6344093456e0d7d907273e744f4276e7858ca",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-wheel-build"
+    },
+    {
+      "id": "E14-wheel-install-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "pip",
+        "install",
+        "--python",
+        ".venv/bin/python",
+        "--no-deps",
+        "--target",
+        "/tmp/veri-ufku-phase14-wheel-v2",
+        "/tmp/veri-ufku-phase14-dist-v2/veri_ufku-0.1.0-py3-none-any.whl"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:15:20.640498+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.015032982999400701,
+      "log": "docs/evidence/phase14/wheel-install.txt",
+      "log_sha256": "17ac851c7db90a2d34ef4df0cdfc137dc9581b775affd739228a5728b512be8a",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-wheel-install"
+    },
+    {
+      "id": "E14-source-workflow-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/measure_phase14.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:15:20.655846+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 40.21332524900026,
+      "log": "docs/evidence/phase14/source-workflow.txt",
+      "log_sha256": "bc53e9f8377cd961742327964a8f970bc37434e44eefe3f724b468e28d5ebaee",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-source-workflow"
+    },
+    {
+      "id": "E14-wheel-workflow-A2",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase14.py",
+        "--package-root",
+        "/tmp/veri-ufku-phase14-wheel-v2",
+        "--output",
+        "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase14/wheel.json"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:16:00.869937+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 40.35618498900021,
+      "log": "docs/evidence/phase14/wheel-workflow-retry.txt",
+      "log_sha256": "a29a7a333fa9c59abb2f304dd8c71eef18a898377adcbfd5d6a9f6b26659c92f",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-wheel-workflow"
+    },
+    {
+      "id": "E14-locked-sync-A2",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "sync",
+        "--offline",
+        "--locked",
+        "--group",
+        "dev"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:16:41.226478+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.009132614999543875,
+      "log": "docs/evidence/phase14/locked-sync-retry.txt",
+      "log_sha256": "f8537094150e17e1c096b6cec8f71c9686cc6ebcad1ce3caacdda552748acd63",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-locked-sync"
+    },
+    {
+      "id": "E14-system-docs-A2",
+      "command": [
+        "python3",
+        "scripts/check_docs.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:16:41.235952+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.05077441000048566,
+      "log": "docs/evidence/phase14/system-docs-retry.txt",
+      "log_sha256": "9a8eb5528c4a53e5c39069acbefdb05a884fe7113b42b434dbc8cb5e241ab631",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-system-docs"
+    },
+    {
+      "id": "E14-locked-docs-A2",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_docs.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:16:41.287203+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.057620278999820584,
+      "log": "docs/evidence/phase14/locked-docs-retry.txt",
+      "log_sha256": "9a8eb5528c4a53e5c39069acbefdb05a884fe7113b42b434dbc8cb5e241ab631",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-locked-docs"
+    },
+    {
+      "id": "E14-artifacts-A2",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_artifacts.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:16:41.345204+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.12832119699942268,
+      "log": "docs/evidence/phase14/artifacts-retry.txt",
+      "log_sha256": "aadc24fe5bdff7258b7b5371995102f493a1ff92a0f17cefd7958a31a9e6da79",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-artifacts"
+    },
+    {
+      "id": "E14-learning-A2",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_learning.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:16:41.473919+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.05421226299949922,
+      "log": "docs/evidence/phase14/learning-retry.txt",
+      "log_sha256": "46ee8a854b7d924948eb94df70e09ede2d2255022d8868a48c7f48cd0d23cf40",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-learning"
+    },
+    {
+      "id": "E14-ruff-A2",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:16:41.528608+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.017293449999669974,
+      "log": "docs/evidence/phase14/ruff-retry.txt",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-ruff"
+    },
+    {
+      "id": "E14-format-A2",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:16:41.546204+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.016843182999764394,
+      "log": "docs/evidence/phase14/format-retry.txt",
+      "log_sha256": "273e81e5999dffa54a2889cd098e6b1b5fa9937e557bd94fbc92a5cf43b546f0",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-format"
+    },
+    {
+      "id": "E14-pytest-A2",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "pytest",
+        "-q"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:16:41.563475+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 116.84442760499951,
+      "log": "docs/evidence/phase14/pytest-retry.txt",
+      "log_sha256": "06f198c0c01a70f4c6fee50002b41087b78f57a1b077c6abc14ceb0c9bebcf25",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-pytest"
+    },
+    {
+      "id": "E14-locked-unittest-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:18:38.408385+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 2.0437176479999835,
+      "log": "docs/evidence/phase14/locked-unittest.txt",
+      "log_sha256": "40db40a196ff3b31fd99f70ff24f1d0e188f8a9ca680253fdf9f3aad77ce5108",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-locked-unittest"
+    },
+    {
+      "id": "E14-system-unittest-A1",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:18:40.452713+00:00",
+      "exit_code": 1,
+      "elapsed_seconds": 1.1136764530001528,
+      "log": "docs/evidence/phase14/system-unittest.txt",
+      "log_sha256": "4493bcdb48f2eeb1bf5adc2450c6e9bd3e169f1f6bc3b680f5e67ce97c590107",
+      "required": false,
+      "attempt": 1,
+      "family_id": "E14-system-unittest"
+    },
+    {
+      "id": "E14-entry-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "veri-ufku",
+        "--smoke-test"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:18:41.566816+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.6334784410000793,
+      "log": "docs/evidence/phase14/entry.txt",
+      "log_sha256": "6805824f4b4cb0e09b8f61780b5ecc609ec414f36a6d01b52049a585f01abeed",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-entry"
+    },
+    {
+      "id": "E14-wheel-entry-A1",
+      "command": [
+        "/tmp/veri-ufku-phase14-wheel-v2/bin/veri-ufku",
+        "--smoke-test"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:18:42.200764+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.6359124119999251,
+      "log": "docs/evidence/phase14/wheel-entry.txt",
+      "log_sha256": "6805824f4b4cb0e09b8f61780b5ecc609ec414f36a6d01b52049a585f01abeed",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-wheel-entry"
+    },
+    {
+      "id": "E14-source-workflow-final-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/measure_phase14.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:24:59.190951+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 41.40371951900033,
+      "log": "docs/evidence/phase14/source-workflow-final.txt",
+      "log_sha256": "bc53e9f8377cd961742327964a8f970bc37434e44eefe3f724b468e28d5ebaee",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-source-workflow-final"
+    },
+    {
+      "id": "E14-wheel-workflow-final-A1",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase14.py",
+        "--package-root",
+        "/tmp/veri-ufku-phase14-wheel-v3",
+        "--output",
+        "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase14/wheel.json"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:25:40.595155+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 41.817755109000245,
+      "log": "docs/evidence/phase14/wheel-workflow-final.txt",
+      "log_sha256": "a29a7a333fa9c59abb2f304dd8c71eef18a898377adcbfd5d6a9f6b26659c92f",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-wheel-workflow-final"
+    },
+    {
+      "id": "E14-statistics-final-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "pytest",
+        "tests/test_statistics.py",
+        "tests/test_statistics_gui.py",
+        "-q"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:26:22.413238+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 26.719706935999966,
+      "log": "docs/evidence/phase14/statistics-final.txt",
+      "log_sha256": "a302cbe8b627da687cbba8337b67547982945119fa51bf259fea8e2da8b89e45",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-statistics-final"
+    },
+    {
+      "id": "E14-ruff-final-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:26:49.133450+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.018788069000038377,
+      "log": "docs/evidence/phase14/ruff-final.txt",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-ruff-final"
+    },
+    {
+      "id": "E14-format-final-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:26:49.152574+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.016947226999945997,
+      "log": "docs/evidence/phase14/format-final.txt",
+      "log_sha256": "273e81e5999dffa54a2889cd098e6b1b5fa9937e557bd94fbc92a5cf43b546f0",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-format-final"
+    },
+    {
+      "id": "E14-learning-final-A1",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_learning.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:26:49.169861+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.05081389899987698,
+      "log": "docs/evidence/phase14/learning-final.txt",
+      "log_sha256": "46ee8a854b7d924948eb94df70e09ede2d2255022d8868a48c7f48cd0d23cf40",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-learning-final"
+    },
+    {
+      "id": "E14-wheel-entry-final-A1",
+      "command": [
+        "/tmp/veri-ufku-phase14-wheel-v3/bin/veri-ufku",
+        "--smoke-test"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:26:49.221011+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.6296123759993861,
+      "log": "docs/evidence/phase14/wheel-entry-final.txt",
+      "log_sha256": "6805824f4b4cb0e09b8f61780b5ecc609ec414f36a6d01b52049a585f01abeed",
+      "required": true,
+      "attempt": 1,
+      "family_id": "E14-wheel-entry-final"
+    },
+    {
+      "id": "E14-source-workflow-final-A2",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/measure_phase14.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:29:35.705306+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 44.16359720899982,
+      "log": "docs/evidence/phase14/source-workflow-final-retry.txt",
+      "log_sha256": "bc53e9f8377cd961742327964a8f970bc37434e44eefe3f724b468e28d5ebaee",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-source-workflow-final"
+    },
+    {
+      "id": "E14-wheel-workflow-final-A2",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase14.py",
+        "--package-root",
+        "/tmp/veri-ufku-phase14-wheel-v3",
+        "--output",
+        "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase14/wheel.json"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:30:19.869494+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 42.47554169200066,
+      "log": "docs/evidence/phase14/wheel-workflow-final-retry.txt",
+      "log_sha256": "a29a7a333fa9c59abb2f304dd8c71eef18a898377adcbfd5d6a9f6b26659c92f",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-wheel-workflow-final"
+    },
+    {
+      "id": "E14-ruff-final-A2",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:31:02.345728+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.01802378000047611,
+      "log": "docs/evidence/phase14/ruff-final-retry.txt",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-ruff-final"
+    },
+    {
+      "id": "E14-format-final-A2",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:31:02.364149+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.015232376999847475,
+      "log": "docs/evidence/phase14/format-final-retry.txt",
+      "log_sha256": "273e81e5999dffa54a2889cd098e6b1b5fa9937e557bd94fbc92a5cf43b546f0",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-format-final"
+    },
+    {
+      "id": "E14-learning-final-A2",
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_learning.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "QT_QUICK_BACKEND": "software",
+        "XDG_CONFIG_HOME": "/tmp/veri-ufku-phase14-checks/config",
+        "XDG_STATE_HOME": "/tmp/veri-ufku-phase14-checks/state",
+        "XDG_CACHE_HOME": "/tmp/veri-ufku-phase14-checks/cache"
+      },
+      "date": "2026-10-08T17:31:02.379728+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.047748409999258,
+      "log": "docs/evidence/phase14/learning-final-retry.txt",
+      "log_sha256": "46ee8a854b7d924948eb94df70e09ede2d2255022d8868a48c7f48cd0d23cf40",
+      "required": true,
+      "attempt": 2,
+      "family_id": "E14-learning-final"
+    },
+    {
+      "id": "E14-final-system-docs",
+      "family_id": "E14-final-system-docs",
+      "attempt": 1,
+      "command": [
+        "python3",
+        "scripts/check_docs.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "date": "2026-10-08T17:33:50.913163+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.047738324999954784,
+      "log": "docs/evidence/phase14/E14-final-system-docs.txt",
+      "log_sha256": "9a8eb5528c4a53e5c39069acbefdb05a884fe7113b42b434dbc8cb5e241ab631",
+      "required": true
+    },
+    {
+      "id": "E14-final-locked-docs",
+      "family_id": "E14-final-locked-docs",
+      "attempt": 1,
+      "command": [
+        "uv",
+        "--cache-dir",
+        "/tmp/veri-ufku-uv",
+        "run",
+        "--frozen",
+        "python",
+        "scripts/check_docs.py"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "date": "2026-10-08T17:33:50.961035+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.05567840499952581,
+      "log": "docs/evidence/phase14/E14-final-locked-docs.txt",
+      "log_sha256": "9a8eb5528c4a53e5c39069acbefdb05a884fe7113b42b434dbc8cb5e241ab631",
+      "required": true
+    },
+    {
+      "id": "E14-final-diff",
+      "family_id": "E14-final-diff",
+      "attempt": 1,
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "date": "2026-10-08T17:33:51.016807+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.009272467000300821,
+      "log": "docs/evidence/phase14/E14-final-diff.txt",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "required": true
+    }
+  ],
+  "latest_required_checks_pass": true,
+  "regression": {
+    "full": "389 passed",
+    "statistics_after_final_ui": "42 passed",
+    "locked_unittest": "9 passed",
+    "system_unittest": "failed; Python3.14.7 outside >=3.13,<3.14 runtime and missing packages",
+    "learning": "89 offline articles / 53 UI bindings"
+  },
+  "initial_pytest_failure_resolution": "Old navigation unavailable expectation and glossary26 count updated to actual enabled statistics /44 glossary; full rerun passed. Final UI Turkish records/categorical directions verified by42 tests and final source/noneditable wheel workflows.",
+  "source_manifest_sha256": "608e1bb8c67ca1cd69404ae0f04f28f4703bf1a9cc3433efbbc59fc98a7e24d1"
+}

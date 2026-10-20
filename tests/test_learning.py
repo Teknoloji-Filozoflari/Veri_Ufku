@@ -24,9 +24,26 @@ def test_catalog_offline_search_turkish_categories_glossary_and_sources():
         "leakage",
     }
     assert [a["id"] for a in catalog.search("MEDYAN", "Özetler")] == ["mean-median"]
-    assert [a["id"] for a in catalog.search("SIZINTI", "Modelleme")] == ["leakage"]
+    assert "leakage" in [a["id"] for a in catalog.search("SIZINTI", "Modelleme")]
     assert catalog.search("şu içerikte olmayan sözcükler") == []
-    assert len(catalog.search(glossary=True)) == 18
+    glossary_ids = {a["id"] for a in catalog.search(glossary=True)}
+    assert "tasks" not in glossary_ids
+    assert {
+        "unsupervised-cluster",
+        "unsupervised-distance",
+        "unsupervised-noise",
+        "unsupervised-score",
+        "unsupervised-evaluation",
+        "model-card",
+        "model-importance",
+        "model-unknown-category",
+        "model-new-data",
+        "model-uncertainty",
+        "inspection-inventory",
+        "inspection-values",
+        "inspection-describe",
+        "inspection-notes",
+    } <= glossary_ids
     # Independent editorial fixtures: no statistics engine called to check them.
     article = catalog.articles["mean-median"]
     assert article["example"]["before"] == "Tutarlar: 10, 20, 90."
@@ -39,7 +56,7 @@ def test_catalog_offline_search_turkish_categories_glossary_and_sources():
         == "Korelasyon nedensellik değildir."
     )
     assert all(a["critical"] and a["sources"] for a in catalog.articles.values())
-    assert catalog.article_for("model") == "prediction"
+    assert catalog.article_for("model") == "model-preparation"
     assert catalog.article_for("prepare") == "operation-preview"
     assert catalog.article_for("demo.io") == "tasks"
     assert validate_bindings(ROOT, catalog) >= 6

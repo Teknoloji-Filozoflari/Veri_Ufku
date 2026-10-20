@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+VU_SITE=/app/lib/python3.13/site-packages
+export PYTHONPATH="$VU_SITE"
+export PYTHONNOUSERSITE=1
+export QT_PLUGIN_PATH="$VU_SITE/PySide6/Qt/plugins"
+export QML2_IMPORT_PATH="$VU_SITE/PySide6/Qt/qml"
+export QML_IMPORT_PATH="$VU_SITE/PySide6/Qt/qml"
+export LD_LIBRARY_PATH="$VU_SITE/PySide6/Qt/lib:/app/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-${XDG_DATA_HOME:-/var/data}/state}"
+if [ "${1:-}" = "--environment-smoke" ]; then
+    shift
+    exec /usr/bin/python3 /app/share/veri-ufku/checks/package_smoke74.py "$@"
+fi
+if [ "${1:-}" = "--package-check" ]; then
+    shift
+    exec /usr/bin/python3 /app/share/veri-ufku/checks/measure_phase27.py "$@"
+fi
+exec /usr/bin/python3 -m veri_ufku "$@"

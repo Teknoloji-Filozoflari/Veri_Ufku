@@ -1,0 +1,820 @@
+{
+  "id": "E44-SOURCE-TESTS",
+  "environment": "ENV-44",
+  "date": "2026-10-12",
+  "unique_passed": 158,
+  "phase44_passed": 25,
+  "failed": 0,
+  "skipped": 0,
+  "runs": [
+    {
+      "file": "targeted.xml",
+      "time": 195.143
+    },
+    {
+      "file": "bayes-regression.xml",
+      "time": 88.888
+    },
+    {
+      "file": "causal-final.xml",
+      "time": 96.53
+    },
+    {
+      "file": "core.xml",
+      "time": 1.422
+    }
+  ],
+  "cases": [
+    {
+      "classname": "tests.test_causal",
+      "name": "test_first_stage_known_effect_and_atomic_roundtrip[causal_randomized]",
+      "seconds": 0.065
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_first_stage_known_effect_and_atomic_roundtrip[causal_adjustment]",
+      "seconds": 0.073
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_first_stage_known_effect_and_atomic_roundtrip[causal_ipw]",
+      "seconds": 0.055
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_first_stage_known_effect_and_atomic_roundtrip[causal_aipw]",
+      "seconds": 0.056
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_later_substages_known_effect_and_mapping[causal_matching]",
+      "seconds": 0.045
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_later_substages_known_effect_and_mapping[causal_did]",
+      "seconds": 0.023
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_later_substages_known_effect_and_mapping[causal_iv]",
+      "seconds": 0.022
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_positivity_separation_visible",
+      "seconds": 0.029
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_missing_assumptions_latent_backdoor_mediator_and_cycle",
+      "seconds": 0.028
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_randomized_reference_cancel_and_source_tamper",
+      "seconds": 0.023
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_method_specific_diagnostics_fail_visible[causal_did]",
+      "seconds": 0.024
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_method_specific_diagnostics_fail_visible[causal_iv]",
+      "seconds": 0.022
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_collider_adjustment_and_dag_dseparation",
+      "seconds": 0.015
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_cancel_budget_missing_repeated_and_safe_plan",
+      "seconds": 0.021
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_iv_against_independent_2sls_reference",
+      "seconds": 0.022
+    },
+    {
+      "classname": "tests.test_causal_gui",
+      "name": "test_causal_qml_template[causal_randomized]",
+      "seconds": 9.48
+    },
+    {
+      "classname": "tests.test_causal_gui",
+      "name": "test_causal_qml_template[causal_adjustment]",
+      "seconds": 13.997
+    },
+    {
+      "classname": "tests.test_causal_gui",
+      "name": "test_causal_qml_template[causal_ipw]",
+      "seconds": 13.798
+    },
+    {
+      "classname": "tests.test_causal_gui",
+      "name": "test_causal_qml_template[causal_aipw]",
+      "seconds": 13.567
+    },
+    {
+      "classname": "tests.test_causal_gui",
+      "name": "test_causal_qml_template[causal_matching]",
+      "seconds": 16.155
+    },
+    {
+      "classname": "tests.test_causal_gui",
+      "name": "test_causal_qml_template[causal_did]",
+      "seconds": 9.495
+    },
+    {
+      "classname": "tests.test_causal_gui",
+      "name": "test_causal_qml_template[causal_iv]",
+      "seconds": 9.373
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_two_groups_closed_t_and_exact_rank_enumeration[welch_t]",
+      "seconds": 0.014
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_two_groups_closed_t_and_exact_rank_enumeration[mann_whitney]",
+      "seconds": 0.013
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_key_pairing_order_invariance_and_independent_p[paired_t]",
+      "seconds": 0.018
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_key_pairing_order_invariance_and_independent_p[wilcoxon]",
+      "seconds": 0.018
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_three_groups_closed_form_and_posthoc_family[anova]",
+      "seconds": 0.015
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_three_groups_closed_form_and_posthoc_family[welch_anova]",
+      "seconds": 0.014
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_three_groups_closed_form_and_posthoc_family[kruskal]",
+      "seconds": 0.016
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_categorical_exact_combinations_and_chi_square_tail[chi2]",
+      "seconds": 0.015
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_categorical_exact_combinations_and_chi_square_tail[fisher]",
+      "seconds": 0.018
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_numeric_closed_correlation_t_and_fisher_z[pearson]",
+      "seconds": 0.014
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_numeric_closed_correlation_t_and_fisher_z[spearman]",
+      "seconds": 0.013
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_multiple_adjustments_hand_reference",
+      "seconds": 0.001
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_missing_nonfinite_and_no_automatic_selection",
+      "seconds": 0.013
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_pairing_and_degenerate_failures_are_explained[duplicate]",
+      "seconds": 0.013
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_pairing_and_degenerate_failures_are_explained[unmatched]",
+      "seconds": 0.014
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_pairing_and_degenerate_failures_are_explained[key_missing]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_pairing_and_degenerate_failures_are_explained[zero]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_pairing_and_degenerate_failures_are_explained[few]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_precision_sparse_table_filter_and_transaction_integrity",
+      "seconds": 0.029
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_sparse_chi_square_and_constant_correlation_rejected",
+      "seconds": 0.01
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_constant_numeric_preflight_clear_error[pearson]",
+      "seconds": 0.009
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_constant_numeric_preflight_clear_error[spearman]",
+      "seconds": 0.009
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_group_with_all_missing_does_not_silently_disappear",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_explicit_scope_and_resource_limit",
+      "seconds": 0.016
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_rank_ties_and_zero_difference_policy",
+      "seconds": 0.024
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_fisher_infinite_odds_is_explicit_and_json_safe",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_statistical_real_sigkill_preserves_complete_commit[pointer_written]",
+      "seconds": 0.383
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_statistical_real_sigkill_preserves_complete_commit[pointer_replaced]",
+      "seconds": 0.37
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_saved_analysis_report_preserves_limits_and_escapes_question",
+      "seconds": 0.024
+    },
+    {
+      "classname": "tests.test_statistics",
+      "name": "test_statistical_second_process_cannot_publish",
+      "seconds": 0.461
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_power_against_noncentral_t_and_normal_analytic_root[0.5-mean]",
+      "seconds": 0.002
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_power_against_noncentral_t_and_normal_analytic_root[0.5-proportion]",
+      "seconds": 0.003
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_power_against_noncentral_t_and_normal_analytic_root[0.3-mean]",
+      "seconds": 0.003
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_power_against_noncentral_t_and_normal_analytic_root[0.3-proportion]",
+      "seconds": 0.003
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_power_against_noncentral_t_and_normal_analytic_root[0.7-mean]",
+      "seconds": 0.003
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_power_against_noncentral_t_and_normal_analytic_root[0.7-proportion]",
+      "seconds": 0.003
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_mean_welch_reference_baseline_guardrail_and_atomic_reopen",
+      "seconds": 0.029
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_binary_denominators_and_conservative_ci",
+      "seconds": 0.023
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_missing_itt_not_complete_case_fake_inference",
+      "seconds": 0.015
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_pp_and_srm_keep_full_roster",
+      "seconds": 0.022
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_srm_exact_fixture_suppresses_primary_inference",
+      "seconds": 0.015
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_assignment_seed_unit_identity_and_source_reorder",
+      "seconds": 0.029
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes0]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes1]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes2]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes3]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes4]",
+      "seconds": 0.013
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes5]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes6]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes7]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes8]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes9]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes10]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes11]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes12]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_unsupported_design_observational_and_peeking_rejected[changes13]",
+      "seconds": 0.01
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_invalid_roster_or_measurement_and_horizon[duplicate]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_invalid_roster_or_measurement_and_horizon[missing_key]",
+      "seconds": 0.013
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_invalid_roster_or_measurement_and_horizon[nan]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_invalid_roster_or_measurement_and_horizon[invalid_binary]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_invalid_roster_or_measurement_and_horizon[short_horizon]",
+      "seconds": 0.014
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_invalid_roster_or_measurement_and_horizon[filtered]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_plan_save_no_observed_power[power_mean]",
+      "seconds": 0.021
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_plan_save_no_observed_power[power_proportion]",
+      "seconds": 0.022
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_binary_zero_events_boolean_outcome_and_constant_mean",
+      "seconds": 0.035
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_assignment_row_reordering_preserves_unit_arm",
+      "seconds": 0.029
+    },
+    {
+      "classname": "tests.test_experiments",
+      "name": "test_cancellation_and_details_source_tamper_atomic_rollback",
+      "seconds": 0.022
+    },
+    {
+      "classname": "tests.test_experiments_gui",
+      "name": "test_experiment_desktop_plan_calculate_export_reopen_help[power_mean-ITT]",
+      "seconds": 8.314
+    },
+    {
+      "classname": "tests.test_experiments_gui",
+      "name": "test_experiment_desktop_plan_calculate_export_reopen_help[power_proportion-ITT]",
+      "seconds": 8.079
+    },
+    {
+      "classname": "tests.test_experiments_gui",
+      "name": "test_experiment_desktop_plan_calculate_export_reopen_help[random_assignment-ITT]",
+      "seconds": 7.999
+    },
+    {
+      "classname": "tests.test_experiments_gui",
+      "name": "test_experiment_desktop_plan_calculate_export_reopen_help[experiment_mean-ITT]",
+      "seconds": 8.527
+    },
+    {
+      "classname": "tests.test_experiments_gui",
+      "name": "test_experiment_desktop_plan_calculate_export_reopen_help[experiment_proportion-ITT]",
+      "seconds": 8.537
+    },
+    {
+      "classname": "tests.test_experiments_gui",
+      "name": "test_experiment_desktop_plan_calculate_export_reopen_help[experiment_mean-PP]",
+      "seconds": 8.4
+    },
+    {
+      "classname": "tests.test_experiments_gui",
+      "name": "test_experiment_desktop_plan_calculate_export_reopen_help[experiment_proportion-PP]",
+      "seconds": 8.498
+    },
+    {
+      "classname": "tests.test_experiments_gui",
+      "name": "test_experiment_desktop_plan_calculate_export_reopen_help[experiment_proportion-missing]",
+      "seconds": 8.301
+    },
+    {
+      "classname": "tests.test_experiments_gui",
+      "name": "test_experiment_desktop_plan_calculate_export_reopen_help[experiment_mean-SRM]",
+      "seconds": 8.208
+    },
+    {
+      "classname": "tests.test_experiments_gui",
+      "name": "test_observational_not_randomized_and_peeking_gui",
+      "seconds": 3.969
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_catalog_offline_search_turkish_categories_glossary_and_sources",
+      "seconds": 0.044
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_invalid_content_and_unimplemented_actions_rejected[<lambda>0]",
+      "seconds": 0.04
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_invalid_content_and_unimplemented_actions_rejected[<lambda>1]",
+      "seconds": 0.039
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_invalid_content_and_unimplemented_actions_rejected[<lambda>2]",
+      "seconds": 0.041
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_invalid_content_and_unimplemented_actions_rejected[<lambda>3]",
+      "seconds": 0.038
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_invalid_content_and_unimplemented_actions_rejected[<lambda>4]",
+      "seconds": 0.04
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_invalid_content_and_unimplemented_actions_rejected[<lambda>5]",
+      "seconds": 0.042
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_invalid_content_and_unimplemented_actions_rejected[<lambda>6]",
+      "seconds": 0.041
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_invalid_content_and_unimplemented_actions_rejected[<lambda>7]",
+      "seconds": 0.039
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_invalid_content_and_unimplemented_actions_rejected[<lambda>8]",
+      "seconds": 0.04
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_invalid_content_and_unimplemented_actions_rejected[<lambda>9]",
+      "seconds": 0.041
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_invalid_content_and_unimplemented_actions_rejected[<lambda>10]",
+      "seconds": 0.041
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_missing_qml_help_and_capability_links_fail_gate",
+      "seconds": 0.106
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_optional_marks_atomic_reload_opt_out_and_existing_bad_file",
+      "seconds": 0.142
+    },
+    {
+      "classname": "tests.test_learning",
+      "name": "test_example_project_separate_query_article_marks_and_no_disk_writes",
+      "seconds": 0.037
+    },
+    {
+      "classname": "tests.test_usability",
+      "name": "test_structural_audit_and_missing_help_rejection",
+      "seconds": 0.127
+    },
+    {
+      "classname": "tests.test_usability",
+      "name": "test_future_common_component_missing_accessible_name_fails",
+      "seconds": 0.042
+    },
+    {
+      "classname": "tests.test_usability",
+      "name": "test_ui_preferences_are_atomic_and_do_not_touch_parsing",
+      "seconds": 0.001
+    },
+    {
+      "classname": "tests.test_usability",
+      "name": "test_qt_names_display_keyboard_locale_and_import_boundary",
+      "seconds": 1.655
+    },
+    {
+      "classname": "tests.test_usability",
+      "name": "test_empty_tables_do_not_trap_keyboard_focus",
+      "seconds": 1.18
+    },
+    {
+      "classname": "tests.test_usability",
+      "name": "test_closed_shell_releases_engine_before_reopening",
+      "seconds": 2.096
+    },
+    {
+      "classname": "tests.test_usability",
+      "name": "test_both_theme_contrast_shared_states",
+      "seconds": 1.378
+    },
+    {
+      "classname": "tests.test_usability",
+      "name": "test_textarea_tab_exits_and_picker_survives_type_update",
+      "seconds": 4.598
+    },
+    {
+      "classname": "tests.test_workspace",
+      "name": "test_one_registry_honest_operations_and_missing_dependencies",
+      "seconds": 0.001
+    },
+    {
+      "classname": "tests.test_workspace",
+      "name": "test_result_contract_model_log_and_unknown_readonly",
+      "seconds": 0.0
+    },
+    {
+      "classname": "tests.test_workspace",
+      "name": "test_registry_real_gui_run_preset_tabs_compare_reopen[pearson]",
+      "seconds": 7.194
+    },
+    {
+      "classname": "tests.test_workspace",
+      "name": "test_registry_real_gui_run_preset_tabs_compare_reopen[spearman]",
+      "seconds": 7.405
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_real_sampler_safe_publish_reopen_source[bayes_beta_binomial]",
+      "seconds": 2.569
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_real_sampler_safe_publish_reopen_source[bayes_normal_mean]",
+      "seconds": 0.939
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_real_sampler_safe_publish_reopen_source[bayes_linear]",
+      "seconds": 2.47
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_real_sampler_safe_publish_reopen_source[bayes_hierarchical]",
+      "seconds": 14.79
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_conjugate_hand_calculations",
+      "seconds": 0.001
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_declarative_validation_rejects_invalid[change0]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_declarative_validation_rejects_invalid[change1]",
+      "seconds": 0.013
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_declarative_validation_rejects_invalid[change2]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_declarative_validation_rejects_invalid[change3]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_declarative_validation_rejects_invalid[change4]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_declarative_validation_rejects_invalid[change5]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_declarative_validation_rejects_invalid[change6]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_declarative_validation_rejects_invalid[change7]",
+      "seconds": 0.012
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_missing_nonfinite_binary_retains_source[values0]",
+      "seconds": 0.011
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_missing_nonfinite_binary_retains_source[values1]",
+      "seconds": 0.009
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_missing_nonfinite_binary_retains_source[values2]",
+      "seconds": 0.01
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_prior_preview_seed_no_data_fit",
+      "seconds": 0.013
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_sampler_cancellation_inside_actual_callback",
+      "seconds": 0.088
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_rhat_ess_divergence_and_loo_waic_references",
+      "seconds": 0.039
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_budget_and_unsupported_weight",
+      "seconds": 0.018
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_optional_backend_absence_controlled",
+      "seconds": 0.001
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_real_normal_conjugate_sampler_converges_and_loo",
+      "seconds": 1.637
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_invalid_groups_rank_units_and_source_mutation",
+      "seconds": 0.014
+    },
+    {
+      "classname": "tests.test_bayes",
+      "name": "test_loo_waic_warnings_not_hidden",
+      "seconds": 0.009
+    },
+    {
+      "classname": "tests.test_bayes_gui",
+      "name": "test_bayes_gui_offline_templates[bayes_beta_binomial]",
+      "seconds": 10.737
+    },
+    {
+      "classname": "tests.test_bayes_gui",
+      "name": "test_bayes_gui_offline_templates[bayes_normal_mean]",
+      "seconds": 10.477
+    },
+    {
+      "classname": "tests.test_bayes_gui",
+      "name": "test_bayes_gui_offline_templates[bayes_linear]",
+      "seconds": 12.444
+    },
+    {
+      "classname": "tests.test_bayes_gui",
+      "name": "test_bayes_gui_offline_templates[bayes_hierarchical]",
+      "seconds": 24.797
+    },
+    {
+      "classname": "tests.test_bayes_gui",
+      "name": "test_bayes_gui_sampler_cancel",
+      "seconds": 6.962
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_placebo_and_bias_scenarios_are_assumptions_not_corrections",
+      "seconds": 0.026
+    },
+    {
+      "classname": "tests.test_causal",
+      "name": "test_finite_overlap_extreme_weight_diagnostics_without_clipping",
+      "seconds": 0.031
+    },
+    {
+      "classname": "tests.test_causal_gui",
+      "name": "test_causal_positivity_failure_visible_qml_and_saved_report",
+      "seconds": 9.02
+    }
+  ],
+  "scope": "targeted and related regression; not full repository regression; runs overlap, times must not be counted as distinct tests"
+}

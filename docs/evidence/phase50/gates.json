@@ -1,0 +1,39 @@
+{
+  "id": "E50-GATES",
+  "environment": "ENV-50",
+  "date": "2026-10-13T18:51:56.854084+00:00",
+  "commands": [
+    {
+      "command": ".venv/bin/python scripts/check_docs.py",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/check_artifacts.py",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/check_learning.py",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/check_usability.py",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/ruff check src tests scripts",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/ruff format --check src tests scripts",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_document_contracts.py -v",
+      "exit_code": 0
+    }
+  ],
+  "document_tests": 14,
+  "active_frozen_files": 28,
+  "installed_package_files": 287,
+  "stage_commit_push": false
+}

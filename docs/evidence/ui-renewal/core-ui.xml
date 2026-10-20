@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="35" time="42.312" timestamp="2026-10-17T13:51:58.271508+03:00" hostname="s-oktay"><testcase classname="tests.test_ui_renewal" name="test_null_identity_and_invalid_model_indices" time="1.731" /><testcase classname="tests.test_ui_renewal" name="test_navigation_deferred_panels_state_and_responsive_shell" time="2.091" /><testcase classname="tests.test_ui_renewal" name="test_hidden_discovery_does_not_probe_optional_backends" time="1.172" /><testcase classname="tests.test_ui_renewal" name="test_real_table_null_clipboard_resize_keyboard_and_source_integrity" time="2.172" /><testcase classname="tests.test_gui" name="test_real_qml_buttons_responsiveness_error_cancel_and_stale" time="3.854" /><testcase classname="tests.test_gui" name="test_readme_entry_point_smoke" time="3.194" /><testcase classname="tests.test_gui" name="test_user_status_text_is_literal_qml_text" time="1.022" /><testcase classname="tests.test_gui" name="test_primary_button_text_is_readable_in_fixed_dark_theme" time="1.009" /><testcase classname="tests.test_gui" name="test_english_startup_uses_same_qml_with_local_configuration" time="3.280" /><testcase classname="tests.test_gui" name="test_bad_configuration_is_visible_and_never_logged_verbatim" time="3.473" /><testcase classname="tests.test_gui" name="test_phase02_keyboard_preferences_and_view_preserve_session" time="7.848" /><testcase classname="tests.test_gui" name="test_phase02_resize_help_navigation_and_fixed_dark_theme" time="0.826"><failure message="assert False&#10; +  where False = &lt;built-in method hasActiveFocus of PySide6.QtQuick.QQuickItem object at 0x7f74644c6480&gt;()&#10; +    where &lt;built-in method hasActiveFocus of PySide6.QtQuick.QQuickItem object at 0x7f74644c6480&gt; = &lt;PySide6.QtQuick.QQuickItem(0x2eca3ea0, id=&quot;headerBeginner&quot;, name=&quot;beginnerButton&quot;, parent=0x32f3d1c0, geometry=48,0 40x40) at 0x7f74644c6480&gt;.hasActiveFocus">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-4/test_phase02_resize_help_navig0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f7464400b90&gt;
+
+    def test_phase02_resize_help_navigation_and_fixed_dark_theme(tmp_path, monkeypatch):
+        from PySide6.QtCore import QPointF, Qt
+        from PySide6.QtQuick import QQuickItem
+    
+        for name in ("CONFIG", "STATE", "CACHE"):
+            monkeypatch.setenv(f"XDG_{name}_HOME", str(tmp_path / name.lower()))
+        app, window, bridge = create_application()
+        from PySide6.QtGui import QColor, QPalette
+    
+        original_palette = app.palette()
+        try:
+            spin(app, lambda: not window.grabWindow().isNull())
+            for width, height in [(720, 560), (1366, 900)]:
+                window.setWidth(width)
+                window.setHeight(height)
+                app.processEvents()
+                QTest.qWait(60)
+                workspace = window.findChild(QQuickItem, "workspace")
+                assert workspace.width() &gt;= 320
+                assert workspace.height() &gt;= 200
+                window.setProperty("selectedSection", 7)
+                app.processEvents()
+                help_button = window.findChild(QQuickItem, "helpButton")
+                assert help_button.isVisible()
+                window.setProperty("selectedSection", 1)
+                app.processEvents()
+                assert help_button.isVisible()
+                origin = window.findChild(QQuickItem, "beginnerButton")
+                origin.forceActiveFocus()
+                QTest.keyClick(window, Qt.Key.Key_F1)
+                spin(app, lambda: window.property("infoOpen"))
+                QTest.keyClick(window, Qt.Key.Key_Escape)
+                spin(app, lambda: not window.property("infoOpen"))
+&gt;               assert origin.hasActiveFocus()
+E               assert False
+E                +  where False = &lt;built-in method hasActiveFocus of PySide6.QtQuick.QQuickItem object at 0x7f74644c6480&gt;()
+E                +    where &lt;built-in method hasActiveFocus of PySide6.QtQuick.QQuickItem object at 0x7f74644c6480&gt; = &lt;PySide6.QtQuick.QQuickItem(0x2eca3ea0, id="headerBeginner", name="beginnerButton", parent=0x32f3d1c0, geometry=48,0 40x40) at 0x7f74644c6480&gt;.hasActiveFocus
+
+tests/test_gui.py:340: AssertionError</failure></testcase><testcase classname="tests.test_dataset_gui" name="test_qml_page_worker_filter_profile_role_save_reopen" time="3.025" /><testcase classname="tests.test_dataset_gui" name="test_cancel_and_stale_binding_do_not_publish" time="2.580" /><testcase classname="tests.test_dataset_gui" name="test_data_content_dictionary_persists_and_view_does_not_change_counts" time="2.388" /><testcase classname="tests.test_science_roadmap_gui" name="test_science_roadmap_expand_keyboard_navigation_planned_and_resize" time="2.028" /><testcase classname="tests.test_presentation_preferences" name="test_preferences_reload_without_changing_runtime_settings" time="0.001" /><testcase classname="tests.test_presentation_preferences" name="test_invalid_preferences_are_preserved_and_not_overwritten" time="0.001" /><testcase classname="tests.test_presentation_preferences" name="test_failed_atomic_commit_retains_file_and_selected_preferences" time="0.001" /><testcase classname="tests.test_presentation_preferences" name="test_legacy_theme_and_size_removed_on_explicit_level_change" time="0.001" /><testcase classname="tests.test_dataset" name="test_reference_stats_nonfinite_and_methods" time="0.017" /><testcase classname="tests.test_dataset" name="test_pages_sort_filter_ids_and_payload_bound" time="0.029" /><testcase classname="tests.test_dataset" name="test_scope_sample_top_values_and_saved_roles" time="0.031" /><testcase classname="tests.test_dataset" name="test_decimal_uint64_dates_empty_and_singleton" time="0.019" /><testcase classname="tests.test_dataset" name="test_filter_rejects_precision_loss[18446744073709551616-UInt64]" time="0.000" /><testcase classname="tests.test_dataset" name="test_filter_rejects_precision_loss[9007199254740993-Float64]" time="0.000" /><testcase classname="tests.test_dataset" name="test_filter_rejects_precision_loss[16777217-Float32]" time="0.001" /><testcase classname="tests.test_dataset" name="test_filter_rejects_precision_loss[1e39-Float32]" time="0.000" /><testcase classname="tests.test_dataset" name="test_filter_rejects_precision_loss[1e-999-Float64]" time="0.000" /><testcase classname="tests.test_dataset" name="test_filter_rejects_precision_loss[1.001-dtype5]" time="0.000" /><testcase classname="tests.test_dataset" name="test_filter_rejects_precision_loss[NaN-Float64]" time="0.000" /><testcase classname="tests.test_dataset" name="test_snapshot_mutation_rejects_results_and_metadata_validation" time="0.009" /><testcase classname="tests.test_dataset" name="test_ordinal_metadata_parent_integrity_and_nested_boundary" time="0.015" /><testcase classname="tests.test_dataset" name="test_wide_page_payload_is_bounded_and_identical_rows_distinct" time="0.094" /><testcase classname="tests.test_dataset" name="test_mid_profile_mutation_discards_mixed_version" time="0.012" /></testsuite></testsuites>

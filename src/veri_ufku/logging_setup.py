@@ -3,14 +3,31 @@
 import json
 import logging
 import os
+import stat
 from logging.handlers import RotatingFileHandler
+
+
+def private_stream(path, mode):
+    fd = os.open(
+        path,
+        os.O_CREAT | os.O_APPEND | os.O_WRONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
+        0o600,
+    )
+    try:
+        info = os.fstat(fd)
+        if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1:
+            raise OSError("Log must be a private regular file")
+        os.fchmod(fd, 0o600)
+        stream = os.fdopen(fd, mode, encoding="utf-8")
+    except BaseException:
+        os.close(fd)
+        raise
+    return stream
 
 
 class PrivateRotatingHandler(RotatingFileHandler):
     def _open(self):
-        fd = os.open(self.baseFilename, os.O_CREAT | os.O_APPEND | os.O_WRONLY, 0o600)
-        os.fchmod(fd, 0o600)
-        return os.fdopen(fd, self.mode, encoding=self.encoding)
+        return private_stream(self.baseFilename, self.mode)
 
 
 class EventLog:
@@ -20,12 +37,6 @@ class EventLog:
         self.logger.propagate = False
         path = state_dir / "application.log"
         # Private even when a user's umask is permissive.
-        fd = os.open(
-            path,
-            os.O_CREAT | os.O_APPEND | os.O_WRONLY,
-            0o600,
-        )
-        os.close(fd)
         handler = PrivateRotatingHandler(path, maxBytes=256_000, backupCount=2)
         handler.setFormatter(logging.Formatter("%(asctime)s %(message)s"))
         self.logger.addHandler(handler)

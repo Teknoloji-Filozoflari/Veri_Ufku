@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="113.206" timestamp="2026-10-15T23:51:04.921787+03:00" hostname="s-oktay"><testcase classname="tests.test_repro_gui" name="test_gui_report_lineage_reference_bundle_rerun" time="48.964" /><testcase classname="tests.test_repro_gui" name="test_gui_opt_in_data_and_changed_source" time="35.831" /><testcase classname="tests.test_repro_gui" name="test_gui_cancel_or_corrupt_never_success[cancel]" time="28.249"><failure message="AssertionError: assert ('')&#10; +  where '' = &lt;veri_ufku.ui.repro.ReproController(0x4b356410) at 0x7fd9eb9daa00&gt;.errorText">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-141/test_gui_cancel_or_corrupt_nev0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7fd9eb9271d0&gt;
+action = 'cancel'
+
+    @pytest.mark.parametrize("action", ["cancel", "corrupt"])
+    def test_gui_cancel_or_corrupt_never_success(tmp_path, monkeypatch, action):
+        app, window, projects, c, ident, _ = imported(tmp_path, monkeypatch)
+        try:
+            before = len(projects.draft["results"])
+            if action == "cancel":
+                focus(window, c, ident)
+                window.findChild(QObject, "reproInspect").clicked.emit()
+                window.findChild(QObject, "reproCancel").clicked.emit()
+            else:
+                file = tmp_path / "corrupt.vurepro"
+                file.write_bytes(b"not a bundle")
+                window.findChild(QObject, "reproArchive").setProperty("text", str(file))
+                window.findChild(QObject, "reproOpen").clicked.emit()
+            spin(app, lambda: not c.busy and not projects.busy, timeout=60000)
+&gt;           assert c.errorText and not c.opened and len(projects.draft["results"]) == before
+E           AssertionError: assert ('')
+E            +  where '' = &lt;veri_ufku.ui.repro.ReproController(0x4b356410) at 0x7fd9eb9daa00&gt;.errorText
+
+tests/test_repro_gui.py:183: AssertionError</failure></testcase></testsuite></testsuites>

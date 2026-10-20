@@ -146,11 +146,10 @@ if __name__ == "__main__":
                 data.profileResult["scope"] == "sample"
                 and data.profileResult["used_n"] == 10000
             )
-            for width, theme in ((1366, "light"), (720, "dark")):
+            for width, theme in ((1366, "dark"), (720, "dark")):
                 window.setWidth(width)
                 window.setHeight(900 if width == 1366 else 800)
                 preferences = app._veri_ufku_resources[-2]
-                preferences.setTheme(theme)
                 app.processEvents()
                 QTest.qWait(150)
                 flick = window.findChild(QObject, "workspace").property("contentItem")

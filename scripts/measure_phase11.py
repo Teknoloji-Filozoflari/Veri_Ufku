@@ -282,14 +282,11 @@ def run(args):
             window.findChild(QObject, "joinLeftKey").setProperty("currentIndex", 1)
             window.findChild(QObject, "joinRightKey").setProperty("currentIndex", 1)
             window.findChild(QObject, "joinRightSuffix").setProperty("text", "_right")
-            prefs = engine.rootContext().contextProperty("preferences")
             flick = window.findChild(QObject, "workspace").property("contentItem")
             for width, height, theme, scale in [
-                (1366, 900, "light", 1.0),
-                (720, 560, "dark", 2.0),
+                (1366, 900, "dark", 1.0),
+                (720, 560, "dark", 1.0),
             ]:
-                prefs.setTheme(theme)
-                prefs.setTextScale(scale)
                 window.setWidth(width)
                 window.setHeight(height)
                 app.processEvents()

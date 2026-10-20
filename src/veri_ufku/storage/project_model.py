@@ -124,13 +124,27 @@ def validate_state(state):
             raise ProjectError("Proje kayıt sayısı geçersiz.")
     seen = set()
     for source in state["sources"]:
-        if not isinstance(source, dict) or set(source) != {
+        if not isinstance(source, dict) or set(source) - {"connector"} != {
             "id",
             "path",
             "fingerprint",
             "copy_uri",
         }:
             raise ProjectError("Kaynak alanları geçersiz.")
+        if "connector" in source:
+            from veri_ufku.importers.connector_contracts import ConnectorSpec
+
+            metadata = source["connector"]
+            if not isinstance(metadata, dict) or set(metadata) != {
+                "spec",
+                "details",
+                "started_at",
+                "finished_at",
+            }:
+                raise ProjectError("Connector kaynak kökeni geçersiz.")
+            ConnectorSpec.from_dict(metadata["spec"])
+            if source["copy_uri"] is None:
+                raise ProjectError("Connector değişmez kaynak kopyası gerekli.")
         entity_id(source["id"], "source")
         if source["id"] in seen:
             raise ProjectError("Kaynak kimliği tekrarlandı.")
@@ -172,6 +186,9 @@ def validate_state(state):
                 "output_schema",
                 "lineage_uri",
                 "forked_from_version_id",
+                "derived_analysis",
+                "schema_contract",
+                "entity_resolution",
             }
         ):
             raise ProjectError("Dataset alanları geçersiz.")
@@ -326,6 +343,134 @@ def validate_state(state):
     from veri_ufku.operations.contracts import validate
 
     by_version = {d["version_id"]: d for d in state["datasets"]}
+    from veri_ufku.storage.unsupervised_store import validate_derived, validate_record
+
+    for record in state["results"]:
+        if "unsupervised" in record:
+            validate_record(record, by_version)
+    from veri_ufku.storage.time_series_store import (
+        validate_journal as validate_series_journal,
+    )
+
+    validate_series_journal(state)
+    for record in state["results"]:
+        if "text_analysis" in record:
+            from veri_ufku.storage.text_store import (
+                validate_record as validate_text_record,
+            )
+
+            validate_text_record(record, by_version)
+        if "time_series" in record:
+            from veri_ufku.storage.time_series_store import (
+                validate_record as validate_series_record,
+            )
+
+            validate_series_record(record, by_version)
+    from veri_ufku.operations.data_contracts import contract_validate
+
+    for dataset in state["datasets"]:
+        if "schema_contract" in dataset:
+            value = dataset["schema_contract"]
+            if (
+                not isinstance(value, dict)
+                or set(value) - {"report_operation"}
+                != {"dataset_version", "definition_version", "definition", "status"}
+                or value["dataset_version"] != dataset["version_id"]
+                or value["definition_version"] not in by_version
+                or value["status"]
+                not in ("requires_validation", "checked", "inapplicable")
+            ):
+                raise ProjectError("Sürüm bağlı şema sözleşmesi geçersiz.")
+            contract_validate(
+                value["definition"],
+                by_version[value["definition_version"]]["import_metadata"]["columns"],
+            )
+            if "report_operation" in value:
+                record = next(
+                    (
+                        o
+                        for o in state["operations"]
+                        if o["id"] == value["report_operation"]
+                    ),
+                    None,
+                )
+                if (
+                    not record
+                    or record.get("spec", {}).get("kind") != "contract_check"
+                    or record["spec"]["parameters"]["contract"] != value["definition"]
+                    or value["status"] == "checked"
+                    and record["output_version_id"] != dataset["version_id"]
+                ):
+                    raise ProjectError(
+                        "Kalite sözleşmesinin kayıtlı kontrol/provenance bağı geçersiz."
+                    )
+            elif value["status"] == "checked":
+                raise ProjectError("Kontrol edilmiş sözleşmenin sonuç kaydı gerekli.")
+            for rule in value["definition"]["rules"]:
+                if rule["kind"] == "foreign_key":
+                    p = rule["parameters"]
+                    other = by_version.get(p["version_id"])
+                    if not other or p["column_id"] not in {
+                        c["id"] for c in other["import_metadata"]["columns"]
+                    }:
+                        raise ProjectError(
+                            "Sözleşmenin foreign-key referans sürümü/sütunu projede yok."
+                        )
+        if "entity_resolution" in dataset:
+            value = dataset["entity_resolution"]
+            if (
+                not isinstance(value, dict)
+                or set(value)
+                != {"canonical_column", "decision_operation", "input_version"}
+                or value["canonical_column"]
+                not in {c["id"] for c in dataset["import_metadata"]["columns"]}
+                or value["input_version"] not in by_version
+            ):
+                raise ProjectError("Canonical kimlik bağı geçersiz.")
+            decision = next(
+                (
+                    o
+                    for o in state["operations"]
+                    if o["id"] == value["decision_operation"]
+                ),
+                None,
+            )
+            if (
+                not decision
+                or decision.get("spec", {}).get("kind") != "entity_merge"
+                or decision["spec"]["parameters"]["canonical_column"]
+                != value["canonical_column"]
+                or decision["spec"]["input_version_id"] != value["input_version"]
+            ):
+                raise ProjectError("Canonical insan kararının provenance bağı eksik.")
+        if "derived_analysis" in dataset:
+            validate_derived(dataset, by_version, state["results"])
+    from veri_ufku.charts.contracts import validate_saved
+
+    for record in state["results"]:
+        if "dashboard" in record:
+            from veri_ufku.charts.dashboard import DashboardSpec
+
+            dashboard = record["dashboard"]
+            spec = DashboardSpec(
+                **{
+                    **dashboard,
+                    "widgets": tuple(dashboard.get("widgets", ())),
+                    "global_filters": tuple(dashboard.get("global_filters", ())),
+                }
+            )
+            spec.validate(by_version)
+            bound = spec.bound_versions()
+            if bound != set(record["dataset_version_ids"]):
+                raise ProjectError("Dashboard sonuç sürüm bağı kayıtla uyuşmuyor.")
+        if "chart" in record:
+            validate_saved(record, by_version)
+        if "analysis" in record:
+            from veri_ufku.statistics.contracts import (
+                validate_saved as validate_analysis,
+            )
+
+            validate_analysis(record, by_version)
     by_operation = {o["id"]: o for o in state["operations"]}
     for d in state["datasets"]:
         if d.get("operation_id"):
@@ -352,6 +497,7 @@ def validate_state(state):
                     columns=binding_parent["import_metadata"]["columns"],
                     settings=binding_parent["import_metadata"]["settings"],
                     version_id=binding_parent["version_id"],
+                    entity_resolution=binding_parent.get("entity_resolution", {}),
                     **(
                         {
                             "secondary": {
@@ -365,6 +511,18 @@ def validate_state(state):
                                 op.get("spec", {})
                                 .get("parameters", {})
                                 .get("secondary_version_id")
+                                or (
+                                    op.get("spec", {}).get(
+                                        "input_version_ids", [None, None]
+                                    )[1]
+                                    if op.get("spec", {}).get("kind")
+                                    == "contract_check"
+                                    and len(
+                                        op.get("spec", {}).get("input_version_ids", [])
+                                    )
+                                    == 2
+                                    else None
+                                )
                             )
                         )
                         else {}
@@ -378,6 +536,79 @@ def validate_state(state):
                 or d["source_id"] != parent["source_id"]
             ):
                 raise ProjectError("İşlem çıktı kolon/kaynak bağı uyuşmuyor.")
+    from veri_ufku.storage.validation_store import validate_journal
+
+    for record in state["results"]:
+        if "baseline" in record:
+            from veri_ufku.modeling.baseline import validate_saved as validate_baseline
+
+            validate_baseline(record, by_version)
+            from veri_ufku.modeling.history import audit
+
+            run = record["baseline"]
+            if run["history"] != audit(
+                state,
+                run["origin_version"],
+                run["dataset_version"],
+                run["preparation_spec"]["history_action"],
+            ):
+                raise ProjectError("Baseline geçmişi kayıtlı işlemlerle uyuşmuyor.")
+    validate_journal(state)
+    from veri_ufku.storage.experiment_store import validate as validate_experiments
+
+    validate_experiments(state)
+    from veri_ufku.storage.monitor_store import validate_records as validate_monitors
+
+    validate_monitors(state, by_version)
+    from veri_ufku.storage.learning_lab_store import validate_records as validate_labs
+
+    validate_labs(state)
+    from veri_ufku.storage.review_store import validate_records as validate_reviews
+
+    validate_reviews(state)
+    from veri_ufku.storage.privacy_store import validate_records as validate_privacy
+
+    validate_privacy(state)
+    from veri_ufku.storage.plugin_store import validate_records as validate_plugins
+
+    validate_plugins(state)
+    from veri_ufku.storage.report_builder_store import (
+        validate_records as validate_reports,
+    )
+
+    validate_reports(state, by_version)
+    from veri_ufku.storage.scenario_store import validate_records as validate_scenarios
+
+    validate_scenarios(state, by_version)
+    from veri_ufku.storage.explanation_store import validate_records
+
+    validate_records(state, by_version)
+    from veri_ufku.storage.search_store import (
+        validate_journal as validate_search_journal,
+    )
+
+    validate_search_journal(state, by_version)
+    from veri_ufku.storage.neural_store import (
+        validate_journal as validate_neural_journal,
+    )
+
+    validate_neural_journal(state, by_version)
+    from veri_ufku.modeling.contracts import validate_saved as validate_preparation
+    from veri_ufku.modeling.history import audit as audit_preparation
+
+    for record in state["results"]:
+        if "preparation" in record:
+            validate_preparation(record, by_version)
+            result = record["preparation"]
+            if result["history"] != audit_preparation(
+                state,
+                result["origin_version"],
+                result["dataset_version"],
+                result["spec"]["history_action"],
+            ):
+                raise ProjectError(
+                    "Model hazırlığı kayıtlı işlem geçmişiyle uyuşmuyor."
+                )
     if len(encode(state)) > MAX_MANIFEST // 2:
         raise ProjectError("Proje durum boyutu sınırı aşıldı.")
 
@@ -473,6 +704,69 @@ def _validate_manifest(manifest):
         for d in state["datasets"]
         for uri in (d["snapshot_uri"], d.get("quarantine_uri"), d.get("lineage_uri"))
     ]
+    refs += [
+        uri
+        for record in state["results"]
+        if "analysis" in record
+        for uri in record["analysis"]["artifact_uris"].values()
+    ]
+    refs += [
+        uri
+        for record in state["results"]
+        if "chart" in record
+        for uri in record["chart"]["artifact_uris"].values()
+    ]
+    refs += [
+        r["baseline"]["details_uri"]
+        for r in state["results"]
+        if r.get("baseline", {}).get("details_uri")
+    ]
+    refs += [
+        r["explanation"]["details_uri"] for r in state["results"] if "explanation" in r
+    ]
+    refs += [
+        r["search"]["details_uri"]
+        for r in state["results"]
+        if r.get("search", {}).get("details_uri")
+    ]
+    refs += [
+        r["unsupervised"]["assignments_uri"]
+        for r in state["results"]
+        if "unsupervised" in r
+    ]
+    refs += [
+        r[k]["model_package_uri"]
+        for r in state["results"]
+        for k in ("baseline", "unsupervised")
+        if r.get(k, {}).get("model_package_uri")
+    ]
+    refs += [
+        r["time_series"]["details_uri"] for r in state["results"] if "time_series" in r
+    ]
+    refs += [
+        r["monitoring"]["details_uri"] for r in state["results"] if "monitoring" in r
+    ]
+    refs += [
+        a["uri"]
+        for r in state["results"]
+        if "scientific_report" in r
+        for a in r["scientific_report"]["file_refs"].values()
+    ]
+    refs += [r["scenario"]["details_uri"] for r in state["results"] if "scenario" in r]
+    refs += [
+        r["learning_lab"]["details_uri"]
+        for r in state["results"]
+        if "learning_lab" in r
+    ]
+    refs += [
+        r["plugin_result"]["details_uri"]
+        for r in state["results"]
+        if "plugin_result" in r
+    ]
+    refs += [r["neural"]["details_uri"] for r in state["results"] if "neural" in r]
+    from veri_ufku.storage.model_store import validate_links
+
+    validate_links(state, artifacts)
     if any(uri and uri not in artifacts for uri in refs):
         raise ProjectError("Bağlı artifact bulunamadı.")
     for source in state["sources"]:
@@ -517,6 +811,22 @@ def _validate_manifest(manifest):
                 if artifacts[uri] != artifacts[source["snapshot_uri"]]:
                     raise ProjectError(
                         "Kopya dataset snapshotı kaynak sürümle aynı olmalı."
+                    )
+                continue
+            if dataset.get("derived_analysis"):
+                from veri_ufku.operations.types import dtype_of
+
+                source = next(
+                    d
+                    for d in state["datasets"]
+                    if d["version_id"] == dataset["derived_analysis"]["source_version"]
+                )
+                expected_schema = dict(artifacts[source["snapshot_uri"]]["schema"])
+                for column in m["columns"][len(source["import_metadata"]["columns"]) :]:
+                    expected_schema[column["name"]] = str(dtype_of(column["type"]))
+                if expected_schema != artifacts[uri]["schema"]:
+                    raise ProjectError(
+                        "İşaretli dataset şeması kaynak ve analiz kolonlarıyla uyuşmuyor."
                     )
                 continue
             if dataset.get("operation_id"):

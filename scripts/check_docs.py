@@ -1,6 +1,7 @@
 """Validate phase 00 documentation contracts without application dependencies."""
 
 import hashlib
+import json
 import re
 import sys
 from datetime import UTC, date, datetime
@@ -153,6 +154,52 @@ def check(root):
             and validation != "doğrulandı"
         ):
             errors.append(f"Verified phase has pending requirement: {phase}:{ident}")
+    if phases.get("28", [None] * 4)[3] != "başlanmadı":
+        for document in (
+            "PRO_PRODUCT",
+            "PRO_ARCHITECTURE",
+            "PRO_CAPABILITY_MATRIX",
+            "PRO_WORK_PLAN",
+        ):
+            if not (root / "docs" / f"{document}.md").is_file():
+                errors.append(f"Missing professional audit document: {document}")
+        try:
+            work = json.loads(
+                (root / "docs/evidence/phase28/work-plan.json").read_text()
+            )
+            if [p["phase"] for p in work] != [str(n) for n in range(29, 76)]:
+                errors.append("Professional plan must cover phases 29..75")
+            planned_ids = set()
+            by_id = {row[0]: row for row in requirements}
+            for phase in work:
+                number = phase["phase"]
+                if phase["dependencies"] != graph[number]:
+                    errors.append(f"Professional dependency plan conflict: {number}")
+                for method in phase["methods"]:
+                    ident = method["id"]
+                    if ident in planned_ids:
+                        errors.append(f"Duplicate professional method: {ident}")
+                    planned_ids.add(ident)
+                    row = by_id.get(ident)
+                    if row is None or row[1] != number or row[3] != method["scope"]:
+                        errors.append(
+                            f"Professional method scope/mapping conflict: {ident}"
+                        )
+                    if method["dependencies"] != graph[number]:
+                        errors.append(
+                            f"Professional method dependency conflict: {ident}"
+                        )
+                    if method["subtasks"] != [
+                        ident + "." + suffix for suffix in ("C", "V", "G", "H", "P")
+                    ]:
+                        errors.append(f"Professional method subtasks missing: {ident}")
+            actual_ids = {
+                r[0] for r in requirements if re.fullmatch(r"F\d{2}-P\d{3}", r[0])
+            }
+            if actual_ids != planned_ids:
+                errors.append("Professional method inventory differs from main matrix")
+        except (OSError, ValueError, KeyError, TypeError):
+            errors.append("Invalid/missing professional work plan")
     # Ensure every source phase paragraph has a permanent record, without rerunning a generator.
     for match in re.finditer(
         r"^## Faz (\d{2}) — [^\n]+\n(.*?)(?=^## |\Z)", source, re.MULTILINE | re.DOTALL
@@ -206,8 +253,40 @@ def check(root):
             if local and not (file.parent / local).exists():
                 errors.append(f"Broken local link: {file.relative_to(root)}:{local}")
     digest = (root / "docs/evidence/source.sha256").read_text().split()[0]
-    if hashlib.sha256((root / SOURCE).read_bytes()).hexdigest() != digest:
-        errors.append("Original source changed; update traceability explicitly")
+    source_bytes = (root / SOURCE).read_bytes()
+    if hashlib.sha256(source_bytes).hexdigest() != digest:
+        # Keep the original digest. Accept only the explicitly recorded insertion,
+        # whose removal reconstructs that exact original, never arbitrary edits.
+        revision_file = root / "docs/evidence/phase28/source-revision.json"
+        try:
+            revision = json.loads(revision_file.read_text())
+            inserted = revision["inserted_utf8"].encode("utf-8")
+            offset = revision["offset"]
+            evidence_path, _, anchor = revision["evidence"].partition("#")
+            evidence_text = (root / evidence_path).read_text()
+            valid = (
+                revision["schema_version"] == 1
+                and revision["base_sha256"] == digest
+                and revision["revision_sha256"]
+                == hashlib.sha256(source_bytes).hexdigest()
+                and revision["decision"] == "DEC-28-03"
+                and bool(revision["reason"])
+                and type(offset) is int
+                and 0 <= offset <= len(source_bytes)
+                and bool(inserted)
+                and source_bytes[offset : offset + len(inserted)] == inserted
+                and hashlib.sha256(
+                    source_bytes[:offset] + source_bytes[offset + len(inserted) :]
+                ).hexdigest()
+                == digest
+                and bool(anchor)
+                and f'id="{anchor}"' in evidence_text
+                and revision["decision"] in evidence_text
+            )
+        except (OSError, ValueError, KeyError, TypeError, AttributeError):
+            valid = False
+        if not valid:
+            errors.append("Original source changed; update traceability explicitly")
     return errors
 
 

@@ -1,0 +1,543 @@
+{
+  "id": "E49-ACCEPTANCE",
+  "environment": "ENV-49",
+  "date": "2026-10-13",
+  "records": [
+    {
+      "id": "F49-P001",
+      "method": "Grid search",
+      "environment": "ENV-49",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F49-P001.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/search.py",
+          "src/veri_ufku/modeling/search_contracts.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/modeling/families.py",
+          "src/veri_ufku/storage/search_store.py",
+          "src/veri_ufku/storage/validation_store.py"
+        ]
+      },
+      "V": {
+        "id": "F49-P001.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_search.py",
+          "tests/test_search_store.py",
+          "tests/test_search_gui.py",
+          "docs/evidence/phase49/source-final.xml",
+          "docs/evidence/phase49/wheel-final.xml"
+        ]
+      },
+      "G": {
+        "id": "F49-P001.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase49/source-gui/walkthrough.json",
+          "docs/evidence/phase49/wheel-gui/walkthrough.json",
+          "docs/evidence/phase49/source-handoff-final.xml"
+        ]
+      },
+      "H": {
+        "id": "F49-P001.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-search"
+      },
+      "P": {
+        "id": "F49-P001.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/search_store.py",
+          "docs/evidence/phase49/wheel.json",
+          "docs/evidence/phase49/smoke.json"
+        ]
+      },
+      "limits": "Discrete native supervised single-target CPU search. Optional Optuna absent. Calibration/advanced selection/indicator/MI tuning closed; native-category variance closed; stacking time/group_time closed. Human/AT/hardware/distribution/offlineinstall/remoteCI separate."
+    },
+    {
+      "id": "F49-P002",
+      "method": "Random search",
+      "environment": "ENV-49",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F49-P002.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/search.py",
+          "src/veri_ufku/modeling/search_contracts.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/modeling/families.py",
+          "src/veri_ufku/storage/search_store.py",
+          "src/veri_ufku/storage/validation_store.py"
+        ]
+      },
+      "V": {
+        "id": "F49-P002.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_search.py",
+          "tests/test_search_store.py",
+          "tests/test_search_gui.py",
+          "docs/evidence/phase49/source-final.xml",
+          "docs/evidence/phase49/wheel-final.xml"
+        ]
+      },
+      "G": {
+        "id": "F49-P002.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase49/source-gui/walkthrough.json",
+          "docs/evidence/phase49/wheel-gui/walkthrough.json",
+          "docs/evidence/phase49/source-handoff-final.xml"
+        ]
+      },
+      "H": {
+        "id": "F49-P002.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-search"
+      },
+      "P": {
+        "id": "F49-P002.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/search_store.py",
+          "docs/evidence/phase49/wheel.json",
+          "docs/evidence/phase49/smoke.json"
+        ]
+      },
+      "limits": "Discrete native supervised single-target CPU search. Optional Optuna absent. Calibration/advanced selection/indicator/MI tuning closed; native-category variance closed; stacking time/group_time closed. Human/AT/hardware/distribution/offlineinstall/remoteCI separate."
+    },
+    {
+      "id": "F49-P003",
+      "method": "Bayesian optimization",
+      "environment": "ENV-49",
+      "date": "2026-10-13",
+      "validation": "not validated Bayesian compute",
+      "scope": "isteğe bağlı",
+      "C": {
+        "id": "F49-P003.C",
+        "status": "implemented unvalidated optional runtime",
+        "paths": [
+          "src/veri_ufku/modeling/search.py",
+          "src/veri_ufku/modeling/search_contracts.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/modeling/families.py",
+          "src/veri_ufku/storage/search_store.py",
+          "src/veri_ufku/storage/validation_store.py"
+        ]
+      },
+      "V": {
+        "id": "F49-P003.V",
+        "status": "verified absent-backend guard only",
+        "paths": [
+          "tests/test_search.py",
+          "tests/test_search_store.py",
+          "tests/test_search_gui.py",
+          "docs/evidence/phase49/source-final.xml",
+          "docs/evidence/phase49/wheel-final.xml"
+        ]
+      },
+      "G": {
+        "id": "F49-P003.G",
+        "status": "verified disabled availability only",
+        "paths": [
+          "docs/evidence/phase49/source-gui/walkthrough.json",
+          "docs/evidence/phase49/wheel-gui/walkthrough.json",
+          "docs/evidence/phase49/source-handoff-final.xml"
+        ]
+      },
+      "H": {
+        "id": "F49-P003.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-search"
+      },
+      "P": {
+        "id": "F49-P003.P",
+        "status": "verified unavailable boundary only",
+        "paths": [
+          "src/veri_ufku/storage/search_store.py",
+          "docs/evidence/phase49/wheel.json",
+          "docs/evidence/phase49/smoke.json"
+        ]
+      },
+      "limits": "Discrete native supervised single-target CPU search. Optional Optuna absent. Calibration/advanced selection/indicator/MI tuning closed; native-category variance closed; stacking time/group_time closed. Human/AT/hardware/distribution/offlineinstall/remoteCI separate."
+    },
+    {
+      "id": "F49-P004",
+      "method": "Nested CV",
+      "environment": "ENV-49",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F49-P004.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/search.py",
+          "src/veri_ufku/modeling/search_contracts.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/modeling/families.py",
+          "src/veri_ufku/storage/search_store.py",
+          "src/veri_ufku/storage/validation_store.py"
+        ]
+      },
+      "V": {
+        "id": "F49-P004.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_search.py",
+          "tests/test_search_store.py",
+          "tests/test_search_gui.py",
+          "docs/evidence/phase49/source-final.xml",
+          "docs/evidence/phase49/wheel-final.xml"
+        ]
+      },
+      "G": {
+        "id": "F49-P004.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase49/source-gui/walkthrough.json",
+          "docs/evidence/phase49/wheel-gui/walkthrough.json",
+          "docs/evidence/phase49/source-handoff-final.xml"
+        ]
+      },
+      "H": {
+        "id": "F49-P004.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-search"
+      },
+      "P": {
+        "id": "F49-P004.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/search_store.py",
+          "docs/evidence/phase49/wheel.json",
+          "docs/evidence/phase49/smoke.json"
+        ]
+      },
+      "limits": "Discrete native supervised single-target CPU search. Optional Optuna absent. Calibration/advanced selection/indicator/MI tuning closed; native-category variance closed; stacking time/group_time closed. Human/AT/hardware/distribution/offlineinstall/remoteCI separate."
+    },
+    {
+      "id": "F49-P005",
+      "method": "Learning curve",
+      "environment": "ENV-49",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F49-P005.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/search.py",
+          "src/veri_ufku/modeling/search_contracts.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/modeling/families.py",
+          "src/veri_ufku/storage/search_store.py",
+          "src/veri_ufku/storage/validation_store.py"
+        ]
+      },
+      "V": {
+        "id": "F49-P005.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_search.py",
+          "tests/test_search_store.py",
+          "tests/test_search_gui.py",
+          "docs/evidence/phase49/source-final.xml",
+          "docs/evidence/phase49/wheel-final.xml"
+        ]
+      },
+      "G": {
+        "id": "F49-P005.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase49/source-gui/walkthrough.json",
+          "docs/evidence/phase49/wheel-gui/walkthrough.json",
+          "docs/evidence/phase49/source-handoff-final.xml"
+        ]
+      },
+      "H": {
+        "id": "F49-P005.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-search"
+      },
+      "P": {
+        "id": "F49-P005.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/search_store.py",
+          "docs/evidence/phase49/wheel.json",
+          "docs/evidence/phase49/smoke.json"
+        ]
+      },
+      "limits": "Discrete native supervised single-target CPU search. Optional Optuna absent. Calibration/advanced selection/indicator/MI tuning closed; native-category variance closed; stacking time/group_time closed. Human/AT/hardware/distribution/offlineinstall/remoteCI separate."
+    },
+    {
+      "id": "F49-P006",
+      "method": "Validation curve",
+      "environment": "ENV-49",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F49-P006.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/search.py",
+          "src/veri_ufku/modeling/search_contracts.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/modeling/families.py",
+          "src/veri_ufku/storage/search_store.py",
+          "src/veri_ufku/storage/validation_store.py"
+        ]
+      },
+      "V": {
+        "id": "F49-P006.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_search.py",
+          "tests/test_search_store.py",
+          "tests/test_search_gui.py",
+          "docs/evidence/phase49/source-final.xml",
+          "docs/evidence/phase49/wheel-final.xml"
+        ]
+      },
+      "G": {
+        "id": "F49-P006.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase49/source-gui/walkthrough.json",
+          "docs/evidence/phase49/wheel-gui/walkthrough.json",
+          "docs/evidence/phase49/source-handoff-final.xml"
+        ]
+      },
+      "H": {
+        "id": "F49-P006.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-search"
+      },
+      "P": {
+        "id": "F49-P006.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/search_store.py",
+          "docs/evidence/phase49/wheel.json",
+          "docs/evidence/phase49/smoke.json"
+        ]
+      },
+      "limits": "Discrete native supervised single-target CPU search. Optional Optuna absent. Calibration/advanced selection/indicator/MI tuning closed; native-category variance closed; stacking time/group_time closed. Human/AT/hardware/distribution/offlineinstall/remoteCI separate."
+    },
+    {
+      "id": "F49-P007",
+      "method": "Early stopping",
+      "environment": "ENV-49",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F49-P007.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/search.py",
+          "src/veri_ufku/modeling/search_contracts.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/modeling/families.py",
+          "src/veri_ufku/storage/search_store.py",
+          "src/veri_ufku/storage/validation_store.py"
+        ]
+      },
+      "V": {
+        "id": "F49-P007.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_search.py",
+          "tests/test_search_store.py",
+          "tests/test_search_gui.py",
+          "docs/evidence/phase49/source-final.xml",
+          "docs/evidence/phase49/wheel-final.xml"
+        ]
+      },
+      "G": {
+        "id": "F49-P007.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase49/source-gui/walkthrough.json",
+          "docs/evidence/phase49/wheel-gui/walkthrough.json",
+          "docs/evidence/phase49/source-handoff-final.xml"
+        ]
+      },
+      "H": {
+        "id": "F49-P007.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-search"
+      },
+      "P": {
+        "id": "F49-P007.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/search_store.py",
+          "docs/evidence/phase49/wheel.json",
+          "docs/evidence/phase49/smoke.json"
+        ]
+      },
+      "limits": "Discrete native supervised single-target CPU search. Optional Optuna absent. Calibration/advanced selection/indicator/MI tuning closed; native-category variance closed; stacking time/group_time closed. Human/AT/hardware/distribution/offlineinstall/remoteCI separate."
+    },
+    {
+      "id": "F49-P008",
+      "method": "Pruning",
+      "environment": "ENV-49",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F49-P008.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/search.py",
+          "src/veri_ufku/modeling/search_contracts.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/modeling/families.py",
+          "src/veri_ufku/storage/search_store.py",
+          "src/veri_ufku/storage/validation_store.py"
+        ]
+      },
+      "V": {
+        "id": "F49-P008.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_search.py",
+          "tests/test_search_store.py",
+          "tests/test_search_gui.py",
+          "docs/evidence/phase49/source-final.xml",
+          "docs/evidence/phase49/wheel-final.xml"
+        ]
+      },
+      "G": {
+        "id": "F49-P008.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase49/source-gui/walkthrough.json",
+          "docs/evidence/phase49/wheel-gui/walkthrough.json",
+          "docs/evidence/phase49/source-handoff-final.xml"
+        ]
+      },
+      "H": {
+        "id": "F49-P008.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-search"
+      },
+      "P": {
+        "id": "F49-P008.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/search_store.py",
+          "docs/evidence/phase49/wheel.json",
+          "docs/evidence/phase49/smoke.json"
+        ]
+      },
+      "limits": "Discrete native supervised single-target CPU search. Optional Optuna absent. Calibration/advanced selection/indicator/MI tuning closed; native-category variance closed; stacking time/group_time closed. Human/AT/hardware/distribution/offlineinstall/remoteCI separate."
+    },
+    {
+      "id": "F49-P009",
+      "method": "Fail cancel resume trial history",
+      "environment": "ENV-49",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F49-P009.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/search.py",
+          "src/veri_ufku/modeling/search_contracts.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/modeling/families.py",
+          "src/veri_ufku/storage/search_store.py",
+          "src/veri_ufku/storage/validation_store.py"
+        ]
+      },
+      "V": {
+        "id": "F49-P009.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_search.py",
+          "tests/test_search_store.py",
+          "tests/test_search_gui.py",
+          "docs/evidence/phase49/source-final.xml",
+          "docs/evidence/phase49/wheel-final.xml"
+        ]
+      },
+      "G": {
+        "id": "F49-P009.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase49/source-gui/walkthrough.json",
+          "docs/evidence/phase49/wheel-gui/walkthrough.json",
+          "docs/evidence/phase49/source-handoff-final.xml"
+        ]
+      },
+      "H": {
+        "id": "F49-P009.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-search"
+      },
+      "P": {
+        "id": "F49-P009.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/search_store.py",
+          "docs/evidence/phase49/wheel.json",
+          "docs/evidence/phase49/smoke.json"
+        ]
+      },
+      "limits": "Discrete native supervised single-target CPU search. Optional Optuna absent. Calibration/advanced selection/indicator/MI tuning closed; native-category variance closed; stacking time/group_time closed. Human/AT/hardware/distribution/offlineinstall/remoteCI separate."
+    }
+  ],
+  "verified_records": 8,
+  "unvalidated_runtime_records": [
+    "F49-P003"
+  ],
+  "formal_status": "sürüyor / deneysel / zorunlu; prior gates open"
+}

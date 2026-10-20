@@ -18,18 +18,22 @@ Frame {
         id: body
         width: parent.width
         spacing: Theme.sm
-        Label {
+        UiLabel {
+            objectName: "stateHeading"
             Layout.fillWidth: true
             text: (notice.kind === "error" ? "!  " : (notice.kind === "canceled" ? "×  " : "○  ")) + notice.heading
+            textFormat: Text.PlainText
             font.pixelSize: Theme.body
             font.bold: true
             color: notice.kind === "error" ? Theme.error : (notice.kind === "unavailable" ? Theme.warning : Theme.text)
             wrapMode: Text.WordWrap
             Accessible.role: Accessible.StaticText
         }
-        Label {
+        UiLabel {
+            objectName: "stateDetail"
             Layout.fillWidth: true
             text: notice.detail
+            textFormat: Text.PlainText
             visible: text.length > 0
             font.pixelSize: Theme.body
             wrapMode: Text.WordWrap

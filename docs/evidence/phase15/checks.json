@@ -1,0 +1,99 @@
+[
+  {
+    "command": [
+      "python3",
+      "scripts/check_docs.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.04882587199972477
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_docs.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.055296664000707096
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_artifacts.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.12370693900084007
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_learning.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.04908657099986158
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "exit_code": 0,
+    "seconds": 0.016311428998960764
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "exit_code": 0,
+    "seconds": 0.015156032000959385
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "exit_code": 0,
+    "seconds": 2.0101788550000492
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "veri-ufku",
+      "--smoke-test"
+    ],
+    "exit_code": 0,
+    "seconds": 0.6236845140010701
+  }
+]

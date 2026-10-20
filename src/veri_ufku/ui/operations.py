@@ -11,6 +11,7 @@ from pathlib import Path
 
 from PySide6.QtCore import Property, QObject, QTimer, Signal, Slot
 
+from veri_ufku.jobs.admission import start_controller
 from veri_ufku.operations.contracts import activate, active_datasets, build, move
 from veri_ufku.operations.worker import process_entry
 from veri_ufku.storage.project_model import ProjectError, decode, uid
@@ -77,6 +78,7 @@ class OperationsController(QObject):
         bool,
         lambda self: bool(
             self.preview
+            and self.preview.get("diagnostics", {}).get("publication_allowed", True)
             and not self.busy
             and not self.projects.busy
             and not self.projects.readOnly
@@ -164,6 +166,243 @@ class OperationsController(QObject):
         notify=changed,
     )
 
+    contractRecipe = Property(
+        "QVariantMap", lambda self: self.contract_recipe(), notify=changed
+    )
+    contractReport = Property(
+        "QVariantMap", lambda self: self.contract_report(), notify=changed
+    )
+
+    def contract_report(self):
+        if self.preview and self.preview.get("diagnostics", {}).get("contract_report"):
+            return dict(
+                report=copy.deepcopy(self.preview["diagnostics"]["contract_report"]),
+                policy=self.preview["diagnostics"]["policy"],
+                output_version=self.preview["version_id"],
+                current=True,
+                saved=False,
+            )
+        d = self.data.dataset() or {}
+        reference = d.get("schema_contract", {}).get("report_operation")
+        op = next(
+            (o for o in self.projects.draft["operations"] if o["id"] == reference), None
+        )
+        if not op:
+            return {}
+        return dict(
+            report=copy.deepcopy(op.get("diagnostics", {}).get("contract_report", {})),
+            policy=op["spec"]["parameters"]["policy"],
+            output_version=op["output_version_id"],
+            current=op["output_version_id"] == d.get("version_id"),
+            saved=True,
+        )
+
+    identityJournal = Property(
+        "QVariantList", lambda self: self.identity_journal(), notify=changed
+    )
+
+    def contract_recipe(self):
+        d = self.data.dataset()
+        if not d:
+            return {}
+        return dict(
+            contract=copy.deepcopy(
+                d.get("schema_contract", {}).get(
+                    "definition", {"schema_version": 1, "rules": []}
+                )
+            ),
+            semantic_metadata=copy.deepcopy(d.get("semantic_metadata", {})),
+            analysis_unit=d.get("analysis_unit", ""),
+        )
+
+    def identity_journal(self):
+        records = []
+        for op in self.projects.draft["operations"]:
+            if op.get("spec", {}).get("kind") not in ("entity_merge", "category_map"):
+                continue
+            versions = op["dataset_version_ids"]
+            descendants = set(versions)
+            for d in self.projects.draft["datasets"]:
+                if any(
+                    v in descendants
+                    for v in d.get("parent_version_ids", [])
+                    + d.get("input_version_ids", [])
+                    + (
+                        [d["derived_analysis"]["source_version"]]
+                        if d.get("derived_analysis")
+                        else []
+                    )
+                    + (
+                        [d["forked_from_version_id"]]
+                        if d.get("forked_from_version_id")
+                        else []
+                    )
+                ):
+                    descendants.add(d["version_id"])
+            linked = [
+                dict(id=r["id"], versions=r.get("dataset_version_ids", []))
+                for r in self.projects.draft["results"]
+                if descendants.intersection(r.get("dataset_version_ids", []))
+            ]
+            records.append(
+                dict(
+                    operation=op["id"],
+                    input=op["spec"]["input_version_id"],
+                    output=op["output_version_id"],
+                    approval=op["spec"]["parameters"]["approval"],
+                    decisions=op.get("diagnostics", {}).get("decisions", []),
+                    mapping=op.get("diagnostics", {}).get("mapping", {}),
+                    related_versions=sorted(descendants),
+                    inverse_artifact=op.get("lineage", {}).get("relation_uri", ""),
+                    related_results=linked,
+                    current=op["output_version_id"]
+                    == (self.data.dataset() or {}).get("version_id"),
+                )
+            )
+        return records
+
+    @Slot(str)
+    def previewSchemaContract(self, recipe):
+        self.previewCleaning("schema_contract", "[]", recipe, "chain")
+
+    @Slot(str, str)
+    def previewContractCheck(self, definition, policy):
+        try:
+            parameters = dict(contract=json.loads(definition), policy=policy)
+            self.start_preview(
+                "contract_check", cleaning_columns=[], cleaning_parameters=parameters
+            )
+        except (TypeError, ValueError) as error:
+            self.fail(error)
+
+    @Slot(str, str, float)
+    def previewIdentityCandidates(self, name_column, block_column, threshold):
+        self.start_preview(
+            "entity_candidates",
+            cleaning_columns=[],
+            cleaning_parameters=dict(
+                name_column=name_column, block_column=block_column, threshold=threshold
+            ),
+        )
+
+    @Slot(str, float)
+    def previewCategoryCandidates(self, column, threshold):
+        self.start_preview(
+            "category_candidates",
+            cleaning_columns=[column],
+            cleaning_parameters=dict(threshold=threshold),
+        )
+
+    @Slot(str, str, str, str)
+    def approveIdentityPair(self, left, right, reviewer, reason):
+        from datetime import UTC, datetime
+
+        if (
+            not self.preview
+            or self.preview["spec"]["kind"] != "entity_candidates"
+            or self.binding != self.current_binding()
+        ):
+            return self.fail(ProjectError("Güncel aday listesinden çift seçin."))
+        d = self.data.dataset()
+        p = copy.deepcopy(self.preview["spec"]["parameters"])
+        p.update(
+            pairs=[[left, right]],
+            canonical_column=d.get("entity_resolution", {}).get(
+                "canonical_column", "col:" + uid()
+            ),
+            approval=dict(
+                approved=True,
+                reviewer=reviewer,
+                reason=reason,
+                at=datetime.now(UTC).isoformat(),
+            ),
+        )
+        self.start_preview("entity_merge", cleaning_columns=[], cleaning_parameters=p)
+
+    @Slot(str, str, str, str, str)
+    def approveCategoryPair(self, column, source, target, reviewer, reason):
+        from datetime import UTC, datetime
+
+        if (
+            not self.preview
+            or self.preview["spec"]["kind"] != "category_candidates"
+            or self.binding != self.current_binding()
+            or list(self.preview["spec"]["column_ids"]) != [column]
+            or not any(
+                {source, target} == {c["left_value"], c["right_value"]}
+                for c in self.preview["diagnostics"].get("category_candidates", [])
+            )
+        ):
+            return self.fail(ProjectError("Güncel kategori adayından eşleme seçin."))
+        self.start_preview(
+            "category_map",
+            cleaning_columns=[column],
+            cleaning_parameters=dict(
+                mapping={source: target},
+                approval=dict(
+                    approved=True,
+                    reviewer=reviewer,
+                    reason=reason,
+                    at=datetime.now(UTC).isoformat(),
+                ),
+            ),
+        )
+
+    @Slot(str, str)
+    def exportContractRecipe(self, path, recipe):
+        from PySide6.QtCore import QIODevice, QSaveFile, QUrl
+
+        from veri_ufku.operations.data_contracts import parameters
+
+        try:
+            d = self.data.dataset()
+            if not d:
+                raise ProjectError("Dataset seçin.")
+            value = json.loads(recipe)
+            parameters(
+                {},
+                "schema_contract",
+                [],
+                value,
+                copy.deepcopy(d["import_metadata"]["columns"]),
+            )
+            target = QUrl(path).toLocalFile() if path.startswith("file:") else path
+            protected = [
+                Path(s["path"]).resolve()
+                for s in self.projects.draft["sources"]
+                if "://" not in s["path"]
+            ]
+            if Path(target).resolve() in protected or Path(
+                target
+            ).resolve().is_relative_to(self.projects.store.root):
+                raise ProjectError(
+                    "Kaynak veya proje iç dosyası üzerine tarif yazılamaz; ayrı çıktı yolu seçin."
+                )
+            if not Path(target).is_absolute() or Path(target).suffix != ".json":
+                raise ProjectError("Mutlak .json tarif yolu gerekli.")
+            file = QSaveFile(target)
+            file.setDirectWriteFallback(False)
+            payload = json.dumps(
+                dict(
+                    schema_version=1,
+                    bound_dataset_version=d["version_id"],
+                    columns=d["import_metadata"]["columns"],
+                    recipe=value,
+                ),
+                ensure_ascii=False,
+                indent=2,
+            ).encode()
+            if (
+                not file.open(QIODevice.WriteOnly)
+                or file.write(payload) != len(payload)
+                or not file.commit()
+            ):
+                raise ProjectError("Tarif atomik dışa yazılamadı.")
+            self._message = "Taşınabilir tarif yazıldı; başka dataset için ColumnId ve referans sürümü açıkça yeniden bağlanmalı."
+            self.changed.emit()
+        except (TypeError, ValueError) as error:
+            self.fail(error)
+
     @Slot(str, str, str, str)
     def previewTransform(self, kind, column_ids_json, parameters_json, destination):
         self.previewCleaning(kind, column_ids_json, parameters_json, destination)
@@ -245,6 +484,31 @@ class OperationsController(QObject):
                 ProjectError("Temizlik seçimleri geçersiz; parametreleri kontrol edin.")
             )
 
+    @Slot(str)
+    def previewChartSelection(self, text):
+        try:
+            selection = json.loads(text)
+            rows = selection.get("dataset_row_ids", [])
+            if (
+                selection.get("dataset_version") != self.data.dataset()["version_id"]
+                or len(rows) != selection.get("count")
+                or not rows
+            ):
+                raise ProjectError(
+                    "Güncel ve tam seçim gerekli; grafik filtresi en fazla10000 kayıt destekler."
+                )
+            self.start_preview(
+                "filter",
+                cleaning_columns=[],
+                cleaning_parameters={
+                    "row_ids": rows,
+                    "chart_result_id": selection["chart_result_id"],
+                },
+                destination="copy",
+            )
+        except (TypeError, ValueError, KeyError, ProjectError) as error:
+            self.fail(ProjectError(str(error)))
+
     def start_preview(
         self,
         kind,
@@ -274,14 +538,35 @@ class OperationsController(QObject):
                 version_id=d["version_id"],
                 source_snapshot_id=d["import_metadata"]["source_snapshot_id"],
                 config_revision=self.data.revision,
+                semantic_metadata=copy.deepcopy(d.get("semantic_metadata", {})),
+                entity_resolution=copy.deepcopy(d.get("entity_resolution", {})),
+                format_metadata=copy.deepcopy(
+                    d["import_metadata"]["settings"].get("format_metadata", {})
+                ),
             )
-            if kind in ("join", "append") and cleaning_parameters:
+            if (
+                kind in ("join", "append", "geo_join")
+                or kind == "contract_check"
+                and any(
+                    r["kind"] == "foreign_key"
+                    for r in (cleaning_parameters or {})
+                    .get("contract", {})
+                    .get("rules", [])
+                )
+            ) and cleaning_parameters:
+                if kind == "contract_check":
+                    secondary_version = next(
+                        r["parameters"]["version_id"]
+                        for r in cleaning_parameters["contract"]["rules"]
+                        if r["kind"] == "foreign_key"
+                    )
+                else:
+                    secondary_version = cleaning_parameters.get("secondary_version_id")
                 other = next(
                     (
                         item
                         for item in active_datasets(self.projects.draft)
-                        if item["version_id"]
-                        == cleaning_parameters.get("secondary_version_id")
+                        if item["version_id"] == secondary_version
                     ),
                     None,
                 )
@@ -297,6 +582,9 @@ class OperationsController(QObject):
                     row_count=other["import_metadata"]["row_count"],
                     version_id=other["version_id"],
                     source_snapshot_id=other["import_metadata"]["source_snapshot_id"],
+                    format_metadata=copy.deepcopy(
+                        other["import_metadata"]["settings"].get("format_metadata", {})
+                    ),
                 )
             if cleaning_columns is not None:
                 spec = build(
@@ -345,7 +633,8 @@ class OperationsController(QObject):
                     self.budget,
                 ),
             )
-            self.process.start()
+            if not start_controller(self, sender):
+                return
             sender.close()
             self.started = time.monotonic()
             self.cancel_time = None

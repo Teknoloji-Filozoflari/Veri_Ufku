@@ -1,0 +1,597 @@
+{
+  "id": "E51-ACCEPTANCE",
+  "environment": "ENV-51",
+  "date": "2026-10-13",
+  "records": [
+    {
+      "id": "F51-P001",
+      "method": "Permutation importance",
+      "environment": "ENV-51",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F51-P001.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/explanation.py",
+          "src/veri_ufku/storage/explanation_store.py",
+          "src/veri_ufku/modeling/lifecycle_worker.py",
+          "src/veri_ufku/ui/lifecycle.py",
+          "src/veri_ufku/ui/qml/ExplanationPanel.qml",
+          "src/veri_ufku/ui/qml/ICEPlot.qml"
+        ]
+      },
+      "V": {
+        "id": "F51-P001.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_explanation.py",
+          "tests/test_explanation_gui.py",
+          "docs/evidence/phase51/source-core.xml",
+          "docs/evidence/phase51/wheel-core.xml",
+          "docs/evidence/phase51/source-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F51-P001.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F51-P001.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-explanation"
+      },
+      "P": {
+        "id": "F51-P001.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel.json",
+          "docs/evidence/phase51/frozen-head.json"
+        ]
+      },
+      "limits": "5000source/500sample/100background/16features/300000pipeline response row-pass; no native child pass or wall-time guarantee; same immutable source validation and fit background only; local-linear exact regression restricted; fairness binary only; no fair/causal/feasible guarantee"
+    },
+    {
+      "id": "F51-P002",
+      "method": "PDP",
+      "environment": "ENV-51",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F51-P002.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/explanation.py",
+          "src/veri_ufku/storage/explanation_store.py",
+          "src/veri_ufku/modeling/lifecycle_worker.py",
+          "src/veri_ufku/ui/lifecycle.py",
+          "src/veri_ufku/ui/qml/ExplanationPanel.qml",
+          "src/veri_ufku/ui/qml/ICEPlot.qml"
+        ]
+      },
+      "V": {
+        "id": "F51-P002.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_explanation.py",
+          "tests/test_explanation_gui.py",
+          "docs/evidence/phase51/source-core.xml",
+          "docs/evidence/phase51/wheel-core.xml",
+          "docs/evidence/phase51/source-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F51-P002.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F51-P002.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-explanation"
+      },
+      "P": {
+        "id": "F51-P002.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel.json",
+          "docs/evidence/phase51/frozen-head.json"
+        ]
+      },
+      "limits": "5000source/500sample/100background/16features/300000pipeline response row-pass; no native child pass or wall-time guarantee; same immutable source validation and fit background only; local-linear exact regression restricted; fairness binary only; no fair/causal/feasible guarantee"
+    },
+    {
+      "id": "F51-P003",
+      "method": "ICE",
+      "environment": "ENV-51",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F51-P003.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/explanation.py",
+          "src/veri_ufku/storage/explanation_store.py",
+          "src/veri_ufku/modeling/lifecycle_worker.py",
+          "src/veri_ufku/ui/lifecycle.py",
+          "src/veri_ufku/ui/qml/ExplanationPanel.qml",
+          "src/veri_ufku/ui/qml/ICEPlot.qml"
+        ]
+      },
+      "V": {
+        "id": "F51-P003.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_explanation.py",
+          "tests/test_explanation_gui.py",
+          "docs/evidence/phase51/source-core.xml",
+          "docs/evidence/phase51/wheel-core.xml",
+          "docs/evidence/phase51/source-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F51-P003.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F51-P003.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-explanation"
+      },
+      "P": {
+        "id": "F51-P003.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel.json",
+          "docs/evidence/phase51/frozen-head.json"
+        ]
+      },
+      "limits": "5000source/500sample/100background/16features/300000pipeline response row-pass; no native child pass or wall-time guarantee; same immutable source validation and fit background only; local-linear exact regression restricted; fairness binary only; no fair/causal/feasible guarantee"
+    },
+    {
+      "id": "F51-P004",
+      "method": "Optional SHAP",
+      "environment": "ENV-51",
+      "date": "2026-10-13",
+      "validation": "NOT validated runtime; SHAP environment absent",
+      "scope": "isteğe bağlı",
+      "C": {
+        "id": "F51-P004.C",
+        "status": "runtime unvalidated; declaration/unavailable guard only",
+        "paths": [
+          "src/veri_ufku/modeling/explanation.py",
+          "src/veri_ufku/storage/explanation_store.py",
+          "src/veri_ufku/modeling/lifecycle_worker.py",
+          "src/veri_ufku/ui/lifecycle.py",
+          "src/veri_ufku/ui/qml/ExplanationPanel.qml",
+          "src/veri_ufku/ui/qml/ICEPlot.qml"
+        ]
+      },
+      "V": {
+        "id": "F51-P004.V",
+        "status": "runtime unvalidated; declaration/unavailable guard only",
+        "paths": [
+          "tests/test_explanation.py",
+          "tests/test_explanation_gui.py",
+          "docs/evidence/phase51/source-core.xml",
+          "docs/evidence/phase51/wheel-core.xml",
+          "docs/evidence/phase51/source-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F51-P004.G",
+        "status": "runtime unvalidated; declaration/unavailable guard only",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F51-P004.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-explanation"
+      },
+      "P": {
+        "id": "F51-P004.P",
+        "status": "runtime unvalidated; declaration/unavailable guard only",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel.json",
+          "docs/evidence/phase51/frozen-head.json"
+        ]
+      },
+      "limits": "5000source/500sample/100background/16features/300000pipeline response row-pass; no native child pass or wall-time guarantee; same immutable source validation and fit background only; local-linear exact regression restricted; fairness binary only; no fair/causal/feasible guarantee"
+    },
+    {
+      "id": "F51-P005",
+      "method": "Feature mapping",
+      "environment": "ENV-51",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F51-P005.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/explanation.py",
+          "src/veri_ufku/storage/explanation_store.py",
+          "src/veri_ufku/modeling/lifecycle_worker.py",
+          "src/veri_ufku/ui/lifecycle.py",
+          "src/veri_ufku/ui/qml/ExplanationPanel.qml",
+          "src/veri_ufku/ui/qml/ICEPlot.qml"
+        ]
+      },
+      "V": {
+        "id": "F51-P005.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_explanation.py",
+          "tests/test_explanation_gui.py",
+          "docs/evidence/phase51/source-core.xml",
+          "docs/evidence/phase51/wheel-core.xml",
+          "docs/evidence/phase51/source-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F51-P005.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F51-P005.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-explanation"
+      },
+      "P": {
+        "id": "F51-P005.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel.json",
+          "docs/evidence/phase51/frozen-head.json"
+        ]
+      },
+      "limits": "5000source/500sample/100background/16features/300000pipeline response row-pass; no native child pass or wall-time guarantee; same immutable source validation and fit background only; local-linear exact regression restricted; fairness binary only; no fair/causal/feasible guarantee"
+    },
+    {
+      "id": "F51-P006",
+      "method": "Group/time/class/range slices",
+      "environment": "ENV-51",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F51-P006.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/explanation.py",
+          "src/veri_ufku/storage/explanation_store.py",
+          "src/veri_ufku/modeling/lifecycle_worker.py",
+          "src/veri_ufku/ui/lifecycle.py",
+          "src/veri_ufku/ui/qml/ExplanationPanel.qml",
+          "src/veri_ufku/ui/qml/ICEPlot.qml"
+        ]
+      },
+      "V": {
+        "id": "F51-P006.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_explanation.py",
+          "tests/test_explanation_gui.py",
+          "docs/evidence/phase51/source-core.xml",
+          "docs/evidence/phase51/wheel-core.xml",
+          "docs/evidence/phase51/source-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F51-P006.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F51-P006.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-explanation"
+      },
+      "P": {
+        "id": "F51-P006.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel.json",
+          "docs/evidence/phase51/frozen-head.json"
+        ]
+      },
+      "limits": "5000source/500sample/100background/16features/300000pipeline response row-pass; no native child pass or wall-time guarantee; same immutable source validation and fit background only; local-linear exact regression restricted; fairness binary only; no fair/causal/feasible guarantee"
+    },
+    {
+      "id": "F51-P007",
+      "method": "Fairness metrics",
+      "environment": "ENV-51",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F51-P007.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/explanation.py",
+          "src/veri_ufku/storage/explanation_store.py",
+          "src/veri_ufku/modeling/lifecycle_worker.py",
+          "src/veri_ufku/ui/lifecycle.py",
+          "src/veri_ufku/ui/qml/ExplanationPanel.qml",
+          "src/veri_ufku/ui/qml/ICEPlot.qml"
+        ]
+      },
+      "V": {
+        "id": "F51-P007.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_explanation.py",
+          "tests/test_explanation_gui.py",
+          "docs/evidence/phase51/source-core.xml",
+          "docs/evidence/phase51/wheel-core.xml",
+          "docs/evidence/phase51/source-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F51-P007.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F51-P007.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-explanation"
+      },
+      "P": {
+        "id": "F51-P007.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel.json",
+          "docs/evidence/phase51/frozen-head.json"
+        ]
+      },
+      "limits": "5000source/500sample/100background/16features/300000pipeline response row-pass; no native child pass or wall-time guarantee; same immutable source validation and fit background only; local-linear exact regression restricted; fairness binary only; no fair/causal/feasible guarantee"
+    },
+    {
+      "id": "F51-P008",
+      "method": "Sensitive export redaction",
+      "environment": "ENV-51",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F51-P008.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/explanation.py",
+          "src/veri_ufku/storage/explanation_store.py",
+          "src/veri_ufku/modeling/lifecycle_worker.py",
+          "src/veri_ufku/ui/lifecycle.py",
+          "src/veri_ufku/ui/qml/ExplanationPanel.qml",
+          "src/veri_ufku/ui/qml/ICEPlot.qml"
+        ]
+      },
+      "V": {
+        "id": "F51-P008.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_explanation.py",
+          "tests/test_explanation_gui.py",
+          "docs/evidence/phase51/source-core.xml",
+          "docs/evidence/phase51/wheel-core.xml",
+          "docs/evidence/phase51/source-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F51-P008.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F51-P008.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-explanation"
+      },
+      "P": {
+        "id": "F51-P008.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel.json",
+          "docs/evidence/phase51/frozen-head.json"
+        ]
+      },
+      "limits": "5000source/500sample/100background/16features/300000pipeline response row-pass; no native child pass or wall-time guarantee; same immutable source validation and fit background only; local-linear exact regression restricted; fairness binary only; no fair/causal/feasible guarantee"
+    },
+    {
+      "id": "F51-P009",
+      "method": "Constrained candidate search",
+      "environment": "ENV-51",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "isteğe bağlı",
+      "C": {
+        "id": "F51-P009.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/explanation.py",
+          "src/veri_ufku/storage/explanation_store.py",
+          "src/veri_ufku/modeling/lifecycle_worker.py",
+          "src/veri_ufku/ui/lifecycle.py",
+          "src/veri_ufku/ui/qml/ExplanationPanel.qml",
+          "src/veri_ufku/ui/qml/ICEPlot.qml"
+        ]
+      },
+      "V": {
+        "id": "F51-P009.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_explanation.py",
+          "tests/test_explanation_gui.py",
+          "docs/evidence/phase51/source-core.xml",
+          "docs/evidence/phase51/wheel-core.xml",
+          "docs/evidence/phase51/source-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F51-P009.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F51-P009.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-explanation"
+      },
+      "P": {
+        "id": "F51-P009.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel.json",
+          "docs/evidence/phase51/frozen-head.json"
+        ]
+      },
+      "limits": "5000source/500sample/100background/16features/300000pipeline response row-pass; no native child pass or wall-time guarantee; same immutable source validation and fit background only; local-linear exact regression restricted; fairness binary only; no fair/causal/feasible guarantee"
+    },
+    {
+      "id": "F51-P010",
+      "method": "What-if",
+      "environment": "ENV-51",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F51-P010.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/explanation.py",
+          "src/veri_ufku/storage/explanation_store.py",
+          "src/veri_ufku/modeling/lifecycle_worker.py",
+          "src/veri_ufku/ui/lifecycle.py",
+          "src/veri_ufku/ui/qml/ExplanationPanel.qml",
+          "src/veri_ufku/ui/qml/ICEPlot.qml"
+        ]
+      },
+      "V": {
+        "id": "F51-P010.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_explanation.py",
+          "tests/test_explanation_gui.py",
+          "docs/evidence/phase51/source-core.xml",
+          "docs/evidence/phase51/wheel-core.xml",
+          "docs/evidence/phase51/source-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F51-P010.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F51-P010.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-explanation"
+      },
+      "P": {
+        "id": "F51-P010.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase51/source-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel-gui/walkthrough.json",
+          "docs/evidence/phase51/wheel.json",
+          "docs/evidence/phase51/frozen-head.json"
+        ]
+      },
+      "limits": "5000source/500sample/100background/16features/300000pipeline response row-pass; no native child pass or wall-time guarantee; same immutable source validation and fit background only; local-linear exact regression restricted; fairness binary only; no fair/causal/feasible guarantee"
+    }
+  ]
+}

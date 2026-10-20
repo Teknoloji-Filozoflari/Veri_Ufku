@@ -84,12 +84,10 @@ if __name__ == "__main__":
             record["source_unchanged"] = True
             record["steps"].append("close/reopen/state-preserved")
             for width, height, theme, scale in (
-                (1366, 900, "light", 1.0),
-                (720, 560, "dark", 2.0),
+                (1366, 900, "dark", 1.0),
+                (720, 560, "dark", 1.0),
             ):
                 preferences = app._veri_ufku_resources[6]
-                preferences.setTheme(theme)
-                preferences.setTextScale(scale)
                 window.setWidth(width)
                 window.setHeight(height)
                 app.processEvents()

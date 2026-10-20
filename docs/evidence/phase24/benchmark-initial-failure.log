@@ -1,0 +1,53 @@
+Traceback (most recent call last):
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase24.py", line 381, in <module>
+    main()
+    ~~~~^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase24.py", line 339, in main
+    trial(args.rows, args.output)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase24.py", line 311, in trial
+    trained = measure(
+        "model_fit_cv",
+    ...<2 lines>...
+        used,
+    )
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase24.py", line 133, in measure
+    result = call()
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase24.py", line 313, in <lambda>
+    lambda: fit(dict(mr, preparation=p), validation.data(), work),
+            ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/modeling/baseline.py", line 693, in calculate
+    save_package(package_path, model, card)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/modeling/lifecycle.py", line 290, in save_package
+    payload = sio.dumps(model)
+  File "/home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/skops/io/_persist.py", line 112, in dumps
+    buffer = _save(obj, compression=compression, compresslevel=compresslevel)
+  File "/home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/skops/io/_persist.py", line 41, in _save
+    zip_file.writestr("schema.json", json.dumps(state, indent=2))
+                                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/s-oktay/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/home/s-oktay/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/home/s-oktay/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+MemoryError
+Traceback (most recent call last):
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase24.py", line 381, in <module>
+    main()
+    ~~~~^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase24.py", line 345, in main
+    subprocess.run(
+    ~~~~~~~~~~~~~~^
+        [sys.executable, __file__, "--rows", str(n), "--output", str(path)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        check=True,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "/home/s-oktay/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python', '/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase24.py', '--rows', '100000', '--output', 'docs/evidence/phase24/medium-1.json']' returned non-zero exit status 1.

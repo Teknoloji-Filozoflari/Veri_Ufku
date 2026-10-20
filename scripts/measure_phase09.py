@@ -80,13 +80,10 @@ def run(args):
             assert ops.previewResult["impact"]["before_rows"] == 100000
             assert ops.before.rowCount() == 200
             for width, height, theme, scale in [
-                (1366, 900, "light", 1.0),
-                (720, 560, "dark", 2.0),
+                (1366, 900, "dark", 1.0),
+                (720, 560, "dark", 1.0),
             ]:
                 # Preferences are held in the QML context, independent of dataset state.
-                prefs = engine.rootContext().contextProperty("preferences")
-                prefs.setTheme(theme)
-                prefs.setTextScale(scale)
                 window.setWidth(width)
                 window.setHeight(height)
                 app.processEvents()

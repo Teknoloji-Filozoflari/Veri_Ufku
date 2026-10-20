@@ -5,6 +5,7 @@ from pathlib import Path
 
 from PySide6.QtCore import QObject, Qt
 from test_import_gui import setup, spin, teardown
+from test_learning_gui import visual_item
 
 
 def load(tmp_path, monkeypatch, rows=450):
@@ -33,6 +34,7 @@ def test_qml_page_worker_filter_profile_role_save_reopen(tmp_path, monkeypatch):
         window.setProperty("selectedSection", 1)
         tabs = window.findChild(QObject, "datasetTabs")
         tabs.setProperty("currentIndex", 0)
+        window.setProperty("dataPane", "rows")
         window.findChild(QObject, "loadDatasetButton").clicked.emit()
         spin(app, lambda: not data.busy)
         assert (
@@ -108,5 +110,71 @@ def test_cancel_and_stale_binding_do_not_publish(tmp_path, monkeypatch):
         spin(app, lambda: not data.busy)
         assert data.profileResult == {} and "Eski veri" in data.message
         assert projects.draft == before
+    finally:
+        teardown(app, window)
+
+
+def test_data_content_dictionary_persists_and_view_does_not_change_counts(
+    tmp_path, monkeypatch
+):
+    app, window, projects, data, source = load(tmp_path, monkeypatch, 12)
+    original = source.read_bytes()
+    try:
+        window.setProperty("selectedSection", 1)
+        tabs = window.findChild(QObject, "datasetTabs")
+        tabs.setProperty("currentIndex", 0)
+        app.processEvents()
+        window.setProperty("dataPane", "rows")
+        app.processEvents()
+        assert visual_item(window.contentItem(), "dataHeading_import").property(
+            "visible"
+        )
+        assert window.findChild(QObject, "dataContentPanel") is None
+        assert data.dataContent["rows"] == 12
+        assert data.dataContent["columns"] == 3
+        assert data.dataContent["source"] == "sample.csv"
+        amount = data.dataset()["import_metadata"]["columns"][1]["id"]
+        data.selectColumn(amount)
+        window.findChild(QObject, "columnDescription").setProperty(
+            "text", "Satışın Türk lirası cinsinden tutarı."
+        )
+        window.findChild(QObject, "columnRole").setProperty("currentIndex", 2)
+        window.findChild(QObject, "columnUnit").setProperty("text", "TL")
+        window.findChild(QObject, "datasetAnalysisUnit").setProperty("text", "satış")
+        snapshot = data.dataset()["snapshot_uri"]
+        window.findChild(QObject, "applyColumnRole").clicked.emit()
+        assert data.errorText == ""
+        assert data.dataset()["snapshot_uri"] == snapshot
+        assert (
+            data.dataDictionary[1]["description"]
+            == "Satışın Türk lirası cinsinden tutarı."
+        )
+        assert data.dataDictionary[1]["role"] == "Ölçüm"
+        assert data.dataContent["analysis_unit"] == "satış"
+        data.addFilter(amount, "gt", "8")
+        spin(app, lambda: not data.busy)
+        assert data.totalRows == 3
+        assert data.dataContent["rows"] == 12
+        data.computeProfile(False, "view", 1)
+        spin(app, lambda: not data.busy)
+        assert float(data.profileResult["numeric"]["mean"]) == 10
+        assert data.profileResult["used_n"] == 3
+        projects.request("save")
+        spin(app, lambda: not projects.busy)
+        assert projects.closeProject() and projects.open(str(tmp_path / "project"))
+        data.selectColumn(amount)
+        assert (
+            data.columnDetails["description"] == "Satışın Türk lirası cinsinden tutarı."
+        )
+        assert data.dataDictionary[1]["unit"] == "TL"
+        assert source.read_bytes() == original
+        visual_item(window.contentItem(), "dataHeading_import").clicked.emit()
+        assert tabs.property("currentIndex") == 1
+        visual_item(window.contentItem(), "dataHeading_profile").clicked.emit()
+        assert tabs.property("currentIndex") == 0
+        window.setProperty("selectedSection", 0)
+        window.findChild(QObject, "projectDetailsToggle").setProperty("checked", True)
+        app.processEvents()
+        assert window.findChild(QObject, "projectDetailsToggle").property("checked")
     finally:
         teardown(app, window)

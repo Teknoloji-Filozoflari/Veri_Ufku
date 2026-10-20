@@ -2,6 +2,13 @@
 
 from pathlib import Path
 
+from veri_ufku.geo import FORMATS as GEO_FORMATS
+from veri_ufku.importers.advanced import ADVANCED_FORMATS, AdvancedAdapter
+from veri_ufku.importers.arrays import ARRAY_FORMATS
+from veri_ufku.importers.audio import SUFFIXES as AUDIO_SUFFIXES
+from veri_ufku.importers.audio import AudioAdapter
+from veri_ufku.importers.connector_contracts import CONNECTORS
+from veri_ufku.importers.connectors import ConnectorAdapter
 from veri_ufku.importers.contracts import SourceRequest
 from veri_ufku.importers.delimited import (
     ImportSettings,
@@ -9,8 +16,11 @@ from veri_ufku.importers.delimited import (
     preview,
     suggest,
 )
+from veri_ufku.importers.graphs import GraphAdapter
+from veri_ufku.importers.images import SUFFIXES, ImageAdapter
 from veri_ufku.importers.native import EXTRA, StructuredSettings, restore
 from veri_ufku.importers.parquet import import_parquet, parquet_schema, preview_parquet
+from veri_ufku.importers.sources import input_snapshot
 from veri_ufku.importers.structured import (
     import_structured,
     json_document,
@@ -22,16 +32,25 @@ from veri_ufku.importers.xlsx import Workbook
 from veri_ufku.storage.project_model import ProjectError
 
 FORMATS = (
-    "csv",
-    "tsv",
-    "json",
-    "jsonl",
-    "xlsx",
-    "parquet",
-    "ods",
-    "sqlite",
-    "ipc",
-    "ipc_stream",
+    (
+        "image_dataset",
+        "audio_dataset",
+        "graphml",
+        "gexf",
+        "csv",
+        "tsv",
+        "json",
+        "jsonl",
+        "xlsx",
+        "parquet",
+        "ods",
+        "sqlite",
+        "ipc",
+        "ipc_stream",
+    )
+    + ADVANCED_FORMATS
+    + ARRAY_FORMATS
+    + GEO_FORMATS
 )
 
 
@@ -50,10 +69,76 @@ def default_settings(adapter_id):
 
 
 def detect(snapshot):
+    suffix = Path(snapshot["original"]).suffix.lower()
+    if suffix in (".graphml", ".gexf"):
+        return suffix[1:]
+    if any(
+        Path(m["name"]).suffix.lower() == ".shp" for m in snapshot.get("members", [])
+    ):
+        return "shapefile"
+    if suffix in (".geojson", ".gpkg", ".shp", ".tif", ".tiff"):
+        return {
+            ".geojson": "geojson",
+            ".gpkg": "geopackage",
+            ".shp": "shapefile",
+            ".tif": "geotiff",
+            ".tiff": "geotiff",
+        }[suffix]
+    if (
+        suffix in AUDIO_SUFFIXES
+        or snapshot.get("members")
+        and (
+            any(m["name"] == "audio.json" for m in snapshot["members"])
+            or all(
+                Path(m["name"]).suffix.lower() in AUDIO_SUFFIXES
+                for m in snapshot["members"]
+            )
+        )
+    ):
+        return "audio_dataset"
+    if snapshot.get("members") and (
+        any(m["name"] == "images.json" for m in snapshot["members"])
+        or all(Path(m["name"]).suffix.lower() in SUFFIXES for m in snapshot["members"])
+    ):
+        return "image_dataset"
+    if snapshot.get("directory") or len(snapshot.get("members", [])) > 1:
+        names = [m["name"] for m in snapshot.get("members", [])]
+        if ".zgroup" in names or "zarr.json" in names:
+            return "zarr"
+        if names and all(Path(n).suffix.lower() == ".parquet" for n in names):
+            return "parquet_dataset"
+        if names and all(
+            Path(n).suffix.lower() in (".arrow", ".ipc", ".feather") for n in names
+        ):
+            return "arrow_dataset"
+        raise ProjectError(
+            "Çok dosyalı dataset yalnız aynı format Parquet/Arrow parçaları destekler."
+        )
+    snapshot = input_snapshot(snapshot)
     with open(snapshot["path"], "rb") as stream:
         raw = stream.read(65536)
     if raw.startswith(b"PAR1"):
-        return "parquet"
+        import pyarrow.parquet as pq
+
+        return (
+            "geoparquet"
+            if b"geo" in (pq.read_schema(snapshot["path"]).metadata or {})
+            else "parquet"
+        )
+    if raw.startswith(b"Obj\x01"):
+        return "avro"
+    if raw.startswith(b"ORC"):
+        return "orc"
+    if raw.startswith(b"\x89HDF\r\n\x1a\n"):
+        return (
+            "netcdf"
+            if Path(snapshot["original"]).suffix.lower() in (".nc", ".netcdf")
+            else "hdf5"
+        )
+    if raw.startswith(b"CDF"):
+        return "netcdf"
+    if raw.startswith((b"$FL2", b"$FL3")):
+        return "spss"
     if raw.startswith(b"SQLite format 3\x00"):
         return "sqlite"
     if raw.startswith(b"ARROW1"):
@@ -82,6 +167,17 @@ def detect(snapshot):
         ".json": "json",
         ".xlsx": "xlsx",
         ".parquet": "parquet",
+        ".xml": "xml",
+        ".fwf": "fixed_width",
+        ".sav": "spss",
+        ".zsav": "spss",
+        ".dta": "stata",
+        ".sas7bdat": "sas",
+        ".xpt": "sas",
+        ".avro": "avro",
+        ".orc": "orc",
+        ".h5": "hdf5",
+        ".hdf5": "hdf5",
     }
     if suffix in hints:
         return hints[suffix]
@@ -94,7 +190,7 @@ class Adapter:
     def __init__(self, adapter_id):
         self.adapter_id = adapter_id
 
-    def validate_source(self, request: SourceRequest):
+    def validate_source(self, request: SourceRequest, control=None):
         if request.adapter_id != self.adapter_id or not request.path.is_file():
             raise ProjectError("Adaptör/kaynak bağı geçersiz.")
         # Validation is parsing/magic based, never extension-only.
@@ -103,13 +199,13 @@ class Adapter:
         elif self.adapter_id == "ods":
             from veri_ufku.importers.ods import document
 
-            document(request.path)
+            document(request.path, control)
         elif self.adapter_id == "sqlite":
             from veri_ufku.importers.sqlite_source import tables
 
             tables({"path": str(request.path)})
         elif self.adapter_id == "xlsx":
-            book = Workbook(request.path)
+            book = Workbook(request.path, control)
             book.close()
         else:
             with request.path.open("rb") as stream:
@@ -118,7 +214,9 @@ class Adapter:
                 raise ProjectError("Seçilen metin formatı ile dosya içeriği uyuşmuyor.")
 
     def inspect(self, snapshot, settings, control):
-        self.validate_source(SourceRequest(Path(snapshot["path"]), self.adapter_id))
+        self.validate_source(
+            SourceRequest(Path(snapshot["path"]), self.adapter_id), control
+        )
         choices = {}
         if self.adapter_id == "json":
             document = json_document(snapshot, control)
@@ -152,7 +250,7 @@ class Adapter:
             from veri_ufku.importers.ods import document
 
             choices = dict(
-                sheets=list(document(snapshot["path"])),
+                sheets=list(document(snapshot["path"], control)),
                 date_system="ISO 8601",
                 formula_behavior="ODS formülleri çalıştırılmaz; cached yalnız dosyadaki değer. Tüm sayfa okunur; duration ve256'dan geniş tekrarlar reddedilir.",
             )
@@ -184,6 +282,13 @@ class Adapter:
 
 
 ADAPTERS = {name: Adapter(name) for name in FORMATS}
+ADAPTERS["image_dataset"] = ImageAdapter()
+ADAPTERS["audio_dataset"] = AudioAdapter()
+ADAPTERS.update({name: GraphAdapter(name) for name in ("graphml", "gexf")})
+ADAPTERS.update({name: AdvancedAdapter(name) for name in ADVANCED_FORMATS})
+ADAPTERS.update({name: AdvancedAdapter(name) for name in ARRAY_FORMATS})
+ADAPTERS.update({name: AdvancedAdapter(name) for name in GEO_FORMATS})
+ADAPTERS.update({name: ConnectorAdapter(name) for name in CONNECTORS})
 
 
 def get_adapter(adapter_id):

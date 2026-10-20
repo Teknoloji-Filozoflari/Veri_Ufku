@@ -1,0 +1,49 @@
+{
+  "id": "E51-VERIFY",
+  "environment": "ENV-51",
+  "date": "2026-10-13T19:28:25.092081+00:00",
+  "tests": {
+    "source-core": 320,
+    "wheel-core": 320,
+    "source-ui": 34
+  },
+  "new_tests": {
+    "core": 25,
+    "gui": 9
+  },
+  "walkthroughs": {
+    "source-gui": {
+      "workflows": 9,
+      "native_methods": 8,
+      "controls": 1,
+      "png": 44,
+      "safe_json_copies": 16
+    },
+    "wheel-gui": {
+      "workflows": 9,
+      "native_methods": 8,
+      "controls": 1,
+      "png": 44,
+      "safe_json_copies": 16
+    }
+  },
+  "commands": [
+    ".venv/bin/pytest -q tests/test_explanation.py tests/test_uncertainty.py tests/test_search.py tests/test_search_store.py tests/test_model_families.py tests/test_model_family_support.py tests/test_regression.py tests/test_classification.py tests/test_lifecycle.py tests/test_validation.py tests/test_learning_tree.py --junitxml=docs/evidence/phase51/source-core.xml",
+    ".venv/bin/python /tmp/f51_wheel_tests.py",
+    "QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software .venv/bin/pytest -q tests/test_explanation_gui.py tests/test_uncertainty_gui.py tests/test_lifecycle_gui.py tests/test_classification_gui.py tests/test_validation_gui.py tests/test_usability.py --junitxml=docs/evidence/phase51/source-ui.xml",
+    ".venv/bin/python scripts/measure_phase51.py --output docs/evidence/phase51/source-gui",
+    ".venv/bin/python scripts/measure_phase51.py --package-root /tmp/veri-ufku-f51-installed --output docs/evidence/phase51/wheel-gui",
+    ".venv/bin/python -m unittest discover -s tests -p test_document_contracts.py -v",
+    ".venv/bin/python /tmp/f51_smoke.py"
+  ],
+  "exit_code": 0,
+  "optional": "SHAP absent/notvalidated; unavailable guard passed but no SHAP compute claim",
+  "not_run": [
+    "physical desktop",
+    "human/AT",
+    "minimum hardware",
+    "clean offline install",
+    "remote CI",
+    "full repo aggregate regression"
+  ]
+}

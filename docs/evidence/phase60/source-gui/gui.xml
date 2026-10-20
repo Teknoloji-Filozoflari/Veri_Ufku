@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="7" time="164.114" timestamp="2026-10-15T19:23:17.386129+03:00" hostname="s-oktay"><testcase classname="tests.test_patterns_gui" name="test_real_patterns[apriori]" time="23.530" /><testcase classname="tests.test_patterns_gui" name="test_real_patterns[fp_growth]" time="22.795" /><testcase classname="tests.test_patterns_gui" name="test_real_patterns[cohort]" time="24.206" /><testcase classname="tests.test_patterns_gui" name="test_real_patterns[funnel]" time="24.461" /><testcase classname="tests.test_patterns_gui" name="test_real_patterns[process]" time="22.621" /><testcase classname="tests.test_patterns_gui" name="test_real_patterns[conformance]" time="22.600" /><testcase classname="tests.test_patterns_gui" name="test_real_pattern_cancel" time="23.879"><failure message="AssertionError">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-21/test_real_pattern_cancel0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f6afdd7fc50&gt;
+
+    def test_real_pattern_cancel(tmp_path, monkeypatch):
+        app, window, projects, controller, _ = imported(
+            tmp_path, monkeypatch, "apriori", large=True
+        )
+        try:
+            window.findChild(QObject, "patternSupport").setProperty("text", "0.0001")
+            window.findChild(QObject, "patternBudget").setProperty("text", "20000")
+            window.findChild(QObject, "patternRun").clicked.emit()
+            spin(
+                app,
+                lambda: (
+                    controller.active is not None
+                    and controller.active["status"] == "running"
+                ),
+                timeout=90000,
+            )
+            window.findChild(QObject, "patternCancel").clicked.emit()
+            spin(app, lambda: not controller.busy, timeout=90000)
+&gt;           assert controller.active["status"] == "canceled", controller.errorText
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError
+
+tests/test_patterns_gui.py:126: AssertionError</failure></testcase></testsuite></testsuites>

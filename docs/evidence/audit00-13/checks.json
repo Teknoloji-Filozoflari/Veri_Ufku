@@ -1,0 +1,314 @@
+[
+  {
+    "id": "AUDIT-CHECK-sync",
+    "utc": "2026-10-07T21:16:22.181529+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "sync",
+      "--offline",
+      "--locked",
+      "--group",
+      "dev"
+    ],
+    "exit_code": 0,
+    "seconds": 0.015889821999735432,
+    "log": "docs/evidence/audit00-13/check-sync.log"
+  },
+  {
+    "id": "AUDIT-CHECK-system-docs",
+    "utc": "2026-10-07T21:16:22.197681+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "python3",
+      "scripts/check_docs.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.06408121099957498,
+    "log": "docs/evidence/audit00-13/check-system-docs.log"
+  },
+  {
+    "id": "AUDIT-CHECK-check_docs",
+    "utc": "2026-10-07T21:16:22.261953+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_docs.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.06391843799792696,
+    "log": "docs/evidence/audit00-13/check-check_docs.log"
+  },
+  {
+    "id": "AUDIT-CHECK-check_artifacts",
+    "utc": "2026-10-07T21:16:22.326083+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_artifacts.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.1642842839974037,
+    "log": "docs/evidence/audit00-13/check-check_artifacts.log"
+  },
+  {
+    "id": "AUDIT-CHECK-check_learning",
+    "utc": "2026-10-07T21:16:22.490870+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_learning.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.06484676900072373,
+    "log": "docs/evidence/audit00-13/check-check_learning.log"
+  },
+  {
+    "id": "AUDIT-CHECK-ruff-check",
+    "utc": "2026-10-07T21:16:22.556071+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "exit_code": 0,
+    "seconds": 0.03237258000081056,
+    "log": "docs/evidence/audit00-13/check-ruff-check.log"
+  },
+  {
+    "id": "AUDIT-CHECK-ruff-format",
+    "utc": "2026-10-07T21:16:22.588731+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "exit_code": 0,
+    "seconds": 0.03204111100058071,
+    "log": "docs/evidence/audit00-13/check-ruff-format.log"
+  },
+  {
+    "id": "AUDIT-CHECK-pytest",
+    "utc": "2026-10-07T21:16:22.621022+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "pytest",
+      "-q",
+      "--junitxml=/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/audit00-13/pytest.xml"
+    ],
+    "exit_code": 0,
+    "seconds": 82.63216327899863,
+    "log": "docs/evidence/audit00-13/check-pytest.log"
+  },
+  {
+    "id": "AUDIT-CHECK-unittest",
+    "utc": "2026-10-07T21:17:45.253675+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "exit_code": 0,
+    "seconds": 1.1676470509992214,
+    "log": "docs/evidence/audit00-13/check-unittest.log"
+  },
+  {
+    "id": "AUDIT-CHECK-entry",
+    "utc": "2026-10-07T21:17:46.421616+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "veri-ufku",
+      "--smoke-test"
+    ],
+    "exit_code": 0,
+    "seconds": 0.5650898510029947,
+    "log": "docs/evidence/audit00-13/check-entry.log"
+  },
+  {
+    "id": "AUDIT-CHECK-gui-final",
+    "utc": "2026-10-07T21:24:57.267651+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "pytest",
+      "-q",
+      "tests/test_gui.py",
+      "--junitxml=/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/audit00-13/gui-final.xml"
+    ],
+    "exit_code": 0,
+    "seconds": 10.912398497999675,
+    "log": "docs/evidence/audit00-13/check-gui-final.log"
+  },
+  {
+    "id": "AUDIT-CHECK-docs-final",
+    "utc": "2026-10-07T21:25:08.180477+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_docs.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.0640180619993771,
+    "log": "docs/evidence/audit00-13/check-docs-final.log"
+  },
+  {
+    "id": "AUDIT-CHECK-artifact-final",
+    "utc": "2026-10-07T21:25:08.244764+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_artifacts.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.16415576600047643,
+    "log": "docs/evidence/audit00-13/check-artifact-final.log"
+  },
+  {
+    "id": "AUDIT-CHECK-learning-final",
+    "utc": "2026-10-07T21:25:08.409272+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_learning.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.064179166998656,
+    "log": "docs/evidence/audit00-13/check-learning-final.log"
+  },
+  {
+    "id": "AUDIT-CHECK-ruff-final",
+    "utc": "2026-10-07T21:25:08.473837+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "exit_code": 0,
+    "seconds": 0.032090189000882674,
+    "log": "docs/evidence/audit00-13/check-ruff-final.log"
+  },
+  {
+    "id": "AUDIT-CHECK-format-final",
+    "utc": "2026-10-07T21:25:08.506296+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "exit_code": 0,
+    "seconds": 0.032102924000355415,
+    "log": "docs/evidence/audit00-13/check-format-final.log"
+  },
+  {
+    "id": "AUDIT-CHECK-unittest-final",
+    "utc": "2026-10-07T21:25:08.538727+00:00",
+    "environment": "ENV-AUDIT-00-13",
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "exit_code": 0,
+    "seconds": 1.517526881001686,
+    "log": "docs/evidence/audit00-13/check-unittest-final.log"
+  }
+]

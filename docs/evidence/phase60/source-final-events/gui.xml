@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="3" time="74.801" timestamp="2026-10-15T19:30:06.067710+03:00" hostname="s-oktay"><testcase classname="tests.test_patterns_gui" name="test_real_patterns[process]" time="26.033"><failure message="AssertionError">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-28/test_real_patterns_process_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0afd70e060&gt;
+task = 'process'
+
+    @pytest.mark.parametrize("task", TASKS)
+    def test_real_patterns(tmp_path, monkeypatch, task):
+        app, window, projects, controller, source = imported(tmp_path, monkeypatch, task)
+        before = source.read_bytes()
+        try:
+            window.findChild(QObject, "patternHelp").clicked.emit()
+            spin(app, lambda: window.property("infoOpen"))
+            assert (
+                app._veri_ufku_resources[0]._learning_resources.article["id"]
+                == "pattern-support"
+            )
+            window.setProperty("infoOpen", False)
+            window.findChild(QObject, "patternRun").clicked.emit()
+            spin(app, lambda: not controller.busy, timeout=90000)
+            assert not controller.errorText, controller.errorText
+            assert (
+                controller.active["status"] == "completed"
+                and controller.active["worker_pid"] != os.getpid()
+            )
+            assert controller.active["analysis"]
+            completed = next(
+                v for v in reversed(controller.saved()) if "completed" in v["label"]
+            )
+            controller.active = None
+            controller.openRun(completed["id"])
+            assert controller.active["status"] == "completed"
+            assert not controller.errorText, controller.errorText
+            assert source.read_bytes() == before
+            assert task in window.findChild(QObject, "patternSummary").property("text")
+            assert "rows" not in controller.historyReport
+            if task in ("process", "conformance"):
+                assert controller.active["analysis"]["edges"][0]["count"] &gt; 0
+                labels = [
+                    v.property("text")
+                    for v in window.findChildren(QObject)
+                    if isinstance(v.property("text"), str)
+                ]
+&gt;               assert any("fitting=unknown" in text for text in labels)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               AssertionError
+
+tests/test_patterns_gui.py:108: AssertionError</failure></testcase><testcase classname="tests.test_patterns_gui" name="test_real_patterns[conformance]" time="25.261"><failure message="AssertionError">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-28/test_real_patterns_conformance0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0afd70e190&gt;
+task = 'conformance'
+
+    @pytest.mark.parametrize("task", TASKS)
+    def test_real_patterns(tmp_path, monkeypatch, task):
+        app, window, projects, controller, source = imported(tmp_path, monkeypatch, task)
+        before = source.read_bytes()
+        try:
+            window.findChild(QObject, "patternHelp").clicked.emit()
+            spin(app, lambda: window.property("infoOpen"))
+            assert (
+                app._veri_ufku_resources[0]._learning_resources.article["id"]
+                == "pattern-support"
+            )
+            window.setProperty("infoOpen", False)
+            window.findChild(QObject, "patternRun").clicked.emit()
+            spin(app, lambda: not controller.busy, timeout=90000)
+            assert not controller.errorText, controller.errorText
+            assert (
+                controller.active["status"] == "completed"
+                and controller.active["worker_pid"] != os.getpid()
+            )
+            assert controller.active["analysis"]
+            completed = next(
+                v for v in reversed(controller.saved()) if "completed" in v["label"]
+            )
+            controller.active = None
+            controller.openRun(completed["id"])
+            assert controller.active["status"] == "completed"
+            assert not controller.errorText, controller.errorText
+            assert source.read_bytes() == before
+            assert task in window.findChild(QObject, "patternSummary").property("text")
+            assert "rows" not in controller.historyReport
+            if task in ("process", "conformance"):
+                assert controller.active["analysis"]["edges"][0]["count"] &gt; 0
+                labels = [
+                    v.property("text")
+                    for v in window.findChildren(QObject)
+                    if isinstance(v.property("text"), str)
+                ]
+&gt;               assert any("fitting=unknown" in text for text in labels)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               AssertionError
+
+tests/test_patterns_gui.py:108: AssertionError</failure></testcase><testcase classname="tests.test_patterns_gui" name="test_real_pattern_budget_failure" time="23.484" /></testsuite></testsuites>

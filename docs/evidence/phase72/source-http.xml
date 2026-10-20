@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="11" failures="0" skipped="0" tests="11" time="1.120" timestamp="2026-10-16T17:38:20.385312+03:00" hostname="s-oktay"><testcase classname="tests.test_connectors" name="test_http_real_tls_pagination_mapping_retry_roundtrip" time="0.044"><error message="failed on setup with &quot;PermissionError: [Errno 1] Operation not permitted&quot;">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-161/test_http_real_tls_pagination_0')
+
+    @pytest.fixture
+    def api(tmp_path):
+&gt;       with api_server(tmp_path) as server:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/phase31_servers.py:112: in api_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;socket.socket fd=-1, family=0, type=0, proto=0&gt;
+family = &lt;AddressFamily.AF_INET: 2&gt;, type = &lt;SocketKind.SOCK_STREAM: 1&gt;
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+&gt;       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socket.py:233: PermissionError</error></testcase><testcase classname="tests.test_connectors" name="test_http_rejects_unsafe_pagination_no_publish[duplicate]" time="0.029"><error message="failed on setup with &quot;PermissionError: [Errno 1] Operation not permitted&quot;">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-161/test_http_rejects_unsafe_pagin0')
+
+    @pytest.fixture
+    def api(tmp_path):
+&gt;       with api_server(tmp_path) as server:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/phase31_servers.py:112: in api_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;socket.socket fd=-1, family=0, type=0, proto=0&gt;
+family = &lt;AddressFamily.AF_INET: 2&gt;, type = &lt;SocketKind.SOCK_STREAM: 1&gt;
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+&gt;       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socket.py:233: PermissionError</error></testcase><testcase classname="tests.test_connectors" name="test_http_rejects_unsafe_pagination_no_publish[gap]" time="0.036"><error message="failed on setup with &quot;PermissionError: [Errno 1] Operation not permitted&quot;">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-161/test_http_rejects_unsafe_pagin1')
+
+    @pytest.fixture
+    def api(tmp_path):
+&gt;       with api_server(tmp_path) as server:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/phase31_servers.py:112: in api_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;socket.socket fd=-1, family=0, type=0, proto=0&gt;
+family = &lt;AddressFamily.AF_INET: 2&gt;, type = &lt;SocketKind.SOCK_STREAM: 1&gt;
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+&gt;       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socket.py:233: PermissionError</error></testcase><testcase classname="tests.test_connectors" name="test_http_rejects_unsafe_pagination_no_publish[mutation]" time="0.058"><error message="failed on setup with &quot;PermissionError: [Errno 1] Operation not permitted&quot;">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-161/test_http_rejects_unsafe_pagin2')
+
+    @pytest.fixture
+    def api(tmp_path):
+&gt;       with api_server(tmp_path) as server:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/phase31_servers.py:112: in api_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;socket.socket fd=-1, family=0, type=0, proto=0&gt;
+family = &lt;AddressFamily.AF_INET: 2&gt;, type = &lt;SocketKind.SOCK_STREAM: 1&gt;
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+&gt;       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socket.py:233: PermissionError</error></testcase><testcase classname="tests.test_connectors" name="test_http_rejects_unsafe_pagination_no_publish[loop]" time="0.022"><error message="failed on setup with &quot;PermissionError: [Errno 1] Operation not permitted&quot;">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-161/test_http_rejects_unsafe_pagin3')
+
+    @pytest.fixture
+    def api(tmp_path):
+&gt;       with api_server(tmp_path) as server:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/phase31_servers.py:112: in api_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;socket.socket fd=-1, family=0, type=0, proto=0&gt;
+family = &lt;AddressFamily.AF_INET: 2&gt;, type = &lt;SocketKind.SOCK_STREAM: 1&gt;
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+&gt;       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socket.py:233: PermissionError</error></testcase><testcase classname="tests.test_connectors" name="test_http_rejects_unsafe_pagination_no_publish[external]" time="0.032"><error message="failed on setup with &quot;PermissionError: [Errno 1] Operation not permitted&quot;">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-161/test_http_rejects_unsafe_pagin4')
+
+    @pytest.fixture
+    def api(tmp_path):
+&gt;       with api_server(tmp_path) as server:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/phase31_servers.py:112: in api_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;socket.socket fd=-1, family=0, type=0, proto=0&gt;
+family = &lt;AddressFamily.AF_INET: 2&gt;, type = &lt;SocketKind.SOCK_STREAM: 1&gt;
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+&gt;       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socket.py:233: PermissionError</error></testcase><testcase classname="tests.test_connectors" name="test_http_rejects_unsafe_pagination_no_publish[redirect]" time="0.030"><error message="failed on setup with &quot;PermissionError: [Errno 1] Operation not permitted&quot;">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-161/test_http_rejects_unsafe_pagin5')
+
+    @pytest.fixture
+    def api(tmp_path):
+&gt;       with api_server(tmp_path) as server:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/phase31_servers.py:112: in api_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;socket.socket fd=-1, family=0, type=0, proto=0&gt;
+family = &lt;AddressFamily.AF_INET: 2&gt;, type = &lt;SocketKind.SOCK_STREAM: 1&gt;
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+&gt;       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socket.py:233: PermissionError</error></testcase><testcase classname="tests.test_connectors" name="test_http_rejects_unsafe_pagination_no_publish[missing_next]" time="0.057"><error message="failed on setup with &quot;PermissionError: [Errno 1] Operation not permitted&quot;">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-161/test_http_rejects_unsafe_pagin6')
+
+    @pytest.fixture
+    def api(tmp_path):
+&gt;       with api_server(tmp_path) as server:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/phase31_servers.py:112: in api_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;socket.socket fd=-1, family=0, type=0, proto=0&gt;
+family = &lt;AddressFamily.AF_INET: 2&gt;, type = &lt;SocketKind.SOCK_STREAM: 1&gt;
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+&gt;       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socket.py:233: PermissionError</error></testcase><testcase classname="tests.test_connectors" name="test_http_freshness_unknown_tls_bounds_timeout_cancel" time="0.034"><error message="failed on setup with &quot;PermissionError: [Errno 1] Operation not permitted&quot;">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-161/test_http_freshness_unknown_tl0')
+
+    @pytest.fixture
+    def api(tmp_path):
+&gt;       with api_server(tmp_path) as server:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/phase31_servers.py:112: in api_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;socket.socket fd=-1, family=0, type=0, proto=0&gt;
+family = &lt;AddressFamily.AF_INET: 2&gt;, type = &lt;SocketKind.SOCK_STREAM: 1&gt;
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+&gt;       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socket.py:233: PermissionError</error></testcase><testcase classname="tests.test_connectors" name="test_http_secret_not_in_export_or_errors" time="0.059"><error message="failed on setup with &quot;PermissionError: [Errno 1] Operation not permitted&quot;">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-161/test_http_secret_not_in_export0')
+
+    @pytest.fixture
+    def api(tmp_path):
+&gt;       with api_server(tmp_path) as server:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/phase31_servers.py:112: in api_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;socket.socket fd=-1, family=0, type=0, proto=0&gt;
+family = &lt;AddressFamily.AF_INET: 2&gt;, type = &lt;SocketKind.SOCK_STREAM: 1&gt;
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+&gt;       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socket.py:233: PermissionError</error></testcase><testcase classname="tests.test_connectors" name="test_explicit_connector_action_required_before_any_http" time="0.042"><error message="failed on setup with &quot;PermissionError: [Errno 1] Operation not permitted&quot;">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-161/test_explicit_connector_action0')
+
+    @pytest.fixture
+    def api(tmp_path):
+&gt;       with api_server(tmp_path) as server:
+             ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/phase31_servers.py:112: in api_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;socket.socket fd=-1, family=0, type=0, proto=0&gt;
+family = &lt;AddressFamily.AF_INET: 2&gt;, type = &lt;SocketKind.SOCK_STREAM: 1&gt;
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+&gt;       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/socket.py:233: PermissionError</error></testcase></testsuite></testsuites>

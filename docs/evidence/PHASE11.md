@@ -1,6 +1,6 @@
 # Faz11 — dönüşüm, birleştirme ve kaynak adaptörleri kanıtı
 
-2026-10-07 / ENV-11: yerel CachyOS Linux7.2.9 x86_64/glibc2.44, Ryzen7 8845HS/32GB/Btrfs/tmpfs; locked CPython3.13.15/PySide6Qt6.11.2/Polars2.0.0/DuckDB1.5.6(dev), offscreen/software. Olgunluk deneysel; yalnız Faz11. [Karar ve destek sınırları](../adr/014-transformations-phase11.md). Yeni kullanıcı masaüstü/minimum donanım/uzak CI ayrı doğrulanmadı; manuel denemeler kullanıcı isteğiyle sonra toplu yapılacak.
+2026-10-07 / ENV-11: yerel CachyOS Linux7.2.9 x86_64/glibc2.44, Ryzen7 8845HS/32GB/Btrfs/tmpfs; locked CPython3.13.15/PySide6Qt6.11.2/Polars2.0.0/DuckDB1.5.6(dev), offscreen/software. Olgunluk deneysel; yalnız Faz11. [Karar ve destek sınırları](../adr/014-transformations-phase11.md). Yeni kullanıcı masaüstü/minimum donanım ayrı doğrulanmadı; uzak CI aşağıdaki kullanıcı kanıtıyla doğrulandı; manuel denemeler kullanıcı isteğiyle sonra toplu yapılacak.
 
 <a id="e11-engine"></a>
 ## F11-S001 — sürümlü dönüşüm motoru
@@ -68,4 +68,11 @@ Bu oturumdaki offline build çıktısı `/tmp/veri-ufku-phase11-final-dist`, off
 
 [Doğrudan sistem Python unittest denemesi](phase11-system-unittest.txt) bağımlılıksız Python3.14 ortamında32 test/23 import hatasıyla başarısızdır; locked CPython3.13 ortamındaki9 belge unittest ve297 pytest başarısından ayrı tutulur. İlk izolasyonsuz smoke exit2 sonrası izinli /tmp XDG dizinleriyle tekrar GUI_SMOKE PASS alınmıştır; başarısız deneme başarı sayılmaz.
 
-Yeni fiziksel tür korumasının Faz10 convert hedefiyle uyumu düzeltildi. Ardışık dönüşüm→temizlik→kopya→rol testi eski recipe girdilerinin yeni tarife taşınmadığını doğrular. Yalnız Faz11 tamamlandı; Faz12 başlatılmadı. Manuel kullanıcı masaüstü ve uzak CI henüz doğrulanmadı.
+Yeni fiziksel tür korumasının Faz10 convert hedefiyle uyumu düzeltildi. Ardışık dönüşüm→temizlik→kopya→rol testi eski recipe girdilerinin yeni tarife taşınmadığını doğrular. Yalnız Faz11 tamamlandı; Faz12 başlatılmadı. Manuel kullanıcı masaüstü henüz doğrulanmadı; uzak CI aşağıdaki kullanıcı kanıtıyla doğrulandı.
+
+<a id="e11-ci-remote"></a>
+## F11-CI-REMOTE — uzak Linux CI
+
+Kayıt2026-10-07 / ENV-CI-11; kullanıcı bildirimi: [koşu37668560670](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37668560670), [Linux işi112954058877](https://github.com/Teknoloji-Filozoflari/Veri_Ufku/actions/runs/37668560670/job/112954058877), success,2m29s. [Kaydedilen çıktı](phase11-ci-37668560670.txt). Qt sistem kitaplıkları, izole yollar, sabit uv/Python, kilitli kurulum, belge/artefact, lint, çekirdek/başsız QML ve giriş noktası Qt/süreç smoke adımlarının tümü bildirilen çıktıda başarılıdır. Workflow Ubuntu24.04/offscreen/software ortamını tanımlar; uzak runner donanımı, commit SHA ve kesin koşu zamanı bağımsız doğrulanmadı. Ajanın GitHub koşu sayfası ve API web erişimleri başarısız; kullanıcı çıktısı kanıt kaynağıdır.
+
+Checkout v4/Node20 deprecation ve zorunlu Node24 annotation bildirildi; koşunun success sonucunu değiştirmiyor. Workflow bu kayıt sırasında değiştirilmedi. F11-CI-REMOTE doğrulandı/deneysel/isteğe bağlı; kullanıcı masaüstü/minimum donanım ayrıca açık.

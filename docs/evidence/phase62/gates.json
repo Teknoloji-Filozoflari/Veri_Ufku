@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-15T18:05:47.627987+00:00",
+  "passed": true,
+  "commands": [
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_docs.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 76 phases, source requirements, evidence, progress and local links\n",
+      "stderr": "",
+      "date": "2026-10-15T18:05:27.911624+00:00"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_artifacts.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee\n",
+      "stderr": "",
+      "date": "2026-10-15T18:05:28.042281+00:00"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_learning.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 394 offline articles; 183 UI bindings; all capability links\n",
+      "stderr": "",
+      "date": "2026-10-15T18:05:30.268772+00:00"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "scripts/check_usability.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 394 articles; 930 named fields; 189 finished core English messages\n",
+      "stderr": "",
+      "date": "2026-10-15T18:05:32.531203+00:00"
+    },
+    {
+      "argv": [
+        ".venv/bin/ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": "",
+      "date": "2026-10-15T18:05:32.540652+00:00"
+    },
+    {
+      "argv": [
+        ".venv/bin/ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "stdout": "444 files already formatted\n",
+      "stderr": "",
+      "date": "2026-10-15T18:05:32.549034+00:00"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_document_contracts.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..............\n----------------------------------------------------------------------\nRan 14 tests in 15.040s\n\nOK\n",
+      "date": "2026-10-15T18:05:47.627946+00:00"
+    }
+  ]
+}

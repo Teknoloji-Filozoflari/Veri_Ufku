@@ -1,0 +1,1082 @@
+{
+  "schema": "TimeSeriesRun/v1",
+  "run_id": "ts:1401d9f2-d940-4696-8325-eeee98cc22c0",
+  "status": "completed",
+  "dataset_version": "dv:6ee0e2ca-6eeb-4053-b77c-48e30b13aea7",
+  "snapshot_fingerprint": {
+    "size": 17022,
+    "sha256": "bde55bcb15b1b2065b7c268f5668c3fd2c5a4bd182a0101d32b34d65ac32b8b8"
+  },
+  "source_snapshot_id": "snapshot:11fa34b5-f31d-4219-bc66-5581ce86e590",
+  "created_at": "2026-10-13T21:06:47.047302+00:00",
+  "data_access_at": "2026-10-13T21:06:47.028055+00:00",
+  "elapsed_seconds": 0.3818009399983566,
+  "seed": 53,
+  "spec": {
+    "date": "col:054c437a-ff93-48fd-9019-906551094676",
+    "measurement": "col:8b70530a-9dff-449a-9a3f-44c6a5e0e70f",
+    "group": "col:ea814a5b-f4de-4cf8-98e3-07ea94b425cc",
+    "frequency": "D",
+    "timezone": "",
+    "resample": false,
+    "aggregation": "none",
+    "horizon": 3,
+    "test_periods": 6,
+    "folds": 2,
+    "seasonal_period": 4,
+    "window": 3,
+    "model": "level",
+    "advanced": {
+      "task": "diagnostics",
+      "method": "arima",
+      "diagnostics": [
+        "change-point"
+      ],
+      "order": [
+        1,
+        0,
+        0
+      ],
+      "seasonal_order": [
+        1,
+        0,
+        0
+      ],
+      "gap": 0,
+      "embargo": 0,
+      "lags": 4,
+      "difference": 0,
+      "known_future": [],
+      "past_covariates": [],
+      "availability": {},
+      "var_columns": [],
+      "var_assumption": "",
+      "hierarchy": [],
+      "training_series": [],
+      "validation_series": [],
+      "label": "",
+      "clusters": 2,
+      "seed": 53,
+      "alpha": 0.2,
+      "croston_alpha": 0.1,
+      "change_penalty": 3
+    }
+  },
+  "mode": "development",
+  "development_run_id": null,
+  "groups": [
+    {
+      "group": "g0",
+      "group_type": "str",
+      "series_id": "[\"str\", \"g0\"]",
+      "timezone": "Date: takvim günü (saat dilimi yok)",
+      "periods": 80,
+      "duplicate_dates": 0,
+      "missing_periods": 0,
+      "train_end": "2026-03-15T00:00:00",
+      "test_start": "2026-03-16T00:00:00",
+      "test_end": "2026-03-21T00:00:00",
+      "train_row_ids": [
+        "row:3d4c1fd0-8e00-41a6-9061-4ee59df94f26",
+        "row:10dce773-7062-45e2-b8c4-e63a173604fa",
+        "row:d44b98b6-791e-4ae0-b742-ebc7e2b61b82",
+        "row:f88038df-e20c-45fe-9924-5651305d2cdf",
+        "row:dbb4fb01-1daf-4377-abc0-8ac7cadddf3b",
+        "row:2579a794-cd29-492f-911a-ef4483841ba3",
+        "row:67f128ba-db0b-4f3c-a12a-1948d92e381e",
+        "row:30769c9d-a96c-43fd-9199-24298bec2263",
+        "row:8ce8c25b-9221-471c-a157-13dc98aa175e",
+        "row:5ac430e4-126f-458e-b831-30ac1aa1b960",
+        "row:1e6f613b-0877-4047-a172-139100a31dde",
+        "row:0d3bf477-fe57-496d-b3ee-fc23d209dd3d",
+        "row:f2b10c95-b592-4061-8f58-8665b5ca918d",
+        "row:c9fecf2b-89f6-4941-b059-a165ed1cc106",
+        "row:df2812b9-d143-49f8-b074-85d2f1d38f8d",
+        "row:6bc86179-e706-4998-8966-d557b567e9f8",
+        "row:dc5d9a3b-210a-4d7a-a206-2d065c71ff2a",
+        "row:527162e2-38d1-4064-a4bf-f6df718f511e",
+        "row:93c1233c-fe31-4cd4-b966-8bb72ae4f188",
+        "row:029cfb1c-c05c-49ef-841b-a0a335bc5df8",
+        "row:a2aa75c5-5cf4-4e81-85c3-0acf2ddc8d5a",
+        "row:aa5498d9-842c-4e19-b521-a6a6c7fd2999",
+        "row:8545957e-5b89-4be8-a2cc-d015a1d11635",
+        "row:1ab63ab8-1bee-4af6-8d73-a544ea46399c",
+        "row:d718bd49-8c4f-4be0-89c8-be6a4009e5c7",
+        "row:717fe736-23a1-41da-b27b-783f2ad07b69",
+        "row:a93e084d-9c8c-4e7b-a115-e39271872e4a",
+        "row:d7d68b9d-a9f9-49a0-9eee-8fffa37cf554",
+        "row:aacb40fa-0d82-4cc3-8874-3f632a40bdf9",
+        "row:4a2d5c27-955b-488b-a7f7-582f1c4d00db",
+        "row:7ce499c1-b35f-4928-92cc-eafdd7e93f85",
+        "row:0a1756cb-886f-4dc7-99d1-c5f07d88b138",
+        "row:9c9290cc-8a45-42ba-93cd-a0e34ed72671",
+        "row:30f42114-53b9-476d-a4de-1bd29a15504c",
+        "row:578f05fe-6622-4f3b-b147-05a32f057944",
+        "row:6b601a30-768b-4b92-87b7-0bca23832a33",
+        "row:cf9ab754-5e92-4e7a-9966-f342abda5f01",
+        "row:4dfe926e-33d9-43d9-ae80-f76a90dbfa4c",
+        "row:f37f587b-ac64-48fa-9dc7-60eb530d1bb5",
+        "row:048f249d-c8b8-4200-a050-0d19e2efe9e8",
+        "row:4478f732-fa3f-4308-8be8-ea017171c0c9",
+        "row:9c446e64-dd4f-4b2c-8506-4c149120a117",
+        "row:54dc0cda-3a4c-4139-98c5-33ac1bf7a2df",
+        "row:9d849158-c907-4f2b-b611-12334e17328c",
+        "row:c13518e0-7c22-4a6f-9516-3baf775b626a",
+        "row:a0617550-5d06-4193-80f8-b1a2c989fbbc",
+        "row:27808af7-a1e8-46d1-b6b3-bb2fb7556fa9",
+        "row:fc5da1b3-6351-4c4a-b36e-bf62cae62389",
+        "row:b9f3171a-059a-47d3-a676-f47c1515be4e",
+        "row:e9fca58d-cfe8-4f83-b90f-0adb962d1ace",
+        "row:e81c4fed-8b90-4b9c-99ce-df8dee163474",
+        "row:1f513d37-6e8d-4711-a2e4-f5a8b739c55f",
+        "row:27e29197-f6e5-4d29-97da-00e69ded0806",
+        "row:4fec2c1a-3d1c-46d9-880c-fa642903cc5c",
+        "row:a7f6d126-a1b3-4352-b128-dd26eb7bb8cf",
+        "row:f0c3a204-5fd9-4343-acd3-02aaba4a98b8",
+        "row:f66c4f7d-439e-40e9-982b-e131b646e3b4",
+        "row:eab9427e-2bbd-4961-a796-93e124fed36a",
+        "row:146185ce-5ebb-4782-8f33-2a81179bf81b",
+        "row:6c6f7afa-7316-4367-9a89-11be0d2ec248",
+        "row:2187836e-5e94-40d7-930f-3526146e0d64",
+        "row:db32e719-5009-4468-bf71-9d3fa3507ae8",
+        "row:ecd93e03-32a4-4a38-b5eb-98b717c451ea",
+        "row:fc14e6e8-a7f6-4ade-a42e-1549aa124fa8",
+        "row:e719c2f2-806f-4366-bf80-74a18e7aa9fa",
+        "row:030a67b4-51a5-4492-bb0c-7b4fe2a71e77",
+        "row:b382db2d-9285-4e09-b1e5-d4ef8ec6f22d",
+        "row:939811f4-b857-4ebd-9983-463909d11fa6",
+        "row:09e6bc47-80fd-467b-b158-dd1980c21633",
+        "row:460f6cc6-f109-4eda-b947-41a62cd75a88",
+        "row:3dae9337-1aaf-46cc-8101-847c6a733e80",
+        "row:63399096-05e3-4cd0-948d-ac9b69e93297",
+        "row:b8f59868-eebb-44f7-9749-d9db70bcf22b",
+        "row:e12d6c7c-7588-4687-b26a-684e29151e77"
+      ],
+      "test_row_ids": [
+        "row:53958ef7-6322-4032-9cfc-14fd2913268a",
+        "row:bdafdda6-5f41-4732-8266-7827389f70c3",
+        "row:8d31b073-f455-4568-afd8-5a9a26528af7",
+        "row:209c7627-4e2f-4348-8f5a-da45276bc075",
+        "row:b490dd30-1a81-411e-b443-e1d3716e1fb6",
+        "row:73e67951-bd92-4dde-84fb-8446f4248f5d"
+      ],
+      "chosen": "diagnostic-only",
+      "comparisons": [],
+      "invalid_models": [],
+      "folds": [],
+      "diagnostics": {
+        "change-point": {
+          "status": "available",
+          "algorithm": "single mean-shift penalized RSS scan",
+          "penalty": 3,
+          "min_segment": 4,
+          "candidate_index": 6,
+          "gain": -10.09045236208149,
+          "detected": false,
+          "warning": "Retrospective descriptive candidate, not online detection performance or forecast success; serial dependence and repeated search can create false alerts.",
+          "warnings": []
+        }
+      },
+      "history": [
+        {
+          "date": "2026-01-01T00:00:00",
+          "actual": 0.0
+        },
+        {
+          "date": "2026-01-02T00:00:00",
+          "actual": -0.30900336673884216
+        },
+        {
+          "date": "2026-01-03T00:00:00",
+          "actual": 0.3903814538493086
+        },
+        {
+          "date": "2026-01-04T00:00:00",
+          "actual": -1.2189586284999465
+        },
+        {
+          "date": "2026-01-05T00:00:00",
+          "actual": -1.6366243840199792
+        },
+        {
+          "date": "2026-01-06T00:00:00",
+          "actual": -0.5373208142418846
+        },
+        {
+          "date": "2026-01-07T00:00:00",
+          "actual": 0.1827281352111656
+        },
+        {
+          "date": "2026-01-08T00:00:00",
+          "actual": 0.7197701935333871
+        },
+        {
+          "date": "2026-01-09T00:00:00",
+          "actual": 1.3011068358006312
+        },
+        {
+          "date": "2026-01-10T00:00:00",
+          "actual": 0.6674812646860091
+        },
+        {
+          "date": "2026-01-11T00:00:00",
+          "actual": -0.4172956974216885
+        },
+        {
+          "date": "2026-01-12T00:00:00",
+          "actual": 0.6102033050400012
+        },
+        {
+          "date": "2026-01-13T00:00:00",
+          "actual": 1.441139006085653
+        },
+        {
+          "date": "2026-01-14T00:00:00",
+          "actual": 1.0641158910557271
+        },
+        {
+          "date": "2026-01-15T00:00:00",
+          "actual": -0.6109714696534942
+        },
+        {
+          "date": "2026-01-16T00:00:00",
+          "actual": -0.7794389813196332
+        },
+        {
+          "date": "2026-01-17T00:00:00",
+          "actual": -0.07857043378089734
+        },
+        {
+          "date": "2026-01-18T00:00:00",
+          "actual": -0.7486713577085138
+        },
+        {
+          "date": "2026-01-19T00:00:00",
+          "actual": -1.0310183279413927
+        },
+        {
+          "date": "2026-01-20T00:00:00",
+          "actual": -1.0224419209668476
+        },
+        {
+          "date": "2026-01-21T00:00:00",
+          "actual": 0.8448595982845365
+        },
+        {
+          "date": "2026-01-22T00:00:00",
+          "actual": 0.21983565673530758
+        },
+        {
+          "date": "2026-01-23T00:00:00",
+          "actual": -0.8970080949838806
+        },
+        {
+          "date": "2026-01-24T00:00:00",
+          "actual": 0.3110202765749256
+        },
+        {
+          "date": "2026-01-25T00:00:00",
+          "actual": -0.0877676729132334
+        },
+        {
+          "date": "2026-01-26T00:00:00",
+          "actual": 0.5617466513834128
+        },
+        {
+          "date": "2026-01-27T00:00:00",
+          "actual": -0.23003868032335137
+        },
+        {
+          "date": "2026-01-28T00:00:00",
+          "actual": -0.483638608447705
+        },
+        {
+          "date": "2026-01-29T00:00:00",
+          "actual": 3.773099297787982
+        },
+        {
+          "date": "2026-01-30T00:00:00",
+          "actual": 0.22992903241366736
+        },
+        {
+          "date": "2026-01-31T00:00:00",
+          "actual": -1.3385345270090157
+        },
+        {
+          "date": "2026-02-01T00:00:00",
+          "actual": 0.09827568794680995
+        },
+        {
+          "date": "2026-02-02T00:00:00",
+          "actual": -1.0384087885329882
+        },
+        {
+          "date": "2026-02-03T00:00:00",
+          "actual": -1.9353716719104268
+        },
+        {
+          "date": "2026-02-04T00:00:00",
+          "actual": 0.2474408231121012
+        },
+        {
+          "date": "2026-02-05T00:00:00",
+          "actual": 0.26364409509545517
+        },
+        {
+          "date": "2026-02-06T00:00:00",
+          "actual": -0.3745773707937753
+        },
+        {
+          "date": "2026-02-07T00:00:00",
+          "actual": -0.13324839532371482
+        },
+        {
+          "date": "2026-02-08T00:00:00",
+          "actual": -0.468898364557964
+        },
+        {
+          "date": "2026-02-09T00:00:00",
+          "actual": 0.1557526183516611
+        },
+        {
+          "date": "2026-02-10T00:00:00",
+          "actual": -0.39078079629701207
+        },
+        {
+          "date": "2026-02-11T00:00:00",
+          "actual": 0.5170418527427558
+        },
+        {
+          "date": "2026-02-12T00:00:00",
+          "actual": 1.308296003150132
+        },
+        {
+          "date": "2026-02-13T00:00:00",
+          "actual": 2.3840516524909954
+        },
+        {
+          "date": "2026-02-14T00:00:00",
+          "actual": -0.5605589373751039
+        },
+        {
+          "date": "2026-02-15T00:00:00",
+          "actual": -1.1001209042887485
+        },
+        {
+          "date": "2026-02-16T00:00:00",
+          "actual": -0.051624923979355364
+        },
+        {
+          "date": "2026-02-17T00:00:00",
+          "actual": 0.22429249109812588
+        },
+        {
+          "date": "2026-02-18T00:00:00",
+          "actual": 0.4684486142987342
+        },
+        {
+          "date": "2026-02-19T00:00:00",
+          "actual": 0.08697545283055086
+        },
+        {
+          "date": "2026-02-20T00:00:00",
+          "actual": 1.8208383031284425
+        },
+        {
+          "date": "2026-02-21T00:00:00",
+          "actual": 2.070200151686573
+        },
+        {
+          "date": "2026-02-22T00:00:00",
+          "actual": 0.844804777763434
+        },
+        {
+          "date": "2026-02-23T00:00:00",
+          "actual": -1.608916092069967
+        },
+        {
+          "date": "2026-02-24T00:00:00",
+          "actual": -0.9983438858529322
+        },
+        {
+          "date": "2026-02-25T00:00:00",
+          "actual": -1.6402531407904715
+        },
+        {
+          "date": "2026-02-26T00:00:00",
+          "actual": 1.3298664742021362
+        },
+        {
+          "date": "2026-02-27T00:00:00",
+          "actual": 0.0635509733740991
+        },
+        {
+          "date": "2026-02-28T00:00:00",
+          "actual": 0.7886940961052973
+        },
+        {
+          "date": "2026-03-01T00:00:00",
+          "actual": 0.818317878625965
+        },
+        {
+          "date": "2026-03-02T00:00:00",
+          "actual": 1.0716941865006933
+        },
+        {
+          "date": "2026-03-03T00:00:00",
+          "actual": 0.03377223877404034
+        },
+        {
+          "date": "2026-03-04T00:00:00",
+          "actual": 0.7777023702475127
+        },
+        {
+          "date": "2026-03-05T00:00:00",
+          "actual": 1.1007092277740544
+        },
+        {
+          "date": "2026-03-06T00:00:00",
+          "actual": -1.727080556348339
+        },
+        {
+          "date": "2026-03-07T00:00:00",
+          "actual": -0.05558625372081982
+        },
+        {
+          "date": "2026-03-08T00:00:00",
+          "actual": -0.3726897765394463
+        },
+        {
+          "date": "2026-03-09T00:00:00",
+          "actual": -0.31449120700869804
+        },
+        {
+          "date": "2026-03-10T00:00:00",
+          "actual": 0.20504940076063605
+        },
+        {
+          "date": "2026-03-11T00:00:00",
+          "actual": -0.2994387904080443
+        },
+        {
+          "date": "2026-03-12T00:00:00",
+          "actual": 0.941794915482685
+        },
+        {
+          "date": "2026-03-13T00:00:00",
+          "actual": 0.7275031225036848
+        },
+        {
+          "date": "2026-03-14T00:00:00",
+          "actual": 0.04767720625734573
+        },
+        {
+          "date": "2026-03-15T00:00:00",
+          "actual": 1.2169950066834194
+        }
+      ],
+      "forecast": [],
+      "future_forecast": [],
+      "final_metrics": [],
+      "trend_per_period": 0.005982679074197022,
+      "seasonal_profile": []
+    },
+    {
+      "group": "g1",
+      "group_type": "str",
+      "series_id": "[\"str\", \"g1\"]",
+      "timezone": "Date: takvim günü (saat dilimi yok)",
+      "periods": 80,
+      "duplicate_dates": 0,
+      "missing_periods": 0,
+      "train_end": "2026-03-15T00:00:00",
+      "test_start": "2026-03-16T00:00:00",
+      "test_end": "2026-03-21T00:00:00",
+      "train_row_ids": [
+        "row:34584cc7-8e5b-40ac-9654-654a47f6e96c",
+        "row:7051ccb0-b645-482a-9987-ad26cb58089b",
+        "row:24db44df-0520-4c0f-a5a2-3b0fc91c8d63",
+        "row:4b4ab228-709d-4a47-a510-f6de709c7603",
+        "row:4fb03ca4-09c9-4403-b989-857a727fe29b",
+        "row:9731dbeb-ac65-4da4-8c74-9bfb8095e6b6",
+        "row:23736ee8-f49b-4525-b4cb-b664b0293f79",
+        "row:fbfa5d51-7762-4373-93d4-e1a16d6a88b4",
+        "row:e6d1b856-185a-402f-95c1-c6d718becdc8",
+        "row:a87edc63-fe92-40c2-b158-67b29baba0e3",
+        "row:f90787d5-4e6c-46bf-86fa-8dc8f35ae6ef",
+        "row:4f38a2fc-9d2e-4c69-a0cf-9e400c1fab5d",
+        "row:05788313-abde-43e3-abc7-1dba0c17dc97",
+        "row:fe55721b-f86c-42a1-b29a-b559ecd0fe15",
+        "row:ae7ca4f4-18da-4196-a889-ad5dae96da55",
+        "row:b166a5ae-8a20-4cb7-aa43-87c8f4bc3504",
+        "row:7cd8bda5-213f-4545-ab57-306fa472f555",
+        "row:f11c2ccd-b837-41dd-a698-0f3a2e9319c4",
+        "row:fad13095-2a68-4f2f-a913-e8288bfafe80",
+        "row:5d1feccb-0420-4046-b8fd-bef54e3ffe91",
+        "row:65512abf-8f1b-4f20-84d7-51128cb3cfa3",
+        "row:4c46bb85-3d2b-42c8-bb3a-a2ab6fcecc32",
+        "row:4e84e324-c728-4b7b-beb7-e50a77db05cf",
+        "row:cf3e8114-b7b9-4ba5-a8da-0e05328b7c63",
+        "row:6e88cd0a-17d1-4670-b498-14169193ef60",
+        "row:5bc003f6-031c-4676-8c73-07283337d779",
+        "row:a78493f5-2434-4c31-b505-1454be477fe8",
+        "row:4bf1e818-6780-4990-aca3-da9aa851115a",
+        "row:273499fc-9879-45c4-bfe9-79707cf299da",
+        "row:569178e9-9505-4622-87f2-f00b610cecf6",
+        "row:970b1428-8786-48fc-bbf2-d36f2a3a15db",
+        "row:64839d52-d5f4-49f7-826f-010547a79035",
+        "row:158bcdc1-7855-467b-bbbc-cc4e9d806c25",
+        "row:834fbd66-91c3-458e-aac4-8f4e0be9cd02",
+        "row:b15c4f5b-edf4-4c6b-b8c5-88e0af4926fa",
+        "row:8a2cbf4d-928a-4360-b2fb-f5aa0dba78f5",
+        "row:b071b776-7e66-4d46-a4c6-869aebd5c8de",
+        "row:c13bb48c-9a28-4511-a24d-de1933fdc99e",
+        "row:72c836d8-218f-4e6d-b21f-3bc0c37bad80",
+        "row:edadb756-bbb6-4345-9778-32baeb48ed2b",
+        "row:25f67c00-14a4-4954-90b9-60be336cc737",
+        "row:887e95e7-90f9-463f-abac-60c5a52ad205",
+        "row:953baf1c-13e8-4382-b0b4-bae3f3fdfd9e",
+        "row:37ee234a-eb1b-4165-9d57-9bef68585b3b",
+        "row:76c484c8-4f08-4ecb-8954-1ffeca4e78b9",
+        "row:bf9be1b2-2bc9-48b1-8cf4-c16eb8da55e7",
+        "row:12f838d4-2bf8-41a1-b3ec-5e4a8d9d74c8",
+        "row:aa351010-46d4-4be8-b06d-4752c8d750e0",
+        "row:0567ef25-0999-42c6-bdf9-0697d0a8fbc0",
+        "row:1fdc2df2-a267-4f1a-bbb6-484d31d9282a",
+        "row:b61d15bd-5cfa-4586-8e72-d24c380aac6e",
+        "row:bef3a6ba-7db6-47b7-8d3f-d353d5de070c",
+        "row:2fde40e4-bf0c-4a0f-8e56-dbea3ee3a7ad",
+        "row:c7b64770-1b07-4c59-89a2-0c87e32c0d0c",
+        "row:ad254a7b-fab0-4416-919a-8e9967cd9398",
+        "row:74f2c9a3-c1f4-40f9-acf6-21cb134e9333",
+        "row:a28f043c-d899-4f76-9263-9ea6b48e015d",
+        "row:d65d0e46-b3a9-4eb9-9d4b-405db1cb7764",
+        "row:5168c06a-597f-48b8-a40d-9b7e3070a4ef",
+        "row:3f9cea11-66a1-4072-a96e-3385f10cad13",
+        "row:d4000a3a-bea4-465e-8ece-a9e16e553da5",
+        "row:f851684b-9aa7-4762-bc2b-f81990983d20",
+        "row:e5c1fb3d-0163-4a7e-881d-c2176e45dabe",
+        "row:77134258-cee1-48d4-a27d-d1e0ad47ab01",
+        "row:1d345595-8a2f-4fde-b4b0-522c7daf991d",
+        "row:77c98dde-8f44-42f8-9b0d-53b6dc2877d5",
+        "row:c7545ffd-4f7d-42c2-a8af-1de48b3a9862",
+        "row:7cb4dd41-49d8-47d2-80a0-3c096dc6734b",
+        "row:db909ab4-27e5-4e09-a69f-64c12a290ad8",
+        "row:74cf34e7-e5cb-4c6d-ae6b-7110445ab7d5",
+        "row:21e63017-965e-4304-9b63-dcf2f6ca72b6",
+        "row:aa9d863f-fec6-4198-b750-7580ae5a54ed",
+        "row:f0a88f44-eebd-4710-81a9-76192cc4bec8",
+        "row:73e29ccf-de8d-4120-9628-c44070a95dd8"
+      ],
+      "test_row_ids": [
+        "row:f658e5f7-cc13-4ae8-866a-7a93e42dadb0",
+        "row:34a236f4-13a9-46d1-8a0b-0f0a17b3909a",
+        "row:04c96ed4-463c-45a6-940c-088825e2cf49",
+        "row:a8b47d7a-29a4-4ef7-809d-48cc1671578f",
+        "row:b02c4ff9-92c1-44ce-9d79-64c8b4ddc107",
+        "row:4c6ffd28-28c2-4d04-a55c-6cfe47a26ed8"
+      ],
+      "chosen": "diagnostic-only",
+      "comparisons": [],
+      "invalid_models": [],
+      "folds": [],
+      "diagnostics": {
+        "change-point": {
+          "status": "available",
+          "algorithm": "single mean-shift penalized RSS scan",
+          "penalty": 3,
+          "min_segment": 4,
+          "candidate_index": 20,
+          "gain": -0.8324536386590111,
+          "detected": false,
+          "warning": "Retrospective descriptive candidate, not online detection performance or forecast success; serial dependence and repeated search can create false alerts.",
+          "warnings": []
+        }
+      },
+      "history": [
+        {
+          "date": "2026-01-01T00:00:00",
+          "actual": 0.2
+        },
+        {
+          "date": "2026-01-02T00:00:00",
+          "actual": -0.10831700906878788
+        },
+        {
+          "date": "2026-01-03T00:00:00",
+          "actual": -0.45247240778745096
+        },
+        {
+          "date": "2026-01-04T00:00:00",
+          "actual": -0.7007698343426787
+        },
+        {
+          "date": "2026-01-05T00:00:00",
+          "actual": -1.8828303383336331
+        },
+        {
+          "date": "2026-01-06T00:00:00",
+          "actual": -0.8944831063281218
+        },
+        {
+          "date": "2026-01-07T00:00:00",
+          "actual": -0.1308083382384334
+        },
+        {
+          "date": "2026-01-08T00:00:00",
+          "actual": 1.3308599323849875
+        },
+        {
+          "date": "2026-01-09T00:00:00",
+          "actual": -0.2581806518877964
+        },
+        {
+          "date": "2026-01-10T00:00:00",
+          "actual": -0.5695760133040162
+        },
+        {
+          "date": "2026-01-11T00:00:00",
+          "actual": -0.3203135940331187
+        },
+        {
+          "date": "2026-01-12T00:00:00",
+          "actual": -1.0436173124244978
+        },
+        {
+          "date": "2026-01-13T00:00:00",
+          "actual": 0.5784501075417756
+        },
+        {
+          "date": "2026-01-14T00:00:00",
+          "actual": -0.5901340718810619
+        },
+        {
+          "date": "2026-01-15T00:00:00",
+          "actual": -0.3522861274756432
+        },
+        {
+          "date": "2026-01-16T00:00:00",
+          "actual": -1.5514798256223263
+        },
+        {
+          "date": "2026-01-17T00:00:00",
+          "actual": -0.18800441810416407
+        },
+        {
+          "date": "2026-01-18T00:00:00",
+          "actual": -0.10680576443207657
+        },
+        {
+          "date": "2026-01-19T00:00:00",
+          "actual": -2.1374190592605844
+        },
+        {
+          "date": "2026-01-20T00:00:00",
+          "actual": -0.2149754032574122
+        },
+        {
+          "date": "2026-01-21T00:00:00",
+          "actual": 0.8127597636700976
+        },
+        {
+          "date": "2026-01-22T00:00:00",
+          "actual": 1.4713065505787444
+        },
+        {
+          "date": "2026-01-23T00:00:00",
+          "actual": 0.41397763156258843
+        },
+        {
+          "date": "2026-01-24T00:00:00",
+          "actual": -0.31895696061430895
+        },
+        {
+          "date": "2026-01-25T00:00:00",
+          "actual": -1.2094244447624776
+        },
+        {
+          "date": "2026-01-26T00:00:00",
+          "actual": -0.3078912140853762
+        },
+        {
+          "date": "2026-01-27T00:00:00",
+          "actual": 0.19146861775058382
+        },
+        {
+          "date": "2026-01-28T00:00:00",
+          "actual": 2.3595587238715336
+        },
+        {
+          "date": "2026-01-29T00:00:00",
+          "actual": 1.2413285773866651
+        },
+        {
+          "date": "2026-01-30T00:00:00",
+          "actual": -0.6859823276939647
+        },
+        {
+          "date": "2026-01-31T00:00:00",
+          "actual": -0.2858605255087361
+        },
+        {
+          "date": "2026-02-01T00:00:00",
+          "actual": 0.15724602887073708
+        },
+        {
+          "date": "2026-02-02T00:00:00",
+          "actual": -0.01762736526658709
+        },
+        {
+          "date": "2026-02-03T00:00:00",
+          "actual": 0.2503871938764432
+        },
+        {
+          "date": "2026-02-04T00:00:00",
+          "actual": 0.13286157726739295
+        },
+        {
+          "date": "2026-02-05T00:00:00",
+          "actual": -0.2742465063650957
+        },
+        {
+          "date": "2026-02-06T00:00:00",
+          "actual": 1.7182928571439715
+        },
+        {
+          "date": "2026-02-07T00:00:00",
+          "actual": 1.5092056147927049
+        },
+        {
+          "date": "2026-02-08T00:00:00",
+          "actual": 1.0565411083347063
+        },
+        {
+          "date": "2026-02-09T00:00:00",
+          "actual": 0.5574078340704107
+        },
+        {
+          "date": "2026-02-10T00:00:00",
+          "actual": -0.3274094165200338
+        },
+        {
+          "date": "2026-02-11T00:00:00",
+          "actual": 0.4540720874079192
+        },
+        {
+          "date": "2026-02-12T00:00:00",
+          "actual": 0.9293819170668551
+        },
+        {
+          "date": "2026-02-13T00:00:00",
+          "actual": 0.07075788151198797
+        },
+        {
+          "date": "2026-02-14T00:00:00",
+          "actual": -0.4604355413231976
+        },
+        {
+          "date": "2026-02-15T00:00:00",
+          "actual": -0.1301359655371348
+        },
+        {
+          "date": "2026-02-16T00:00:00",
+          "actual": 0.5473390204797345
+        },
+        {
+          "date": "2026-02-17T00:00:00",
+          "actual": 1.0097424422565455
+        },
+        {
+          "date": "2026-02-18T00:00:00",
+          "actual": 1.2403462884519854
+        },
+        {
+          "date": "2026-02-19T00:00:00",
+          "actual": 0.07639799595033667
+        },
+        {
+          "date": "2026-02-20T00:00:00",
+          "actual": 1.037922940508984
+        },
+        {
+          "date": "2026-02-21T00:00:00",
+          "actual": -1.0317149411191449
+        },
+        {
+          "date": "2026-02-22T00:00:00",
+          "actual": 0.17205679580400945
+        },
+        {
+          "date": "2026-02-23T00:00:00",
+          "actual": -0.3100177041346925
+        },
+        {
+          "date": "2026-02-24T00:00:00",
+          "actual": -0.5756170841555464
+        },
+        {
+          "date": "2026-02-25T00:00:00",
+          "actual": -0.04050744347283103
+        },
+        {
+          "date": "2026-02-26T00:00:00",
+          "actual": -0.5342486226425627
+        },
+        {
+          "date": "2026-02-27T00:00:00",
+          "actual": 0.1988883878281229
+        },
+        {
+          "date": "2026-02-28T00:00:00",
+          "actual": 0.8431904775042436
+        },
+        {
+          "date": "2026-03-01T00:00:00",
+          "actual": 2.0348658440207186
+        },
+        {
+          "date": "2026-03-02T00:00:00",
+          "actual": 1.6550098175341317
+        },
+        {
+          "date": "2026-03-03T00:00:00",
+          "actual": 0.9096747332350845
+        },
+        {
+          "date": "2026-03-04T00:00:00",
+          "actual": 0.07656074020716838
+        },
+        {
+          "date": "2026-03-05T00:00:00",
+          "actual": -1.282886852061616
+        },
+        {
+          "date": "2026-03-06T00:00:00",
+          "actual": -0.824319683851183
+        },
+        {
+          "date": "2026-03-07T00:00:00",
+          "actual": 1.8421896029980709
+        },
+        {
+          "date": "2026-03-08T00:00:00",
+          "actual": -0.36548297261951007
+        },
+        {
+          "date": "2026-03-09T00:00:00",
+          "actual": -0.8449139458527091
+        },
+        {
+          "date": "2026-03-10T00:00:00",
+          "actual": 0.3620768889985552
+        },
+        {
+          "date": "2026-03-11T00:00:00",
+          "actual": 0.074389668083708
+        },
+        {
+          "date": "2026-03-12T00:00:00",
+          "actual": 0.7753311335244448
+        },
+        {
+          "date": "2026-03-13T00:00:00",
+          "actual": 0.33807401821837346
+        },
+        {
+          "date": "2026-03-14T00:00:00",
+          "actual": -0.17919201349616337
+        },
+        {
+          "date": "2026-03-15T00:00:00",
+          "actual": -0.11411229260299538
+        }
+      ],
+      "forecast": [],
+      "future_forecast": [],
+      "final_metrics": [],
+      "trend_per_period": 0.009826559442486366,
+      "seasonal_profile": []
+    }
+  ],
+  "interval": null,
+  "feature_policy": "chronological pooled or local fit; known_future explicitly declared, past x fixed lag; no whole-data fit",
+  "scope": "Aligned regular panel; rolling-origin gap+embargo excluded from fit; held final targets not used during development",
+  "warning": "Diagnostic tests do not prove stationarity or predictive success. Coverage not guaranteed after regime/parameter/covariate change.",
+  "advanced": {
+    "schema": "TemporalRun/v1",
+    "spec": {
+      "task": "diagnostics",
+      "method": "arima",
+      "diagnostics": [
+        "change-point"
+      ],
+      "order": [
+        1,
+        0,
+        0
+      ],
+      "seasonal_order": [
+        1,
+        0,
+        0
+      ],
+      "gap": 0,
+      "embargo": 0,
+      "lags": 4,
+      "difference": 0,
+      "known_future": [],
+      "past_covariates": [],
+      "availability": {},
+      "var_columns": [],
+      "var_assumption": "",
+      "hierarchy": [],
+      "training_series": [],
+      "validation_series": [],
+      "label": "",
+      "clusters": 2,
+      "seed": 53,
+      "alpha": 0.2,
+      "croston_alpha": 0.1,
+      "change_penalty": 3
+    },
+    "provenance": {
+      "capability_id": "model.temporal.change-point",
+      "column_lineage_ref": null,
+      "config_revision": 0,
+      "created_at": "2026-10-13T21:06:47.047302+00:00",
+      "dataset_versions": [
+        "dv:6ee0e2ca-6eeb-4053-b77c-48e30b13aea7"
+      ],
+      "environment": [
+        [
+          "statsmodels",
+          "0.15.0"
+        ]
+      ],
+      "exclusions": [],
+      "filters": [],
+      "learning_content_version": null,
+      "method_version": 1,
+      "parameters_hash": "e52f069acd8dde91f68bfc3f3a95bc85cd053b53fc6d303c9fa809a52d74afd8",
+      "provenance_id": "provenance:937bde3b-ea44-459b-87e6-4094f8bafec1",
+      "row_lineage_ref": null,
+      "scope": "chronological origin fit; development diagnostics only; no final target choice",
+      "seed": 53,
+      "seed_reason": "seeded whole-series KMeans; deterministic numerical forecasting otherwise",
+      "source_snapshot_ids": [
+        "snapshot:11fa34b5-f31d-4219-bc66-5581ce86e590"
+      ]
+    },
+    "estimated_fit_count": 8,
+    "compute_budget": {
+      "ram_bytes": 2147483648,
+      "temp_disk_bytes": 4294967296,
+      "cpu_threads": 2,
+      "max_wall_seconds": 600,
+      "max_concurrent_cpu_jobs": 1,
+      "max_concurrent_io_jobs": 2,
+      "device": "cpu",
+      "sample_limit_rows": 10000,
+      "cancel_grace_ms": 2000,
+      "reserve_disk_bytes": 1073741824
+    },
+    "series_task": null,
+    "reconciliation": []
+  },
+  "experiment_capture": {
+    "schema": "RunCapture/v1",
+    "captured_at": "2026-10-13T21:06:47.055686+00:00",
+    "code_hash": "522b667a17a512d91655fdcbaa0b6303250fdb33de16a7396a0137bc9c8b815f",
+    "environment_hash": "07face0e2f6039f7a030483fef9a10b7d4037e0338cefda2fada742b631a9d8f",
+    "config_hash": "f6867ca580e20be99e27d16ed8d578a438c83046f9ab2a4a518bbf2b983de1bb",
+    "config_scope": "full TimeSeriesSpec including temporal protocol, availability, method and parameters",
+    "environment": {
+      "python": "3.13.15",
+      "machine": "x86_64",
+      "system": "Linux",
+      "numpy": "2.5.3",
+      "scipy": "1.18.0",
+      "scikit-learn": "1.9.1",
+      "polars": "2.0.0",
+      "skops": "0.16.0",
+      "veri-ufku": "0.1.0",
+      "statsmodels": "0.15.0",
+      "pandas": "3.0.6"
+    },
+    "code_files": {
+      "analytics/__init__.py": "9a40480d4948c6569039dcba9b5eb8500217898bd1082cbf7dc116ea9eb697d1",
+      "analytics/cache.py": "d9bc4a880fbdee9cfec9bcdb2be956bd892472776a162db5f44de7ea800cb810",
+      "analytics/contracts.py": "b48013d36e9aaa985421706a519052cd92877fc3f3f39a0a5cf121127b6a8254",
+      "analytics/dataset.py": "577491b35241d4564f0aa99b801b4676bd3eb7f31e0ff81534178e4f2603ec28",
+      "analytics/inspection.py": "7d32d36f9f4ca19dceb4ed92d70e58724bdb92394ac62f7b2b7195665ad83e46",
+      "analytics/quality.py": "26614e90d24781175ee63e890ea820abdc3ba71a338c0a8eac68973ab4f91002",
+      "analytics/text.py": "fcbf422f6913a0d2ce472a0973bc408dda3a5676da304361de1ec6000a6d81f0",
+      "analytics/text_contracts.py": "3499a5661c22caa01c8355074d11d2a734fbe67e51914f5332ecb0c3726222f2",
+      "analytics/worker.py": "31c63ee72335dade3e877599e1354ac043e3618f550867dc25927460aa026a59",
+      "domain/__init__.py": "2dbb12e6e6559fc7cfeaa0bd919e0daed1a2b0087606b6a80365376ce3600b26",
+      "domain/capabilities.py": "d24f881452fd39bae641d0bfb26e4d87c1719a373e966139b2549fae4dd1c5d3",
+      "domain/contracts.py": "f876547de14f69c2c21d69a18e4af28ff1d2bb1e86a91d3b517ae7715025503b",
+      "domain/json.py": "460d139d25b367c54bc7535a099ff4de6d8d71af90a4f90914f864e71a18236f",
+      "jobs/__init__.py": "3e422efd1e5f67820bedb952921837211d5a5c953360bd7d6d1f7e69789cbf7d",
+      "jobs/limits.py": "4bbb51c061c186506137e3d46668d6ba16db56ad65f92b34a16f2ec5c4c007e2",
+      "jobs/manager.py": "3e17e08325e636527b665c1d1ee4756e524f813cc71b907ef31e9208f4624a38",
+      "jobs/supervision.py": "0cae684cbb07a6f3c8c63b2b8a66c2e3a0f778e5eeb903bc3e851bb6abab7f00",
+      "jobs/workers.py": "2c9c7a58f328ca607b257046b9c07de0c2bd095b7ea282e1b8725d9c81423505",
+      "modeling/__init__.py": "13027d8be106084ca581b11ced17bc5f8f0ddaeb927c7b27f55b2de67d62bb83",
+      "modeling/baseline.py": "d6a047e1a621524897fc5b2aa7f867a68da3d56aa33957072d4d6f3b47e95625",
+      "modeling/classification.py": "8325bd7adab2baf3925a2028acf69850cbe71677120848972f3cea9e3b3c3ca8",
+      "modeling/contracts.py": "0a013b594dc6710b72001268fe0923fb979fac36ad0602b7c9a640b9248a3f79",
+      "modeling/explanation.py": "a8fd47fed21b142479c966060600aa00595b768e58e1195000b59aa27494dfb7",
+      "modeling/exploration.py": "987bf5fc7419cc0562b8df7cd2e47cd6152d5e6521a2f6e1e6c5c67212820200",
+      "modeling/families.py": "ed4cb3d88c87d673dacc3496d0943995c7ea942401bf8225566e19b3e0268986",
+      "modeling/family_contracts.py": "93528657acdaf3e89ba974923402cfed2e72a1bf610b790d25ee6a3bc4406475",
+      "modeling/history.py": "89092e5f34ae94b1cb72a21b9b1a6a6f558a57c6f38ed1026146f228cf77db64",
+      "modeling/lifecycle.py": "1c00836f8d9de2ef61b98b600d02b908459234dd3dbb4a31cde226fe81c07f54",
+      "modeling/lifecycle_worker.py": "58cc961b8f4cbc8f651e695ebea6b52c3dbc6b49394700d847627ee22e9b6f84",
+      "modeling/optional_families.py": "bde8df0efe706a77c3e78c2f6ab44cf35a01ff2ed74b7f80bfdad585009281bd",
+      "modeling/plan.py": "d8a1f6043c9a96da399b74da095f3cc47c6972477984f9b3e085e48376fc6114",
+      "modeling/preparation.py": "bbb6d86e399f61d2d86c85a5b9205680ee4dbc780bfc1854ef4783ee4a82eee1",
+      "modeling/regression.py": "6fd65943f87ec2fee438e20f16d400a1eafe6cf6ef24e64a5e54eac132da51e8",
+      "modeling/search.py": "d8b90bb06060477bd8f4d2df0d6c6ece0825c72d9c243ee65cfd5af2e1009fef",
+      "modeling/search_contracts.py": "a82b856b338ed33e25a8d8f9fe340a60008cdd88cfca893fe04c4aaefe27d10e",
+      "modeling/temporal.py": "a7f74140fa4a201e559cf3de6ae2a3c66c37c89f70e5373e9433c9289ec8415d",
+      "modeling/temporal_contracts.py": "a7f949827438b4136a0576acc0455feed01400ace0639379f8068d70fc1c6291",
+      "modeling/time_series.py": "15f12f39a21438116ee47a0cc7fb3d9c7b62b161e1861cc61b9f07227f1abbc6",
+      "modeling/time_series_contracts.py": "7562d5555d7a51c409739b19ecddca20d865ca82fe9a930de60802c7dc47fb84",
+      "modeling/uncertainty.py": "18459743f79438daf7236e14e696dd6f9cc7a71388251464f8b1159c38944292",
+      "modeling/unsupervised.py": "f622291e9b889aa7dba7928e22dd716436042edc58349010bfeffe4d9f3fa693",
+      "modeling/unsupervised_contracts.py": "8f695e61dfb7d2e9f04cf075e049fc2ca6b0d85f8f681d13c8c26483fd6c55ea",
+      "modeling/validation.py": "926d32f935b8bafa2154ca6522c2a78462fcec7d12f47c489349542a8d2e8245",
+      "modeling/worker.py": "a1ec8f40ffc48ecefb6f74f52d608d39ebe57c5cf7b7e50c5e36cc714f97faa6",
+      "operations/__init__.py": "3057dbc6d9b812bf9b2aad778db59346f32918c18d3855963ded8c84538a2d89",
+      "operations/cleaning.py": "952547f346de6778896e29f7033ed71c977168a11fe99880a6ba0767f6765b17",
+      "operations/cleaning_contracts.py": "2a6e1a9234fe3b62e28af1ff518eb7cb385d34af47eec8b5d9601c7581eb0dc8",
+      "operations/contracts.py": "67b8cd99bcb930a22422f51e85ae33822bb141a4df0f9c6c510d68cb450be7fc",
+      "operations/data_contracts.py": "abd9a1c68cb13ac27f9c9edc0e91e4d47df018760f6b5ad2c769b9cfb3ddce23",
+      "operations/data_quality.py": "d5475654431190c5a2b0f63490a5c77d017e4fdc6650b3ee8443c42fa0cb8d11",
+      "operations/engine.py": "d11a56c787773556c91ee5856f254cc9c20700d69b924c3a4464f2b558e0162e",
+      "operations/formula.py": "73aa71d20562e78d06055e194a41480d86211a5f33a8c915c661af7b7dfb4e5a",
+      "operations/monitoring.py": "0f92c902fb431475d850c331e44dfcc8fe97f3b0c44a51c2e6917cdf68514bf4",
+      "operations/recipe_worker.py": "3d496a1724c200816ca4a183c4a9513d800eedc393cc88d35742d7c3d8b20e53",
+      "operations/recipes.py": "f890531237267f41521ddeea299b5f4b03e023025105b7d39cc74086616a4dd8",
+      "operations/relational.py": "d1c10afd56fbfbea134435b73f589e39a10173680b8e12985f7605436fc52135",
+      "operations/relational_contracts.py": "eb0cef0160b7a0c92c601a407fceec423699032bc8d7fe4b3bba9196c29473da",
+      "operations/types.py": "0fe52eaad36ed00788508b4e28ed0c9a34df55b7ee41e6503127dd4d87bccd87",
+      "operations/worker.py": "f6fef54a9a1374728902e546eac733e33b243eee6ce115c29e0a99062b402435",
+      "storage/validation_store.py": "1fefd1981064775b0120d724df80a529f8d7ae1f58d9334be36e214be8bdfa27",
+      "storage/experiment_store.py": "4703db92ba003e39a53125cf16bb169e3bf6c7edf9be0c2655a3c3659818dc8e"
+    },
+    "data_access_time": "captured before scheduling; run.data_access_at records first immutable snapshot read boundary"
+  },
+  "plan": {
+    "split_id": "split:06325af796af2fb031abecd749374d4a68970843e4c9270312c90cec0568c28d",
+    "protocol_id": "protocol:81b020a596db97569176fef918efe8e25a6ff7eca6bcfe5963db13798c679755"
+  },
+  "prior_test_use_ids": [],
+  "interpretation": "Bu projede önceki final test kullanımı yok; proje dışı kullanım bilinmez.",
+  "details_uri": "sources/f28539a8-bc54-43e7-a6c6-99ffdf33db6b.bin",
+  "details_fingerprint": {
+    "sha256": "51abfac216b6f24e3d9bfb02e9d907637aec2afad65aaf9071ba6abdf54c27fc",
+    "size": 28686
+  }
+}

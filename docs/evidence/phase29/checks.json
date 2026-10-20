@@ -1,0 +1,98 @@
+[
+  {
+    "name": "sync",
+    "command": [
+      "uv",
+      "sync",
+      "--locked",
+      "--group",
+      "dev",
+      "--offline"
+    ],
+    "started_at": "2026-10-10T12:42:46.973413+00:00",
+    "duration_seconds": 0.009,
+    "exit_code": 0
+  },
+  {
+    "name": "docs",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_docs.py"
+    ],
+    "started_at": "2026-10-10T12:42:46.982946+00:00",
+    "duration_seconds": 0.105,
+    "exit_code": 0
+  },
+  {
+    "name": "artifacts",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_artifacts.py"
+    ],
+    "started_at": "2026-10-10T12:42:47.088210+00:00",
+    "duration_seconds": 0.111,
+    "exit_code": 0
+  },
+  {
+    "name": "learning",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_learning.py"
+    ],
+    "started_at": "2026-10-10T12:42:47.199187+00:00",
+    "duration_seconds": 0.058,
+    "exit_code": 0
+  },
+  {
+    "name": "usability",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_usability.py"
+    ],
+    "started_at": "2026-10-10T12:42:47.256955+00:00",
+    "duration_seconds": 0.081,
+    "exit_code": 0
+  },
+  {
+    "name": "ruff",
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "started_at": "2026-10-10T12:42:47.338553+00:00",
+    "duration_seconds": 0.008,
+    "exit_code": 0
+  },
+  {
+    "name": "format",
+    "command": [
+      ".venv/bin/ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "started_at": "2026-10-10T12:42:47.347149+00:00",
+    "duration_seconds": 0.007,
+    "exit_code": 0
+  },
+  {
+    "name": "unittest",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "started_at": "2026-10-10T12:42:47.354581+00:00",
+    "duration_seconds": 7.24,
+    "exit_code": 0
+  }
+]

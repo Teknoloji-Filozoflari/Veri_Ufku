@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="40.776" timestamp="2026-10-15T20:24:12.941360+03:00" hostname="s-oktay"><testcase classname="tests.test_graphs_gui" name="test_real_separate_node_edge_tables" time="40.753"><failure message="AssertionError: ('edges', 'Uygulama ve işlerin toplam bellek bütçesi aşıldı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu.', 'İptal edildi. Dataset kaydedilmedi.')">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-45/test_real_separate_node_edge_t0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f6b35f235c0&gt;
+
+    def test_real_separate_node_edge_tables(tmp_path, monkeypatch):
+        import polars as pl
+    
+        app, window, projects, controller, _ = imported(tmp_path, monkeypatch)
+        try:
+            imports = app._veri_ufku_resources[0]._imports_resources
+            for name, frame in (
+                ("nodes", pl.DataFrame(dict(node=["a", "b", "c", "isolated"]))),
+                (
+                    "edges",
+                    pl.DataFrame(
+                        dict(source=["a", "b"], target=["b", "c"], edge_id=["one", "two"])
+                    ),
+                ),
+            ):
+                p = tmp_path / (name + ".parquet")
+                frame.write_parquet(p)
+                imports.choose(str(p))
+                spin(app, lambda: not imports.busy and not projects.busy)
+                assert imports.ready, imports.errorText
+                imports.importData(True)
+                spin(app, lambda: not imports.busy and not projects.busy)
+&gt;               assert not imports.errorText, (name, imports.errorText, imports.message)
+                       ^^^^^^^^^^^^^^^^^^^^^
+E               AssertionError: ('edges', 'Uygulama ve işlerin toplam bellek bütçesi aşıldı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu.', 'İptal edildi. Dataset kaydedilmedi.')
+
+tests/test_graphs_gui.py:167: AssertionError</failure></testcase></testsuite></testsuites>

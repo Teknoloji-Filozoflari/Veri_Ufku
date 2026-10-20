@@ -1,0 +1,3332 @@
+........................................................................ [  9%]
+........................................................................ [ 19%]
+...............................................................FFFFFFFFF [ 29%]
+.................................FF....F................................ [ 39%]
+........................................................................ [ 49%]
+........................................................................ [ 59%]
+........................................................................ [ 69%]
+........................................................................ [ 79%]
+........................................................................ [ 89%]
+.............................F.......................................... [ 99%]
+....                                                                     [100%]
+=================================== FAILURES ===================================
+______ test_readonly_cannot_import_and_invalid_option_invalidates_preview ______
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_readonly_cannot_import_an0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd3437e350>
+
+    def test_readonly_cannot_import_and_invalid_option_invalidates_preview(
+        tmp_path, monkeypatch
+    ):
+>       app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_import_gui.py:153: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_import_gui.py:29: in setup
+    app, window, bridge = create_application()
+                          ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+_________ test_initial_bad_csv_can_switch_to_quarantine_and_repreview __________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_initial_bad_csv_can_switc0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd18b6bd20>
+
+    def test_initial_bad_csv_can_switch_to_quarantine_and_repreview(tmp_path, monkeypatch):
+>       app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_import_gui.py:173: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_import_gui.py:29: in setup
+    app, window, bridge = create_application()
+                          ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+__________ test_qml_file_dialog_accepted_local_path_reaches_importer ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_qml_file_dialog_accepted_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd35ce62e0>
+
+    def test_qml_file_dialog_accepted_local_path_reaches_importer(tmp_path, monkeypatch):
+        from PySide6.QtCore import QObject
+    
+>       app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_import_gui.py:197: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_import_gui.py:29: in setup
+    app, window, bridge = create_application()
+                          ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+________ test_phase06_four_formats_real_worker_qml_controls_and_reopen _________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_phase06_four_formats_real0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd3437f0e0>
+
+    def test_phase06_four_formats_real_worker_qml_controls_and_reopen(
+        tmp_path, monkeypatch
+    ):
+        from decimal import Decimal
+        from pathlib import Path
+    
+        from PySide6.QtCore import QObject
+    
+>       app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_import_gui.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_import_gui.py:29: in setup
+    app, window, bridge = create_application()
+                          ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+_________ test_jsonl_worker_cancel_keeps_previous_project_and_original _________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_jsonl_worker_cancel_keeps0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd35e5be70>
+
+    def test_jsonl_worker_cancel_keeps_previous_project_and_original(tmp_path, monkeypatch):
+>       app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_import_gui.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_import_gui.py:29: in setup
+    app, window, bridge = create_application()
+                          ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+________ test_basic_import_project_route_advanced_settings_and_success _________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_basic_import_project_rout0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd35e5baf0>
+
+    def test_basic_import_project_route_advanced_settings_and_success(
+        tmp_path, monkeypatch
+    ):
+>       app, window, _, projects, imports = setup(tmp_path, monkeypatch)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_import_gui.py:312: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_import_gui.py:29: in setup
+    app, window, bridge = create_application()
+                          ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+___ test_beginner_preview_shows_twenty_and_automatically_imports_real_types ____
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_beginner_preview_shows_tw0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd5801d7f0>
+
+    def test_beginner_preview_shows_twenty_and_automatically_imports_real_types(
+        tmp_path, monkeypatch
+    ):
+>       app, window, _, projects, imports = setup(tmp_path, monkeypatch)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_import_gui.py:373: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_import_gui.py:29: in setup
+    app, window, bridge = create_application()
+                          ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+_________ test_selecting_csv_format_keeps_automatic_integer_inference __________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_selecting_csv_format_keep0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd580a9be0>
+
+    def test_selecting_csv_format_keeps_automatic_integer_inference(tmp_path, monkeypatch):
+>       app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_import_gui.py:399: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_import_gui.py:29: in setup
+    app, window, bridge = create_application()
+                          ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+______ test_import_advanced_starts_closed_even_with_advanced_preferences _______
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_import_advanced_starts_cl0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd58f22900>
+
+    def test_import_advanced_starts_closed_even_with_advanced_preferences(
+        tmp_path, monkeypatch
+    ):
+>       app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_import_gui.py:418: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_import_gui.py:29: in setup
+    app, window, bridge = create_application()
+                          ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+__ test_offline_qml_search_context_depth_critical_close_and_example_isolation __
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_offline_qml_search_contex0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd58f5c3d0>
+
+    def test_offline_qml_search_context_depth_critical_close_and_example_isolation(
+        tmp_path, monkeypatch
+    ):
+        def network_forbidden(*args, **kwargs):
+            raise AssertionError("Help attempted network access")
+    
+        monkeypatch.setattr(socket, "create_connection", network_forbidden)
+        monkeypatch.setattr(urllib.request, "urlopen", network_forbidden)
+        for name in ("CONFIG", "STATE", "CACHE"):
+            monkeypatch.setenv(f"XDG_{name}_HOME", str(tmp_path / name.lower()))
+>       app, window, bridge = create_application()
+                              ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_learning_gui.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+________________ test_article_markup_is_rendered_as_plain_text _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_article_markup_is_rendere0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd1f1c7d20>
+
+    def test_article_markup_is_rendered_as_plain_text(tmp_path, monkeypatch):
+        for name in ("CONFIG", "STATE", "CACHE"):
+            monkeypatch.setenv(f"XDG_{name}_HOME", str(tmp_path / name.lower()))
+>       app, window, bridge = create_application()
+                              ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_learning_gui.py:151: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+__________________ test_learning_hierarchy_and_readable_modal __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_learning_hierarchy_and_re0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbd34495a20>
+
+    def test_learning_hierarchy_and_readable_modal(tmp_path, monkeypatch):
+        for name in ("CONFIG", "STATE", "CACHE"):
+            monkeypatch.setenv(f"XDG_{name}_HOME", str(tmp_path / name.lower()))
+>       app, window, _ = create_application()
+                         ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_learning_tree_gui.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def create_application():
+        from veri_ufku.config import AppPaths, load_settings
+        from veri_ufku.jobs.limits import configure_threads
+    
+        try:
+            configure_threads(load_settings(AppPaths.discover()).budget.cpu_threads)
+        except (OSError, ValueError, TypeError):
+            configure_threads(2)
+        from PySide6.QtCore import QCoreApplication, QEvent, QLocale, QTranslator, QUrl
+        from PySide6.QtGui import QFont, QFontDatabase, QGuiApplication, QIcon
+        from PySide6.QtQml import QQmlApplicationEngine
+        from PySide6.QtQuickControls2 import QQuickStyle
+    
+        from veri_ufku.config import AppPaths, Settings, load_settings
+        from veri_ufku.domain.contracts import AppError
+        from veri_ufku.jobs.manager import JobManager
+        from veri_ufku.logging_setup import EventLog
+        from veri_ufku.services.demo import DemoSession
+        from veri_ufku.ui.charts import ChartController, ChartImages
+        from veri_ufku.ui.controller import ShellController, tr
+        from veri_ufku.ui.dataset import DatasetController
+        from veri_ufku.ui.exports import ExportController
+        from veri_ufku.ui.folders import FolderController
+        from veri_ufku.ui.guide import GuideController
+        from veri_ufku.ui.imports import ImportController
+        from veri_ufku.ui.learning import LearningController
+        from veri_ufku.ui.lifecycle import LifecycleController
+        from veri_ufku.ui.operations import OperationsController
+        from veri_ufku.ui.preferences import PresentationPreferences
+        from veri_ufku.ui.preparation import PreparationController
+        from veri_ufku.ui.projects import ProjectController
+        from veri_ufku.ui.recipes import RecipeController
+        from veri_ufku.ui.statistics import StatisticsController
+        from veri_ufku.ui.text import TextController
+        from veri_ufku.ui.time_series import TimeSeriesController
+        from veri_ufku.ui.unsupervised import UnsupervisedController
+        from veri_ufku.ui.validation import ValidationController
+    
+        if QGuiApplication.instance() is None:
+            QQuickStyle.setStyle("Basic")
+        app = QGuiApplication.instance() or QGuiApplication(["veri-ufku"])
+        # Finish disposal of a previous shell before reusing the Qt application.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        # Destroying its window schedules the engine for a separate deferred pass.
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+        app.setApplicationName("Veri_Ufku")
+        app.setOrganizationName("Veri_Ufku")
+        app.setApplicationVersion("0.1.0")
+        root_dir = Path(__file__).parent
+        app.setDesktopFileName("org.veriufku.Veri_Ufku")
+        icon = QIcon()
+        for size in (16, 24, 32, 48, 64, 128, 256, 512):
+            icon.addFile(str(root_dir / f"assets/branding/icon-{size}.png"))
+        if icon.isNull():
+            raise RuntimeError("Bundled application logo is missing")
+        app.setWindowIcon(icon)
+        if (
+            QFontDatabase.addApplicationFont(str(root_dir / "assets/fonts/DejaVuSans.ttf"))
+            < 0
+        ):
+            raise RuntimeError("Bundled font is missing")
+        app.setFont(QFont("DejaVu Sans", 11))
+        paths, settings, startup_error, log, manager = (
+            AppPaths.discover(),
+            Settings(),
+            "",
+            None,
+            None,
+        )
+        try:
+            paths.prepare()
+            log = EventLog(paths.state)
+            settings = load_settings(paths)
+        except (OSError, ValueError, TypeError) as exception:
+            error = AppError.create("configuration", type(exception).__name__)
+            if log:
+                log.event("startup_failed", error=error)
+            startup_error = "Configuration is invalid. Check local settings."
+        preferences = PresentationPreferences(paths.config, locale=settings.locale)
+        translator = QTranslator(app)
+        if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
+            raise RuntimeError("Bundled Turkish translation is missing")
+        if preferences.locale == "tr":
+            app.installTranslator(translator)
+        english = QTranslator(app)
+        if not english.load(str(root_dir / "learning/i18n/en.qm")):
+            raise RuntimeError("Bundled core English translation is missing")
+        if preferences.locale == "en":
+            app.installTranslator(english)
+        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        engine = QQmlApplicationEngine()
+        current_locale = preferences.locale
+    
+        def update_locale():
+            nonlocal current_locale
+            if preferences.locale == current_locale:
+                return
+            current_locale = preferences.locale
+            app.removeTranslator(translator)
+            app.removeTranslator(english)
+            app.installTranslator(translator if preferences.locale == "tr" else english)
+            QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+            engine.retranslate()
+    
+        preferences.changed.connect(update_locale)
+        engine._english_translation = english
+        folders = FolderController(engine)
+        engine._folders_resources = folders
+        engine.rootContext().setContextProperty("folders", folders)
+        learning = LearningController(paths.config, engine)
+        projects = ProjectController(paths.config, learning, engine)
+        imports = ImportController(
+            projects, paths.cache / "imports", settings.budget, engine
+        )
+        data_view = DatasetController(
+            projects, paths.cache / "dataset", settings.budget, engine
+        )
+        operations = OperationsController(
+            data_view, projects, paths.cache / "operations", settings.budget, engine
+        )
+        image_provider = ChartImages()
+        engine.addImageProvider("charts", image_provider)
+        charts = ChartController(
+            data_view,
+            projects,
+            paths.cache / "charts",
+            settings.budget,
+            image_provider,
+            engine,
+        )
+        exports = ExportController(
+            data_view, projects, charts, paths.cache / "exports", settings.budget, engine
+        )
+        guide = GuideController(projects, imports, data_view, engine)
+        statistics = StatisticsController(
+            data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
+        )
+        preparation = PreparationController(
+            data_view, projects, paths.cache / "preparation", settings.budget, engine
+        )
+        validation = ValidationController(
+            data_view,
+            projects,
+            preparation,
+            paths.cache / "validation",
+            settings.budget,
+            engine,
+        )
+        engine._validation_resources = validation
+        engine.rootContext().setContextProperty("validation", validation)
+        engine._preparation_resources = preparation
+        engine.rootContext().setContextProperty("preparation", preparation)
+        unsupervised = UnsupervisedController(
+            data_view, projects, paths.cache / "unsupervised", settings.budget, engine
+        )
+        text_analysis = TextController(
+            data_view, projects, paths.cache / "text", settings.budget, engine
+        )
+        engine._text_resources = text_analysis
+        engine.rootContext().setContextProperty("textAnalysis", text_analysis)
+        time_series = TimeSeriesController(
+            data_view, projects, paths.cache / "time-series", settings.budget, engine
+        )
+        engine._time_series_resources = time_series
+        engine.rootContext().setContextProperty("timeSeries", time_series)
+        lifecycle = LifecycleController(
+            data_view, projects, paths.cache / "lifecycle", settings.budget, engine
+        )
+        recipes = RecipeController(
+            data_view, projects, paths.cache / "recipes", settings.budget, engine
+        )
+        engine._recipe_resources = recipes
+        engine.rootContext().setContextProperty("recipes", recipes)
+        engine._lifecycle_resources = lifecycle
+        engine.rootContext().setContextProperty("lifecycle", lifecycle)
+        engine._unsupervised_resources = unsupervised
+        engine.rootContext().setContextProperty("unsupervised", unsupervised)
+        from veri_ufku.ui.workspace import WorkspaceController
+    
+        workspace = WorkspaceController(
+            projects,
+            statistics,
+            charts,
+            (preparation, validation, unsupervised, text_analysis, time_series, lifecycle),
+            engine,
+        )
+        engine._workspace_resources = workspace
+        engine.rootContext().setContextProperty("expertWorkspace", workspace)
+        engine._statistics_resources = statistics
+        engine.rootContext().setContextProperty("statistics", statistics)
+        engine._exports_resources = exports
+        engine._guide_resources = guide
+        engine.rootContext().setContextProperty("exports", exports)
+        engine.rootContext().setContextProperty("guide", guide)
+        engine._charts_resources = charts
+        engine.rootContext().setContextProperty("charts", charts)
+        engine._operations_resources = operations
+        engine.rootContext().setContextProperty("operations", operations)
+        engine._dataset_resources = data_view
+        engine.rootContext().setContextProperty("dataView", data_view)
+        engine._imports_resources = imports
+        engine.rootContext().setContextProperty("imports", imports)
+        from veri_ufku.ui.launch import LaunchRequests
+    
+        launch = LaunchRequests(projects, imports, engine)
+        engine._launch_resources = launch
+        engine.rootContext().setContextProperty("launchRequests", launch)
+        engine._projects_resources = projects
+        engine.rootContext().setContextProperty("projects", projects)
+        engine._learning_resources = learning
+        engine.rootContext().setContextProperty("learning", learning)
+        engine.rootContext().setContextProperty("preferences", preferences)
+        controller = None
+        if not startup_error:
+            manager = JobManager(paths.cache, settings.budget, log)
+            controller = ShellController(DemoSession(manager, settings.budget), engine)
+            controller.admission = lambda: not projects.busy
+            projects.external_busy = lambda: controller._active
+            controller.changed.connect(projects.changed.emit)
+        from veri_ufku.jobs.supervision import ResourceSupervisor
+    
+        supervisor = ResourceSupervisor(
+            (
+                imports,
+                data_view,
+                operations,
+                charts,
+                exports,
+                statistics,
+                preparation,
+                validation,
+                unsupervised,
+                text_analysis,
+                time_series,
+                lifecycle,
+                recipes,
+            ),
+            settings.budget,
+            engine,
+        )
+        engine._resource_supervisor = supervisor
+        engine.rootContext().setContextProperty("bridge", controller)
+        engine.rootContext().setContextProperty(
+            "startupError", tr(startup_error) if startup_error else ""
+        )
+        engine.load(QUrl.fromLocalFile(str(root_dir / "ui/qml/Main.qml")))
+        if not engine.rootObjects():
+            if manager:
+                manager.shutdown()
+>           raise RuntimeError("Application UI could not be loaded")
+E           RuntimeError: Application UI could not be loaded
+
+src/veri_ufku/app.py:261: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+QQmlApplicationEngine failed to load component
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/Main.qml:530:17: Type ResultPanel unavailable
+file:///home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/ui/qml/ResultPanel.qml:26:190: Unexpected token `;'
+_______________ test_structural_audit_and_missing_help_rejection _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-36/test_structural_audit_and_miss0')
+
+    def test_structural_audit_and_missing_help_rejection(tmp_path):
+        result = audit(ROOT)
+>       assert len(result["articles"]) == 151 and result["core_english_messages"] >= 186
+E       AssertionError: assert (152 == 151)
+E        +  where 152 = len([{'id': 'data', 'version': 2, 'summary': True, 'example': True, ...}, {'id': 'rows-columns', 'version': 1, 'summary': ... 1, 'summary': True, 'example': True, ...}, {'id': 'sample', 'version': 1, 'summary': True, 'example': True, ...}, ...])
+
+tests/test_usability.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_import_gui.py::test_readonly_cannot_import_and_invalid_option_invalidates_preview
+FAILED tests/test_import_gui.py::test_initial_bad_csv_can_switch_to_quarantine_and_repreview
+FAILED tests/test_import_gui.py::test_qml_file_dialog_accepted_local_path_reaches_importer
+FAILED tests/test_import_gui.py::test_phase06_four_formats_real_worker_qml_controls_and_reopen
+FAILED tests/test_import_gui.py::test_jsonl_worker_cancel_keeps_previous_project_and_original
+FAILED tests/test_import_gui.py::test_basic_import_project_route_advanced_settings_and_success
+FAILED tests/test_import_gui.py::test_beginner_preview_shows_twenty_and_automatically_imports_real_types
+FAILED tests/test_import_gui.py::test_selecting_csv_format_keeps_automatic_integer_inference
+FAILED tests/test_import_gui.py::test_import_advanced_starts_closed_even_with_advanced_preferences
+FAILED tests/test_learning_gui.py::test_offline_qml_search_context_depth_critical_close_and_example_isolation
+FAILED tests/test_learning_gui.py::test_article_markup_is_rendered_as_plain_text
+FAILED tests/test_learning_tree_gui.py::test_learning_hierarchy_and_readable_modal
+FAILED tests/test_usability.py::test_structural_audit_and_missing_help_rejection
+13 failed, 711 passed in 307.03s (0:05:07)

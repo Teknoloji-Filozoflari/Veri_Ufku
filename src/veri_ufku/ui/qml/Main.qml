@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
+import "RoadmapSteps.js" as Roadmap
 
 ApplicationWindow {
     id: window
@@ -18,37 +19,58 @@ ApplicationWindow {
     palette.windowText: Theme.text
     palette.text: Theme.text
     palette.buttonText: Theme.text
-    palette.button: Theme.surface
-    palette.base: Theme.surface
+    palette.brightText: Theme.text
+    palette.button: Theme.raised
+    palette.base: Theme.field
     palette.alternateBase: Theme.background
-    palette.highlight: Theme.accent
-    palette.highlightedText: Theme.onAccent
+    palette.highlight: window.sectionAccent
+    palette.highlightedText: Theme.accentText
     palette.light: Theme.surface
-    palette.mid: Theme.border
+    palette.mid: Theme.controlBorder
     palette.dark: Theme.secondary
     palette.placeholderText: Theme.secondary
     property int selectedSection: 0
+    // -1 follows the window; an explicit user choice lasts for this session.
+    property int navigationMode: -1
+    readonly property bool compactNavigation: navigationMode < 0 ? width < 1000 * Theme.scale : navigationMode === 1
+    property string dataPane: ""
+    function openDataPane(pane) {
+        dataPane = pane
+        dataTabs.currentIndex = pane === "import" ? 1 : pane === "quality" ? 2 : pane ? 0 : -1
+        if (pane) Qt.callLater(function() {
+            let name = pane === "profile" ? "inventoryTable" : pane === "describe" ? "computeDescribe" : pane === "values" ? "valuesColumn" : pane === "rows" ? "loadDatasetButton" : ""
+            let control = name ? window.findVisibleItem(window.contentItem, name) : null
+            if (control && control.enabled) control.forceActiveFocus()
+        })
+    }
+    readonly property var sectionTones: ["warm", "cyan", "violet", "cyan", "violet", "violet", "warm", "mint"]
+    readonly property color sectionAccent: Theme.toneColor(sectionTones[selectedSection])
     property bool showDemo: false
     property bool infoOpen: false
+    property bool readingOpen: false
     readonly property bool dockInfo: width >= 1100 * Theme.scale
     readonly property bool advanced: preferences && preferences.view === "advanced"
     readonly property bool darkTheme: Theme.dark
     property var helpOrigin: null
     property string helpOriginName: ""
-    readonly property var sections: [
+    readonly property var sections: !advanced ? [
+        qsTr("Başlangıç"), qsTr("Veriyi tanı"), qsTr("Veriyi hazırla"),
+        qsTr("Desenleri keşfet"), qsTr("Farkları karşılaştır"), qsTr("Model kur"),
+        qsTr("Bulguları paylaş"), qsTr("Öğren")
+    ] : [
         qsTranslate("Shell", "Home"), qsTranslate("Shell", "Data"),
         qsTranslate("Shell", "Prepare"), qsTranslate("Shell", "Explore"),
         qsTranslate("Shell", "Compare"), qsTranslate("Shell", "Model"),
         qsTranslate("Shell", "Report"), qsTranslate("Shell", "Learn")
     ]
     readonly property var descriptions: [
-        qsTranslate("Shell", "Choose where to start. File import and sample datasets will be available in a later phase. Display preferences and infrastructure trials are available now."),
-        qsTranslate("Shell", "View your rows and columns. File import and the data table are not available yet."),
-        qsTranslate("Shell", "Prepare your data with a preview before applying changes. Cleaning tools are not available yet."),
-        qsTranslate("Shell", "Look for patterns with charts. Charts and statistics are not available yet."),
-        qsTranslate("Shell", "Understand differences between groups. Comparison tools are not available yet."),
-        qsTranslate("Shell", "Make predictions with a model and understand its limits. Modeling is not available yet."),
-        qsTranslate("Shell", "Save and share your findings. Report generation is not available yet."),
+        window.advanced ? qsTr("Proje ve araçlarına doğrudan eriş.") : qsTr("Bir sorudan bulguya: verinin yolculuğunu adım adım izle."),
+        qsTr("Kaynağı içe aktarın; sütunları, kayıtları ve veri kalitesini inceleyin."),
+        qsTr("Değişiklikleri önce önizleyin; yeni veri sürümüne açıkça uygulayın."),
+        qsTr("İstatistik özetini ve grafiklerle dağılım, grup, zaman, ilişki ve eksikleri inceleyin."),
+        "Sorundan hareketle grup farkını veya sayısal/kategorik ilişkiyi araştır; önce varsayımları incele.",
+        "Model amacına göre uygunluğu incele ve eğitim katında öğrenilecek hazırlama planını kaydet.",
+        qsTr("Temizlenmiş veriyi dışa aktarın ve yerel HTML/PDF raporunu kaydedin."),
         "Merak ettiğin konuyu çevrimdışı ara; özet, örnek veya rehber olarak oku."
     ]
     function navigate(index, origin) {
@@ -57,7 +79,17 @@ ApplicationWindow {
         if (origin) origin.forceActiveFocus()
         workspace.contentItem.contentY = 0
     }
+    onSelectedSectionChanged: workspace.contentItem.contentY = 0
+    function openReading(origin, articleId) {
+        helpOrigin = origin
+        helpOriginName = origin.objectName
+        learning.openArticle(articleId)
+        readingOpen = true
+        infoOpen = true
+        articleReader.open()
+    }
     function openInformation(origin, articleId, context) {
+        if (readingOpen) closeInformation()
         helpOrigin = origin || helpButton
         helpOriginName = helpOrigin.objectName
         if (articleId) learning.openArticle(articleId)
@@ -75,7 +107,7 @@ ApplicationWindow {
         return learning.screenContexts[selectedSection]
     }
     function findVisibleItem(item, name) {
-        if (!item.visible) return null
+        if (!item || !item.visible) return null
         if (item.objectName === name) return item
         for (let child of item.children) {
             let found = findVisibleItem(child, name)
@@ -85,25 +117,162 @@ ApplicationWindow {
     }
     function restoreHelpFocus() {
         let origin = helpOriginName ? findVisibleItem(window.contentItem, helpOriginName) : helpOrigin
+        if (!origin && helpOriginName) origin = findVisibleItem(window.header, helpOriginName) || findVisibleItem(window.footer, helpOriginName)
         if (!origin && selectedSection === 7) origin = findVisibleItem(window.contentItem, "learningSearch")
-        if (!origin || !origin.visible || !origin.enabled) origin = helpButton
+        if (!origin || !origin.visible || !origin.enabled) origin = helpButton.visible ? helpButton : headerBeginner
         origin.forceActiveFocus()
     }
     function closeInformation() {
         infoOpen = false
+        readingOpen = false
+        articleReader.close()
         infoDrawer.close()
         restoreHelpFocus()
     }
     onDockInfoChanged: {
-        if (infoOpen) {
+        if (infoOpen && !readingOpen) {
             if (dockInfo) infoDrawer.close()
             else infoDrawer.open()
+        }
+    }
+    Shortcut { sequence: "Ctrl+K"; onActivated: { expertWorkspace.search(""); commandPalette.open() } }
+    Dialog {
+        id: commandPalette
+        objectName: "commandPalette"
+        title: "Komut paleti — yöntem ve amaç ara"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(window.width - 40, 800)
+        standardButtons: Dialog.Close
+        contentItem: ModuleDiscovery { }
+        onOpened: {
+            let search = window.findVisibleItem(contentItem, "moduleSearch")
+            if (search) search.forceActiveFocus()
+        }
+    }
+    Connections {
+        target: expertWorkspace
+        function onNavigate(section, capability) {
+            if (capability.indexOf("learn.") !== 0) preferences.setView("advanced")
+            window.selectedSection = section
+            if(capability.indexOf("learn.lab.")===0)learningLab.startLesson(capability.substring("learn.lab.".length))
+            if(capability.indexOf("environment.")===0) {
+                Qt.callLater(function(){let control=window.findVisibleItem(window.contentItem,"environmentExpanded");if(control){control.checked=true;control.forceActiveFocus()}})
+            }
+            if(capability.indexOf("plugin.")===0) {
+                Qt.callLater(function(){let control=window.findVisibleItem(window.contentItem,"pluginsExpanded");if(control){control.checked=true;control.forceActiveFocus()}})
+            }
+            if(capability.indexOf("privacy.")===0) {
+                Qt.callLater(function(){let control=window.findVisibleItem(window.contentItem,"privacyExpanded");if(control){control.checked=true;control.forceActiveFocus()}})
+            }
+            if(capability.indexOf("share.")===0) {
+                Qt.callLater(function(){let control=window.findVisibleItem(window.contentItem,"sharingExpanded");if(control){control.checked=true;control.forceActiveFocus()}})
+            }
+            if(capability.indexOf("report.")===0) {
+                Qt.callLater(function(){let control=window.findVisibleItem(window.contentItem,"reportBuilderExpanded");if(control){control.checked=true;control.forceActiveFocus()}})
+            }
+            if(capability.indexOf("scenario.")===0) {
+                modelPath.currentIndex=0
+                Qt.callLater(function(){
+                    let control=window.findVisibleItem(window.contentItem,"scenarioExpanded")
+                    if(control){control.checked=true;control.forceActiveFocus()}
+                })
+            }
+            if(capability.indexOf("model.monitor.")===0) {
+                modelPath.currentIndex=0
+                Qt.callLater(function(){
+                    let control=window.findVisibleItem(window.contentItem,"monitoringExpanded")
+                    if(control){control.checked=true;control.forceActiveFocus()}
+                })
+            }
+            if(capability.indexOf("text.nlp.")===0)modelPath.currentIndex=2
+            if(capability.indexOf("model.temporal.")===0||capability.indexOf("model.signal.")===0)modelPath.currentIndex=1
+            let clusterIds=["model.kmeans","model.dbscan","model.agglomerative","model.gmm","model.optics","model.hdbscan"]
+            let anomalyIds=["model.isolation-forest","model.iqr","model.lof","model.one-class-svm","model.robust-covariance"]
+            if(section===5&&(clusterIds.indexOf(capability)>=0||anomalyIds.indexOf(capability)>=0))Qt.callLater(function(){
+                modelPath.currentIndex=0
+                let settings=window.findVisibleItem(window.contentItem,"preparationSettings")
+                if(settings)settings.checked=true
+                Qt.callLater(function(){
+                    let purpose=window.findVisibleItem(window.contentItem,"preparationPurpose")
+                    let clustering=clusterIds.indexOf(capability)>=0
+                    if(purpose){purpose.currentIndex=clustering?2:3;purpose.activated(purpose.currentIndex)}
+                    Qt.callLater(function(){let choice=window.findVisibleItem(window.contentItem,"unsupervisedMethod");if(choice){choice.currentIndex=(clustering?clusterIds:anomalyIds).indexOf(capability);choice.forceActiveFocus()}})
+                })
+            })
+            if (capability === "dashboard.canvas" || capability === "figure.compose") Qt.callLater(function() { let control = window.findVisibleItem(window.contentItem,"dashboardExpanded"); if(control)control.checked=true })
+            if (section === 1) window.openDataPane(capability.startsWith("import.") ? "import" : "profile")
+            if (["operation.schema-contract", "operation.contract-check", "operation.entity-candidates", "operation.entity-merge", "operation.category-candidates", "operation.category-map"].indexOf(capability) >= 0) datasetViewPanel.contractExpanded = true
+            commandPalette.close()
+        }
+    }
+    Dialog {
+        id: computeDialog
+        objectName: "computeBudgetDialog"
+        title: qsTr("Hesaplama bütçesi ve ölçümler")
+        width: Math.min(window.width - 24, 900 * Theme.scale)
+        height: Math.min(window.height - 24, 650 * Theme.scale)
+        anchors.centerIn: parent
+        modal: true
+        standardButtons: Dialog.Close
+        ScrollView {
+            anchors.fill: parent
+            clip: true
+            ColumnLayout {
+                width: computeDialog.availableWidth - 24
+                spacing: Theme.md
+                UiLabel { text: "RAM: " + Math.round((computeResources.report.rss_bytes || 0)/1048576) + " / " + Math.round((computeResources.report.ram_limit || 0)/1048576) + " MiB · süreç: " + (computeResources.report.processes || 0) + " / " + (computeResources.report.process_limit || 0); Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                UiLabel { text: "Toplam native thread bütçesi: " + (computeResources.report.cpu_threads || 0) + " · geçici disk zirvesi: " + Math.round((computeResources.report.temp_bytes || 0)/1048576) + " MiB"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                UiLabel { text: computeResources.report.note || "Ölçüm bekleniyor"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                UiLabel { text: "Profil, join, tuning, açıklama ve tensor işleri aynı panelde görünür. Son 64 biten süreç yalnız ölçüm kaydıdır; başarı durumu ilgili sonuç ekranındadır."; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                Repeater {
+                    model: computeResources.report.rows || []
+                    UiLabel { required property var modelData; text: modelData.kind + " · PID " + modelData.pid + " · " + modelData.seconds + " s · " + (modelData.peak_rss_bytes ? Math.round(modelData.peak_rss_bytes/1048576) + " MiB" : "RSS örneklenemedi") + " · " + modelData.native_threads + " thread · " + modelData.device + " · " + modelData.state; Layout.fillWidth: true; wrapMode: Text.WrapAnywhere }
+                }
+                UiLabel { text: "Yöntem bazında çalışma belleği (ilk 50 eşleşme)"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                UiTextField { id: computeMethodQuery; objectName: "computeMethodQuery"; property string helpContext: "compute.resources"; Accessible.name: "Yöntem kimliği ara"; placeholderText: "Yöntem kimliği ara"; text: "dataset.profile"; Layout.fillWidth: true }
+                Repeater {
+                    model: computeResources.methods(computeMethodQuery.text)
+                    UiLabel { required property var modelData; text: modelData.id + " · " + modelData.memory + " · sparse: " + modelData.sparse + " · device: " + modelData.devices.join(", ") + " · limits: " + JSON.stringify(modelData.limits); Layout.fillWidth: true; wrapMode: Text.WrapAnywhere }
+                }
+                UiButton { text: "Bu ne işe yarar?"; helpContext: "compute.resources"; onClicked: window.openInformation(this, "", "compute.resources") }
+                UiLabel { text: "Dask: isteğe bağlı, bu kurulumda runtime doğrulanmadı. Remote çalıştırma ve GPU yürütme bu panelden başlatılamaz. Yerel veri otomatik gönderilmez."; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+            }
+        }
+    }
+    Shortcut { sequence: "Ctrl+,"; onActivated: displayDialog.open() }
+    Dialog {
+        id: displayDialog
+        objectName: "displayDialog"
+        title: qsTr("Görünüm ve dil")
+        modal: true
+        x: Math.max(0, (window.width - width) / 2)
+        y: Math.max(0, (window.height - height) / 2)
+        width: Math.min(window.width - 32, 460)
+        height: Math.min(window.height - 32, implicitHeight)
+        onOpened: displayTheme.forceActiveFocus()
+        onClosed: displayButton.forceActiveFocus()
+        contentItem: ScrollView {
+            contentWidth: availableWidth
+            clip: true
+            ColumnLayout {
+                width: parent.width
+                spacing: Theme.md
+                UiLabel { text: qsTr("Tema"); Layout.fillWidth: true; wrapMode: Text.Wrap }
+                UiCombo { id: displayTheme; objectName: "displayTheme"; accessibleLabel: qsTr("Tema"); model: [qsTr("Koyu"), qsTr("Açık")]; currentIndex: preferences && preferences.theme === "light" ? 1 : 0; Layout.fillWidth: true; onActivated: preferences.setTheme(currentIndex === 1 ? "light" : "dark") }
+                UiLabel { text: qsTr("Yazı boyutu"); Layout.fillWidth: true; wrapMode: Text.Wrap }
+                UiCombo { objectName: "displayTextScale"; accessibleLabel: qsTr("Yazı boyutu"); model: ["100%", "125%", "150%", "200%"]; currentIndex: preferences ? [1, 1.25, 1.5, 2].indexOf(preferences.textScale) : 0; Layout.fillWidth: true; onActivated: preferences.setTextScale([1, 1.25, 1.5, 2][currentIndex]) }
+                UiLabel { text: qsTr("Arayüz dili"); Layout.fillWidth: true; wrapMode: Text.Wrap }
+                UiCombo { objectName: "displayLocale"; accessibleLabel: qsTr("Arayüz dili"); model: ["Türkçe", "English"]; currentIndex: preferences && preferences.locale === "en" ? 1 : 0; Layout.fillWidth: true; onActivated: preferences.setLocale(currentIndex === 1 ? "en" : "tr") }
+                UiLabel { objectName: "localeBoundaryNotice"; text: qsTr("Temel arayüz İngilizceye çevrilmiştir; ayrıntılı yardım ve bazı analiz metinleri Türkçedir. Dil ve görünüm değişikliği dosyanın sayı/tarih okuma ayarlarını değiştirmez."); Layout.fillWidth: true; wrapMode: Text.Wrap }
+                UiButton { objectName: "displayClose"; text: qsTr("Kapat"); onClicked: displayDialog.close() }
+            }
         }
     }
     property bool discardOnExit: false
     property bool closeAfterSave: false
     onClosing: function(event) {
-        if (projects.busy) {
+        if (projects.projectTaskBusy) {
             event.accepted = false
             return
         }
@@ -112,6 +281,7 @@ ApplicationWindow {
             unsavedDialog.open()
             return
         }
+        lessonLab.close()
         learningExample.close()
         if (bridge && !bridge.closed) {
             event.accepted = false
@@ -122,7 +292,7 @@ ApplicationWindow {
     Shortcut { sequence: "Escape"; enabled: window.infoOpen && window.dockInfo; onActivated: window.closeInformation() }
 
     header: Rectangle {
-        color: Theme.surface
+        color: Theme.chrome
         implicitHeight: headerBody.implicitHeight + 2 * Theme.lg
         ColumnLayout {
             id: headerBody
@@ -134,68 +304,134 @@ ApplicationWindow {
             RowLayout {
                 Layout.fillWidth: true
                 spacing: Theme.xl
-                Label { text: "Veri_Ufku"; font.pixelSize: Theme.subheading; font.bold: true }
-                Label {
+                UiIconButton {
+                    objectName: "navigationToggle"
+                    symbol: "sidebar"
+                    accessibleLabel: window.compactNavigation ? qsTr("Gezinme menüsünü genişlet") : qsTr("Gezinme menüsünü daralt")
+                    onClicked: window.navigationMode = window.compactNavigation ? 0 : 1
+                }
+                RowLayout {
+                    spacing: Theme.sm
+
+                    Layout.fillWidth: window.width < 1000 * Theme.scale
+                    BrandMark { objectName: "applicationLogo"; Layout.preferredWidth: 36; Layout.preferredHeight: 36 }
+                    UiLabel { text: "Veri_Ufku"; font.pixelSize: Theme.subheading; font.bold: true }
+                }
+                UiLabel {
                     objectName: "datasetContext"
+                    visible: window.width >= 1000 * Theme.scale
                     Layout.fillWidth: true
+                    Layout.minimumWidth: 0
                     text: projects.context
                     color: Theme.secondary
                     wrapMode: Text.WordWrap
                 }
+                RowLayout {
+                    spacing: Theme.sm
+                    UiIconButton {
+                        objectName: "commandSearchButton"
+                        symbol: "search"
+                        accessibleLabel: qsTr("Yöntem ve amaç ara (Ctrl+K)")
+                        onClicked: { expertWorkspace.search(""); commandPalette.open() }
+                    }
+                    UiLabel { objectName: "levelLabel"; visible: window.width >= 1000 * Theme.scale; text: window.advanced ? qsTr("Gelişmiş çalışma") : qsTr("Başlangıç · adım adım"); color: Theme.secondary; font.pixelSize: Theme.small }
+                    UiIconButton {
+                        id: headerBeginner
+                        objectName: "beginnerButton"
+                        symbol: "sprout"
+                        accessibleLabel: qsTranslate("Shell", "Beginner")
+                        checked: !window.advanced
+                        onClicked: preferences.setView("beginner")
+                    }
+                    UiIconButton {
+                        objectName: "advancedButton"
+                        tone: "violet"
+                        symbol: "sliders"
+                        accessibleLabel: qsTranslate("Shell", "Advanced")
+                        checked: window.advanced
+                        onClicked: preferences.setView("advanced")
+                    }
+                    UiIconButton {
+                        id: displayButton
+                        objectName: "displayButton"
+                        symbol: "settings"
+                        accessibleLabel: qsTr("Görünüm ve dil")
+                        onClicked: displayDialog.open()
+                    }
+                    UiIconButton {
+                        objectName: "closeButton"
+                        symbol: "close"
+                        accessibleLabel: qsTr("Uygulamayı kapat")
+                        onClicked: window.close()
+                    }
+                }
             }
-            Flow {
+            UiLabel {
+                visible: window.width < 1000 * Theme.scale
+                text: projects.context
+                color: Theme.secondary
                 Layout.fillWidth: true
-                spacing: Theme.lg
-                Column {
-                    spacing: Theme.xs
-                    Label { text: qsTranslate("Shell", "Theme"); font.pixelSize: Theme.small; color: Theme.secondary }
-                    UiCombo {
-                        id: themePicker
-                        objectName: "themePicker"
-                        width: Math.max(150, 150 * Theme.scale)
-                        model: [qsTranslate("Shell", "System"), qsTranslate("Shell", "Light"), qsTranslate("Shell", "Dark")]
-                        currentIndex: preferences ? ["system", "light", "dark"].indexOf(preferences.theme) : 0
-                        Accessible.name: qsTranslate("Shell", "Theme")
-                        onActivated: preferences.setTheme(["system", "light", "dark"][index])
-                    }
-                }
-                Column {
-                    spacing: Theme.xs
-                    Label { text: qsTranslate("Shell", "View"); font.pixelSize: Theme.small; color: Theme.secondary }
-                    UiCombo {
-                        id: viewPicker
-                        objectName: "viewPicker"
-                        width: Math.max(170, 170 * Theme.scale)
-                        model: [qsTranslate("Shell", "Beginner"), qsTranslate("Shell", "Advanced")]
-                        currentIndex: window.advanced ? 1 : 0
-                        Accessible.name: qsTranslate("Shell", "View")
-                        onActivated: preferences.setView(index === 1 ? "advanced" : "beginner")
-                    }
-                }
-                Column {
-                    spacing: Theme.xs
-                    Label { text: qsTranslate("Shell", "Text size"); font.pixelSize: Theme.small; color: Theme.secondary }
-                    UiCombo {
-                        objectName: "scalePicker"
-                        width: 120 * Theme.scale
-                        model: ["100%", "125%", "150%", "200%"]
-                        currentIndex: preferences ? [1, 1.25, 1.5, 2].indexOf(preferences.textScale) : 0
-                        Accessible.name: qsTranslate("Shell", "Text size")
-                        onActivated: preferences.setTextScale([1, 1.25, 1.5, 2][index])
-                    }
-                }
+                Layout.minimumWidth: 0
+                wrapMode: Text.WordWrap
+                maximumLineCount: 2
+                elide: Text.ElideRight
+            }
+            UiLabel {
+                objectName: "startupWarning"
+                visible: !!startupError
+                text: startupError
+                color: Theme.error
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
             }
         }
         Rectangle { height: 1; anchors.bottom: parent.bottom; width: parent.width; color: Theme.border }
+    }
+
+    footer: Rectangle {
+        color: Theme.chrome
+        implicitHeight: statusRow.implicitHeight + 2 * Theme.sm
+        Rectangle { width: parent.width; height: 1; color: Theme.border }
+        RowLayout {
+            id: statusRow
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.margins: Theme.sm
+            spacing: Theme.md
+            UiLabel {
+                objectName: "workspaceStatus"
+                Layout.fillWidth: true
+                Layout.minimumWidth: 0
+                text: projects.busy ? qsTr("Proje işlemi sürüyor…") : projects.dirty ? qsTr("Kaydedilmemiş değişiklikler") : projects.opened ? qsTr("Proje açık") : qsTr("Proje açık değil")
+                font.pixelSize: Theme.small
+                color: projects.dirty ? Theme.warning : Theme.secondary
+                elide: Text.ElideRight
+            }
+            UiLabel {
+                visible: window.width >= 1000 * Theme.scale
+                text: qsTr("Yardım F1 · Yöntem ara Ctrl+K")
+                font.pixelSize: Theme.small
+                color: Theme.secondary
+            }
+            UiButton {
+                objectName: "statusResources"
+                quiet: true
+                text: qsTr("Kaynaklar") + " · " + Math.round((computeResources.report.rss_bytes || 0) / 1048576) + " MiB"
+                helpContext: "compute.resources"
+                onClicked: computeDialog.open()
+            }
+        }
     }
 
     RowLayout {
         anchors.fill: parent
         spacing: 0
         Rectangle {
+            objectName: "navigationRail"
             Layout.fillHeight: true
-            Layout.preferredWidth: Math.max(150, 130 * Theme.scale)
-            color: Theme.surface
+            Layout.preferredWidth: window.compactNavigation ? 68 : 212 * Math.min(Theme.scale, 1.25)
+            color: Theme.chrome
             ScrollView {
                 anchors.fill: parent
                 anchors.margins: Theme.md
@@ -204,32 +440,36 @@ ApplicationWindow {
                 ColumnLayout {
                     width: parent.width
                     spacing: Theme.sm
+                    UiLabel {
+                        visible: !window.compactNavigation
+                        text: qsTr("ÇALIŞMA ALANI")
+                        color: Theme.muted
+                        font.pixelSize: Theme.small
+                        font.letterSpacing: 1
+                        Layout.leftMargin: Theme.md
+                        Layout.topMargin: Theme.md
+                        Layout.bottomMargin: Theme.sm
+                    }
                     Repeater {
                         model: window.sections
-                        UiButton {
+                        UiNavigationButton {
                             id: navButton
                             required property int index
                             required property string modelData
                             objectName: "nav" + index
+                            compact: window.compactNavigation
                             Layout.fillWidth: true
-                            glyph: ["⌂", "▦", "◇", "⌕", "⇄", "△", "≡", "?"][index]
+                            symbol: ["home", "table", "prepare", "chart", "compare", "model", "report", "book"][index]
+                            tone: window.sectionTones[index]
+                            symbolColor: index === 6 ? Theme.reportTone : Theme.toneColor(tone)
                             text: modelData
-                            multiline: true
-                            quiet: true
                             checked: window.selectedSection === index
-                            Accessible.description: (index > 0 && index < 7) ? qsTranslate("Shell", "Not available yet. Open the availability information.") : modelData
+                            Accessible.description: modelData
                             onClicked: window.navigate(index, this)
                             Keys.onDownPressed: nextItemInFocusChain().forceActiveFocus()
                             Keys.onUpPressed: nextItemInFocusChain(false).forceActiveFocus()
                             Shortcut { sequence: "Ctrl+" + (navButton.index + 1); onActivated: window.navigate(navButton.index, navButton) }
                         }
-                    }
-                    Label {
-                        text: qsTranslate("Shell", "Planned areas show their availability.")
-                        font.pixelSize: Theme.small
-                        color: Theme.secondary
-                        Layout.fillWidth: true
-                        wrapMode: Text.WordWrap
                     }
                 }
             }
@@ -237,6 +477,7 @@ ApplicationWindow {
         ScrollView {
             id: workspace
             objectName: "workspace"
+            enabled: !startupError || window.selectedSection === 7
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
@@ -250,9 +491,10 @@ ApplicationWindow {
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    Label {
+                    UiLabel {
                         Layout.fillWidth: true
                         text: window.sections[window.selectedSection]
+                        color: window.sectionAccent
                         font.pixelSize: Theme.heading
                         font.bold: true
                         wrapMode: Text.WrapAnywhere
@@ -260,12 +502,23 @@ ApplicationWindow {
                     UiButton {
                         id: helpButton
                         objectName: "helpButton"
+                        visible: true
+                        quiet: true
+                        tone: "mint"
                         text: qsTranslate("Shell", "What is this for?")
                         glyph: "?"
                         multiline: true
                         Layout.maximumWidth: workspace.availableWidth < 650 * Theme.scale ? workspace.availableWidth - 2 * Theme.xl : workspace.availableWidth * 0.5
                         onClicked: window.openInformation(this)
                     }
+                }
+                UiLabel {
+                    text: window.descriptions[window.selectedSection]
+                    color: Theme.secondary
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    wrapMode: Text.WordWrap
                 }
                 StateNotice {
                     Layout.fillWidth: true
@@ -276,141 +529,509 @@ ApplicationWindow {
                     heading: qsTranslate("Shell", "Display preferences")
                     detail: preferences ? preferences.errorText : ""
                 }
-                TabBar {
-                    id: dataTabs
-                    objectName: "datasetTabs"
+                GuidePanel {
+                    id: homeGuide
+                    compactHome: window.selectedSection === 0
+                    Layout.fillWidth:true
+                    Layout.leftMargin:Theme.xl
+                    Layout.rightMargin:Theme.xl
+                    visible:guide.active && window.selectedSection!==0 && window.selectedSection!==7
+                    onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
+                }
+                Connections { target:guide; function onNavigate(section,tab) { window.selectedSection=section; if(section===1) dataTabs.currentIndex=tab } }
+                Connections { target:launchRequests; function onNavigate(section,tab) { window.selectedSection=section; if(section===1) dataTabs.currentIndex=tab } }
+                JourneyGuide {
+                    visible: !window.advanced && window.selectedSection > 0 && window.selectedSection < 7
+                    section: window.selectedSection
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    onLearnRequested: function(articleId, origin) { window.selectedSection=7; window.openReading(origin, articleId) }
+                    onNavigate: function(section) {
+                        window.navigate(section, null)
+                        if (section === 0) Qt.callLater(function() {
+                            let target=window.findVisibleItem(window.contentItem, projects.opened ? "saveProjectButton" : "newProjectButton")
+                            if (target) target.forceActiveFocus()
+                        })
+                    }
+                }
+                UiButton {
+                    objectName: "expertToolsEntry"
+                    visible: !window.advanced && window.selectedSection > 0 && window.selectedSection < 7
+                    text: qsTr("Daha fazla araç · Gelişmiş görünüme geç")
+                    quiet: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    onClicked: preferences.setView("advanced")
+                }
+                WorkspacePanel {
+                    objectName: "deferredReportBuilderPanel"
+                    requested: window.selectedSection===6
+                    sourceComponent: ReportBuilderPanel {
+                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredReportPanel"
+                    requested: window.selectedSection===6
+                    sourceComponent: ReportPanel {
+                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredReproPanel"
+                    requested: window.advanced && window.selectedSection===6
+                    sourceComponent: ReproPanel {
+                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredCodePanel"
+                    requested: window.advanced && window.selectedSection===6
+                    sourceComponent: CodePanel {
+                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredEnvironmentPanel"
+                    requested: window.advanced && window.selectedSection===6
+                    sourceComponent: EnvironmentPanel {
+                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredPluginsPanel"
+                    requested: window.advanced && window.selectedSection===6
+                    sourceComponent: PluginsPanel {
+                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredPrivacyPanel"
+                    requested: window.selectedSection===6
+                    sourceComponent: PrivacyPanel {
+                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredSharingPanel"
+                    requested: window.advanced && window.selectedSection===6
+                    sourceComponent: SharingPanel {
+                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
+                    }
+                }
+
+
+                GridLayout {
+                    id: dataSections
+                    objectName: "dataSectionHeadings"
+                    columns: window.dataPane && width > 650 * Theme.scale ? 3 : 1
+                    function body(pane) {
+                        for (let i = 0; i < dataHeadings.count; i++) {
+                            let entry = dataHeadings.itemAt(i)
+                            if (entry && entry.modelData.id === pane) return entry.body
+                        }
+                        return hiddenBody
+                    }
+                    Item { id: hiddenBody; visible: false; Layout.fillWidth: true }
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
                     visible: window.selectedSection === 1
-                    currentIndex: 1
-                    TabButton { text: "Veri tablosu"; checked: dataTabs.currentIndex === 0; onClicked: dataTabs.setCurrentIndex(0) }
-                    TabButton { text: "Dosya içe aktar"; checked: dataTabs.currentIndex === 1; onClicked: dataTabs.setCurrentIndex(1) }
-                    TabButton { text: "Veri kalitesi"; checked: dataTabs.currentIndex === 2; onClicked: dataTabs.setCurrentIndex(2) }
+                    columnSpacing: Theme.sm
+                    rowSpacing: Theme.sm
+                    Repeater {
+                        id: dataHeadings
+                        model: [
+                            {id:"import", title:"Veriyi projeye aktar", detail:"Dosyanı seç, önizle ve projenle birlikte sakla."},
+                            {id:"profile", title:"Veri profili", detail:"Sütun başlıklarını ve veri türlerini birlikte gör."},
+                            {id:"values", title:"Sütun değerleri", detail:"Bir sütundaki değerleri ve tekrarlarını incele."},
+                            {id:"describe", title:"Özet istatistikler", detail:"Sayısal sütunların dağılımını ve temel ölçülerini gör."},
+                            {id:"rows", title:"Veri tablosu", detail:"Kayıtlarını satır satır incele."},
+                            {id:"quality", title:"Veri kalitesi", detail:"Eksik ve şüpheli kayıtları değerlendir."}
+                        ]
+                        ColumnLayout {
+                            id: entry
+                            required property var modelData
+                            required property int index
+                            property alias body: bodyLayout
+                            Layout.fillWidth: true
+                            Layout.columnSpan: window.dataPane === modelData.id ? dataSections.columns : 1
+                            spacing: Theme.md
+                            Button {
+                                id: sectionHeading
+                                objectName: "dataHeading_" + entry.modelData.id
+                                text: entry.modelData.title
+                                checkable: true
+                                checked: window.dataPane === entry.modelData.id
+                                Accessible.name: text
+                                Accessible.description: entry.modelData.detail
+                                Layout.fillWidth: true
+                                implicitHeight: headingContent.implicitHeight + 2 * (window.dataPane ? Theme.sm : Theme.lg)
+                                leftPadding: Theme.lg
+                                rightPadding: Theme.lg
+                                topPadding: window.dataPane ? Theme.sm : Theme.lg
+                                bottomPadding: window.dataPane ? Theme.sm : Theme.lg
+                                background: Rectangle {
+                                    color: sectionHeading.checked ? Theme.cyanSurface : sectionHeading.hovered ? Theme.raised : Theme.surface
+                                    radius: Theme.radius
+                                    border.width: sectionHeading.visualFocus ? 2 : 1
+                                    border.color: sectionHeading.checked || sectionHeading.visualFocus ? Theme.dataTone : Theme.border
+                                    Rectangle { anchors.left: parent.left; anchors.leftMargin: 1; anchors.verticalCenter: parent.verticalCenter; width: 3; height: parent.height - 24; radius: 2; color: Theme.dataTone; visible: sectionHeading.checked }
+                                }
+                                contentItem: RowLayout {
+                                    id: headingContent
+                                    spacing: Theme.lg
+                                    Rectangle {
+                                        Layout.preferredWidth: (window.dataPane ? 28 : 38) * Theme.scale
+                                        Layout.preferredHeight: (window.dataPane ? 28 : 38) * Theme.scale
+                                        radius: Theme.radius
+                                        color: sectionHeading.checked ? Theme.field : Theme.cyanSurface
+                                        UiLabel { anchors.centerIn: parent; text: "0" + (entry.index + 1); font.bold: true; color: Theme.dataTone }
+                                    }
+                                    ColumnLayout {
+                                        Layout.fillWidth: true
+                                        spacing: Theme.xs
+                                        UiLabel { text: entry.modelData.title; font.pixelSize: window.dataPane ? Theme.body : Theme.subheading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.Wrap }
+                                        UiLabel { visible: !window.dataPane; text: entry.modelData.detail; color: Theme.secondary; Layout.fillWidth: true; wrapMode: Text.Wrap }
+                                    }
+                                    UiLabel { text: sectionHeading.checked ? "−" : "+"; color: Theme.dataTone; font.pixelSize: Theme.heading }
+                                }
+                                onClicked: window.openDataPane(window.dataPane === entry.modelData.id ? "" : entry.modelData.id)
+                            }
+                            ColumnLayout {
+                                id: bodyLayout
+                                visible: window.dataPane === entry.modelData.id
+                                Layout.fillWidth: true
+                                Layout.leftMargin: Theme.lg
+                                Layout.rightMargin: Theme.lg
+                                Layout.bottomMargin: Theme.lg
+                            }
+                        }
+                    }
+                }
+                QtObject {
+                    id: dataTabs
+                    objectName: "datasetTabs"
+                    property int currentIndex: -1
+                    function setCurrentIndex(index) { currentIndex = index }
+                    onCurrentIndexChanged: {
+                        if (currentIndex === 1) window.dataPane = "import"
+                        else if (currentIndex === 2) window.dataPane = "quality"
+                        else if (currentIndex === 0 && (!window.dataPane || window.dataPane === "import" || window.dataPane === "quality")) window.dataPane = "profile"
+                    }
                 }
                 Connections { target: imports; function onChanged() { if (imports.busy) dataTabs.currentIndex = 1 } }
                 DatasetPanel {
+                    id: datasetViewPanel
+                    parent: dataSections.body(window.dataPane)
+                    pane: window.dataPane
+                    onShowValues: window.openDataPane("values")
                     Layout.fillWidth: true
-                    Layout.leftMargin: Theme.xl
-                    Layout.rightMargin: Theme.xl
-                    visible: window.selectedSection === 1 && dataTabs.currentIndex === 0
+                    visible: window.selectedSection === 1 && dataTabs.currentIndex === 0 && window.dataPane !== ""
                     onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                 }
                 QualityPanel {
+                    parent: dataSections.body("quality")
                     Layout.fillWidth: true
-                    Layout.leftMargin: Theme.xl
-                    Layout.rightMargin: Theme.xl
                     visible: window.selectedSection === 1 && dataTabs.currentIndex === 2
                     onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                 }
                 ImportPanel {
+                    parent: dataSections.body("import")
+                    onProjectRequested: { window.selectedSection = 0; Qt.callLater(function() { let control = window.findVisibleItem(window.contentItem, "newProjectButton"); if (control) control.forceActiveFocus() }) }
                     id: importPanel
                     Layout.fillWidth: true
-                    Layout.leftMargin: Theme.xl
-                    Layout.rightMargin: Theme.xl
                     visible: window.selectedSection === 1 && dataTabs.currentIndex === 1
                     onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                 }
-                OperationsPanel {
+                WorkspacePanel {
+                    objectName: "deferredChartPanel"
+                    requested: window.selectedSection === 3
+                    sourceComponent: ChartPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredDashboardPanel"
+                    requested: window.advanced && window.selectedSection === 3
+                    sourceComponent: DashboardPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredOperationsPanel"
+                    requested: window.selectedSection === 2
+                    sourceComponent: OperationsPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredWorkflowPanel"
+                    requested: window.advanced && window.selectedSection === 2
+                    sourceComponent: WorkflowPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredRecipePanel"
+                    requested: window.advanced && window.selectedSection === 2
+                    sourceComponent: RecipePanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                Loader {
+                    id: dimensionTools
+                    property bool visited: false
+                    readonly property bool expanded: item ? item.expanded : false
+                    active: visited
+                    Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) dimensionTools.visited = true } }
+                    Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) dimensionTools.visited = true } }
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.selectedSection === 2
+                    visible: window.advanced && window.selectedSection === 4 && !survivalTools.expanded && !causalTools.expanded && !bayesTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded
+                    sourceComponent: DimensionsPanel { onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) } }
+                }
+                Loader {
+                    id: survivalTools
+                    property bool visited: false
+                    readonly property bool expanded: item ? item.expanded : false
+                    active: visited
+                    Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) survivalTools.visited = true } }
+                    Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) survivalTools.visited = true } }
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !causalTools.expanded && !bayesTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded
+                    sourceComponent: SurvivalPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                Loader {
+                    id: causalTools
+                    property bool visited: false
+                    readonly property bool expanded: item ? item.expanded : false
+                    active: visited
+                    Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) causalTools.visited = true } }
+                    Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) causalTools.visited = true } }
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !survivalTools.expanded && !bayesTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded
+                    sourceComponent: CausalPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                Loader {
+                    id: bayesTools
+                    property bool visited: false
+                    readonly property bool expanded: item ? item.expanded : false
+                    active: visited
+                    Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) bayesTools.visited = true } }
+                    Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) bayesTools.visited = true } }
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded
+                    sourceComponent: BayesPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                Loader {
+                    id: experimentTools
+                    property bool visited: false
+                    readonly property bool expanded: item ? item.expanded : false
+                    active: visited
+                    Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) experimentTools.visited = true } }
+                    Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) experimentTools.visited = true } }
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !bayesTools.expanded
+                    sourceComponent: ExperimentPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                Loader {
+                    id: resamplingTools
+                    property bool visited: false
+                    readonly property bool expanded: item ? item.expanded : false
+                    active: visited
+                    Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) resamplingTools.visited = true } }
+                    Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) resamplingTools.visited = true } }
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !experimentTools.expanded && !bayesTools.expanded
+                    sourceComponent: ResamplingPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                Loader {
+                    id: statisticalModels
+                    property bool visited: false
+                    readonly property bool expanded: item ? item.expanded : false
+                    active: visited
+                    Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) statisticalModels.visited = true } }
+                    Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
+                    Connections {
+                        target: window
+                        function onSelectedSectionChanged() {
+                            if (window.advanced && window.selectedSection === 4) statisticalModels.visited = true
+                        }
+                    }
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !resamplingTools.expanded && !experimentTools.expanded && !bayesTools.expanded
+                    sourceComponent: StatisticalModelsPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                StatisticsPanel {
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.selectedSection === 4 && (!window.advanced || (!dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded && !bayesTools.expanded))
                     onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                 }
-                // Future sections contain honest availability information, no simulated data.
-                StateNotice {
-                    objectName: "availabilityNotice"
+                ResultPanel {
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.selectedSection !== 0 && window.selectedSection !== 1 && window.selectedSection !== 2 && window.selectedSection !== 7
-                    kind: "unavailable"
-                    heading: qsTranslate("Shell", "Not available yet")
-                    detail: window.descriptions[window.selectedSection]
+                    expert: window.advanced
+                    visible: window.advanced || (window.selectedSection === 4 && !!expertWorkspace.selected.id)
+                    onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                 }
-                ColumnLayout {
+                UiCombo {
+                    id:modelPath
+                    objectName:"modelPath"
+                    visible:window.selectedSection===5
+                    model:["Kayıt bazlı modelleme","Zaman serisi — geçmişten geleceğe","Yerel metin incelemesi"]
+                    Layout.fillWidth:true;Layout.leftMargin:Theme.xl;Layout.rightMargin:Theme.xl
+                    Accessible.name:"Modelleme yolu"
+                }
+                WorkspacePanel {
+                    objectName: "deferredTextPanel"
+                    requested: window.selectedSection===5&&modelPath.currentIndex===2
+                    sourceComponent: TextPanel {
+                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredTimeSeriesPanel"
+                    requested: window.selectedSection===5&&modelPath.currentIndex===1
+                    sourceComponent: TimeSeriesPanel {
+                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredScenarioPanel"
+                    requested: window.advanced && window.selectedSection === 5 && modelPath.currentIndex === 0
+                    sourceComponent: ScenarioPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredMonitoringPanel"
+                    requested: window.advanced && window.selectedSection === 5 && modelPath.currentIndex === 0
+                    sourceComponent: MonitoringPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                WorkspacePanel {
+                    objectName: "deferredPreparationPanel"
+                    requested: window.selectedSection === 5 && modelPath.currentIndex === 0
+                    sourceComponent: PreparationPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
+                StateNotice { objectName: "availabilityNotice"; visible: false; heading: "Henüz mevcut değil" }
+                ScienceRoadmap {
+                    Layout.fillWidth:true
+                    Layout.leftMargin:Theme.xl
+                    Layout.rightMargin:Theme.xl
+                    visible:window.selectedSection===0 && !window.advanced
+                    onNavigate:function(section,tab,origin){
+                        if(origin && origin.expertRoute) preferences.setView("advanced")
+                        window.navigate(section,window.findVisibleItem(window.contentItem,"nav"+section))
+                        if(section===1){ window.openDataPane(tab<0 ? "" : origin && origin.route ? origin.route : tab===1?"import":"profile") }
+                        const route=origin&&origin.route?origin.route:""
+                        if(section===2&&route)Qt.callLater(function(){
+                            let kind=window.findVisibleItem(window.contentItem,"operationKind")
+                            if(!kind||!kind.enabled)return
+                            kind.currentIndex=route==="clean"?3:4
+                            kind.activated(kind.currentIndex)
+                            kind.forceActiveFocus()
+                            if(route==="join")Qt.callLater(function(){
+                                let method=window.findVisibleItem(window.contentItem,"transformMethod")
+                                if(method&&method.enabled){method.currentIndex=8;method.activated(8);method.forceActiveFocus()}
+                            })
+                        })
+                        if(section===5&&route)Qt.callLater(function(){
+                            if(route==="scenario" || route==="monitoring"){
+                                modelPath.currentIndex=0
+                                Qt.callLater(function(){let control=window.findVisibleItem(window.contentItem,route+"Expanded");if(control){control.checked=true;control.forceActiveFocus()}})
+                                return
+                            }
+                            let clusterIds=["model.kmeans","model.dbscan","model.agglomerative","model.gmm","model.optics","model.hdbscan"]
+                            let anomalyIds=["model.isolation-forest","model.iqr","model.lof","model.one-class-svm","model.robust-covariance"]
+                            if(clusterIds.indexOf(route)>=0||anomalyIds.indexOf(route)>=0){
+                                modelPath.currentIndex=0
+                                let purpose=window.findVisibleItem(window.contentItem,"preparationPurpose")
+                                let clustering=clusterIds.indexOf(route)>=0
+                                if(purpose&&purpose.enabled){purpose.currentIndex=clustering?2:3;purpose.activated(purpose.currentIndex)}
+                                Qt.callLater(function(){let choice=window.findVisibleItem(window.contentItem,"unsupervisedMethod");if(choice){choice.currentIndex=(clustering?clusterIds:anomalyIds).indexOf(route);choice.forceActiveFocus()}})
+                                return
+                            }
+
+                            modelPath.currentIndex=route==="timeseries"?1:route==="text"?2:0
+                            if(route==="timeseries"||route==="text")return
+                            if(route==="classification"||route==="clustering"||route==="anomaly"){
+                                let purpose=window.findVisibleItem(window.contentItem,"preparationPurpose")
+                                if(purpose&&purpose.enabled){purpose.currentIndex=route==="classification"?1:route==="clustering"?2:3;purpose.activated(purpose.currentIndex);purpose.forceActiveFocus()}
+                                return
+                            }
+                            let name=route==="validation"?"validationSettings":route==="regression"?"regressionUnit":"preparationSettings"
+                            let control=window.findVisibleItem(window.contentItem,name)
+                            if(control&&control.enabled)control.forceActiveFocus()
+                        })
+                        if(section===0)Qt.callLater(function(){
+                            let button=window.findVisibleItem(window.contentItem,"newProjectButton")
+                            if(button)button.forceActiveFocus()
+                        })
+                    }
+                }
+
+                UiLabel {
+                    objectName: "journeyProjectHeading"
+                    visible: window.selectedSection === 0 && !window.advanced
+                    text: qsTr("Kendi yolculuğunu başlat")
+                    font.pixelSize: Theme.heading; font.bold: true
+                    Layout.fillWidth: true; Layout.leftMargin: Theme.xl; Layout.rightMargin: Theme.xl
+                    wrapMode: Text.Wrap
+                }
+                UiLabel {
+                    visible: window.selectedSection === 0 && !window.advanced
+                    text: qsTr("Yeni bir proje oluştur veya kayıtlı çalışmanı aç. Veriyi ekledikten sonra haritadaki adımlara istediğin sırada dönebilirsin; kaydetmek çalışmanı korur.")
+                    color: Theme.secondary; wrapMode: Text.Wrap
+                    Layout.fillWidth: true; Layout.leftMargin: Theme.xl; Layout.rightMargin: Theme.xl
+                }
+                ProjectPanel {
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
                     visible: window.selectedSection === 0
-                    spacing: Theme.xl
-                    ProjectPanel {
-                        Layout.fillWidth: true
-                        onHelpRequested: function(origin) { window.openInformation(origin, "", "project") }
-                    }
-                    Label { text: qsTranslate("Shell", "Start with your data"); font.pixelSize: Theme.heading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.WordWrap }
-                    Label {
-                        text: qsTranslate("Shell", "A calm place to understand your data, one step at a time.")
-                        color: Theme.secondary
-                        Layout.fillWidth: true
-                        wrapMode: Text.WordWrap
-                    }
-                    GridLayout {
-                        columns: workspace.availableWidth > 700 * Theme.scale ? 2 : 1
-                        Layout.fillWidth: true
-                        columnSpacing: Theme.lg
-                        rowSpacing: Theme.lg
-                        Frame {
-                            Layout.fillWidth: true
-                            padding: Theme.lg
-                            background: Rectangle { color: Theme.surface; radius: Theme.radius; border.color: Theme.accent; border.width: 1 }
-                            ColumnLayout {
-                                width: parent.width
-                                spacing: Theme.md
-                                UiButton { objectName: "openFileButton"; primary: true; text: qsTranslate("Shell", "Open file"); glyph: "▤"; Layout.fillWidth: true; enabled: !projects.busy; multiline: true; onClicked: { window.selectedSection = 1; importPanel.openPicker() } Accessible.description: "CSV/TSV dosyası seç" }
-                                Label { text: "CSV/TSV içe aktarma ve sınırlı önizleme hazır. Önce proje oluşturun."; Layout.fillWidth: true; wrapMode: Text.WordWrap; color: Theme.secondary }
-                            }
-                        }
-                        Frame {
-                            Layout.fillWidth: true
-                            padding: Theme.lg
-                            background: Rectangle { color: Theme.surface; radius: Theme.radius; border.color: Theme.border }
-                            ColumnLayout {
-                                width: parent.width
-                                spacing: Theme.md
-                                UiButton { objectName: "sampleButton"; primary: true; text: qsTranslate("Shell", "Try sample data"); glyph: "▦"; Layout.fillWidth: true; enabled: false; multiline: true; Accessible.description: qsTranslate("Shell", "Sample datasets are not available yet.") }
-                                Label { text: qsTranslate("Shell", "Sample datasets are not available yet."); Layout.fillWidth: true; wrapMode: Text.WordWrap; color: Theme.secondary }
-                            }
-                        }
-                    }
-                    StateNotice {
-                        Layout.fillWidth: true
-                        kind: "empty"
-                        heading: qsTranslate("Shell", "No data loaded")
-                        detail: qsTranslate("Shell", "Your source files stay unchanged. Data loading will be added in a later phase.")
-                    }
-                    Label { text: qsTranslate("Shell", "What would you like to do?"); font.pixelSize: Theme.subheading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.WordWrap }
-                    Label { text: qsTranslate("Shell", "Planned goals · Not available yet"); color: Theme.secondary; Layout.fillWidth: true; wrapMode: Text.WordWrap }
-                    GridLayout {
-                        Layout.fillWidth: true
-                        columns: workspace.availableWidth > 700 * Theme.scale ? 2 : 1
-                        rowSpacing: Theme.md
-                        columnSpacing: Theme.md
-                        Repeater {
-                            model: [
-                                {label: qsTranslate("Shell", "Understand my data"), section: 1, icon: "▦"},
-                                {label: qsTranslate("Shell", "Tidy up my data"), section: 2, icon: "◇"},
-                                {label: qsTranslate("Shell", "Find patterns"), section: 3, icon: "⌕"},
-                                {label: qsTranslate("Shell", "Compare groups"), section: 4, icon: "⇄"},
-                                {label: qsTranslate("Shell", "Make a prediction"), section: 5, icon: "△"},
-                                {label: qsTranslate("Shell", "Find similar records"), section: 5, icon: "◇"},
-                                {label: qsTranslate("Shell", "Spot unusual records"), section: 3, icon: "⌕"},
-                                {label: qsTranslate("Shell", "Share my findings"), section: 6, icon: "≡"}
-                            ]
-                            UiButton {
-                                required property var modelData
-                                Layout.fillWidth: true
-                                implicitHeight: Math.max(64, contentItem.implicitHeight + 32)
-                                text: modelData.label
-                                glyph: modelData.icon
-                                multiline: true
-                                Accessible.description: qsTranslate("Shell", "Not available yet. Open the availability information.")
-                                onClicked: window.navigate(modelData.section, this)
-                            }
-                        }
-                    }
+                    onHelpRequested: function(origin) { window.openInformation(origin, "", "project") }
                 }
+
                 LearningCenter {
                     objectName: "learningCenter"
                     visible: window.selectedSection === 7
@@ -418,7 +1039,7 @@ ApplicationWindow {
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
                     library: learning
-                    onArticleRequested: function(articleId, origin) { window.openInformation(origin, articleId) }
+                    onArticleRequested: function(articleId, origin) { window.openReading(origin, articleId) }
                 }
                 // Results and errors remain visible in either view, even if trial controls are collapsed.
                 ColumnLayout {
@@ -428,14 +1049,15 @@ ApplicationWindow {
                     spacing: Theme.md
                     StateNotice {
                         objectName: "taskNotice"
+                        visible: !!startupError || !!(bridge && bridge.jobId)
                         Layout.fillWidth: true
                         kind: startupError || (bridge && bridge.errorText) ? "error" : (bridge && bridge.active ? "loading" : (bridge && bridge.stateCode === "canceled" ? "canceled" : "empty"))
                         heading: startupError ? qsTranslate("Shell", "Unavailable") : (bridge && bridge.jobId ? qsTranslate("Main", "Task infrastructure test") + " · " + bridge.stateText : qsTranslate("Shell", "Local workspace ready"))
-                        detail: bridge && bridge.jobId ? qsTranslate("Shell", "Infrastructure trial · No dataset analysis") : qsTranslate("Shell", "Theme, view and text size are saved on this computer.")
+                        detail: bridge && bridge.jobId ? qsTranslate("Shell", "Infrastructure trial · No dataset analysis") : qsTranslate("Shell", "View is saved on this computer.")
                     }
-                    Label { objectName: "stateLabel"; text: bridge ? bridge.stateText : qsTranslate("Main", "Unavailable"); Layout.fillWidth: true; wrapMode: Text.WordWrap }
-                    Label { objectName: "resultLabel"; text: bridge ? bridge.resultText : ""; visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.WordWrap }
-                    Label { objectName: "errorLabel"; text: startupError || (bridge ? bridge.errorText : ""); visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.WrapAnywhere; color: Theme.error }
+                    UiLabel { visible: !!(bridge && bridge.jobId); objectName: "stateLabel"; text: bridge ? bridge.stateText : qsTranslate("Main", "Unavailable"); Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                    UiLabel { objectName: "resultLabel"; text: bridge ? bridge.resultText : ""; visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                    UiLabel { objectName: "errorLabel"; text: startupError || (bridge ? bridge.errorText : ""); visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.WrapAnywhere; color: Theme.error }
                     ProgressBar {
                         objectName: "jobProgress"
                         Layout.fillWidth: true
@@ -444,9 +1066,10 @@ ApplicationWindow {
                         visible: bridge && bridge.active
                         Accessible.name: qsTranslate("Shell", "Task progress")
                     }
-                    UiButton { objectName: "cancelButton"; text: qsTranslate("Main", "Cancel task"); glyph: "×"; visible: bridge && bridge.active; enabled: bridge && bridge.active && !bridge.closing; onClicked: bridge.cancel() }
+                    UiButton { objectName: "cancelButton"; helpContext: "demo.cpu"; text: qsTranslate("Main", "Cancel task"); glyph: "×"; visible: bridge && bridge.active; enabled: bridge && bridge.active && !bridge.closing; onClicked: bridge.cancel() }
                     UiButton {
                         objectName: "demoToggle"
+                        visible: window.advanced || window.showDemo
                         text: qsTranslate("Shell", "Infrastructure trials")
                         glyph: window.showDemo ? "−" : "+"
                         checkable: true
@@ -461,7 +1084,7 @@ ApplicationWindow {
                         ColumnLayout {
                             width: parent.width
                             spacing: Theme.lg
-                            Label { text: qsTranslate("Shell", "These trials check the app. They do not load or analyze data."); Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                            UiLabel { text: qsTranslate("Shell", "These trials check the app. They do not load or analyze data."); Layout.fillWidth: true; wrapMode: Text.WordWrap }
                             Flow {
                                 Layout.fillWidth: true
                                 spacing: Theme.sm
@@ -470,6 +1093,13 @@ ApplicationWindow {
                                 UiButton { objectName: "unknownButton"; helpContext: "demo.unknown"; width: Math.min(implicitWidth, parent.width); multiline: true; text: qsTranslate("Main", "Test unknown progress"); enabled: bridge && !bridge.active && !bridge.closing; onClicked: bridge.start("demo.unknown") }
                             }
                         }
+                    }
+                    UiButton {
+                        objectName: "computeBudgetButton"
+                        text: qsTr("Hesaplama bütçesi ve ölçümler")
+                        helpContext: "compute.resources"
+                        Layout.fillWidth: true
+                        onClicked: computeDialog.open()
                     }
                     Frame {
                         objectName: "technicalSettings"
@@ -480,11 +1110,11 @@ ApplicationWindow {
                         ColumnLayout {
                             width: parent.width
                             spacing: Theme.md
-                            Label { text: qsTranslate("Shell", "Technical details"); font.pixelSize: Theme.subheading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.WordWrap }
-                            Label { text: qsTranslate("Main", "Change the test configuration while a task is running to verify that old results are not applied."); Layout.fillWidth: true; wrapMode: Text.WordWrap }
-                            Label { objectName: "bindingLabel"; text: qsTranslate("Shell", "Session:") + " " + (bridge ? bridge.sessionVersion : "—"); Layout.fillWidth: true; wrapMode: Text.WrapAnywhere }
-                            Label { text: qsTranslate("Main", "Task ID:") + " " + (bridge ? bridge.jobId : "—"); Layout.fillWidth: true; wrapMode: Text.WrapAnywhere }
-                            Label { text: qsTranslate("Main", "Configuration revision:") + " " + (bridge ? bridge.revision : 0); Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                            UiLabel { text: qsTranslate("Shell", "Technical details"); font.pixelSize: Theme.subheading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                            UiLabel { text: qsTranslate("Main", "Change the test configuration while a task is running to verify that old results are not applied."); Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                            UiLabel { objectName: "bindingLabel"; text: qsTranslate("Shell", "Session:") + " " + (bridge ? bridge.sessionVersion : "—"); Layout.fillWidth: true; wrapMode: Text.WrapAnywhere }
+                            UiLabel { text: qsTranslate("Main", "Task ID:") + " " + (bridge ? bridge.jobId : "—"); Layout.fillWidth: true; wrapMode: Text.WrapAnywhere }
+                            UiLabel { text: qsTranslate("Main", "Configuration revision:") + " " + (bridge ? bridge.revision : 0); Layout.fillWidth: true; wrapMode: Text.WordWrap }
                             Flow {
                                 Layout.fillWidth: true
                                 spacing: Theme.sm
@@ -493,8 +1123,6 @@ ApplicationWindow {
                             }
                         }
                     }
-                    UiButton { objectName: "taskHelpButton"; helpContext: "demo.cpu"; text: "Görevler ne işe yarar?"; glyph: "?"; multiline: true; Layout.fillWidth: true; onClicked: window.openInformation(this, "", helpContext) }
-                    UiButton { objectName: "closeButton"; text: qsTranslate("Main", "Close"); glyph: "×"; onClicked: window.close() }
                 }
                 Item { Layout.preferredHeight: Theme.xl }
             }
@@ -504,7 +1132,7 @@ ApplicationWindow {
             objectName: "dockedInformation"
             Layout.fillHeight: true
             Layout.preferredWidth: 320 * Theme.scale
-            visible: window.dockInfo && window.infoOpen
+            visible: window.dockInfo && window.infoOpen && !window.readingOpen
             heading: window.sections[window.selectedSection]
             detail: window.descriptions[window.selectedSection]
             onCloseRequested: window.closeInformation()
@@ -513,28 +1141,58 @@ ApplicationWindow {
     Dialog {
         id: unsavedDialog
         objectName: "unsavedProjectDialog"
-        title: "Kaydedilmemiş değişiklikler"
+        title: qsTr("Kaydedilmemiş değişiklikler")
         modal: true
         anchors.centerIn: parent
         width: Math.min(520, window.width - 40)
         ColumnLayout {
             anchors.fill: parent
-            Label { text: "Kapanmadan önce proje değişikliklerini kaydetmek ister misiniz?"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
-            Label { text: projects.errorText; visible: text.length > 0; color: Theme.error; Layout.fillWidth: true; wrapMode: Text.WordWrap }
-            UiButton { text: "Kaydet ve kapat"; Layout.fillWidth: true; onClicked: { window.closeAfterSave = true; projects.request("save") } }
-            UiButton { text: "Değişiklikleri bırak ve kapat"; Layout.fillWidth: true; onClicked: { window.discardOnExit = true; unsavedDialog.close(); window.close() } }
-            UiButton { text: "Çalışmaya dön"; Layout.fillWidth: true; onClicked: unsavedDialog.close() }
+            UiLabel { text: qsTr("Kapanmadan önce proje değişikliklerini kaydetmek ister misiniz?"); Layout.fillWidth: true; wrapMode: Text.WordWrap }
+            UiLabel { text: projects.errorText; visible: text.length > 0; color: Theme.error; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+            UiButton { text: qsTr("Kaydet ve kapat"); Layout.fillWidth: true; onClicked: { window.closeAfterSave = true; projects.request("save") } }
+            UiButton { text: qsTr("Değişiklikleri bırak ve kapat"); Layout.fillWidth: true; onClicked: { window.discardOnExit = true; unsavedDialog.close(); window.close() } }
+            UiButton { text: qsTr("Çalışmaya dön"); Layout.fillWidth: true; onClicked: unsavedDialog.close() }
         }
     }
     Connections { target: projects; function onSaveFinished(success) { if (window.closeAfterSave) { window.closeAfterSave = false; if (success) { unsavedDialog.close(); window.close() } } } }
-    Shortcut { sequence: "Ctrl+S"; onActivated: projects.request("save") }
-    Shortcut { sequence: "Ctrl+O"; onActivated: { window.selectedSection = 0; window.findVisibleItem(window.contentItem, "openProjectButton").clicked() } }
+    Shortcut { objectName: "saveProjectShortcut"; sequence: "Ctrl+S"; enabled: !startupError; onActivated: projects.request("save") }
+    Shortcut { objectName: "openProjectShortcut"; sequence: "Ctrl+O"; enabled: !startupError; onActivated: { window.selectedSection = 0; window.findVisibleItem(window.contentItem, "openProjectButton").clicked() } }
+    LaboratoryWindow { id: lessonLab; library: learning; lab: learningLab; onArticleRequested: function(articleId, origin) { window.openReading(origin, articleId); window.requestActivate() } }
+    Connections { target: learningLab; function onOpened() { lessonLab.show(); lessonLab.requestActivate() } }
     ExampleWindow {
         id: learningExample
         library: learning.exampleLibrary
         onClosing: { window.requestActivate(); window.restoreHelpFocus() }
     }
     Connections { target: learning; function onExampleRequested() { learningExample.show(); learningExample.requestActivate() } }
+    Dialog {
+        id: articleReader
+        objectName: "learningReader"
+        parent: Overlay.overlay
+        anchors.centerIn: parent
+        width: Math.min(850 * Theme.scale, window.width - 32)
+        height: Math.min(820 * Theme.scale, window.height - 48)
+        modal: true
+        focus: true
+        padding: Theme.lg
+        closePolicy: Popup.CloseOnEscape
+        background: Rectangle { color: Theme.surface; radius: Theme.radius; border.color: Theme.learningTone }
+        onClosed: if (window.readingOpen) window.closeInformation()
+        header: RowLayout {
+            spacing: Theme.md
+            UiLabel { text: qsTr("Öğren · ") + learning.article.category; color: Theme.learningTone; font.bold: true; Layout.fillWidth: true; Layout.leftMargin: Theme.lg; wrapMode: Text.WordWrap }
+            UiIconButton { objectName: "learningReaderClose"; symbol: "close"; accessibleLabel: qsTr("Okuma penceresini kapat"); Layout.rightMargin: Theme.md; onClicked: window.closeInformation() }
+        }
+        contentItem: ScrollView {
+            id: readerScroll
+            clip: true
+            contentWidth: availableWidth
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ArticleView { width: readerScroll.availableWidth; library: learning; readingMode: true }
+        }
+        onOpened: { readerScroll.contentItem.contentY = 0; readerScroll.forceActiveFocus() }
+        Connections { target: learning; function onChanged() { if (window.readingOpen) readerScroll.contentItem.contentY = 0 } }
+    }
     Drawer {
         id: infoDrawer
         objectName: "informationDrawer"

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="66" time="82.467" timestamp="2026-10-16T11:39:28.878960+03:00" hostname="s-oktay"><testcase classname="tests.test_learning_lab" name="test_real_kernel_safe_publication[mean-median]" time="0.436" /><testcase classname="tests.test_learning_lab" name="test_real_kernel_safe_publication[cleaning]" time="0.429" /><testcase classname="tests.test_learning_lab" name="test_real_kernel_safe_publication[histogram]" time="0.433" /><testcase classname="tests.test_learning_lab" name="test_real_kernel_safe_publication[sampling]" time="0.425" /><testcase classname="tests.test_learning_lab" name="test_real_kernel_safe_publication[ci]" time="0.441" /><testcase classname="tests.test_learning_lab" name="test_real_kernel_safe_publication[overfitting]" time="0.411" /><testcase classname="tests.test_learning_lab" name="test_real_kernel_safe_publication[leakage]" time="0.409" /><testcase classname="tests.test_learning_lab" name="test_real_kernel_safe_publication[calibration]" time="0.422" /><testcase classname="tests.test_learning_lab" name="test_real_kernel_safe_publication[time-series]" time="0.530" /><testcase classname="tests.test_learning_lab" name="test_real_kernel_safe_publication[confounding]" time="0.404" /><testcase classname="tests.test_learning_lab" name="test_all_paths_prerequisites_coverage_and_negative_mutations" time="0.287" /><testcase classname="tests.test_learning_lab" name="test_optional_progress_migration_version_and_optout" time="0.099" /><testcase classname="tests.test_learning_lab" name="test_cancel_immutable_user_project_and_hash" time="0.543" /><testcase classname="tests.test_learning_lab" name="test_slider_reproducibility_and_closed_recipe" time="0.202" /><testcase classname="tests.test_learning" name="test_catalog_offline_search_turkish_categories_glossary_and_sources" time="0.056" /><testcase classname="tests.test_learning" name="test_invalid_content_and_unimplemented_actions_rejected[&lt;lambda&gt;0]" time="0.053" /><testcase classname="tests.test_learning" name="test_invalid_content_and_unimplemented_actions_rejected[&lt;lambda&gt;1]" time="0.053" /><testcase classname="tests.test_learning" name="test_invalid_content_and_unimplemented_actions_rejected[&lt;lambda&gt;2]" time="0.056" /><testcase classname="tests.test_learning" name="test_invalid_content_and_unimplemented_actions_rejected[&lt;lambda&gt;3]" time="0.052" /><testcase classname="tests.test_learning" name="test_invalid_content_and_unimplemented_actions_rejected[&lt;lambda&gt;4]" time="0.056" /><testcase classname="tests.test_learning" name="test_invalid_content_and_unimplemented_actions_rejected[&lt;lambda&gt;5]" time="0.055" /><testcase classname="tests.test_learning" name="test_invalid_content_and_unimplemented_actions_rejected[&lt;lambda&gt;6]" time="0.056" /><testcase classname="tests.test_learning" name="test_invalid_content_and_unimplemented_actions_rejected[&lt;lambda&gt;7]" time="0.053" /><testcase classname="tests.test_learning" name="test_invalid_content_and_unimplemented_actions_rejected[&lt;lambda&gt;8]" time="0.056" /><testcase classname="tests.test_learning" name="test_invalid_content_and_unimplemented_actions_rejected[&lt;lambda&gt;9]" time="0.053" /><testcase classname="tests.test_learning" name="test_invalid_content_and_unimplemented_actions_rejected[&lt;lambda&gt;10]" time="0.057" /><testcase classname="tests.test_learning" name="test_missing_qml_help_and_capability_links_fail_gate" time="0.144" /><testcase classname="tests.test_learning" name="test_optional_marks_atomic_reload_opt_out_and_existing_bad_file" time="0.195" /><testcase classname="tests.test_learning" name="test_example_project_separate_query_article_marks_and_no_disk_writes" time="0.051" /><testcase classname="tests.test_learning_tree" name="test_published_topics_have_one_home_and_context_help_is_separate" time="0.049" /><testcase classname="tests.test_learning_tree" name="test_source_preserved_and_reading_content_available_offline" time="0.050" /><testcase classname="tests.test_learning_tree" name="test_analysis_source_and_five_explanations" time="0.049" /><testcase classname="tests.test_learning_tree" name="test_cleaning_source_excludes_code_and_preserves_training_scope" time="0.049" /><testcase classname="tests.test_workspace" name="test_one_registry_honest_operations_and_missing_dependencies" time="0.001" /><testcase classname="tests.test_workspace" name="test_result_contract_model_log_and_unknown_readonly" time="0.000" /><testcase classname="tests.test_workspace" name="test_registry_real_gui_run_preset_tabs_compare_reopen[pearson]" time="23.772" /><testcase classname="tests.test_workspace" name="test_registry_real_gui_run_preset_tabs_compare_reopen[spearman]" time="38.091"><failure message="AssertionError: Import GUI condition timed out">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-79/test_registry_real_gui_run_pre1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f31ee4d4c00&gt;
+method = 'spearman'
+
+    @pytest.mark.parametrize("method", ["pearson", "spearman"])
+    def test_registry_real_gui_run_preset_tabs_compare_reopen(
+        tmp_path, monkeypatch, method
+    ):
+        app, window, _, projects, imports = setup(tmp_path, monkeypatch)
+        source = tmp_path / "pairs.parquet"
+        pl.DataFrame(dict(x=[-2, -1, 0, 1, 2], y=[-2, 0, -1, 2, 1])).write_parquet(source)
+        original = source.read_bytes()
+        try:
+            imports.choose(str(source))
+            spin(app, lambda: not imports.busy)
+            imports.importData()
+            spin(app, lambda: not imports.busy)
+            engine = app._veri_ufku_resources[0]
+            registry = engine._workspace_resources
+            stats = engine._statistics_resources
+            preferences = app._veri_ufku_resources[-2]
+            preferences.setView("advanced")
+            registry.search(method)
+            assert any(m["id"] == "statistics." + method for m in registry.modules)
+            app.processEvents()
+            button = visual_item(window.contentItem(), "module-statistics." + method)
+            assert button and button.property("enabled")
+            button.clicked.emit()
+            app.processEvents()
+            assert window.property("selectedSection") == 4
+            assert window.findChild(QObject, "statisticsPath").property("currentIndex") == 4
+            columns = {c["name"]: c["id"] for c in stats.columns}
+            spec = dict(
+                path="numeric",
+                method=method,
+                x=columns["x"],
+                y=columns["y"],
+                question="İlişki?",
+                hypothesis="İlişki yok",
+                unit="puan",
+                observation_unit="kişi",
+                independent=True,
+                measurement_confirmed=True,
+            )
+            stats.create(json.dumps(spec), True)
+            spin(app, lambda: not stats.busy)
+            assert stats.preflightCurrent, stats.errorText
+            stats.create(json.dumps(dict(spec, assumptions_confirmed=True)), False)
+            spin(app, lambda: not stats.busy)
+            assert not stats.errorText
+            # Independent reference: ranks here have identical Pearson/Spearman dot products.
+            assert stats.result["primary"]["effect"]["value"] == pytest.approx(0.8)
+            ident = stats.result["result_version"]
+            frozen = copy.deepcopy(stats.result)
+            assert registry.selected["id"] == ident
+            assert window.findChild(QObject, "commonResultId").property("text") == ident
+            preferences.setView("beginner")
+            app.processEvents()
+            assert registry.selected["id"] == ident
+            assert window.findChild(QObject, "commonResultId").property("text") == ident
+            preferences.setView("advanced")
+            stats.save()
+            spin(app, lambda: not stats.busy)
+            registry.favorite("statistics." + method)
+            spin(app, lambda: not projects.busy)
+            registry.pin(ident)
+            spin(app, lambda: not projects.busy)
+            registry.savePreset("İlişki", json.dumps(spec))
+            spin(app, lambda: not projects.busy)
+            assert registry.presets and registry.tabs[0]["id"] == ident
+            registry.applyPreset(0)
+            assert stats.result == frozen
+            assert not stats.preflightCurrent
+            stats.create(json.dumps(dict(spec, confidence=0.9)), True)
+            spin(app, lambda: not stats.busy)
+            stats.create(
+                json.dumps(dict(spec, confidence=0.9, assumptions_confirmed=True)), False
+            )
+&gt;           spin(app, lambda: not stats.busy)
+
+tests/test_workspace.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+app = &lt;PySide6.QtGui.QGuiApplication(0x49fa2130) at 0x7f317301bb00&gt;
+predicate = &lt;function test_registry_real_gui_run_preset_tabs_compare_reopen.&lt;locals&gt;.&lt;lambda&gt; at 0x7f31709611c0&gt;
+timeout = 20000
+
+    def spin(app, predicate, timeout=20000):
+        deadline = time.monotonic() + timeout / 1000
+        while time.monotonic() &lt; deadline:
+            app.processEvents()
+            if predicate():
+                return
+            QTest.qWait(10)
+&gt;       raise AssertionError("Import GUI condition timed out")
+E       AssertionError: Import GUI condition timed out
+
+tests/test_import_gui.py:35: AssertionError</failure></testcase><testcase classname="tests.test_experiment_registry" name="test_existing_identity_capture_integrity_revision_reopen_masked_export" time="0.116" /><testcase classname="tests.test_experiment_registry" name="test_split_mismatch_canceled_run_not_success_and_legacy_unknown" time="0.180" /><testcase classname="tests.test_experiment_registry" name="test_invalid_revision_atomic[tags-value0]" time="0.085" /><testcase classname="tests.test_experiment_registry" name="test_invalid_revision_atomic[tags-value1]" time="0.082" /><testcase classname="tests.test_experiment_registry" name="test_invalid_revision_atomic[quota--1]" time="0.087" /><testcase classname="tests.test_experiment_registry" name="test_invalid_revision_atomic[model_status-deployed]" time="0.090" /><testcase classname="tests.test_experiment_registry" name="test_invalid_revision_atomic[metric_revision-test_accuracy]" time="0.086" /><testcase classname="tests.test_experiment_registry" name="test_invalid_revision_atomic[threshold-0.7]" time="0.087" /><testcase classname="tests.test_experiment_registry" name="test_revision_tampering_stale_draft_and_disk_quota" time="0.096" /><testcase classname="tests.test_experiment_registry" name="test_integrity_scan_cancel_and_timeout_preserve_run" time="0.080" /><testcase classname="tests.test_experiment_registry" name="test_pending_canceled_final_reservation_visible_without_success" time="0.101" /><testcase classname="tests.test_experiment_registry" name="test_same_split_different_metric_averaging_is_not_same_protocol" time="0.228" /><testcase classname="tests.test_repro" name="test_lineage_recorded_report_operation_source_and_legacy_gap" time="0.019" /><testcase classname="tests.test_repro" name="test_profile_reference_bundle_exact_and_reopen_hash" time="0.325" /><testcase classname="tests.test_repro" name="test_opt_in_snapshot_reopens_without_original_project" time="0.170" /><testcase classname="tests.test_repro" name="test_corruption_schema_and_environment_fail_closed" time="0.165" /><testcase classname="tests.test_repro" name="test_secret_redaction_and_data_rejection" time="0.221" /><testcase classname="tests.test_repro" name="test_workflow_safe_model_artifact_and_numeric_policy" time="1.630" /><testcase classname="tests.test_repro" name="test_changed_data_does_not_pass_numeric_tolerance" time="0.160" /><testcase classname="tests.test_repro" name="test_multisource_graph_preserves_recorded_relation_uri" time="0.144" /><testcase classname="tests.test_repro" name="test_malicious_bundle_paths_methods_duplicates_and_budget" time="0.217" /><testcase classname="tests.test_repro" name="test_preview_redaction_disables_changed_config_and_legacy_no_replay" time="0.048" /><testcase classname="tests.test_repro" name="test_profile_tolerance_never_loosens_decimal_or_integer" time="0.001" /><testcase classname="tests.test_repro" name="test_data_pattern_and_external_path_redaction" time="0.115" /><testcase classname="tests.test_repro" name="test_workflow_graph_traces_model_and_report_nodes" time="0.325" /><testcase classname="tests.test_repro" name="test_canceled_bundle_never_publishes_and_environment_captures_no_env" time="0.159" /><testcase classname="tests.test_repro" name="test_metadata_worker_and_budget_probe_do_not_load_model_runtime" time="0.162" /><testcase classname="tests.test_repro" name="test_workflow_preview_hash_stable_across_hash_seeds" time="6.596" /><testcase classname="tests.test_repro" name="test_legacy_dataset_without_import_metadata_keeps_graph_not_invented" time="0.014" /></testsuite></testsuites>

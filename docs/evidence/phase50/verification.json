@@ -1,0 +1,51 @@
+{
+  "id": "E50-VERIFY",
+  "environment": "ENV-50",
+  "date": "2026-10-13T18:50:40.052092+00:00",
+  "tests": {
+    "source-core": 295,
+    "wheel-core": 295,
+    "source-ui": 23,
+    "source-forest-ui": 2
+  },
+  "new_tests": {
+    "core": 23,
+    "gui": 10
+  },
+  "walkthroughs": {
+    "source-gui": {
+      "workflows": 10,
+      "stages": 18,
+      "png": 108,
+      "json_and_model_copies": 36
+    },
+    "wheel-gui": {
+      "workflows": 10,
+      "stages": 18,
+      "png": 108,
+      "json_and_model_copies": 36
+    }
+  },
+  "commands": [
+    ".venv/bin/pytest -q tests/test_uncertainty.py tests/test_search.py tests/test_search_store.py tests/test_model_families.py tests/test_model_family_support.py tests/test_regression.py tests/test_classification.py tests/test_lifecycle.py tests/test_validation.py tests/test_learning_tree.py --junitxml=docs/evidence/phase50/source-core.xml",
+    ".venv/bin/python /tmp/f50_wheel_tests.py",
+    "QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software .venv/bin/pytest -q tests/test_uncertainty_gui.py tests/test_classification_gui.py tests/test_lifecycle_gui.py tests/test_validation_gui.py tests/test_usability.py --junitxml=docs/evidence/phase50/source-ui.xml",
+    "QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software .venv/bin/pytest -q tests/test_uncertainty_gui.py -k forest --junitxml=docs/evidence/phase50/source-forest-ui.xml",
+    ".venv/bin/python scripts/measure_phase50.py --output docs/evidence/phase50/source-gui",
+    ".venv/bin/python scripts/measure_phase50.py --forest-only --output docs/evidence/phase50/source-gui",
+    ".venv/bin/python scripts/measure_phase50.py --package-root /tmp/veri-ufku-f50-installed --output docs/evidence/phase50/wheel-gui",
+    ".venv/bin/python scripts/measure_phase50.py --forest-only --package-root /tmp/veri-ufku-f50-installed --output docs/evidence/phase50/wheel-gui",
+    ".venv/bin/python -m unittest discover -s tests -p test_document_contracts.py -v"
+  ],
+  "exit_code": 0,
+  "not_run": [
+    "physical desktop",
+    "human usability",
+    "AT",
+    "minimum hardware",
+    "clean offline install",
+    "remote CI",
+    "full repo aggregate regressions"
+  ],
+  "prior_gates": "unchanged; optional earlier backends remain unvalidated"
+}

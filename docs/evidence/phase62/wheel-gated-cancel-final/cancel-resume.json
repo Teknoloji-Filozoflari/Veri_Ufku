@@ -1,0 +1,595 @@
+{
+  "schema": "StreamRun/v1",
+  "run_id": "run:bd697022-7b31-47d3-bbeb-c84199ec763c",
+  "training_id": "run:bd697022-7b31-47d3-bbeb-c84199ec763c",
+  "dataset_version": "dv:2e7e8809-c601-4eb8-b960-9bc75f8437c8",
+  "origin_version": "dv:2e7e8809-c601-4eb8-b960-9bc75f8437c8",
+  "source_snapshot_id": "snapshot:68157c91-e415-4631-b948-3bd8d2eaab2f",
+  "snapshot_fingerprint": {
+    "size": 8944,
+    "sha256": "aeb9b308fed47960a9976abcd5747d62f5cd5e7aa77017b90039a58422d81487"
+  },
+  "seed": 62,
+  "spec": {},
+  "stream_spec": {
+    "event_id": "col:f027bb89-297f-4d8b-b4b1-86683a95799f",
+    "event_time": "col:bbea6ae9-3df7-4c67-a8ea-5c78eedcfac3",
+    "processing_time": "col:ece72f80-370f-471e-9c58-f3f0d50dad0f",
+    "feedback_time": "col:35ac8246-6559-4f6d-bf5e-79930ec900ba",
+    "target": "col:07169cb9-5827-489d-85ce-3bdb050f586b",
+    "features": [
+      "col:d8ddcd26-9e39-4327-82a7-c2986ef1965b"
+    ],
+    "buffer": 64,
+    "window": 60,
+    "lateness": 0,
+    "late_policy": "quarantine",
+    "clock": "event",
+    "retrain": "alarm_only",
+    "drift_threshold": 0.25,
+    "checkpoint_every": 16,
+    "seed": 62
+  },
+  "epoch": 0,
+  "curves": [],
+  "elapsed_seconds": 9.64830540299954,
+  "created_at": "2026-10-15T17:59:44.376704+00:00",
+  "data_access_at": "2026-10-15T17:59:44.376704+00:00",
+  "prior_test_use_ids": [],
+  "state": {
+    "cursor": 40,
+    "last_id": 39,
+    "last_processing": 39.0,
+    "max_event": 39.0,
+    "pending": [],
+    "windows": {
+      "0": 40
+    },
+    "scaler": {
+      "mean_": [
+        19.5
+      ],
+      "var_": [
+        133.25
+      ],
+      "scale_": [
+        11.543396380615196
+      ],
+      "n_samples_seen_": 40.0,
+      "n_features_in_": 1
+    },
+    "model": {
+      "coef_": [
+        [
+          -0.301016639575457
+        ]
+      ],
+      "intercept_": [
+        -0.6944861906529396
+      ],
+      "classes_": [
+        0,
+        1
+      ],
+      "t_": 41.0,
+      "n_iter_": 1,
+      "n_features_in_": 1
+    },
+    "trained": 40,
+    "scored": 39,
+    "errors": 20,
+    "missing": 0,
+    "late": 0,
+    "expired": 0,
+    "closed_windows": 0,
+    "generation": 0,
+    "alarms": 1,
+    "losses": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "preview": [
+      {
+        "id": 0,
+        "row_id": "row:3dc03f73-27e6-4679-aedd-0dc8ce0a2f5c",
+        "source_record_id": "sr:4f582eee-3940-41a7-a6b4-37103c678154",
+        "prediction": null,
+        "generation": 0,
+        "trained_before": 0
+      },
+      {
+        "id": 1,
+        "row_id": "row:873327ee-e600-4ea4-9686-c6aab188204a",
+        "source_record_id": "sr:18eb97f7-91f8-4e18-85f6-d2ccfe3ae539",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 1
+      },
+      {
+        "id": 2,
+        "row_id": "row:6c05fbf8-e567-4852-b568-445d27bbadd5",
+        "source_record_id": "sr:918b71a7-49de-42e8-a768-f2ea3cfe01e5",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 2
+      },
+      {
+        "id": 3,
+        "row_id": "row:26701a72-8a52-4af5-a228-4b5ff8341315",
+        "source_record_id": "sr:7f713a80-3c18-4795-be6f-e88837870c26",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 3
+      },
+      {
+        "id": 4,
+        "row_id": "row:a7e22fa6-6a22-4c2b-8393-35260403da8b",
+        "source_record_id": "sr:807ed844-db28-4bab-bf82-f9284cde989f",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 4
+      },
+      {
+        "id": 5,
+        "row_id": "row:e5b2ef0c-43e3-4f41-906e-f68ce37edbcc",
+        "source_record_id": "sr:9ff0c1e3-e0d1-4982-aced-885b3452c1f3",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 5
+      },
+      {
+        "id": 6,
+        "row_id": "row:3ee0e85a-738d-44cf-81f3-452b79d71d82",
+        "source_record_id": "sr:a1327fd8-b34e-4389-871f-1770b8e4b019",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 6
+      },
+      {
+        "id": 7,
+        "row_id": "row:efaa5705-3d3e-4418-b417-57ca6eeec5c2",
+        "source_record_id": "sr:9159ed37-5354-4a30-ace7-ed91b5cb467d",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 7
+      },
+      {
+        "id": 8,
+        "row_id": "row:6c228aee-577f-4b4b-90ef-3dc11befa855",
+        "source_record_id": "sr:a25c489e-1c92-45d9-96ed-498d7e3314d1",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 8
+      },
+      {
+        "id": 9,
+        "row_id": "row:008fdad1-5fed-4a8e-b06f-c22b82241329",
+        "source_record_id": "sr:b4e85a89-5bdc-4a31-931c-f078ead4385c",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 9
+      },
+      {
+        "id": 10,
+        "row_id": "row:cf85a1bc-b27b-4877-9606-18452afa871b",
+        "source_record_id": "sr:4d5b0613-7110-450f-97ae-70a268e98776",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 10
+      },
+      {
+        "id": 11,
+        "row_id": "row:7dab296d-2914-47f7-a823-a3f142330bd0",
+        "source_record_id": "sr:898b133f-41bf-47b1-bfa8-94397faab8d4",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 11
+      },
+      {
+        "id": 12,
+        "row_id": "row:7ba3a81d-3117-4b43-a2fd-7d0efbc0440f",
+        "source_record_id": "sr:06f4b20d-f943-41b8-b2c8-cae074b5ba10",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 12
+      },
+      {
+        "id": 13,
+        "row_id": "row:fd996b9d-ab2c-4d2b-aabc-82011d592778",
+        "source_record_id": "sr:9e8e2eb9-e471-44ec-9aaa-198243f6a3f4",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 13
+      },
+      {
+        "id": 14,
+        "row_id": "row:824b51cf-27ff-43ba-a8ec-a4264dd28bf0",
+        "source_record_id": "sr:b1455916-7485-4182-b3e5-51094695bbe4",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 14
+      },
+      {
+        "id": 15,
+        "row_id": "row:f8ea372b-34ab-4d4d-b79a-7afdf079cdd3",
+        "source_record_id": "sr:262dff41-a015-48e6-84ee-3a7e3cda01e2",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 15
+      },
+      {
+        "id": 16,
+        "row_id": "row:b8826ee2-17b8-4bc7-98cd-3a21a9c117f1",
+        "source_record_id": "sr:2eff3127-dcae-4c24-a331-4a6caa9ad967",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 16
+      },
+      {
+        "id": 17,
+        "row_id": "row:8c4b49ea-7669-4557-8345-06586db41313",
+        "source_record_id": "sr:12fd260f-bee3-461a-a10d-02cf352bc5be",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 17
+      },
+      {
+        "id": 18,
+        "row_id": "row:6d08789a-817b-422d-9ce7-f07ee3521084",
+        "source_record_id": "sr:7a948710-80aa-452f-b75d-937d57d5b02b",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 18
+      },
+      {
+        "id": 19,
+        "row_id": "row:bb984a60-519e-470c-8740-5413c85e0e45",
+        "source_record_id": "sr:6d6679cd-daf2-4b52-acd2-95f6aa7cf857",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 19
+      },
+      {
+        "id": 20,
+        "row_id": "row:02e4cb8e-3cbd-4ba6-ab28-c0efae0abccd",
+        "source_record_id": "sr:4dc725d3-621b-46ba-8c1c-597816bf3530",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 20
+      },
+      {
+        "id": 21,
+        "row_id": "row:870d8e43-6890-44e5-8df2-6192987c0009",
+        "source_record_id": "sr:58af5ca4-03f3-4235-86bd-3b37890ee641",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 21
+      },
+      {
+        "id": 22,
+        "row_id": "row:fc806edc-c599-432c-9ee3-70f7e3ea3a9b",
+        "source_record_id": "sr:5b811814-a73d-42a1-a16b-cc3c6fbd0408",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 22
+      },
+      {
+        "id": 23,
+        "row_id": "row:14ac40d6-f2d4-4e5f-9c1e-67c4640462e0",
+        "source_record_id": "sr:8b83c984-6bc9-4b03-a7c4-63e793cc6b5f",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 23
+      },
+      {
+        "id": 24,
+        "row_id": "row:722f5b4a-defb-42a2-a6d7-b08363fb1275",
+        "source_record_id": "sr:f851d1e8-b972-4eb0-bf41-14b57d913ce5",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 24
+      },
+      {
+        "id": 25,
+        "row_id": "row:80b75947-29be-4749-9927-25c011bbd3d0",
+        "source_record_id": "sr:db33870d-6db3-4a17-9f2d-ffae72b0b2c1",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 25
+      },
+      {
+        "id": 26,
+        "row_id": "row:916e561e-2b5e-49fd-9410-acdf72a965cd",
+        "source_record_id": "sr:06351038-2773-4061-92bc-3e641befb861",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 26
+      },
+      {
+        "id": 27,
+        "row_id": "row:96a6c68f-167b-4bb8-80f2-4b29d4dedbf6",
+        "source_record_id": "sr:9f6efbf3-b662-44a7-a59c-f5f8c4dfa4e0",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 27
+      },
+      {
+        "id": 28,
+        "row_id": "row:15e55c9d-7ca9-4fe5-9121-64be7f6f4706",
+        "source_record_id": "sr:91af889c-ddc4-46ac-b9f2-a52e6b2c173d",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 28
+      },
+      {
+        "id": 29,
+        "row_id": "row:5d8682f2-55b3-407d-b59d-fc15264e43d2",
+        "source_record_id": "sr:8107242b-1ce7-446a-874c-1d6075b571f5",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 29
+      },
+      {
+        "id": 30,
+        "row_id": "row:c8f54557-3f11-44fe-967b-1e6c7544c7e2",
+        "source_record_id": "sr:76147360-612a-430f-bbaa-061b41798499",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 30
+      },
+      {
+        "id": 31,
+        "row_id": "row:a5d82f37-4d16-4b67-a2b6-dc2f4a1461ac",
+        "source_record_id": "sr:13239bb4-569b-4462-b797-675f2fb64bb4",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 31
+      },
+      {
+        "id": 32,
+        "row_id": "row:26e4259e-bd24-452b-8441-2c443eb2f90f",
+        "source_record_id": "sr:a6c5faef-bb9a-4209-ac2b-d10a86068b01",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 32
+      },
+      {
+        "id": 33,
+        "row_id": "row:c91c9fb2-9f7a-4ce1-82a0-9ec3871922fa",
+        "source_record_id": "sr:bfc77544-d4da-4077-8ae2-268b748400e9",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 33
+      },
+      {
+        "id": 34,
+        "row_id": "row:f7144fc8-4d40-4c38-b0e1-7ec44a6b29d6",
+        "source_record_id": "sr:f523bbae-fca0-4677-99ea-b9572a9d7aac",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 34
+      },
+      {
+        "id": 35,
+        "row_id": "row:87857c04-6388-49bd-8451-e046c63eb143",
+        "source_record_id": "sr:f4945eae-3e4e-41eb-a84e-5008240ac189",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 35
+      },
+      {
+        "id": 36,
+        "row_id": "row:91112edd-2050-499d-97cb-e82b3b1238fd",
+        "source_record_id": "sr:d0cfc0e8-9f1e-4ba7-a7f5-bad219f54269",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 36
+      },
+      {
+        "id": 37,
+        "row_id": "row:1bb0e1f7-8e13-44b4-95c5-3d70724a665b",
+        "source_record_id": "sr:37da515c-e710-49e2-8f77-e40e75f98ffa",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 37
+      },
+      {
+        "id": 38,
+        "row_id": "row:7f8eea66-abe4-49fd-8504-e4ea8de272c5",
+        "source_record_id": "sr:1e53eccb-4294-45b6-adbb-2770e488916d",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 38
+      },
+      {
+        "id": 39,
+        "row_id": "row:693a9666-ecbe-4b6c-b289-d6f2230cf8d9",
+        "source_record_id": "sr:b3380b91-beb6-47eb-a0ea-16177f974ee1",
+        "prediction": 0,
+        "generation": 0,
+        "trained_before": 39
+      }
+    ],
+    "late_preview": [],
+    "peak_pending": 1
+  },
+  "plan": {
+    "split_id": "prequential:bc086a20984bf7179afd4e5916b27b5fe3a507ac10420f8873be31171e58178d",
+    "membership": {
+      "train": [],
+      "validation": [],
+      "test": []
+    },
+    "scope": "local immutable snapshot append simulator; prequential development, no final-test access"
+  },
+  "tensor_schema": {},
+  "model_weights": null,
+  "runtime": null,
+  "compat_id": "bc086a20984bf7179afd4e5916b27b5fe3a507ac10420f8873be31171e58178d",
+  "metrics": {
+    "scored": 39,
+    "accuracy": 0.4871794871794872,
+    "trained": 40
+  },
+  "mode": "prequential",
+  "environment": {
+    "sklearn": "1.9.1",
+    "numpy": "2.5.3",
+    "python": "3.13.15",
+    "engine": "47041be5a242211b81357703ff14d0928e91ae3aa8dfb880c6613b0f8327d824",
+    "device": "cpu"
+  },
+  "experiment_capture": {
+    "schema": "RunCapture/v1",
+    "captured_at": "2026-10-15T17:59:42.834618+00:00",
+    "code_hash": "48b7c95db37f9ab0b2a6a93d29ba68c14bd5e0c91f288c5e210f968449117ac0",
+    "environment_hash": "a968f3834713fe5c140f15dca79af105e865b3503a3b984e42b567eaa0504e92",
+    "config_hash": "383498e8b6da2350c747e87ce1bbc6d487ead828bf6346f6682945aed1059da2",
+    "config_scope": "validation/model options + immutable PipelineId preprocessing reference",
+    "environment": {
+      "python": "3.13.15",
+      "machine": "x86_64",
+      "system": "Linux",
+      "numpy": "2.5.3",
+      "scipy": "1.18.0",
+      "scikit-learn": "1.9.1",
+      "polars": "2.0.0",
+      "skops": "0.16.0",
+      "veri-ufku": "0.1.0"
+    },
+    "code_files": {
+      "analytics/__init__.py": "9a40480d4948c6569039dcba9b5eb8500217898bd1082cbf7dc116ea9eb697d1",
+      "analytics/cache.py": "d9bc4a880fbdee9cfec9bcdb2be956bd892472776a162db5f44de7ea800cb810",
+      "analytics/contracts.py": "b48013d36e9aaa985421706a519052cd92877fc3f3f39a0a5cf121127b6a8254",
+      "analytics/dataset.py": "577491b35241d4564f0aa99b801b4676bd3eb7f31e0ff81534178e4f2603ec28",
+      "analytics/inspection.py": "7d32d36f9f4ca19dceb4ed92d70e58724bdb92394ac62f7b2b7195665ad83e46",
+      "analytics/nlp.py": "f44349a7bda3954ddee023a207d0a15c7810e89e653c9052eea6ca787fb31805",
+      "analytics/nlp_contracts.py": "ecd8ebb0fa86054f7717318d553c3125b7fe56bccd4c1252d5eacc07286595ea",
+      "analytics/nlp_models.py": "3bde557209340c1e4c3b03084a09c2a89673de6aedd594d990a3a79c0b45968c",
+      "analytics/quality.py": "26614e90d24781175ee63e890ea820abdc3ba71a338c0a8eac68973ab4f91002",
+      "analytics/text.py": "79162336f36367f36bfb03d403dd1ed2fd13d525544c52065408aefd8aaf3b4d",
+      "analytics/text_contracts.py": "eaa4d0d7e9c82c9eed47276dd770fa6894955496b8c4ffa211ca990b8dbe817c",
+      "analytics/worker.py": "31c63ee72335dade3e877599e1354ac043e3618f550867dc25927460aa026a59",
+      "domain/__init__.py": "2dbb12e6e6559fc7cfeaa0bd919e0daed1a2b0087606b6a80365376ce3600b26",
+      "domain/capabilities.py": "552ecbc64b6342e0d101854c5a202a0ab20c88087dd755471b1ec0b312f6bd14",
+      "domain/contracts.py": "f876547de14f69c2c21d69a18e4af28ff1d2bb1e86a91d3b517ae7715025503b",
+      "domain/json.py": "460d139d25b367c54bc7535a099ff4de6d8d71af90a4f90914f864e71a18236f",
+      "jobs/__init__.py": "3e422efd1e5f67820bedb952921837211d5a5c953360bd7d6d1f7e69789cbf7d",
+      "jobs/limits.py": "4bbb51c061c186506137e3d46668d6ba16db56ad65f92b34a16f2ec5c4c007e2",
+      "jobs/manager.py": "3e17e08325e636527b665c1d1ee4756e524f813cc71b907ef31e9208f4624a38",
+      "jobs/supervision.py": "0cae684cbb07a6f3c8c63b2b8a66c2e3a0f778e5eeb903bc3e851bb6abab7f00",
+      "jobs/workers.py": "2c9c7a58f328ca607b257046b9c07de0c2bd095b7ea282e1b8725d9c81423505",
+      "modeling/__init__.py": "13027d8be106084ca581b11ced17bc5f8f0ddaeb927c7b27f55b2de67d62bb83",
+      "modeling/audio.py": "d125e1d93b972b78ee10ff65803183954168fc740ef10d85d02ff73afe482157",
+      "modeling/audio_contracts.py": "1b89af3b1552ee7e662140129bf8c826f3ffe3995417c84a703cb4269cf220c1",
+      "modeling/audio_features.py": "5a8a49770d396a6a1f1e2963dbbb3c908d04c5b1cdb4f78e313991e129987765",
+      "modeling/audio_speech.py": "d4099523006300c4d8fbab532fa0b9b3a567cb8e8269ab927cebb81a30acdf76",
+      "modeling/baseline.py": "d6a047e1a621524897fc5b2aa7f867a68da3d56aa33957072d4d6f3b47e95625",
+      "modeling/classification.py": "8325bd7adab2baf3925a2028acf69850cbe71677120848972f3cea9e3b3c3ca8",
+      "modeling/contracts.py": "0a013b594dc6710b72001268fe0923fb979fac36ad0602b7c9a640b9248a3f79",
+      "modeling/explanation.py": "a8fd47fed21b142479c966060600aa00595b768e58e1195000b59aa27494dfb7",
+      "modeling/exploration.py": "987bf5fc7419cc0562b8df7cd2e47cd6152d5e6521a2f6e1e6c5c67212820200",
+      "modeling/families.py": "ed4cb3d88c87d673dacc3496d0943995c7ea942401bf8225566e19b3e0268986",
+      "modeling/family_contracts.py": "93528657acdaf3e89ba974923402cfed2e72a1bf610b790d25ee6a3bc4406475",
+      "modeling/graph_contracts.py": "8e3abcfb3eda7ef23b706e72b96450cc84269bd6e9778af4aad19892c536613c",
+      "modeling/graphs.py": "41f6e5de8e39e46bcc1c2af008e32c238b1ba9c025b49b5a6fb9a33c132ddcb4",
+      "modeling/history.py": "89092e5f34ae94b1cb72a21b9b1a6a6f558a57c6f38ed1026146f228cf77db64",
+      "modeling/lifecycle.py": "1c00836f8d9de2ef61b98b600d02b908459234dd3dbb4a31cde226fe81c07f54",
+      "modeling/lifecycle_worker.py": "58cc961b8f4cbc8f651e695ebea6b52c3dbc6b49394700d847627ee22e9b6f84",
+      "modeling/neural.py": "eb7b8fc39fd85fcf73799b3f645bc334a7820ae1a5ca3eb2993a0ff545f5fbc1",
+      "modeling/neural_contracts.py": "72295b0bdb3610743bf6800f391468d0c26dec3b64080fd40ec262044d27921e",
+      "modeling/optional_families.py": "bde8df0efe706a77c3e78c2f6ab44cf35a01ff2ed74b7f80bfdad585009281bd",
+      "modeling/pattern_basket.py": "d6aa38ccd500d04483bbc98445ec503ce65e6c2060ee3ecec9c45611175fa4f7",
+      "modeling/pattern_contracts.py": "b8da3a28b57991b33fa69feee8183700263e9cbe9978bdf5ef432671cd2c0fae",
+      "modeling/pattern_events.py": "d1221869a904132b6756b990ff2367a58d454a325969c4b3c251a73fcc5ea7ea",
+      "modeling/patterns.py": "54232c5beb344f02e067f8f335acfaa1f8a1d4eacb141f3479ac3e2331bbfc97",
+      "modeling/plan.py": "d8a1f6043c9a96da399b74da095f3cc47c6972477984f9b3e085e48376fc6114",
+      "modeling/preparation.py": "bbb6d86e399f61d2d86c85a5b9205680ee4dbc780bfc1854ef4783ee4a82eee1",
+      "modeling/recommendation.py": "bac4167977a62565f2411fe6ec0a6fb08c979cc184e31046db5e1bb8da0e5b85",
+      "modeling/recommendation_contracts.py": "9afadb2ec2ab17a228eeb72d376ead3f28514d87162531974ecc9b9dfb86c6ea",
+      "modeling/recommendation_math.py": "ec585143ec19ec8933b99e74d098cacb51febc3e85265d6e0cfc750862c11a21",
+      "modeling/regression.py": "6fd65943f87ec2fee438e20f16d400a1eafe6cf6ef24e64a5e54eac132da51e8",
+      "modeling/search.py": "d8b90bb06060477bd8f4d2df0d6c6ece0825c72d9c243ee65cfd5af2e1009fef",
+      "modeling/search_contracts.py": "a82b856b338ed33e25a8d8f9fe340a60008cdd88cfca893fe04c4aaefe27d10e",
+      "modeling/signal_contracts.py": "1edcc6cbdfd13b8af74bfbebaa4c321fc1f4e1eb1ccafc109662e6d3460c66f7",
+      "modeling/signals.py": "04da330a1bd55d8c83fb8c3ca947d27f9b2c4ee5485a4ca40d884bd7f752ce37",
+      "modeling/special_runs.py": "c1b5360c73fc65179c105b8749330746a4acb896293d6726e64e318251503a83",
+      "modeling/special_targets.py": "b0abfbfa39c94f5743537fb2bdaad158b75d015f2bb7c02b4d0f0a013099dd97",
+      "modeling/stream_contracts.py": "41432c3fc518e16a19c55235a5639bc6de61d88d662868e7ee83aa0687870a3d",
+      "modeling/streams.py": "4ccf951077e8277e793c1b618d2bc77819e573b2e340b774c2b983b969625956",
+      "modeling/temporal.py": "a7f74140fa4a201e559cf3de6ae2a3c66c37c89f70e5373e9433c9289ec8415d",
+      "modeling/temporal_contracts.py": "a7f949827438b4136a0576acc0455feed01400ace0639379f8068d70fc1c6291",
+      "modeling/time_series.py": "3ce5d126a56d8ea5fa5cc277e34a9c9b9246b88dc5472fa030699ff511d1d14c",
+      "modeling/time_series_contracts.py": "7acf1fc8415fab05a533a16691d044fdf4edc539b6a4e047fd5a8bcb7d6449ab",
+      "modeling/uncertainty.py": "18459743f79438daf7236e14e696dd6f9cc7a71388251464f8b1159c38944292",
+      "modeling/unsupervised.py": "f622291e9b889aa7dba7928e22dd716436042edc58349010bfeffe4d9f3fa693",
+      "modeling/unsupervised_contracts.py": "8f695e61dfb7d2e9f04cf075e049fc2ca6b0d85f8f681d13c8c26483fd6c55ea",
+      "modeling/validation.py": "926d32f935b8bafa2154ca6522c2a78462fcec7d12f47c489349542a8d2e8245",
+      "modeling/vision.py": "5fa20f0eb90dab4c85de7e34a49bfb3a9c8369c59c22786645e50010d21f2cf1",
+      "modeling/vision_contracts.py": "09d103e2a0302b461b52109569bf6f5c57e0484806488f9fec7e92d19ce965b1",
+      "modeling/vision_metrics.py": "a9435b6d44d89659a644e15a307e195d3e86ca8e1916349f4cac3b8f4e771bc4",
+      "modeling/worker.py": "7668c26547396f289ea9addcdea95903395f6c0693c76040dbd6c5fad1d7e0f1",
+      "operations/__init__.py": "3057dbc6d9b812bf9b2aad778db59346f32918c18d3855963ded8c84538a2d89",
+      "operations/cleaning.py": "952547f346de6778896e29f7033ed71c977168a11fe99880a6ba0767f6765b17",
+      "operations/cleaning_contracts.py": "2a6e1a9234fe3b62e28af1ff518eb7cb385d34af47eec8b5d9601c7581eb0dc8",
+      "operations/contracts.py": "67b8cd99bcb930a22422f51e85ae33822bb141a4df0f9c6c510d68cb450be7fc",
+      "operations/data_contracts.py": "abd9a1c68cb13ac27f9c9edc0e91e4d47df018760f6b5ad2c769b9cfb3ddce23",
+      "operations/data_quality.py": "d5475654431190c5a2b0f63490a5c77d017e4fdc6650b3ee8443c42fa0cb8d11",
+      "operations/engine.py": "d11a56c787773556c91ee5856f254cc9c20700d69b924c3a4464f2b558e0162e",
+      "operations/formula.py": "73aa71d20562e78d06055e194a41480d86211a5f33a8c915c661af7b7dfb4e5a",
+      "operations/monitoring.py": "0f92c902fb431475d850c331e44dfcc8fe97f3b0c44a51c2e6917cdf68514bf4",
+      "operations/recipe_worker.py": "3d496a1724c200816ca4a183c4a9513d800eedc393cc88d35742d7c3d8b20e53",
+      "operations/recipes.py": "f890531237267f41521ddeea299b5f4b03e023025105b7d39cc74086616a4dd8",
+      "operations/relational.py": "d1c10afd56fbfbea134435b73f589e39a10173680b8e12985f7605436fc52135",
+      "operations/relational_contracts.py": "eb0cef0160b7a0c92c601a407fceec423699032bc8d7fe4b3bba9196c29473da",
+      "operations/types.py": "0fe52eaad36ed00788508b4e28ed0c9a34df55b7ee41e6503127dd4d87bccd87",
+      "operations/worker.py": "f6fef54a9a1374728902e546eac733e33b243eee6ce115c29e0a99062b402435",
+      "storage/validation_store.py": "15e4a941263a9018507689559829a009140966815888aa38a7271cb84646aa45",
+      "storage/experiment_store.py": "91d58b677e5b3318b3e1fc1f347a9d27264ecf60a0c00d00c6bd194924146d87"
+    },
+    "data_access_time": "captured before scheduling; run.data_access_at records first immutable snapshot read boundary"
+  },
+  "resume_from": "run:ef4d720e-2315-4525-842e-45d88b038308",
+  "warnings": [
+    "Local immutable file replay only; no live watcher/network broker/external side effects.",
+    "Replay requires identical snapshot, recipe, order and sklearn version; device/version independent bitwise equivalence is not promised.",
+    "Integer event IDs must strictly increase; resume starts at next durable cursor. Duplicate/out-of-order IDs fail, never silently retrain.",
+    "Feedback beyond last processing time remains pending; missing labels never become negatives. Predictions precede scaler/model updates.",
+    "Drift is a bounded two-half error-rate heuristic, not proof of distribution change. Reset only under explicit reset policy."
+  ],
+  "provenance": {
+    "provenance_id": "provenance:bc086a20984bf7179afd4e5916b27b5fe3a507ac10420f8873be31171e58178d",
+    "dataset_versions": [
+      "dv:2e7e8809-c601-4eb8-b960-9bc75f8437c8"
+    ],
+    "config_revision": 2,
+    "capability_id": "model.stream.replay",
+    "parameters_hash": "9bf93d4509cae09588ec50252844a374cb0023f5ecfb47302cf1a0f5e58ca46e",
+    "environment": [
+      [
+        "sklearn",
+        "1.9.1"
+      ]
+    ],
+    "created_at": "2026-10-15T17:59:44.376704+00:00",
+    "method_version": 1,
+    "scope": "local immutable snapshot append simulator; prequential development, no final-test access",
+    "seed": 62,
+    "seed_reason": "deterministic fixture; no sampling",
+    "source_snapshot_ids": [
+      "snapshot:68157c91-e415-4631-b948-3bd8d2eaab2f"
+    ],
+    "row_lineage_ref": "cursor:bc086a20984bf7179afd4e5916b27b5fe3a507ac10420f8873be31171e58178d",
+    "column_lineage_ref": null,
+    "filters": [],
+    "exclusions": [],
+    "learning_content_version": null
+  },
+  "status": "completed",
+  "worker_pid": 150
+}

@@ -1,0 +1,180 @@
+[
+  {
+    "command": [
+      "python3",
+      "scripts/check_docs.py"
+    ],
+    "date_utc": "2026-10-07T21:41:14.449885+00:00",
+    "exit_code": 0,
+    "seconds": 0.044,
+    "log": "docs/evidence/ui-header/check-01.log"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_docs.py"
+    ],
+    "date_utc": "2026-10-07T21:41:14.493896+00:00",
+    "exit_code": 0,
+    "seconds": 0.053,
+    "log": "docs/evidence/ui-header/check-02.log"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_artifacts.py"
+    ],
+    "date_utc": "2026-10-07T21:41:14.546756+00:00",
+    "exit_code": 0,
+    "seconds": 0.117,
+    "log": "docs/evidence/ui-header/check-03.log"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_learning.py"
+    ],
+    "date_utc": "2026-10-07T21:41:14.664072+00:00",
+    "exit_code": 0,
+    "seconds": 0.049,
+    "log": "docs/evidence/ui-header/check-04.log"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "date_utc": "2026-10-07T21:41:14.712893+00:00",
+    "exit_code": 0,
+    "seconds": 0.016,
+    "log": "docs/evidence/ui-header/check-05.log"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "date_utc": "2026-10-07T21:41:14.729001+00:00",
+    "exit_code": 0,
+    "seconds": 0.015,
+    "log": "docs/evidence/ui-header/check-06.log"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "pytest",
+      "-q",
+      "--junitxml=docs/evidence/ui-header/pytest.xml"
+    ],
+    "date_utc": "2026-10-07T21:41:14.744043+00:00",
+    "exit_code": 0,
+    "seconds": 82.058,
+    "log": "docs/evidence/ui-header/check-07.log"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "date_utc": "2026-10-07T21:42:36.801953+00:00",
+    "exit_code": 0,
+    "seconds": 1.423,
+    "log": "docs/evidence/ui-header/check-08.log"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "veri-ufku",
+      "--smoke-test"
+    ],
+    "date_utc": "2026-10-07T21:42:38.224754+00:00",
+    "exit_code": 2,
+    "seconds": 0.475,
+    "log": "docs/evidence/ui-header/check-09.log"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "veri-ufku",
+      "--smoke-test"
+    ],
+    "date_utc": "2026-10-07T21:43:15.186590+00:00",
+    "exit_code": 0,
+    "seconds": 0.571,
+    "log": "docs/evidence/ui-header/check-09-isolated.log",
+    "environment": "offscreen/software; isolated temporary XDG CONFIG/STATE/CACHE"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "date_utc": "2026-10-07T21:43:15.195092+00:00",
+    "exit_code": 0,
+    "log": "docs/evidence/ui-header/check-diff.log"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check_docs.py"
+    ],
+    "date_utc": "2026-10-07T21:43:15.237403+00:00",
+    "exit_code": 0,
+    "log": "docs/evidence/ui-header/check-docs-final.log"
+  }
+]

@@ -1,0 +1,52 @@
+name: Reviewed core release candidate (no publication)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: release-candidate-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  core-candidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      QT_QPA_PLATFORM: offscreen
+      QT_QUICK_BACKEND: software
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # official v4.2.2
+        with:
+          persist-credentials: false
+      - name: Install Qt system prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y libegl1 libgl1
+      - name: Fixed build tool and locked CPU core only
+        run: |
+          python3 -m pip install uv==0.12.23
+          uv sync --locked --group dev
+      - name: Core contract and optional-absence checks
+        run: |
+          uv run --frozen python scripts/check_docs.py
+          uv run --frozen python scripts/check_artifacts.py
+          uv run --frozen python scripts/check_learning.py
+          uv run --frozen ruff check src tests scripts
+          uv run --frozen pytest -q tests/test_environment_distribution.py tests/test_packaging.py tests/test_projects.py --junitxml=core-tests.xml
+      - name: Build wheel and scoped SBOM
+        run: |
+          uv build --no-build-isolation --out-dir dist
+          uv run --frozen python scripts/release_inventory.py --output dist/core-sbom.cdx.json
+          sha256sum dist/*.whl > dist/SHA256SUMS
+      - name: Explicit public package metadata advisory scan
+        run: uv run --frozen python scripts/release_inventory.py --scan --online --output dist/dependency-scan.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # official v4.6.2
+        if: always()
+        with:
+          name: reviewed-core-candidate
+          path: |
+            dist/
+            core-tests.xml
+          retention-days: 14
+          if-no-files-found: error
+# No release creation, package push, privileged pull_request_target or deployment token.
+# Actual Flatpak/native/portal tests and OS matrix are separate recorded acceptance gates.

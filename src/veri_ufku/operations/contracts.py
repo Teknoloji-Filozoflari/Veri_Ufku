@@ -4,12 +4,17 @@ import copy
 from dataclasses import asdict, dataclass
 
 from veri_ufku.analytics.contracts import ViewSpec
+from veri_ufku.geo import OPERATION_KINDS as GEO_KINDS
 from veri_ufku.operations.cleaning_contracts import KINDS, learned, validate_parameters
+from veri_ufku.operations.data_contracts import KINDS as CONTRACTS
+from veri_ufku.operations.data_contracts import input_versions as contract_inputs
+from veri_ufku.operations.data_contracts import parameters as contract_parameters
 from veri_ufku.operations.relational_contracts import KINDS as RELATIONAL
 from veri_ufku.operations.relational_contracts import input_versions
 from veri_ufku.operations.relational_contracts import (
     validate_parameters as relational_parameters,
 )
+from veri_ufku.operations.workflow_contracts import KINDS as WORKFLOW_KINDS
 from veri_ufku.storage.project_model import ProjectError, entity_id, uid
 
 # Future kinds have a lineage contract, but are deliberately not executable.
@@ -24,7 +29,14 @@ LINEAGE = {
     "dedup": "retain first/last stable RowId; persist duplicate-group membership separately",
 }
 
-IMPLEMENTED = {"rename", "drop", "filter", "roles"} | KINDS | RELATIONAL
+IMPLEMENTED = (
+    {"rename", "drop", "filter", "roles"}
+    | KINDS
+    | RELATIONAL
+    | CONTRACTS
+    | GEO_KINDS
+    | set(WORKFLOW_KINDS)
+)
 
 
 def heads(state):
@@ -133,7 +145,23 @@ def build(request, kind, column_ids=(), parameters=None, destination="chain"):
         raise ProjectError("İşlem bilinmeyen/tekrarlanan ColumnId içeriyor.")
     if destination not in ("chain", "copy"):
         raise ProjectError("İşlem hedefi mevcut zincir veya kopya dataset olmalı.")
-    if kind in RELATIONAL:
+    if kind in WORKFLOW_KINDS:
+        from veri_ufku.operations.workflow_contracts import (
+            parameters as workflow_parameters,
+        )
+
+        columns = workflow_parameters(request, kind, columns, parameters)
+    elif kind in GEO_KINDS:
+        from veri_ufku.geo.operations import parameters as geo_parameters
+
+        columns = geo_parameters(request, kind, column_ids, parameters, columns)
+    elif kind in CONTRACTS:
+        if destination != "chain":
+            raise ProjectError(
+                "Veri sözleşmesi ve kimlik kararları mevcut zincirde uygulanır."
+            )
+        columns = contract_parameters(request, kind, column_ids, parameters, columns)
+    elif kind in RELATIONAL:
         columns = relational_parameters(request, kind, column_ids, parameters)
     elif kind in KINDS:
         columns = validate_parameters(kind, column_ids, parameters, columns)
@@ -157,6 +185,25 @@ def build(request, kind, column_ids=(), parameters=None, destination="chain"):
         if parameters or not column_ids or len(column_ids) == len(columns):
             raise ProjectError("En az bir sütun korunmalı; çıkarılacak sütun seçin.")
         columns = [c for c in columns if c["id"] not in column_ids]
+    elif kind == "filter" and "row_ids" in parameters:
+        if set(parameters) != {"row_ids", "chart_result_id"} or column_ids:
+            raise ProjectError(
+                "RowId filtresi kimlikler ve kaynak grafik kimliği ister."
+            )
+        row_ids = parameters["row_ids"]
+        if (
+            not isinstance(row_ids, list)
+            or not 1 <= len(row_ids) <= 10000
+            or len(set(row_ids)) != len(row_ids)
+        ):
+            raise ProjectError("Grafik filtresi 1–10000 farklı kaynak RowId ister.")
+        for row_id in row_ids:
+            entity_id(row_id, "row")
+        if (
+            not isinstance(parameters["chart_result_id"], str)
+            or len(parameters["chart_result_id"]) > 100
+        ):
+            raise ProjectError("Kaynak grafik kimliği geçersiz.")
     elif kind == "filter":
         if set(parameters) != {"filters"} or not parameters["filters"]:
             raise ProjectError("Kalıcı filtre için en az bir koşul seçin.")
@@ -209,6 +256,10 @@ def build(request, kind, column_ids=(), parameters=None, destination="chain"):
         destination=destination,
         input_version_ids=input_versions(request, kind, parameters)
         if kind in RELATIONAL
+        else (request["version_id"], request["secondary"]["version_id"])
+        if kind == "geo_join"
+        else contract_inputs(request, kind, parameters)
+        if kind in CONTRACTS
         else (),
     )
 

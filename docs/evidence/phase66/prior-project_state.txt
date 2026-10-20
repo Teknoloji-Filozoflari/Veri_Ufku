@@ -1,0 +1,68 @@
+# Veri_Ufku — aktif görev hafızası
+
+2026-10-16 Europe/Istanbul (kanıt UTC2026-10-15), DEC65-01 Faz65 bounded lineage/repro teknik teslim.
+Resmî sürüyor/deneysel/isteğe bağlı; [E65](evidence/PHASE65.md),
+[ADR066](adr/066-reproducibility-phase65.md),[kayıtlar](evidence/phase65/acceptance.json).
+Faz66 başlatılmaz. Önceki tüm resmî açıklar ve Faz64/63/62/61/60/59/58/57/56 durumu
+[önceki hafızada](evidence/phase65/prior-project_state.txt) korunur.
+
+Rapor → Lineage ve bilimsel yeniden üretim. Source/dataset/operation/analysis/model/
+report graph yalnız mevcut kayıtlı kimliklerle; hash/URI/schema/version/params/
+decisions/provenance/capture/backend/hardware ayrıntısı. Yeni report context gerçekten
+kullanılan saved profile/quality/analysis/chart kimliklerini taşır; eski report yalnız
+dataset bağıyla kalır, olmayan run/provenance uydurulmaz. Workflow typed train/model/
+predict/export bağlantıları gerçek. RowId küresel anahtar değil; multi-source relation
+Parquet URI/hash korunur, genel recursive row reconstruction yok. Yeni RunCapture
+hardware eklenir; geçmiş not_recorded alanları doldurulmaz. Bundle hardware şimdiki
+makine, tarihî run ortamı iddiası değil.
+
+Reference-only default ReproBundle/v1: manifest/config/lineage/reference-report safe
+aggregate/env lock/requirements.lock/method-help versions/access terms/storage policy/
+redaction preview; optional explicit native snapshot inclusion. Snapshot bytes kopya,
+reference erişim hakkı/yedek değil. Dış paths/secret keys/pairs/patterns/free-text
+redaction; original değer gösterilmez. Config değişirse rerun unsupported. Data inclusion
+raw/personal/RowId içerir; secret kolon/örüntü/dış path reddi, universal secret detector
+iddiası yok; nested/binary user data reference-only, native missing_fields istisna.
+ZIP hash/member/schema/method/size/duplicate/path/symlink kontrolü; açmak çalıştırmaz.
+No arbitrary code/model object/pickle import. Hash authenticity/signature değil.
+32snapshot/10000row inclusion/128MiB bundle/8MiB metadata/256member. Mevcut quota/usage,
+retain history; no automatic delete/GC, archive disk boşaltmaz. Silme veri kaybı uyarısı.
+
+Verifier yalnız saved numeric measurement dataset profile (full veya firstN≤10000)
+ve completed Faz64 workflow analytical projection. Report içindeki tek recorded
+supported analysis/run reference karşılaştırılabilir; HTML/PDF layout replay değil.
+Decimal80/count/identity/null exact. Numeric yalnız Float64 OLS coefficients/predictions
+rtol1e-9/atol1e-12, output-unit/conditioning açıklaması policy'de; bilimsel eşdeğerlik
+garantisi değil. Veri hash farkı numeric öncesi durur, beklenen/yeni SHA görünür.
+Environment/package/Python/code/backend/platform/schema/method farkında safe failure,
+otomatik migration yok. Seed yeterli değil. Reference/actual/comparison yeni exclusive
+.vureprotest artifact; dış DAG export private temp'te hazırlanır, parent publish yok.
+
+Worker Qt/ProjectStore/ACTIVE almaz; parent-validated immutable envelope ve pinned
+read-only artifact paths. Native standalone resolver read-only ProjectStore. Tek
+registry/provenance/ComputeBudget/ProjectStore/experiment journal korunur; GUI receipt
+existing result taslağında, kullanıcı explicit Projeyi kaydet ile durable olur. Lineage/
+bundle için unsaved draft reddi. Ağ/keyring/envsecret/model download yok. Cancel metadata
+önce/sonra kontrolü, worker limits ve parent RSS/disk/time gözetimi.
+
+Ortak RSS probe jobs/resources.py içine çıkarıldı; Control.check artık manager/registry/
+sklearn/Torch yüklemez. Workflow code/env fingerprint backend import etmeden installed
+source full relative paths hash eder. Bu hash değişimi eski cache'i güncel saymaz;
+eski workflow signature farklıysa safe failure. Graph edges/redaction traversal/list
+canonical order; hash-seed regression in-memory ve JSON/reopen preview eşitliği.
+
+382source/382wheel selected core (son pair/canonical fix öncesi), ardından39şar
+focused ve son legacy metadata guard sonrası40source/40completewheel focused;17native
+son40 içindedir. Basic source/wheel4şer actualGUI default2GiB;
+model source/wheel1şer explicit4GiB actualGUI; ayrı1şer final profile exact tekrar.
+Source diagram1repeat.370byte-eşit delivery package. Bunlar tek default2GiB5pass aggregate
+değil. Model GUI hem mixed hem fresh default2GiB budget reject: kapı AÇIK. Son sayılar/
+ortam/hashler verification.json içinde; erken fail ve canonical/hash fixture kayıtları
+silinmedi. Intentional duplicateZIP warning ve382core shutdown uncollectable warning
+kaydı var; long retainedheap kabulü kapanmadı.405offline makale/5yeni yardım,7gate/14docunit.
+
+Generic other-method/model rerun, recursive row traversal, başka platform/GPU runtime
+unvalidated. Önceki Faz64 schedule yok; Faz63 OS sandbox/managedJupyter yok; Faz58 Vosk
+model yok/STT unvalidated. Physical/human/AT/minimum hardware/longheap/clean offline
+installer/remoteCI ayrı açık. Stage/commit/push yapılmadı; dirty/untracked teslim korunur.
+Yalnız açık yeni talimatla sonraki faz.

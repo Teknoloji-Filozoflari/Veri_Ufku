@@ -1,0 +1,140 @@
+......FF                                                                 [100%]
+=================================== FAILURES ===================================
+________ test_preparation_qml_phase33_parameters_and_plan_reopen[knn-3] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-54/test_preparation_qml_phase33_p0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fccb39e5350>
+strategy = 'knn', index = 3
+
+    @pytest.mark.parametrize("strategy,index", [("knn", 3), ("iterative", 4)])
+    def test_preparation_qml_phase33_parameters_and_plan_reopen(
+        tmp_path, monkeypatch, strategy, index
+    ):
+        app, window, _, projects, imports = setup(tmp_path, monkeypatch)
+        source = tmp_path / "folds.parquet"
+        n = 80
+        pl.DataFrame(
+            dict(
+                x=[None if i % 7 == 0 else float(i) for i in range(n)],
+                z=[float(i) + np.sin(i) for i in range(n)],
+                y=[float(i % 11) for i in range(n)],
+            )
+        ).write_parquet(source)
+        imports.choose(str(source))
+        spin(app, lambda: not imports.busy)
+        imports.importData()
+        spin(app, lambda: not imports.busy)
+        assert not imports.errorText
+        engine = app._veri_ufku_resources[0]
+        controller = engine._preparation_resources
+        before = source.read_bytes()
+        try:
+            window.setProperty("selectedSection", 5)
+            cols = {c["name"]: i for i, c in enumerate(controller.columns)}
+            window.findChild(QObject, "preparationTarget").setProperty(
+                "currentIndex", cols["y"]
+            )
+            panel = window.findChild(QObject, "preparationPanel")
+            panel.setProperty(
+                "chosenFeatures",
+                [c["id"] for c in controller.columns if c["name"] in ("x", "z")],
+            )
+            window.findChild(QObject, "preparationNumericFill").setProperty(
+                "currentIndex", index
+            )
+            window.findChild(QObject, "preparationMissingIndicator").setProperty(
+                "checked", True
+            )
+            window.findChild(QObject, "preparationImputationNeighbors").setProperty(
+                "value", 2
+            )
+            window.findChild(QObject, "preparationImputationIterations").setProperty(
+                "value", 10
+            )
+            window.findChild(QObject, "preparationImputationSeed").setProperty("value", 11)
+            window.findChild(QObject, "preparationScan").clicked.emit()
+            spin(app, lambda: not controller.busy)
+            assert not controller.errorText, controller.errorText
+            assert controller.result["worker_pid"] != os.getpid()
+            s = controller.result["spec"]
+            assert s["numeric_imputation"] == strategy and s["missing_indicator"]
+            assert (
+                s["imputation_seed"] == 11
+                and s["imputation_neighbors"] == 2
+>               and s["imputation_iterations"] == 10
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+            )
+E           KeyError: 'imputation_iterations'
+
+tests/test_missing_sampling_gui.py:268: KeyError
+_____ test_preparation_qml_phase33_parameters_and_plan_reopen[iterative-4] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-54/test_preparation_qml_phase33_p1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fccb0fe6d70>
+strategy = 'iterative', index = 4
+
+    @pytest.mark.parametrize("strategy,index", [("knn", 3), ("iterative", 4)])
+    def test_preparation_qml_phase33_parameters_and_plan_reopen(
+        tmp_path, monkeypatch, strategy, index
+    ):
+        app, window, _, projects, imports = setup(tmp_path, monkeypatch)
+        source = tmp_path / "folds.parquet"
+        n = 80
+        pl.DataFrame(
+            dict(
+                x=[None if i % 7 == 0 else float(i) for i in range(n)],
+                z=[float(i) + np.sin(i) for i in range(n)],
+                y=[float(i % 11) for i in range(n)],
+            )
+        ).write_parquet(source)
+        imports.choose(str(source))
+        spin(app, lambda: not imports.busy)
+        imports.importData()
+        spin(app, lambda: not imports.busy)
+        assert not imports.errorText
+        engine = app._veri_ufku_resources[0]
+        controller = engine._preparation_resources
+        before = source.read_bytes()
+        try:
+            window.setProperty("selectedSection", 5)
+            cols = {c["name"]: i for i, c in enumerate(controller.columns)}
+            window.findChild(QObject, "preparationTarget").setProperty(
+                "currentIndex", cols["y"]
+            )
+            panel = window.findChild(QObject, "preparationPanel")
+            panel.setProperty(
+                "chosenFeatures",
+                [c["id"] for c in controller.columns if c["name"] in ("x", "z")],
+            )
+            window.findChild(QObject, "preparationNumericFill").setProperty(
+                "currentIndex", index
+            )
+            window.findChild(QObject, "preparationMissingIndicator").setProperty(
+                "checked", True
+            )
+            window.findChild(QObject, "preparationImputationNeighbors").setProperty(
+                "value", 2
+            )
+            window.findChild(QObject, "preparationImputationIterations").setProperty(
+                "value", 10
+            )
+            window.findChild(QObject, "preparationImputationSeed").setProperty("value", 11)
+            window.findChild(QObject, "preparationScan").clicked.emit()
+            spin(app, lambda: not controller.busy)
+            assert not controller.errorText, controller.errorText
+            assert controller.result["worker_pid"] != os.getpid()
+            s = controller.result["spec"]
+            assert s["numeric_imputation"] == strategy and s["missing_indicator"]
+            assert (
+                s["imputation_seed"] == 11
+                and s["imputation_neighbors"] == 2
+>               and s["imputation_iterations"] == 10
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+            )
+E           KeyError: 'imputation_iterations'
+
+tests/test_missing_sampling_gui.py:268: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_missing_sampling_gui.py::test_preparation_qml_phase33_parameters_and_plan_reopen[knn-3]
+FAILED tests/test_missing_sampling_gui.py::test_preparation_qml_phase33_parameters_and_plan_reopen[iterative-4]
+2 failed, 6 passed, 28 deselected in 4.55s

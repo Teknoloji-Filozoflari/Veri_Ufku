@@ -1,0 +1,43 @@
+{
+  "app-id": "org.veriufku.Veri_Ufku",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "6.11",
+  "runtime-commit": "fe192771c0992ad873e6a9ccc6e4f087c76314ce5ced165650cc7ea045a6bbaa",
+  "sdk": "org.kde.Sdk",
+  "sdk-commit": "305b8ec8d506448558798256bd9afcfd856c7e62357a42e320a6678a08f81465",
+  "arch": "x86_64",
+  "branch": "candidate",
+  "command": "veri-ufku",
+  "finish-args": [
+    "--share=ipc",
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--device=dri",
+    "--filesystem=xdg-documents",
+    "--filesystem=xdg-download:ro",
+    "--env=QT_QPA_PLATFORMTHEME=xdgdesktopportal",
+    "--env=PYTHONNOUSERSITE=1"
+  ],
+  "native-base-app": "io.qt.PySide.BaseApp",
+  "native-base-app-commit": "a6cddcbcf58032e3f22c66a98779cc07685d376e52718e5aee307ad9aeb1bb8e",
+  "native-files": {
+    "lib/libgssapi_krb5.so.2": "561442e8effdcd462dbeb7fb5a210f457597cebce938624b86847f7afd6f29be",
+    "lib/libgssapi_krb5.so.2.2": "561442e8effdcd462dbeb7fb5a210f457597cebce938624b86847f7afd6f29be",
+    "lib/libk5crypto.so.3": "640ef3e4bbb10c9d1e90adfb2a1cfef3166dd4385653561a66b2000410554f03",
+    "lib/libk5crypto.so.3.1": "640ef3e4bbb10c9d1e90adfb2a1cfef3166dd4385653561a66b2000410554f03",
+    "lib/libkrb5.so.3": "bd2426904ed8991fd1f04b80eb937cee40634ef509656f7a2af580009fd9b224",
+    "lib/libkrb5.so.3.3": "bd2426904ed8991fd1f04b80eb937cee40634ef509656f7a2af580009fd9b224",
+    "lib/libkrb5support.so.0": "8afe42f71a13cf81d37ab651e503a053b99e777cca57b8b7b44335f39cc08731",
+    "lib/libkrb5support.so.0.1": "8afe42f71a13cf81d37ab651e503a053b99e777cca57b8b7b44335f39cc08731",
+    "lib/libcom_err.so.3": "e66e6be397dae8c5c3f275653413a3bb75e99b900f6a74bd2c98b740d7a1dc4e",
+    "lib/libcom_err.so.3.0": "e66e6be397dae8c5c3f275653413a3bb75e99b900f6a74bd2c98b740d7a1dc4e",
+    "lib/libverto.so.0": "6d365bc834085f4d68fb3e5a6ca02840bba058119520a5ee2851b90762c39516",
+    "lib/libverto.so.0.0": "6d365bc834085f4d68fb3e5a6ca02840bba058119520a5ee2851b90762c39516"
+  },
+  "exclude-files": [
+    "*QtWebEngine*",
+    "*qtwebengine*",
+    "PySide6/Qt/plugins/sqldrivers/*",
+    "PySide6/Qt/plugins/texttospeech/*"
+  ]
+}

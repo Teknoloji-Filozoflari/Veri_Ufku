@@ -11,7 +11,9 @@ jobs:
       QT_QPA_PLATFORM: offscreen
       QT_QUICK_BACKEND: software
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # official v4.2.2
+        with:
+          persist-credentials: false
       - name: Install Qt native runtime libraries
         run: |
           sudo apt-get update
@@ -24,7 +26,7 @@ jobs:
       - name: Install fixed uv tool
         run: python3 -m pip install uv==0.12.23
       - name: Resolve fixed Python and install locked dependencies
-        run: uv sync --locked --group dev
+        run: uv sync --locked --group dev --all-extras
       - name: Validate documentation and development artifact
         run: |
           uv run --frozen python scripts/check_docs.py
@@ -35,6 +37,36 @@ jobs:
           uv run --frozen ruff check src tests scripts
           uv run --frozen ruff format --check src tests scripts
       - name: Core correctness and headless QML test
-        run: uv run --frozen pytest -q
+        run: |
+          uv run --frozen pytest -q --junitxml="$RUNNER_TEMP/reliability-tests.xml"
+          uv run --frozen python scripts/audit_reliability.py --junit "$RUNNER_TEMP/reliability-tests.xml" --output "$RUNNER_TEMP/reliability-review.json"
       - name: Installed entry point Qt and process smoke
         run: uv run --frozen veri-ufku --smoke-test
+      - name: Early Linux wheel QML Matplotlib worker and export
+        run: |
+          uv build --no-build-isolation --out-dir "$RUNNER_TEMP/chart-dist"
+          uv pip install --python .venv/bin/python --no-deps --target "$RUNNER_TEMP/chart-wheel" "$RUNNER_TEMP/chart-dist/veri_ufku-0.1.0-py3-none-any.whl"
+          cd "$RUNNER_TEMP"
+          PYTHONPATH="$RUNNER_TEMP/chart-wheel" "$GITHUB_WORKSPACE/.venv/bin/python" "$GITHUB_WORKSPACE/scripts/measure_phase12.py" --package-root "$RUNNER_TEMP/chart-wheel" --output "$RUNNER_TEMP/phase12-wheel.json"
+      - name: Early offline Linux wheel guided export and report
+        run: |
+          cd "$RUNNER_TEMP"
+          PYTHONPATH="$RUNNER_TEMP/chart-wheel" "$GITHUB_WORKSPACE/.venv/bin/python" "$GITHUB_WORKSPACE/scripts/measure_phase13.py" --package-root "$RUNNER_TEMP/chart-wheel" --output "$RUNNER_TEMP/phase13-wheel.json"
+      - name: Early Linux wheel statistical preflight compute and durable results
+        run: |
+          cd "$RUNNER_TEMP"
+          PYTHONPATH="$RUNNER_TEMP/chart-wheel" "$GITHUB_WORKSPACE/.venv/bin/python" "$GITHUB_WORKSPACE/scripts/measure_phase14.py" --package-root "$RUNNER_TEMP/chart-wheel" --output "$RUNNER_TEMP/phase14-wheel.json"
+      - name: Early Linux wheel unfitted modeling preparation and history audit
+        run: |
+          cd "$RUNNER_TEMP"
+          PYTHONPATH="$RUNNER_TEMP/chart-wheel" "$GITHUB_WORKSPACE/.venv/bin/python" "$GITHUB_WORKSPACE/scripts/measure_phase15.py" --package-root "$RUNNER_TEMP/chart-wheel" --output "$RUNNER_TEMP/phase15-wheel.json"
+      - name: Early Linux wheel split folds baseline and final test journal
+        run: |
+          cd "$RUNNER_TEMP"
+          PYTHONPATH="$RUNNER_TEMP/chart-wheel" "$GITHUB_WORKSPACE/.venv/bin/python" "$GITHUB_WORKSPACE/scripts/measure_phase16.py" --package-root "$RUNNER_TEMP/chart-wheel" --output "$RUNNER_TEMP/phase16-wheel.json"
+      - name: Help core translations and shared accessibility contracts
+        run: uv run --frozen python scripts/check_usability.py
+      - name: Early Linux wheel keyboard usability walkthrough
+        run: |
+          cd "$RUNNER_TEMP"
+          PYTHONPATH="$RUNNER_TEMP/chart-wheel" "$GITHUB_WORKSPACE/.venv/bin/python" "$GITHUB_WORKSPACE/scripts/measure_phase25.py" --package-root "$RUNNER_TEMP/chart-wheel" --output "$RUNNER_TEMP/phase25-wheel.json"

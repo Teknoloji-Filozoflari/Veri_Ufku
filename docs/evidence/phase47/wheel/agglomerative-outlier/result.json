@@ -1,0 +1,918 @@
+{
+  "schema": "UnsupervisedRun/v1",
+  "run_id": "unsupervised:20e5ad6b-aa00-4606-b2fe-60b9f2782d48",
+  "dataset_version": "dv:e2bf1d06-82ca-4c58-93f9-68ecbe0bc9d1",
+  "spec": {
+    "method": "agglomerative",
+    "features": [
+      "col:f294a75a-19e9-4444-88a9-4d47d220721a",
+      "col:3cd0f71f-10ac-4837-b47d-09b56eade643"
+    ],
+    "scaling": "none",
+    "seed": 42,
+    "clusters": 2,
+    "eps": 0.5,
+    "min_samples": 5,
+    "contamination": 0.05,
+    "iqr_multiplier": 1.5,
+    "threshold_mode": "fraction",
+    "score_threshold": 0.6,
+    "metric": "euclidean",
+    "linkage": "ward",
+    "covariance_type": "full",
+    "xi": 0.05,
+    "min_cluster_size": 5,
+    "stability_runs": 1,
+    "compare_methods": [],
+    "anomaly_mode": "outlier",
+    "training_fraction": 0.7,
+    "nu": 0.05,
+    "gamma": "scale",
+    "label_column": "",
+    "false_positive_cost": 1.0,
+    "false_negative_cost": 1.0
+  },
+  "config_revision": 18,
+  "rows": 61,
+  "fit_scope": "full_selected_dataset_version; no view filters; no holdout",
+  "compute_preflight": {
+    "rows": 61,
+    "features": 2,
+    "worst_case_bytes": 89304,
+    "quadratic": true,
+    "stability_fits": 1,
+    "policy": "no implicit sampling; full-version exploratory fit"
+  },
+  "cpu_threads": 2,
+  "row_ids": [
+    "row:2523bd1e-2f8b-4194-8429-864a506f378b",
+    "row:d45a8d7e-6541-4eff-9aea-acd9f0f9c2b7",
+    "row:c80cbe30-1a3a-4d18-a3e0-b976f63121f7",
+    "row:4b019457-9ac9-4e25-ad4c-02d2233b7e0d",
+    "row:c01cb708-20b2-470e-9f7b-4c7ae33c2437",
+    "row:a9d31894-0077-4e82-b984-aed8704d284e",
+    "row:b0249f8f-7d73-49c7-8811-bc7e811f9501",
+    "row:5a066ca8-90dd-42af-a5cc-3321b36459ac",
+    "row:43b11995-7dbb-4f3b-a60e-6e632067206b",
+    "row:3cbf5f7f-7b9a-4975-80ee-247042b28294",
+    "row:c805e0e4-5a0e-4eca-bec1-2d658aaa1dab",
+    "row:196a47e7-b7e1-4715-96a0-02ab8bd1ea75",
+    "row:041b766b-6db5-4224-98ef-30e205b9050e",
+    "row:ba4a0efd-47c8-437c-af4b-8023fe9269b0",
+    "row:b92b6c99-a60a-4fa7-8932-158caae20aa9",
+    "row:3b8ae174-fe88-4288-9b2a-831d666724b6",
+    "row:fdccc3ef-b276-4358-8095-f1579f7d0b61",
+    "row:80a9f646-ca48-477f-a5f8-6b34d579f670",
+    "row:71d71361-eb54-4599-bcbd-93d1ba834411",
+    "row:fbf28263-9f18-4e99-acd2-e04c148b180a",
+    "row:5f50ef35-3d27-4a05-ba12-d8e90e1a0743",
+    "row:7aaad4bf-6ca0-4c3c-a7d2-a23cd83a160e",
+    "row:fe6bc4c0-9694-44e9-acaf-be1ab0ea13d8",
+    "row:28dae69e-123c-4cee-ae7d-4491a2995368",
+    "row:0d9f1772-6424-4287-b471-224d17e4ad3e",
+    "row:380641d3-4966-4ed1-9b13-4218ef502147",
+    "row:52adf942-28c2-493e-9da5-cb261db380a8",
+    "row:46f8e1dc-8f90-4335-b934-babf833fa264",
+    "row:fa6fa2e6-86fe-4c87-ae8e-9549b4d3baef",
+    "row:1e3e7859-0986-45b3-9bab-8fcb05e75166",
+    "row:c2feddb4-229b-4b54-a60b-ad7c896ac854",
+    "row:1aaace2b-18dc-4e5c-b2f4-2deb4dbe8b35",
+    "row:797207cd-bb37-4e55-a5cd-cde73e2dcbc3",
+    "row:23ed82d0-b195-4b51-843e-e267041e2964",
+    "row:3afbd890-3305-45d8-b5ed-a0923aee35e3",
+    "row:39121c33-5e88-4aa4-b61a-a922fac07740",
+    "row:b825441d-dbf2-48e4-98c0-c755c04e6b69",
+    "row:d399354a-7eac-436e-9cea-347ac2e14940",
+    "row:baf4b2ba-6833-4a6d-889e-7c718318a0b5",
+    "row:5749131e-d81e-44cd-ab5c-0e2ea63d44e1",
+    "row:12e307f1-d2bb-4e16-ae4c-1c677dae3ca1",
+    "row:58282e4b-6eb4-4f76-abb6-b5492e9c411e",
+    "row:8931370d-9b42-4889-a97d-20559a16b170",
+    "row:30abfc01-4b09-445a-8d1b-2dc06a011387",
+    "row:0e6d4bfc-7766-4278-a63e-f598c7326f42",
+    "row:2279666b-e471-4371-b82f-8da9c840e08f",
+    "row:5d0f9fb1-dee2-47a6-be64-47e606ccaf35",
+    "row:9f108aae-94e9-40d4-8be7-492afce1e849",
+    "row:f0c5d1a4-e43a-4406-8341-b66c9e029ece",
+    "row:0e5fc844-0b71-4ad3-b8b3-250a41b3fba0",
+    "row:7fe07980-d6e4-4bb7-b422-dcc9db055b2d",
+    "row:b201d152-309d-4ba8-b57d-9807e0b6bba9",
+    "row:fb7ed97e-2b8e-4f7d-81a5-1bf346882654",
+    "row:6bd34071-f46f-4433-b855-3ea10861f34b",
+    "row:dd2157fd-9470-405a-aca8-a32ca15bf49e",
+    "row:399145f4-25fc-4b09-9b15-5311e7c199e3",
+    "row:eb469d84-0d2c-4867-af63-17ec06663740",
+    "row:b625034d-974d-4144-bd33-b9c335987ce0",
+    "row:2c39bdca-c155-4dba-9f37-3be50ac23ce3",
+    "row:a405d434-83f5-4455-b05b-04acd9635c21",
+    "row:5ad0ff26-2d90-434c-b441-08f00a857fe2"
+  ],
+  "fit_row_ids": [
+    "row:2523bd1e-2f8b-4194-8429-864a506f378b",
+    "row:d45a8d7e-6541-4eff-9aea-acd9f0f9c2b7",
+    "row:c80cbe30-1a3a-4d18-a3e0-b976f63121f7",
+    "row:4b019457-9ac9-4e25-ad4c-02d2233b7e0d",
+    "row:c01cb708-20b2-470e-9f7b-4c7ae33c2437",
+    "row:a9d31894-0077-4e82-b984-aed8704d284e",
+    "row:b0249f8f-7d73-49c7-8811-bc7e811f9501",
+    "row:5a066ca8-90dd-42af-a5cc-3321b36459ac",
+    "row:43b11995-7dbb-4f3b-a60e-6e632067206b",
+    "row:3cbf5f7f-7b9a-4975-80ee-247042b28294",
+    "row:c805e0e4-5a0e-4eca-bec1-2d658aaa1dab",
+    "row:196a47e7-b7e1-4715-96a0-02ab8bd1ea75",
+    "row:041b766b-6db5-4224-98ef-30e205b9050e",
+    "row:ba4a0efd-47c8-437c-af4b-8023fe9269b0",
+    "row:b92b6c99-a60a-4fa7-8932-158caae20aa9",
+    "row:3b8ae174-fe88-4288-9b2a-831d666724b6",
+    "row:fdccc3ef-b276-4358-8095-f1579f7d0b61",
+    "row:80a9f646-ca48-477f-a5f8-6b34d579f670",
+    "row:71d71361-eb54-4599-bcbd-93d1ba834411",
+    "row:fbf28263-9f18-4e99-acd2-e04c148b180a",
+    "row:5f50ef35-3d27-4a05-ba12-d8e90e1a0743",
+    "row:7aaad4bf-6ca0-4c3c-a7d2-a23cd83a160e",
+    "row:fe6bc4c0-9694-44e9-acaf-be1ab0ea13d8",
+    "row:28dae69e-123c-4cee-ae7d-4491a2995368",
+    "row:0d9f1772-6424-4287-b471-224d17e4ad3e",
+    "row:380641d3-4966-4ed1-9b13-4218ef502147",
+    "row:52adf942-28c2-493e-9da5-cb261db380a8",
+    "row:46f8e1dc-8f90-4335-b934-babf833fa264",
+    "row:fa6fa2e6-86fe-4c87-ae8e-9549b4d3baef",
+    "row:1e3e7859-0986-45b3-9bab-8fcb05e75166",
+    "row:c2feddb4-229b-4b54-a60b-ad7c896ac854",
+    "row:1aaace2b-18dc-4e5c-b2f4-2deb4dbe8b35",
+    "row:797207cd-bb37-4e55-a5cd-cde73e2dcbc3",
+    "row:23ed82d0-b195-4b51-843e-e267041e2964",
+    "row:3afbd890-3305-45d8-b5ed-a0923aee35e3",
+    "row:39121c33-5e88-4aa4-b61a-a922fac07740",
+    "row:b825441d-dbf2-48e4-98c0-c755c04e6b69",
+    "row:d399354a-7eac-436e-9cea-347ac2e14940",
+    "row:baf4b2ba-6833-4a6d-889e-7c718318a0b5",
+    "row:5749131e-d81e-44cd-ab5c-0e2ea63d44e1",
+    "row:12e307f1-d2bb-4e16-ae4c-1c677dae3ca1",
+    "row:58282e4b-6eb4-4f76-abb6-b5492e9c411e",
+    "row:8931370d-9b42-4889-a97d-20559a16b170",
+    "row:30abfc01-4b09-445a-8d1b-2dc06a011387",
+    "row:0e6d4bfc-7766-4278-a63e-f598c7326f42",
+    "row:2279666b-e471-4371-b82f-8da9c840e08f",
+    "row:5d0f9fb1-dee2-47a6-be64-47e606ccaf35",
+    "row:9f108aae-94e9-40d4-8be7-492afce1e849",
+    "row:f0c5d1a4-e43a-4406-8341-b66c9e029ece",
+    "row:0e5fc844-0b71-4ad3-b8b3-250a41b3fba0",
+    "row:7fe07980-d6e4-4bb7-b422-dcc9db055b2d",
+    "row:b201d152-309d-4ba8-b57d-9807e0b6bba9",
+    "row:fb7ed97e-2b8e-4f7d-81a5-1bf346882654",
+    "row:6bd34071-f46f-4433-b855-3ea10861f34b",
+    "row:dd2157fd-9470-405a-aca8-a32ca15bf49e",
+    "row:399145f4-25fc-4b09-9b15-5311e7c199e3",
+    "row:eb469d84-0d2c-4867-af63-17ec06663740",
+    "row:b625034d-974d-4144-bd33-b9c335987ce0",
+    "row:2c39bdca-c155-4dba-9f37-3be50ac23ce3",
+    "row:a405d434-83f5-4455-b05b-04acd9635c21",
+    "row:5ad0ff26-2d90-434c-b441-08f00a857fe2"
+  ],
+  "selected_measurements": [
+    {
+      "id": "col:f294a75a-19e9-4444-88a9-4d47d220721a",
+      "name": "x",
+      "original_name": "x",
+      "type": "Float64"
+    },
+    {
+      "id": "col:3cd0f71f-10ac-4837-b47d-09b56eade643",
+      "name": "y",
+      "original_name": "y",
+      "type": "Float64"
+    }
+  ],
+  "scaling_state": null,
+  "method_state": {
+    "metric": "euclidean",
+    "linkage": "ward",
+    "scaling": "none",
+    "dendrogram_linkage": [
+      [
+        7.0,
+        28.0,
+        0.013993756844585547,
+        2.0
+      ],
+      [
+        45.0,
+        47.0,
+        0.02611226133476247,
+        2.0
+      ],
+      [
+        37.0,
+        44.0,
+        0.02936215642802862,
+        2.0
+      ],
+      [
+        38.0,
+        40.0,
+        0.03596797288277676,
+        2.0
+      ],
+      [
+        32.0,
+        36.0,
+        0.045763108297096754,
+        2.0
+      ],
+      [
+        31.0,
+        57.0,
+        0.04844096846115795,
+        2.0
+      ],
+      [
+        27.0,
+        61.0,
+        0.048811630088985446,
+        3.0
+      ],
+      [
+        14.0,
+        20.0,
+        0.0499505352342798,
+        2.0
+      ],
+      [
+        8.0,
+        15.0,
+        0.05610258194163818,
+        2.0
+      ],
+      [
+        11.0,
+        21.0,
+        0.059902715982960125,
+        2.0
+      ],
+      [
+        1.0,
+        2.0,
+        0.0620675236962202,
+        2.0
+      ],
+      [
+        30.0,
+        43.0,
+        0.06466936714252167,
+        2.0
+      ],
+      [
+        42.0,
+        50.0,
+        0.07184107763774036,
+        2.0
+      ],
+      [
+        26.0,
+        67.0,
+        0.07324320942361008,
+        4.0
+      ],
+      [
+        0.0,
+        68.0,
+        0.0735412167499989,
+        3.0
+      ],
+      [
+        54.0,
+        64.0,
+        0.08302157875853432,
+        3.0
+      ],
+      [
+        18.0,
+        74.0,
+        0.08717388338479483,
+        5.0
+      ],
+      [
+        53.0,
+        62.0,
+        0.08908284433784859,
+        3.0
+      ],
+      [
+        58.0,
+        66.0,
+        0.11008635987675433,
+        3.0
+      ],
+      [
+        65.0,
+        76.0,
+        0.11912826189106056,
+        5.0
+      ],
+      [
+        4.0,
+        71.0,
+        0.11957232144009577,
+        3.0
+      ],
+      [
+        17.0,
+        29.0,
+        0.11999632408484287,
+        2.0
+      ],
+      [
+        55.0,
+        59.0,
+        0.12718053298672605,
+        2.0
+      ],
+      [
+        5.0,
+        23.0,
+        0.13178921833498972,
+        2.0
+      ],
+      [
+        12.0,
+        75.0,
+        0.13639818872568357,
+        4.0
+      ],
+      [
+        39.0,
+        46.0,
+        0.1439569565127999,
+        2.0
+      ],
+      [
+        41.0,
+        72.0,
+        0.14557809586532458,
+        3.0
+      ],
+      [
+        48.0,
+        56.0,
+        0.1492537543255468,
+        2.0
+      ],
+      [
+        34.0,
+        52.0,
+        0.1561758188480002,
+        2.0
+      ],
+      [
+        10.0,
+        69.0,
+        0.1616545878817334,
+        3.0
+      ],
+      [
+        73.0,
+        79.0,
+        0.1824430506018467,
+        5.0
+      ],
+      [
+        6.0,
+        81.0,
+        0.1915660827712053,
+        4.0
+      ],
+      [
+        33.0,
+        63.0,
+        0.19672364355884836,
+        3.0
+      ],
+      [
+        22.0,
+        25.0,
+        0.20717208077659335,
+        2.0
+      ],
+      [
+        16.0,
+        19.0,
+        0.2403669099278406,
+        2.0
+      ],
+      [
+        3.0,
+        77.0,
+        0.25100047187356683,
+        6.0
+      ],
+      [
+        83.0,
+        93.0,
+        0.25309704410909556,
+        5.0
+      ],
+      [
+        82.0,
+        94.0,
+        0.2797334349608973,
+        4.0
+      ],
+      [
+        9.0,
+        13.0,
+        0.29127107101886646,
+        2.0
+      ],
+      [
+        70.0,
+        90.0,
+        0.3026513523675064,
+        5.0
+      ],
+      [
+        92.0,
+        95.0,
+        0.3139128597022607,
+        6.0
+      ],
+      [
+        84.0,
+        85.0,
+        0.31424483963332717,
+        6.0
+      ],
+      [
+        80.0,
+        87.0,
+        0.34060914241242235,
+        8.0
+      ],
+      [
+        88.0,
+        89.0,
+        0.3594714981502859,
+        4.0
+      ],
+      [
+        78.0,
+        86.0,
+        0.36708205707672625,
+        5.0
+      ],
+      [
+        35.0,
+        91.0,
+        0.4549031112475324,
+        6.0
+      ],
+      [
+        24.0,
+        96.0,
+        0.5263644411276174,
+        7.0
+      ],
+      [
+        51.0,
+        105.0,
+        0.5432135634501151,
+        6.0
+      ],
+      [
+        99.0,
+        100.0,
+        0.5439062216440128,
+        7.0
+      ],
+      [
+        103.0,
+        104.0,
+        0.6521546066577746,
+        12.0
+      ],
+      [
+        102.0,
+        107.0,
+        0.7102322688669918,
+        13.0
+      ],
+      [
+        49.0,
+        106.0,
+        0.7759542298412222,
+        7.0
+      ],
+      [
+        97.0,
+        108.0,
+        0.7957432425866642,
+        11.0
+      ],
+      [
+        110.0,
+        112.0,
+        0.9626969235856764,
+        19.0
+      ],
+      [
+        101.0,
+        109.0,
+        0.9633055892713862,
+        13.0
+      ],
+      [
+        98.0,
+        111.0,
+        1.46621176092858,
+        17.0
+      ],
+      [
+        115.0,
+        116.0,
+        1.8385956221250261,
+        30.0
+      ],
+      [
+        113.0,
+        114.0,
+        1.9493172293868692,
+        30.0
+      ],
+      [
+        60.0,
+        118.0,
+        31.528929175588786,
+        31.0
+      ],
+      [
+        117.0,
+        119.0,
+        66.80565875662056,
+        61.0
+      ]
+    ],
+    "dendrogram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"900\" height=\"350\" viewBox=\"0 0 900 350\"><rect width=\"900\" height=\"350\" fill=\"white\"/><text x=\"30\" y=\"25\" fill=\"black\">Dendrogram: selected metric/linkage; last 30 nodes (collapsed leaves)</text><polyline points=\"48.8333,300.0000 48.8333,299.2831 76.5000,299.2831 76.5000,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"104.1667,300.0000 104.1667,299.1005 131.8333,299.1005 131.8333,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"62.6667,299.2831 62.6667,298.8253 118.0000,298.8253 118.0000,299.1005\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"159.5000,300.0000 159.5000,298.9100 187.1667,298.9100 187.1667,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"214.8333,300.0000 214.8333,298.8674 242.5000,298.8674 242.5000,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"173.3333,298.9100 173.3333,297.9646 228.6667,297.9646 228.6667,298.8674\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"90.3333,298.8253 90.3333,296.3951 201.0000,296.3951 201.0000,297.9646\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"297.8333,300.0000 297.8333,299.2247 325.5000,299.2247 325.5000,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"270.1667,300.0000 270.1667,298.9532 311.6667,298.9532 311.6667,299.2247\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"353.1667,300.0000 353.1667,298.8240 380.8333,298.8240 380.8333,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"436.1667,300.0000 436.1667,299.0607 463.8333,299.0607 463.8333,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"408.5000,300.0000 408.5000,298.0302 450.0000,298.0302 450.0000,299.0607\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"367.0000,298.8240 367.0000,297.3422 429.2500,297.3422 429.2500,298.0302\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"290.9167,298.9532 290.9167,294.5131 398.1250,294.5131 398.1250,297.3422\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"145.6667,296.3951 145.6667,293.1196 344.5208,293.1196 344.5208,294.5131\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"546.8333,300.0000 546.8333,299.2638 574.5000,299.2638 574.5000,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"519.1667,300.0000 519.1667,299.0529 560.6667,299.0529 560.6667,299.2638\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"629.8333,300.0000 629.8333,298.6263 657.5000,298.6263 657.5000,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"602.1667,300.0000 602.1667,297.9672 643.6667,297.9672 643.6667,298.6263\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"539.9167,299.0529 539.9167,297.0222 622.9167,297.0222 622.9167,297.9672\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"685.1667,300.0000 685.1667,298.7254 712.8333,298.7254 712.8333,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"740.5000,300.0000 740.5000,298.6548 768.1667,298.6548 768.1667,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"699.0000,298.7254 699.0000,297.5595 754.3333,297.5595 754.3333,298.6548\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"823.5000,300.0000 823.5000,298.2977 851.1667,298.2977 851.1667,300.0000\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"795.8333,300.0000 795.8333,297.0962 837.3333,297.0962 837.3333,298.2977\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"726.6667,297.5595 726.6667,296.3974 816.5833,296.3974 816.5833,297.0962\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"581.4167,297.0222 581.4167,292.7053 771.6250,292.7053 771.6250,296.3974\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"491.5000,300.0000 491.5000,182.0125 676.5208,182.0125 676.5208,292.7053\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/><polyline points=\"245.0938,293.1196 245.0938,50.0000 584.0104,50.0000 584.0104,182.0125\" fill=\"none\" stroke=\"#3d65aa\" stroke-width=\"1.5\"/></svg>",
+    "comparison": [
+      {
+        "method": "agglomerative",
+        "metrics": {
+          "used_rows": 61,
+          "noise_excluded": 0,
+          "metric": "euclidean",
+          "scope": "non_noise",
+          "silhouette": 0.9182465723006551,
+          "davies_bouldin": 0.14732980602048948,
+          "calinski_harabasz": 260.72157467852776,
+          "reason": "Internal geometry; no universal true cluster count or labeled accuracy."
+        },
+        "noise_count": 0,
+        "cluster_count": 2,
+        "assignments": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "aic": null,
+        "bic": null,
+        "stability": [
+          {
+            "status": "valid",
+            "adjusted_rand": 1.0,
+            "non_noise_overlap": 48,
+            "noise_agreement": 1.0,
+            "selected_indices": [
+              1,
+              2,
+              3,
+              4,
+              6,
+              7,
+              8,
+              10,
+              11,
+              12,
+              14,
+              15,
+              16,
+              17,
+              19,
+              20,
+              22,
+              24,
+              25,
+              26,
+              27,
+              29,
+              32,
+              33,
+              34,
+              36,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60
+            ],
+            "selected_row_ids": [
+              "row:d45a8d7e-6541-4eff-9aea-acd9f0f9c2b7",
+              "row:c80cbe30-1a3a-4d18-a3e0-b976f63121f7",
+              "row:4b019457-9ac9-4e25-ad4c-02d2233b7e0d",
+              "row:c01cb708-20b2-470e-9f7b-4c7ae33c2437",
+              "row:b0249f8f-7d73-49c7-8811-bc7e811f9501",
+              "row:5a066ca8-90dd-42af-a5cc-3321b36459ac",
+              "row:43b11995-7dbb-4f3b-a60e-6e632067206b",
+              "row:c805e0e4-5a0e-4eca-bec1-2d658aaa1dab",
+              "row:196a47e7-b7e1-4715-96a0-02ab8bd1ea75",
+              "row:041b766b-6db5-4224-98ef-30e205b9050e",
+              "row:b92b6c99-a60a-4fa7-8932-158caae20aa9",
+              "row:3b8ae174-fe88-4288-9b2a-831d666724b6",
+              "row:fdccc3ef-b276-4358-8095-f1579f7d0b61",
+              "row:80a9f646-ca48-477f-a5f8-6b34d579f670",
+              "row:fbf28263-9f18-4e99-acd2-e04c148b180a",
+              "row:5f50ef35-3d27-4a05-ba12-d8e90e1a0743",
+              "row:fe6bc4c0-9694-44e9-acaf-be1ab0ea13d8",
+              "row:0d9f1772-6424-4287-b471-224d17e4ad3e",
+              "row:380641d3-4966-4ed1-9b13-4218ef502147",
+              "row:52adf942-28c2-493e-9da5-cb261db380a8",
+              "row:46f8e1dc-8f90-4335-b934-babf833fa264",
+              "row:1e3e7859-0986-45b3-9bab-8fcb05e75166",
+              "row:797207cd-bb37-4e55-a5cd-cde73e2dcbc3",
+              "row:23ed82d0-b195-4b51-843e-e267041e2964",
+              "row:3afbd890-3305-45d8-b5ed-a0923aee35e3",
+              "row:b825441d-dbf2-48e4-98c0-c755c04e6b69",
+              "row:baf4b2ba-6833-4a6d-889e-7c718318a0b5",
+              "row:5749131e-d81e-44cd-ab5c-0e2ea63d44e1",
+              "row:12e307f1-d2bb-4e16-ae4c-1c677dae3ca1",
+              "row:58282e4b-6eb4-4f76-abb6-b5492e9c411e",
+              "row:8931370d-9b42-4889-a97d-20559a16b170",
+              "row:30abfc01-4b09-445a-8d1b-2dc06a011387",
+              "row:0e6d4bfc-7766-4278-a63e-f598c7326f42",
+              "row:2279666b-e471-4371-b82f-8da9c840e08f",
+              "row:5d0f9fb1-dee2-47a6-be64-47e606ccaf35",
+              "row:9f108aae-94e9-40d4-8be7-492afce1e849",
+              "row:f0c5d1a4-e43a-4406-8341-b66c9e029ece",
+              "row:0e5fc844-0b71-4ad3-b8b3-250a41b3fba0",
+              "row:7fe07980-d6e4-4bb7-b422-dcc9db055b2d",
+              "row:b201d152-309d-4ba8-b57d-9807e0b6bba9",
+              "row:fb7ed97e-2b8e-4f7d-81a5-1bf346882654",
+              "row:dd2157fd-9470-405a-aca8-a32ca15bf49e",
+              "row:399145f4-25fc-4b09-9b15-5311e7c199e3",
+              "row:eb469d84-0d2c-4867-af63-17ec06663740",
+              "row:b625034d-974d-4144-bd33-b9c335987ce0",
+              "row:2c39bdca-c155-4dba-9f37-3be50ac23ce3",
+              "row:a405d434-83f5-4455-b05b-04acd9635c21",
+              "row:5ad0ff26-2d90-434c-b441-08f00a857fe2"
+            ]
+          }
+        ],
+        "stability_policy": "80% subsample without replacement; scaler refit in each sample; ARI only shared non-noise rows; no truth claim"
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "label": 0,
+      "name": "Küme 0",
+      "count": 31,
+      "measurements": [
+        {
+          "column_id": "col:f294a75a-19e9-4444-88a9-4d47d220721a",
+          "name": "x",
+          "mean": 4.49402471999443,
+          "min": 3.4935387647900376,
+          "max": 20.0
+        },
+        {
+          "column_id": "col:3cd0f71f-10ac-4837-b47d-09b56eade643",
+          "name": "y",
+          "mean": 4.489746083190591,
+          "min": 3.38940131651802,
+          "max": 20.0
+        }
+      ],
+      "examples": [
+        {
+          "row_id": "row:c2feddb4-229b-4b54-a60b-ad7c896ac854",
+          "values": {
+            "x": 4.0609415831168825,
+            "y": 3.8610077270384755
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:1aaace2b-18dc-4e5c-b2f4-2deb4dbe8b35",
+          "values": {
+            "x": 4.03818052336775,
+            "y": 3.643841641644958
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:797207cd-bb37-4e55-a5cd-cde73e2dcbc3",
+          "values": {
+            "x": 3.826209521049198,
+            "y": 3.941141208158651
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:23ed82d0-b195-4b51-843e-e267041e2964",
+          "values": {
+            "x": 4.269629161630123,
+            "y": 4.34356660223624
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:3afbd890-3305-45d8-b5ed-a0923aee35e3",
+          "values": {
+            "x": 3.6029416622547235,
+            "y": 3.761607290203885
+          },
+          "score": null
+        }
+      ]
+    },
+    {
+      "label": 1,
+      "name": "Küme 1",
+      "count": 30,
+      "measurements": [
+        {
+          "column_id": "col:f294a75a-19e9-4444-88a9-4d47d220721a",
+          "name": "x",
+          "mean": -4.089385005406942,
+          "min": -4.755027913246154,
+          "max": -3.5684432225031544
+        },
+        {
+          "column_id": "col:3cd0f71f-10ac-4837-b47d-09b56eade643",
+          "name": "y",
+          "mean": -4.03622318596013,
+          "min": -4.464143403438545,
+          "max": -3.3998750360972734
+        }
+      ],
+      "examples": [
+        {
+          "row_id": "row:2523bd1e-2f8b-4194-8429-864a506f378b",
+          "values": {
+            "x": -3.9996309539927553,
+            "y": -3.910376338747459
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:d45a8d7e-6541-4eff-9aea-acd9f0f9c2b7",
+          "values": {
+            "x": -4.082241356608665,
+            "y": -4.267177551627182
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:c80cbe30-1a3a-4d18-a3e0-b976f63121f7",
+          "values": {
+            "x": -4.136401235551517,
+            "y": -4.297493966498939
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:4b019457-9ac9-4e25-ad4c-02d2233b7e0d",
+          "values": {
+            "x": -3.9819569192207687,
+            "y": -3.59793542633364
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:c01cb708-20b2-470e-9f7b-4c7ae33c2437",
+          "values": {
+            "x": -4.147661955565399,
+            "y": -4.186142469945982
+          },
+          "score": null
+        }
+      ]
+    }
+  ],
+  "silhouette": {
+    "status": "valid",
+    "value": 0.9182465723006551,
+    "used_rows": 61,
+    "noise_excluded": 0,
+    "scope": "all_non_noise",
+    "metric": "euclidean_scaled_features",
+    "reason": "Seçili/ölçeklenmiş uzayda iç ayrışma; gerçek sınıf veya yeni veri başarısı değildir."
+  },
+  "noise_count": 0,
+  "flagged_count": 0,
+  "threshold": null,
+  "score_direction": null,
+  "score_units": null,
+  "evaluation": {
+    "labels_available": false,
+    "precision": null,
+    "recall": null,
+    "reason": "Gerçek etiket yok; precision/recall hesaplanamaz. İç ayrışma doğruluk değildir."
+  },
+  "new_data": {
+    "native_support": false,
+    "available": false,
+    "reason": "Phase47: yalnız kaydedilen fit/heldout kapsamı; yeni dosya ve safe model persistence kapalı."
+  },
+  "projection": null,
+  "warning": "Kümeler fiziksel gerçek sınıflar değildir; gürültü/anomali adayları kesin veri hatası değildir. Otomatik silme yok.",
+  "provenance": {
+    "snapshot_fingerprint": {
+      "size": 8803,
+      "sha256": "06117d87291cf4bc560a055cee5e92bbeb5429484f340f5e79bdc529264dffd4"
+    },
+    "snapshot_uri": "snapshots/c8dddbdf-9dc1-47d5-827a-e95b06409b60.parquet",
+    "source_snapshot_id": "snapshot:f9250f22-2a60-4126-8018-132f83befe42",
+    "created_at": "2026-10-12T20:00:29.063447+00:00",
+    "backend": "scikit-learn",
+    "backend_version": "1.9.1",
+    "numpy_version": "2.5.3",
+    "seed": 42,
+    "seed_used": true,
+    "help_content_version": 63
+  },
+  "assignments_uri": "snapshots/28f64916-b627-41ab-952a-ce55e8a9d78c.parquet"
+}

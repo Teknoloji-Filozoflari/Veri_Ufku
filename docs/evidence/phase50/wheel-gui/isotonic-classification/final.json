@@ -1,0 +1,3032 @@
+{
+  "schema": "BaselineRun/v1",
+  "status": "completed",
+  "run_id": "run:e1267af0-23b8-42e2-acd9-646ca045c78f",
+  "mode": "final",
+  "dataset_version": "dv:69f8d928-8be2-411a-aa9e-bbfd4508f90f",
+  "origin_version": "dv:69f8d928-8be2-411a-aa9e-bbfd4508f90f",
+  "source_snapshot_id": "snapshot:18a34459-8462-461b-b11f-5b4735ec2251",
+  "snapshot_fingerprint": {
+    "size": 9539,
+    "sha256": "b0ec233d518e9719c257c6d966876079b91fd3806f5260cb57e3800993ca0fa6"
+  },
+  "pipeline_id": "ml-pipeline:4ccc9877-e370-4876-9aaa-9da412c6dfc2",
+  "pipeline": {
+    "schema": "PreparationPlan/v1",
+    "fit_state": "not_fitted",
+    "fitted_parameters": {},
+    "estimator_family": "tree",
+    "steps": [
+      {
+        "kind": "numeric",
+        "input_column_ids": [
+          "col:60961f5e-65dc-4589-8805-0cc4fdc9d681"
+        ],
+        "output_names": [
+          "f_60961f5e65dc458988050cc4fdc9d681__numeric"
+        ],
+        "learned_scope": "row_local",
+        "state": "planned",
+        "parameters": {
+          "precision": "reject",
+          "nonfinite": "reject"
+        },
+        "reason": "Kimlik ölçüm değildir; Float64 kaybı gelecekte açık politika ile denetlenir."
+      },
+      {
+        "kind": "impute_numeric",
+        "input_column_ids": [
+          "col:60961f5e-65dc-4589-8805-0cc4fdc9d681"
+        ],
+        "output_names": [
+          "f_60961f5e65dc458988050cc4fdc9d681__numeric"
+        ],
+        "learned_scope": "training_fold",
+        "state": "planned",
+        "parameters": {
+          "strategy": "median",
+          "all_missing": "error"
+        },
+        "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz."
+      },
+      {
+        "kind": "no_scaling",
+        "input_column_ids": [
+          "col:60961f5e-65dc-4589-8805-0cc4fdc9d681"
+        ],
+        "output_names": [
+          "f_60961f5e65dc458988050cc4fdc9d681__numeric"
+        ],
+        "learned_scope": "row_local",
+        "state": "planned",
+        "parameters": {
+          "explicit_override": false
+        },
+        "reason": "Ağaç ailesine scaling otomatik önerilmez; açık none seçiminde diğer ailelerde ölçek duyarlılığını inceleyin."
+      },
+      {
+        "kind": "impute_category",
+        "input_column_ids": [
+          "col:5fae3335-7b09-4fd5-b1b4-0384ecca1b61"
+        ],
+        "output_names": [],
+        "learned_scope": "training_fold",
+        "state": "planned",
+        "parameters": {
+          "strategy": "most_frequent",
+          "all_missing": "error"
+        },
+        "reason": "Kategori modunu yalnız eğitim katı öğrenir; eksik hedef doldurulmaz."
+      },
+      {
+        "kind": "encode_onehot",
+        "input_column_ids": [
+          "col:5fae3335-7b09-4fd5-b1b4-0384ecca1b61"
+        ],
+        "output_names": [
+          "f_5fae33357b094fd5b1b40384ecca1b61__category_{training_index}"
+        ],
+        "learned_scope": "training_fold",
+        "state": "planned",
+        "parameters": {
+          "categories": "training_only",
+          "unknown": "ignore_with_warning",
+          "sparse": true,
+          "name_binding": "training category index -> original ColumnId and category; deferred until fit"
+        },
+        "reason": "Nominal kategorilere sıralama yüklenmez; kategori sözlüğü yalnız eğitim katında öğrenilir."
+      }
+    ],
+    "column_lineage": [
+      {
+        "input_column_id": "col:60961f5e-65dc-4589-8805-0cc4fdc9d681",
+        "source_name": "x",
+        "source_dtype": "Float64",
+        "output_names": [
+          "f_60961f5e65dc458988050cc4fdc9d681__numeric"
+        ],
+        "names_status": "structurally_known",
+        "category_map": [],
+        "selected_after_fit": "all_planned"
+      },
+      {
+        "input_column_id": "col:5fae3335-7b09-4fd5-b1b4-0384ecca1b61",
+        "source_name": "cat",
+        "source_dtype": "String",
+        "output_names": [
+          "f_5fae33357b094fd5b1b40384ecca1b61__category_{training_index}"
+        ],
+        "names_status": "template_training_bound",
+        "category_map": null,
+        "selected_after_fit": "all_planned"
+      }
+    ],
+    "training_dependency": "Requires a validated split/fold protocol in Phase16; no training performed",
+    "category_vocabulary": null,
+    "feature_selection_mask": null,
+    "version_id": "ml-pipeline:4ccc9877-e370-4876-9aaa-9da412c6dfc2"
+  },
+  "preparation_spec": {
+    "purpose": "classification",
+    "features": [
+      "col:60961f5e-65dc-4589-8805-0cc4fdc9d681",
+      "col:5fae3335-7b09-4fd5-b1b4-0384ecca1b61"
+    ],
+    "target": "col:e1fd4742-3a1a-431e-b75a-b0148a20d232",
+    "family": "tree",
+    "source_version": "dv:69f8d928-8be2-411a-aa9e-bbfd4508f90f",
+    "history_action": "review",
+    "numeric_imputation": "median",
+    "categorical_imputation": "most_frequent",
+    "encoding": "onehot",
+    "scaling": "auto",
+    "date_features": true,
+    "selection": "none",
+    "group": "",
+    "time": "",
+    "allow_identifiers": false,
+    "prediction_context": "Cihaz çalıştırılmadan önce",
+    "history_note": "",
+    "invalid_numeric": "reject",
+    "precision": "reject"
+  },
+  "history": {
+    "origin_version": "dv:69f8d928-8be2-411a-aa9e-bbfd4508f90f",
+    "source_version": "dv:69f8d928-8be2-411a-aa9e-bbfd4508f90f",
+    "action": "review",
+    "findings": [],
+    "unresolved_source_operations": [],
+    "relocation_unavailable": [],
+    "external_history": "Proje dışındaki geçmiş ve kullanıcı seçimlerinin bütününü tespit edemeyiz; yeni plan tek başına eski riski gidermez.",
+    "leakage_certified": false
+  },
+  "spec": {
+    "structure": "independent",
+    "method": "auto",
+    "entity_use": "new",
+    "prediction_moment": "Cihaz çalıştırılmadan önce",
+    "horizon_seconds": 0,
+    "availability": {
+      "col:5fae3335-7b09-4fd5-b1b4-0384ecca1b61": {
+        "note": "Çalıştırmadan önce mevcut",
+        "offset_seconds": 0
+      },
+      "col:60961f5e-65dc-4589-8805-0cc4fdc9d681": {
+        "note": "Çalıştırmadan önce mevcut",
+        "offset_seconds": 0
+      }
+    },
+    "test_fraction": 0.2,
+    "validation_fraction": 0.2,
+    "folds": 3,
+    "seed": 42,
+    "baseline": "auto"
+  },
+  "plan": {
+    "schema": "ValidationPlan/v1",
+    "split_id": "split:42771bc795efff41bde7cc8aa667e2976a209c9001399e3c109045a07e0b3b0e",
+    "protocol_id": "protocol:00f072755d966499bfc81d45d3de44dd6595c2ac6c9d51a28cd0d7339887091c",
+    "method": "stratified",
+    "membership": {
+      "train": [
+        "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+        "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+        "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+        "row:165df915-c25f-432b-bb46-b8595e540bf9",
+        "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+        "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+        "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+        "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+        "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+        "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+        "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+        "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+        "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+        "row:5878e365-a482-4d01-957e-3944630e3999",
+        "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+        "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+        "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+        "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+        "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+        "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+        "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+        "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+        "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+        "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+        "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+        "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+        "row:82d47852-b861-4aba-a06c-06cfb773a081",
+        "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+        "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+        "row:9e2c704d-a70a-447d-821d-3116331d8341",
+        "row:9e54f009-af73-4808-88b6-aceaafc53356",
+        "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+        "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+        "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+        "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+        "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+        "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+        "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+        "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+        "row:c48b0fed-b294-4858-8856-a156eea03436",
+        "row:c71ab1fe-b8b1-4f38-b491-c256348597df",
+        "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+        "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+        "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+        "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+        "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+        "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+        "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+      ],
+      "validation": [
+        "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+        "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+        "row:351d265a-14ce-4455-83f7-a07761588f17",
+        "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+        "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+        "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+        "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+        "row:75456424-a832-4535-a48d-4f02ad751253",
+        "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+        "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+        "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+        "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+        "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+        "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+        "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+        "row:fff41924-b22e-48bd-803d-8b64367788f0"
+      ],
+      "development": [
+        "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+        "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+        "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+        "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+        "row:165df915-c25f-432b-bb46-b8595e540bf9",
+        "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+        "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+        "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+        "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+        "row:351d265a-14ce-4455-83f7-a07761588f17",
+        "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+        "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+        "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+        "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+        "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+        "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+        "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+        "row:5878e365-a482-4d01-957e-3944630e3999",
+        "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+        "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+        "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+        "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+        "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+        "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+        "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+        "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+        "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+        "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+        "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+        "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+        "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+        "row:75456424-a832-4535-a48d-4f02ad751253",
+        "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+        "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+        "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+        "row:82d47852-b861-4aba-a06c-06cfb773a081",
+        "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+        "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+        "row:9e2c704d-a70a-447d-821d-3116331d8341",
+        "row:9e54f009-af73-4808-88b6-aceaafc53356",
+        "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+        "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+        "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+        "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+        "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+        "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+        "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+        "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+        "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+        "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+        "row:c48b0fed-b294-4858-8856-a156eea03436",
+        "row:c71ab1fe-b8b1-4f38-b491-c256348597df",
+        "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+        "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+        "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+        "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+        "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+        "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+        "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+        "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+        "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+        "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+        "row:ff466881-2cd7-48ba-a623-9b0b2d697d12",
+        "row:fff41924-b22e-48bd-803d-8b64367788f0"
+      ],
+      "test": [
+        "row:1658fda6-0f82-40b9-a708-a679ec5ed24e",
+        "row:173b8e52-00dc-4998-9e42-b098c81d35fb",
+        "row:2c925a5e-9238-4cc0-883c-f9779484736c",
+        "row:3a593eae-144d-4261-8002-6a5290987c95",
+        "row:461b20d1-73cb-41d4-aac3-6691f83f831e",
+        "row:5e1d65b7-f12a-4a9f-8920-b16eea485180",
+        "row:82eeeb43-6e79-4f97-87dc-1f422e747141",
+        "row:9dbb6fb3-6fa0-4262-a538-d02554b9a38a",
+        "row:adce0198-8b0b-4adc-9021-cc23d6e58731",
+        "row:c39587a7-9564-4f9f-ac0e-f858283050d2",
+        "row:d4f7eae4-1af9-4834-a165-802ff290213b",
+        "row:e52daf6c-0c11-414b-87a0-25c3117c477e",
+        "row:eb6bd902-edb9-4295-8087-88d8ec653b58",
+        "row:f6609818-3fcf-4193-a02b-4d6e5a34a2a7",
+        "row:f6e2623c-0309-4c52-9ce3-617c9bdddd3c",
+        "row:fc033f8e-7683-4622-acdf-ac6ecb982cac"
+      ],
+      "folds": [
+        {
+          "train": [
+            "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+            "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+            "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+            "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+            "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+            "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+            "row:351d265a-14ce-4455-83f7-a07761588f17",
+            "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+            "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+            "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+            "row:5878e365-a482-4d01-957e-3944630e3999",
+            "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+            "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+            "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+            "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+            "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+            "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+            "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+            "row:75456424-a832-4535-a48d-4f02ad751253",
+            "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+            "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+            "row:82d47852-b861-4aba-a06c-06cfb773a081",
+            "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+            "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+            "row:9e2c704d-a70a-447d-821d-3116331d8341",
+            "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+            "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+            "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+            "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+            "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+            "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+            "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+            "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+            "row:c71ab1fe-b8b1-4f38-b491-c256348597df",
+            "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+            "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+            "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+            "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+            "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+            "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+            "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+            "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+          ],
+          "validation": [
+            "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+            "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+            "row:165df915-c25f-432b-bb46-b8595e540bf9",
+            "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+            "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+            "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+            "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+            "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+            "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+            "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+            "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+            "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+            "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+            "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+            "row:9e54f009-af73-4808-88b6-aceaafc53356",
+            "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+            "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+            "row:c48b0fed-b294-4858-8856-a156eea03436",
+            "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+            "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+            "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+            "row:fff41924-b22e-48bd-803d-8b64367788f0"
+          ],
+          "status": "valid"
+        },
+        {
+          "train": [
+            "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+            "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+            "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+            "row:165df915-c25f-432b-bb46-b8595e540bf9",
+            "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+            "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+            "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+            "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+            "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+            "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+            "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+            "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+            "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+            "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+            "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+            "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+            "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+            "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+            "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+            "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+            "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+            "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+            "row:75456424-a832-4535-a48d-4f02ad751253",
+            "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+            "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+            "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+            "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+            "row:9e2c704d-a70a-447d-821d-3116331d8341",
+            "row:9e54f009-af73-4808-88b6-aceaafc53356",
+            "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+            "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+            "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+            "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+            "row:c48b0fed-b294-4858-8856-a156eea03436",
+            "row:c71ab1fe-b8b1-4f38-b491-c256348597df",
+            "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+            "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+            "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+            "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+            "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+            "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+            "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+            "row:fff41924-b22e-48bd-803d-8b64367788f0"
+          ],
+          "validation": [
+            "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+            "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+            "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+            "row:351d265a-14ce-4455-83f7-a07761588f17",
+            "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+            "row:5878e365-a482-4d01-957e-3944630e3999",
+            "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+            "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+            "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+            "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+            "row:82d47852-b861-4aba-a06c-06cfb773a081",
+            "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+            "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+            "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+            "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+            "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+            "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+            "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+            "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+            "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+            "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+          ],
+          "status": "valid"
+        },
+        {
+          "train": [
+            "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+            "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+            "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+            "row:165df915-c25f-432b-bb46-b8595e540bf9",
+            "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+            "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+            "row:351d265a-14ce-4455-83f7-a07761588f17",
+            "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+            "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+            "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+            "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+            "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+            "row:5878e365-a482-4d01-957e-3944630e3999",
+            "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+            "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+            "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+            "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+            "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+            "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+            "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+            "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+            "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+            "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+            "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+            "row:82d47852-b861-4aba-a06c-06cfb773a081",
+            "row:9e54f009-af73-4808-88b6-aceaafc53356",
+            "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+            "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+            "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+            "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+            "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+            "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+            "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+            "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+            "row:c48b0fed-b294-4858-8856-a156eea03436",
+            "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+            "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+            "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+            "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+            "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+            "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+            "row:ff466881-2cd7-48ba-a623-9b0b2d697d12",
+            "row:fff41924-b22e-48bd-803d-8b64367788f0"
+          ],
+          "validation": [
+            "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+            "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+            "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+            "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+            "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+            "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+            "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+            "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+            "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+            "row:75456424-a832-4535-a48d-4f02ad751253",
+            "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+            "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+            "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+            "row:9e2c704d-a70a-447d-821d-3116331d8341",
+            "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+            "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+            "row:c71ab1fe-b8b1-4f38-b491-c256348597df",
+            "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+            "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+            "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+            "row:e0676965-8f02-44d1-8d64-8ebc39924d6c"
+          ],
+          "status": "valid"
+        }
+      ],
+      "purged": []
+    },
+    "invalid_folds": []
+  },
+  "baseline": "prior",
+  "default_reason": "Bağımsız kategorilerde sınıf oranını korur.",
+  "seed": 42,
+  "excluded_target_row_ids": [],
+  "evaluations": [
+    {
+      "scope": "final_test",
+      "status": "valid",
+      "train_n": 28,
+      "evaluation_n": 16,
+      "fit_row_ids": [
+        "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+        "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+        "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+        "row:165df915-c25f-432b-bb46-b8595e540bf9",
+        "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+        "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+        "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+        "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+        "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+        "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+        "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+        "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+        "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+        "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+        "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+        "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+        "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+        "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+        "row:9e54f009-af73-4808-88b6-aceaafc53356",
+        "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+        "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+        "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+        "row:c48b0fed-b294-4858-8856-a156eea03436",
+        "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+        "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+        "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+        "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+        "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+      ],
+      "fitted_parameters": {
+        "1": {
+          "kind": "impute_numeric",
+          "statistics": [
+            43.0
+          ]
+        },
+        "3": {
+          "kind": "impute_category",
+          "statistics": [
+            "A"
+          ]
+        },
+        "4": {
+          "kind": "encode_onehot",
+          "categories": [
+            [
+              "A",
+              "B"
+            ]
+          ]
+        }
+      },
+      "metrics": [
+        {
+          "metric": "log_loss",
+          "value": 10.431751395074842,
+          "n": 16,
+          "scope": "final_test",
+          "direction": "minimize",
+          "status": "valid"
+        },
+        {
+          "metric": "brier",
+          "value": 0.9713932901457917,
+          "n": 16,
+          "scope": "final_test",
+          "direction": "minimize",
+          "status": "valid"
+        },
+        {
+          "metric": "accuracy",
+          "value": 0.1875,
+          "n": 16,
+          "scope": "final_test",
+          "direction": "maximize",
+          "status": "valid"
+        }
+      ],
+      "uncertainty_report": {
+        "n": 16,
+        "scope": "final_test",
+        "nominal_coverage": 0.9,
+        "empirical_coverage": 1.0,
+        "mean_width": null,
+        "mean_set_size": 7.0,
+        "limitations": "Brier kalibrasyon, ayırt etme ve veri belirsizliğini birlikte ölçer; tek başına kalibrasyon değildir. Conformal coverage exchangeability gerektirir; grup/zaman ayrımı bunu kanıtlamaz. Nominal coverage her alt grupta veya gelecek dağılımda garanti değildir. Predictive interval yeni gözlemi kapsar; parametrenin CI aralığı değildir. Quantile aralığı kendi başına conformal coverage garantisi taşımaz.",
+        "probability": {
+          "log_loss": 10.431751395074842,
+          "brier": 0.9713932901457917,
+          "brier_scale": "multiclass sum [0,2]",
+          "reliability": [
+            {
+              "label": "0.0",
+              "points": [
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 10,
+                  "mean_probability": 0.15284334423151852,
+                  "fraction_positive": 0.2
+                },
+                {
+                  "bin": 2,
+                  "lower": 0.2,
+                  "upper": 0.3,
+                  "n": 6,
+                  "mean_probability": 0.27000964320154286,
+                  "fraction_positive": 0.0
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "1.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 4,
+                  "mean_probability": 0.0,
+                  "fraction_positive": 0.25
+                },
+                {
+                  "bin": 2,
+                  "lower": 0.2,
+                  "upper": 0.3,
+                  "n": 11,
+                  "mean_probability": 0.26875392375859286,
+                  "fraction_positive": 0.09090909090909091
+                },
+                {
+                  "bin": 3,
+                  "lower": 0.3,
+                  "upper": 0.4,
+                  "n": 1,
+                  "mean_probability": 0.31927023945267957,
+                  "fraction_positive": 1.0
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "2.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 3,
+                  "mean_probability": 0.015157256536566936,
+                  "fraction_positive": 0.3333333333333333
+                },
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 13,
+                  "mean_probability": 0.1317961779671758,
+                  "fraction_positive": 0.15384615384615385
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "3.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 3,
+                  "mean_probability": 0.018450763735342598,
+                  "fraction_positive": 0.0
+                },
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 13,
+                  "mean_probability": 0.1151076862157451,
+                  "fraction_positive": 0.15384615384615385
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "4.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 12,
+                  "mean_probability": 0.0,
+                  "fraction_positive": 0.16666666666666666
+                },
+                {
+                  "bin": 2,
+                  "lower": 0.2,
+                  "upper": 0.3,
+                  "n": 1,
+                  "mean_probability": 0.208667538966274,
+                  "fraction_positive": 0.0
+                },
+                {
+                  "bin": 4,
+                  "lower": 0.4,
+                  "upper": 0.5,
+                  "n": 2,
+                  "mean_probability": 0.4293190655325644,
+                  "fraction_positive": 0.0
+                },
+                {
+                  "bin": 5,
+                  "lower": 0.5,
+                  "upper": 0.6,
+                  "n": 1,
+                  "mean_probability": 0.5303030303030303,
+                  "fraction_positive": 0.0
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "5.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 8,
+                  "mean_probability": 0.08416231313038863,
+                  "fraction_positive": 0.125
+                },
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 8,
+                  "mean_probability": 0.11032778279253727,
+                  "fraction_positive": 0.125
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "6.0",
+              "points": [
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 8,
+                  "mean_probability": 0.16832462626077727,
+                  "fraction_positive": 0.125
+                },
+                {
+                  "bin": 2,
+                  "lower": 0.2,
+                  "upper": 0.3,
+                  "n": 8,
+                  "mean_probability": 0.22065556558507454,
+                  "fraction_positive": 0.125
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            }
+          ],
+          "n": 16,
+          "label_order": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ],
+          "exclusions": 0,
+          "note": "Brier kalibrasyon, ayırt etme ve veri belirsizliğini birlikte ölçer; tek başına kalibrasyon değildir. Conformal coverage exchangeability gerektirir; grup/zaman ayrımı bunu kanıtlamaz. Nominal coverage her alt grupta veya gelecek dağılımda garanti değildir. Predictive interval yeni gözlemi kapsar; parametrenin CI aralığı değildir. Quantile aralığı kendi başına conformal coverage garantisi taşımaz."
+        },
+        "uncalibrated_probability": {
+          "log_loss": 2.3197655022657337,
+          "brier": 0.9586235432488535,
+          "brier_scale": "multiclass sum [0,2]",
+          "reliability": [
+            {
+              "label": "0.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 7,
+                  "mean_probability": 0.05198955567475893,
+                  "fraction_positive": 0.2857142857142857
+                },
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 6,
+                  "mean_probability": 0.13746729641296726,
+                  "fraction_positive": 0.0
+                },
+                {
+                  "bin": 3,
+                  "lower": 0.3,
+                  "upper": 0.4,
+                  "n": 3,
+                  "mean_probability": 0.3406735060397727,
+                  "fraction_positive": 0.0
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "1.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 1,
+                  "mean_probability": 0.09559848515692748,
+                  "fraction_positive": 0.0
+                },
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 15,
+                  "mean_probability": 0.1421750388621614,
+                  "fraction_positive": 0.2
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "2.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 3,
+                  "mean_probability": 0.08099267977273462,
+                  "fraction_positive": 0.3333333333333333
+                },
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 10,
+                  "mean_probability": 0.14823666654242093,
+                  "fraction_positive": 0.2
+                },
+                {
+                  "bin": 2,
+                  "lower": 0.2,
+                  "upper": 0.3,
+                  "n": 3,
+                  "mean_probability": 0.20347869658589168,
+                  "fraction_positive": 0.0
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "3.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 5,
+                  "mean_probability": 0.07224831137846996,
+                  "fraction_positive": 0.0
+                },
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 10,
+                  "mean_probability": 0.15897889809905671,
+                  "fraction_positive": 0.2
+                },
+                {
+                  "bin": 2,
+                  "lower": 0.2,
+                  "upper": 0.3,
+                  "n": 1,
+                  "mean_probability": 0.20169208345813586,
+                  "fraction_positive": 0.0
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "4.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 6,
+                  "mean_probability": 0.06276111547196911,
+                  "fraction_positive": 0.3333333333333333
+                },
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 5,
+                  "mean_probability": 0.15476481893987296,
+                  "fraction_positive": 0.0
+                },
+                {
+                  "bin": 2,
+                  "lower": 0.2,
+                  "upper": 0.3,
+                  "n": 4,
+                  "mean_probability": 0.2664254333452515,
+                  "fraction_positive": 0.0
+                },
+                {
+                  "bin": 3,
+                  "lower": 0.3,
+                  "upper": 0.4,
+                  "n": 1,
+                  "mean_probability": 0.3273499657707829,
+                  "fraction_positive": 0.0
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "5.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 3,
+                  "mean_probability": 0.08800335339744803,
+                  "fraction_positive": 0.0
+                },
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 13,
+                  "mean_probability": 0.16025534930958832,
+                  "fraction_positive": 0.15384615384615385
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            },
+            {
+              "label": "6.0",
+              "points": [
+                {
+                  "bin": 0,
+                  "lower": 0.0,
+                  "upper": 0.1,
+                  "n": 9,
+                  "mean_probability": 0.0550862649695218,
+                  "fraction_positive": 0.2222222222222222
+                },
+                {
+                  "bin": 1,
+                  "lower": 0.1,
+                  "upper": 0.2,
+                  "n": 2,
+                  "mean_probability": 0.17964131830748853,
+                  "fraction_positive": 0.0
+                },
+                {
+                  "bin": 2,
+                  "lower": 0.2,
+                  "upper": 0.3,
+                  "n": 3,
+                  "mean_probability": 0.23732851235599536,
+                  "fraction_positive": 0.0
+                },
+                {
+                  "bin": 3,
+                  "lower": 0.3,
+                  "upper": 0.4,
+                  "n": 2,
+                  "mean_probability": 0.30735234172022835,
+                  "fraction_positive": 0.0
+                }
+              ],
+              "binning": "uniform [0,1]; boundary belongs to lower bin; empty bins omitted",
+              "bins": 10,
+              "n": 16,
+              "empty_bins_omitted": true
+            }
+          ],
+          "n": 16,
+          "label_order": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ],
+          "exclusions": 0,
+          "note": "Brier kalibrasyon, ayırt etme ve veri belirsizliğini birlikte ölçer; tek başına kalibrasyon değildir. Conformal coverage exchangeability gerektirir; grup/zaman ayrımı bunu kanıtlamaz. Nominal coverage her alt grupta veya gelecek dağılımda garanti değildir. Predictive interval yeni gözlemi kapsar; parametrenin CI aralığı değildir. Quantile aralığı kendi başına conformal coverage garantisi taşımaz."
+        },
+        "empty_set_n": 0,
+        "full_set_n": 16
+      },
+      "prediction_records": [
+        {
+          "row_id": "row:82eeeb43-6e79-4f97-87dc-1f422e747141",
+          "actual": "2.0",
+          "predicted": "0.0",
+          "probabilities": [
+            0.27000964320154286,
+            0.27000964320154286,
+            0.11571841851494695,
+            0.10125361620057859,
+            0.0,
+            0.08100289296046287,
+            0.16200578592092574
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:eb6bd902-edb9-4295-8087-88d8ec653b58",
+          "actual": "0.0",
+          "predicted": "1.0",
+          "probabilities": [
+            0.16672982190223568,
+            0.2917771883289124,
+            0.045471769609700806,
+            0.1458885941644562,
+            0.0,
+            0.11671087533156498,
+            0.23342175066312995
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:d4f7eae4-1af9-4834-a165-802ff290213b",
+          "actual": "3.0",
+          "predicted": "1.0",
+          "probabilities": [
+            0.14869888475836432,
+            0.26022304832713755,
+            0.14869888475836432,
+            0.13011152416356878,
+            0.0,
+            0.10408921933085503,
+            0.20817843866171007
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:e52daf6c-0c11-414b-87a0-25c3117c477e",
+          "actual": "4.0",
+          "predicted": "0.0",
+          "probabilities": [
+            0.27000964320154286,
+            0.27000964320154286,
+            0.11571841851494695,
+            0.10125361620057859,
+            0.0,
+            0.08100289296046287,
+            0.16200578592092574
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:f6e2623c-0309-4c52-9ce3-617c9bdddd3c",
+          "actual": "5.0",
+          "predicted": "1.0",
+          "probabilities": [
+            0.14869888475836432,
+            0.26022304832713755,
+            0.14869888475836432,
+            0.13011152416356878,
+            0.0,
+            0.10408921933085503,
+            0.20817843866171007
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:fc033f8e-7683-4622-acdf-ac6ecb982cac",
+          "actual": "6.0",
+          "predicted": "0.0",
+          "probabilities": [
+            0.27000964320154286,
+            0.27000964320154286,
+            0.11571841851494695,
+            0.10125361620057859,
+            0.0,
+            0.08100289296046287,
+            0.16200578592092574
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:3a593eae-144d-4261-8002-6a5290987c95",
+          "actual": "1.0",
+          "predicted": "1.0",
+          "probabilities": [
+            0.14869888475836432,
+            0.26022304832713755,
+            0.14869888475836432,
+            0.13011152416356878,
+            0.0,
+            0.10408921933085503,
+            0.20817843866171007
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:2c925a5e-9238-4cc0-883c-f9779484736c",
+          "actual": "2.0",
+          "predicted": "4.0",
+          "probabilities": [
+            0.15151515151515152,
+            0.0,
+            0.0,
+            0.0,
+            0.5303030303030303,
+            0.10606060606060606,
+            0.21212121212121213
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:adce0198-8b0b-4adc-9021-cc23d6e58731",
+          "actual": "6.0",
+          "predicted": "6.0",
+          "probabilities": [
+            0.16836542153534115,
+            0.0,
+            0.16836542153534115,
+            0.10103423273882738,
+            0.208667538966274,
+            0.11785579507473881,
+            0.23571159014947762
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:5e1d65b7-f12a-4a9f-8920-b16eea485180",
+          "actual": "1.0",
+          "predicted": "4.0",
+          "probabilities": [
+            0.17744534335835305,
+            0.0,
+            0.0,
+            0.04878168174661633,
+            0.40113775384248923,
+            0.12421174035084714,
+            0.2484234807016943
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:461b20d1-73cb-41d4-aac3-6691f83f831e",
+          "actual": "0.0",
+          "predicted": "1.0",
+          "probabilities": [
+            0.15073655361425148,
+            0.26378896882494013,
+            0.13703323055841032,
+            0.13189448441247006,
+            0.0,
+            0.10551558752997604,
+            0.2110311750599521
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:c39587a7-9564-4f9f-ac0e-f858283050d2",
+          "actual": "2.0",
+          "predicted": "0.0",
+          "probabilities": [
+            0.27000964320154286,
+            0.27000964320154286,
+            0.11571841851494695,
+            0.10125361620057859,
+            0.0,
+            0.08100289296046287,
+            0.16200578592092574
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:1658fda6-0f82-40b9-a708-a679ec5ed24e",
+          "actual": "1.0",
+          "predicted": "1.0",
+          "probabilities": [
+            0.13683010262257694,
+            0.31927023945267957,
+            0.13683010262257694,
+            0.11972633979475483,
+            0.0,
+            0.09578107183580388,
+            0.19156214367160776
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:f6609818-3fcf-4193-a02b-4d6e5a34a2a7",
+          "actual": "5.0",
+          "predicted": "4.0",
+          "probabilities": [
+            0.1307143934921827,
+            0.0,
+            0.1307143934921827,
+            0.006570609459411463,
+            0.4575003772226395,
+            0.0915000754445279,
+            0.1830001508890558
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:173b8e52-00dc-4998-9e42-b098c81d35fb",
+          "actual": "4.0",
+          "predicted": "0.0",
+          "probabilities": [
+            0.27000964320154286,
+            0.27000964320154286,
+            0.11571841851494695,
+            0.10125361620057859,
+            0.0,
+            0.08100289296046287,
+            0.16200578592092574
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        },
+        {
+          "row_id": "row:9dbb6fb3-6fa0-4262-a538-d02554b9a38a",
+          "actual": "3.0",
+          "predicted": "0.0",
+          "probabilities": [
+            0.27000964320154286,
+            0.27000964320154286,
+            0.11571841851494695,
+            0.10125361620057859,
+            0.0,
+            0.08100289296046287,
+            0.16200578592092574
+          ],
+          "prediction_set": [
+            "0.0",
+            "1.0",
+            "2.0",
+            "3.0",
+            "4.0",
+            "5.0",
+            "6.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "invalid_folds": [],
+  "cv_summary": [],
+  "comparison": [],
+  "selected_model": "logistic",
+  "selection_rule": "explicit bounded uncertainty template; train/calibration/validation/test isolated; final frozen package without refit",
+  "prior_test_use_ids": [],
+  "interpretation": "project_test_not_previously_used",
+  "external_test_use_known": false,
+  "evaluated_at": "2026-10-13T18:35:50.610410+00:00",
+  "config_revision": 3,
+  "packages": {
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.3",
+    "scipy": "1.18.0",
+    "polars": "2.0.0",
+    "veri-ufku": "0.1.0"
+  },
+  "help_content_version": 66,
+  "leakage_certified": false,
+  "uncertainty": {
+    "schema": "UncertaintyModel/v1",
+    "spec": {
+      "model": "logistic",
+      "calibration": "isotonic",
+      "prediction": "sets",
+      "alpha": 0.1,
+      "bins": 10,
+      "threshold": "default",
+      "positive_class": "",
+      "false_positive_cost": 1,
+      "false_negative_cost": 1,
+      "min_precision": 0,
+      "min_recall": 0
+    },
+    "membership": {
+      "fit": [
+        "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+        "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+        "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+        "row:165df915-c25f-432b-bb46-b8595e540bf9",
+        "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+        "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+        "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+        "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+        "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+        "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+        "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+        "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+        "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+        "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+        "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+        "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+        "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+        "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+        "row:9e54f009-af73-4808-88b6-aceaafc53356",
+        "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+        "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+        "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+        "row:c48b0fed-b294-4858-8856-a156eea03436",
+        "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+        "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+        "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+        "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+        "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+      ],
+      "probability_calibration": [
+        "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+        "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+        "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+        "row:5878e365-a482-4d01-957e-3944630e3999",
+        "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+        "row:82d47852-b861-4aba-a06c-06cfb773a081",
+        "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+        "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+        "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+        "row:d16a6338-4fc6-4099-b526-e5f942dff677"
+      ],
+      "conformal_calibration": [
+        "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+        "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+        "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+        "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+        "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+        "row:9e2c704d-a70a-447d-821d-3116331d8341",
+        "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+        "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+        "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+        "row:c71ab1fe-b8b1-4f38-b491-c256348597df"
+      ],
+      "validation": [
+        "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+        "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+        "row:351d265a-14ce-4455-83f7-a07761588f17",
+        "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+        "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+        "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+        "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+        "row:75456424-a832-4535-a48d-4f02ad751253",
+        "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+        "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+        "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+        "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+        "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+        "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+        "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+        "row:fff41924-b22e-48bd-803d-8b64367788f0"
+      ],
+      "test": [
+        "row:1658fda6-0f82-40b9-a708-a679ec5ed24e",
+        "row:173b8e52-00dc-4998-9e42-b098c81d35fb",
+        "row:2c925a5e-9238-4cc0-883c-f9779484736c",
+        "row:3a593eae-144d-4261-8002-6a5290987c95",
+        "row:461b20d1-73cb-41d4-aac3-6691f83f831e",
+        "row:5e1d65b7-f12a-4a9f-8920-b16eea485180",
+        "row:82eeeb43-6e79-4f97-87dc-1f422e747141",
+        "row:9dbb6fb3-6fa0-4262-a538-d02554b9a38a",
+        "row:adce0198-8b0b-4adc-9021-cc23d6e58731",
+        "row:c39587a7-9564-4f9f-ac0e-f858283050d2",
+        "row:d4f7eae4-1af9-4834-a165-802ff290213b",
+        "row:e52daf6c-0c11-414b-87a0-25c3117c477e",
+        "row:eb6bd902-edb9-4295-8087-88d8ec653b58",
+        "row:f6609818-3fcf-4193-a02b-4d6e5a34a2a7",
+        "row:f6e2623c-0309-4c52-9ce3-617c9bdddd3c",
+        "row:fc033f8e-7683-4622-acdf-ac6ecb982cac"
+      ],
+      "unused": []
+    },
+    "partition_id": "uncertainty:f150033c53bd447888f2fe13f4731712645ff082fdf6023927bfc26fecb8ef61",
+    "inner_plan": {
+      "schema": "ValidationPlan/v1",
+      "split_id": "split:6b2fb5b35fcc0890fb0fa642c0d99a5f5229498b6483c3b9b72b97f3b97939c6",
+      "protocol_id": "protocol:ba4a75ee360229cf884f45794f1554b35c9ebd7a95340ca8777ffa4669b7e5d0",
+      "method": "stratified",
+      "membership": {
+        "train": [
+          "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+          "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+          "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+          "row:165df915-c25f-432b-bb46-b8595e540bf9",
+          "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+          "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+          "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+          "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+          "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+          "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+          "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+          "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+          "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+          "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+          "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+          "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+          "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+          "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+          "row:9e54f009-af73-4808-88b6-aceaafc53356",
+          "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+          "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+          "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+          "row:c48b0fed-b294-4858-8856-a156eea03436",
+          "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+          "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+          "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+          "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+          "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+        ],
+        "validation": [
+          "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+          "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+          "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+          "row:5878e365-a482-4d01-957e-3944630e3999",
+          "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+          "row:82d47852-b861-4aba-a06c-06cfb773a081",
+          "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+          "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+          "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+          "row:d16a6338-4fc6-4099-b526-e5f942dff677"
+        ],
+        "development": [
+          "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+          "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+          "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+          "row:165df915-c25f-432b-bb46-b8595e540bf9",
+          "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+          "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+          "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+          "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+          "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+          "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+          "row:5878e365-a482-4d01-957e-3944630e3999",
+          "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+          "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+          "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+          "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+          "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+          "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+          "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+          "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+          "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+          "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+          "row:82d47852-b861-4aba-a06c-06cfb773a081",
+          "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+          "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+          "row:9e54f009-af73-4808-88b6-aceaafc53356",
+          "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+          "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+          "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+          "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+          "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+          "row:c48b0fed-b294-4858-8856-a156eea03436",
+          "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+          "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+          "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+          "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+          "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+          "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+          "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+        ],
+        "test": [
+          "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+          "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+          "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+          "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+          "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+          "row:9e2c704d-a70a-447d-821d-3116331d8341",
+          "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+          "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+          "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+          "row:c71ab1fe-b8b1-4f38-b491-c256348597df"
+        ],
+        "folds": [
+          {
+            "train": [
+              "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+              "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+              "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+              "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+              "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+              "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+              "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+              "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+              "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+              "row:82d47852-b861-4aba-a06c-06cfb773a081",
+              "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+              "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+              "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+              "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+              "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+              "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+              "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+              "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+              "row:d8960408-174c-47a1-8264-3bc6c53c53cc"
+            ],
+            "validation": [
+              "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+              "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+              "row:165df915-c25f-432b-bb46-b8595e540bf9",
+              "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+              "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+              "row:5878e365-a482-4d01-957e-3944630e3999",
+              "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+              "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+              "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+              "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+              "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+              "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+              "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+              "row:9e54f009-af73-4808-88b6-aceaafc53356",
+              "row:c48b0fed-b294-4858-8856-a156eea03436",
+              "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+              "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+              "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+              "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+            ],
+            "status": "valid"
+          },
+          {
+            "train": [
+              "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+              "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+              "row:165df915-c25f-432b-bb46-b8595e540bf9",
+              "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+              "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+              "row:5878e365-a482-4d01-957e-3944630e3999",
+              "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+              "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+              "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+              "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+              "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+              "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+              "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+              "row:9e54f009-af73-4808-88b6-aceaafc53356",
+              "row:c48b0fed-b294-4858-8856-a156eea03436",
+              "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+              "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+              "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+              "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+            ],
+            "validation": [
+              "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+              "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+              "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+              "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+              "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+              "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+              "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+              "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+              "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+              "row:82d47852-b861-4aba-a06c-06cfb773a081",
+              "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+              "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+              "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+              "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+              "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+              "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+              "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+              "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+              "row:d8960408-174c-47a1-8264-3bc6c53c53cc"
+            ],
+            "status": "valid"
+          }
+        ],
+        "purged": []
+      },
+      "invalid_folds": []
+    },
+    "train_n": 28,
+    "calibration_n": 10,
+    "probability_calibration_used_n": 10,
+    "conformal_calibration_used_n": 10,
+    "conformal_n": 10,
+    "validation_n": 16,
+    "limitations": "Brier kalibrasyon, ayırt etme ve veri belirsizliğini birlikte ölçer; tek başına kalibrasyon değildir. Conformal coverage exchangeability gerektirir; grup/zaman ayrımı bunu kanıtlamaz. Nominal coverage her alt grupta veya gelecek dağılımda garanti değildir. Predictive interval yeni gözlemi kapsar; parametrenin CI aralığı değildir. Quantile aralığı kendi başına conformal coverage garantisi taşımaz.",
+    "probability_fit_scope": "independent held-out probability_calibration",
+    "conformal_fit_scope": "separate held-out conformal_calibration",
+    "threshold_fit_scope": "validation",
+    "exchangeability": "required, not verified or asserted; group/time preservation alone does not establish it",
+    "preprocessing_fit_scope": "fit only",
+    "nominal_coverage": 0.9,
+    "warnings": [
+      "Isotonic küçük calibration örneğinde aşırı öğrenebilir; n<1000."
+    ],
+    "conformal_scores": [
+      1.0,
+      1.0,
+      0.7767306995288148,
+      0.7612707280111979,
+      0.9189971070395371,
+      0.9189971070395371,
+      1.0,
+      0.8495506057053537,
+      0.9402762224710712,
+      1.0
+    ],
+    "conformal_rank": 10,
+    "conformal_q": 1.0,
+    "conformal_score": "1 - calibrated p(true class)"
+  },
+  "decision": {
+    "cost_note": "validation-only bounded uncertainty constraints",
+    "mode": "default",
+    "model": "logistic",
+    "objective": "default",
+    "positive_class": "",
+    "selection_scope": "validation",
+    "threshold": null,
+    "threshold_report": null,
+    "validation_row_ids": [
+      "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+      "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+      "row:351d265a-14ce-4455-83f7-a07761588f17",
+      "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+      "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+      "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+      "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+      "row:75456424-a832-4535-a48d-4f02ad751253",
+      "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+      "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+      "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+      "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+      "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+      "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+      "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+      "row:fff41924-b22e-48bd-803d-8b64367788f0"
+    ]
+  },
+  "fit_count": 0,
+  "estimated_cost": {
+    "train_n": 28,
+    "validation_n": 16,
+    "development_n": 64,
+    "test_n": 16,
+    "fold_train_n": [],
+    "fit_count": 0,
+    "estimated_fit_row_passes": 28,
+    "calibration_n": 10,
+    "conformal_n": 10
+  },
+  "classification": {
+    "candidates": [
+      "baseline",
+      "logistic"
+    ],
+    "C": 1.0,
+    "trees": 50,
+    "depth": 8,
+    "averaging": "macro",
+    "positive_class": "",
+    "threshold_mode": "default",
+    "threshold": 0.5,
+    "cost_note": "",
+    "uncertainty": {
+      "model": "logistic",
+      "calibration": "isotonic",
+      "prediction": "sets",
+      "alpha": 0.1,
+      "bins": 10,
+      "threshold": "default",
+      "positive_class": "",
+      "false_positive_cost": 1,
+      "false_negative_cost": 1,
+      "min_precision": 0,
+      "min_recall": 0
+    }
+  },
+  "classes": [
+    "0.0",
+    "1.0",
+    "2.0",
+    "3.0",
+    "4.0",
+    "5.0",
+    "6.0"
+  ],
+  "decision_validation": null,
+  "model_card": {
+    "baseline": {
+      "comparison": [],
+      "limitation": "Final koşuda yeniden baseline seçimi yapılmaz; geliştirme koşusu kartına bakın.",
+      "strategy": "prior"
+    },
+    "candidate_selection": {
+      "parameters": {
+        "C": 1.0,
+        "averaging": "macro",
+        "candidates": [
+          "baseline",
+          "logistic"
+        ],
+        "cost_note": "",
+        "depth": 8,
+        "positive_class": "",
+        "threshold": 0.5,
+        "threshold_mode": "default",
+        "trees": 50,
+        "uncertainty": {
+          "alpha": 0.1,
+          "bins": 10,
+          "calibration": "isotonic",
+          "false_negative_cost": 1,
+          "false_positive_cost": 1,
+          "min_precision": 0,
+          "min_recall": 0,
+          "model": "logistic",
+          "positive_class": "",
+          "prediction": "sets",
+          "threshold": "default"
+        }
+      },
+      "rule": "explicit bounded uncertainty template; train/calibration/validation/test isolated; final frozen package without refit",
+      "selected": "logistic"
+    },
+    "columns": [
+      {
+        "id": "col:60961f5e-65dc-4589-8805-0cc4fdc9d681",
+        "name": "x",
+        "original_name": "x",
+        "type": "Float64"
+      },
+      {
+        "id": "col:5fae3335-7b09-4fd5-b1b4-0384ecca1b61",
+        "name": "cat",
+        "original_name": "cat",
+        "type": "String"
+      },
+      {
+        "id": "col:e1fd4742-3a1a-431e-b75a-b0148a20d232",
+        "name": "y",
+        "original_name": "y",
+        "type": "Float64"
+      },
+      {
+        "id": "col:bdc426e0-c98e-4eed-b3a5-57184dfdd094",
+        "name": "group",
+        "original_name": "group",
+        "type": "String"
+      },
+      {
+        "id": "col:52c00246-048b-4bc0-bbe3-6a20b04403f0",
+        "name": "when",
+        "original_name": "when",
+        "type": "Date"
+      }
+    ],
+    "dataset_version": "dv:69f8d928-8be2-411a-aa9e-bbfd4508f90f",
+    "decision": {
+      "cost_note": "validation-only bounded uncertainty constraints",
+      "mode": "default",
+      "model": "logistic",
+      "objective": "default",
+      "positive_class": "",
+      "selection_scope": "validation",
+      "threshold": null,
+      "threshold_report": null,
+      "validation_row_ids": [
+        "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+        "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+        "row:351d265a-14ce-4455-83f7-a07761588f17",
+        "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+        "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+        "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+        "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+        "row:75456424-a832-4535-a48d-4f02ad751253",
+        "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+        "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+        "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+        "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+        "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+        "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+        "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+        "row:fff41924-b22e-48bd-803d-8b64367788f0"
+      ]
+    },
+    "estimator": "ProbabilityModel",
+    "features": [
+      {
+        "id": "col:60961f5e-65dc-4589-8805-0cc4fdc9d681",
+        "name": "x",
+        "type": "Float64",
+        "unit": ""
+      },
+      {
+        "id": "col:5fae3335-7b09-4fd5-b1b4-0384ecca1b61",
+        "name": "cat",
+        "type": "String",
+        "unit": ""
+      }
+    ],
+    "fit_row_ids": [
+      "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+      "row:ff466881-2cd7-48ba-a623-9b0b2d697d12",
+      "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+      "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+      "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+      "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+      "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+      "row:165df915-c25f-432b-bb46-b8595e540bf9",
+      "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+      "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+      "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+      "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+      "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+      "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+      "row:9e54f009-af73-4808-88b6-aceaafc53356",
+      "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+      "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+      "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+      "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+      "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+      "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+      "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+      "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+      "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+      "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+      "row:c48b0fed-b294-4858-8856-a156eea03436",
+      "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+      "row:d8960408-174c-47a1-8264-3bc6c53c53cc"
+    ],
+    "fit_scope": "isolated proper train; calibrator/threshold frozen; no final refit",
+    "fitted_preprocessing": {
+      "1": {
+        "kind": "impute_numeric",
+        "statistics": [
+          43.0
+        ]
+      },
+      "3": {
+        "kind": "impute_category",
+        "statistics": [
+          "A"
+        ]
+      },
+      "4": {
+        "categories": [
+          [
+            "A",
+            "B"
+          ]
+        ],
+        "kind": "encode_onehot"
+      }
+    },
+    "importance": {
+      "reason": "Bağımsız değerlendirme bölümü yok; nedensellik çıkarılamaz.",
+      "status": "unavailable"
+    },
+    "label_order": [
+      "0.0",
+      "1.0",
+      "2.0",
+      "3.0",
+      "4.0",
+      "5.0",
+      "6.0"
+    ],
+    "limitations": "Brier kalibrasyon, ayırt etme ve veri belirsizliğini birlikte ölçer; tek başına kalibrasyon değildir. Conformal coverage exchangeability gerektirir; grup/zaman ayrımı bunu kanıtlamaz. Nominal coverage her alt grupta veya gelecek dağılımda garanti değildir. Predictive interval yeni gözlemi kapsar; parametrenin CI aralığı değildir. Quantile aralığı kendi başına conformal coverage garantisi taşımaz.",
+    "method": null,
+    "metrics": [
+      {
+        "evaluation_n": 16,
+        "metrics": [
+          {
+            "direction": "minimize",
+            "metric": "log_loss",
+            "n": 16,
+            "scope": "final_test",
+            "status": "valid",
+            "value": 10.431751395074842
+          },
+          {
+            "direction": "minimize",
+            "metric": "brier",
+            "n": 16,
+            "scope": "final_test",
+            "status": "valid",
+            "value": 0.9713932901457917
+          },
+          {
+            "direction": "maximize",
+            "metric": "accuracy",
+            "n": 16,
+            "scope": "final_test",
+            "status": "valid",
+            "value": 0.1875
+          }
+        ],
+        "scope": "final_test",
+        "status": "valid",
+        "train_n": 28
+      }
+    ],
+    "preparation_spec": {
+      "allow_identifiers": false,
+      "categorical_imputation": "most_frequent",
+      "date_features": true,
+      "encoding": "onehot",
+      "family": "tree",
+      "features": [
+        "col:60961f5e-65dc-4589-8805-0cc4fdc9d681",
+        "col:5fae3335-7b09-4fd5-b1b4-0384ecca1b61"
+      ],
+      "group": "",
+      "history_action": "review",
+      "history_note": "",
+      "invalid_numeric": "reject",
+      "numeric_imputation": "median",
+      "precision": "reject",
+      "prediction_context": "Cihaz çalıştırılmadan önce",
+      "purpose": "classification",
+      "scaling": "auto",
+      "selection": "none",
+      "source_version": "dv:69f8d928-8be2-411a-aa9e-bbfd4508f90f",
+      "target": "col:e1fd4742-3a1a-431e-b75a-b0148a20d232",
+      "time": ""
+    },
+    "preprocessing": {
+      "category_vocabulary": null,
+      "column_lineage": [
+        {
+          "category_map": [],
+          "input_column_id": "col:60961f5e-65dc-4589-8805-0cc4fdc9d681",
+          "names_status": "structurally_known",
+          "output_names": [
+            "f_60961f5e65dc458988050cc4fdc9d681__numeric"
+          ],
+          "selected_after_fit": "all_planned",
+          "source_dtype": "Float64",
+          "source_name": "x"
+        },
+        {
+          "category_map": null,
+          "input_column_id": "col:5fae3335-7b09-4fd5-b1b4-0384ecca1b61",
+          "names_status": "template_training_bound",
+          "output_names": [
+            "f_5fae33357b094fd5b1b40384ecca1b61__category_{training_index}"
+          ],
+          "selected_after_fit": "all_planned",
+          "source_dtype": "String",
+          "source_name": "cat"
+        }
+      ],
+      "estimator_family": "tree",
+      "feature_selection_mask": null,
+      "fit_state": "not_fitted",
+      "fitted_parameters": {},
+      "schema": "PreparationPlan/v1",
+      "steps": [
+        {
+          "input_column_ids": [
+            "col:60961f5e-65dc-4589-8805-0cc4fdc9d681"
+          ],
+          "kind": "numeric",
+          "learned_scope": "row_local",
+          "output_names": [
+            "f_60961f5e65dc458988050cc4fdc9d681__numeric"
+          ],
+          "parameters": {
+            "nonfinite": "reject",
+            "precision": "reject"
+          },
+          "reason": "Kimlik ölçüm değildir; Float64 kaybı gelecekte açık politika ile denetlenir.",
+          "state": "planned"
+        },
+        {
+          "input_column_ids": [
+            "col:60961f5e-65dc-4589-8805-0cc4fdc9d681"
+          ],
+          "kind": "impute_numeric",
+          "learned_scope": "training_fold",
+          "output_names": [
+            "f_60961f5e65dc458988050cc4fdc9d681__numeric"
+          ],
+          "parameters": {
+            "all_missing": "error",
+            "strategy": "median"
+          },
+          "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz.",
+          "state": "planned"
+        },
+        {
+          "input_column_ids": [
+            "col:60961f5e-65dc-4589-8805-0cc4fdc9d681"
+          ],
+          "kind": "no_scaling",
+          "learned_scope": "row_local",
+          "output_names": [
+            "f_60961f5e65dc458988050cc4fdc9d681__numeric"
+          ],
+          "parameters": {
+            "explicit_override": false
+          },
+          "reason": "Ağaç ailesine scaling otomatik önerilmez; açık none seçiminde diğer ailelerde ölçek duyarlılığını inceleyin.",
+          "state": "planned"
+        },
+        {
+          "input_column_ids": [
+            "col:5fae3335-7b09-4fd5-b1b4-0384ecca1b61"
+          ],
+          "kind": "impute_category",
+          "learned_scope": "training_fold",
+          "output_names": [],
+          "parameters": {
+            "all_missing": "error",
+            "strategy": "most_frequent"
+          },
+          "reason": "Kategori modunu yalnız eğitim katı öğrenir; eksik hedef doldurulmaz.",
+          "state": "planned"
+        },
+        {
+          "input_column_ids": [
+            "col:5fae3335-7b09-4fd5-b1b4-0384ecca1b61"
+          ],
+          "kind": "encode_onehot",
+          "learned_scope": "training_fold",
+          "output_names": [
+            "f_5fae33357b094fd5b1b40384ecca1b61__category_{training_index}"
+          ],
+          "parameters": {
+            "categories": "training_only",
+            "name_binding": "training category index -> original ColumnId and category; deferred until fit",
+            "sparse": true,
+            "unknown": "ignore_with_warning"
+          },
+          "reason": "Nominal kategorilere sıralama yüklenmez; kategori sözlüğü yalnız eğitim katında öğrenilir.",
+          "state": "planned"
+        }
+      ],
+      "training_dependency": "Requires a validated split/fold protocol in Phase16; no training performed",
+      "version_id": "ml-pipeline:4ccc9877-e370-4876-9aaa-9da412c6dfc2"
+    },
+    "probability_supported": true,
+    "purpose": "classification",
+    "run_id": "run:e1267af0-23b8-42e2-acd9-646ca045c78f",
+    "schema": "ModelCard/v1",
+    "seed": 42,
+    "snapshot_fingerprint": {
+      "sha256": "b0ec233d518e9719c257c6d966876079b91fd3806f5260cb57e3800993ca0fa6",
+      "size": 9539
+    },
+    "split": {
+      "invalid_folds": [],
+      "membership": {
+        "development": [
+          "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+          "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+          "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+          "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+          "row:165df915-c25f-432b-bb46-b8595e540bf9",
+          "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+          "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+          "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+          "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+          "row:351d265a-14ce-4455-83f7-a07761588f17",
+          "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+          "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+          "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+          "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+          "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+          "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+          "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+          "row:5878e365-a482-4d01-957e-3944630e3999",
+          "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+          "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+          "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+          "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+          "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+          "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+          "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+          "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+          "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+          "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+          "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+          "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+          "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+          "row:75456424-a832-4535-a48d-4f02ad751253",
+          "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+          "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+          "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+          "row:82d47852-b861-4aba-a06c-06cfb773a081",
+          "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+          "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+          "row:9e2c704d-a70a-447d-821d-3116331d8341",
+          "row:9e54f009-af73-4808-88b6-aceaafc53356",
+          "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+          "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+          "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+          "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+          "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+          "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+          "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+          "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+          "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+          "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+          "row:c48b0fed-b294-4858-8856-a156eea03436",
+          "row:c71ab1fe-b8b1-4f38-b491-c256348597df",
+          "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+          "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+          "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+          "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+          "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+          "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+          "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+          "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+          "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+          "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+          "row:ff466881-2cd7-48ba-a623-9b0b2d697d12",
+          "row:fff41924-b22e-48bd-803d-8b64367788f0"
+        ],
+        "folds": [
+          {
+            "status": "valid",
+            "train": [
+              "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+              "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+              "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+              "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+              "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+              "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+              "row:351d265a-14ce-4455-83f7-a07761588f17",
+              "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+              "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+              "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+              "row:5878e365-a482-4d01-957e-3944630e3999",
+              "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+              "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+              "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+              "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+              "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+              "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+              "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+              "row:75456424-a832-4535-a48d-4f02ad751253",
+              "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+              "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+              "row:82d47852-b861-4aba-a06c-06cfb773a081",
+              "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+              "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+              "row:9e2c704d-a70a-447d-821d-3116331d8341",
+              "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+              "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+              "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+              "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+              "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+              "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+              "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+              "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+              "row:c71ab1fe-b8b1-4f38-b491-c256348597df",
+              "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+              "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+              "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+              "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+              "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+              "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+              "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+              "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+            ],
+            "validation": [
+              "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+              "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+              "row:165df915-c25f-432b-bb46-b8595e540bf9",
+              "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+              "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+              "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+              "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+              "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+              "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+              "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+              "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+              "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+              "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+              "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+              "row:9e54f009-af73-4808-88b6-aceaafc53356",
+              "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+              "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+              "row:c48b0fed-b294-4858-8856-a156eea03436",
+              "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+              "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+              "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+              "row:fff41924-b22e-48bd-803d-8b64367788f0"
+            ]
+          },
+          {
+            "status": "valid",
+            "train": [
+              "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+              "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+              "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+              "row:165df915-c25f-432b-bb46-b8595e540bf9",
+              "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+              "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+              "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+              "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+              "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+              "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+              "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+              "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+              "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+              "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+              "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+              "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+              "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+              "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+              "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+              "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+              "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+              "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+              "row:75456424-a832-4535-a48d-4f02ad751253",
+              "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+              "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+              "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+              "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+              "row:9e2c704d-a70a-447d-821d-3116331d8341",
+              "row:9e54f009-af73-4808-88b6-aceaafc53356",
+              "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+              "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+              "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+              "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+              "row:c48b0fed-b294-4858-8856-a156eea03436",
+              "row:c71ab1fe-b8b1-4f38-b491-c256348597df",
+              "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+              "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+              "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+              "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+              "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+              "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+              "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+              "row:fff41924-b22e-48bd-803d-8b64367788f0"
+            ],
+            "validation": [
+              "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+              "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+              "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+              "row:351d265a-14ce-4455-83f7-a07761588f17",
+              "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+              "row:5878e365-a482-4d01-957e-3944630e3999",
+              "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+              "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+              "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+              "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+              "row:82d47852-b861-4aba-a06c-06cfb773a081",
+              "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+              "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+              "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+              "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+              "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+              "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+              "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+              "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+              "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+              "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+            ]
+          },
+          {
+            "status": "valid",
+            "train": [
+              "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+              "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+              "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+              "row:165df915-c25f-432b-bb46-b8595e540bf9",
+              "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+              "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+              "row:351d265a-14ce-4455-83f7-a07761588f17",
+              "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+              "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+              "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+              "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+              "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+              "row:5878e365-a482-4d01-957e-3944630e3999",
+              "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+              "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+              "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+              "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+              "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+              "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+              "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+              "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+              "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+              "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+              "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+              "row:82d47852-b861-4aba-a06c-06cfb773a081",
+              "row:9e54f009-af73-4808-88b6-aceaafc53356",
+              "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+              "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+              "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+              "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+              "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+              "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+              "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+              "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+              "row:c48b0fed-b294-4858-8856-a156eea03436",
+              "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+              "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+              "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+              "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+              "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+              "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+              "row:ff466881-2cd7-48ba-a623-9b0b2d697d12",
+              "row:fff41924-b22e-48bd-803d-8b64367788f0"
+            ],
+            "validation": [
+              "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+              "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+              "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+              "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+              "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+              "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+              "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+              "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+              "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+              "row:75456424-a832-4535-a48d-4f02ad751253",
+              "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+              "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+              "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+              "row:9e2c704d-a70a-447d-821d-3116331d8341",
+              "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+              "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+              "row:c71ab1fe-b8b1-4f38-b491-c256348597df",
+              "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+              "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+              "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+              "row:e0676965-8f02-44d1-8d64-8ebc39924d6c"
+            ]
+          }
+        ],
+        "purged": [],
+        "test": [
+          "row:1658fda6-0f82-40b9-a708-a679ec5ed24e",
+          "row:173b8e52-00dc-4998-9e42-b098c81d35fb",
+          "row:2c925a5e-9238-4cc0-883c-f9779484736c",
+          "row:3a593eae-144d-4261-8002-6a5290987c95",
+          "row:461b20d1-73cb-41d4-aac3-6691f83f831e",
+          "row:5e1d65b7-f12a-4a9f-8920-b16eea485180",
+          "row:82eeeb43-6e79-4f97-87dc-1f422e747141",
+          "row:9dbb6fb3-6fa0-4262-a538-d02554b9a38a",
+          "row:adce0198-8b0b-4adc-9021-cc23d6e58731",
+          "row:c39587a7-9564-4f9f-ac0e-f858283050d2",
+          "row:d4f7eae4-1af9-4834-a165-802ff290213b",
+          "row:e52daf6c-0c11-414b-87a0-25c3117c477e",
+          "row:eb6bd902-edb9-4295-8087-88d8ec653b58",
+          "row:f6609818-3fcf-4193-a02b-4d6e5a34a2a7",
+          "row:f6e2623c-0309-4c52-9ce3-617c9bdddd3c",
+          "row:fc033f8e-7683-4622-acdf-ac6ecb982cac"
+        ],
+        "train": [
+          "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+          "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+          "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+          "row:165df915-c25f-432b-bb46-b8595e540bf9",
+          "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+          "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+          "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+          "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+          "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+          "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+          "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+          "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+          "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+          "row:5878e365-a482-4d01-957e-3944630e3999",
+          "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+          "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+          "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+          "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+          "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+          "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+          "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+          "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+          "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+          "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+          "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+          "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+          "row:82d47852-b861-4aba-a06c-06cfb773a081",
+          "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+          "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+          "row:9e2c704d-a70a-447d-821d-3116331d8341",
+          "row:9e54f009-af73-4808-88b6-aceaafc53356",
+          "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+          "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+          "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+          "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+          "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+          "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+          "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+          "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+          "row:c48b0fed-b294-4858-8856-a156eea03436",
+          "row:c71ab1fe-b8b1-4f38-b491-c256348597df",
+          "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+          "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+          "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+          "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+          "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+          "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+          "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+        ],
+        "validation": [
+          "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+          "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+          "row:351d265a-14ce-4455-83f7-a07761588f17",
+          "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+          "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+          "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+          "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+          "row:75456424-a832-4535-a48d-4f02ad751253",
+          "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+          "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+          "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+          "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+          "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+          "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+          "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+          "row:fff41924-b22e-48bd-803d-8b64367788f0"
+        ]
+      },
+      "method": "stratified",
+      "protocol_id": "protocol:00f072755d966499bfc81d45d3de44dd6595c2ac6c9d51a28cd0d7339887091c",
+      "schema": "ValidationPlan/v1",
+      "split_id": "split:42771bc795efff41bde7cc8aa667e2976a209c9001399e3c109045a07e0b3b0e"
+    },
+    "target": {
+      "id": "col:e1fd4742-3a1a-431e-b75a-b0148a20d232",
+      "name": "y",
+      "original_name": "y",
+      "type": "Float64",
+      "unit": ""
+    },
+    "threshold": null,
+    "versions": {
+      "numpy": "2.5.3",
+      "polars": "2.0.0",
+      "python": "3.13.15",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.0",
+      "skops": "0.16.0",
+      "veri-ufku": "0.1.0"
+    },
+    "uncertainty": {
+      "schema": "UncertaintyModel/v1",
+      "spec": {
+        "model": "logistic",
+        "calibration": "isotonic",
+        "prediction": "sets",
+        "alpha": 0.1,
+        "bins": 10,
+        "threshold": "default",
+        "positive_class": "",
+        "false_positive_cost": 1,
+        "false_negative_cost": 1,
+        "min_precision": 0,
+        "min_recall": 0
+      },
+      "membership": {
+        "fit": [
+          "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+          "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+          "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+          "row:165df915-c25f-432b-bb46-b8595e540bf9",
+          "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+          "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+          "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+          "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+          "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+          "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+          "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+          "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+          "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+          "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+          "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+          "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+          "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+          "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+          "row:9e54f009-af73-4808-88b6-aceaafc53356",
+          "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+          "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+          "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+          "row:c48b0fed-b294-4858-8856-a156eea03436",
+          "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+          "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+          "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+          "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+          "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+        ],
+        "probability_calibration": [
+          "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+          "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+          "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+          "row:5878e365-a482-4d01-957e-3944630e3999",
+          "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+          "row:82d47852-b861-4aba-a06c-06cfb773a081",
+          "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+          "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+          "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+          "row:d16a6338-4fc6-4099-b526-e5f942dff677"
+        ],
+        "conformal_calibration": [
+          "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+          "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+          "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+          "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+          "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+          "row:9e2c704d-a70a-447d-821d-3116331d8341",
+          "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+          "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+          "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+          "row:c71ab1fe-b8b1-4f38-b491-c256348597df"
+        ],
+        "validation": [
+          "row:0e07974b-9fbc-4634-b6c8-2de06447b6f5",
+          "row:239b45b0-ea08-4ff9-9a42-d82cff3fd42f",
+          "row:351d265a-14ce-4455-83f7-a07761588f17",
+          "row:3d25b5db-993c-4da4-9c17-0d852eaef26d",
+          "row:645659a0-b8a9-4929-b867-98d78e76c9c0",
+          "row:6ea0dc02-bf27-487e-b7b2-ce15237c2d6f",
+          "row:737dca5d-070e-4b9c-b9f4-5a0ea264c969",
+          "row:75456424-a832-4535-a48d-4f02ad751253",
+          "row:7fe667ad-2e24-428b-849e-e3b6a8972698",
+          "row:a1c9314b-ca0f-46c9-b52c-323811c84f79",
+          "row:aa31ed4b-6c5c-4c8e-82db-0b26862f74da",
+          "row:c994e38a-b0c7-4f49-ae16-2d8fadc3381b",
+          "row:d0901e61-3516-4deb-accc-a48c7c3a8899",
+          "row:e0676965-8f02-44d1-8d64-8ebc39924d6c",
+          "row:fdc9c0cf-8562-4ea0-a889-bf15c7b3e6db",
+          "row:fff41924-b22e-48bd-803d-8b64367788f0"
+        ],
+        "test": [
+          "row:1658fda6-0f82-40b9-a708-a679ec5ed24e",
+          "row:173b8e52-00dc-4998-9e42-b098c81d35fb",
+          "row:2c925a5e-9238-4cc0-883c-f9779484736c",
+          "row:3a593eae-144d-4261-8002-6a5290987c95",
+          "row:461b20d1-73cb-41d4-aac3-6691f83f831e",
+          "row:5e1d65b7-f12a-4a9f-8920-b16eea485180",
+          "row:82eeeb43-6e79-4f97-87dc-1f422e747141",
+          "row:9dbb6fb3-6fa0-4262-a538-d02554b9a38a",
+          "row:adce0198-8b0b-4adc-9021-cc23d6e58731",
+          "row:c39587a7-9564-4f9f-ac0e-f858283050d2",
+          "row:d4f7eae4-1af9-4834-a165-802ff290213b",
+          "row:e52daf6c-0c11-414b-87a0-25c3117c477e",
+          "row:eb6bd902-edb9-4295-8087-88d8ec653b58",
+          "row:f6609818-3fcf-4193-a02b-4d6e5a34a2a7",
+          "row:f6e2623c-0309-4c52-9ce3-617c9bdddd3c",
+          "row:fc033f8e-7683-4622-acdf-ac6ecb982cac"
+        ],
+        "unused": []
+      },
+      "partition_id": "uncertainty:f150033c53bd447888f2fe13f4731712645ff082fdf6023927bfc26fecb8ef61",
+      "inner_plan": {
+        "schema": "ValidationPlan/v1",
+        "split_id": "split:6b2fb5b35fcc0890fb0fa642c0d99a5f5229498b6483c3b9b72b97f3b97939c6",
+        "protocol_id": "protocol:ba4a75ee360229cf884f45794f1554b35c9ebd7a95340ca8777ffa4669b7e5d0",
+        "method": "stratified",
+        "membership": {
+          "train": [
+            "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+            "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+            "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+            "row:165df915-c25f-432b-bb46-b8595e540bf9",
+            "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+            "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+            "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+            "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+            "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+            "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+            "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+            "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+            "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+            "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+            "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+            "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+            "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+            "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+            "row:9e54f009-af73-4808-88b6-aceaafc53356",
+            "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+            "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+            "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+            "row:c48b0fed-b294-4858-8856-a156eea03436",
+            "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+            "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+            "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+            "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+            "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+          ],
+          "validation": [
+            "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+            "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+            "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+            "row:5878e365-a482-4d01-957e-3944630e3999",
+            "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+            "row:82d47852-b861-4aba-a06c-06cfb773a081",
+            "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+            "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+            "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+            "row:d16a6338-4fc6-4099-b526-e5f942dff677"
+          ],
+          "development": [
+            "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+            "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+            "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+            "row:165df915-c25f-432b-bb46-b8595e540bf9",
+            "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+            "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+            "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+            "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+            "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+            "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+            "row:5878e365-a482-4d01-957e-3944630e3999",
+            "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+            "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+            "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+            "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+            "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+            "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+            "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+            "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+            "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+            "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+            "row:82d47852-b861-4aba-a06c-06cfb773a081",
+            "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+            "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+            "row:9e54f009-af73-4808-88b6-aceaafc53356",
+            "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+            "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+            "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+            "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+            "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+            "row:c48b0fed-b294-4858-8856-a156eea03436",
+            "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+            "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+            "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+            "row:d8960408-174c-47a1-8264-3bc6c53c53cc",
+            "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+            "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+            "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+          ],
+          "test": [
+            "row:1c4f9678-f6e2-425b-b51c-46f26dd72437",
+            "row:4075e97b-c1f3-4b1d-9973-6f2c5b5797af",
+            "row:5176a9d2-7d9a-41d9-8215-eb1a34b2827a",
+            "row:6dc68c6b-2314-4922-844a-f2343e58c585",
+            "row:7a460b20-aa87-4e87-9fde-8299a511f5dc",
+            "row:9e2c704d-a70a-447d-821d-3116331d8341",
+            "row:b68b0d9b-85e3-420c-878b-c805bbdefcae",
+            "row:b86ca010-e7ca-47e7-99d5-5f39544eb930",
+            "row:beccbb67-ed1c-48d8-b17b-d9d4609058a1",
+            "row:c71ab1fe-b8b1-4f38-b491-c256348597df"
+          ],
+          "folds": [
+            {
+              "train": [
+                "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+                "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+                "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+                "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+                "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+                "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+                "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+                "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+                "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+                "row:82d47852-b861-4aba-a06c-06cfb773a081",
+                "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+                "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+                "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+                "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+                "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+                "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+                "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+                "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+                "row:d8960408-174c-47a1-8264-3bc6c53c53cc"
+              ],
+              "validation": [
+                "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+                "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+                "row:165df915-c25f-432b-bb46-b8595e540bf9",
+                "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+                "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+                "row:5878e365-a482-4d01-957e-3944630e3999",
+                "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+                "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+                "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+                "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+                "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+                "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+                "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+                "row:9e54f009-af73-4808-88b6-aceaafc53356",
+                "row:c48b0fed-b294-4858-8856-a156eea03436",
+                "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+                "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+                "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+                "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+              ],
+              "status": "valid"
+            },
+            {
+              "train": [
+                "row:03ec393e-2225-4f9d-84e8-fa1e4574e122",
+                "row:0d7c918e-b84b-4cb9-a451-e1c180c7dcfe",
+                "row:165df915-c25f-432b-bb46-b8595e540bf9",
+                "row:171b033a-bb23-4743-b2d6-5abf1c7ca12e",
+                "row:47e93a53-92d0-4df8-912d-14e60920ab3c",
+                "row:5878e365-a482-4d01-957e-3944630e3999",
+                "row:5b4093e5-29cc-4d60-ac32-f12c0b4c546c",
+                "row:62db9fd5-df66-4731-8b28-b9f95442374f",
+                "row:6677bfef-cc8c-4fb9-afa5-b25cdbb80374",
+                "row:6819dc23-f963-4621-aed1-cae3eb26f878",
+                "row:697117e2-a9c4-4010-9ff6-f37d083f73b1",
+                "row:73ebed85-51ec-4919-8320-8349863d2bcb",
+                "row:834fe9af-4da7-4417-af94-5b03b22b1f99",
+                "row:9e54f009-af73-4808-88b6-aceaafc53356",
+                "row:c48b0fed-b294-4858-8856-a156eea03436",
+                "row:d02e5d5d-37c0-44cb-8d5c-aa7787a0b237",
+                "row:e2f5d137-ffbb-4ae3-8513-e0db1a7212e5",
+                "row:e53292fd-eac5-4b40-8f9a-8aeb70274026",
+                "row:ff466881-2cd7-48ba-a623-9b0b2d697d12"
+              ],
+              "validation": [
+                "row:0af9e711-0eb5-4df8-a689-15b17adbdbbf",
+                "row:1b793e4b-3d26-4b7e-8f6b-a207c9fb91dc",
+                "row:446195a4-bc19-4701-a26f-d6cd3d725a5e",
+                "row:50c2521c-6da7-4a51-b24b-20698fea9f90",
+                "row:520a3f14-8c1e-4c63-8f0c-5862a6f84feb",
+                "row:5acc5aaf-aeb7-45cc-8114-9de72457438d",
+                "row:639c8575-8f3c-4776-b822-8a8d4bc3579f",
+                "row:68d178da-d3b9-47e9-96d6-f26b8e5025b3",
+                "row:80ba6136-7777-4276-8e5f-4dfdcc273483",
+                "row:82d47852-b861-4aba-a06c-06cfb773a081",
+                "row:9ca4c350-ad36-48c3-aab2-7dda152162a0",
+                "row:9f9a0455-bf5b-47fb-a84c-30fbfca75353",
+                "row:a11be1b4-b4ee-448f-a127-ef945ca4d9bc",
+                "row:a7b7287d-14ce-4060-b99e-a6117d6cd7dd",
+                "row:a81fcecd-4ddc-4239-9088-d8f71ab207cc",
+                "row:acc20019-c6b0-4fad-a350-de95d2129f8a",
+                "row:ce8f1f63-f98e-42db-a0c0-cab9f34ae458",
+                "row:d16a6338-4fc6-4099-b526-e5f942dff677",
+                "row:d8960408-174c-47a1-8264-3bc6c53c53cc"
+              ],
+              "status": "valid"
+            }
+          ],
+          "purged": []
+        },
+        "invalid_folds": []
+      },
+      "train_n": 28,
+      "calibration_n": 10,
+      "probability_calibration_used_n": 10,
+      "conformal_calibration_used_n": 10,
+      "conformal_n": 10,
+      "validation_n": 16,
+      "limitations": "Brier kalibrasyon, ayırt etme ve veri belirsizliğini birlikte ölçer; tek başına kalibrasyon değildir. Conformal coverage exchangeability gerektirir; grup/zaman ayrımı bunu kanıtlamaz. Nominal coverage her alt grupta veya gelecek dağılımda garanti değildir. Predictive interval yeni gözlemi kapsar; parametrenin CI aralığı değildir. Quantile aralığı kendi başına conformal coverage garantisi taşımaz.",
+      "probability_fit_scope": "independent held-out probability_calibration",
+      "conformal_fit_scope": "separate held-out conformal_calibration",
+      "threshold_fit_scope": "validation",
+      "exchangeability": "required, not verified or asserted; group/time preservation alone does not establish it",
+      "preprocessing_fit_scope": "fit only",
+      "nominal_coverage": 0.9,
+      "warnings": [
+        "Isotonic küçük calibration örneğinde aşırı öğrenebilir; n<1000."
+      ],
+      "conformal_scores": [
+        1.0,
+        1.0,
+        0.7767306995288148,
+        0.7612707280111979,
+        0.9189971070395371,
+        0.9189971070395371,
+        1.0,
+        0.8495506057053537,
+        0.9402762224710712,
+        1.0
+      ],
+      "conformal_rank": 10,
+      "conformal_q": 1.0,
+      "conformal_score": "1 - calibrated p(true class)"
+    }
+  },
+  "project_root": "/tmp/veri-ufku-f50-d9b4b7ms/project"
+}

@@ -1,0 +1,47 @@
+{
+  "id": "E54-VERIFY",
+  "environment": "ENV-54",
+  "date": "2026-10-14T16:45:33.154609+00:00",
+  "tests": {
+    "source-core": {
+      "tests": 408,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "wheel-core": {
+      "tests": 408,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "source-ui": {
+      "tests": 42,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "new_tests": {
+    "core": 35,
+    "gui": 13
+  },
+  "commands": [
+    ".venv/bin/pytest -q tests/test_signals.py tests/test_temporal.py tests/test_time_series.py tests/test_experiment_registry.py tests/test_explanation.py tests/test_uncertainty.py tests/test_search.py tests/test_search_store.py tests/test_model_families.py tests/test_model_family_support.py tests/test_regression.py tests/test_classification.py tests/test_lifecycle.py tests/test_validation.py tests/test_learning_tree.py --junitxml=docs/evidence/phase54/source-core.xml",
+    ".venv/bin/python /tmp/f54_wheel_tests.py",
+    "QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software .venv/bin/pytest -q tests/test_signals_gui.py tests/test_temporal_gui.py tests/test_time_series_gui.py tests/test_experiment_registry_gui.py tests/test_usability.py --junitxml=docs/evidence/phase54/source-ui.xml",
+    ".venv/bin/python scripts/measure_phase54.py --output docs/evidence/phase54/source-gui",
+    ".venv/bin/python scripts/measure_phase54.py --package-root /tmp/veri-ufku-f54-installed --output docs/evidence/phase54/wheel-gui",
+    ".venv/bin/python /tmp/f54_smoke.py"
+  ],
+  "exit_code": 0,
+  "not_run": [
+    "physical desktop",
+    "human/AT",
+    "minimum hardware",
+    "clean offline install",
+    "remote CI",
+    "full repository aggregate regression"
+  ],
+  "scope": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred."
+}

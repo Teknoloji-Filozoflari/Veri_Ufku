@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="52.520" timestamp="2026-10-15T20:56:53.232219+03:00" hostname="s-oktay"><testcase classname="tests.test_streams_gui" name="test_live_cancel_and_explicit_resume" time="52.498"><failure message="TypeError: QQuickItem.mapToScene() takes exactly one argument (2 given)">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-76/test_live_cancel_and_explicit_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7fbfcc982650&gt;
+
+    def test_live_cancel_and_explicit_resume(tmp_path, monkeypatch):
+        app, window, projects, c, source = imported(tmp_path, monkeypatch)
+        # Hold a real parent publication while the spawned worker waits for ACK.
+        # This is a controlled I/O boundary, not a claim of naturally slow computation.
+        import veri_ufku.ui.neural as lifecycle
+    
+        real_publish = lifecycle.publish
+        gate = threading.Event()
+    
+        def held_publish(store, state, data):
+            if (
+                data.get("schema") == "StreamRun/v1"
+                and data["status"] == "running"
+                and data["state"]["cursor"] == 16
+            ):
+                if not gate.wait(20):
+                    raise AssertionError("Controlled publication gate timed out")
+            return real_publish(store, state, data)
+    
+        monkeypatch.setattr(lifecycle, "publish", held_publish)
+        try:
+            spin(
+                app,
+                lambda: (
+                    c.canStreamRun
+                    and not projects.busy
+                    and window.findChild(QObject, "streamRun").property("enabled")
+                ),
+            )
+            window.findChild(QObject, "streamRun").clicked.emit()
+            assert c.busy, c.errorText
+            spin(
+                app,
+                lambda: (
+                    not c.busy
+                    or (c.stage == "checkpoint" and c._incoming["state"]["cursor"] &gt;= 16)
+                ),
+                timeout=90000,
+            )
+            assert c.busy, (c.errorText, c.message, c.stage)
+            window.findChild(QObject, "streamCancel").clicked.emit()
+            gate.set()
+            spin(app, lambda: not c.busy, timeout=90000)
+            assert c.active["status"] == "canceled", c.errorText
+            cursor = c.active["state"]["cursor"]
+            prior = c.active["run_id"]
+            assert 16 &lt;= cursor &lt; 40
+            spin(app, lambda: c.canStreamRun)
+            window.findChild(QObject, "streamResume").clicked.emit()
+            spin(app, lambda: not c.busy, timeout=90000)
+            assert not c.errorText, c.errorText
+            assert c.active["status"] == "completed" and c.active["resume_from"] == prior
+            assert c.active["state"]["trained"] == 40 and c.active["state"]["scored"] == 39
+            if CAPTURE:
+&gt;               CAPTURE(app, window, projects, c, "cancel-resume")
+
+tests/test_streams_gui.py:177: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+app = &lt;PySide6.QtGui.QGuiApplication(0x44d045d0) at 0x7fbf667b66c0&gt;
+window = &lt;[RuntimeError('libshiboken: Internal C++ object (PySide6.QtQuick.QQuickWindow) already deleted.') raised in repr()] QQuickWindow object at 0x7fbf65037d40&gt;
+projects = &lt;[RuntimeError('libshiboken: Internal C++ object (ProjectController) already deleted.') raised in repr()] ProjectController object at 0x7fbf6df3dbc0&gt;
+controller = &lt;[RuntimeError('libshiboken: Internal C++ object (StreamController) already deleted.') raised in repr()] StreamController object at 0x7fbf68295100&gt;
+task = 'cancel-resume'
+
+    def capture(app, window, projects, controller, task):
+        record = dict(
+            task=task,
+            status=controller.active["status"],
+            worker_pid=controller.active.get("worker_pid"),
+            ui_pid=os.getpid(),
+            metrics=controller.active["metrics"],
+            source_snapshot_id=controller.active["source_snapshot_id"],
+            prior_test_use_ids=controller.active["prior_test_use_ids"],
+            saved=controller.saved(),
+        )
+        (output / (task + ".json")).write_text(
+            json.dumps(controller.active, ensure_ascii=False, indent=2, allow_nan=False)
+        )
+        target = window.findChild(
+            QObject,
+            "specialSummary"
+            if controller.active["schema"] == "SpecialTargetRun/v1"
+            else "streamSummary",
+        )
+        for width, height in ((1000, 740), (1366, 900)):
+            window.setWidth(width)
+            window.setHeight(height)
+            window.findChild(QObject, "streamExpanded").setProperty("checked", True)
+            app.processEvents()
+            QTest.qWait(250)
+            app.processEvents()
+            parent = target.parentItem()
+            while parent:
+                if parent.property("contentY") is not None:
+                    pos = target.mapToItem(parent.property("contentItem"), 0, 0)
+                    parent.setProperty("contentY", max(0, pos.y() - 10))
+                    break
+                parent = parent.parentItem()
+            for _ in range(3):
+                QTest.qWait(100)
+                app.processEvents()
+                if parent:
+                    pos = target.mapToItem(parent.property("contentItem"), 0, 0)
+                    parent.setProperty("contentY", max(0, pos.y() - 10))
+            QTest.qWait(150)
+            app.processEvents()
+&gt;           location = target.mapToScene(0, 0)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: QQuickItem.mapToScene() takes exactly one argument (2 given)
+
+scripts/measure_phase62.py:80: TypeError</failure></testcase></testsuite></testsuites>

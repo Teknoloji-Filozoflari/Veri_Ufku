@@ -1,0 +1,3029 @@
+{
+  "schema": "TimeSeriesRun/v1",
+  "run_id": "ts:11068318-3f33-43b9-8667-677e4fe083dc",
+  "status": "completed",
+  "dataset_version": "dv:709d05bb-7ee8-43af-97d9-7aa4457cf9c7",
+  "snapshot_fingerprint": {
+    "size": 17022,
+    "sha256": "3fd436ae8df8bc4cca32c952cb7621c9dce4812a6ca041c436e9589d45cee651"
+  },
+  "source_snapshot_id": "snapshot:9fe76bd3-3e8d-4e5a-b24a-be592abdecfa",
+  "created_at": "2026-10-13T21:07:01.885638+00:00",
+  "data_access_at": "2026-10-13T21:07:01.856772+00:00",
+  "elapsed_seconds": 0.3642952949994651,
+  "seed": 53,
+  "spec": {
+    "date": "col:ef5c2e48-26ae-490e-a5fa-825992a44457",
+    "measurement": "col:84e88311-1431-470a-9503-4a3570faafbe",
+    "group": "col:906f4868-069e-4d9a-a8be-378929fa3ee3",
+    "frequency": "D",
+    "timezone": "",
+    "resample": false,
+    "aggregation": "none",
+    "horizon": 3,
+    "test_periods": 6,
+    "folds": 2,
+    "seasonal_period": 4,
+    "window": 3,
+    "model": "level",
+    "advanced": {
+      "task": "forecast",
+      "method": "arima",
+      "diagnostics": [
+        "acf",
+        "stationarity"
+      ],
+      "order": [
+        1,
+        0,
+        0
+      ],
+      "seasonal_order": [
+        1,
+        0,
+        0
+      ],
+      "gap": 0,
+      "embargo": 0,
+      "lags": 4,
+      "difference": 0,
+      "known_future": [],
+      "past_covariates": [],
+      "availability": {},
+      "var_columns": [],
+      "var_assumption": "",
+      "hierarchy": [],
+      "training_series": [],
+      "validation_series": [],
+      "label": "",
+      "clusters": 2,
+      "seed": 53,
+      "alpha": 0.2,
+      "croston_alpha": 0.1,
+      "change_penalty": 3
+    }
+  },
+  "mode": "final",
+  "development_run_id": "ts:8a60650c-1750-44e0-81b0-cc10d096c2b1",
+  "groups": [
+    {
+      "group": "g0",
+      "group_type": "str",
+      "series_id": "[\"str\", \"g0\"]",
+      "timezone": "Date: takvim günü (saat dilimi yok)",
+      "periods": 80,
+      "duplicate_dates": 0,
+      "missing_periods": 0,
+      "train_end": "2026-03-15T00:00:00",
+      "test_start": "2026-03-16T00:00:00",
+      "test_end": "2026-03-21T00:00:00",
+      "train_row_ids": [
+        "row:bc13bcb0-9a66-4b9c-a477-5a993056ca96",
+        "row:3fb017a4-87ba-4ab2-8c01-b59c84675145",
+        "row:6499d1b4-5950-4f48-8914-5ec74bcff30d",
+        "row:1c9271b6-56c9-4de5-bb94-e250298fa866",
+        "row:e56dbb36-0b53-48c1-9210-9ad9cfd8da78",
+        "row:435b1964-538e-4c6d-b0a8-f131eff916e1",
+        "row:2896b0a6-4fb7-4016-94fc-eb0a2cd4396c",
+        "row:862ae780-73ac-4677-b41c-0afa4ab01b1c",
+        "row:0fe5a5dd-f391-4dd4-a041-9d591a162eb9",
+        "row:4d14a97d-f3c2-43dc-9449-985dbae0579e",
+        "row:5fb4fe21-6e18-42ba-bbf6-09fe94d9633c",
+        "row:54b89789-0ca5-41da-b4dc-1ab711e9d354",
+        "row:0153eda2-6e79-4b2a-b657-0c9a1ea3ac30",
+        "row:8ecb176a-ead0-401d-ae06-302efc523e8a",
+        "row:aaabbc49-6fe9-4b8b-8fb6-2b261bbffc5a",
+        "row:dd3cb9e2-bbaa-489f-a892-d3f269ef365e",
+        "row:2e8ce3b1-bfda-4096-84b1-cd088ee62c5f",
+        "row:8e312606-8b6e-4538-ac87-a4da72596a05",
+        "row:f6ce5cac-bdbd-4d96-830f-3527588853f1",
+        "row:2c6c9aef-4db4-4f9c-a063-ea25ce2210a3",
+        "row:c37c62b6-8d08-477a-8bee-11b8efa6b15e",
+        "row:cd1abb8e-5527-4540-bd2c-724724e1320e",
+        "row:d651ce7d-9132-4763-8cda-eedbfa5f58be",
+        "row:3b48547e-c858-4b71-ad84-5e0590b0942f",
+        "row:686c3b1e-e00a-4613-b801-35478feffd72",
+        "row:2f437026-399c-408e-809c-7b2e3d6577e1",
+        "row:4ce9930e-d453-4a16-be0b-a8027635451b",
+        "row:a2463f8e-c3a2-42ed-9da6-fd65ed99da10",
+        "row:8ddb0a0e-0ed6-4d0f-89cc-cdc79060d53a",
+        "row:4dfa015d-3039-45ef-b441-77660f52131c",
+        "row:9a042b9f-da9d-4fba-81a9-cb628d2d351d",
+        "row:525d5bbe-e8e6-42b9-b02b-bb4e10920a1a",
+        "row:356127b2-38d5-4d6a-b6b9-7e0f19cc05b5",
+        "row:b99847ce-e407-4a65-9c20-f367f6a3dbc6",
+        "row:fc4489b0-1863-42db-8578-aa7c23b738ad",
+        "row:190a6fa1-8fec-4aba-99ed-838d9119deb2",
+        "row:49c191e2-b1a1-4ec9-baf7-ef8887e8d758",
+        "row:f14120a9-a599-4a78-80cc-f852b3a2f54a",
+        "row:18c8f305-868f-4f00-926a-a4c48c7649f7",
+        "row:a94c5eec-af15-43e6-b936-39551854c132",
+        "row:dcad217f-2ab4-4f7e-8871-bbafc82855d1",
+        "row:16193f70-eb85-45a4-9d59-2da416c7e902",
+        "row:ca5c32fc-b172-4531-85fa-4733e57110dd",
+        "row:c8e83001-a8fd-4715-8cc5-c8dd2adbf0a8",
+        "row:e41fda60-2187-423c-8548-4a19b7c910af",
+        "row:a3e1218b-8035-4f75-acaa-122be6fdbdec",
+        "row:8cec9225-2124-4030-8243-4f3f031f376a",
+        "row:7bc29395-455c-4a75-bc05-e9dc0411b27e",
+        "row:e53c6c33-96ec-4088-b359-3a155c87ec5f",
+        "row:65808979-b301-45ec-92b3-1192365892d5",
+        "row:539a17d2-8bb7-419b-8801-03af5491e4d8",
+        "row:d2e0a4a1-d33e-4387-bad5-55235ed2e7f1",
+        "row:2e895caf-90eb-460f-9ed7-b1d585e0a524",
+        "row:2f641165-c786-4a9f-8506-723c6c7e469e",
+        "row:efed3b89-044f-4487-b6ec-a7db17f29540",
+        "row:59e0e866-00fe-499a-9cb8-8f94c297e153",
+        "row:1d78dc91-fe98-4b0d-9f94-7232ed7fad8c",
+        "row:c1e1f130-ac9c-4d8f-9d19-6e209aabde6f",
+        "row:d83f78c2-0c5c-46f6-a070-0dc9d9f527ba",
+        "row:9775e4e8-0541-4713-99e1-aaef86754681",
+        "row:0db183e9-b8c9-45cb-bc98-47c373069ea7",
+        "row:4d2c8979-a5ad-4ace-a803-1720c8b32a92",
+        "row:6fe06ed0-d81c-4cee-b2b0-ab6eabdab657",
+        "row:103054db-9f88-40b3-abdb-4358cd7b7c0d",
+        "row:6773967d-7a64-43b3-89a0-4e51713c3370",
+        "row:865a5773-52e2-4a86-950d-56573210b367",
+        "row:d02095a3-5f76-4263-ba63-8fe8b6cd8a15",
+        "row:c6d20230-f8c1-4dd4-8079-d517de734935",
+        "row:5128f62e-9fb5-4f32-b8c6-0b760abbda5d",
+        "row:512230c4-f17e-4b10-ab1e-d4465738e961",
+        "row:30730201-324f-4e4c-b6d4-d7eb99f89b5f",
+        "row:66281efd-c60c-4c77-8ebc-80a962f08b87",
+        "row:272472b9-c82d-44ca-8bc2-cb2a4e33fb08",
+        "row:2999235d-4039-4a5b-8577-d9a502044d3c"
+      ],
+      "test_row_ids": [
+        "row:9017a061-560e-481e-a222-b129d8fd1c68",
+        "row:d7e4945d-76a7-45b6-9280-ab4a5052a21d",
+        "row:1a7504ac-c05d-470a-aa80-92efa73c54c6",
+        "row:1bb0a967-eea5-44f6-9e98-24cae562cfd2",
+        "row:aee620ab-a76e-4a39-a672-bee97b778da6",
+        "row:0124a36e-e98f-4cb6-bf04-448a25ce1a47"
+      ],
+      "chosen": "naive",
+      "comparisons": [
+        {
+          "method": "naive",
+          "mae": 0.5290814567110742,
+          "rmse": 0.6794000270602363,
+          "n": 6,
+          "mape": null,
+          "mape_reason": "not reported",
+          "per_horizon": [
+            {
+              "horizon": 1,
+              "lead": 1,
+              "mae": 0.36691620037416717,
+              "rmse": 0.3973936434188925,
+              "mase": 0.3093485054984405,
+              "n": 2,
+              "probabilistic": null
+            },
+            {
+              "horizon": 2,
+              "lead": 2,
+              "mae": 0.4545850629129965,
+              "rmse": 0.6323262817548737,
+              "mase": 0.3834916829666444,
+              "n": 2,
+              "probabilistic": null
+            },
+            {
+              "horizon": 3,
+              "lead": 3,
+              "mae": 0.7657431068460587,
+              "rmse": 0.9093926302102208,
+              "mase": 0.6455383312743707,
+              "n": 2,
+              "probabilistic": null
+            }
+          ]
+        },
+        {
+          "method": "seasonal-naive",
+          "mae": 1.0343779178209112,
+          "rmse": 1.2200102381856759,
+          "n": 6,
+          "mape": null,
+          "mape_reason": "not reported",
+          "per_horizon": [
+            {
+              "horizon": 1,
+              "lead": 1,
+              "mae": 1.4870621433106788,
+              "rmse": 1.5522368301734581,
+              "mase": 1.2538112595538815,
+              "n": 2,
+              "probabilistic": null
+            },
+            {
+              "horizon": 2,
+              "lead": 2,
+              "mae": 0.20061236559525739,
+              "rmse": 0.2052194767213575,
+              "mase": 0.16915174268232192,
+              "n": 2,
+              "probabilistic": null
+            },
+            {
+              "horizon": 3,
+              "lead": 3,
+              "mae": 1.4154592445567975,
+              "rmse": 1.4190562826261952,
+              "mase": 1.1936308112429557,
+              "n": 2,
+              "probabilistic": null
+            }
+          ]
+        },
+        {
+          "method": "arima",
+          "mae": 0.5409189731331625,
+          "rmse": 0.6816547173380072,
+          "n": 6,
+          "mape": null,
+          "mape_reason": "not reported",
+          "per_horizon": [
+            {
+              "horizon": 1,
+              "lead": 1,
+              "mae": 0.40103196490472204,
+              "rmse": 0.4208572867273525,
+              "mase": 0.33821901068441174,
+              "n": 2,
+              "probabilistic": {
+                "coverage": 1.0,
+                "mean_width": 2.555961728467542,
+                "crps": 0.30277926585191806,
+                "interval_score": 2.555961728467542,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.16790128291384934
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.20051598245236102
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.0876948899329049
+                  }
+                ]
+              }
+            },
+            {
+              "horizon": 2,
+              "lead": 2,
+              "mae": 0.1451474043119711,
+              "rmse": 0.20127663378677754,
+              "mase": 0.12234552311326059,
+              "n": 2,
+              "probabilistic": {
+                "coverage": 1.0,
+                "mean_width": 2.6139602833177005,
+                "crps": 0.25396869194842925,
+                "interval_score": 2.6139602833177005,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.11675365533156291
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.07257370215598555
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.1446423730002071
+                  }
+                ]
+              }
+            },
+            {
+              "horizon": 3,
+              "lead": 3,
+              "mae": 1.0765775501827943,
+              "rmse": 1.0845857835632138,
+              "mase": 0.9078780614922657,
+              "n": 2,
+              "probabilistic": {
+                "coverage": 1.0,
+                "mean_width": 2.616593568274333,
+                "crps": 0.6581089557318471,
+                "interval_score": 2.616593568274333,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.2384874334319961
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.5382887750913972
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.023171923395437194
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "invalid_models": [],
+      "folds": [
+        {
+          "method": "naive",
+          "origin": 74,
+          "start": 74,
+          "gap": 0,
+          "train_end": "2026-03-15T00:00:00",
+          "validation_start": "2026-03-16T00:00:00",
+          "validation_end": "2026-03-21T00:00:00",
+          "train_row_ids": [
+            "row:bc13bcb0-9a66-4b9c-a477-5a993056ca96",
+            "row:3fb017a4-87ba-4ab2-8c01-b59c84675145",
+            "row:6499d1b4-5950-4f48-8914-5ec74bcff30d",
+            "row:1c9271b6-56c9-4de5-bb94-e250298fa866",
+            "row:e56dbb36-0b53-48c1-9210-9ad9cfd8da78",
+            "row:435b1964-538e-4c6d-b0a8-f131eff916e1",
+            "row:2896b0a6-4fb7-4016-94fc-eb0a2cd4396c",
+            "row:862ae780-73ac-4677-b41c-0afa4ab01b1c",
+            "row:0fe5a5dd-f391-4dd4-a041-9d591a162eb9",
+            "row:4d14a97d-f3c2-43dc-9449-985dbae0579e",
+            "row:5fb4fe21-6e18-42ba-bbf6-09fe94d9633c",
+            "row:54b89789-0ca5-41da-b4dc-1ab711e9d354",
+            "row:0153eda2-6e79-4b2a-b657-0c9a1ea3ac30",
+            "row:8ecb176a-ead0-401d-ae06-302efc523e8a",
+            "row:aaabbc49-6fe9-4b8b-8fb6-2b261bbffc5a",
+            "row:dd3cb9e2-bbaa-489f-a892-d3f269ef365e",
+            "row:2e8ce3b1-bfda-4096-84b1-cd088ee62c5f",
+            "row:8e312606-8b6e-4538-ac87-a4da72596a05",
+            "row:f6ce5cac-bdbd-4d96-830f-3527588853f1",
+            "row:2c6c9aef-4db4-4f9c-a063-ea25ce2210a3",
+            "row:c37c62b6-8d08-477a-8bee-11b8efa6b15e",
+            "row:cd1abb8e-5527-4540-bd2c-724724e1320e",
+            "row:d651ce7d-9132-4763-8cda-eedbfa5f58be",
+            "row:3b48547e-c858-4b71-ad84-5e0590b0942f",
+            "row:686c3b1e-e00a-4613-b801-35478feffd72",
+            "row:2f437026-399c-408e-809c-7b2e3d6577e1",
+            "row:4ce9930e-d453-4a16-be0b-a8027635451b",
+            "row:a2463f8e-c3a2-42ed-9da6-fd65ed99da10",
+            "row:8ddb0a0e-0ed6-4d0f-89cc-cdc79060d53a",
+            "row:4dfa015d-3039-45ef-b441-77660f52131c",
+            "row:9a042b9f-da9d-4fba-81a9-cb628d2d351d",
+            "row:525d5bbe-e8e6-42b9-b02b-bb4e10920a1a",
+            "row:356127b2-38d5-4d6a-b6b9-7e0f19cc05b5",
+            "row:b99847ce-e407-4a65-9c20-f367f6a3dbc6",
+            "row:fc4489b0-1863-42db-8578-aa7c23b738ad",
+            "row:190a6fa1-8fec-4aba-99ed-838d9119deb2",
+            "row:49c191e2-b1a1-4ec9-baf7-ef8887e8d758",
+            "row:f14120a9-a599-4a78-80cc-f852b3a2f54a",
+            "row:18c8f305-868f-4f00-926a-a4c48c7649f7",
+            "row:a94c5eec-af15-43e6-b936-39551854c132",
+            "row:dcad217f-2ab4-4f7e-8871-bbafc82855d1",
+            "row:16193f70-eb85-45a4-9d59-2da416c7e902",
+            "row:ca5c32fc-b172-4531-85fa-4733e57110dd",
+            "row:c8e83001-a8fd-4715-8cc5-c8dd2adbf0a8",
+            "row:e41fda60-2187-423c-8548-4a19b7c910af",
+            "row:a3e1218b-8035-4f75-acaa-122be6fdbdec",
+            "row:8cec9225-2124-4030-8243-4f3f031f376a",
+            "row:7bc29395-455c-4a75-bc05-e9dc0411b27e",
+            "row:e53c6c33-96ec-4088-b359-3a155c87ec5f",
+            "row:65808979-b301-45ec-92b3-1192365892d5",
+            "row:539a17d2-8bb7-419b-8801-03af5491e4d8",
+            "row:d2e0a4a1-d33e-4387-bad5-55235ed2e7f1",
+            "row:2e895caf-90eb-460f-9ed7-b1d585e0a524",
+            "row:2f641165-c786-4a9f-8506-723c6c7e469e",
+            "row:efed3b89-044f-4487-b6ec-a7db17f29540",
+            "row:59e0e866-00fe-499a-9cb8-8f94c297e153",
+            "row:1d78dc91-fe98-4b0d-9f94-7232ed7fad8c",
+            "row:c1e1f130-ac9c-4d8f-9d19-6e209aabde6f",
+            "row:d83f78c2-0c5c-46f6-a070-0dc9d9f527ba",
+            "row:9775e4e8-0541-4713-99e1-aaef86754681",
+            "row:0db183e9-b8c9-45cb-bc98-47c373069ea7",
+            "row:4d2c8979-a5ad-4ace-a803-1720c8b32a92",
+            "row:6fe06ed0-d81c-4cee-b2b0-ab6eabdab657",
+            "row:103054db-9f88-40b3-abdb-4358cd7b7c0d",
+            "row:6773967d-7a64-43b3-89a0-4e51713c3370",
+            "row:865a5773-52e2-4a86-950d-56573210b367",
+            "row:d02095a3-5f76-4263-ba63-8fe8b6cd8a15",
+            "row:c6d20230-f8c1-4dd4-8079-d517de734935",
+            "row:5128f62e-9fb5-4f32-b8c6-0b760abbda5d",
+            "row:512230c4-f17e-4b10-ab1e-d4465738e961",
+            "row:30730201-324f-4e4c-b6d4-d7eb99f89b5f",
+            "row:66281efd-c60c-4c77-8ebc-80a962f08b87",
+            "row:272472b9-c82d-44ca-8bc2-cb2a4e33fb08",
+            "row:2999235d-4039-4a5b-8577-d9a502044d3c"
+          ],
+          "validation_row_ids": [
+            "row:9017a061-560e-481e-a222-b129d8fd1c68",
+            "row:d7e4945d-76a7-45b6-9280-ab4a5052a21d",
+            "row:1a7504ac-c05d-470a-aa80-92efa73c54c6",
+            "row:1bb0a967-eea5-44f6-9e98-24cae562cfd2",
+            "row:aee620ab-a76e-4a39-a672-bee97b778da6",
+            "row:0124a36e-e98f-4cb6-bf04-448a25ce1a47"
+          ],
+          "covariate_read_row_ids": [],
+          "metrics": {
+            "mae": 0.6765704324905107,
+            "rmse": 0.7692334530271608,
+            "n": 6,
+            "mase": 0.5766078837559278,
+            "mase_denominator": 1.1733631321227236,
+            "mase_period": 4,
+            "mase_status": "valid",
+            "mape": null,
+            "mape_reason": "MAPE zero/near-zero unstable; not reported",
+            "probabilistic": null
+          },
+          "points": [
+            {
+              "date": "2026-03-16T00:00:00",
+              "horizon": 1,
+              "lead": 1,
+              "predicted": 1.2169950066834194,
+              "actual": 0.9937931716887975,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-17T00:00:00",
+              "horizon": 2,
+              "lead": 2,
+              "predicted": 1.2169950066834194,
+              "actual": 0.2689901029863332,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-18T00:00:00",
+              "horizon": 3,
+              "lead": 3,
+              "predicted": 1.2169950066834194,
+              "actual": 0.17542937417379958,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-19T00:00:00",
+              "horizon": 4,
+              "lead": 4,
+              "predicted": 1.2169950066834194,
+              "actual": 1.0342321495623856,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-20T00:00:00",
+              "horizon": 5,
+              "lead": 5,
+              "predicted": 1.2169950066834194,
+              "actual": 2.2717238575764123,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-21T00:00:00",
+              "horizon": 6,
+              "lead": 6,
+              "predicted": 1.2169950066834194,
+              "actual": 1.8261535224111294,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            }
+          ],
+          "backend": {
+            "method": "naive",
+            "fit_n": 74,
+            "warnings": []
+          }
+        },
+        {
+          "method": "seasonal-naive",
+          "origin": 74,
+          "start": 74,
+          "gap": 0,
+          "train_end": "2026-03-15T00:00:00",
+          "validation_start": "2026-03-16T00:00:00",
+          "validation_end": "2026-03-21T00:00:00",
+          "train_row_ids": [
+            "row:bc13bcb0-9a66-4b9c-a477-5a993056ca96",
+            "row:3fb017a4-87ba-4ab2-8c01-b59c84675145",
+            "row:6499d1b4-5950-4f48-8914-5ec74bcff30d",
+            "row:1c9271b6-56c9-4de5-bb94-e250298fa866",
+            "row:e56dbb36-0b53-48c1-9210-9ad9cfd8da78",
+            "row:435b1964-538e-4c6d-b0a8-f131eff916e1",
+            "row:2896b0a6-4fb7-4016-94fc-eb0a2cd4396c",
+            "row:862ae780-73ac-4677-b41c-0afa4ab01b1c",
+            "row:0fe5a5dd-f391-4dd4-a041-9d591a162eb9",
+            "row:4d14a97d-f3c2-43dc-9449-985dbae0579e",
+            "row:5fb4fe21-6e18-42ba-bbf6-09fe94d9633c",
+            "row:54b89789-0ca5-41da-b4dc-1ab711e9d354",
+            "row:0153eda2-6e79-4b2a-b657-0c9a1ea3ac30",
+            "row:8ecb176a-ead0-401d-ae06-302efc523e8a",
+            "row:aaabbc49-6fe9-4b8b-8fb6-2b261bbffc5a",
+            "row:dd3cb9e2-bbaa-489f-a892-d3f269ef365e",
+            "row:2e8ce3b1-bfda-4096-84b1-cd088ee62c5f",
+            "row:8e312606-8b6e-4538-ac87-a4da72596a05",
+            "row:f6ce5cac-bdbd-4d96-830f-3527588853f1",
+            "row:2c6c9aef-4db4-4f9c-a063-ea25ce2210a3",
+            "row:c37c62b6-8d08-477a-8bee-11b8efa6b15e",
+            "row:cd1abb8e-5527-4540-bd2c-724724e1320e",
+            "row:d651ce7d-9132-4763-8cda-eedbfa5f58be",
+            "row:3b48547e-c858-4b71-ad84-5e0590b0942f",
+            "row:686c3b1e-e00a-4613-b801-35478feffd72",
+            "row:2f437026-399c-408e-809c-7b2e3d6577e1",
+            "row:4ce9930e-d453-4a16-be0b-a8027635451b",
+            "row:a2463f8e-c3a2-42ed-9da6-fd65ed99da10",
+            "row:8ddb0a0e-0ed6-4d0f-89cc-cdc79060d53a",
+            "row:4dfa015d-3039-45ef-b441-77660f52131c",
+            "row:9a042b9f-da9d-4fba-81a9-cb628d2d351d",
+            "row:525d5bbe-e8e6-42b9-b02b-bb4e10920a1a",
+            "row:356127b2-38d5-4d6a-b6b9-7e0f19cc05b5",
+            "row:b99847ce-e407-4a65-9c20-f367f6a3dbc6",
+            "row:fc4489b0-1863-42db-8578-aa7c23b738ad",
+            "row:190a6fa1-8fec-4aba-99ed-838d9119deb2",
+            "row:49c191e2-b1a1-4ec9-baf7-ef8887e8d758",
+            "row:f14120a9-a599-4a78-80cc-f852b3a2f54a",
+            "row:18c8f305-868f-4f00-926a-a4c48c7649f7",
+            "row:a94c5eec-af15-43e6-b936-39551854c132",
+            "row:dcad217f-2ab4-4f7e-8871-bbafc82855d1",
+            "row:16193f70-eb85-45a4-9d59-2da416c7e902",
+            "row:ca5c32fc-b172-4531-85fa-4733e57110dd",
+            "row:c8e83001-a8fd-4715-8cc5-c8dd2adbf0a8",
+            "row:e41fda60-2187-423c-8548-4a19b7c910af",
+            "row:a3e1218b-8035-4f75-acaa-122be6fdbdec",
+            "row:8cec9225-2124-4030-8243-4f3f031f376a",
+            "row:7bc29395-455c-4a75-bc05-e9dc0411b27e",
+            "row:e53c6c33-96ec-4088-b359-3a155c87ec5f",
+            "row:65808979-b301-45ec-92b3-1192365892d5",
+            "row:539a17d2-8bb7-419b-8801-03af5491e4d8",
+            "row:d2e0a4a1-d33e-4387-bad5-55235ed2e7f1",
+            "row:2e895caf-90eb-460f-9ed7-b1d585e0a524",
+            "row:2f641165-c786-4a9f-8506-723c6c7e469e",
+            "row:efed3b89-044f-4487-b6ec-a7db17f29540",
+            "row:59e0e866-00fe-499a-9cb8-8f94c297e153",
+            "row:1d78dc91-fe98-4b0d-9f94-7232ed7fad8c",
+            "row:c1e1f130-ac9c-4d8f-9d19-6e209aabde6f",
+            "row:d83f78c2-0c5c-46f6-a070-0dc9d9f527ba",
+            "row:9775e4e8-0541-4713-99e1-aaef86754681",
+            "row:0db183e9-b8c9-45cb-bc98-47c373069ea7",
+            "row:4d2c8979-a5ad-4ace-a803-1720c8b32a92",
+            "row:6fe06ed0-d81c-4cee-b2b0-ab6eabdab657",
+            "row:103054db-9f88-40b3-abdb-4358cd7b7c0d",
+            "row:6773967d-7a64-43b3-89a0-4e51713c3370",
+            "row:865a5773-52e2-4a86-950d-56573210b367",
+            "row:d02095a3-5f76-4263-ba63-8fe8b6cd8a15",
+            "row:c6d20230-f8c1-4dd4-8079-d517de734935",
+            "row:5128f62e-9fb5-4f32-b8c6-0b760abbda5d",
+            "row:512230c4-f17e-4b10-ab1e-d4465738e961",
+            "row:30730201-324f-4e4c-b6d4-d7eb99f89b5f",
+            "row:66281efd-c60c-4c77-8ebc-80a962f08b87",
+            "row:272472b9-c82d-44ca-8bc2-cb2a4e33fb08",
+            "row:2999235d-4039-4a5b-8577-d9a502044d3c"
+          ],
+          "validation_row_ids": [
+            "row:9017a061-560e-481e-a222-b129d8fd1c68",
+            "row:d7e4945d-76a7-45b6-9280-ab4a5052a21d",
+            "row:1a7504ac-c05d-470a-aa80-92efa73c54c6",
+            "row:1bb0a967-eea5-44f6-9e98-24cae562cfd2",
+            "row:aee620ab-a76e-4a39-a672-bee97b778da6",
+            "row:0124a36e-e98f-4cb6-bf04-448a25ce1a47"
+          ],
+          "covariate_read_row_ids": [],
+          "metrics": {
+            "mae": 0.541600940460354,
+            "rmse": 0.7346659760622649,
+            "n": 6,
+            "mase": 0.46157998801321404,
+            "mase_denominator": 1.1733631321227236,
+            "mase_period": 4,
+            "mase_status": "valid",
+            "mape": null,
+            "mape_reason": "MAPE zero/near-zero unstable; not reported",
+            "probabilistic": null
+          },
+          "points": [
+            {
+              "date": "2026-03-16T00:00:00",
+              "horizon": 1,
+              "lead": 1,
+              "predicted": 0.941794915482685,
+              "actual": 0.9937931716887975,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-17T00:00:00",
+              "horizon": 2,
+              "lead": 2,
+              "predicted": 0.7275031225036848,
+              "actual": 0.2689901029863332,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-18T00:00:00",
+              "horizon": 3,
+              "lead": 3,
+              "predicted": 0.04767720625734573,
+              "actual": 0.17542937417379958,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-19T00:00:00",
+              "horizon": 4,
+              "lead": 4,
+              "predicted": 1.2169950066834194,
+              "actual": 1.0342321495623856,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-20T00:00:00",
+              "horizon": 5,
+              "lead": 5,
+              "predicted": 0.941794915482685,
+              "actual": 2.2717238575764123,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-21T00:00:00",
+              "horizon": 6,
+              "lead": 6,
+              "predicted": 0.7275031225036848,
+              "actual": 1.8261535224111294,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            }
+          ],
+          "backend": {
+            "method": "seasonal-naive",
+            "fit_n": 74,
+            "warnings": []
+          }
+        }
+      ],
+      "diagnostics": {
+        "acf": {
+          "status": "available",
+          "lags": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "values": [
+            1.0,
+            0.20983712359827328,
+            -0.10583695289690309,
+            -0.05034783617476845,
+            -0.14766472138221556
+          ],
+          "estimator": "FFT biased autocorrelation",
+          "warnings": []
+        },
+        "stationarity": {
+          "status": "available",
+          "adf": {
+            "statistic": -4.888503505161655,
+            "p": 3.6716577295180944e-05,
+            "lag": 4,
+            "n": 69,
+            "null": "unit root"
+          },
+          "kpss": {
+            "statistic": 0.1334821479877231,
+            "p": 0.1,
+            "lag": 4,
+            "null": "level stationarity"
+          },
+          "warning": "Tests depend on lag/trend, sample size and regime. Failure to reject is not proof. KPSS tabulated p-values may be bounds.",
+          "warnings": [
+            "adfuller currently returns a plain tuple whose length depends on the store and autolag arguments. In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning an ADFullerResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.",
+            "The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is greater than the p-value returned.",
+            "kpss currently returns a plain tuple whose length and layout depends on the store argument (and which silently drops `lags` when store=True). In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning a KPSSResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning."
+          ]
+        }
+      },
+      "history": [
+        {
+          "date": "2026-01-01T00:00:00",
+          "actual": 0.0
+        },
+        {
+          "date": "2026-01-02T00:00:00",
+          "actual": -0.30900336673884216
+        },
+        {
+          "date": "2026-01-03T00:00:00",
+          "actual": 0.3903814538493086
+        },
+        {
+          "date": "2026-01-04T00:00:00",
+          "actual": -1.2189586284999465
+        },
+        {
+          "date": "2026-01-05T00:00:00",
+          "actual": -1.6366243840199792
+        },
+        {
+          "date": "2026-01-06T00:00:00",
+          "actual": -0.5373208142418846
+        },
+        {
+          "date": "2026-01-07T00:00:00",
+          "actual": 0.1827281352111656
+        },
+        {
+          "date": "2026-01-08T00:00:00",
+          "actual": 0.7197701935333871
+        },
+        {
+          "date": "2026-01-09T00:00:00",
+          "actual": 1.3011068358006312
+        },
+        {
+          "date": "2026-01-10T00:00:00",
+          "actual": 0.6674812646860091
+        },
+        {
+          "date": "2026-01-11T00:00:00",
+          "actual": -0.4172956974216885
+        },
+        {
+          "date": "2026-01-12T00:00:00",
+          "actual": 0.6102033050400012
+        },
+        {
+          "date": "2026-01-13T00:00:00",
+          "actual": 1.441139006085653
+        },
+        {
+          "date": "2026-01-14T00:00:00",
+          "actual": 1.0641158910557271
+        },
+        {
+          "date": "2026-01-15T00:00:00",
+          "actual": -0.6109714696534942
+        },
+        {
+          "date": "2026-01-16T00:00:00",
+          "actual": -0.7794389813196332
+        },
+        {
+          "date": "2026-01-17T00:00:00",
+          "actual": -0.07857043378089734
+        },
+        {
+          "date": "2026-01-18T00:00:00",
+          "actual": -0.7486713577085138
+        },
+        {
+          "date": "2026-01-19T00:00:00",
+          "actual": -1.0310183279413927
+        },
+        {
+          "date": "2026-01-20T00:00:00",
+          "actual": -1.0224419209668476
+        },
+        {
+          "date": "2026-01-21T00:00:00",
+          "actual": 0.8448595982845365
+        },
+        {
+          "date": "2026-01-22T00:00:00",
+          "actual": 0.21983565673530758
+        },
+        {
+          "date": "2026-01-23T00:00:00",
+          "actual": -0.8970080949838806
+        },
+        {
+          "date": "2026-01-24T00:00:00",
+          "actual": 0.3110202765749256
+        },
+        {
+          "date": "2026-01-25T00:00:00",
+          "actual": -0.0877676729132334
+        },
+        {
+          "date": "2026-01-26T00:00:00",
+          "actual": 0.5617466513834128
+        },
+        {
+          "date": "2026-01-27T00:00:00",
+          "actual": -0.23003868032335137
+        },
+        {
+          "date": "2026-01-28T00:00:00",
+          "actual": -0.483638608447705
+        },
+        {
+          "date": "2026-01-29T00:00:00",
+          "actual": 3.773099297787982
+        },
+        {
+          "date": "2026-01-30T00:00:00",
+          "actual": 0.22992903241366736
+        },
+        {
+          "date": "2026-01-31T00:00:00",
+          "actual": -1.3385345270090157
+        },
+        {
+          "date": "2026-02-01T00:00:00",
+          "actual": 0.09827568794680995
+        },
+        {
+          "date": "2026-02-02T00:00:00",
+          "actual": -1.0384087885329882
+        },
+        {
+          "date": "2026-02-03T00:00:00",
+          "actual": -1.9353716719104268
+        },
+        {
+          "date": "2026-02-04T00:00:00",
+          "actual": 0.2474408231121012
+        },
+        {
+          "date": "2026-02-05T00:00:00",
+          "actual": 0.26364409509545517
+        },
+        {
+          "date": "2026-02-06T00:00:00",
+          "actual": -0.3745773707937753
+        },
+        {
+          "date": "2026-02-07T00:00:00",
+          "actual": -0.13324839532371482
+        },
+        {
+          "date": "2026-02-08T00:00:00",
+          "actual": -0.468898364557964
+        },
+        {
+          "date": "2026-02-09T00:00:00",
+          "actual": 0.1557526183516611
+        },
+        {
+          "date": "2026-02-10T00:00:00",
+          "actual": -0.39078079629701207
+        },
+        {
+          "date": "2026-02-11T00:00:00",
+          "actual": 0.5170418527427558
+        },
+        {
+          "date": "2026-02-12T00:00:00",
+          "actual": 1.308296003150132
+        },
+        {
+          "date": "2026-02-13T00:00:00",
+          "actual": 2.3840516524909954
+        },
+        {
+          "date": "2026-02-14T00:00:00",
+          "actual": -0.5605589373751039
+        },
+        {
+          "date": "2026-02-15T00:00:00",
+          "actual": -1.1001209042887485
+        },
+        {
+          "date": "2026-02-16T00:00:00",
+          "actual": -0.051624923979355364
+        },
+        {
+          "date": "2026-02-17T00:00:00",
+          "actual": 0.22429249109812588
+        },
+        {
+          "date": "2026-02-18T00:00:00",
+          "actual": 0.4684486142987342
+        },
+        {
+          "date": "2026-02-19T00:00:00",
+          "actual": 0.08697545283055086
+        },
+        {
+          "date": "2026-02-20T00:00:00",
+          "actual": 1.8208383031284425
+        },
+        {
+          "date": "2026-02-21T00:00:00",
+          "actual": 2.070200151686573
+        },
+        {
+          "date": "2026-02-22T00:00:00",
+          "actual": 0.844804777763434
+        },
+        {
+          "date": "2026-02-23T00:00:00",
+          "actual": -1.608916092069967
+        },
+        {
+          "date": "2026-02-24T00:00:00",
+          "actual": -0.9983438858529322
+        },
+        {
+          "date": "2026-02-25T00:00:00",
+          "actual": -1.6402531407904715
+        },
+        {
+          "date": "2026-02-26T00:00:00",
+          "actual": 1.3298664742021362
+        },
+        {
+          "date": "2026-02-27T00:00:00",
+          "actual": 0.0635509733740991
+        },
+        {
+          "date": "2026-02-28T00:00:00",
+          "actual": 0.7886940961052973
+        },
+        {
+          "date": "2026-03-01T00:00:00",
+          "actual": 0.818317878625965
+        },
+        {
+          "date": "2026-03-02T00:00:00",
+          "actual": 1.0716941865006933
+        },
+        {
+          "date": "2026-03-03T00:00:00",
+          "actual": 0.03377223877404034
+        },
+        {
+          "date": "2026-03-04T00:00:00",
+          "actual": 0.7777023702475127
+        },
+        {
+          "date": "2026-03-05T00:00:00",
+          "actual": 1.1007092277740544
+        },
+        {
+          "date": "2026-03-06T00:00:00",
+          "actual": -1.727080556348339
+        },
+        {
+          "date": "2026-03-07T00:00:00",
+          "actual": -0.05558625372081982
+        },
+        {
+          "date": "2026-03-08T00:00:00",
+          "actual": -0.3726897765394463
+        },
+        {
+          "date": "2026-03-09T00:00:00",
+          "actual": -0.31449120700869804
+        },
+        {
+          "date": "2026-03-10T00:00:00",
+          "actual": 0.20504940076063605
+        },
+        {
+          "date": "2026-03-11T00:00:00",
+          "actual": -0.2994387904080443
+        },
+        {
+          "date": "2026-03-12T00:00:00",
+          "actual": 0.941794915482685
+        },
+        {
+          "date": "2026-03-13T00:00:00",
+          "actual": 0.7275031225036848
+        },
+        {
+          "date": "2026-03-14T00:00:00",
+          "actual": 0.04767720625734573
+        },
+        {
+          "date": "2026-03-15T00:00:00",
+          "actual": 1.2169950066834194
+        }
+      ],
+      "forecast": [
+        {
+          "date": "2026-03-16T00:00:00",
+          "predicted": 1.2169950066834194,
+          "actual": 0.9937931716887975
+        },
+        {
+          "date": "2026-03-17T00:00:00",
+          "predicted": 1.2169950066834194,
+          "actual": 0.2689901029863332
+        },
+        {
+          "date": "2026-03-18T00:00:00",
+          "predicted": 1.2169950066834194,
+          "actual": 0.17542937417379958
+        },
+        {
+          "date": "2026-03-19T00:00:00",
+          "predicted": 1.2169950066834194,
+          "actual": 1.0342321495623856
+        },
+        {
+          "date": "2026-03-20T00:00:00",
+          "predicted": 1.2169950066834194,
+          "actual": 2.2717238575764123
+        },
+        {
+          "date": "2026-03-21T00:00:00",
+          "predicted": 1.2169950066834194,
+          "actual": 1.8261535224111294
+        }
+      ],
+      "future_forecast": [],
+      "final_metrics": [
+        {
+          "method": "naive",
+          "mae": 0.6765704324905107,
+          "rmse": 0.7692334530271608,
+          "n": 6,
+          "mape": null,
+          "mape_reason": "not reported",
+          "per_horizon": [
+            {
+              "horizon": 1,
+              "lead": 1,
+              "mae": 0.22320183499462187,
+              "rmse": 0.22320183499462187,
+              "mase": 0.1902240055819965,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 2,
+              "lead": 2,
+              "mae": 0.9480049036970862,
+              "rmse": 0.9480049036970862,
+              "mase": 0.8079382057812373,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 3,
+              "lead": 3,
+              "mae": 1.0415656325096199,
+              "rmse": 1.0415656325096199,
+              "mase": 0.8876754382297066,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 4,
+              "lead": 4,
+              "mae": 0.1827628571210338,
+              "rmse": 0.1827628571210338,
+              "mase": 0.15575984289739758,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 5,
+              "lead": 5,
+              "mae": 1.0547288508929928,
+              "rmse": 1.0547288508929928,
+              "mase": 0.8988938053515366,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 6,
+              "lead": 6,
+              "mae": 0.60915851572771,
+              "rmse": 0.60915851572771,
+              "mase": 0.5191560046936922,
+              "n": 1,
+              "probabilistic": null
+            }
+          ]
+        },
+        {
+          "method": "seasonal-naive",
+          "mae": 0.541600940460354,
+          "rmse": 0.7346659760622649,
+          "n": 6,
+          "mape": null,
+          "mape_reason": "not reported",
+          "per_horizon": [
+            {
+              "horizon": 1,
+              "lead": 1,
+              "mae": 0.051998256206112536,
+              "rmse": 0.051998256206112536,
+              "mase": 0.04431557016116812,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 2,
+              "lead": 2,
+              "mae": 0.45851301951735157,
+              "rmse": 0.45851301951735157,
+              "mase": 0.39076821741267653,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 3,
+              "lead": 3,
+              "mae": 0.12775216791645386,
+              "rmse": 0.12775216791645386,
+              "mase": 0.10887692345108733,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 4,
+              "lead": 4,
+              "mae": 0.1827628571210338,
+              "rmse": 0.1827628571210338,
+              "mase": 0.15575984289739758,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 5,
+              "lead": 5,
+              "mae": 1.3299289420937273,
+              "rmse": 1.3299289420937273,
+              "mase": 1.1334333810947013,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 6,
+              "lead": 6,
+              "mae": 1.0986503999074446,
+              "rmse": 1.0986503999074446,
+              "mase": 0.936325993062253,
+              "n": 1,
+              "probabilistic": null
+            }
+          ]
+        }
+      ],
+      "trend_per_period": 0.005982679074197022,
+      "seasonal_profile": []
+    },
+    {
+      "group": "g1",
+      "group_type": "str",
+      "series_id": "[\"str\", \"g1\"]",
+      "timezone": "Date: takvim günü (saat dilimi yok)",
+      "periods": 80,
+      "duplicate_dates": 0,
+      "missing_periods": 0,
+      "train_end": "2026-03-15T00:00:00",
+      "test_start": "2026-03-16T00:00:00",
+      "test_end": "2026-03-21T00:00:00",
+      "train_row_ids": [
+        "row:bd5fb618-2291-4cd3-83a5-e4ea127f88b4",
+        "row:e1b27c79-92f0-4336-b105-299da111d378",
+        "row:dd011744-4ce2-4b60-968d-74f8ec29f81e",
+        "row:52374af4-3d3e-45aa-ac28-2ebb3fce1040",
+        "row:9ae5eefc-fa43-4d2e-939e-3d8b46e0703b",
+        "row:8ed9ead5-41b2-4e6c-b652-9dbadcc2e634",
+        "row:3637fd5e-f7a8-4d64-95cf-7876e8944ef1",
+        "row:fca587bd-a574-416e-a2f1-bce717892cf1",
+        "row:d381eced-8876-43c7-a70b-e68ce288c7e5",
+        "row:f3bdd03b-5f2c-41c2-94b6-6d34ae9c23bd",
+        "row:5e316b8b-3153-48dd-a254-a46c618b02e4",
+        "row:dbbd6ae8-a498-47da-b22f-e005691a2c09",
+        "row:57207133-7a3f-4fe9-9991-1fd031d38901",
+        "row:02b2465f-f635-4023-a5bf-03b272c0c197",
+        "row:a0721628-99d6-4e3f-a4cd-e9c09aafa9ff",
+        "row:7aae1d77-034b-4ab1-a854-f53fa52e966f",
+        "row:6f0235a7-39a0-48d1-8b0e-817f51198274",
+        "row:5bd29ca5-6478-4532-ab97-faecc2db2015",
+        "row:d57f16a3-16d5-4eff-9353-e41ecbd58673",
+        "row:0905e9dd-a30a-465b-be70-5ddfb4d06cf1",
+        "row:fce4f5fa-97cb-4cab-9515-080463ad8536",
+        "row:67e9ea81-9fca-430e-a721-3ddfd772fa39",
+        "row:03b6c30a-a13a-4b9d-b19d-f3dc3ce3911a",
+        "row:a5b520a0-2fc6-42a7-812f-60a61809d249",
+        "row:b8a348ac-377a-40a6-abee-cfdd8d26efaa",
+        "row:a2248543-9e63-4b33-b5b4-ad8e252dd979",
+        "row:783abe15-5621-4054-9193-1e7c725f500d",
+        "row:ea6d5452-a1bc-4deb-95cf-dab15e60c67d",
+        "row:a1226392-98e3-4f30-8a28-71cbc79df745",
+        "row:7a471d9c-8852-49b5-8d18-90b44e2763b8",
+        "row:a453d764-7795-407c-a832-f54f20527a82",
+        "row:ddaee0fb-8161-40cc-a66a-37e8af9db342",
+        "row:a9c314b6-43e9-435d-961d-9d6a3c8ddbdd",
+        "row:6ff2e639-5b98-4b8b-af68-2c9615ec53ac",
+        "row:0d17afff-b30b-4a6b-925d-cfcfa89e604e",
+        "row:e36a97a4-721c-4fcb-97cc-693eb3f66597",
+        "row:f7051345-7f83-44b5-a84f-193dfbf3542b",
+        "row:dbc812b0-82cd-4cc5-a0b6-b62ad74d2254",
+        "row:c8438237-f211-43fd-b055-c2d6f8c1d119",
+        "row:369f5e94-1a82-4484-942b-52c58501325f",
+        "row:c0d0e856-db7f-47b4-a177-db390d898692",
+        "row:7c33f5d3-59c5-462c-b250-f02b5022cece",
+        "row:662e47c2-f65c-4d97-b539-64020cba287f",
+        "row:801758e8-5dd1-48c5-b49c-ea646aced202",
+        "row:ba42ef23-3ac7-4939-89a5-2d7b8b53b863",
+        "row:872789cb-73bf-4455-8596-3f691e243a1d",
+        "row:dcb268a0-abc1-4b8a-a25f-e13441627a7c",
+        "row:736bb529-087d-4720-bba5-1df3d7719caf",
+        "row:84d2a2c9-3ddb-4efc-a219-b10106c47720",
+        "row:4aaa233d-4a7a-49a2-b6cf-7f1b24d39a82",
+        "row:736e6827-86c3-4d28-aaa3-fbd5c62b8104",
+        "row:3434fff1-9382-472a-989a-16fbeea0bec8",
+        "row:bba9399b-d100-4a89-8038-c17b6734d0d8",
+        "row:2a73caaf-24fe-4ed8-87f3-9d32c3d3ebfb",
+        "row:00315b58-adcf-4e7d-a289-52c9fc588d42",
+        "row:78cb71ad-5de6-4c0a-a998-447297148147",
+        "row:e3989eb2-547a-4670-89c2-e7ee9092d5c3",
+        "row:2c744758-6bfd-4d7d-a8a0-ba95c67de861",
+        "row:c1fd490a-5790-4884-ac0c-8ed33dd3e4e4",
+        "row:dbda7e06-7118-473c-856d-7b7990b0e4bf",
+        "row:102a5f95-dd11-43a0-ad90-0178059329e5",
+        "row:05ae8f68-38ca-4960-955e-ddcb02f449fa",
+        "row:30b8d5f5-7b69-431d-b5f8-2b0543f9682a",
+        "row:5990d477-391e-4bc2-ac51-fbbfeb40a18f",
+        "row:4e70c74d-b14f-4c08-8c5e-55910bc48b4d",
+        "row:ef475270-42e5-4bfa-ba65-e5c220c4c28e",
+        "row:d1e8b4be-5a13-415d-8763-15741dc05453",
+        "row:56b168e8-e8b6-4341-ae29-f2ba9878ab6b",
+        "row:1a785714-c0d8-40a6-b846-ba210768f027",
+        "row:16ff2ae0-1d5f-49b4-aa32-4e2a13588aac",
+        "row:b8668a97-eed1-414b-9f1d-b5b762f4b61b",
+        "row:05c1d04f-fe2d-40bf-aae5-a719773f18a8",
+        "row:2484d253-13c6-40f2-a1b0-fb1cae185a66",
+        "row:161a4e9e-4168-4139-82c0-e888634c997c"
+      ],
+      "test_row_ids": [
+        "row:9afac55d-8ec7-459b-92e1-ff46771cec0d",
+        "row:ed4dd397-f247-47d8-9f1f-5eadee828b84",
+        "row:ccb032f7-123f-4255-a349-b48c2b484093",
+        "row:6f0bbda2-4f04-40d6-bbdf-44aa356981b2",
+        "row:d2502300-50a5-4c31-9db9-117be04e6d13",
+        "row:4e7d4f54-d33f-45ba-9038-643e74fd00f7"
+      ],
+      "chosen": "arima",
+      "comparisons": [
+        {
+          "method": "naive",
+          "mae": 1.0046272027698258,
+          "rmse": 1.066189317040101,
+          "n": 6,
+          "mape": null,
+          "mape_reason": "not reported",
+          "per_horizon": [
+            {
+              "horizon": 1,
+              "lead": 1,
+              "mae": 0.8221239750786679,
+              "rmse": 0.9077501474251434,
+              "mase": 0.7392372389049109,
+              "n": 2,
+              "probabilistic": null
+            },
+            {
+              "horizon": 2,
+              "lead": 2,
+              "mae": 0.9369133804785126,
+              "rmse": 0.9370788581530057,
+              "mase": 0.8403504736383045,
+              "n": 2,
+              "probabilistic": null
+            },
+            {
+              "horizon": 3,
+              "lead": 3,
+              "mae": 1.2548442527522972,
+              "rmse": 1.306962839090538,
+              "mase": 1.1273069912064386,
+              "n": 2,
+              "probabilistic": null
+            }
+          ]
+        },
+        {
+          "method": "seasonal-naive",
+          "mae": 1.0012949068600934,
+          "rmse": 1.1226513112462446,
+          "n": 6,
+          "mape": null,
+          "mape_reason": "not reported",
+          "per_horizon": [
+            {
+              "horizon": 1,
+              "lead": 1,
+              "mae": 1.1846922684604104,
+              "rmse": 1.1846934943703054,
+              "mase": 1.0627025527738185,
+              "n": 2,
+              "probabilistic": null
+            },
+            {
+              "horizon": 2,
+              "lead": 2,
+              "mae": 1.1545344187045408,
+              "rmse": 1.307304217596475,
+              "mase": 1.038469509307204,
+              "n": 2,
+              "probabilistic": null
+            },
+            {
+              "horizon": 3,
+              "lead": 3,
+              "mae": 0.6646580334153291,
+              "rmse": 0.8176153783900356,
+              "mase": 0.5984076982709786,
+              "n": 2,
+              "probabilistic": null
+            }
+          ]
+        },
+        {
+          "method": "arima",
+          "mae": 0.35672077809890373,
+          "rmse": 0.45241410338399146,
+          "n": 6,
+          "mape": null,
+          "mape_reason": "not reported",
+          "per_horizon": [
+            {
+              "horizon": 1,
+              "lead": 1,
+              "mae": 0.36574182895815255,
+              "rmse": 0.4695799422742016,
+              "mase": 0.32943602649741427,
+              "n": 2,
+              "probabilistic": {
+                "coverage": 1.0,
+                "mean_width": 2.1940336614745464,
+                "crps": 0.2975513266206653,
+                "interval_score": 2.1940336614745464,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.1462758659695426
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.18287091447907627
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.07312750017791204
+                  }
+                ]
+              }
+            },
+            {
+              "horizon": 2,
+              "lead": 2,
+              "mae": 0.22532606987176626,
+              "rmse": 0.22991498345684883,
+              "mase": 0.20191167994616765,
+              "n": 2,
+              "probabilistic": {
+                "coverage": 1.0,
+                "mean_width": 2.3235169239806095,
+                "crps": 0.23503552614887196,
+                "interval_score": 2.3235169239806095,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.11160522058090447
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.11266303493588313
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.12074647181715646
+                  }
+                ]
+              }
+            },
+            {
+              "horizon": 3,
+              "lead": 3,
+              "mae": 0.47909443546679253,
+              "rmse": 0.5836688624708511,
+              "mase": 0.43129491467848147,
+              "n": 2,
+              "probabilistic": {
+                "coverage": 1.0,
+                "mean_width": 2.3387716102880463,
+                "crps": 0.3524881285056949,
+                "interval_score": 2.3387716102880463,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.1502759263779789
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.23954721773339627
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.08360123465082572
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "invalid_models": [],
+      "folds": [
+        {
+          "method": "naive",
+          "origin": 74,
+          "start": 74,
+          "gap": 0,
+          "train_end": "2026-03-15T00:00:00",
+          "validation_start": "2026-03-16T00:00:00",
+          "validation_end": "2026-03-21T00:00:00",
+          "train_row_ids": [
+            "row:bd5fb618-2291-4cd3-83a5-e4ea127f88b4",
+            "row:e1b27c79-92f0-4336-b105-299da111d378",
+            "row:dd011744-4ce2-4b60-968d-74f8ec29f81e",
+            "row:52374af4-3d3e-45aa-ac28-2ebb3fce1040",
+            "row:9ae5eefc-fa43-4d2e-939e-3d8b46e0703b",
+            "row:8ed9ead5-41b2-4e6c-b652-9dbadcc2e634",
+            "row:3637fd5e-f7a8-4d64-95cf-7876e8944ef1",
+            "row:fca587bd-a574-416e-a2f1-bce717892cf1",
+            "row:d381eced-8876-43c7-a70b-e68ce288c7e5",
+            "row:f3bdd03b-5f2c-41c2-94b6-6d34ae9c23bd",
+            "row:5e316b8b-3153-48dd-a254-a46c618b02e4",
+            "row:dbbd6ae8-a498-47da-b22f-e005691a2c09",
+            "row:57207133-7a3f-4fe9-9991-1fd031d38901",
+            "row:02b2465f-f635-4023-a5bf-03b272c0c197",
+            "row:a0721628-99d6-4e3f-a4cd-e9c09aafa9ff",
+            "row:7aae1d77-034b-4ab1-a854-f53fa52e966f",
+            "row:6f0235a7-39a0-48d1-8b0e-817f51198274",
+            "row:5bd29ca5-6478-4532-ab97-faecc2db2015",
+            "row:d57f16a3-16d5-4eff-9353-e41ecbd58673",
+            "row:0905e9dd-a30a-465b-be70-5ddfb4d06cf1",
+            "row:fce4f5fa-97cb-4cab-9515-080463ad8536",
+            "row:67e9ea81-9fca-430e-a721-3ddfd772fa39",
+            "row:03b6c30a-a13a-4b9d-b19d-f3dc3ce3911a",
+            "row:a5b520a0-2fc6-42a7-812f-60a61809d249",
+            "row:b8a348ac-377a-40a6-abee-cfdd8d26efaa",
+            "row:a2248543-9e63-4b33-b5b4-ad8e252dd979",
+            "row:783abe15-5621-4054-9193-1e7c725f500d",
+            "row:ea6d5452-a1bc-4deb-95cf-dab15e60c67d",
+            "row:a1226392-98e3-4f30-8a28-71cbc79df745",
+            "row:7a471d9c-8852-49b5-8d18-90b44e2763b8",
+            "row:a453d764-7795-407c-a832-f54f20527a82",
+            "row:ddaee0fb-8161-40cc-a66a-37e8af9db342",
+            "row:a9c314b6-43e9-435d-961d-9d6a3c8ddbdd",
+            "row:6ff2e639-5b98-4b8b-af68-2c9615ec53ac",
+            "row:0d17afff-b30b-4a6b-925d-cfcfa89e604e",
+            "row:e36a97a4-721c-4fcb-97cc-693eb3f66597",
+            "row:f7051345-7f83-44b5-a84f-193dfbf3542b",
+            "row:dbc812b0-82cd-4cc5-a0b6-b62ad74d2254",
+            "row:c8438237-f211-43fd-b055-c2d6f8c1d119",
+            "row:369f5e94-1a82-4484-942b-52c58501325f",
+            "row:c0d0e856-db7f-47b4-a177-db390d898692",
+            "row:7c33f5d3-59c5-462c-b250-f02b5022cece",
+            "row:662e47c2-f65c-4d97-b539-64020cba287f",
+            "row:801758e8-5dd1-48c5-b49c-ea646aced202",
+            "row:ba42ef23-3ac7-4939-89a5-2d7b8b53b863",
+            "row:872789cb-73bf-4455-8596-3f691e243a1d",
+            "row:dcb268a0-abc1-4b8a-a25f-e13441627a7c",
+            "row:736bb529-087d-4720-bba5-1df3d7719caf",
+            "row:84d2a2c9-3ddb-4efc-a219-b10106c47720",
+            "row:4aaa233d-4a7a-49a2-b6cf-7f1b24d39a82",
+            "row:736e6827-86c3-4d28-aaa3-fbd5c62b8104",
+            "row:3434fff1-9382-472a-989a-16fbeea0bec8",
+            "row:bba9399b-d100-4a89-8038-c17b6734d0d8",
+            "row:2a73caaf-24fe-4ed8-87f3-9d32c3d3ebfb",
+            "row:00315b58-adcf-4e7d-a289-52c9fc588d42",
+            "row:78cb71ad-5de6-4c0a-a998-447297148147",
+            "row:e3989eb2-547a-4670-89c2-e7ee9092d5c3",
+            "row:2c744758-6bfd-4d7d-a8a0-ba95c67de861",
+            "row:c1fd490a-5790-4884-ac0c-8ed33dd3e4e4",
+            "row:dbda7e06-7118-473c-856d-7b7990b0e4bf",
+            "row:102a5f95-dd11-43a0-ad90-0178059329e5",
+            "row:05ae8f68-38ca-4960-955e-ddcb02f449fa",
+            "row:30b8d5f5-7b69-431d-b5f8-2b0543f9682a",
+            "row:5990d477-391e-4bc2-ac51-fbbfeb40a18f",
+            "row:4e70c74d-b14f-4c08-8c5e-55910bc48b4d",
+            "row:ef475270-42e5-4bfa-ba65-e5c220c4c28e",
+            "row:d1e8b4be-5a13-415d-8763-15741dc05453",
+            "row:56b168e8-e8b6-4341-ae29-f2ba9878ab6b",
+            "row:1a785714-c0d8-40a6-b846-ba210768f027",
+            "row:16ff2ae0-1d5f-49b4-aa32-4e2a13588aac",
+            "row:b8668a97-eed1-414b-9f1d-b5b762f4b61b",
+            "row:05c1d04f-fe2d-40bf-aae5-a719773f18a8",
+            "row:2484d253-13c6-40f2-a1b0-fb1cae185a66",
+            "row:161a4e9e-4168-4139-82c0-e888634c997c"
+          ],
+          "validation_row_ids": [
+            "row:9afac55d-8ec7-459b-92e1-ff46771cec0d",
+            "row:ed4dd397-f247-47d8-9f1f-5eadee828b84",
+            "row:ccb032f7-123f-4255-a349-b48c2b484093",
+            "row:6f0bbda2-4f04-40d6-bbdf-44aa356981b2",
+            "row:d2502300-50a5-4c31-9db9-117be04e6d13",
+            "row:4e7d4f54-d33f-45ba-9038-643e74fd00f7"
+          ],
+          "covariate_read_row_ids": [],
+          "metrics": {
+            "mae": 0.5826974119688423,
+            "rmse": 0.7036052662918104,
+            "n": 6,
+            "mase": 0.5297923480142831,
+            "mase_denominator": 1.0998600001544998,
+            "mase_period": 4,
+            "mase_status": "valid",
+            "mape": null,
+            "mape_reason": "MAPE zero/near-zero unstable; not reported",
+            "probabilistic": null
+          },
+          "points": [
+            {
+              "date": "2026-03-16T00:00:00",
+              "horizon": 1,
+              "lead": 1,
+              "predicted": -0.11411229260299538,
+              "actual": 0.3696694734920489,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-17T00:00:00",
+              "horizon": 2,
+              "lead": 2,
+              "predicted": -0.11411229260299538,
+              "actual": -0.3112290685469576,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-18T00:00:00",
+              "horizon": 3,
+              "lead": 3,
+              "predicted": -0.11411229260299538,
+              "actual": -0.5854603734980044,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-19T00:00:00",
+              "horizon": 4,
+              "lead": 4,
+              "predicted": -0.11411229260299538,
+              "actual": 0.8091488577519192,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-20T00:00:00",
+              "horizon": 5,
+              "lead": 5,
+              "predicted": -0.11411229260299538,
+              "actual": 1.1501760083577934,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-21T00:00:00",
+              "horizon": 6,
+              "lead": 6,
+              "predicted": -0.11411229260299538,
+              "actual": 0.042276104960339955,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            }
+          ],
+          "backend": {
+            "method": "naive",
+            "fit_n": 74,
+            "warnings": []
+          }
+        },
+        {
+          "method": "seasonal-naive",
+          "origin": 74,
+          "start": 74,
+          "gap": 0,
+          "train_end": "2026-03-15T00:00:00",
+          "validation_start": "2026-03-16T00:00:00",
+          "validation_end": "2026-03-21T00:00:00",
+          "train_row_ids": [
+            "row:bd5fb618-2291-4cd3-83a5-e4ea127f88b4",
+            "row:e1b27c79-92f0-4336-b105-299da111d378",
+            "row:dd011744-4ce2-4b60-968d-74f8ec29f81e",
+            "row:52374af4-3d3e-45aa-ac28-2ebb3fce1040",
+            "row:9ae5eefc-fa43-4d2e-939e-3d8b46e0703b",
+            "row:8ed9ead5-41b2-4e6c-b652-9dbadcc2e634",
+            "row:3637fd5e-f7a8-4d64-95cf-7876e8944ef1",
+            "row:fca587bd-a574-416e-a2f1-bce717892cf1",
+            "row:d381eced-8876-43c7-a70b-e68ce288c7e5",
+            "row:f3bdd03b-5f2c-41c2-94b6-6d34ae9c23bd",
+            "row:5e316b8b-3153-48dd-a254-a46c618b02e4",
+            "row:dbbd6ae8-a498-47da-b22f-e005691a2c09",
+            "row:57207133-7a3f-4fe9-9991-1fd031d38901",
+            "row:02b2465f-f635-4023-a5bf-03b272c0c197",
+            "row:a0721628-99d6-4e3f-a4cd-e9c09aafa9ff",
+            "row:7aae1d77-034b-4ab1-a854-f53fa52e966f",
+            "row:6f0235a7-39a0-48d1-8b0e-817f51198274",
+            "row:5bd29ca5-6478-4532-ab97-faecc2db2015",
+            "row:d57f16a3-16d5-4eff-9353-e41ecbd58673",
+            "row:0905e9dd-a30a-465b-be70-5ddfb4d06cf1",
+            "row:fce4f5fa-97cb-4cab-9515-080463ad8536",
+            "row:67e9ea81-9fca-430e-a721-3ddfd772fa39",
+            "row:03b6c30a-a13a-4b9d-b19d-f3dc3ce3911a",
+            "row:a5b520a0-2fc6-42a7-812f-60a61809d249",
+            "row:b8a348ac-377a-40a6-abee-cfdd8d26efaa",
+            "row:a2248543-9e63-4b33-b5b4-ad8e252dd979",
+            "row:783abe15-5621-4054-9193-1e7c725f500d",
+            "row:ea6d5452-a1bc-4deb-95cf-dab15e60c67d",
+            "row:a1226392-98e3-4f30-8a28-71cbc79df745",
+            "row:7a471d9c-8852-49b5-8d18-90b44e2763b8",
+            "row:a453d764-7795-407c-a832-f54f20527a82",
+            "row:ddaee0fb-8161-40cc-a66a-37e8af9db342",
+            "row:a9c314b6-43e9-435d-961d-9d6a3c8ddbdd",
+            "row:6ff2e639-5b98-4b8b-af68-2c9615ec53ac",
+            "row:0d17afff-b30b-4a6b-925d-cfcfa89e604e",
+            "row:e36a97a4-721c-4fcb-97cc-693eb3f66597",
+            "row:f7051345-7f83-44b5-a84f-193dfbf3542b",
+            "row:dbc812b0-82cd-4cc5-a0b6-b62ad74d2254",
+            "row:c8438237-f211-43fd-b055-c2d6f8c1d119",
+            "row:369f5e94-1a82-4484-942b-52c58501325f",
+            "row:c0d0e856-db7f-47b4-a177-db390d898692",
+            "row:7c33f5d3-59c5-462c-b250-f02b5022cece",
+            "row:662e47c2-f65c-4d97-b539-64020cba287f",
+            "row:801758e8-5dd1-48c5-b49c-ea646aced202",
+            "row:ba42ef23-3ac7-4939-89a5-2d7b8b53b863",
+            "row:872789cb-73bf-4455-8596-3f691e243a1d",
+            "row:dcb268a0-abc1-4b8a-a25f-e13441627a7c",
+            "row:736bb529-087d-4720-bba5-1df3d7719caf",
+            "row:84d2a2c9-3ddb-4efc-a219-b10106c47720",
+            "row:4aaa233d-4a7a-49a2-b6cf-7f1b24d39a82",
+            "row:736e6827-86c3-4d28-aaa3-fbd5c62b8104",
+            "row:3434fff1-9382-472a-989a-16fbeea0bec8",
+            "row:bba9399b-d100-4a89-8038-c17b6734d0d8",
+            "row:2a73caaf-24fe-4ed8-87f3-9d32c3d3ebfb",
+            "row:00315b58-adcf-4e7d-a289-52c9fc588d42",
+            "row:78cb71ad-5de6-4c0a-a998-447297148147",
+            "row:e3989eb2-547a-4670-89c2-e7ee9092d5c3",
+            "row:2c744758-6bfd-4d7d-a8a0-ba95c67de861",
+            "row:c1fd490a-5790-4884-ac0c-8ed33dd3e4e4",
+            "row:dbda7e06-7118-473c-856d-7b7990b0e4bf",
+            "row:102a5f95-dd11-43a0-ad90-0178059329e5",
+            "row:05ae8f68-38ca-4960-955e-ddcb02f449fa",
+            "row:30b8d5f5-7b69-431d-b5f8-2b0543f9682a",
+            "row:5990d477-391e-4bc2-ac51-fbbfeb40a18f",
+            "row:4e70c74d-b14f-4c08-8c5e-55910bc48b4d",
+            "row:ef475270-42e5-4bfa-ba65-e5c220c4c28e",
+            "row:d1e8b4be-5a13-415d-8763-15741dc05453",
+            "row:56b168e8-e8b6-4341-ae29-f2ba9878ab6b",
+            "row:1a785714-c0d8-40a6-b846-ba210768f027",
+            "row:16ff2ae0-1d5f-49b4-aa32-4e2a13588aac",
+            "row:b8668a97-eed1-414b-9f1d-b5b762f4b61b",
+            "row:05c1d04f-fe2d-40bf-aae5-a719773f18a8",
+            "row:2484d253-13c6-40f2-a1b0-fb1cae185a66",
+            "row:161a4e9e-4168-4139-82c0-e888634c997c"
+          ],
+          "validation_row_ids": [
+            "row:9afac55d-8ec7-459b-92e1-ff46771cec0d",
+            "row:ed4dd397-f247-47d8-9f1f-5eadee828b84",
+            "row:ccb032f7-123f-4255-a349-b48c2b484093",
+            "row:6f0bbda2-4f04-40d6-bbdf-44aa356981b2",
+            "row:d2502300-50a5-4c31-9db9-117be04e6d13",
+            "row:4e7d4f54-d33f-45ba-9038-643e74fd00f7"
+          ],
+          "covariate_read_row_ids": [],
+          "metrics": {
+            "mae": 0.5091895075409775,
+            "rmse": 0.5525133631375093,
+            "n": 6,
+            "mase": 0.46295847423258457,
+            "mase_denominator": 1.0998600001544998,
+            "mase_period": 4,
+            "mase_status": "valid",
+            "mape": null,
+            "mape_reason": "MAPE zero/near-zero unstable; not reported",
+            "probabilistic": null
+          },
+          "points": [
+            {
+              "date": "2026-03-16T00:00:00",
+              "horizon": 1,
+              "lead": 1,
+              "predicted": 0.7753311335244448,
+              "actual": 0.3696694734920489,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-17T00:00:00",
+              "horizon": 2,
+              "lead": 2,
+              "predicted": 0.33807401821837346,
+              "actual": -0.3112290685469576,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-18T00:00:00",
+              "horizon": 3,
+              "lead": 3,
+              "predicted": -0.17919201349616337,
+              "actual": -0.5854603734980044,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-19T00:00:00",
+              "horizon": 4,
+              "lead": 4,
+              "predicted": -0.11411229260299538,
+              "actual": 0.8091488577519192,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-20T00:00:00",
+              "horizon": 5,
+              "lead": 5,
+              "predicted": 0.7753311335244448,
+              "actual": 1.1501760083577934,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            },
+            {
+              "date": "2026-03-21T00:00:00",
+              "horizon": 6,
+              "lead": 6,
+              "predicted": 0.33807401821837346,
+              "actual": 0.042276104960339955,
+              "sd": null,
+              "lower": null,
+              "upper": null,
+              "probabilistic": null
+            }
+          ],
+          "backend": {
+            "method": "seasonal-naive",
+            "fit_n": 74,
+            "warnings": []
+          }
+        },
+        {
+          "method": "arima",
+          "origin": 74,
+          "start": 74,
+          "gap": 0,
+          "train_end": "2026-03-15T00:00:00",
+          "validation_start": "2026-03-16T00:00:00",
+          "validation_end": "2026-03-21T00:00:00",
+          "train_row_ids": [
+            "row:bd5fb618-2291-4cd3-83a5-e4ea127f88b4",
+            "row:e1b27c79-92f0-4336-b105-299da111d378",
+            "row:dd011744-4ce2-4b60-968d-74f8ec29f81e",
+            "row:52374af4-3d3e-45aa-ac28-2ebb3fce1040",
+            "row:9ae5eefc-fa43-4d2e-939e-3d8b46e0703b",
+            "row:8ed9ead5-41b2-4e6c-b652-9dbadcc2e634",
+            "row:3637fd5e-f7a8-4d64-95cf-7876e8944ef1",
+            "row:fca587bd-a574-416e-a2f1-bce717892cf1",
+            "row:d381eced-8876-43c7-a70b-e68ce288c7e5",
+            "row:f3bdd03b-5f2c-41c2-94b6-6d34ae9c23bd",
+            "row:5e316b8b-3153-48dd-a254-a46c618b02e4",
+            "row:dbbd6ae8-a498-47da-b22f-e005691a2c09",
+            "row:57207133-7a3f-4fe9-9991-1fd031d38901",
+            "row:02b2465f-f635-4023-a5bf-03b272c0c197",
+            "row:a0721628-99d6-4e3f-a4cd-e9c09aafa9ff",
+            "row:7aae1d77-034b-4ab1-a854-f53fa52e966f",
+            "row:6f0235a7-39a0-48d1-8b0e-817f51198274",
+            "row:5bd29ca5-6478-4532-ab97-faecc2db2015",
+            "row:d57f16a3-16d5-4eff-9353-e41ecbd58673",
+            "row:0905e9dd-a30a-465b-be70-5ddfb4d06cf1",
+            "row:fce4f5fa-97cb-4cab-9515-080463ad8536",
+            "row:67e9ea81-9fca-430e-a721-3ddfd772fa39",
+            "row:03b6c30a-a13a-4b9d-b19d-f3dc3ce3911a",
+            "row:a5b520a0-2fc6-42a7-812f-60a61809d249",
+            "row:b8a348ac-377a-40a6-abee-cfdd8d26efaa",
+            "row:a2248543-9e63-4b33-b5b4-ad8e252dd979",
+            "row:783abe15-5621-4054-9193-1e7c725f500d",
+            "row:ea6d5452-a1bc-4deb-95cf-dab15e60c67d",
+            "row:a1226392-98e3-4f30-8a28-71cbc79df745",
+            "row:7a471d9c-8852-49b5-8d18-90b44e2763b8",
+            "row:a453d764-7795-407c-a832-f54f20527a82",
+            "row:ddaee0fb-8161-40cc-a66a-37e8af9db342",
+            "row:a9c314b6-43e9-435d-961d-9d6a3c8ddbdd",
+            "row:6ff2e639-5b98-4b8b-af68-2c9615ec53ac",
+            "row:0d17afff-b30b-4a6b-925d-cfcfa89e604e",
+            "row:e36a97a4-721c-4fcb-97cc-693eb3f66597",
+            "row:f7051345-7f83-44b5-a84f-193dfbf3542b",
+            "row:dbc812b0-82cd-4cc5-a0b6-b62ad74d2254",
+            "row:c8438237-f211-43fd-b055-c2d6f8c1d119",
+            "row:369f5e94-1a82-4484-942b-52c58501325f",
+            "row:c0d0e856-db7f-47b4-a177-db390d898692",
+            "row:7c33f5d3-59c5-462c-b250-f02b5022cece",
+            "row:662e47c2-f65c-4d97-b539-64020cba287f",
+            "row:801758e8-5dd1-48c5-b49c-ea646aced202",
+            "row:ba42ef23-3ac7-4939-89a5-2d7b8b53b863",
+            "row:872789cb-73bf-4455-8596-3f691e243a1d",
+            "row:dcb268a0-abc1-4b8a-a25f-e13441627a7c",
+            "row:736bb529-087d-4720-bba5-1df3d7719caf",
+            "row:84d2a2c9-3ddb-4efc-a219-b10106c47720",
+            "row:4aaa233d-4a7a-49a2-b6cf-7f1b24d39a82",
+            "row:736e6827-86c3-4d28-aaa3-fbd5c62b8104",
+            "row:3434fff1-9382-472a-989a-16fbeea0bec8",
+            "row:bba9399b-d100-4a89-8038-c17b6734d0d8",
+            "row:2a73caaf-24fe-4ed8-87f3-9d32c3d3ebfb",
+            "row:00315b58-adcf-4e7d-a289-52c9fc588d42",
+            "row:78cb71ad-5de6-4c0a-a998-447297148147",
+            "row:e3989eb2-547a-4670-89c2-e7ee9092d5c3",
+            "row:2c744758-6bfd-4d7d-a8a0-ba95c67de861",
+            "row:c1fd490a-5790-4884-ac0c-8ed33dd3e4e4",
+            "row:dbda7e06-7118-473c-856d-7b7990b0e4bf",
+            "row:102a5f95-dd11-43a0-ad90-0178059329e5",
+            "row:05ae8f68-38ca-4960-955e-ddcb02f449fa",
+            "row:30b8d5f5-7b69-431d-b5f8-2b0543f9682a",
+            "row:5990d477-391e-4bc2-ac51-fbbfeb40a18f",
+            "row:4e70c74d-b14f-4c08-8c5e-55910bc48b4d",
+            "row:ef475270-42e5-4bfa-ba65-e5c220c4c28e",
+            "row:d1e8b4be-5a13-415d-8763-15741dc05453",
+            "row:56b168e8-e8b6-4341-ae29-f2ba9878ab6b",
+            "row:1a785714-c0d8-40a6-b846-ba210768f027",
+            "row:16ff2ae0-1d5f-49b4-aa32-4e2a13588aac",
+            "row:b8668a97-eed1-414b-9f1d-b5b762f4b61b",
+            "row:05c1d04f-fe2d-40bf-aae5-a719773f18a8",
+            "row:2484d253-13c6-40f2-a1b0-fb1cae185a66",
+            "row:161a4e9e-4168-4139-82c0-e888634c997c"
+          ],
+          "validation_row_ids": [
+            "row:9afac55d-8ec7-459b-92e1-ff46771cec0d",
+            "row:ed4dd397-f247-47d8-9f1f-5eadee828b84",
+            "row:ccb032f7-123f-4255-a349-b48c2b484093",
+            "row:6f0bbda2-4f04-40d6-bbdf-44aa356981b2",
+            "row:d2502300-50a5-4c31-9db9-117be04e6d13",
+            "row:4e7d4f54-d33f-45ba-9038-643e74fd00f7"
+          ],
+          "covariate_read_row_ids": [],
+          "metrics": {
+            "mae": 0.548566081047701,
+            "rmse": 0.6552960445897892,
+            "n": 6,
+            "mase": 0.49875991578077455,
+            "mase_denominator": 1.0998600001544998,
+            "mase_period": 4,
+            "mase_status": "valid",
+            "mape": null,
+            "mape_reason": "MAPE zero/near-zero unstable; not reported",
+            "probabilistic": {
+              "assumption": "Gaussian model forecast; conditional on supplied future exog, not covariate uncertainty",
+              "alpha": 0.2,
+              "coverage": 0.8333333333333334,
+              "mean_width": 2.251078424544651,
+              "interval_score": 2.271287364584133,
+              "crps": 0.38277425947910576,
+              "pinball": [
+                {
+                  "q": 0.1,
+                  "value": 0.13812489655557716
+                },
+                {
+                  "q": 0.5,
+                  "value": 0.2742830405238505
+                },
+                {
+                  "q": 0.9,
+                  "value": 0.08900383990283617
+                }
+              ]
+            }
+          },
+          "points": [
+            {
+              "date": "2026-03-16T00:00:00",
+              "horizon": 1,
+              "lead": 1,
+              "predicted": -0.03922741656659468,
+              "actual": 0.3696694734920489,
+              "sd": 0.8343176816753494,
+              "lower": -1.10844854767918,
+              "upper": 1.0299937145459908,
+              "probabilistic": {
+                "assumption": "Gaussian model forecast; conditional on supplied future exog, not covariate uncertainty",
+                "alpha": 0.2,
+                "coverage": 1.0,
+                "mean_width": 2.138442262225171,
+                "interval_score": 2.138442262225171,
+                "crps": 0.27336097067537024,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.14781180211712291
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.20444844502932177
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.06603242410539417
+                  }
+                ]
+              }
+            },
+            {
+              "date": "2026-03-17T00:00:00",
+              "horizon": 2,
+              "lead": 2,
+              "predicted": -0.013484876829551618,
+              "actual": -0.3112290685469576,
+              "sd": 0.8822379848210652,
+              "lower": -1.1441183474599013,
+              "upper": 1.117148593800798,
+              "probabilistic": {
+                "assumption": "Gaussian model forecast; conditional on supplied future exog, not covariate uncertainty",
+                "alpha": 0.2,
+                "coverage": 1.0,
+                "mean_width": 2.261266941260699,
+                "interval_score": 2.261266941260699,
+                "crps": 0.24588606327986096,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.08328892789129437
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.14887209585870298
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.1428377662347755
+                  }
+                ]
+              }
+            },
+            {
+              "date": "2026-03-18T00:00:00",
+              "horizon": 3,
+              "lead": 3,
+              "predicted": -0.0046355819226451735,
+              "actual": -0.5854603734980044,
+              "sd": 0.8877299352267866,
+              "lower": -1.14230727019334,
+              "upper": 1.1330361063480499,
+              "probabilistic": {
+                "assumption": "Gaussian model forecast; conditional on supplied future exog, not covariate uncertainty",
+                "alpha": 0.2,
+                "coverage": 1.0,
+                "mean_width": 2.27534337654139,
+                "interval_score": 2.27534337654139,
+                "crps": 0.3538796954182776,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.05568468966953358
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.29041239578767963
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.1718496479846054
+                  }
+                ]
+              }
+            },
+            {
+              "date": "2026-03-19T00:00:00",
+              "horizon": 4,
+              "lead": 4,
+              "predicted": -0.001593534745120044,
+              "actual": 0.8091488577519192,
+              "sd": 0.8883766868412035,
+              "lower": -1.1400940685597898,
+              "upper": 1.1369069990695495,
+              "probabilistic": {
+                "assumption": "Gaussian model forecast; conditional on supplied future exog, not covariate uncertainty",
+                "alpha": 0.2,
+                "coverage": 1.0,
+                "mean_width": 2.2770010676293393,
+                "interval_score": 2.2770010676293393,
+                "crps": 0.4838841441050567,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.19492429263117092
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.40537119624851964
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.03277581413176302
+                  }
+                ]
+              }
+            },
+            {
+              "date": "2026-03-20T00:00:00",
+              "horizon": 5,
+              "lead": 5,
+              "predicted": -0.0005477959458552267,
+              "actual": 1.1501760083577934,
+              "sd": 0.8884530836619965,
+              "lower": -1.1391462362258147,
+              "upper": 1.138050644334104,
+              "probabilistic": {
+                "assumption": "Gaussian model forecast; conditional on supplied future exog, not covariate uncertainty",
+                "alpha": 0.2,
+                "coverage": 0.0,
+                "mean_width": 2.2771968805599188,
+                "interval_score": 2.3984505207968123,
+                "crps": 0.7311960096127927,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.2289322244583608
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.5753619021518244
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.01091282762132042
+                  }
+                ]
+              }
+            },
+            {
+              "date": "2026-03-21T00:00:00",
+              "horizon": 6,
+              "lead": 6,
+              "predicted": -0.00018831117376911472,
+              "actual": 0.042276104960339955,
+              "sd": 0.8884621111924108,
+              "lower": -1.1387983206994639,
+              "upper": 1.1384216983519257,
+              "probabilistic": {
+                "assumption": "Gaussian model forecast; conditional on supplied future exog, not covariate uncertainty",
+                "alpha": 0.2,
+                "coverage": 1.0,
+                "mean_width": 2.2772200190513896,
+                "interval_score": 2.2772200190513896,
+                "crps": 0.2084386737832765,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.11810744256598038
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.021232208067054534
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.10961455933915855
+                  }
+                ]
+              }
+            }
+          ],
+          "backend": {
+            "method": "arima",
+            "fit_n": 74,
+            "warnings": [],
+            "aic": 187.32065294129757,
+            "bic": 191.9287831277059,
+            "converged": true,
+            "residual_n": 70,
+            "ljung_box_p": 0.24867044066499605,
+            "residual_warning": "Ljung-Box adequate lag/df and model assumptions required; white residuals do not prove forecast success."
+          }
+        }
+      ],
+      "diagnostics": {
+        "acf": {
+          "status": "available",
+          "lags": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "values": [
+            1.0,
+            0.3405987847841964,
+            -0.025397063903912047,
+            -0.16460756253611752,
+            -0.11090921944258819
+          ],
+          "estimator": "FFT biased autocorrelation",
+          "warnings": []
+        },
+        "stationarity": {
+          "status": "available",
+          "adf": {
+            "statistic": -3.521374433681084,
+            "p": 0.007454825056446894,
+            "lag": 4,
+            "n": 69,
+            "null": "unit root"
+          },
+          "kpss": {
+            "statistic": 0.42655940316017144,
+            "p": 0.06570715381027094,
+            "lag": 4,
+            "null": "level stationarity"
+          },
+          "warning": "Tests depend on lag/trend, sample size and regime. Failure to reject is not proof. KPSS tabulated p-values may be bounds.",
+          "warnings": [
+            "adfuller currently returns a plain tuple whose length depends on the store and autolag arguments. In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning an ADFullerResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.",
+            "kpss currently returns a plain tuple whose length and layout depends on the store argument (and which silently drops `lags` when store=True). In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning a KPSSResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning."
+          ]
+        }
+      },
+      "history": [
+        {
+          "date": "2026-01-01T00:00:00",
+          "actual": 0.2
+        },
+        {
+          "date": "2026-01-02T00:00:00",
+          "actual": -0.10831700906878788
+        },
+        {
+          "date": "2026-01-03T00:00:00",
+          "actual": -0.45247240778745096
+        },
+        {
+          "date": "2026-01-04T00:00:00",
+          "actual": -0.7007698343426787
+        },
+        {
+          "date": "2026-01-05T00:00:00",
+          "actual": -1.8828303383336331
+        },
+        {
+          "date": "2026-01-06T00:00:00",
+          "actual": -0.8944831063281218
+        },
+        {
+          "date": "2026-01-07T00:00:00",
+          "actual": -0.1308083382384334
+        },
+        {
+          "date": "2026-01-08T00:00:00",
+          "actual": 1.3308599323849875
+        },
+        {
+          "date": "2026-01-09T00:00:00",
+          "actual": -0.2581806518877964
+        },
+        {
+          "date": "2026-01-10T00:00:00",
+          "actual": -0.5695760133040162
+        },
+        {
+          "date": "2026-01-11T00:00:00",
+          "actual": -0.3203135940331187
+        },
+        {
+          "date": "2026-01-12T00:00:00",
+          "actual": -1.0436173124244978
+        },
+        {
+          "date": "2026-01-13T00:00:00",
+          "actual": 0.5784501075417756
+        },
+        {
+          "date": "2026-01-14T00:00:00",
+          "actual": -0.5901340718810619
+        },
+        {
+          "date": "2026-01-15T00:00:00",
+          "actual": -0.3522861274756432
+        },
+        {
+          "date": "2026-01-16T00:00:00",
+          "actual": -1.5514798256223263
+        },
+        {
+          "date": "2026-01-17T00:00:00",
+          "actual": -0.18800441810416407
+        },
+        {
+          "date": "2026-01-18T00:00:00",
+          "actual": -0.10680576443207657
+        },
+        {
+          "date": "2026-01-19T00:00:00",
+          "actual": -2.1374190592605844
+        },
+        {
+          "date": "2026-01-20T00:00:00",
+          "actual": -0.2149754032574122
+        },
+        {
+          "date": "2026-01-21T00:00:00",
+          "actual": 0.8127597636700976
+        },
+        {
+          "date": "2026-01-22T00:00:00",
+          "actual": 1.4713065505787444
+        },
+        {
+          "date": "2026-01-23T00:00:00",
+          "actual": 0.41397763156258843
+        },
+        {
+          "date": "2026-01-24T00:00:00",
+          "actual": -0.31895696061430895
+        },
+        {
+          "date": "2026-01-25T00:00:00",
+          "actual": -1.2094244447624776
+        },
+        {
+          "date": "2026-01-26T00:00:00",
+          "actual": -0.3078912140853762
+        },
+        {
+          "date": "2026-01-27T00:00:00",
+          "actual": 0.19146861775058382
+        },
+        {
+          "date": "2026-01-28T00:00:00",
+          "actual": 2.3595587238715336
+        },
+        {
+          "date": "2026-01-29T00:00:00",
+          "actual": 1.2413285773866651
+        },
+        {
+          "date": "2026-01-30T00:00:00",
+          "actual": -0.6859823276939647
+        },
+        {
+          "date": "2026-01-31T00:00:00",
+          "actual": -0.2858605255087361
+        },
+        {
+          "date": "2026-02-01T00:00:00",
+          "actual": 0.15724602887073708
+        },
+        {
+          "date": "2026-02-02T00:00:00",
+          "actual": -0.01762736526658709
+        },
+        {
+          "date": "2026-02-03T00:00:00",
+          "actual": 0.2503871938764432
+        },
+        {
+          "date": "2026-02-04T00:00:00",
+          "actual": 0.13286157726739295
+        },
+        {
+          "date": "2026-02-05T00:00:00",
+          "actual": -0.2742465063650957
+        },
+        {
+          "date": "2026-02-06T00:00:00",
+          "actual": 1.7182928571439715
+        },
+        {
+          "date": "2026-02-07T00:00:00",
+          "actual": 1.5092056147927049
+        },
+        {
+          "date": "2026-02-08T00:00:00",
+          "actual": 1.0565411083347063
+        },
+        {
+          "date": "2026-02-09T00:00:00",
+          "actual": 0.5574078340704107
+        },
+        {
+          "date": "2026-02-10T00:00:00",
+          "actual": -0.3274094165200338
+        },
+        {
+          "date": "2026-02-11T00:00:00",
+          "actual": 0.4540720874079192
+        },
+        {
+          "date": "2026-02-12T00:00:00",
+          "actual": 0.9293819170668551
+        },
+        {
+          "date": "2026-02-13T00:00:00",
+          "actual": 0.07075788151198797
+        },
+        {
+          "date": "2026-02-14T00:00:00",
+          "actual": -0.4604355413231976
+        },
+        {
+          "date": "2026-02-15T00:00:00",
+          "actual": -0.1301359655371348
+        },
+        {
+          "date": "2026-02-16T00:00:00",
+          "actual": 0.5473390204797345
+        },
+        {
+          "date": "2026-02-17T00:00:00",
+          "actual": 1.0097424422565455
+        },
+        {
+          "date": "2026-02-18T00:00:00",
+          "actual": 1.2403462884519854
+        },
+        {
+          "date": "2026-02-19T00:00:00",
+          "actual": 0.07639799595033667
+        },
+        {
+          "date": "2026-02-20T00:00:00",
+          "actual": 1.037922940508984
+        },
+        {
+          "date": "2026-02-21T00:00:00",
+          "actual": -1.0317149411191449
+        },
+        {
+          "date": "2026-02-22T00:00:00",
+          "actual": 0.17205679580400945
+        },
+        {
+          "date": "2026-02-23T00:00:00",
+          "actual": -0.3100177041346925
+        },
+        {
+          "date": "2026-02-24T00:00:00",
+          "actual": -0.5756170841555464
+        },
+        {
+          "date": "2026-02-25T00:00:00",
+          "actual": -0.04050744347283103
+        },
+        {
+          "date": "2026-02-26T00:00:00",
+          "actual": -0.5342486226425627
+        },
+        {
+          "date": "2026-02-27T00:00:00",
+          "actual": 0.1988883878281229
+        },
+        {
+          "date": "2026-02-28T00:00:00",
+          "actual": 0.8431904775042436
+        },
+        {
+          "date": "2026-03-01T00:00:00",
+          "actual": 2.0348658440207186
+        },
+        {
+          "date": "2026-03-02T00:00:00",
+          "actual": 1.6550098175341317
+        },
+        {
+          "date": "2026-03-03T00:00:00",
+          "actual": 0.9096747332350845
+        },
+        {
+          "date": "2026-03-04T00:00:00",
+          "actual": 0.07656074020716838
+        },
+        {
+          "date": "2026-03-05T00:00:00",
+          "actual": -1.282886852061616
+        },
+        {
+          "date": "2026-03-06T00:00:00",
+          "actual": -0.824319683851183
+        },
+        {
+          "date": "2026-03-07T00:00:00",
+          "actual": 1.8421896029980709
+        },
+        {
+          "date": "2026-03-08T00:00:00",
+          "actual": -0.36548297261951007
+        },
+        {
+          "date": "2026-03-09T00:00:00",
+          "actual": -0.8449139458527091
+        },
+        {
+          "date": "2026-03-10T00:00:00",
+          "actual": 0.3620768889985552
+        },
+        {
+          "date": "2026-03-11T00:00:00",
+          "actual": 0.074389668083708
+        },
+        {
+          "date": "2026-03-12T00:00:00",
+          "actual": 0.7753311335244448
+        },
+        {
+          "date": "2026-03-13T00:00:00",
+          "actual": 0.33807401821837346
+        },
+        {
+          "date": "2026-03-14T00:00:00",
+          "actual": -0.17919201349616337
+        },
+        {
+          "date": "2026-03-15T00:00:00",
+          "actual": -0.11411229260299538
+        }
+      ],
+      "forecast": [
+        {
+          "date": "2026-03-16T00:00:00",
+          "predicted": -0.03922741656659468,
+          "actual": 0.3696694734920489
+        },
+        {
+          "date": "2026-03-17T00:00:00",
+          "predicted": -0.013484876829551618,
+          "actual": -0.3112290685469576
+        },
+        {
+          "date": "2026-03-18T00:00:00",
+          "predicted": -0.0046355819226451735,
+          "actual": -0.5854603734980044
+        },
+        {
+          "date": "2026-03-19T00:00:00",
+          "predicted": -0.001593534745120044,
+          "actual": 0.8091488577519192
+        },
+        {
+          "date": "2026-03-20T00:00:00",
+          "predicted": -0.0005477959458552267,
+          "actual": 1.1501760083577934
+        },
+        {
+          "date": "2026-03-21T00:00:00",
+          "predicted": -0.00018831117376911472,
+          "actual": 0.042276104960339955
+        }
+      ],
+      "future_forecast": [],
+      "final_metrics": [
+        {
+          "method": "naive",
+          "mae": 0.5826974119688423,
+          "rmse": 0.7036052662918104,
+          "n": 6,
+          "mape": null,
+          "mape_reason": "not reported",
+          "per_horizon": [
+            {
+              "horizon": 1,
+              "lead": 1,
+              "mae": 0.48378176609504425,
+              "rmse": 0.48378176609504425,
+              "mase": 0.43985758735392355,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 2,
+              "lead": 2,
+              "mae": 0.1971167759439622,
+              "rmse": 0.1971167759439622,
+              "mase": 0.17921987881755203,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 3,
+              "lead": 3,
+              "mae": 0.471348080895009,
+              "rmse": 0.471348080895009,
+              "mase": 0.42855279838233745,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 4,
+              "lead": 4,
+              "mae": 0.9232611503549146,
+              "rmse": 0.9232611503549146,
+              "mase": 0.8394351555881858,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 5,
+              "lead": 5,
+              "mae": 1.2642883009607888,
+              "rmse": 1.2642883009607888,
+              "mase": 1.1494993006229806,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 6,
+              "lead": 6,
+              "mae": 0.15638839756333534,
+              "rmse": 0.15638839756333534,
+              "mase": 0.14218936732072002,
+              "n": 1,
+              "probabilistic": null
+            }
+          ]
+        },
+        {
+          "method": "seasonal-naive",
+          "mae": 0.5091895075409775,
+          "rmse": 0.5525133631375093,
+          "n": 6,
+          "mape": null,
+          "mape_reason": "not reported",
+          "per_horizon": [
+            {
+              "horizon": 1,
+              "lead": 1,
+              "mae": 0.40566166003239595,
+              "rmse": 0.40566166003239595,
+              "mase": 0.3688302692846469,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 2,
+              "lead": 2,
+              "mae": 0.6493030867653311,
+              "rmse": 0.6493030867653311,
+              "mase": 0.5903506688797866,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 3,
+              "lead": 3,
+              "mae": 0.406268360001841,
+              "rmse": 0.406268360001841,
+              "mase": 0.3693818849169636,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 4,
+              "lead": 4,
+              "mae": 0.9232611503549146,
+              "rmse": 0.9232611503549146,
+              "mase": 0.8394351555881858,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 5,
+              "lead": 5,
+              "mae": 0.3748448748333486,
+              "rmse": 0.3748448748333486,
+              "mase": 0.3408114439844101,
+              "n": 1,
+              "probabilistic": null
+            },
+            {
+              "horizon": 6,
+              "lead": 6,
+              "mae": 0.2957979132580335,
+              "rmse": 0.2957979132580335,
+              "mase": 0.26894142274151445,
+              "n": 1,
+              "probabilistic": null
+            }
+          ]
+        },
+        {
+          "method": "arima",
+          "mae": 0.548566081047701,
+          "rmse": 0.6552960445897892,
+          "n": 6,
+          "mape": null,
+          "mape_reason": "not reported",
+          "per_horizon": [
+            {
+              "horizon": 1,
+              "lead": 1,
+              "mae": 0.40889689005864355,
+              "rmse": 0.40889689005864355,
+              "mase": 0.3717717618616959,
+              "n": 1,
+              "probabilistic": {
+                "coverage": 1.0,
+                "mean_width": 2.138442262225171,
+                "crps": 0.27336097067537024,
+                "interval_score": 2.138442262225171,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.14781180211712291
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.20444844502932177
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.06603242410539417
+                  }
+                ]
+              }
+            },
+            {
+              "horizon": 2,
+              "lead": 2,
+              "mae": 0.29774419171740596,
+              "rmse": 0.29774419171740596,
+              "mase": 0.2707109920131482,
+              "n": 1,
+              "probabilistic": {
+                "coverage": 1.0,
+                "mean_width": 2.261266941260699,
+                "crps": 0.24588606327986096,
+                "interval_score": 2.261266941260699,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.08328892789129437
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.14887209585870298
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.1428377662347755
+                  }
+                ]
+              }
+            },
+            {
+              "horizon": 3,
+              "lead": 3,
+              "mae": 0.5808247915753593,
+              "rmse": 0.5808247915753593,
+              "mase": 0.528089749144227,
+              "n": 1,
+              "probabilistic": {
+                "coverage": 1.0,
+                "mean_width": 2.27534337654139,
+                "crps": 0.3538796954182776,
+                "interval_score": 2.27534337654139,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.05568468966953358
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.29041239578767963
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.1718496479846054
+                  }
+                ]
+              }
+            },
+            {
+              "horizon": 4,
+              "lead": 4,
+              "mae": 0.8107423924970393,
+              "rmse": 0.8107423924970393,
+              "mase": 0.7371323553753683,
+              "n": 1,
+              "probabilistic": {
+                "coverage": 1.0,
+                "mean_width": 2.2770010676293393,
+                "crps": 0.4838841441050567,
+                "interval_score": 2.2770010676293393,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.19492429263117092
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.40537119624851964
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.03277581413176302
+                  }
+                ]
+              }
+            },
+            {
+              "horizon": 5,
+              "lead": 5,
+              "mae": 1.1507238043036487,
+              "rmse": 1.1507238043036487,
+              "mase": 1.046245707764628,
+              "n": 1,
+              "probabilistic": {
+                "coverage": 0.0,
+                "mean_width": 2.2771968805599188,
+                "crps": 0.7311960096127927,
+                "interval_score": 2.3984505207968123,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.2289322244583608
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.5753619021518244
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.01091282762132042
+                  }
+                ]
+              }
+            },
+            {
+              "horizon": 6,
+              "lead": 6,
+              "mae": 0.04246441613410907,
+              "rmse": 0.04246441613410907,
+              "mase": 0.038608928525579615,
+              "n": 1,
+              "probabilistic": {
+                "coverage": 1.0,
+                "mean_width": 2.2772200190513896,
+                "crps": 0.2084386737832765,
+                "interval_score": 2.2772200190513896,
+                "pinball": [
+                  {
+                    "q": 0.1,
+                    "value": 0.11810744256598038
+                  },
+                  {
+                    "q": 0.5,
+                    "value": 0.021232208067054534
+                  },
+                  {
+                    "q": 0.9,
+                    "value": 0.10961455933915855
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "trend_per_period": 0.009826559442486366,
+      "seasonal_profile": []
+    }
+  ],
+  "interval": null,
+  "feature_policy": "chronological pooled or local fit; known_future explicitly declared, past x fixed lag; no whole-data fit",
+  "scope": "Aligned regular panel; rolling-origin gap+embargo excluded from fit; held final targets not used during development",
+  "warning": "Diagnostic tests do not prove stationarity or predictive success. Coverage not guaranteed after regime/parameter/covariate change.",
+  "advanced": {
+    "schema": "TemporalRun/v1",
+    "spec": {
+      "task": "forecast",
+      "method": "arima",
+      "diagnostics": [
+        "acf",
+        "stationarity"
+      ],
+      "order": [
+        1,
+        0,
+        0
+      ],
+      "seasonal_order": [
+        1,
+        0,
+        0
+      ],
+      "gap": 0,
+      "embargo": 0,
+      "lags": 4,
+      "difference": 0,
+      "known_future": [],
+      "past_covariates": [],
+      "availability": {},
+      "var_columns": [],
+      "var_assumption": "",
+      "hierarchy": [],
+      "training_series": [],
+      "validation_series": [],
+      "label": "",
+      "clusters": 2,
+      "seed": 53,
+      "alpha": 0.2,
+      "croston_alpha": 0.1,
+      "change_penalty": 3
+    },
+    "provenance": {
+      "capability_id": "model.temporal.arima",
+      "column_lineage_ref": null,
+      "config_revision": 0,
+      "created_at": "2026-10-13T21:07:01.885638+00:00",
+      "dataset_versions": [
+        "dv:709d05bb-7ee8-43af-97d9-7aa4457cf9c7"
+      ],
+      "environment": [
+        [
+          "statsmodels",
+          "0.15.0"
+        ]
+      ],
+      "exclusions": [],
+      "filters": [],
+      "learning_content_version": null,
+      "method_version": 1,
+      "parameters_hash": "0bc6ad4713af92e01c00b9f427ae5b51fd606cbe0df3fa384aaa08ef3ae289ea",
+      "provenance_id": "provenance:76511374-51b3-43ee-97fa-83e44f92f869",
+      "row_lineage_ref": null,
+      "scope": "chronological origin fit; development diagnostics only; no final target choice",
+      "seed": 53,
+      "seed_reason": "seeded whole-series KMeans; deterministic numerical forecasting otherwise",
+      "source_snapshot_ids": [
+        "snapshot:9fe76bd3-3e8d-4e5a-b24a-be592abdecfa"
+      ]
+    },
+    "estimated_fit_count": 6,
+    "compute_budget": {
+      "ram_bytes": 2147483648,
+      "temp_disk_bytes": 4294967296,
+      "cpu_threads": 2,
+      "max_wall_seconds": 600,
+      "max_concurrent_cpu_jobs": 1,
+      "max_concurrent_io_jobs": 2,
+      "device": "cpu",
+      "sample_limit_rows": 10000,
+      "cancel_grace_ms": 2000,
+      "reserve_disk_bytes": 1073741824
+    },
+    "series_task": null,
+    "reconciliation": []
+  },
+  "experiment_capture": {
+    "schema": "RunCapture/v1",
+    "captured_at": "2026-10-13T21:07:01.890811+00:00",
+    "code_hash": "522b667a17a512d91655fdcbaa0b6303250fdb33de16a7396a0137bc9c8b815f",
+    "environment_hash": "07face0e2f6039f7a030483fef9a10b7d4037e0338cefda2fada742b631a9d8f",
+    "config_hash": "3ba554c255daf894c40b67005ba5b6f007d37010ceff3e5b1d087560a034f83b",
+    "config_scope": "full TimeSeriesSpec including temporal protocol, availability, method and parameters",
+    "environment": {
+      "python": "3.13.15",
+      "machine": "x86_64",
+      "system": "Linux",
+      "numpy": "2.5.3",
+      "scipy": "1.18.0",
+      "scikit-learn": "1.9.1",
+      "polars": "2.0.0",
+      "skops": "0.16.0",
+      "veri-ufku": "0.1.0",
+      "statsmodels": "0.15.0",
+      "pandas": "3.0.6"
+    },
+    "code_files": {
+      "analytics/__init__.py": "9a40480d4948c6569039dcba9b5eb8500217898bd1082cbf7dc116ea9eb697d1",
+      "analytics/cache.py": "d9bc4a880fbdee9cfec9bcdb2be956bd892472776a162db5f44de7ea800cb810",
+      "analytics/contracts.py": "b48013d36e9aaa985421706a519052cd92877fc3f3f39a0a5cf121127b6a8254",
+      "analytics/dataset.py": "577491b35241d4564f0aa99b801b4676bd3eb7f31e0ff81534178e4f2603ec28",
+      "analytics/inspection.py": "7d32d36f9f4ca19dceb4ed92d70e58724bdb92394ac62f7b2b7195665ad83e46",
+      "analytics/quality.py": "26614e90d24781175ee63e890ea820abdc3ba71a338c0a8eac68973ab4f91002",
+      "analytics/text.py": "fcbf422f6913a0d2ce472a0973bc408dda3a5676da304361de1ec6000a6d81f0",
+      "analytics/text_contracts.py": "3499a5661c22caa01c8355074d11d2a734fbe67e51914f5332ecb0c3726222f2",
+      "analytics/worker.py": "31c63ee72335dade3e877599e1354ac043e3618f550867dc25927460aa026a59",
+      "domain/__init__.py": "2dbb12e6e6559fc7cfeaa0bd919e0daed1a2b0087606b6a80365376ce3600b26",
+      "domain/capabilities.py": "d24f881452fd39bae641d0bfb26e4d87c1719a373e966139b2549fae4dd1c5d3",
+      "domain/contracts.py": "f876547de14f69c2c21d69a18e4af28ff1d2bb1e86a91d3b517ae7715025503b",
+      "domain/json.py": "460d139d25b367c54bc7535a099ff4de6d8d71af90a4f90914f864e71a18236f",
+      "jobs/__init__.py": "3e422efd1e5f67820bedb952921837211d5a5c953360bd7d6d1f7e69789cbf7d",
+      "jobs/limits.py": "4bbb51c061c186506137e3d46668d6ba16db56ad65f92b34a16f2ec5c4c007e2",
+      "jobs/manager.py": "3e17e08325e636527b665c1d1ee4756e524f813cc71b907ef31e9208f4624a38",
+      "jobs/supervision.py": "0cae684cbb07a6f3c8c63b2b8a66c2e3a0f778e5eeb903bc3e851bb6abab7f00",
+      "jobs/workers.py": "2c9c7a58f328ca607b257046b9c07de0c2bd095b7ea282e1b8725d9c81423505",
+      "modeling/__init__.py": "13027d8be106084ca581b11ced17bc5f8f0ddaeb927c7b27f55b2de67d62bb83",
+      "modeling/baseline.py": "d6a047e1a621524897fc5b2aa7f867a68da3d56aa33957072d4d6f3b47e95625",
+      "modeling/classification.py": "8325bd7adab2baf3925a2028acf69850cbe71677120848972f3cea9e3b3c3ca8",
+      "modeling/contracts.py": "0a013b594dc6710b72001268fe0923fb979fac36ad0602b7c9a640b9248a3f79",
+      "modeling/explanation.py": "a8fd47fed21b142479c966060600aa00595b768e58e1195000b59aa27494dfb7",
+      "modeling/exploration.py": "987bf5fc7419cc0562b8df7cd2e47cd6152d5e6521a2f6e1e6c5c67212820200",
+      "modeling/families.py": "ed4cb3d88c87d673dacc3496d0943995c7ea942401bf8225566e19b3e0268986",
+      "modeling/family_contracts.py": "93528657acdaf3e89ba974923402cfed2e72a1bf610b790d25ee6a3bc4406475",
+      "modeling/history.py": "89092e5f34ae94b1cb72a21b9b1a6a6f558a57c6f38ed1026146f228cf77db64",
+      "modeling/lifecycle.py": "1c00836f8d9de2ef61b98b600d02b908459234dd3dbb4a31cde226fe81c07f54",
+      "modeling/lifecycle_worker.py": "58cc961b8f4cbc8f651e695ebea6b52c3dbc6b49394700d847627ee22e9b6f84",
+      "modeling/optional_families.py": "bde8df0efe706a77c3e78c2f6ab44cf35a01ff2ed74b7f80bfdad585009281bd",
+      "modeling/plan.py": "d8a1f6043c9a96da399b74da095f3cc47c6972477984f9b3e085e48376fc6114",
+      "modeling/preparation.py": "bbb6d86e399f61d2d86c85a5b9205680ee4dbc780bfc1854ef4783ee4a82eee1",
+      "modeling/regression.py": "6fd65943f87ec2fee438e20f16d400a1eafe6cf6ef24e64a5e54eac132da51e8",
+      "modeling/search.py": "d8b90bb06060477bd8f4d2df0d6c6ece0825c72d9c243ee65cfd5af2e1009fef",
+      "modeling/search_contracts.py": "a82b856b338ed33e25a8d8f9fe340a60008cdd88cfca893fe04c4aaefe27d10e",
+      "modeling/temporal.py": "a7f74140fa4a201e559cf3de6ae2a3c66c37c89f70e5373e9433c9289ec8415d",
+      "modeling/temporal_contracts.py": "a7f949827438b4136a0576acc0455feed01400ace0639379f8068d70fc1c6291",
+      "modeling/time_series.py": "15f12f39a21438116ee47a0cc7fb3d9c7b62b161e1861cc61b9f07227f1abbc6",
+      "modeling/time_series_contracts.py": "7562d5555d7a51c409739b19ecddca20d865ca82fe9a930de60802c7dc47fb84",
+      "modeling/uncertainty.py": "18459743f79438daf7236e14e696dd6f9cc7a71388251464f8b1159c38944292",
+      "modeling/unsupervised.py": "f622291e9b889aa7dba7928e22dd716436042edc58349010bfeffe4d9f3fa693",
+      "modeling/unsupervised_contracts.py": "8f695e61dfb7d2e9f04cf075e049fc2ca6b0d85f8f681d13c8c26483fd6c55ea",
+      "modeling/validation.py": "926d32f935b8bafa2154ca6522c2a78462fcec7d12f47c489349542a8d2e8245",
+      "modeling/worker.py": "a1ec8f40ffc48ecefb6f74f52d608d39ebe57c5cf7b7e50c5e36cc714f97faa6",
+      "operations/__init__.py": "3057dbc6d9b812bf9b2aad778db59346f32918c18d3855963ded8c84538a2d89",
+      "operations/cleaning.py": "952547f346de6778896e29f7033ed71c977168a11fe99880a6ba0767f6765b17",
+      "operations/cleaning_contracts.py": "2a6e1a9234fe3b62e28af1ff518eb7cb385d34af47eec8b5d9601c7581eb0dc8",
+      "operations/contracts.py": "67b8cd99bcb930a22422f51e85ae33822bb141a4df0f9c6c510d68cb450be7fc",
+      "operations/data_contracts.py": "abd9a1c68cb13ac27f9c9edc0e91e4d47df018760f6b5ad2c769b9cfb3ddce23",
+      "operations/data_quality.py": "d5475654431190c5a2b0f63490a5c77d017e4fdc6650b3ee8443c42fa0cb8d11",
+      "operations/engine.py": "d11a56c787773556c91ee5856f254cc9c20700d69b924c3a4464f2b558e0162e",
+      "operations/formula.py": "73aa71d20562e78d06055e194a41480d86211a5f33a8c915c661af7b7dfb4e5a",
+      "operations/monitoring.py": "0f92c902fb431475d850c331e44dfcc8fe97f3b0c44a51c2e6917cdf68514bf4",
+      "operations/recipe_worker.py": "3d496a1724c200816ca4a183c4a9513d800eedc393cc88d35742d7c3d8b20e53",
+      "operations/recipes.py": "f890531237267f41521ddeea299b5f4b03e023025105b7d39cc74086616a4dd8",
+      "operations/relational.py": "d1c10afd56fbfbea134435b73f589e39a10173680b8e12985f7605436fc52135",
+      "operations/relational_contracts.py": "eb0cef0160b7a0c92c601a407fceec423699032bc8d7fe4b3bba9196c29473da",
+      "operations/types.py": "0fe52eaad36ed00788508b4e28ed0c9a34df55b7ee41e6503127dd4d87bccd87",
+      "operations/worker.py": "f6fef54a9a1374728902e546eac733e33b243eee6ce115c29e0a99062b402435",
+      "storage/validation_store.py": "1fefd1981064775b0120d724df80a529f8d7ae1f58d9334be36e214be8bdfa27",
+      "storage/experiment_store.py": "4703db92ba003e39a53125cf16bb169e3bf6c7edf9be0c2655a3c3659818dc8e"
+    },
+    "data_access_time": "captured before scheduling; run.data_access_at records first immutable snapshot read boundary"
+  },
+  "plan": {
+    "split_id": "split:ba4fb958df99d844a55f90c8250a5110d2feb451be614a4ddc1b0d77d94a41fc",
+    "protocol_id": "protocol:8fe6b01b1b9c791b5b8ae226f3dc14919a20d17b578a4c5ed31e8a263abdc396"
+  },
+  "prior_test_use_ids": [],
+  "interpretation": "Bu projede önceki final test kullanımı yok; proje dışı kullanım bilinmez.",
+  "details_uri": "sources/6169ec3e-1314-405b-8eca-115500612303.bin",
+  "details_fingerprint": {
+    "sha256": "125ad87964f9cd4ab547f6f8a09146aee3e6c92559bc75beb93b41c3b413bbff",
+    "size": 72818
+  }
+}

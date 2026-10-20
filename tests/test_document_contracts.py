@@ -1,6 +1,7 @@
 """Negative tests for durable acceptance records; no analytic implementation tests."""
 
 import importlib.util
+import json
 import shutil
 import tempfile
 import unittest
@@ -21,6 +22,9 @@ class DocumentContracts(unittest.TestCase):
         shutil.copytree(ROOT / "docs", self.root / "docs")
         for filename in [
             "README.md",
+            "CHANGELOG.md",
+            "CONTRIBUTING.md",
+            "LICENSE",
             "AGENTS.md",
             "pyproject.toml",
             "uv.lock",
@@ -30,6 +34,9 @@ class DocumentContracts(unittest.TestCase):
         shutil.copytree(ROOT / "scripts", self.root / "scripts")
         shutil.copytree(ROOT / "src", self.root / "src")
         shutil.copytree(ROOT / "tests", self.root / "tests")
+        shutil.copytree(
+            ROOT / "examples" / "plugins", self.root / "examples" / "plugins"
+        )
         shutil.copytree(ROOT / ".github", self.root / ".github")
 
     def tearDown(self):
@@ -56,10 +63,19 @@ class DocumentContracts(unittest.TestCase):
         self.assertTrue(any("Progress conflict" in e for e in CHECKER.check(self.root)))
 
     def test_false_completion_is_rejected(self):
+        row = next(
+            line
+            for line in (self.root / "docs/REQUIREMENTS_MATRIX.md")
+            .read_text()
+            .splitlines()
+            if line.startswith("| 28 |")
+        )
+        fields = row.split("|")
+        fields[4] = " doğrulandı "
         self.mutate(
             "docs/REQUIREMENTS_MATRIX.md",
-            "| başlanmadı | mevcut değil | zorunlu |",
-            "| doğrulandı | mevcut değil | zorunlu |",
+            row,
+            "|".join(fields),
         )
         self.assertTrue(
             any("pending requirement" in e for e in CHECKER.check(self.root))
@@ -107,6 +123,59 @@ class DocumentContracts(unittest.TestCase):
         self.mutate("docs/REQUIREMENTS_MATRIX.md", "F05-S001", "F05-REMOVED")
         self.assertTrue(
             any("Source requirement lost" in e for e in CHECKER.check(self.root))
+        )
+
+    def test_professional_method_scope_loss_is_rejected(self):
+        path = self.root / "docs/evidence/phase28/work-plan.json"
+        plan = json.loads(path.read_text())
+        plan[0]["methods"][0]["scope"] = "ertelendi"
+        path.write_text(json.dumps(plan))
+        self.assertTrue(
+            any(
+                "Professional method scope/mapping conflict" in e
+                for e in CHECKER.check(self.root)
+            )
+        )
+
+    def test_professional_dependency_plan_loss_is_rejected(self):
+        path = self.root / "docs/evidence/phase28/work-plan.json"
+        plan = json.loads(path.read_text())
+        plan[0]["dependencies"] = []
+        path.write_text(json.dumps(plan))
+        self.assertTrue(
+            any(
+                "Professional dependency plan conflict" in e
+                for e in CHECKER.check(self.root)
+            )
+        )
+
+    def test_unrecorded_source_edit_is_rejected(self):
+        with (self.root / CHECKER.SOURCE).open("a") as source:
+            source.write("\nUnrecorded edit\n")
+        self.assertTrue(
+            any("Original source changed" in e for e in CHECKER.check(self.root))
+        )
+
+    def test_source_revision_cannot_replace_original_digest(self):
+        path = self.root / "docs/evidence/phase28/source-revision.json"
+        revision = json.loads(path.read_text())
+        revision["base_sha256"] = revision["revision_sha256"]
+        path.write_text(json.dumps(revision))
+        self.assertTrue(
+            any("Original source changed" in e for e in CHECKER.check(self.root))
+        )
+
+    def test_source_revision_cannot_hide_another_insertion(self):
+        source = self.root / CHECKER.SOURCE
+        source.write_text(source.read_text() + "\nUnrecorded edit\n")
+        path = self.root / "docs/evidence/phase28/source-revision.json"
+        revision = json.loads(path.read_text())
+        revision["revision_sha256"] = CHECKER.hashlib.sha256(
+            source.read_bytes()
+        ).hexdigest()
+        path.write_text(json.dumps(revision))
+        self.assertTrue(
+            any("Original source changed" in e for e in CHECKER.check(self.root))
         )
 
     def test_duplicate_id_is_rejected(self):

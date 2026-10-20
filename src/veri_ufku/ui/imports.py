@@ -1,11 +1,12 @@
 """CSV/TSV workflow with a virtual preview model and isolated, cancelable I/O."""
 
 import copy
+import json
 import multiprocessing as mp
-import os
 import shutil
 import tempfile
 import time
+from dataclasses import replace
 from pathlib import Path
 
 from PySide6.QtCore import (
@@ -20,9 +21,13 @@ from PySide6.QtCore import (
 )
 
 from veri_ufku.domain.contracts import ComputeBudget
+from veri_ufku.importers.advanced import ADVANCED_FORMATS
+from veri_ufku.importers.arrays import ARRAY_FORMATS
+from veri_ufku.importers.connector_contracts import CONNECTORS, ConnectorSpec
 from veri_ufku.importers.delimited import TYPES, ImportSettings
 from veri_ufku.importers.registry import FORMATS, default_settings, settings_from_dict
 from veri_ufku.importers.worker import process_entry
+from veri_ufku.jobs.admission import start_controller
 from veri_ufku.jobs.workers import Canceled
 from veri_ufku.storage.project_model import ProjectError
 from veri_ufku.ui.projects import project_error_text
@@ -53,7 +58,7 @@ class PreviewModel(QAbstractTableModel):
 
     def replace(self, result=None):
         self.beginResetModel()
-        self.rows = result["rows"] if result else []
+        self.rows = result["rows"][:20] if result else []
         self.names = result["schema"]["names"] if result else []
         self.endResetModel()
 
@@ -125,6 +130,42 @@ class ImportController(QObject):
         notify=changed,
     )
     message = Property(str, lambda self: self._message, notify=changed)
+
+    @Property(str, notify=changed)
+    def statusText(self):
+        if self.busy:
+            return "Dosyan işleniyor…"
+        if self.errorText:
+            return "Okuma ayarlarını Gelişmiş bölümünden düzenleyebilirsin."
+        if self.valid and self.result:
+            return (
+                f"Önizleme: {self.model.rowCount()} kayıt · "
+                f"{len(self.result['schema']['names'])} sütun. "
+                "Bu sınırlı örnektir; içe aktarmada dosyanın tamamı doğrulanır."
+            )
+        if self._message.startswith(("İçe aktarma kaydedildi:", "İptal")):
+            return self._message.split(" Veri sürümü:")[0]
+        if self.sourcePath:
+            return "Ayarları düzenledikten sonra önizlemeyi güncelle."
+        return ""
+
+    @Property(str, notify=changed)
+    def previewWarnings(self):
+        if not self.result or self.busy:
+            return ""
+        if not self.valid and self.result.get("settings") != {
+            k: list(v) if isinstance(v, tuple) else v
+            for k, v in self._settings.__dict__.items()
+        }:
+            return ""
+        warnings = list(self.result["schema"]["warnings"])
+        if self.result["bad"]:
+            warnings.append(
+                f"Önizlemede {len(self.result['bad'])} bozuk kayıt var. "
+                "Bu kayıtlar veriden ayrı tutulacak; ayrıntılar Gelişmiş bölümünde."
+            )
+        return "\n".join(warnings)
+
     errorText = Property(str, lambda self: self._error, notify=changed)
     sourcePath = Property(str, lambda self: self._path, notify=changed)
     settings = Property(
@@ -165,11 +206,96 @@ class ImportController(QObject):
         notify=changed,
     )
 
+    formats = Property("QVariantList", lambda self: list(FORMATS), constant=True)
+    connectorKinds = Property(
+        "QVariantList", lambda self: list(CONNECTORS), constant=True
+    )
+    connectorTables = Property(
+        "QVariantList",
+        lambda self: getattr(self, "_connector_tables", []),
+        notify=changed,
+    )
+
+    @Slot()
+    def connectionEdited(self):
+        if not self.busy and self.snapshot and self.snapshot.get("connector"):
+            self.valid = False
+            self._message = "Bağlantı ayarları değişti. Yeni açık okuma ile yeniden snapshot önizleyin."
+            self.changed.emit()
+
+    @Slot(str, str)
+    def saveCredential(self, reference, secret):
+        from veri_ufku.importers.credentials import store
+
+        if self.busy:
+            return
+        try:
+            store(reference, secret)
+            self._message, self._error = (
+                "Credential sistem keyring'inde; projede yalnız referans saklanır.",
+                "",
+            )
+            self.changed.emit()
+        except (ValueError, OSError) as error:
+            self.fail(error)
+
+    @Slot(str)
+    def connectSource(self, data):
+        self._connect(data, "connector")
+
+    @Slot(str)
+    def listTables(self, data):
+        self._connect(data, "connector_tables")
+
+    def _connect(self, data, action):
+        if (
+            self.busy
+            or self.projects.busy
+            or (self.projects.opened and self.projects.readOnly)
+        ):
+            return self.fail(
+                ProjectError("Devam eden işi bekleyin; yazılabilir proje gerekli.")
+            )
+        try:
+            spec = ConnectorSpec.from_dict(json.loads(data))
+            if not spec.terms_acknowledged:
+                raise ProjectError("Bağlantı/servis koşullarını onaylayın.")
+            self.cache.mkdir(parents=True, exist_ok=True)
+            self.clear_workspace()
+            self.workspace = tempfile.mkdtemp(prefix="connector-", dir=self.cache)
+            self.snapshot = self.result = None
+            self.valid = False
+            self.model.replace()
+            self._connector_tables = []
+            self._path = spec.endpoint or ("S3 · " + spec.bucket)
+            self.revision += 1
+            self.start(action, spec.data())
+        except (OSError, ValueError, TypeError) as error:
+            self.fail(error)
+
+    @Property(str, notify=changed)
+    def formatMetadata(self):
+        import json
+
+        metadata = getattr(self._settings, "format_metadata", {})
+        if not metadata and self.snapshot and self.snapshot.get("connector"):
+            metadata = {"connector": self.snapshot["connector"]}
+        display = copy.deepcopy(metadata)
+        for part in display.get("parts", []):
+            part.pop("arrow_schema_base64", None)
+        return json.dumps(display, ensure_ascii=False, indent=2) if metadata else ""
+
     @Slot(str)
     def setFormat(self, adapter_id):
-        if self.busy or adapter_id not in FORMATS:
+        if (
+            self.busy
+            or adapter_id not in FORMATS
+            or (self.snapshot and self.snapshot.get("connector"))
+        ):
             return
         self._settings = default_settings(adapter_id)
+        if isinstance(self._settings, ImportSettings):
+            self._settings = replace(self._settings, infer_types=True)
         if self.snapshot:
             self.snapshot["adapter_id"] = adapter_id
         self._choices = {}
@@ -218,10 +344,12 @@ class ImportController(QObject):
                 ProjectError("Devam eden işlemin tamamlanmasını bekleyin.")
             )
         try:
-            if not self.projects.opened or self.projects.readOnly:
+            if self.projects.opened and self.projects.readOnly:
                 raise ProjectError("Önce yazılabilir bir proje oluşturun veya açın.")
             source = self.projects.local(value)
-            if source.resolve().is_relative_to(self.projects.store.root):
+            if self.projects.opened and source.resolve().is_relative_to(
+                self.projects.store.root
+            ):
                 raise ProjectError("Proje içindeki dosya kaynak olarak seçilemez.")
             self.cache.mkdir(parents=True, exist_ok=True)
             self.clear_workspace()
@@ -250,6 +378,18 @@ class ImportController(QObject):
                 raise ProjectError("Bilinmeyen içe aktarma ayarı.")
             if key in {"null_markers", "expand_lists"}:
                 value = tuple(value.split("|")) if value else ()
+            if key == "column_names":
+                value = tuple(str(value).split("|")) if value else ()
+            if key == "widths":
+                value = tuple(
+                    int(w.strip()) for w in str(value).split(",") if w.strip()
+                )
+            if key == "geo_window" and isinstance(value, str):
+                value = json.loads(value)
+            if key == "array_slice" and isinstance(value, str):
+                value = json.loads(value or "{}")
+            if key == "array_coordinates" and isinstance(value, str):
+                value = tuple(n.strip() for n in value.split("|") if n.strip())
             if key in {"delimiter", "encoding", "header_row"}:
                 data["types"] = ()
             data[key] = value
@@ -268,7 +408,11 @@ class ImportController(QObject):
         if self.busy or not self.result:
             return
         if (
-            self.formatId in ("parquet", "ipc", "ipc_stream")
+            self.formatId
+            in ("parquet", "ipc", "ipc_stream")
+            + CONNECTORS
+            + ARRAY_FORMATS
+            + tuple(n for n in ADVANCED_FORMATS if n not in ("xml", "fixed_width"))
             or kind not in TYPES + ("auto",)
             or not 0 <= index < len(self.result["schema"]["names"])
         ):
@@ -317,14 +461,14 @@ class ImportController(QObject):
         if action == "import":
             # These files are private worker copies, never linked project artifacts.
             for path in Path(self.workspace).glob("*.parquet"):
-                path.unlink()
+                if not self.snapshot or str(path) != self.snapshot["path"]:
+                    path.unlink()
         self.action = action
         self.submitted_revision = self.revision
         self.started = time.monotonic()
         self.cancel_time = None
         self.cancel_event = self.context.Event()
         self.connection, sender = self.context.Pipe(duplex=False)
-        os.environ.setdefault("POLARS_MAX_THREADS", str(self.budget.cpu_threads))
         self.process = self.context.Process(
             target=process_entry,
             args=(
@@ -339,7 +483,8 @@ class ImportController(QObject):
             ),
         )
         try:
-            self.process.start()
+            if not start_controller(self, sender):
+                return
         except BaseException:
             sender.close()
             self.connection.close()
@@ -398,6 +543,8 @@ class ImportController(QObject):
                 self.valid = False
             except Canceled:
                 self._message = "İptal edildi. Dataset kaydedilmedi."
+                self.clear_workspace()
+                self.valid = False
             except Exception as error:
                 self.fail(error)
                 self.projects.draft = self.projects.store.state
@@ -417,6 +564,8 @@ class ImportController(QObject):
         ):
             self.release_process()
             self._message = "İptal edildi. Kaynak ve proje korunuyor."
+            self.clear_workspace()
+            self.valid = False
             self.finish()
             return
         # Drain only a bounded number per Qt tick.
@@ -443,9 +592,19 @@ class ImportController(QObject):
                 )
                 self.changed.emit()
                 continue
+            if kind == "tables":
+                self.release_process()
+                self._connector_tables = value["tables"]
+                self._message = (
+                    "Tablo/şema listesini inceleyin; veri okuması ayrı açık eylemdir."
+                )
+                self.finish()
+                return
             self.release_process()
             if self.cancel_event.is_set() or kind == "canceled":
                 self._message = "İptal edildi. Dataset kaydedilmedi."
+                self.clear_workspace()
+                self.valid = False
             elif kind == "error":
                 self._error = value
                 self.valid = False
@@ -468,7 +627,7 @@ class ImportController(QObject):
                 self._settings = settings_from_dict(value["settings"])
                 self.model.replace(value)
                 self.valid = bool(value["examined"]) and value.get("importable", True)
-                self._message = f"Sınırlı önizleme: en fazla 200 kayıt; incelenen {value['examined']}, bozuk {len(value['bad'])}. Tür önerileri kesin değildir. CSV varsayılanı metin; yapılandırılmış veride tam dosya tür doğrulaması; Parquet türleri korunur.\nDeğişmez kopya: {self.snapshot['captured_at']} · SHA256 {self.snapshot['fingerprint']['sha256']}. İçe aktarma bu kopyadan yapılır; güncel kaynağı almak için dosyayı yeniden seçin."
+                self._message = f"Ekranda ilk 20 kayıt gösterilir; önkontrolde incelenen {value['examined']}, bozuk {len(value['bad'])}. Tür önerileri kesin değildir. CSV otomatik türleri tam dosyada doğrulanır; yapılandırılmış veride tam dosya tür doğrulaması; Parquet türleri korunur.\nDeğişmez kopya: {self.snapshot['captured_at']} · SHA256 {self.snapshot['fingerprint']['sha256']}. İçe aktarma bu kopyadan yapılır; güncel kaynağı almak için dosyayı yeniden seçin."
                 if value["schema"]["warnings"]:
                     self._message += "\n" + "\n".join(value["schema"]["warnings"])
                 if value["bad"]:
@@ -486,6 +645,7 @@ class ImportController(QObject):
                 "İçe aktarma işlemi beklenmedik biçimde durdu; dataset kaydedilmedi."
             )
             self.valid = False
+            self.clear_workspace()
             self.finish()
 
     def shutdown(self):

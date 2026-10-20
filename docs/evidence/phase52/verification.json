@@ -1,0 +1,48 @@
+{
+  "id": "E52-VERIFY",
+  "environment": "ENV-52",
+  "date": "2026-10-13T20:03:59.356939+00:00",
+  "tests": {
+    "source-core": {
+      "tests": 332,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "wheel-core": {
+      "tests": 332,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "source-ui": {
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "new_tests": {
+    "core": 12,
+    "gui": 1
+  },
+  "commands": [
+    ".venv/bin/pytest -q tests/test_experiment_registry.py tests/test_explanation.py tests/test_uncertainty.py tests/test_search.py tests/test_search_store.py tests/test_model_families.py tests/test_model_family_support.py tests/test_regression.py tests/test_classification.py tests/test_lifecycle.py tests/test_validation.py tests/test_learning_tree.py --junitxml=docs/evidence/phase52/source-core.xml",
+    ".venv/bin/python /tmp/f52_wheel_tests.py",
+    "QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software .venv/bin/pytest -q tests/test_experiment_registry_gui.py tests/test_lifecycle_gui.py tests/test_validation_gui.py tests/test_usability.py --junitxml=docs/evidence/phase52/source-ui.xml",
+    ".venv/bin/python scripts/measure_phase52.py --output docs/evidence/phase52/source-gui-release",
+    ".venv/bin/python scripts/measure_phase52.py --package-root /tmp/veri-ufku-f52-installed --output docs/evidence/phase52/wheel-gui-release",
+    ".venv/bin/python /tmp/f52_smoke.py"
+  ],
+  "exit_code": 0,
+  "optional": "Tracking adapter not implemented/configured; no execution/acceptance claim",
+  "not_run": [
+    "physical desktop",
+    "human/AT",
+    "minimum hardware",
+    "clean offline install",
+    "remote CI",
+    "full repository aggregate regression"
+  ],
+  "final_presentation_change": "Pareto marker P is palette independent; computational Python unchanged after332+332/13 checks; source and installed full Qt workflow rerun for final QML legend."
+}

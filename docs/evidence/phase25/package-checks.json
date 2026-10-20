@@ -1,0 +1,64 @@
+{
+  "environment": "ENV-25-WHEEL",
+  "results": [
+    {
+      "name": "wheel-build",
+      "command": [
+        "uv",
+        "build",
+        "--wheel",
+        "--no-build-isolation",
+        "--out-dir",
+        "/tmp/veri-ufku-phase25-dist"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "exit_code": 0,
+      "date": "2026-10-09T21:31:15.107621+00:00",
+      "seconds": 0.13563405199965928
+    },
+    {
+      "name": "wheel-install",
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--no-deps",
+        "--reinstall",
+        "--target",
+        "/tmp/veri-ufku-phase25-installed",
+        "/tmp/veri-ufku-phase25-dist/veri_ufku-0.1.0-py3-none-any.whl"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "exit_code": 0,
+      "date": "2026-10-09T21:31:15.148943+00:00",
+      "seconds": 0.041157468000164954
+    },
+    {
+      "name": "wheel-walkthrough",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase25.py",
+        "--package-root",
+        "/tmp/veri-ufku-phase25-installed",
+        "--output",
+        "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase25/wheel.json"
+      ],
+      "cwd": "/tmp",
+      "exit_code": 0,
+      "date": "2026-10-09T21:31:41.553852+00:00",
+      "seconds": 26.40467277800053
+    },
+    {
+      "name": "wheel-entry",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "/tmp/veri-ufku-phase25-installed/veri_ufku/__main__.py",
+        "--smoke-test"
+      ],
+      "cwd": "/tmp",
+      "exit_code": 0,
+      "date": "2026-10-09T21:31:42.362298+00:00",
+      "seconds": 0.8082202990008227
+    }
+  ]
+}

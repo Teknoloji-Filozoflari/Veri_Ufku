@@ -1,6 +1,6 @@
 # Veri_Ufku — faz bağımlılık planı
 
-Bu belge uygulama yetkisi değildir. Durum [REQUIREMENTS_MATRIX](REQUIREMENTS_MATRIX.md) içindedir. Temel yol Faz00–13 ilk inceleme/temizleme, 14–20 istatistik/ML, 24–27 doğrulama/dağıtım; 21–23 kullanıcı kararıyla optional, ertelenmiş değil. Profesyonel seçim Faz28. Doğrudan bağımlılıklar aşağıda; transitif atalar da karşılanmalıdır. Ortak güvenlik/sözleşmeler her faza uygulanır.
+Bu belge uygulama yetkisi değildir. Durum [REQUIREMENTS_MATRIX](REQUIREMENTS_MATRIX.md) içindedir. Temel yol Faz00–13 ilk inceleme/temizleme, 14–20 istatistik/ML, 24–27 doğrulama/dağıtım; 21–23 kullanıcı tarafından seçilmiş zorunlu kapsam; teknik mevcut, kabul sürüyor, ertelenmiş değil. Profesyonel teslim seçimi henüz yapılmadı. Doğrudan bağımlılıklar aşağıda; transitif atalar da karşılanmalıdır. Ortak güvenlik/sözleşmeler her faza uygulanır.
 
 | Faz | Teslim | Doğrudan önkoşullar |
 |---|---|---|
@@ -48,7 +48,7 @@ Bu belge uygulama yetkisi değildir. Durum [REQUIREMENTS_MATRIX](REQUIREMENTS_MA
 | 41 | Bootstrap, permütasyon, çoklu test ve sağlam analiz | 14, 29, 33, 40 |
 | 42 | Deney tasarımı, A/B testi ve güç analizi | 14, 32, 40, 41 |
 | 43 | Bayesçi analiz ve model kontrolü | 16, 29, 40, 41 |
-| 44 | Nedensel çıkarım ve varsayımların görünürlüğü | 16, 29, 32, 40, 41 |
+| 44 | Nedensel çıkarım ve varsayımların görünürlüğü | 16, 29, 32, 40, 41, 42 |
 | 45 | Sağkalım ve olay zamanı analizi | 16, 29, 32, 40 |
 | 46 | Boyut indirgeme ve özellik seçimi | 16, 29, 35, 36 |
 | 47 | Gelişmiş kümeleme, yoğunluk ve anomali yöntemleri | 19, 29, 46 |
@@ -92,3 +92,6 @@ Profesyonel fazların listede olması seçilmiş zorunlu teslim anlamına gelmez
 Format, dönüşüm, istatistik, grafik veya model başına Fxx-Snnn.<method> kimliği; GUI/hesap/help/save/export/cancel alt kanıtları. Önce küçük uçtan uca bir yöntem, sonra kalan alt işler; genel pytest başarısı paragraftaki bütün yöntemleri doğrulamaz. Faz30 formatları, Faz35–38 grafikleri, Faz40 modelleri, Faz48 estimator aileleri ve diğer profesyonel alt yöntemler ilgili faz başlamadan ayrı satırlara açılır; kaynak paragraf kapsamı aynı kalır. Zorunlu önceki faz düzeltmesi DEP-Fxx-* ve önceki regression kanıtıyla kayıtlıdır.
 
 Ağır modül, registry v2 veya GPU Faz 00 kapsamında geliştirilmez. Minimal sözleşmeler [CORE_CONTRACTS](CORE_CONTRACTS.md) tek kaynak; profesyonel fazlar genişletir.
+
+
+Faz28 denetimi: F44 randomize ATE için F42 deney kabulü eklendi (DEC-28-04); kaynak faz kapsamı değişmedi. [Tam graf/alt işler](PRO_WORK_PLAN.md), [kapılar](evidence/PHASE28.md). Sayısal sıra topolojik olsa da Faz28 giriş kapısı kapalı; yeni yöntemler başlatılmaz.

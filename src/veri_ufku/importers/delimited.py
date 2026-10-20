@@ -4,10 +4,11 @@ import codecs
 import csv
 import hashlib
 import math
+import os
 import re
 import shutil
 import time
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from datetime import UTC, datetime
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -39,6 +40,7 @@ class ImportSettings:
     timezone: str = ""
     bad_rows: str = "stop"
     types: tuple[str, ...] = ()
+    infer_types: bool = False
 
     def __post_init__(self):
         if (
@@ -54,6 +56,8 @@ class ImportSettings:
             or self.decimal == self.thousands
         ):
             raise ProjectError("Ondalık ve binlik ayracı farklı olmalı.")
+        if type(self.infer_types) is not bool:
+            raise ProjectError("Otomatik tür algılama seçimi geçersiz.")
         if (
             self.bad_rows not in ("stop", "quarantine")
             or len(self.types) > MAX_COLUMNS
@@ -97,22 +101,42 @@ class Control:
     ):
         self.cancel, self.progress, self.budget = cancel, progress, budget
         self.started = time.monotonic()
+        self._memory_checked = 0.0
+        self._disk_checked = {}
 
     def check(self):
         if self.cancel and self.cancel.is_set():
             raise Canceled()
         if time.monotonic() - self.started > self.budget.max_wall_seconds:
-            raise ProjectError("İçe aktarma süre bütçesini aştı.")
+            raise ProjectError("İşlem süre bütçesini aştı; önceki proje korundu.")
+        now = time.monotonic()
+        if now - self._memory_checked >= 0.1:
+            from veri_ufku.jobs.resources import rss_bytes
 
-    def disk(self, path):
+            self._memory_checked = now
+            if rss_bytes(os.getpid()) > self.budget.ram_bytes:
+                raise ProjectError(
+                    "İşlem bellek bütçesini aştı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu."
+                )
+
+    def disk(self, path, *, force=False):
         self.check()
-        used = sum(p.stat().st_size for p in Path(path).glob("*") if p.is_file())
+        path = Path(path)
+        now = time.monotonic()
+        if not force and now - self._disk_checked.get(path, 0) < 0.25:
+            return
+        self._disk_checked[path] = now
+        used = sum(
+            p.stat().st_size
+            for p in path.rglob("*")
+            if p.is_file() and not p.is_symlink()
+        )
         if (
             used > self.budget.temp_disk_bytes
             or shutil.disk_usage(path).free < self.budget.reserve_disk_bytes
         ):
             raise ProjectError(
-                "İçe aktarma geçici disk bütçesi aşıldı veya boş alan yetersiz."
+                "Geçici disk bütçesi aşıldı veya boş alan yetersiz; önceki proje korundu."
             )
 
 
@@ -206,6 +230,7 @@ def suggest(snapshot):
         encoding=encoding,
         header_row=header,
         decimal="," if delimiter == ";" else ".",
+        infer_types=True,
     )
 
 
@@ -262,6 +287,10 @@ def records(snapshot, settings, control):
                         "Tırnak/CSV yapısı bozuk; bu kaynak aralığı güvenle ayrıştırılamadı.",
                     )
                 ordinal += 1
+                if snapshot.get("members") and ordinal > 10000000:
+                    raise ProjectError(
+                        "Sıkıştırılmış metin10000000 kayıt sınırını aştı; yayın yok."
+                    )
                 if row is not None and len(row) > MAX_COLUMNS:
                     raise ProjectError("Dosya 256 sütun sınırını aştı.")
                 yield ordinal, start, reader.line_num, row, "".join(lines.parts), reason
@@ -310,7 +339,9 @@ def number(value, settings):
 
 
 def convert(value, kind, settings):
-    if value in settings.null_markers:
+    if value in settings.null_markers or (
+        settings.infer_types and kind != "text" and value == ""
+    ):
         return None
     if kind == "text":
         return value
@@ -422,6 +453,62 @@ def parsed(snapshot, settings, control):
         )
 
 
+class TypeInference:
+    """Exact content candidates shared by import and read-only legacy inspection."""
+
+    def __init__(self, settings):
+        self.settings = settings
+        self.options = set(("int64", "decimal", "date", "boolean"))
+        self.seen = False
+
+    def observe(self, value):
+        if value is None or value == "":
+            return
+        self.seen = True
+        if value.casefold() not in ("true", "false", "evet", "hayır"):
+            self.options.discard("boolean")
+        for candidate in tuple(self.options):
+            try:
+                convert(value, candidate, self.settings)
+            except (ValueError, InvalidOperation, OverflowError):
+                self.options.discard(candidate)
+
+    def resolve(self):
+        return next(
+            (
+                kind
+                for kind in ("boolean", "int64", "decimal", "date")
+                if self.seen and kind in self.options
+            ),
+            "text",
+        )
+
+
+def infer_settings(snapshot, settings, control=None):
+    """Resolve automatic CSV types over all records with bounded column state."""
+    if not settings.infer_types or settings.types:
+        return settings
+    control = control or Control()
+    candidates = []
+    raw_settings = replace(settings, infer_types=False)
+    count = 0
+    for kind, record in parsed(snapshot, raw_settings, control):
+        if kind == "schema":
+            candidates = [TypeInference(settings) for _ in record["names"]]
+            continue
+        count += 1
+        if count % 4096 == 0:
+            control.progress("Sütun türleri algılanıyor", count, None)
+        if record["reason"]:
+            continue
+        for candidate, value in zip(candidates, record["values"], strict=True):
+            candidate.observe(value)
+    control.check()
+    return replace(
+        settings, types=tuple(candidate.resolve() for candidate in candidates)
+    )
+
+
 def preview(snapshot, settings, control=None):
     control = control or Control()
     schema, rows, bad, examined = None, [], [], 0
@@ -450,6 +537,8 @@ def preview(snapshot, settings, control=None):
         elif vals and all(re.fullmatch(r"\d{4}-\d{2}-\d{2}", v) for v in vals):
             suggestion = "date"
         suggestions.append(suggestion)
+    if settings.infer_types:
+        suggestions = list(schema["types"])
     return dict(
         schema=schema,
         rows=rows,

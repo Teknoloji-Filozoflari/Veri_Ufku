@@ -1,0 +1,707 @@
+{
+  "id": "E50-ACCEPTANCE",
+  "environment": "ENV-50",
+  "date": "2026-10-13",
+  "records": [
+    {
+      "id": "F50-P001",
+      "method": "Reliability diagram",
+      "environment": "ENV-50",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F50-P001.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/uncertainty.py",
+          "src/veri_ufku/modeling/baseline.py",
+          "src/veri_ufku/modeling/lifecycle.py",
+          "src/veri_ufku/modeling/classification.py",
+          "src/veri_ufku/modeling/regression.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/storage/validation_store.py",
+          "src/veri_ufku/storage/model_store.py",
+          "src/veri_ufku/domain/capabilities.py",
+          "src/veri_ufku/ui/validation.py",
+          "src/veri_ufku/ui/workspace.py",
+          "src/veri_ufku/ui/qml/UncertaintyPanel.qml",
+          "src/veri_ufku/ui/qml/ReliabilityDiagram.qml",
+          "src/veri_ufku/ui/qml/ValidationPanel.qml",
+          "src/veri_ufku/ui/qml/ClassificationPanel.qml",
+          "src/veri_ufku/ui/qml/RegressionPanel.qml"
+        ]
+      },
+      "V": {
+        "id": "F50-P001.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_uncertainty.py",
+          "tests/test_uncertainty_gui.py",
+          "docs/evidence/phase50/source-core.xml",
+          "docs/evidence/phase50/wheel-core.xml",
+          "docs/evidence/phase50/source-ui.xml",
+          "docs/evidence/phase50/source-forest-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F50-P001.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F50-P001.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-uncertainty"
+      },
+      "P": {
+        "id": "F50-P001.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel.json",
+          "docs/evidence/phase50/frozen-head.json"
+        ]
+      },
+      "limits": "1000rows/32features; logistic/forest calibration; Ridge/forest residual; gradient quantile/CQR; family/sparse/weights/TF-IDF unsupported; exchangeability required, not established; formal gates separate"
+    },
+    {
+      "id": "F50-P002",
+      "method": "Log-loss",
+      "environment": "ENV-50",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F50-P002.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/uncertainty.py",
+          "src/veri_ufku/modeling/baseline.py",
+          "src/veri_ufku/modeling/lifecycle.py",
+          "src/veri_ufku/modeling/classification.py",
+          "src/veri_ufku/modeling/regression.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/storage/validation_store.py",
+          "src/veri_ufku/storage/model_store.py",
+          "src/veri_ufku/domain/capabilities.py",
+          "src/veri_ufku/ui/validation.py",
+          "src/veri_ufku/ui/workspace.py",
+          "src/veri_ufku/ui/qml/UncertaintyPanel.qml",
+          "src/veri_ufku/ui/qml/ReliabilityDiagram.qml",
+          "src/veri_ufku/ui/qml/ValidationPanel.qml",
+          "src/veri_ufku/ui/qml/ClassificationPanel.qml",
+          "src/veri_ufku/ui/qml/RegressionPanel.qml"
+        ]
+      },
+      "V": {
+        "id": "F50-P002.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_uncertainty.py",
+          "tests/test_uncertainty_gui.py",
+          "docs/evidence/phase50/source-core.xml",
+          "docs/evidence/phase50/wheel-core.xml",
+          "docs/evidence/phase50/source-ui.xml",
+          "docs/evidence/phase50/source-forest-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F50-P002.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F50-P002.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-uncertainty"
+      },
+      "P": {
+        "id": "F50-P002.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel.json",
+          "docs/evidence/phase50/frozen-head.json"
+        ]
+      },
+      "limits": "1000rows/32features; logistic/forest calibration; Ridge/forest residual; gradient quantile/CQR; family/sparse/weights/TF-IDF unsupported; exchangeability required, not established; formal gates separate"
+    },
+    {
+      "id": "F50-P003",
+      "method": "Brier",
+      "environment": "ENV-50",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F50-P003.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/uncertainty.py",
+          "src/veri_ufku/modeling/baseline.py",
+          "src/veri_ufku/modeling/lifecycle.py",
+          "src/veri_ufku/modeling/classification.py",
+          "src/veri_ufku/modeling/regression.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/storage/validation_store.py",
+          "src/veri_ufku/storage/model_store.py",
+          "src/veri_ufku/domain/capabilities.py",
+          "src/veri_ufku/ui/validation.py",
+          "src/veri_ufku/ui/workspace.py",
+          "src/veri_ufku/ui/qml/UncertaintyPanel.qml",
+          "src/veri_ufku/ui/qml/ReliabilityDiagram.qml",
+          "src/veri_ufku/ui/qml/ValidationPanel.qml",
+          "src/veri_ufku/ui/qml/ClassificationPanel.qml",
+          "src/veri_ufku/ui/qml/RegressionPanel.qml"
+        ]
+      },
+      "V": {
+        "id": "F50-P003.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_uncertainty.py",
+          "tests/test_uncertainty_gui.py",
+          "docs/evidence/phase50/source-core.xml",
+          "docs/evidence/phase50/wheel-core.xml",
+          "docs/evidence/phase50/source-ui.xml",
+          "docs/evidence/phase50/source-forest-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F50-P003.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F50-P003.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-uncertainty"
+      },
+      "P": {
+        "id": "F50-P003.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel.json",
+          "docs/evidence/phase50/frozen-head.json"
+        ]
+      },
+      "limits": "1000rows/32features; logistic/forest calibration; Ridge/forest residual; gradient quantile/CQR; family/sparse/weights/TF-IDF unsupported; exchangeability required, not established; formal gates separate"
+    },
+    {
+      "id": "F50-P004",
+      "method": "Sigmoid calibration",
+      "environment": "ENV-50",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F50-P004.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/uncertainty.py",
+          "src/veri_ufku/modeling/baseline.py",
+          "src/veri_ufku/modeling/lifecycle.py",
+          "src/veri_ufku/modeling/classification.py",
+          "src/veri_ufku/modeling/regression.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/storage/validation_store.py",
+          "src/veri_ufku/storage/model_store.py",
+          "src/veri_ufku/domain/capabilities.py",
+          "src/veri_ufku/ui/validation.py",
+          "src/veri_ufku/ui/workspace.py",
+          "src/veri_ufku/ui/qml/UncertaintyPanel.qml",
+          "src/veri_ufku/ui/qml/ReliabilityDiagram.qml",
+          "src/veri_ufku/ui/qml/ValidationPanel.qml",
+          "src/veri_ufku/ui/qml/ClassificationPanel.qml",
+          "src/veri_ufku/ui/qml/RegressionPanel.qml"
+        ]
+      },
+      "V": {
+        "id": "F50-P004.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_uncertainty.py",
+          "tests/test_uncertainty_gui.py",
+          "docs/evidence/phase50/source-core.xml",
+          "docs/evidence/phase50/wheel-core.xml",
+          "docs/evidence/phase50/source-ui.xml",
+          "docs/evidence/phase50/source-forest-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F50-P004.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F50-P004.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-uncertainty"
+      },
+      "P": {
+        "id": "F50-P004.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel.json",
+          "docs/evidence/phase50/frozen-head.json"
+        ]
+      },
+      "limits": "1000rows/32features; logistic/forest calibration; Ridge/forest residual; gradient quantile/CQR; family/sparse/weights/TF-IDF unsupported; exchangeability required, not established; formal gates separate"
+    },
+    {
+      "id": "F50-P005",
+      "method": "Isotonic calibration",
+      "environment": "ENV-50",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F50-P005.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/uncertainty.py",
+          "src/veri_ufku/modeling/baseline.py",
+          "src/veri_ufku/modeling/lifecycle.py",
+          "src/veri_ufku/modeling/classification.py",
+          "src/veri_ufku/modeling/regression.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/storage/validation_store.py",
+          "src/veri_ufku/storage/model_store.py",
+          "src/veri_ufku/domain/capabilities.py",
+          "src/veri_ufku/ui/validation.py",
+          "src/veri_ufku/ui/workspace.py",
+          "src/veri_ufku/ui/qml/UncertaintyPanel.qml",
+          "src/veri_ufku/ui/qml/ReliabilityDiagram.qml",
+          "src/veri_ufku/ui/qml/ValidationPanel.qml",
+          "src/veri_ufku/ui/qml/ClassificationPanel.qml",
+          "src/veri_ufku/ui/qml/RegressionPanel.qml"
+        ]
+      },
+      "V": {
+        "id": "F50-P005.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_uncertainty.py",
+          "tests/test_uncertainty_gui.py",
+          "docs/evidence/phase50/source-core.xml",
+          "docs/evidence/phase50/wheel-core.xml",
+          "docs/evidence/phase50/source-ui.xml",
+          "docs/evidence/phase50/source-forest-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F50-P005.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F50-P005.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-uncertainty"
+      },
+      "P": {
+        "id": "F50-P005.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel.json",
+          "docs/evidence/phase50/frozen-head.json"
+        ]
+      },
+      "limits": "1000rows/32features; logistic/forest calibration; Ridge/forest residual; gradient quantile/CQR; family/sparse/weights/TF-IDF unsupported; exchangeability required, not established; formal gates separate"
+    },
+    {
+      "id": "F50-P006",
+      "method": "Validation threshold constraints",
+      "environment": "ENV-50",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F50-P006.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/uncertainty.py",
+          "src/veri_ufku/modeling/baseline.py",
+          "src/veri_ufku/modeling/lifecycle.py",
+          "src/veri_ufku/modeling/classification.py",
+          "src/veri_ufku/modeling/regression.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/storage/validation_store.py",
+          "src/veri_ufku/storage/model_store.py",
+          "src/veri_ufku/domain/capabilities.py",
+          "src/veri_ufku/ui/validation.py",
+          "src/veri_ufku/ui/workspace.py",
+          "src/veri_ufku/ui/qml/UncertaintyPanel.qml",
+          "src/veri_ufku/ui/qml/ReliabilityDiagram.qml",
+          "src/veri_ufku/ui/qml/ValidationPanel.qml",
+          "src/veri_ufku/ui/qml/ClassificationPanel.qml",
+          "src/veri_ufku/ui/qml/RegressionPanel.qml"
+        ]
+      },
+      "V": {
+        "id": "F50-P006.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_uncertainty.py",
+          "tests/test_uncertainty_gui.py",
+          "docs/evidence/phase50/source-core.xml",
+          "docs/evidence/phase50/wheel-core.xml",
+          "docs/evidence/phase50/source-ui.xml",
+          "docs/evidence/phase50/source-forest-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F50-P006.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F50-P006.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-uncertainty"
+      },
+      "P": {
+        "id": "F50-P006.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel.json",
+          "docs/evidence/phase50/frozen-head.json"
+        ]
+      },
+      "limits": "1000rows/32features; logistic/forest calibration; Ridge/forest residual; gradient quantile/CQR; family/sparse/weights/TF-IDF unsupported; exchangeability required, not established; formal gates separate"
+    },
+    {
+      "id": "F50-P007",
+      "method": "Quantile prediction",
+      "environment": "ENV-50",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F50-P007.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/uncertainty.py",
+          "src/veri_ufku/modeling/baseline.py",
+          "src/veri_ufku/modeling/lifecycle.py",
+          "src/veri_ufku/modeling/classification.py",
+          "src/veri_ufku/modeling/regression.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/storage/validation_store.py",
+          "src/veri_ufku/storage/model_store.py",
+          "src/veri_ufku/domain/capabilities.py",
+          "src/veri_ufku/ui/validation.py",
+          "src/veri_ufku/ui/workspace.py",
+          "src/veri_ufku/ui/qml/UncertaintyPanel.qml",
+          "src/veri_ufku/ui/qml/ReliabilityDiagram.qml",
+          "src/veri_ufku/ui/qml/ValidationPanel.qml",
+          "src/veri_ufku/ui/qml/ClassificationPanel.qml",
+          "src/veri_ufku/ui/qml/RegressionPanel.qml"
+        ]
+      },
+      "V": {
+        "id": "F50-P007.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_uncertainty.py",
+          "tests/test_uncertainty_gui.py",
+          "docs/evidence/phase50/source-core.xml",
+          "docs/evidence/phase50/wheel-core.xml",
+          "docs/evidence/phase50/source-ui.xml",
+          "docs/evidence/phase50/source-forest-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F50-P007.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F50-P007.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-uncertainty"
+      },
+      "P": {
+        "id": "F50-P007.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel.json",
+          "docs/evidence/phase50/frozen-head.json"
+        ]
+      },
+      "limits": "1000rows/32features; logistic/forest calibration; Ridge/forest residual; gradient quantile/CQR; family/sparse/weights/TF-IDF unsupported; exchangeability required, not established; formal gates separate"
+    },
+    {
+      "id": "F50-P008",
+      "method": "Conformal interval",
+      "environment": "ENV-50",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F50-P008.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/uncertainty.py",
+          "src/veri_ufku/modeling/baseline.py",
+          "src/veri_ufku/modeling/lifecycle.py",
+          "src/veri_ufku/modeling/classification.py",
+          "src/veri_ufku/modeling/regression.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/storage/validation_store.py",
+          "src/veri_ufku/storage/model_store.py",
+          "src/veri_ufku/domain/capabilities.py",
+          "src/veri_ufku/ui/validation.py",
+          "src/veri_ufku/ui/workspace.py",
+          "src/veri_ufku/ui/qml/UncertaintyPanel.qml",
+          "src/veri_ufku/ui/qml/ReliabilityDiagram.qml",
+          "src/veri_ufku/ui/qml/ValidationPanel.qml",
+          "src/veri_ufku/ui/qml/ClassificationPanel.qml",
+          "src/veri_ufku/ui/qml/RegressionPanel.qml"
+        ]
+      },
+      "V": {
+        "id": "F50-P008.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_uncertainty.py",
+          "tests/test_uncertainty_gui.py",
+          "docs/evidence/phase50/source-core.xml",
+          "docs/evidence/phase50/wheel-core.xml",
+          "docs/evidence/phase50/source-ui.xml",
+          "docs/evidence/phase50/source-forest-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F50-P008.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F50-P008.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-uncertainty"
+      },
+      "P": {
+        "id": "F50-P008.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel.json",
+          "docs/evidence/phase50/frozen-head.json"
+        ]
+      },
+      "limits": "1000rows/32features; logistic/forest calibration; Ridge/forest residual; gradient quantile/CQR; family/sparse/weights/TF-IDF unsupported; exchangeability required, not established; formal gates separate"
+    },
+    {
+      "id": "F50-P009",
+      "method": "Conformal prediction sets",
+      "environment": "ENV-50",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F50-P009.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/uncertainty.py",
+          "src/veri_ufku/modeling/baseline.py",
+          "src/veri_ufku/modeling/lifecycle.py",
+          "src/veri_ufku/modeling/classification.py",
+          "src/veri_ufku/modeling/regression.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/storage/validation_store.py",
+          "src/veri_ufku/storage/model_store.py",
+          "src/veri_ufku/domain/capabilities.py",
+          "src/veri_ufku/ui/validation.py",
+          "src/veri_ufku/ui/workspace.py",
+          "src/veri_ufku/ui/qml/UncertaintyPanel.qml",
+          "src/veri_ufku/ui/qml/ReliabilityDiagram.qml",
+          "src/veri_ufku/ui/qml/ValidationPanel.qml",
+          "src/veri_ufku/ui/qml/ClassificationPanel.qml",
+          "src/veri_ufku/ui/qml/RegressionPanel.qml"
+        ]
+      },
+      "V": {
+        "id": "F50-P009.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_uncertainty.py",
+          "tests/test_uncertainty_gui.py",
+          "docs/evidence/phase50/source-core.xml",
+          "docs/evidence/phase50/wheel-core.xml",
+          "docs/evidence/phase50/source-ui.xml",
+          "docs/evidence/phase50/source-forest-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F50-P009.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F50-P009.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-uncertainty"
+      },
+      "P": {
+        "id": "F50-P009.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel.json",
+          "docs/evidence/phase50/frozen-head.json"
+        ]
+      },
+      "limits": "1000rows/32features; logistic/forest calibration; Ridge/forest residual; gradient quantile/CQR; family/sparse/weights/TF-IDF unsupported; exchangeability required, not established; formal gates separate"
+    },
+    {
+      "id": "F50-P010",
+      "method": "Calibrator threshold persistence",
+      "environment": "ENV-50",
+      "date": "2026-10-13",
+      "validation": "verified bounded native workflow",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F50-P010.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/uncertainty.py",
+          "src/veri_ufku/modeling/baseline.py",
+          "src/veri_ufku/modeling/lifecycle.py",
+          "src/veri_ufku/modeling/classification.py",
+          "src/veri_ufku/modeling/regression.py",
+          "src/veri_ufku/modeling/validation.py",
+          "src/veri_ufku/storage/validation_store.py",
+          "src/veri_ufku/storage/model_store.py",
+          "src/veri_ufku/domain/capabilities.py",
+          "src/veri_ufku/ui/validation.py",
+          "src/veri_ufku/ui/workspace.py",
+          "src/veri_ufku/ui/qml/UncertaintyPanel.qml",
+          "src/veri_ufku/ui/qml/ReliabilityDiagram.qml",
+          "src/veri_ufku/ui/qml/ValidationPanel.qml",
+          "src/veri_ufku/ui/qml/ClassificationPanel.qml",
+          "src/veri_ufku/ui/qml/RegressionPanel.qml"
+        ]
+      },
+      "V": {
+        "id": "F50-P010.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_uncertainty.py",
+          "tests/test_uncertainty_gui.py",
+          "docs/evidence/phase50/source-core.xml",
+          "docs/evidence/phase50/wheel-core.xml",
+          "docs/evidence/phase50/source-ui.xml",
+          "docs/evidence/phase50/source-forest-ui.xml"
+        ]
+      },
+      "G": {
+        "id": "F50-P010.G",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json"
+        ]
+      },
+      "H": {
+        "id": "F50-P010.H",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ],
+        "article": "model-uncertainty"
+      },
+      "P": {
+        "id": "F50-P010.P",
+        "status": "verified",
+        "paths": [
+          "docs/evidence/phase50/source-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel-gui/walkthrough.json",
+          "docs/evidence/phase50/wheel.json",
+          "docs/evidence/phase50/frozen-head.json"
+        ]
+      },
+      "limits": "1000rows/32features; logistic/forest calibration; Ridge/forest residual; gradient quantile/CQR; family/sparse/weights/TF-IDF unsupported; exchangeability required, not established; formal gates separate"
+    }
+  ]
+}

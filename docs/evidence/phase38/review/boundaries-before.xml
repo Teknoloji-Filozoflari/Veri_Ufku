@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="8" time="0.406" timestamp="2026-10-11T20:19:38.480675+03:00" hostname="s-oktay"><testcase classname="tests.test_geo_boundaries" name="test_measured_geometry_never_silently_loses_m" time="0.000"><failure message="Failed: DID NOT RAISE ProjectError">tests/test_geo_boundaries.py:19: in test_measured_geometry_never_silently_loses_m
+    with pytest.raises(ProjectError, match="M"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ProjectError</failure></testcase><testcase classname="tests.test_geo_boundaries" name="test_geographic_limits_use_crs_angular_units" time="0.001"><failure message="veri_ufku.storage.project_model.ProjectError: Longitude/latitude sınırı veya eksen sırası yanlış; x=longitude,y=latitude.">tests/test_geo_boundaries.py:28: in test_geographic_limits_use_crs_angular_units
+    geographic_check([shapely.Point(0, 99)], system)
+src/veri_ufku/geo/core.py:83: in geographic_check
+    raise ProjectError(
+E   veri_ufku.storage.project_model.ProjectError: Longitude/latitude sınırı veya eksen sırası yanlış; x=longitude,y=latitude.</failure></testcase><testcase classname="tests.test_geo_boundaries" name="test_collection_points_do_not_form_an_antimeridian_edge" time="0.001"><failure message="veri_ufku.storage.project_model.ProjectError: Antimeridian geçişi: açık split/wrap gerekir; düzlemsel eşleşme yapılmadı.">tests/test_geo_boundaries.py:36: in test_collection_points_do_not_form_an_antimeridian_edge
+    geographic_check(
+src/veri_ufku/geo/core.py:96: in geographic_check
+    raise ProjectError(
+E   veri_ufku.storage.project_model.ProjectError: Antimeridian geçişi: açık split/wrap gerekir; düzlemsel eşleşme yapılmadı.</failure></testcase><testcase classname="tests.test_geo_boundaries" name="test_complex_raster_never_discards_imaginary_values[complex64]" time="0.029"><failure message="Failed: DID NOT RAISE ProjectError">tests/test_geo_boundaries.py:62: in test_complex_raster_never_discards_imaginary_values
+    with pytest.raises(ProjectError, match="complex"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ProjectError</failure></testcase><testcase classname="tests.test_geo_boundaries" name="test_complex_raster_never_discards_imaginary_values[complex128]" time="0.005"><failure message="Failed: DID NOT RAISE ProjectError">tests/test_geo_boundaries.py:62: in test_complex_raster_never_discards_imaginary_values
+    with pytest.raises(ProjectError, match="complex"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ProjectError</failure></testcase><testcase classname="tests.test_geo_boundaries" name="test_moran_is_invariant_to_scale_without_float_overflow[1e-200]" time="0.002"><failure message="assert nan == 0 ± 1.0e-12&#10;  &#10;  comparison failed&#10;  Obtained: nan&#10;  Expected: 0 ± 1.0e-12">tests/test_geo_boundaries.py:74: in test_moran_is_invariant_to_scale_without_float_overflow
+    assert report["I"] == pytest.approx(0)
+E   assert nan == 0 ± 1.0e-12
+E     
+E     comparison failed
+E     Obtained: nan
+E     Expected: 0 ± 1.0e-12</failure></testcase><testcase classname="tests.test_geo_boundaries" name="test_moran_is_invariant_to_scale_without_float_overflow[1e+200]" time="0.001" /><testcase classname="tests.test_geo_boundaries" name="test_moran_is_invariant_to_scale_without_float_overflow[1e+307]" time="0.001" /></testsuite></testsuites>

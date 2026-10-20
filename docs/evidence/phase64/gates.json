@@ -1,0 +1,65 @@
+{
+  "recorded_at": "2026-10-15T19:09:49.064Z",
+  "environment": "ENV-64 CPython3.13.15 .venv",
+  "checks": [
+    {
+      "command": ".venv/bin/python scripts/check_docs.py",
+      "chunk_id": "a7d25e",
+      "wall_time_seconds": 0.110225247,
+      "exit_code": 0,
+      "original_token_count": 19,
+      "output": "PASS: 76 phases, source requirements, evidence, progress and local links\n"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_artifacts.py",
+      "chunk_id": "ffd750",
+      "wall_time_seconds": 0.021902568,
+      "exit_code": 0,
+      "original_token_count": 27,
+      "output": "PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee\n"
+    },
+    {
+      "command": ".venv/bin/python scripts/check_learning.py",
+      "chunk_id": "d615e8",
+      "wall_time_seconds": 0.000010881,
+      "session_id": 60662,
+      "original_token_count": 17,
+      "output": "PASS: 400 offline articles; 186 UI bindings; all capability links\n",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/check_usability.py",
+      "chunk_id": "13fe80",
+      "wall_time_seconds": 0.000008415,
+      "session_id": 69092,
+      "original_token_count": 19,
+      "output": "PASS: 400 articles; 954 named fields; 189 finished core English messages\n",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/ruff check src tests scripts",
+      "chunk_id": "a6aaec",
+      "wall_time_seconds": 0.00001059,
+      "exit_code": 0,
+      "original_token_count": 5,
+      "output": "All checks passed!\n"
+    },
+    {
+      "command": ".venv/bin/ruff format --check src tests scripts",
+      "chunk_id": "539b4e",
+      "wall_time_seconds": 0.000009968,
+      "exit_code": 0,
+      "original_token_count": 7,
+      "output": "460 files already formatted\n"
+    },
+    {
+      "command": ".venv/bin/python -m unittest discover -s tests -p test_document_contracts.py",
+      "chunk_id": "0f4611",
+      "wall_time_seconds": 0.000006953,
+      "session_id": 55280,
+      "original_token_count": 29,
+      "output": "..............\n----------------------------------------------------------------------\nRan 14 tests in 15.047s\n\nOK\n",
+      "exit_code": 0
+    }
+  ]
+}

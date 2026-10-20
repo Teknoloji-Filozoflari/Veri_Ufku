@@ -1,0 +1,710 @@
+{
+  "id": "E54-ACCEPTANCE",
+  "environment": "ENV-54",
+  "date": "2026-10-14T16:45:33.154609+00:00",
+  "records": [
+    {
+      "id": "F54-P001",
+      "capability": "model.signal.schema",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P001.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P001.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P001.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/schema/run.json",
+          "docs/evidence/phase54/wheel-gui/schema/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P001.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P001.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P002",
+      "capability": "model.signal.resample",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P002.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P002.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P002.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/resample/run.json",
+          "docs/evidence/phase54/wheel-gui/resample/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P002.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P002.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P003",
+      "capability": "model.signal.detrend",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P003.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P003.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P003.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/detrend/run.json",
+          "docs/evidence/phase54/wheel-gui/detrend/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P003.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P003.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P004",
+      "capability": "model.signal.window",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P004.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P004.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P004.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/window/run.json",
+          "docs/evidence/phase54/wheel-gui/window/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P004.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P004.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P005",
+      "capability": "model.signal.fft",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P005.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P005.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P005.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/fft/run.json",
+          "docs/evidence/phase54/wheel-gui/fft/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P005.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P005.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P006",
+      "capability": "model.signal.welch",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P006.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P006.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P006.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/welch/run.json",
+          "docs/evidence/phase54/wheel-gui/welch/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P006.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P006.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P007",
+      "capability": "model.signal.stft",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P007.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P007.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P007.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/stft/run.json",
+          "docs/evidence/phase54/wheel-gui/stft/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P007.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P007.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P008",
+      "capability": "model.signal.spectrogram",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P008.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P008.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P008.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/spectrogram/run.json",
+          "docs/evidence/phase54/wheel-gui/spectrogram/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P008.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P008.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P009",
+      "capability": "model.signal.peak",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P009.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P009.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P009.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/peak/run.json",
+          "docs/evidence/phase54/wheel-gui/peak/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P009.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P009.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P010",
+      "capability": "model.signal.filter",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P010.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P010.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P010.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/filter/run.json",
+          "docs/evidence/phase54/wheel-gui/filter/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P010.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P010.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P011",
+      "capability": "model.signal.zero-phase",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P011.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P011.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P011.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/zero-phase/run.json",
+          "docs/evidence/phase54/wheel-gui/zero-phase/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P011.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P011.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P012",
+      "capability": "model.signal.events",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P012.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P012.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P012.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/events/run.json",
+          "docs/evidence/phase54/wheel-gui/events/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P012.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P012.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    },
+    {
+      "id": "F54-P013",
+      "capability": "model.signal.classification",
+      "environment": "ENV-54",
+      "date": "2026-10-14",
+      "status": "verified bounded native",
+      "scope": "zorunlu",
+      "limits": "32768rows/16recordings/8channels/8192samples perrecord,131072STFTcells/2000windows. Regular numeric time only; irregular FFT/Lomb-Scargle unsupported. Offline zero-phase/polyphase/full-record detrend; online means causal transformation validation, not streaming serving. Analog bandwidth declaration does not prove no aliasing. Complete feature windows only, incomplete tail remains in source. Fixed block-isolated StandardScaler+LogisticRegression, no tuning/final test/new-file fitted prediction. Safe JSON numeric diagnostics, no executable model persistence. Generic Phase52 run registry view/capture preserved; native signal model comparison not inferred.",
+      "C": {
+        "id": "F54-P013.C",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/modeling/signals.py",
+          "src/veri_ufku/modeling/signal_contracts.py",
+          "src/veri_ufku/storage/time_series_store.py",
+          "src/veri_ufku/ui/time_series.py"
+        ]
+      },
+      "V": {
+        "id": "F54-P013.V",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-core.xml",
+          "docs/evidence/phase54/wheel-core.xml"
+        ]
+      },
+      "G": {
+        "id": "F54-P013.G",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/source-ui.xml",
+          "docs/evidence/phase54/source-gui/walkthrough.json",
+          "docs/evidence/phase54/wheel-gui/walkthrough.json",
+          "docs/evidence/phase54/source-gui/classification/run.json",
+          "docs/evidence/phase54/wheel-gui/classification/run.json"
+        ]
+      },
+      "H": {
+        "id": "F54-P013.H",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F54-P013.P",
+        "status": "verified within bounded native flow",
+        "paths": [
+          "docs/evidence/phase54/wheel.json",
+          "docs/evidence/phase54/frozen-head.json"
+        ]
+      }
+    }
+  ],
+  "formal_phase": "sürüyor/deneysel/zorunlu; prior formal gates open"
+}

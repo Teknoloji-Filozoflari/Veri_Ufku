@@ -1,0 +1,22 @@
+{
+  "id": "E46-VISUAL",
+  "date": "2026-10-12",
+  "environment": "ENV-46",
+  "reviewer": "Developer image inspection, not human/AT/physical desktop acceptance",
+  "reviewed": [
+    "pre-column-map-source-gui/dimension_pca-default/diagnostic_png.png",
+    "pre-column-map-source-gui/dimension_sequential-default/diagnostic_png.png",
+    "source-gui/dimension_sequential-default/diagnostic_png.png",
+    "source-gui/dimension_pca-model_input/dimensionLoadings-1000.png"
+  ],
+  "findings": [
+    "Embedding uses monochrome points, no real class labels or test rows",
+    "Selected-feature frequency is original feature support, not causal importance",
+    "Feature-axis ticks made discrete integer indices in final artifact; companion JSON now exports source_columns name/ColumnId mapping",
+    "Full purpose/fit n/seed and approximate projection limits accompany PNG",
+    "Final 1000px actual QML loading rows resolve original names x0..x3; direction and loading values distinct",
+    "Final safe inverse result contains input/output feature-order mapping and approximation warning"
+  ],
+  "automated_coverage": "12source+12wheel cases;96+96PNG/60+60safe exported artifacts;UMAP compute not run",
+  "limits": "Human usability, AT, physical desktop, minimum hardware, clean offline install and remote CI untested"
+}

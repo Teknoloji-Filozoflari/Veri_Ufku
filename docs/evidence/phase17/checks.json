@@ -1,0 +1,115 @@
+[
+  {
+    "command": [
+      "uv",
+      "sync",
+      "--frozen",
+      "--group",
+      "dev"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/phase17/check-01.txt",
+    "evaluated_at": "2026-10-08T20:02:53.756409+00:00"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check_docs.py"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/phase17/check-02.txt",
+    "evaluated_at": "2026-10-08T20:02:53.805858+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/phase17/check-03.txt",
+    "evaluated_at": "2026-10-08T20:02:56.051363+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_docs.py"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/phase17/check-04.txt",
+    "evaluated_at": "2026-10-08T20:02:56.109482+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_artifacts.py"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/phase17/check-05.txt",
+    "evaluated_at": "2026-10-08T20:02:56.233905+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_learning.py"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/phase17/check-06.txt",
+    "evaluated_at": "2026-10-08T20:02:56.285963+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "."
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/phase17/check-07.txt",
+    "evaluated_at": "2026-10-08T20:02:56.303627+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "--check",
+      "."
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/phase17/check-08.txt",
+    "evaluated_at": "2026-10-08T20:02:56.319227+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "veri-ufku",
+      "--smoke-test"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/phase17/check-09.txt",
+    "evaluated_at": "2026-10-08T20:02:57.601773+00:00"
+  }
+]

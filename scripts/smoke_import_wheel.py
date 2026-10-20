@@ -10,6 +10,7 @@ from PySide6.QtTest import QTest
 
 import veri_ufku
 from veri_ufku.app import create_application
+from veri_ufku.storage.project_model import SCHEMA_VERSION
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -41,7 +42,7 @@ if __name__ == "__main__":
                 if action == "preview":
                     assert imports.ready
             assert projects.draft["datasets"][0]["import_metadata"]["row_count"] == 2
-            assert projects.store.manifest["format_version"] == 4
+            assert projects.store.manifest["format_version"] == SCHEMA_VERSION
             assert source.read_bytes() == original
             assert projects.closeProject() and projects.open(str(base / "project"))
             assert projects.draft["datasets"][0]["import_metadata"]["row_count"] == 2

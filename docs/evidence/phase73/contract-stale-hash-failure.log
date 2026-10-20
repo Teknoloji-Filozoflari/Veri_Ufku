@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/plugins/contract_test.py", line 119, in <module>
+    main()
+    ~~~~^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/plugins/contract_test.py", line 112, in main
+    run(args.manifest, decode(path.read_bytes()), args.trust_code, args.timeout)
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/plugins/contract_test.py", line 45, in run
+    inspected, code = inspect(manifest_path)
+                      ~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/plugins/discovery.py", line 37, in inspect
+    raise ProjectError(
+        "Plugin kod hash'i manifestle uyuşmuyor; güveni yeniden değerlendirin."
+    )
+veri_ufku.storage.project_model.ProjectError: Plugin kod hash'i manifestle uyuşmuyor; güveni yeniden değerlendirin.

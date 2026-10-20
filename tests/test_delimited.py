@@ -430,3 +430,50 @@ def test_completed_worker_artifact_tamper_prevents_publication(tmp_path):
         assert store.path("ACTIVE").read_bytes() == active
     finally:
         store.close()
+
+
+def test_full_file_inference_preserves_codes_precision_and_late_mixed_values(tmp_path):
+    from veri_ufku.importers.delimited import infer_settings
+
+    text = "id,amount,day,flag,mixed,long_number\n"
+    text += "001,1.25,2026-10-10,true,4,123456789012345678\n" * 205
+    text += "002,,2026-10-11,false,unknown,123456789012345679\n"
+    snapshot, work = captured(tmp_path, text)
+    original = Path(snapshot["original"]).read_bytes()
+    settings = infer_settings(snapshot, ImportSettings(infer_types=True))
+    assert settings.types == ("text", "decimal", "date", "boolean", "text", "int64")
+    result = import_snapshot(snapshot, settings, work)
+    frame = pl.read_parquet(result["path"])
+    assert frame["id"][0] == "001"
+    assert frame["amount"][0] == Decimal("1.250000")
+    assert frame["amount"][-1] is None
+    assert frame["day"][0] == date(2026, 10, 10)
+    assert frame["flag"][-1] is False
+    assert frame["mixed"][-1] == "unknown"
+    assert frame["long_number"][-1] == 123456789012345679
+    assert Path(snapshot["original"]).read_bytes() == original
+
+
+def test_inference_keeps_zero_prefixed_and_ambiguous_columns_as_text(tmp_path):
+    from veri_ufku.importers.delimited import infer_settings
+
+    snapshot, _ = captured(
+        tmp_path, "code,n,empty,invalid_date\n012,2,,2026-99-99\n013,3,,2026-10-10\n"
+    )
+    settings = infer_settings(snapshot, ImportSettings(infer_types=True))
+    assert settings.types == ("text", "int64", "text", "text")
+
+
+def test_integer_inference_uses_values_not_identifier_header_or_digit_count(tmp_path):
+    from veri_ufku.importers.delimited import infer_settings
+
+    snapshot, work = captured(
+        tmp_path,
+        "id,code,kimlik,limit\n1,-2,123456789012345678,9223372036854775807\n2,3,123456789012345679,-9223372036854775808\n",
+    )
+    settings = infer_settings(snapshot, ImportSettings(infer_types=True))
+    assert settings.types == ("int64",) * 4
+    result = import_snapshot(snapshot, settings, work)
+    frame = pl.read_parquet(result["path"])
+    assert frame["limit"].to_list() == [2**63 - 1, -(2**63)]
+    assert frame["kimlik"].to_list() == [123456789012345678, 123456789012345679]

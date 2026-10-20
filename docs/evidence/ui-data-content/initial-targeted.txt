@@ -1,0 +1,38 @@
+...................F.......                                              [100%]
+=================================== FAILURES ===================================
+________ test_actual_qt_drop_routes_one_local_tsv_and_rejects_multiple _________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-99/test_actual_qt_drop_routes_one0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f196004ead0>
+
+    def test_actual_qt_drop_routes_one_local_tsv_and_rejects_multiple(
+        tmp_path, monkeypatch
+    ):
+        app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+        source = tmp_path / "sample.tsv"
+        source.write_text("id\tad\n001\tŞule\n")
+        try:
+            window.setProperty("selectedSection", 1)
+>           spin(app, lambda: window.findChild(QQuickItem, "csvDropArea").isVisible())
+
+tests/test_import_gui.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+app = <PySide6.QtGui.QGuiApplication(0x29b0d950) at 0x7f193b35e3c0>
+predicate = <function test_actual_qt_drop_routes_one_local_tsv_and_rejects_multiple.<locals>.<lambda> at 0x7f18d4b460c0>
+timeout = 20000
+
+    def spin(app, predicate, timeout=20000):
+        deadline = time.monotonic() + timeout / 1000
+        while time.monotonic() < deadline:
+            app.processEvents()
+            if predicate():
+                return
+            QTest.qWait(10)
+>       raise AssertionError("Import GUI condition timed out")
+E       AssertionError: Import GUI condition timed out
+
+tests/test_import_gui.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_import_gui.py::test_actual_qt_drop_routes_one_local_tsv_and_rejects_multiple
+1 failed, 26 passed in 33.36s

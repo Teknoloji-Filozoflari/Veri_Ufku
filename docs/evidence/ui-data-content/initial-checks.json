@@ -1,0 +1,190 @@
+[
+  {
+    "name": "format",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "src/veri_ufku/analytics/contracts.py",
+      "src/veri_ufku/ui/dataset.py",
+      "tests/test_dataset.py",
+      "tests/test_dataset_gui.py"
+    ],
+    "date": "2026-10-08T22:32:47.395694+00:00",
+    "exit": 0,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/format.txt"
+  },
+  {
+    "name": "sync",
+    "command": [
+      "uv",
+      "sync",
+      "--locked",
+      "--group",
+      "dev"
+    ],
+    "date": "2026-10-08T22:32:47.436808+00:00",
+    "exit": 0,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/sync.txt"
+  },
+  {
+    "name": "system-docs",
+    "command": [
+      "python3",
+      "scripts/check_docs.py"
+    ],
+    "date": "2026-10-08T22:32:47.445864+00:00",
+    "exit": 0,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/system-docs.txt"
+  },
+  {
+    "name": "docs",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_docs.py"
+    ],
+    "date": "2026-10-08T22:32:47.494566+00:00",
+    "exit": 0,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/docs.txt"
+  },
+  {
+    "name": "artifacts",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_artifacts.py"
+    ],
+    "date": "2026-10-08T22:32:47.551149+00:00",
+    "exit": 0,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/artifacts.txt"
+  },
+  {
+    "name": "learning",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_learning.py"
+    ],
+    "date": "2026-10-08T22:32:47.670774+00:00",
+    "exit": 0,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/learning.txt"
+  },
+  {
+    "name": "ruff",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "date": "2026-10-08T22:32:47.724376+00:00",
+    "exit": 0,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/ruff.txt"
+  },
+  {
+    "name": "format-check",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "date": "2026-10-08T22:32:47.740629+00:00",
+    "exit": 0,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/format-check.txt"
+  },
+  {
+    "name": "targeted",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "pytest",
+      "-q",
+      "tests/test_dataset.py",
+      "tests/test_dataset_gui.py",
+      "tests/test_import_gui.py",
+      "tests/test_science_roadmap_gui.py"
+    ],
+    "date": "2026-10-08T22:32:47.757749+00:00",
+    "exit": 1,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/targeted.txt"
+  },
+  {
+    "name": "pytest",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "pytest",
+      "-q"
+    ],
+    "date": "2026-10-08T22:33:21.572545+00:00",
+    "exit": 1,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/pytest.txt"
+  },
+  {
+    "name": "unittest",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "date": "2026-10-08T22:36:02.537436+00:00",
+    "exit": 0,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/unittest.txt"
+  },
+  {
+    "name": "system-unittest",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "date": "2026-10-08T22:36:04.744378+00:00",
+    "exit": 1,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/system-unittest.txt"
+  },
+  {
+    "name": "entry",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "veri-ufku",
+      "--smoke-test"
+    ],
+    "date": "2026-10-08T22:36:05.929229+00:00",
+    "exit": 0,
+    "path": "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-content/entry.txt"
+  }
+]

@@ -130,10 +130,29 @@ class StructuredSettings:
     date_format: str = "%Y-%m-%d"
     timezone: str = ""
     native_schema: dict = field(default_factory=dict)
+    schema_policy: str = "strict"
+    format_metadata: dict = field(default_factory=dict)
+    widths: tuple[int, ...] = ()
+    encoding: str = "utf-8"
+    max_rows: int = 10000000
+    weight_column: str = ""
+    array_variable: str = ""
+    array_slice: dict = field(default_factory=dict)
+    array_coordinates: tuple[str, ...] = ()
+    array_decode: bool = False
+    array_unit: str = ""
+    geo_crs: str = ""
+    geo_geometry: str = ""
+    geo_band: int = 1
+    geo_window: tuple = ()
 
     def __post_init__(self):
         if self.adapter_id not in (
             "json",
+            "image_dataset",
+            "audio_dataset",
+            "graphml",
+            "gexf",
             "jsonl",
             "xlsx",
             "parquet",
@@ -141,8 +160,48 @@ class StructuredSettings:
             "sqlite",
             "ipc",
             "ipc_stream",
+            "parquet_dataset",
+            "arrow_dataset",
+            "avro",
+            "orc",
+            "hdf5",
+            "xml",
+            "fixed_width",
+            "spss",
+            "stata",
+            "sas",
+            "netcdf",
+            "zarr",
+            "hdf5_array",
+            "geojson",
+            "geopackage",
+            "shapefile",
+            "geoparquet",
+            "geotiff",
         ):
             raise ProjectError("Adaptör bulunamadı.")
+        if (
+            not isinstance(self.geo_crs, str)
+            or len(self.geo_crs) > 4096
+            or not isinstance(self.geo_geometry, str)
+            or len(self.geo_geometry) > 200
+            or type(self.geo_band) is not int
+            or not 1 <= self.geo_band <= 1024
+            or not isinstance(self.geo_window, (tuple, list))
+        ):
+            raise ProjectError("Geo seçim ayarları geçersiz.")
+        if (
+            not isinstance(self.array_variable, str)
+            or len(self.array_variable) > 4096
+            or not isinstance(self.array_unit, str)
+            or len(self.array_unit) > 100
+            or type(self.array_decode) is not bool
+            or not isinstance(self.array_slice, dict)
+            or len(self.array_slice) > 8
+            or len(self.array_coordinates) > 32
+            or any(not isinstance(n, str) for n in self.array_coordinates)
+        ):
+            raise ProjectError("Array seçim ayarları geçersiz.")
         if any(
             not isinstance(getattr(self, k), str) or len(getattr(self, k)) > 4096
             for k in ("record_path", "sheet", "cell_range", "date_format", "timezone")
@@ -172,7 +231,9 @@ class StructuredSettings:
             or len(set(self.expand_lists)) != len(self.expand_lists)
         ):
             raise ProjectError("En fazla8 farklı JSON Pointer listesi seçin.")
-        for pointer in (self.record_path, *self.expand_lists):
+        for pointer in (
+            (self.record_path,) if self.adapter_id != "xml" else ()
+        ) + self.expand_lists:
             if pointer and (
                 not pointer.startswith("/") or re.search(r"~(?![01])", pointer)
             ):
@@ -200,6 +261,31 @@ class StructuredSettings:
             if not isinstance(key, str) or len(key) > 4096:
                 raise ProjectError("Native sütun adı geçersiz.")
             restore(value)
+        if self.schema_policy not in ("strict", "union"):
+            raise ProjectError("Şema çözümü strict veya union olmalı.")
+        if (
+            not isinstance(self.format_metadata, dict)
+            or len(
+                json.dumps(
+                    self.format_metadata, ensure_ascii=False, allow_nan=False
+                ).encode()
+            )
+            > 262144
+        ):
+            raise ProjectError(
+                "Format metadata256KiB sınırını aştı; metadata kaybedilmedi, import durdu."
+            )
+        if (
+            len(self.widths) > 256
+            or any(type(w) is not int or not 1 <= w <= 1048576 for w in self.widths)
+            or sum(self.widths) > 1048576
+            or self.encoding not in ("utf-8", "cp1254", "iso8859-9")
+            or type(self.max_rows) is not int
+            or not 1 <= self.max_rows <= 10000000
+            or not isinstance(self.weight_column, str)
+            or len(self.weight_column) > 4096
+        ):
+            raise ProjectError("Sabit genişlik/encoding/satır/ağırlık sınırı geçersiz.")
         if self.adapter_id in ("parquet", "ipc", "ipc_stream") and (
             self.types or self.flatten or self.expand_lists
         ):
@@ -210,7 +296,14 @@ class StructuredSettings:
     @classmethod
     def from_dict(cls, value):
         data = dict(value)
-        for key in ("expand_lists", "types", "column_names"):
+        for key in (
+            "expand_lists",
+            "types",
+            "column_names",
+            "widths",
+            "array_coordinates",
+            "geo_window",
+        ):
             data[key] = tuple(data.get(key, ()))
         try:
             return cls(**data)

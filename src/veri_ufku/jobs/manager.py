@@ -24,20 +24,14 @@ from veri_ufku.domain.contracts import (
     Progress,
     Provenance,
 )
+from veri_ufku.jobs.admission import capacity, reservations, start
+from veri_ufku.jobs.resources import process_tree, rss_bytes
 from veri_ufku.jobs.workers import BudgetExceeded, Canceled, process_entry, run_fixture
 from veri_ufku.storage.workspace import (
     create_workspace,
     remove_workspace,
     workspace_bytes,
 )
-
-
-def rss_bytes(pid):
-    try:
-        with open(f"/proc/{pid}/statm") as file:
-            return int(file.read().split()[1]) * os.sysconf("SC_PAGE_SIZE")
-    except (OSError, ValueError, IndexError):
-        return 0
 
 
 @dataclass
@@ -84,6 +78,11 @@ class JobManager:
             "max_wall_seconds",
             "sample_limit_rows",
             "cancel_grace_ms",
+            "threads_per_process",
+            "max_processes",
+            "max_tasks",
+            "device_memory_bytes",
+            "transfer_bytes",
         ):
             if getattr(spec.budget, name) > getattr(self.budget, name):
                 raise ValueError("Requested budget exceeds manager budget")
@@ -93,7 +92,7 @@ class JobManager:
             pending = [
                 r for r in self._records.values() if not r.snapshot.state.terminal
             ]
-            if len(pending) >= 32:
+            if len(pending) >= min(32, self.budget.max_tasks):
                 raise ValueError("Job queue is full")
             # Bounded in-memory history; remove oldest terminal entries only.
             if len(self._records) >= 64:
@@ -212,6 +211,8 @@ class JobManager:
             messages.put(("error", ("worker", type(error).__name__)))
 
     def _start(self, record, execution):
+        if execution == ExecutionKind.CPU and not capacity(record.snapshot.spec.budget):
+            return
         spec = record.snapshot.spec
         required_temp = (
             0 if execution == ExecutionKind.CPU else spec.parameters.units * 4096
@@ -248,7 +249,7 @@ class JobManager:
                     args=(spec, str(record.workspace), record.cancel, sender),
                     name="veri-ufku-cpu",
                 )
-                record.runner.start()
+                start(record.runner, record.snapshot.spec.budget)
                 sender.close()
                 pid = record.runner.pid
             else:
@@ -333,11 +334,12 @@ class JobManager:
                         for r in self._records.values()
                         if r.runner and not r.snapshot.state.terminal
                     ]
+                    pids = set()
+                    for process, _ in reservations():
+                        if process.pid:
+                            pids.update(process_tree(process.pid))
                     total_rss = rss_bytes(os.getpid()) + sum(
-                        rss_bytes(r.snapshot.worker_pid)
-                        for r in running
-                        if get_capability(r.snapshot.spec.capability_id).execution
-                        == ExecutionKind.CPU
+                        rss_bytes(pid) for pid in pids
                     )
                     total_disk = sum(
                         workspace_bytes(r.workspace) for r in running if r.workspace

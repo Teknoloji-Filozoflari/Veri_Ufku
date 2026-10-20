@@ -1,0 +1,65 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_human_review_transfers_with_original_artifact_context __________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-145/test_human_review_transfers_wi0')
+
+    def test_human_review_transfers_with_original_artifact_context(tmp_path):
+        store, r, work = prepare(tmp_path, pl.DataFrame({"x": [1.0, 2.0]}))
+        with closing(store):
+            first, _, _ = bundle(store, spec(), work, tmp_path)
+            opened = open_bundle(first)
+            bound = storage.subject(
+                opened["projection"], "dataset:" + r["version_id"], opened["fingerprint"]
+            )
+            state = storage.append_review(
+                store,
+                store.state,
+                bound,
+                "Yerel inceleyen",
+                "Özgün sürüm yorumu.",
+                dict.fromkeys(storage.CHECKS, True),
+                "defer",
+            )
+            original = copy.deepcopy(state["results"][-1]["review_event"])
+>           path, _, _ = bundle(store, spec("full-copy"), work, tmp_path)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_share.py:494: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_share.py:29: in bundle
+    result = build(req, s, work, path, p["preview_hash"], allow)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = {'action': 'preview', 'spec': {'mode': 'full-copy', 'version': '', 'rows': 2, 'keep_numeric': [], ...}, 'state': {'nam...'f48b530b-a696-4cd9-bc60-d12b727f0bfa', 'commit_id': 'cf1dd083-82bb-456e-b949-f2dce76e53dc', 'schema_version': 7}, ...}
+parameters = {'mode': 'full-copy', 'version': '', 'rows': 2, 'keep_numeric': [], ...}
+workspace = PosixPath('/tmp/pytest-of-s-oktay/pytest-145/test_human_review_transfers_wi0/work')
+destination = PosixPath('/tmp/pytest-of-s-oktay/pytest-145/test_human_review_transfers_wi0/06c88124d479407ba265dc8b2d801933.vushare')
+preview_hash = 'ba7c558674cc95dc094622406d77f3d16a2a6afa0ee45d94a40cdc37fef3511d'
+allow_pii = False
+control = <veri_ufku.importers.delimited.Control object at 0x7f937342b9b0>
+
+    def build(
+        request,
+        parameters,
+        workspace,
+        destination,
+        preview_hash,
+        allow_pii=False,
+        control=None,
+    ):
+        from veri_ufku.exports.files import publish
+    
+        control = control or Control()
+        p, members = prepare(request, parameters, workspace, control)
+        if p["preview_hash"] != preview_hash or p["blocked"]:
+>           raise ProjectError(
+                "Önizleme değişti veya secret/taranamayan içerik var; paylaşım reddedildi."
+            )
+E           veri_ufku.storage.project_model.ProjectError: Önizleme değişti veya secret/taranamayan içerik var; paylaşım reddedildi.
+
+src/veri_ufku/exports/share_bundle.py:417: ProjectError
+=========================== short test summary info ============================
+FAILED tests/test_share.py::test_human_review_transfers_with_original_artifact_context
+1 failed in 1.99s

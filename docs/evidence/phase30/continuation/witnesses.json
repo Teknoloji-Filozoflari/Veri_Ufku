@@ -1,0 +1,167 @@
+{
+  "date": "2026-10-11T06:16:08.617634+00:00",
+  "environment": "ENV-30-CONTINUATION",
+  "junit": "pytest.xml",
+  "suite": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "761",
+    "time": "463.803",
+    "timestamp": "2026-10-11T09:07:59.311180+03:00",
+    "hostname": "s-oktay"
+  },
+  "witnesses": [
+    {
+      "requirement": "F30-P001",
+      "adapter": "parquet_dataset",
+      "tests": [
+        "tests.test_advanced_import::test_format_native_metadata_publish_reopen[parquet_dataset]",
+        "tests.test_advanced_import_gui::test_gui_format_selection_worker_save_reopen[parquet_dataset]"
+      ],
+      "result": "passed",
+      "large_preview_cancel": "passed: wheel-large.json",
+      "acceptance": "doğrulandı"
+    },
+    {
+      "requirement": "F30-P002",
+      "adapter": "arrow_dataset",
+      "tests": [
+        "tests.test_advanced_import::test_format_native_metadata_publish_reopen[arrow_dataset]",
+        "tests.test_advanced_import_gui::test_gui_format_selection_worker_save_reopen[arrow_dataset]"
+      ],
+      "result": "passed",
+      "large_preview_cancel": "passed: wheel-large.json",
+      "acceptance": "doğrulandı"
+    },
+    {
+      "requirement": "F30-P003",
+      "adapter": "avro",
+      "tests": [
+        "tests.test_advanced_import::test_format_native_metadata_publish_reopen[avro]",
+        "tests.test_advanced_import_gui::test_gui_format_selection_worker_save_reopen[avro]"
+      ],
+      "result": "passed",
+      "large_preview_cancel": "passed: wheel-large.json",
+      "acceptance": "doğrulandı"
+    },
+    {
+      "requirement": "F30-P004",
+      "adapter": "orc",
+      "tests": [
+        "tests.test_advanced_import::test_format_native_metadata_publish_reopen[orc]",
+        "tests.test_advanced_import_gui::test_gui_format_selection_worker_save_reopen[orc]"
+      ],
+      "result": "passed",
+      "large_preview_cancel": "passed: wheel-large.json",
+      "acceptance": "doğrulandı"
+    },
+    {
+      "requirement": "F30-P005",
+      "adapter": "hdf5",
+      "tests": [
+        "tests.test_advanced_import::test_format_native_metadata_publish_reopen[hdf5]",
+        "tests.test_advanced_import_gui::test_gui_format_selection_worker_save_reopen[hdf5]"
+      ],
+      "result": "passed",
+      "large_preview_cancel": "passed: wheel-large.json",
+      "acceptance": "doğrulandı"
+    },
+    {
+      "requirement": "F30-P006",
+      "adapter": "xml",
+      "tests": [
+        "tests.test_advanced_import::test_format_native_metadata_publish_reopen[xml]",
+        "tests.test_advanced_import_gui::test_gui_format_selection_worker_save_reopen[xml]"
+      ],
+      "result": "passed",
+      "large_preview_cancel": "passed: wheel-large.json",
+      "acceptance": "doğrulandı"
+    },
+    {
+      "requirement": "F30-P007",
+      "adapter": "fixed_width",
+      "tests": [
+        "tests.test_advanced_import::test_format_native_metadata_publish_reopen[fixed_width]",
+        "tests.test_advanced_import_gui::test_gui_format_selection_worker_save_reopen[fixed_width]"
+      ],
+      "result": "passed",
+      "large_preview_cancel": "passed: wheel-large.json",
+      "acceptance": "doğrulandı"
+    },
+    {
+      "requirement": "F30-P008",
+      "adapter": "spss",
+      "tests": [
+        "tests.test_advanced_import::test_format_native_metadata_publish_reopen[spss]",
+        "tests.test_advanced_import_gui::test_gui_format_selection_worker_save_reopen[spss]"
+      ],
+      "result": "passed",
+      "large_preview_cancel": "passed: wheel-large.json",
+      "acceptance": "doğrulandı"
+    },
+    {
+      "requirement": "F30-P009",
+      "adapter": "stata",
+      "tests": [
+        "tests.test_advanced_import::test_format_native_metadata_publish_reopen[stata]",
+        "tests.test_advanced_import_gui::test_gui_format_selection_worker_save_reopen[stata]"
+      ],
+      "result": "passed",
+      "large_preview_cancel": "passed: wheel-large.json",
+      "acceptance": "doğrulandı"
+    },
+    {
+      "requirement": "F30-P010",
+      "adapter": "sas",
+      "tests": [
+        "tests.test_advanced_import::test_format_native_metadata_publish_reopen[sas]",
+        "tests.test_advanced_import_gui::test_gui_format_selection_worker_save_reopen[sas]"
+      ],
+      "result": "passed",
+      "large_preview_cancel": "not measured",
+      "acceptance": "doğrulandı: tested small sas7bdat variant; large measurement not included"
+    },
+    {
+      "requirement": "F30-P011",
+      "tests": [
+        "tests.test_advanced_import_gui::test_gui_compressed_inputs[gzip]"
+      ],
+      "result": "passed",
+      "acceptance": "doğrulandı"
+    },
+    {
+      "requirement": "F30-P012",
+      "tests": [
+        "tests.test_advanced_import::test_archive_member_paths_rejected[../bad.csv]",
+        "tests.test_advanced_import::test_archive_member_paths_rejected[/bad.csv]",
+        "tests.test_advanced_import::test_archive_member_paths_rejected[a\\\\bad.csv]",
+        "tests.test_advanced_import::test_archive_member_paths_rejected[C:bad.csv]",
+        "tests.test_advanced_import::test_archive_duplicates_links_expansion_and_decoded_budget",
+        "tests.test_advanced_import_gui::test_gui_compressed_inputs[zip]",
+        "tests.test_advanced_import_gui::test_gui_compressed_inputs[dataset_zip]"
+      ],
+      "result": "passed",
+      "acceptance": "doğrulandı"
+    },
+    {
+      "requirement": "F30-P013",
+      "tests": [
+        "tests.test_advanced_import::test_schema_evolution_exact_union_and_incompatible_types",
+        "tests.test_advanced_import::test_nested_schema_evolution_timezone_conflict_and_no_float_promotion",
+        "tests.test_advanced_import::test_publication_changed_source_preserves_previous_commit"
+      ],
+      "result": "passed",
+      "acceptance": "doğrulandı"
+    }
+  ],
+  "phase_status": "sürüyor",
+  "open_requirements": [
+    "DEP-28-02",
+    "DEP-28-03",
+    "DEP-28-04",
+    "DEP-28-05"
+  ],
+  "unmeasured": "Large SAS preview/cancellation; small SAS fixture and native/metadata/QML/reopen witnesses passed."
+}

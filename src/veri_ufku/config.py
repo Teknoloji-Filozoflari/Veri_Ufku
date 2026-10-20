@@ -20,6 +20,13 @@ class AppPaths:
     state: Path
     cache: Path
 
+    @property
+    def data(self):
+        return (
+            Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share"))
+            / "veri_ufku"
+        )
+
     @classmethod
     def discover(cls):
         home = Path.home()
@@ -30,7 +37,7 @@ class AppPaths:
         )
 
     def prepare(self):
-        for path in (self.config, self.state, self.cache):
+        for path in (self.config, self.state, self.cache, self.data):
             path.mkdir(parents=True, exist_ok=True, mode=0o700)
 
 

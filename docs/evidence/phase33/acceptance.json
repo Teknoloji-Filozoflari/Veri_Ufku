@@ -1,0 +1,875 @@
+[
+  {
+    "id": "F33-S001",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/modeling/baseline.py",
+      "src/veri_ufku/statistics/missing_sampling.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected; test_mi_separate_realizations_observed_cells_and_delta_sensitivity",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_mi_separate_realizations_observed_cells_and_delta_sensitivity[mi_mean]",
+        "test_mi_separate_realizations_observed_cells_and_delta_sensitivity[mi_ols]",
+        "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[knn]",
+        "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[iterative]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "preparation_knn/preparation_iterative; mi_mean/mi_ols",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-S002",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/modeling/plan.py",
+      "src/veri_ufku/statistics/missing_sampling.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected; test_mi_separate_realizations_observed_cells_and_delta_sensitivity",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_mi_separate_realizations_observed_cells_and_delta_sensitivity[mi_mean]",
+        "test_mi_separate_realizations_observed_cells_and_delta_sensitivity[mi_ols]",
+        "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[knn]",
+        "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[iterative]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "mi_mean/mi_ols; missing_patterns",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-S003",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_sampling.py",
+      "src/veri_ufku/domain/capabilities.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_seed_sampling_membership_and_cluster_integrity; test_survey_hand_two_strata_nested_psus_and_no_lonely_adjustment",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_survey_hand_two_strata_nested_psus_and_no_lonely_adjustment",
+        "test_seed_sampling_membership_and_cluster_integrity[sample_random]",
+        "test_seed_sampling_membership_and_cluster_integrity[sample_stratified]",
+        "test_seed_sampling_membership_and_cluster_integrity[sample_cluster]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "sample_random/sample_stratified/sample_cluster; weighted_mean/weighted_ols/weighted_fit/survey_mean",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-S004",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_contracts.py",
+      "src/veri_ufku/learning/content/tr.json"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_hand_weighted_mean_semantics_and_reopen_exportable_identity; test_rubin_hand_calculation_and_barnard_rubin_not_average_se; test_bad_weights_rejected_without_mutation",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_rubin_hand_calculation_and_barnard_rubin_not_average_se",
+        "test_hand_weighted_mean_semantics_and_reopen_exportable_identity[frequency-6.25-3]",
+        "test_hand_weighted_mean_semantics_and_reopen_exportable_identity[analytic-18.75-1]",
+        "test_bad_weights_rejected_without_mutation[values0-frequency]",
+        "test_bad_weights_rejected_without_mutation[values1-analytic]",
+        "test_bad_weights_rejected_without_mutation[values2-sample_weight]",
+        "test_bad_weights_rejected_without_mutation[values3-frequency]",
+        "test_bad_weights_rejected_without_mutation[values4-survey]",
+        "test_bad_weights_rejected_without_mutation[values5-analytic]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "all14; five actual F1 contexts",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P001",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_sampling.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_patterns_indicators_null_not_mechanism",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_patterns_indicators_null_not_mechanism"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "missing_patterns",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P002",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/modeling/baseline.py",
+      "src/veri_ufku/statistics/missing_sampling.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_patterns_indicators_null_not_mechanism; test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_patterns_indicators_null_not_mechanism",
+        "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[knn]",
+        "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[iterative]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "missing_indicators; preparation_knn/preparation_iterative",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P003",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/modeling/baseline.py",
+      "src/veri_ufku/modeling/lifecycle.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[knn]",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[knn]",
+        "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[iterative]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "preparation_knn",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P004",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/modeling/baseline.py",
+      "src/veri_ufku/modeling/lifecycle.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[iterative]",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[knn]",
+        "test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[iterative]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "preparation_iterative",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P005",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_sampling.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_rubin_hand_calculation_and_barnard_rubin_not_average_se; test_mi_separate_realizations_observed_cells_and_delta_sensitivity; test_parent_rejects_forged_mi_covariance_before_active",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_rubin_hand_calculation_and_barnard_rubin_not_average_se",
+        "test_mi_separate_realizations_observed_cells_and_delta_sensitivity[mi_mean]",
+        "test_mi_separate_realizations_observed_cells_and_delta_sensitivity[mi_ols]",
+        "test_parent_rejects_forged_mi_covariance_before_active"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "mi_mean/mi_ols",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P006",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_sampling.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_mi_separate_realizations_observed_cells_and_delta_sensitivity[mi_mean]",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_mi_separate_realizations_observed_cells_and_delta_sensitivity[mi_mean]",
+        "test_mi_separate_realizations_observed_cells_and_delta_sensitivity[mi_ols]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "mi_mean/mi_ols",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P007",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_sampling.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_seed_sampling_membership_and_cluster_integrity[sample_random]",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_seed_sampling_membership_and_cluster_integrity[sample_random]",
+        "test_seed_sampling_membership_and_cluster_integrity[sample_stratified]",
+        "test_seed_sampling_membership_and_cluster_integrity[sample_cluster]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "sample_random",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P008",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_sampling.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_seed_sampling_membership_and_cluster_integrity[sample_stratified]",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_seed_sampling_membership_and_cluster_integrity[sample_random]",
+        "test_seed_sampling_membership_and_cluster_integrity[sample_stratified]",
+        "test_seed_sampling_membership_and_cluster_integrity[sample_cluster]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "sample_stratified",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P009",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_sampling.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_seed_sampling_membership_and_cluster_integrity[sample_cluster]",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_seed_sampling_membership_and_cluster_integrity[sample_random]",
+        "test_seed_sampling_membership_and_cluster_integrity[sample_stratified]",
+        "test_seed_sampling_membership_and_cluster_integrity[sample_cluster]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "sample_cluster",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P010",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_sampling.py",
+      "src/veri_ufku/domain/capabilities.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_hand_weighted_mean_semantics_and_reopen_exportable_identity[frequency]; test_bad_weights_rejected_without_mutation",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_hand_weighted_mean_semantics_and_reopen_exportable_identity[frequency-6.25-3]",
+        "test_hand_weighted_mean_semantics_and_reopen_exportable_identity[analytic-18.75-1]",
+        "test_bad_weights_rejected_without_mutation[values0-frequency]",
+        "test_bad_weights_rejected_without_mutation[values1-analytic]",
+        "test_bad_weights_rejected_without_mutation[values2-sample_weight]",
+        "test_bad_weights_rejected_without_mutation[values3-frequency]",
+        "test_bad_weights_rejected_without_mutation[values4-survey]",
+        "test_bad_weights_rejected_without_mutation[values5-analytic]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "weighted_mean",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P011",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_sampling.py",
+      "src/veri_ufku/domain/capabilities.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_hand_weighted_mean_semantics_and_reopen_exportable_identity[analytic]",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_hand_weighted_mean_semantics_and_reopen_exportable_identity[frequency-6.25-3]",
+        "test_hand_weighted_mean_semantics_and_reopen_exportable_identity[analytic-18.75-1]"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "weighted_mean; weighted_ols",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P012",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_sampling.py",
+      "src/veri_ufku/domain/capabilities.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_survey_hand_two_strata_nested_psus_and_no_lonely_adjustment; test_bad_weights_rejected_without_mutation",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_bad_weights_rejected_without_mutation[values0-frequency]",
+        "test_bad_weights_rejected_without_mutation[values1-analytic]",
+        "test_bad_weights_rejected_without_mutation[values2-sample_weight]",
+        "test_bad_weights_rejected_without_mutation[values3-frequency]",
+        "test_bad_weights_rejected_without_mutation[values4-survey]",
+        "test_bad_weights_rejected_without_mutation[values5-analytic]",
+        "test_survey_hand_two_strata_nested_psus_and_no_lonely_adjustment"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "survey_mean",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  },
+  {
+    "id": "F33-P013",
+    "phase": 33,
+    "scope": "zorunlu",
+    "maturity": "deneysel",
+    "validation": "doğrulandı",
+    "date": "2026-10-11",
+    "environment": "ENV-33",
+    "C": [
+      "src/veri_ufku/statistics/missing_sampling.py",
+      "src/veri_ufku/domain/capabilities.py"
+    ],
+    "V": {
+      "path": "tests/test_missing_sampling.py",
+      "cases": "test_sample_weight_linear_loss_without_survey_inference; test_unsupported_weight_old_and_new_methods_rejected",
+      "evidence": "final-targeted.xml",
+      "executed_case_names": [
+        "test_unsupported_weight_old_and_new_methods_rejected",
+        "test_sample_weight_linear_loss_without_survey_inference"
+      ]
+    },
+    "G": {
+      "path": "tests/test_missing_sampling_gui.py",
+      "cases": "weighted_fit",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "H": {
+      "path": "src/veri_ufku/learning/content/tr.json",
+      "content_version": 49,
+      "topics": [
+        "missing-assumptions",
+        "missing-multiple",
+        "sampling-representation",
+        "sampling-bias",
+        "weights-types"
+      ]
+    },
+    "P": {
+      "path": "src/veri_ufku/storage/analysis_store.py",
+      "behavior": "actual export/save/reopen; KNN/iterative safe fitted package roundtrip; immutable source identities",
+      "evidence": [
+        "source-gui/walkthrough.json",
+        "wheel-gui/walkthrough.json"
+      ]
+    },
+    "limitations": "ADR-034; PHASE33.md#e33-limits; official prior gates remain open"
+  }
+]

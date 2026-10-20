@@ -1,0 +1,2346 @@
+{
+  "result": {
+    "comparison": {
+      "schema": "ReproComparison/v1",
+      "status": "matched",
+      "difference_count": 0,
+      "differences": [],
+      "differences_truncated": false,
+      "policy": {
+        "schema": "ReproTolerance/v1",
+        "mode": "numeric",
+        "profile": "Decimal80 profile strings/counts/scope exact; no epsilon for integers/Decimal/identities",
+        "float64_workflow": {
+          "rtol": "1e-9",
+          "atol": "1e-12",
+          "fields": [
+            "coefficients",
+            "predictions"
+          ],
+          "reason": "Bounded OLS Float64 coefficient/matrix prediction; small platform rounding allowance in output units. Not a universal statistical equivalence or conditioning guarantee; inspect differences. Environment/backend lock must still match."
+        },
+        "identities": "RowId/SourceRecordId/ColumnId, integer counts, categories and null masks exact",
+        "supported_method": "workflow"
+      },
+      "reference_hash": "12e2824bf1c9c942c87ca37154a0893f76018742c9a764965bf10fbf21ee25da",
+      "actual_hash": "12e2824bf1c9c942c87ca37154a0893f76018742c9a764965bf10fbf21ee25da",
+      "scope": "defined analytical projection only; timestamps/cache/run UUIDs/visual layout not compared; original source hash must match",
+      "bundle_fingerprint": {
+        "sha256": "f7bf941a88117598cb5c39d90d24fb17f6ace3919d15d905cbd0b29de510c567",
+        "size": 15113
+      },
+      "source_status": "all exact hashes verified",
+      "data_access": "explicit read-only local project",
+      "environment_hash": "145332f69bea3129f69932f65c42ec633733c4c8f0bf59a286da62cf020f3830",
+      "replay_kind": "workflow"
+    },
+    "receipt": {
+      "path": "/tmp/pytest-of-s-oktay/pytest-165/test_gui_workflow_model_numeri0/model.vureprotest",
+      "size": 2772,
+      "sha256": "41b22e8d6ccdf7b55119df3490620df0ab6a944f43910bfca34fe1ee5e7998b4"
+    },
+    "status": "matched"
+  },
+  "preview": {
+    "schema": "ReproPlan/v1",
+    "focus": "result:1283151c-5f04-4670-8e16-42c42f852ed0",
+    "project_id": "b72366e8-4fc7-4e3b-9bfa-4a2d118aeb05",
+    "commit_id": "f8eff1d1-5c8c-4f95-abec-da15fc32343c",
+    "lineage": {
+      "edges": [
+        {
+          "relation": "import_or_source_reference",
+          "source": "source:5a253f8a-b151-4e65-a440-723931dfe9ec",
+          "target": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+        },
+        {
+          "relation": "recorded_dataset_input",
+          "source": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "member_of_run",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "member_of_run",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "member_of_run",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/quality",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "member_of_run",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/summary",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "member_of_run",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "source_snapshot",
+          "source": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source"
+        },
+        {
+          "relation": "typed_dependency",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit"
+        },
+        {
+          "relation": "typed_dependency",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/quality"
+        },
+        {
+          "relation": "typed_dependency",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/summary"
+        },
+        {
+          "relation": "typed_dependency",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict"
+        },
+        {
+          "relation": "typed_dependency",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict"
+        }
+      ],
+      "focus": "result:1283151c-5f04-4670-8e16-42c42f852ed0",
+      "limits": [
+        "Dataset-level links use only recorded identities.",
+        "RowId is not global across all datasets. Multi-source row edges only when a lineage Parquet was recorded; no reverse relation is fabricated.",
+        "Old reports without record IDs trace to dataset only; analyses/models not guessed.",
+        "Current machine information is not historical run hardware."
+      ],
+      "nodes": [
+        {
+          "id": "source:5a253f8a-b151-4e65-a440-723931dfe9ec",
+          "kind": "source",
+          "metadata": {
+            "provenance": "not_recorded",
+            "snapshot": {
+              "fingerprint": {
+                "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4",
+                "size": 840
+              },
+              "uri": "sources/506e5da7-8247-44ba-8f55-4291f1dd03b0.bin"
+            },
+            "source_adapter": "not_recorded",
+            "source_location": "[redacted]",
+            "version": {
+              "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4",
+              "size": 840
+            }
+          }
+        },
+        {
+          "id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+          "kind": "dataset",
+          "metadata": {
+            "dataset_id": "dataset:65ef4bc5-0e55-4acf-8eae-b0ce2aa70453",
+            "row_lineage": {
+              "status": "preserved_identity_or_not_recorded; inspect operation policy"
+            },
+            "rows": 4,
+            "schema": [
+              {
+                "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              },
+              {
+                "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              }
+            ],
+            "schema_contract": "not_recorded",
+            "semantic_metadata": {},
+            "snapshot": {
+              "fingerprint": {
+                "sha256": "db15a10ed9e742e83871c617a798c1e82097a721b9c444d6654173f4c034231b",
+                "size": 4349
+              },
+              "uri": "snapshots/9e8f48bc-0231-40a0-8b4a-88133aae58f5.parquet"
+            },
+            "source_snapshot_id": "snapshot:43962115-a34e-46e1-9d70-2c12b395db72",
+            "version": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0",
+          "kind": "workflow",
+          "metadata": {
+            "capture": {
+              "captured_at": "2026-10-15T21:03:42.567033+00:00",
+              "code_files": {
+                "analytics/__init__.py": "9a40480d4948c6569039dcba9b5eb8500217898bd1082cbf7dc116ea9eb697d1",
+                "analytics/cache.py": "d9bc4a880fbdee9cfec9bcdb2be956bd892472776a162db5f44de7ea800cb810",
+                "analytics/contracts.py": "b48013d36e9aaa985421706a519052cd92877fc3f3f39a0a5cf121127b6a8254",
+                "analytics/dataset.py": "577491b35241d4564f0aa99b801b4676bd3eb7f31e0ff81534178e4f2603ec28",
+                "analytics/inspection.py": "7d32d36f9f4ca19dceb4ed92d70e58724bdb92394ac62f7b2b7195665ad83e46",
+                "analytics/nlp.py": "f44349a7bda3954ddee023a207d0a15c7810e89e653c9052eea6ca787fb31805",
+                "analytics/nlp_contracts.py": "ecd8ebb0fa86054f7717318d553c3125b7fe56bccd4c1252d5eacc07286595ea",
+                "analytics/nlp_models.py": "3bde557209340c1e4c3b03084a09c2a89673de6aedd594d990a3a79c0b45968c",
+                "analytics/quality.py": "26614e90d24781175ee63e890ea820abdc3ba71a338c0a8eac68973ab4f91002",
+                "analytics/text.py": "79162336f36367f36bfb03d403dd1ed2fd13d525544c52065408aefd8aaf3b4d",
+                "analytics/text_contracts.py": "eaa4d0d7e9c82c9eed47276dd770fa6894955496b8c4ffa211ca990b8dbe817c",
+                "analytics/worker.py": "31c63ee72335dade3e877599e1354ac043e3618f550867dc25927460aa026a59",
+                "domain/__init__.py": "2dbb12e6e6559fc7cfeaa0bd919e0daed1a2b0087606b6a80365376ce3600b26",
+                "domain/capabilities.py": "0d305cf2674efd6baf422f6411988830f27fca758b2351d3624bc4f3fe40c57c",
+                "domain/contracts.py": "f876547de14f69c2c21d69a18e4af28ff1d2bb1e86a91d3b517ae7715025503b",
+                "domain/json.py": "460d139d25b367c54bc7535a099ff4de6d8d71af90a4f90914f864e71a18236f",
+                "jobs/__init__.py": "3e422efd1e5f67820bedb952921837211d5a5c953360bd7d6d1f7e69789cbf7d",
+                "jobs/limits.py": "4bbb51c061c186506137e3d46668d6ba16db56ad65f92b34a16f2ec5c4c007e2",
+                "jobs/manager.py": "ad2a6a9a0e9a0cedcc3a0497a59dfda78a3f57ef246a369007a13a64279ea550",
+                "jobs/resources.py": "b73ffbf3420ce72ca4a1dba8b2ac519c2239224b763dea9bab88110656658c19",
+                "jobs/supervision.py": "0cae684cbb07a6f3c8c63b2b8a66c2e3a0f778e5eeb903bc3e851bb6abab7f00",
+                "jobs/workers.py": "2c9c7a58f328ca607b257046b9c07de0c2bd095b7ea282e1b8725d9c81423505",
+                "modeling/__init__.py": "13027d8be106084ca581b11ced17bc5f8f0ddaeb927c7b27f55b2de67d62bb83",
+                "modeling/audio.py": "d125e1d93b972b78ee10ff65803183954168fc740ef10d85d02ff73afe482157",
+                "modeling/audio_contracts.py": "1b89af3b1552ee7e662140129bf8c826f3ffe3995417c84a703cb4269cf220c1",
+                "modeling/audio_features.py": "5a8a49770d396a6a1f1e2963dbbb3c908d04c5b1cdb4f78e313991e129987765",
+                "modeling/audio_speech.py": "d4099523006300c4d8fbab532fa0b9b3a567cb8e8269ab927cebb81a30acdf76",
+                "modeling/baseline.py": "d6a047e1a621524897fc5b2aa7f867a68da3d56aa33957072d4d6f3b47e95625",
+                "modeling/classification.py": "8325bd7adab2baf3925a2028acf69850cbe71677120848972f3cea9e3b3c3ca8",
+                "modeling/code_kernel.py": "1e3f99618d10bb91da46491b9ee77662321cdaceed6555a8dbe20962e39291b0",
+                "modeling/code_workspace.py": "ea2f11789e0d1c80d88550bbb99c26e39682d20552fc58a9b91cae5007c31151",
+                "modeling/contracts.py": "0a013b594dc6710b72001268fe0923fb979fac36ad0602b7c9a640b9248a3f79",
+                "modeling/explanation.py": "a8fd47fed21b142479c966060600aa00595b768e58e1195000b59aa27494dfb7",
+                "modeling/exploration.py": "987bf5fc7419cc0562b8df7cd2e47cd6152d5e6521a2f6e1e6c5c67212820200",
+                "modeling/families.py": "ed4cb3d88c87d673dacc3496d0943995c7ea942401bf8225566e19b3e0268986",
+                "modeling/family_contracts.py": "93528657acdaf3e89ba974923402cfed2e72a1bf610b790d25ee6a3bc4406475",
+                "modeling/graph_contracts.py": "8e3abcfb3eda7ef23b706e72b96450cc84269bd6e9778af4aad19892c536613c",
+                "modeling/graphs.py": "41f6e5de8e39e46bcc1c2af008e32c238b1ba9c025b49b5a6fb9a33c132ddcb4",
+                "modeling/history.py": "89092e5f34ae94b1cb72a21b9b1a6a6f558a57c6f38ed1026146f228cf77db64",
+                "modeling/lifecycle.py": "1c00836f8d9de2ef61b98b600d02b908459234dd3dbb4a31cde226fe81c07f54",
+                "modeling/lifecycle_worker.py": "58cc961b8f4cbc8f651e695ebea6b52c3dbc6b49394700d847627ee22e9b6f84",
+                "modeling/neural.py": "eb7b8fc39fd85fcf73799b3f645bc334a7820ae1a5ca3eb2993a0ff545f5fbc1",
+                "modeling/neural_contracts.py": "72295b0bdb3610743bf6800f391468d0c26dec3b64080fd40ec262044d27921e",
+                "modeling/optional_families.py": "bde8df0efe706a77c3e78c2f6ab44cf35a01ff2ed74b7f80bfdad585009281bd",
+                "modeling/pattern_basket.py": "d6aa38ccd500d04483bbc98445ec503ce65e6c2060ee3ecec9c45611175fa4f7",
+                "modeling/pattern_contracts.py": "b8da3a28b57991b33fa69feee8183700263e9cbe9978bdf5ef432671cd2c0fae",
+                "modeling/pattern_events.py": "d1221869a904132b6756b990ff2367a58d454a325969c4b3c251a73fcc5ea7ea",
+                "modeling/patterns.py": "54232c5beb344f02e067f8f335acfaa1f8a1d4eacb141f3479ac3e2331bbfc97",
+                "modeling/plan.py": "d8a1f6043c9a96da399b74da095f3cc47c6972477984f9b3e085e48376fc6114",
+                "modeling/preparation.py": "bbb6d86e399f61d2d86c85a5b9205680ee4dbc780bfc1854ef4783ee4a82eee1",
+                "modeling/recommendation.py": "bac4167977a62565f2411fe6ec0a6fb08c979cc184e31046db5e1bb8da0e5b85",
+                "modeling/recommendation_contracts.py": "9afadb2ec2ab17a228eeb72d376ead3f28514d87162531974ecc9b9dfb86c6ea",
+                "modeling/recommendation_math.py": "ec585143ec19ec8933b99e74d098cacb51febc3e85265d6e0cfc750862c11a21",
+                "modeling/regression.py": "6fd65943f87ec2fee438e20f16d400a1eafe6cf6ef24e64a5e54eac132da51e8",
+                "modeling/repro_verify.py": "571168935d8a09fb40c15a4760ad09d28f07f1b34e298ff1f6d68578fa5b4e06",
+                "modeling/search.py": "d8b90bb06060477bd8f4d2df0d6c6ece0825c72d9c243ee65cfd5af2e1009fef",
+                "modeling/search_contracts.py": "a82b856b338ed33e25a8d8f9fe340a60008cdd88cfca893fe04c4aaefe27d10e",
+                "modeling/signal_contracts.py": "1edcc6cbdfd13b8af74bfbebaa4c321fc1f4e1eb1ccafc109662e6d3460c66f7",
+                "modeling/signals.py": "04da330a1bd55d8c83fb8c3ca947d27f9b2c4ee5485a4ca40d884bd7f752ce37",
+                "modeling/special_runs.py": "c1b5360c73fc65179c105b8749330746a4acb896293d6726e64e318251503a83",
+                "modeling/special_targets.py": "b0abfbfa39c94f5743537fb2bdaad158b75d015f2bb7c02b4d0f0a013099dd97",
+                "modeling/stream_contracts.py": "41432c3fc518e16a19c55235a5639bc6de61d88d662868e7ee83aa0687870a3d",
+                "modeling/streams.py": "e6a196e8e79025e8beb0dc49162b846579880ef2695689ceed2c48b9fcdb0702",
+                "modeling/temporal.py": "a7f74140fa4a201e559cf3de6ae2a3c66c37c89f70e5373e9433c9289ec8415d",
+                "modeling/temporal_contracts.py": "a7f949827438b4136a0576acc0455feed01400ace0639379f8068d70fc1c6291",
+                "modeling/time_series.py": "3ce5d126a56d8ea5fa5cc277e34a9c9b9246b88dc5472fa030699ff511d1d14c",
+                "modeling/time_series_contracts.py": "7acf1fc8415fab05a533a16691d044fdf4edc539b6a4e047fd5a8bcb7d6449ab",
+                "modeling/uncertainty.py": "18459743f79438daf7236e14e696dd6f9cc7a71388251464f8b1159c38944292",
+                "modeling/unsupervised.py": "f622291e9b889aa7dba7928e22dd716436042edc58349010bfeffe4d9f3fa693",
+                "modeling/unsupervised_contracts.py": "8f695e61dfb7d2e9f04cf075e049fc2ca6b0d85f8f681d13c8c26483fd6c55ea",
+                "modeling/validation.py": "926d32f935b8bafa2154ca6522c2a78462fcec7d12f47c489349542a8d2e8245",
+                "modeling/vision.py": "5fa20f0eb90dab4c85de7e34a49bfb3a9c8369c59c22786645e50010d21f2cf1",
+                "modeling/vision_contracts.py": "09d103e2a0302b461b52109569bf6f5c57e0484806488f9fec7e92d19ce965b1",
+                "modeling/vision_metrics.py": "a9435b6d44d89659a644e15a307e195d3e86ca8e1916349f4cac3b8f4e771bc4",
+                "modeling/worker.py": "7668c26547396f289ea9addcdea95903395f6c0693c76040dbd6c5fad1d7e0f1",
+                "operations/__init__.py": "3057dbc6d9b812bf9b2aad778db59346f32918c18d3855963ded8c84538a2d89",
+                "operations/cleaning.py": "952547f346de6778896e29f7033ed71c977168a11fe99880a6ba0767f6765b17",
+                "operations/cleaning_contracts.py": "2a6e1a9234fe3b62e28af1ff518eb7cb385d34af47eec8b5d9601c7581eb0dc8",
+                "operations/contracts.py": "9147685763df3e70a23a7ac202cbb61301ee2a86a655315977948896ce504851",
+                "operations/data_contracts.py": "abd9a1c68cb13ac27f9c9edc0e91e4d47df018760f6b5ad2c769b9cfb3ddce23",
+                "operations/data_quality.py": "d5475654431190c5a2b0f63490a5c77d017e4fdc6650b3ee8443c42fa0cb8d11",
+                "operations/engine.py": "adedd572483e085070267b48c3a36414d438276429f90ed9de48c482c3bbc233",
+                "operations/formula.py": "73aa71d20562e78d06055e194a41480d86211a5f33a8c915c661af7b7dfb4e5a",
+                "operations/monitoring.py": "0f92c902fb431475d850c331e44dfcc8fe97f3b0c44a51c2e6917cdf68514bf4",
+                "operations/recipe_worker.py": "3d496a1724c200816ca4a183c4a9513d800eedc393cc88d35742d7c3d8b20e53",
+                "operations/recipes.py": "f890531237267f41521ddeea299b5f4b03e023025105b7d39cc74086616a4dd8",
+                "operations/relational.py": "d1c10afd56fbfbea134435b73f589e39a10173680b8e12985f7605436fc52135",
+                "operations/relational_contracts.py": "eb0cef0160b7a0c92c601a407fceec423699032bc8d7fe4b3bba9196c29473da",
+                "operations/types.py": "0fe52eaad36ed00788508b4e28ed0c9a34df55b7ee41e6503127dd4d87bccd87",
+                "operations/worker.py": "f6fef54a9a1374728902e546eac733e33b243eee6ce115c29e0a99062b402435",
+                "operations/workflow.py": "c1047f3f6463a3ba1e554d06dc8c5f283e2b80cc6b703087ae41a4daa87d6534",
+                "operations/workflow_cli.py": "47ad3ee0dcee4cc5adf984d00a6393eb4896e3b88e97d64aa226dddba01c2e7d",
+                "operations/workflow_contracts.py": "9b39ba4b6aed914ee689e3df42588a2cf5613bc463c3f869629eaf61858db642",
+                "operations/workflow_fingerprint.py": "9fa208ef3ce63f000049eb736bf5b1e9af8c82a55f2deea65e55a67df4be0432",
+                "operations/workflow_service.py": "f64433af7adf3cc4e6aebac623b1c516e3577763f116c60a1cd9dee9fd55a012",
+                "storage/experiment_store.py": "f994800d3ba6aae5f30ddffe8f5a777651451523410d68fd92222c577470e4ee",
+                "storage/validation_store.py": "15e4a941263a9018507689559829a009140966815888aa38a7271cb84646aa45"
+              },
+              "code_hash": "99489433f3fabc0939630055c5c205a3776898867b5d217cd5ddcabe2c72bf7a",
+              "config_hash": "32c2fd7c03fb11e22675985a6c8c822f92af0fd1b5a0f11c8faba4ffb97f7a7c",
+              "config_scope": "validation/model options + immutable PipelineId preprocessing reference",
+              "data_access_time": "captured before scheduling; run.data_access_at records first immutable snapshot read boundary",
+              "environment": {
+                "machine": "x86_64",
+                "numpy": "2.5.3",
+                "polars": "2.0.0",
+                "python": "3.13.15",
+                "scikit-learn": "1.9.1",
+                "scipy": "1.18.0",
+                "skops": "0.16.0",
+                "system": "Linux",
+                "veri-ufku": "0.1.0"
+              },
+              "environment_hash": "a968f3834713fe5c140f15dca79af105e865b3503a3b984e42b567eaa0504e92",
+              "hardware": {
+                "captured_at": "same capture boundary",
+                "device": "not_recorded; inspect method spec",
+                "machine": "x86_64",
+                "physical_memory_bytes": 32913383424,
+                "system": "Linux",
+                "visible_cpu_count": 16
+              },
+              "schema": "RunCapture/v1"
+            },
+            "details_artifact": {
+              "fingerprint": {
+                "sha256": "5ef10577f34e25f6136548534dfd8f086febcf7da8f3077cbd8ed4b910d9e2d4",
+                "size": 33508
+              },
+              "uri": "sources/5fab0111-1131-4c38-b810-7d639a940674.bin"
+            },
+            "hardware": {
+              "captured_at": "same capture boundary",
+              "device": "not_recorded; inspect method spec",
+              "machine": "x86_64",
+              "physical_memory_bytes": 32913383424,
+              "system": "Linux",
+              "visible_cpu_count": 16
+            },
+            "legacy_gaps": "Only recorded fields. Package/hardware/code/user decision may be not_recorded.",
+            "model_artifact": "not_recorded",
+            "params": {
+              "plan": {
+                "membership": {
+                  "test": [],
+                  "train": [],
+                  "validation": []
+                },
+                "scope": "bounded DAG run artifacts; no automatic dataset head activation, no evaluation score",
+                "split_id": "dag:90a8d40006eae99fa081c201353ec5beca954728f1bbc6fce96b30b965484269"
+              },
+              "spec": {},
+              "workflow_spec": {
+                "cases": [],
+                "nodes": [
+                  {
+                    "after": [],
+                    "id": "source",
+                    "inputs": {},
+                    "kind": "source",
+                    "method_version": 1,
+                    "params": {
+                      "version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+                    }
+                  },
+                  {
+                    "after": [],
+                    "id": "summary",
+                    "inputs": {
+                      "data": {
+                        "node": "source",
+                        "port": "data"
+                      }
+                    },
+                    "kind": "analysis",
+                    "method_version": 1,
+                    "params": {
+                      "column": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                      "ddof": 1
+                    }
+                  },
+                  {
+                    "after": [],
+                    "id": "quality",
+                    "inputs": {
+                      "data": {
+                        "node": "source",
+                        "port": "data"
+                      }
+                    },
+                    "kind": "quality",
+                    "method_version": 1,
+                    "params": {
+                      "column": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                      "fail_on_null": true
+                    }
+                  },
+                  {
+                    "after": [],
+                    "id": "fit",
+                    "inputs": {
+                      "data": {
+                        "node": "source",
+                        "port": "data"
+                      }
+                    },
+                    "kind": "train",
+                    "method_version": 1,
+                    "params": {
+                      "confirmed": true,
+                      "feature": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                      "target": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81"
+                    }
+                  },
+                  {
+                    "after": [],
+                    "id": "predict",
+                    "inputs": {
+                      "data": {
+                        "node": "source",
+                        "port": "data"
+                      },
+                      "model": {
+                        "node": "fit",
+                        "port": "model"
+                      }
+                    },
+                    "kind": "predict",
+                    "method_version": 1,
+                    "params": {
+                      "prediction_column": "col:3ea02a04-1c6a-438b-8fb2-b21afccdacd7"
+                    }
+                  }
+                ],
+                "retries": 0,
+                "schema": "TypedDAG/v1",
+                "seed": 64,
+                "sweep": []
+              }
+            },
+            "provenance": {
+              "capability_id": "workflow.source",
+              "column_lineage_ref": null,
+              "config_revision": 0,
+              "created_at": "2026-10-15T21:03:44.125191+00:00",
+              "dataset_versions": [
+                "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+              ],
+              "environment": [
+                [
+                  "workflow_signature",
+                  "a0ba6f034258f0c2c86322f87cc685d0ccce50d07e6b97981ad4ed330b4e732d"
+                ]
+              ],
+              "exclusions": [],
+              "filters": [],
+              "learning_content_version": null,
+              "method_version": 1,
+              "parameters_hash": "5050622405caae9f643dc032edba24f1e632e936057ff15723f2d8365ab72b23",
+              "provenance_id": "provenance:90a8d40006eae99fa081c201353ec5beca954728f1bbc6fce96b30b965484269",
+              "row_lineage_ref": "workflow-node-artifact-membership:90a8d40006eae99fa081c201353ec5beca954728f1bbc6fce96b30b965484269",
+              "scope": "bounded DAG run artifacts; no automatic dataset head activation, no evaluation score",
+              "seed": 64,
+              "seed_reason": "deterministic fixture; no sampling",
+              "source_snapshot_ids": [
+                "snapshot:43962115-a34e-46e1-9d70-2c12b395db72"
+              ]
+            },
+            "record_kind": "neural",
+            "recorded_environment": {
+              "code": "c52e7c9b64ae779866fc5f52091930a7ed45a888d4416727611f2e89c424c765",
+              "environment": {
+                "machine": "x86_64",
+                "numpy": "2.5.3",
+                "polars": "2.0.0",
+                "python": "3.13.15",
+                "scikit-learn": "1.9.1",
+                "scipy": "1.18.0",
+                "statsmodels": "0.15.0"
+              }
+            },
+            "report_reference": {
+              "dataset_version": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+            },
+            "run_id": "run:e717a40a-f44e-47ec-bf1d-91ea7d3e40ea",
+            "schema": "WorkflowRun/v1",
+            "status": "completed"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "kind": "analysis",
+          "metadata": {
+            "cache_key": "7858ef591299c10d11bd85accfd2f9a9fe307b2243e6c41ada87eb2481d620aa",
+            "operation_spec": {
+              "column_ids": [],
+              "destination": "[redacted]",
+              "id": "op:10be41e4-39b4-4495-87a9-27ff291821b4",
+              "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+              "input_version_ids": [],
+              "kind": "workflow_source",
+              "learned_scope": "none",
+              "method_version": 1,
+              "output_schema": [
+                {
+                  "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                },
+                {
+                  "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                }
+              ],
+              "parameters": {
+                "version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+              },
+              "schema_version": 1
+            },
+            "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+            "status": "completed",
+            "verified_at": "2026-10-15T21:03:44.130290+00:00",
+            "workflow_kind": "source"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit",
+          "kind": "model",
+          "metadata": {
+            "cache_key": "73da9d3205b79196668d7639a36cc8d635d08d56ff563506706a4022af79624e",
+            "operation_spec": {
+              "column_ids": [],
+              "destination": "[redacted]",
+              "id": "op:90001091-68ff-4fbb-b70f-c6be06940c17",
+              "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+              "input_version_ids": [],
+              "kind": "workflow_train",
+              "learned_scope": "none",
+              "method_version": 1,
+              "output_schema": [],
+              "parameters": {
+                "confirmed": true,
+                "feature": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                "target": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81"
+              },
+              "schema_version": 1
+            },
+            "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+            "status": "completed",
+            "verified_at": "2026-10-15T21:03:45.901241+00:00",
+            "workflow_kind": "train"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/quality",
+          "kind": "analysis",
+          "metadata": {
+            "cache_key": "ff51af76782a53c844b3767d5327f39a5d524e09323fd59967665b3be61a0acd",
+            "operation_spec": {
+              "column_ids": [],
+              "destination": "[redacted]",
+              "id": "op:0310b29f-7051-418a-b07f-2f472d532251",
+              "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+              "input_version_ids": [],
+              "kind": "workflow_quality",
+              "learned_scope": "none",
+              "method_version": 1,
+              "output_schema": [
+                {
+                  "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                },
+                {
+                  "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                }
+              ],
+              "parameters": {
+                "column": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                "fail_on_null": true
+              },
+              "schema_version": 1
+            },
+            "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+            "status": "completed",
+            "verified_at": "2026-10-15T21:03:45.907990+00:00",
+            "workflow_kind": "quality"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/summary",
+          "kind": "analysis",
+          "metadata": {
+            "cache_key": "6cadc9cd429bae6c3c6719514add4c8907afa5abf48c86b9f665452756b40278",
+            "operation_spec": {
+              "column_ids": [],
+              "destination": "[redacted]",
+              "id": "op:9850c753-c764-477f-9e28-eb8c3fbf091f",
+              "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+              "input_version_ids": [],
+              "kind": "workflow_analysis",
+              "learned_scope": "none",
+              "method_version": 1,
+              "output_schema": [],
+              "parameters": {
+                "column": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                "ddof": 1
+              },
+              "schema_version": 1
+            },
+            "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+            "status": "completed",
+            "verified_at": "2026-10-15T21:03:45.910743+00:00",
+            "workflow_kind": "analysis"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict",
+          "kind": "analysis",
+          "metadata": {
+            "cache_key": "7f2e19a37757f9baaae57a79217ad48fd31feade12c1058a271c1ae432447f40",
+            "operation_spec": {
+              "column_ids": [],
+              "destination": "[redacted]",
+              "id": "op:619465bc-49cc-4307-8ffb-1e63d8a747f3",
+              "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+              "input_version_ids": [],
+              "kind": "workflow_predict",
+              "learned_scope": "none",
+              "method_version": 1,
+              "output_schema": [
+                {
+                  "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                },
+                {
+                  "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                },
+                {
+                  "id": "col:3ea02a04-1c6a-438b-8fb2-b21afccdacd7",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                }
+              ],
+              "parameters": {
+                "prediction_column": "col:3ea02a04-1c6a-438b-8fb2-b21afccdacd7"
+              },
+              "schema_version": 1
+            },
+            "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+            "status": "completed",
+            "verified_at": "2026-10-15T21:03:45.913303+00:00",
+            "workflow_kind": "predict"
+          }
+        }
+      ],
+      "schema": "LineageGraph/v1"
+    },
+    "references": [
+      {
+        "version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+        "source_snapshot_id": "snapshot:43962115-a34e-46e1-9d70-2c12b395db72",
+        "uri": "snapshots/9e8f48bc-0231-40a0-8b4a-88133aae58f5.parquet",
+        "fingerprint": {
+          "size": 4349,
+          "sha256": "db15a10ed9e742e83871c617a798c1e82097a721b9c444d6654173f4c034231b"
+        },
+        "rows": 4,
+        "columns": [
+          {
+            "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+            "type": "Float64"
+          },
+          {
+            "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+            "type": "Float64"
+          }
+        ],
+        "semantic_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "column_schema_hash": "6ff8ce4bf4523ad770bea45d2597a9032d34aedfcd3317f537fad743946c1a2a",
+        "access": "local project snapshot or explicit included native data; no credential or network resolver"
+      }
+    ],
+    "replay": {
+      "kind": "workflow",
+      "recorded_signature": {
+        "code": "c52e7c9b64ae779866fc5f52091930a7ed45a888d4416727611f2e89c424c765",
+        "environment": {
+          "machine": "x86_64",
+          "numpy": "2.5.3",
+          "polars": "2.0.0",
+          "python": "3.13.15",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.0",
+          "statsmodels": "0.15.0"
+        }
+      },
+      "reference": {
+        "default/fit": {
+          "coefficients": [
+            0.0,
+            1.9999999999999996
+          ],
+          "fit_row_ids": [
+            "row:4b7c3300-6bd4-4b54-a7b8-542d5419ee6d",
+            "row:942466f4-2097-4a2d-8fc3-08fa85039d1b",
+            "row:94a18f00-7aee-4361-9e53-d4e5b416233f",
+            "row:9879d696-6aa5-4ec8-a0d7-ac11f9a92d7b"
+          ],
+          "kind": "train"
+        },
+        "default/predict": {
+          "columns": [
+            {
+              "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+              "type": "Float64"
+            },
+            {
+              "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+              "type": "Float64"
+            },
+            {
+              "id": "col:3ea02a04-1c6a-438b-8fb2-b21afccdacd7",
+              "type": "Float64"
+            }
+          ],
+          "kind": "predict",
+          "predictions": [
+            1.9999999999999996,
+            3.999999999999999,
+            5.999999999999998,
+            7.999999999999998
+          ],
+          "row_ids": [
+            "row:4b7c3300-6bd4-4b54-a7b8-542d5419ee6d",
+            "row:942466f4-2097-4a2d-8fc3-08fa85039d1b",
+            "row:94a18f00-7aee-4361-9e53-d4e5b416233f",
+            "row:9879d696-6aa5-4ec8-a0d7-ac11f9a92d7b"
+          ],
+          "source_record_ids": [
+            "sr:837746ea-173c-45f2-b663-a1d47b0f77f9",
+            "sr:3f704bca-c112-4f65-b8a4-1543626f55d3",
+            "sr:e9059640-055b-41b8-bf18-5ff942224410",
+            "sr:945dd401-55df-4b36-a623-71f42146cdaa"
+          ]
+        },
+        "default/quality": {
+          "kind": "quality",
+          "null_count": 0
+        },
+        "default/source": {
+          "columns": [
+            {
+              "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+              "type": "Float64"
+            },
+            {
+              "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+              "type": "Float64"
+            }
+          ],
+          "kind": "source",
+          "row_ids": [
+            "row:4b7c3300-6bd4-4b54-a7b8-542d5419ee6d",
+            "row:942466f4-2097-4a2d-8fc3-08fa85039d1b",
+            "row:94a18f00-7aee-4361-9e53-d4e5b416233f",
+            "row:9879d696-6aa5-4ec8-a0d7-ac11f9a92d7b"
+          ],
+          "source_record_ids": [
+            "sr:837746ea-173c-45f2-b663-a1d47b0f77f9",
+            "sr:3f704bca-c112-4f65-b8a4-1543626f55d3",
+            "sr:e9059640-055b-41b8-bf18-5ff942224410",
+            "sr:945dd401-55df-4b36-a623-71f42146cdaa"
+          ]
+        },
+        "default/summary": {
+          "kind": "analysis",
+          "profile": {
+            "counts": {
+              "empty_string": 0,
+              "nan": 0,
+              "negative_infinity": 0,
+              "null": 0,
+              "positive_infinity": 0,
+              "valid": 4
+            },
+            "numeric": {
+              "arithmetic": "Decimal precision80; sqrt rounded half-even",
+              "ddof": 1,
+              "exclusions": "null, NaN, +infinity, -infinity",
+              "finite_n": 4,
+              "maximum": "4",
+              "mean": "2.5",
+              "median": "2.5",
+              "minimum": "1",
+              "quantile_method": "linear h=(n-1)*q",
+              "quantiles": {
+                "0.05": "1.15",
+                "0.25": "1.75",
+                "0.5": "2.5",
+                "0.75": "3.25",
+                "0.95": "3.85"
+              },
+              "std": "1.2909944487358056283930884665941332036109739017638636088625245887044943639789930",
+              "suppressed": false
+            },
+            "scope": "full",
+            "used_n": 4
+          }
+        }
+      },
+      "spec": {
+        "cases": [],
+        "nodes": [
+          {
+            "after": [],
+            "id": "source",
+            "inputs": {},
+            "kind": "source",
+            "method_version": 1,
+            "params": {
+              "version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+            }
+          },
+          {
+            "after": [],
+            "id": "summary",
+            "inputs": {
+              "data": {
+                "node": "source",
+                "port": "data"
+              }
+            },
+            "kind": "analysis",
+            "method_version": 1,
+            "params": {
+              "column": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+              "ddof": 1
+            }
+          },
+          {
+            "after": [],
+            "id": "quality",
+            "inputs": {
+              "data": {
+                "node": "source",
+                "port": "data"
+              }
+            },
+            "kind": "quality",
+            "method_version": 1,
+            "params": {
+              "column": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+              "fail_on_null": true
+            }
+          },
+          {
+            "after": [],
+            "id": "fit",
+            "inputs": {
+              "data": {
+                "node": "source",
+                "port": "data"
+              }
+            },
+            "kind": "train",
+            "method_version": 1,
+            "params": {
+              "confirmed": true,
+              "feature": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+              "target": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81"
+            }
+          },
+          {
+            "after": [],
+            "id": "predict",
+            "inputs": {
+              "data": {
+                "node": "source",
+                "port": "data"
+              },
+              "model": {
+                "node": "fit",
+                "port": "model"
+              }
+            },
+            "kind": "predict",
+            "method_version": 1,
+            "params": {
+              "prediction_column": "col:3ea02a04-1c6a-438b-8fb2-b21afccdacd7"
+            }
+          }
+        ],
+        "retries": 0,
+        "schema": "TypedDAG/v1",
+        "seed": 64,
+        "sweep": []
+      }
+    },
+    "rerun_supported": true,
+    "rerun_reason": "profile Decimal80 / bounded workflow numeric projection; compare defined fields only",
+    "include_data": false,
+    "estimated_data_bytes": 0,
+    "redactions": [
+      {
+        "field": "root.lineage.nodes.0.metadata.source_location",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.1.metadata.schema.0.name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.1.metadata.schema.0.original_name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.1.metadata.schema.1.name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.1.metadata.schema.1.original_name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.3.metadata.operation_spec.destination",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.3.metadata.operation_spec.output_schema.0.name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.3.metadata.operation_spec.output_schema.0.original_name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.3.metadata.operation_spec.output_schema.1.name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.3.metadata.operation_spec.output_schema.1.original_name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.4.metadata.operation_spec.destination",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.5.metadata.operation_spec.destination",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.5.metadata.operation_spec.output_schema.0.name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.5.metadata.operation_spec.output_schema.0.original_name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.5.metadata.operation_spec.output_schema.1.name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.5.metadata.operation_spec.output_schema.1.original_name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.6.metadata.operation_spec.destination",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.7.metadata.operation_spec.destination",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.7.metadata.operation_spec.output_schema.0.name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.7.metadata.operation_spec.output_schema.0.original_name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.7.metadata.operation_spec.output_schema.1.name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.7.metadata.operation_spec.output_schema.1.original_name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.7.metadata.operation_spec.output_schema.2.name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.7.metadata.operation_spec.output_schema.2.original_name",
+        "reason": "secret/location/free-text field"
+      }
+    ],
+    "storage": {
+      "artifact_usage_bytes": 43385,
+      "quota_bytes": 4294967296,
+      "snapshot": "immutable native copy retained by project; bundle data inclusion is a separate choice",
+      "reference": "version/URI/hash/schema only; access to original local project required without included data",
+      "retention": "retain historical snapshots/artifacts; no automatic deletion/GC; archive does not reclaim disk",
+      "deletion": "Deleting project/bundle may permanently lose snapshots and reproducibility; no delete operation here"
+    },
+    "sensitive_content": "Aggregates/config may be sensitive. Data inclusion can contain personal/raw values and native row identifiers; user review required. Pattern scan is not a universal secret detector.",
+    "retention": "No automatic expiration or deletion. Reference-only bundle does not preserve source bytes.",
+    "captured_hardware": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "visible_cpu_count": 2,
+      "physical_memory_bytes": 32913383424,
+      "device": "cpu",
+      "gpu": "not_probed",
+      "scope": "captured now; not attributed to historical runs",
+      "backend_versions": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.0",
+        "polars": "2.0.0",
+        "statsmodels": "0.15.0"
+      }
+    },
+    "preview_hash": "8ff0028314809d96510f665db659d433a452bab4edaf2e66f5d8c1a240ab3ad4"
+  },
+  "opened": {
+    "manifest": {
+      "bundle_id": "bundle:d9a66c37-08db-48c5-9f65-2fd5db3bcd9f",
+      "commit_id": "f8eff1d1-5c8c-4f95-abec-da15fc32343c",
+      "created_at": "2026-10-15T21:03:53.618254+00:00",
+      "focus": "result:1283151c-5f04-4670-8e16-42c42f852ed0",
+      "help": {
+        "articles": {
+          "repro-environment": 1,
+          "repro-lineage": 1,
+          "repro-record": 1,
+          "repro-snapshot": 1,
+          "repro-tolerance": 1
+        },
+        "content_version": 81
+      },
+      "include_data": false,
+      "members": {
+        "README.txt": {
+          "sha256": "b0df5319d05293d776881ac0c4c0d5c7f6fd78e8af6bf8c25a0bc8f043be3b17",
+          "size": 597
+        },
+        "config.json": {
+          "sha256": "acdda3c6392693aec2a8948cb1693de44e16c86e3cc8064b7895d4b32aacff5c",
+          "size": 3600
+        },
+        "environment.lock.json": {
+          "sha256": "22c46c99f8a2b7a205a0b7b3a984eec3153e650e6a891ef5646df7651ec3f5fe",
+          "size": 1810
+        },
+        "hardware.json": {
+          "sha256": "3117b43b20124f7bb65dd191485ebceb2ab7aa8f5d2133f060487de2e7a6205d",
+          "size": 281
+        },
+        "lineage.json": {
+          "sha256": "c8a8679eedd7853f2282de2635bb8a21fab34234eeaa5440aabfef3a0950f85c",
+          "size": 21769
+        },
+        "redaction-preview.json": {
+          "sha256": "db9e8e69e78a66746c154ed7c43128905899bd086a99d0f67317905a3803ec4f",
+          "size": 3068
+        },
+        "reference-report.json": {
+          "sha256": "0c58a2984f5b534f9c2a846d6a2baa2fd96f3595766fb3c63291bd34dd9fa33d",
+          "size": 2179
+        },
+        "requirements.lock": {
+          "sha256": "9a3d5db7d911e0e7e898322fdc7895e0fb0a302e52337314ecc032abc1436818",
+          "size": 1070
+        },
+        "storage-policy.json": {
+          "sha256": "e440c81dd4745b42e3a2824bc5a1499caf588648a1be8ed6e6ef4b010206b29e",
+          "size": 485
+        }
+      },
+      "methods": {
+        "profile": 1,
+        "workflow": 1
+      },
+      "project_id": "b72366e8-4fc7-4e3b-9bfa-4a2d118aeb05",
+      "project_schema": 7,
+      "references": [
+        {
+          "access": "local project snapshot or explicit included native data; no credential or network resolver",
+          "column_schema_hash": "6ff8ce4bf4523ad770bea45d2597a9032d34aedfcd3317f537fad743946c1a2a",
+          "columns": [
+            {
+              "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+              "type": "Float64"
+            },
+            {
+              "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+              "type": "Float64"
+            }
+          ],
+          "fingerprint": {
+            "sha256": "db15a10ed9e742e83871c617a798c1e82097a721b9c444d6654173f4c034231b",
+            "size": 4349
+          },
+          "rows": 4,
+          "semantic_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "source_snapshot_id": "snapshot:43962115-a34e-46e1-9d70-2c12b395db72",
+          "uri": "snapshots/9e8f48bc-0231-40a0-8b4a-88133aae58f5.parquet",
+          "version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+        }
+      ],
+      "rerun_reason": "profile Decimal80 / bounded workflow numeric projection; compare defined fields only",
+      "rerun_supported": true,
+      "safe_artifacts": "closed config/reference aggregate JSON and opt-in native snapshots only; arbitrary model object or executable never included",
+      "schema": "ReproBundle/v1"
+    },
+    "lineage": {
+      "edges": [
+        {
+          "relation": "import_or_source_reference",
+          "source": "source:5a253f8a-b151-4e65-a440-723931dfe9ec",
+          "target": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+        },
+        {
+          "relation": "recorded_dataset_input",
+          "source": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "member_of_run",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "member_of_run",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "member_of_run",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/quality",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "member_of_run",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/summary",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "member_of_run",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+        },
+        {
+          "relation": "source_snapshot",
+          "source": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source"
+        },
+        {
+          "relation": "typed_dependency",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit"
+        },
+        {
+          "relation": "typed_dependency",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/quality"
+        },
+        {
+          "relation": "typed_dependency",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/summary"
+        },
+        {
+          "relation": "typed_dependency",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict"
+        },
+        {
+          "relation": "typed_dependency",
+          "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict"
+        }
+      ],
+      "focus": "result:1283151c-5f04-4670-8e16-42c42f852ed0",
+      "limits": [
+        "Dataset-level links use only recorded identities.",
+        "RowId is not global across all datasets. Multi-source row edges only when a lineage Parquet was recorded; no reverse relation is fabricated.",
+        "Old reports without record IDs trace to dataset only; analyses/models not guessed.",
+        "Current machine information is not historical run hardware."
+      ],
+      "nodes": [
+        {
+          "id": "source:5a253f8a-b151-4e65-a440-723931dfe9ec",
+          "kind": "source",
+          "metadata": {
+            "provenance": "not_recorded",
+            "snapshot": {
+              "fingerprint": {
+                "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4",
+                "size": 840
+              },
+              "uri": "sources/506e5da7-8247-44ba-8f55-4291f1dd03b0.bin"
+            },
+            "source_adapter": "not_recorded",
+            "source_location": "[redacted]",
+            "version": {
+              "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4",
+              "size": 840
+            }
+          }
+        },
+        {
+          "id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+          "kind": "dataset",
+          "metadata": {
+            "dataset_id": "dataset:65ef4bc5-0e55-4acf-8eae-b0ce2aa70453",
+            "row_lineage": {
+              "status": "preserved_identity_or_not_recorded; inspect operation policy"
+            },
+            "rows": 4,
+            "schema": [
+              {
+                "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              },
+              {
+                "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              }
+            ],
+            "schema_contract": "not_recorded",
+            "semantic_metadata": {},
+            "snapshot": {
+              "fingerprint": {
+                "sha256": "db15a10ed9e742e83871c617a798c1e82097a721b9c444d6654173f4c034231b",
+                "size": 4349
+              },
+              "uri": "snapshots/9e8f48bc-0231-40a0-8b4a-88133aae58f5.parquet"
+            },
+            "source_snapshot_id": "snapshot:43962115-a34e-46e1-9d70-2c12b395db72",
+            "version": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0",
+          "kind": "workflow",
+          "metadata": {
+            "capture": {
+              "captured_at": "2026-10-15T21:03:42.567033+00:00",
+              "code_files": {
+                "analytics/__init__.py": "9a40480d4948c6569039dcba9b5eb8500217898bd1082cbf7dc116ea9eb697d1",
+                "analytics/cache.py": "d9bc4a880fbdee9cfec9bcdb2be956bd892472776a162db5f44de7ea800cb810",
+                "analytics/contracts.py": "b48013d36e9aaa985421706a519052cd92877fc3f3f39a0a5cf121127b6a8254",
+                "analytics/dataset.py": "577491b35241d4564f0aa99b801b4676bd3eb7f31e0ff81534178e4f2603ec28",
+                "analytics/inspection.py": "7d32d36f9f4ca19dceb4ed92d70e58724bdb92394ac62f7b2b7195665ad83e46",
+                "analytics/nlp.py": "f44349a7bda3954ddee023a207d0a15c7810e89e653c9052eea6ca787fb31805",
+                "analytics/nlp_contracts.py": "ecd8ebb0fa86054f7717318d553c3125b7fe56bccd4c1252d5eacc07286595ea",
+                "analytics/nlp_models.py": "3bde557209340c1e4c3b03084a09c2a89673de6aedd594d990a3a79c0b45968c",
+                "analytics/quality.py": "26614e90d24781175ee63e890ea820abdc3ba71a338c0a8eac68973ab4f91002",
+                "analytics/text.py": "79162336f36367f36bfb03d403dd1ed2fd13d525544c52065408aefd8aaf3b4d",
+                "analytics/text_contracts.py": "eaa4d0d7e9c82c9eed47276dd770fa6894955496b8c4ffa211ca990b8dbe817c",
+                "analytics/worker.py": "31c63ee72335dade3e877599e1354ac043e3618f550867dc25927460aa026a59",
+                "domain/__init__.py": "2dbb12e6e6559fc7cfeaa0bd919e0daed1a2b0087606b6a80365376ce3600b26",
+                "domain/capabilities.py": "0d305cf2674efd6baf422f6411988830f27fca758b2351d3624bc4f3fe40c57c",
+                "domain/contracts.py": "f876547de14f69c2c21d69a18e4af28ff1d2bb1e86a91d3b517ae7715025503b",
+                "domain/json.py": "460d139d25b367c54bc7535a099ff4de6d8d71af90a4f90914f864e71a18236f",
+                "jobs/__init__.py": "3e422efd1e5f67820bedb952921837211d5a5c953360bd7d6d1f7e69789cbf7d",
+                "jobs/limits.py": "4bbb51c061c186506137e3d46668d6ba16db56ad65f92b34a16f2ec5c4c007e2",
+                "jobs/manager.py": "ad2a6a9a0e9a0cedcc3a0497a59dfda78a3f57ef246a369007a13a64279ea550",
+                "jobs/resources.py": "b73ffbf3420ce72ca4a1dba8b2ac519c2239224b763dea9bab88110656658c19",
+                "jobs/supervision.py": "0cae684cbb07a6f3c8c63b2b8a66c2e3a0f778e5eeb903bc3e851bb6abab7f00",
+                "jobs/workers.py": "2c9c7a58f328ca607b257046b9c07de0c2bd095b7ea282e1b8725d9c81423505",
+                "modeling/__init__.py": "13027d8be106084ca581b11ced17bc5f8f0ddaeb927c7b27f55b2de67d62bb83",
+                "modeling/audio.py": "d125e1d93b972b78ee10ff65803183954168fc740ef10d85d02ff73afe482157",
+                "modeling/audio_contracts.py": "1b89af3b1552ee7e662140129bf8c826f3ffe3995417c84a703cb4269cf220c1",
+                "modeling/audio_features.py": "5a8a49770d396a6a1f1e2963dbbb3c908d04c5b1cdb4f78e313991e129987765",
+                "modeling/audio_speech.py": "d4099523006300c4d8fbab532fa0b9b3a567cb8e8269ab927cebb81a30acdf76",
+                "modeling/baseline.py": "d6a047e1a621524897fc5b2aa7f867a68da3d56aa33957072d4d6f3b47e95625",
+                "modeling/classification.py": "8325bd7adab2baf3925a2028acf69850cbe71677120848972f3cea9e3b3c3ca8",
+                "modeling/code_kernel.py": "1e3f99618d10bb91da46491b9ee77662321cdaceed6555a8dbe20962e39291b0",
+                "modeling/code_workspace.py": "ea2f11789e0d1c80d88550bbb99c26e39682d20552fc58a9b91cae5007c31151",
+                "modeling/contracts.py": "0a013b594dc6710b72001268fe0923fb979fac36ad0602b7c9a640b9248a3f79",
+                "modeling/explanation.py": "a8fd47fed21b142479c966060600aa00595b768e58e1195000b59aa27494dfb7",
+                "modeling/exploration.py": "987bf5fc7419cc0562b8df7cd2e47cd6152d5e6521a2f6e1e6c5c67212820200",
+                "modeling/families.py": "ed4cb3d88c87d673dacc3496d0943995c7ea942401bf8225566e19b3e0268986",
+                "modeling/family_contracts.py": "93528657acdaf3e89ba974923402cfed2e72a1bf610b790d25ee6a3bc4406475",
+                "modeling/graph_contracts.py": "8e3abcfb3eda7ef23b706e72b96450cc84269bd6e9778af4aad19892c536613c",
+                "modeling/graphs.py": "41f6e5de8e39e46bcc1c2af008e32c238b1ba9c025b49b5a6fb9a33c132ddcb4",
+                "modeling/history.py": "89092e5f34ae94b1cb72a21b9b1a6a6f558a57c6f38ed1026146f228cf77db64",
+                "modeling/lifecycle.py": "1c00836f8d9de2ef61b98b600d02b908459234dd3dbb4a31cde226fe81c07f54",
+                "modeling/lifecycle_worker.py": "58cc961b8f4cbc8f651e695ebea6b52c3dbc6b49394700d847627ee22e9b6f84",
+                "modeling/neural.py": "eb7b8fc39fd85fcf73799b3f645bc334a7820ae1a5ca3eb2993a0ff545f5fbc1",
+                "modeling/neural_contracts.py": "72295b0bdb3610743bf6800f391468d0c26dec3b64080fd40ec262044d27921e",
+                "modeling/optional_families.py": "bde8df0efe706a77c3e78c2f6ab44cf35a01ff2ed74b7f80bfdad585009281bd",
+                "modeling/pattern_basket.py": "d6aa38ccd500d04483bbc98445ec503ce65e6c2060ee3ecec9c45611175fa4f7",
+                "modeling/pattern_contracts.py": "b8da3a28b57991b33fa69feee8183700263e9cbe9978bdf5ef432671cd2c0fae",
+                "modeling/pattern_events.py": "d1221869a904132b6756b990ff2367a58d454a325969c4b3c251a73fcc5ea7ea",
+                "modeling/patterns.py": "54232c5beb344f02e067f8f335acfaa1f8a1d4eacb141f3479ac3e2331bbfc97",
+                "modeling/plan.py": "d8a1f6043c9a96da399b74da095f3cc47c6972477984f9b3e085e48376fc6114",
+                "modeling/preparation.py": "bbb6d86e399f61d2d86c85a5b9205680ee4dbc780bfc1854ef4783ee4a82eee1",
+                "modeling/recommendation.py": "bac4167977a62565f2411fe6ec0a6fb08c979cc184e31046db5e1bb8da0e5b85",
+                "modeling/recommendation_contracts.py": "9afadb2ec2ab17a228eeb72d376ead3f28514d87162531974ecc9b9dfb86c6ea",
+                "modeling/recommendation_math.py": "ec585143ec19ec8933b99e74d098cacb51febc3e85265d6e0cfc750862c11a21",
+                "modeling/regression.py": "6fd65943f87ec2fee438e20f16d400a1eafe6cf6ef24e64a5e54eac132da51e8",
+                "modeling/repro_verify.py": "571168935d8a09fb40c15a4760ad09d28f07f1b34e298ff1f6d68578fa5b4e06",
+                "modeling/search.py": "d8b90bb06060477bd8f4d2df0d6c6ece0825c72d9c243ee65cfd5af2e1009fef",
+                "modeling/search_contracts.py": "a82b856b338ed33e25a8d8f9fe340a60008cdd88cfca893fe04c4aaefe27d10e",
+                "modeling/signal_contracts.py": "1edcc6cbdfd13b8af74bfbebaa4c321fc1f4e1eb1ccafc109662e6d3460c66f7",
+                "modeling/signals.py": "04da330a1bd55d8c83fb8c3ca947d27f9b2c4ee5485a4ca40d884bd7f752ce37",
+                "modeling/special_runs.py": "c1b5360c73fc65179c105b8749330746a4acb896293d6726e64e318251503a83",
+                "modeling/special_targets.py": "b0abfbfa39c94f5743537fb2bdaad158b75d015f2bb7c02b4d0f0a013099dd97",
+                "modeling/stream_contracts.py": "41432c3fc518e16a19c55235a5639bc6de61d88d662868e7ee83aa0687870a3d",
+                "modeling/streams.py": "e6a196e8e79025e8beb0dc49162b846579880ef2695689ceed2c48b9fcdb0702",
+                "modeling/temporal.py": "a7f74140fa4a201e559cf3de6ae2a3c66c37c89f70e5373e9433c9289ec8415d",
+                "modeling/temporal_contracts.py": "a7f949827438b4136a0576acc0455feed01400ace0639379f8068d70fc1c6291",
+                "modeling/time_series.py": "3ce5d126a56d8ea5fa5cc277e34a9c9b9246b88dc5472fa030699ff511d1d14c",
+                "modeling/time_series_contracts.py": "7acf1fc8415fab05a533a16691d044fdf4edc539b6a4e047fd5a8bcb7d6449ab",
+                "modeling/uncertainty.py": "18459743f79438daf7236e14e696dd6f9cc7a71388251464f8b1159c38944292",
+                "modeling/unsupervised.py": "f622291e9b889aa7dba7928e22dd716436042edc58349010bfeffe4d9f3fa693",
+                "modeling/unsupervised_contracts.py": "8f695e61dfb7d2e9f04cf075e049fc2ca6b0d85f8f681d13c8c26483fd6c55ea",
+                "modeling/validation.py": "926d32f935b8bafa2154ca6522c2a78462fcec7d12f47c489349542a8d2e8245",
+                "modeling/vision.py": "5fa20f0eb90dab4c85de7e34a49bfb3a9c8369c59c22786645e50010d21f2cf1",
+                "modeling/vision_contracts.py": "09d103e2a0302b461b52109569bf6f5c57e0484806488f9fec7e92d19ce965b1",
+                "modeling/vision_metrics.py": "a9435b6d44d89659a644e15a307e195d3e86ca8e1916349f4cac3b8f4e771bc4",
+                "modeling/worker.py": "7668c26547396f289ea9addcdea95903395f6c0693c76040dbd6c5fad1d7e0f1",
+                "operations/__init__.py": "3057dbc6d9b812bf9b2aad778db59346f32918c18d3855963ded8c84538a2d89",
+                "operations/cleaning.py": "952547f346de6778896e29f7033ed71c977168a11fe99880a6ba0767f6765b17",
+                "operations/cleaning_contracts.py": "2a6e1a9234fe3b62e28af1ff518eb7cb385d34af47eec8b5d9601c7581eb0dc8",
+                "operations/contracts.py": "9147685763df3e70a23a7ac202cbb61301ee2a86a655315977948896ce504851",
+                "operations/data_contracts.py": "abd9a1c68cb13ac27f9c9edc0e91e4d47df018760f6b5ad2c769b9cfb3ddce23",
+                "operations/data_quality.py": "d5475654431190c5a2b0f63490a5c77d017e4fdc6650b3ee8443c42fa0cb8d11",
+                "operations/engine.py": "adedd572483e085070267b48c3a36414d438276429f90ed9de48c482c3bbc233",
+                "operations/formula.py": "73aa71d20562e78d06055e194a41480d86211a5f33a8c915c661af7b7dfb4e5a",
+                "operations/monitoring.py": "0f92c902fb431475d850c331e44dfcc8fe97f3b0c44a51c2e6917cdf68514bf4",
+                "operations/recipe_worker.py": "3d496a1724c200816ca4a183c4a9513d800eedc393cc88d35742d7c3d8b20e53",
+                "operations/recipes.py": "f890531237267f41521ddeea299b5f4b03e023025105b7d39cc74086616a4dd8",
+                "operations/relational.py": "d1c10afd56fbfbea134435b73f589e39a10173680b8e12985f7605436fc52135",
+                "operations/relational_contracts.py": "eb0cef0160b7a0c92c601a407fceec423699032bc8d7fe4b3bba9196c29473da",
+                "operations/types.py": "0fe52eaad36ed00788508b4e28ed0c9a34df55b7ee41e6503127dd4d87bccd87",
+                "operations/worker.py": "f6fef54a9a1374728902e546eac733e33b243eee6ce115c29e0a99062b402435",
+                "operations/workflow.py": "c1047f3f6463a3ba1e554d06dc8c5f283e2b80cc6b703087ae41a4daa87d6534",
+                "operations/workflow_cli.py": "47ad3ee0dcee4cc5adf984d00a6393eb4896e3b88e97d64aa226dddba01c2e7d",
+                "operations/workflow_contracts.py": "9b39ba4b6aed914ee689e3df42588a2cf5613bc463c3f869629eaf61858db642",
+                "operations/workflow_fingerprint.py": "9fa208ef3ce63f000049eb736bf5b1e9af8c82a55f2deea65e55a67df4be0432",
+                "operations/workflow_service.py": "f64433af7adf3cc4e6aebac623b1c516e3577763f116c60a1cd9dee9fd55a012",
+                "storage/experiment_store.py": "f994800d3ba6aae5f30ddffe8f5a777651451523410d68fd92222c577470e4ee",
+                "storage/validation_store.py": "15e4a941263a9018507689559829a009140966815888aa38a7271cb84646aa45"
+              },
+              "code_hash": "99489433f3fabc0939630055c5c205a3776898867b5d217cd5ddcabe2c72bf7a",
+              "config_hash": "32c2fd7c03fb11e22675985a6c8c822f92af0fd1b5a0f11c8faba4ffb97f7a7c",
+              "config_scope": "validation/model options + immutable PipelineId preprocessing reference",
+              "data_access_time": "captured before scheduling; run.data_access_at records first immutable snapshot read boundary",
+              "environment": {
+                "machine": "x86_64",
+                "numpy": "2.5.3",
+                "polars": "2.0.0",
+                "python": "3.13.15",
+                "scikit-learn": "1.9.1",
+                "scipy": "1.18.0",
+                "skops": "0.16.0",
+                "system": "Linux",
+                "veri-ufku": "0.1.0"
+              },
+              "environment_hash": "a968f3834713fe5c140f15dca79af105e865b3503a3b984e42b567eaa0504e92",
+              "hardware": {
+                "captured_at": "same capture boundary",
+                "device": "not_recorded; inspect method spec",
+                "machine": "x86_64",
+                "physical_memory_bytes": 32913383424,
+                "system": "Linux",
+                "visible_cpu_count": 16
+              },
+              "schema": "RunCapture/v1"
+            },
+            "details_artifact": {
+              "fingerprint": {
+                "sha256": "5ef10577f34e25f6136548534dfd8f086febcf7da8f3077cbd8ed4b910d9e2d4",
+                "size": 33508
+              },
+              "uri": "sources/5fab0111-1131-4c38-b810-7d639a940674.bin"
+            },
+            "hardware": {
+              "captured_at": "same capture boundary",
+              "device": "not_recorded; inspect method spec",
+              "machine": "x86_64",
+              "physical_memory_bytes": 32913383424,
+              "system": "Linux",
+              "visible_cpu_count": 16
+            },
+            "legacy_gaps": "Only recorded fields. Package/hardware/code/user decision may be not_recorded.",
+            "model_artifact": "not_recorded",
+            "params": {
+              "plan": {
+                "membership": {
+                  "test": [],
+                  "train": [],
+                  "validation": []
+                },
+                "scope": "bounded DAG run artifacts; no automatic dataset head activation, no evaluation score",
+                "split_id": "dag:90a8d40006eae99fa081c201353ec5beca954728f1bbc6fce96b30b965484269"
+              },
+              "spec": {},
+              "workflow_spec": {
+                "cases": [],
+                "nodes": [
+                  {
+                    "after": [],
+                    "id": "source",
+                    "inputs": {},
+                    "kind": "source",
+                    "method_version": 1,
+                    "params": {
+                      "version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+                    }
+                  },
+                  {
+                    "after": [],
+                    "id": "summary",
+                    "inputs": {
+                      "data": {
+                        "node": "source",
+                        "port": "data"
+                      }
+                    },
+                    "kind": "analysis",
+                    "method_version": 1,
+                    "params": {
+                      "column": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                      "ddof": 1
+                    }
+                  },
+                  {
+                    "after": [],
+                    "id": "quality",
+                    "inputs": {
+                      "data": {
+                        "node": "source",
+                        "port": "data"
+                      }
+                    },
+                    "kind": "quality",
+                    "method_version": 1,
+                    "params": {
+                      "column": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                      "fail_on_null": true
+                    }
+                  },
+                  {
+                    "after": [],
+                    "id": "fit",
+                    "inputs": {
+                      "data": {
+                        "node": "source",
+                        "port": "data"
+                      }
+                    },
+                    "kind": "train",
+                    "method_version": 1,
+                    "params": {
+                      "confirmed": true,
+                      "feature": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                      "target": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81"
+                    }
+                  },
+                  {
+                    "after": [],
+                    "id": "predict",
+                    "inputs": {
+                      "data": {
+                        "node": "source",
+                        "port": "data"
+                      },
+                      "model": {
+                        "node": "fit",
+                        "port": "model"
+                      }
+                    },
+                    "kind": "predict",
+                    "method_version": 1,
+                    "params": {
+                      "prediction_column": "col:3ea02a04-1c6a-438b-8fb2-b21afccdacd7"
+                    }
+                  }
+                ],
+                "retries": 0,
+                "schema": "TypedDAG/v1",
+                "seed": 64,
+                "sweep": []
+              }
+            },
+            "provenance": {
+              "capability_id": "workflow.source",
+              "column_lineage_ref": null,
+              "config_revision": 0,
+              "created_at": "2026-10-15T21:03:44.125191+00:00",
+              "dataset_versions": [
+                "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+              ],
+              "environment": [
+                [
+                  "workflow_signature",
+                  "a0ba6f034258f0c2c86322f87cc685d0ccce50d07e6b97981ad4ed330b4e732d"
+                ]
+              ],
+              "exclusions": [],
+              "filters": [],
+              "learning_content_version": null,
+              "method_version": 1,
+              "parameters_hash": "5050622405caae9f643dc032edba24f1e632e936057ff15723f2d8365ab72b23",
+              "provenance_id": "provenance:90a8d40006eae99fa081c201353ec5beca954728f1bbc6fce96b30b965484269",
+              "row_lineage_ref": "workflow-node-artifact-membership:90a8d40006eae99fa081c201353ec5beca954728f1bbc6fce96b30b965484269",
+              "scope": "bounded DAG run artifacts; no automatic dataset head activation, no evaluation score",
+              "seed": 64,
+              "seed_reason": "deterministic fixture; no sampling",
+              "source_snapshot_ids": [
+                "snapshot:43962115-a34e-46e1-9d70-2c12b395db72"
+              ]
+            },
+            "record_kind": "neural",
+            "recorded_environment": {
+              "code": "c52e7c9b64ae779866fc5f52091930a7ed45a888d4416727611f2e89c424c765",
+              "environment": {
+                "machine": "x86_64",
+                "numpy": "2.5.3",
+                "polars": "2.0.0",
+                "python": "3.13.15",
+                "scikit-learn": "1.9.1",
+                "scipy": "1.18.0",
+                "statsmodels": "0.15.0"
+              }
+            },
+            "report_reference": {
+              "dataset_version": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+            },
+            "run_id": "run:e717a40a-f44e-47ec-bf1d-91ea7d3e40ea",
+            "schema": "WorkflowRun/v1",
+            "status": "completed"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+          "kind": "analysis",
+          "metadata": {
+            "cache_key": "7858ef591299c10d11bd85accfd2f9a9fe307b2243e6c41ada87eb2481d620aa",
+            "operation_spec": {
+              "column_ids": [],
+              "destination": "[redacted]",
+              "id": "op:10be41e4-39b4-4495-87a9-27ff291821b4",
+              "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+              "input_version_ids": [],
+              "kind": "workflow_source",
+              "learned_scope": "none",
+              "method_version": 1,
+              "output_schema": [
+                {
+                  "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                },
+                {
+                  "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                }
+              ],
+              "parameters": {
+                "version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+              },
+              "schema_version": 1
+            },
+            "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+            "status": "completed",
+            "verified_at": "2026-10-15T21:03:44.130290+00:00",
+            "workflow_kind": "source"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit",
+          "kind": "model",
+          "metadata": {
+            "cache_key": "73da9d3205b79196668d7639a36cc8d635d08d56ff563506706a4022af79624e",
+            "operation_spec": {
+              "column_ids": [],
+              "destination": "[redacted]",
+              "id": "op:90001091-68ff-4fbb-b70f-c6be06940c17",
+              "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+              "input_version_ids": [],
+              "kind": "workflow_train",
+              "learned_scope": "none",
+              "method_version": 1,
+              "output_schema": [],
+              "parameters": {
+                "confirmed": true,
+                "feature": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                "target": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81"
+              },
+              "schema_version": 1
+            },
+            "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+            "status": "completed",
+            "verified_at": "2026-10-15T21:03:45.901241+00:00",
+            "workflow_kind": "train"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/quality",
+          "kind": "analysis",
+          "metadata": {
+            "cache_key": "ff51af76782a53c844b3767d5327f39a5d524e09323fd59967665b3be61a0acd",
+            "operation_spec": {
+              "column_ids": [],
+              "destination": "[redacted]",
+              "id": "op:0310b29f-7051-418a-b07f-2f472d532251",
+              "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+              "input_version_ids": [],
+              "kind": "workflow_quality",
+              "learned_scope": "none",
+              "method_version": 1,
+              "output_schema": [
+                {
+                  "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                },
+                {
+                  "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                }
+              ],
+              "parameters": {
+                "column": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                "fail_on_null": true
+              },
+              "schema_version": 1
+            },
+            "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+            "status": "completed",
+            "verified_at": "2026-10-15T21:03:45.907990+00:00",
+            "workflow_kind": "quality"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/summary",
+          "kind": "analysis",
+          "metadata": {
+            "cache_key": "6cadc9cd429bae6c3c6719514add4c8907afa5abf48c86b9f665452756b40278",
+            "operation_spec": {
+              "column_ids": [],
+              "destination": "[redacted]",
+              "id": "op:9850c753-c764-477f-9e28-eb8c3fbf091f",
+              "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+              "input_version_ids": [],
+              "kind": "workflow_analysis",
+              "learned_scope": "none",
+              "method_version": 1,
+              "output_schema": [],
+              "parameters": {
+                "column": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                "ddof": 1
+              },
+              "schema_version": 1
+            },
+            "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+            "status": "completed",
+            "verified_at": "2026-10-15T21:03:45.910743+00:00",
+            "workflow_kind": "analysis"
+          }
+        },
+        {
+          "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict",
+          "kind": "analysis",
+          "metadata": {
+            "cache_key": "7f2e19a37757f9baaae57a79217ad48fd31feade12c1058a271c1ae432447f40",
+            "operation_spec": {
+              "column_ids": [],
+              "destination": "[redacted]",
+              "id": "op:619465bc-49cc-4307-8ffb-1e63d8a747f3",
+              "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+              "input_version_ids": [],
+              "kind": "workflow_predict",
+              "learned_scope": "none",
+              "method_version": 1,
+              "output_schema": [
+                {
+                  "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                },
+                {
+                  "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                },
+                {
+                  "id": "col:3ea02a04-1c6a-438b-8fb2-b21afccdacd7",
+                  "name": "[redacted]",
+                  "original_name": "[redacted]",
+                  "type": "Float64"
+                }
+              ],
+              "parameters": {
+                "prediction_column": "col:3ea02a04-1c6a-438b-8fb2-b21afccdacd7"
+              },
+              "schema_version": 1
+            },
+            "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+            "status": "completed",
+            "verified_at": "2026-10-15T21:03:45.913303+00:00",
+            "workflow_kind": "predict"
+          }
+        }
+      ],
+      "schema": "LineageGraph/v1"
+    },
+    "status": "integrity_verified; no execution",
+    "fingerprint": {
+      "sha256": "f7bf941a88117598cb5c39d90d24fb17f6ace3919d15d905cbd0b29de510c567",
+      "size": 15113
+    }
+  },
+  "graph": {
+    "edges": [
+      {
+        "relation": "import_or_source_reference",
+        "source": "source:5a253f8a-b151-4e65-a440-723931dfe9ec",
+        "target": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+      },
+      {
+        "relation": "recorded_dataset_input",
+        "source": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+      },
+      {
+        "relation": "member_of_run",
+        "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+      },
+      {
+        "relation": "member_of_run",
+        "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+      },
+      {
+        "relation": "member_of_run",
+        "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/quality",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+      },
+      {
+        "relation": "member_of_run",
+        "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/summary",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+      },
+      {
+        "relation": "member_of_run",
+        "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0"
+      },
+      {
+        "relation": "source_snapshot",
+        "source": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source"
+      },
+      {
+        "relation": "typed_dependency",
+        "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit"
+      },
+      {
+        "relation": "typed_dependency",
+        "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/quality"
+      },
+      {
+        "relation": "typed_dependency",
+        "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/summary"
+      },
+      {
+        "relation": "typed_dependency",
+        "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict"
+      },
+      {
+        "relation": "typed_dependency",
+        "source": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+        "target": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict"
+      }
+    ],
+    "focus": "result:1283151c-5f04-4670-8e16-42c42f852ed0",
+    "limits": [
+      "Dataset-level links use only recorded identities.",
+      "RowId is not global across all datasets. Multi-source row edges only when a lineage Parquet was recorded; no reverse relation is fabricated.",
+      "Old reports without record IDs trace to dataset only; analyses/models not guessed.",
+      "Current machine information is not historical run hardware."
+    ],
+    "nodes": [
+      {
+        "id": "source:5a253f8a-b151-4e65-a440-723931dfe9ec",
+        "kind": "source",
+        "metadata": {
+          "provenance": "not_recorded",
+          "snapshot": {
+            "fingerprint": {
+              "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4",
+              "size": 840
+            },
+            "uri": "sources/506e5da7-8247-44ba-8f55-4291f1dd03b0.bin"
+          },
+          "source_adapter": "not_recorded",
+          "source_location": "[redacted]",
+          "version": {
+            "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4",
+            "size": 840
+          }
+        }
+      },
+      {
+        "id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+        "kind": "dataset",
+        "metadata": {
+          "dataset_id": "dataset:65ef4bc5-0e55-4acf-8eae-b0ce2aa70453",
+          "row_lineage": {
+            "status": "preserved_identity_or_not_recorded; inspect operation policy"
+          },
+          "rows": 4,
+          "schema": [
+            {
+              "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+              "name": "[redacted]",
+              "original_name": "[redacted]",
+              "type": "Float64"
+            },
+            {
+              "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+              "name": "[redacted]",
+              "original_name": "[redacted]",
+              "type": "Float64"
+            }
+          ],
+          "schema_contract": "not_recorded",
+          "semantic_metadata": {},
+          "snapshot": {
+            "fingerprint": {
+              "sha256": "db15a10ed9e742e83871c617a798c1e82097a721b9c444d6654173f4c034231b",
+              "size": 4349
+            },
+            "uri": "snapshots/9e8f48bc-0231-40a0-8b4a-88133aae58f5.parquet"
+          },
+          "source_snapshot_id": "snapshot:43962115-a34e-46e1-9d70-2c12b395db72",
+          "version": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+        }
+      },
+      {
+        "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0",
+        "kind": "workflow",
+        "metadata": {
+          "capture": {
+            "captured_at": "2026-10-15T21:03:42.567033+00:00",
+            "code_files": {
+              "analytics/__init__.py": "9a40480d4948c6569039dcba9b5eb8500217898bd1082cbf7dc116ea9eb697d1",
+              "analytics/cache.py": "d9bc4a880fbdee9cfec9bcdb2be956bd892472776a162db5f44de7ea800cb810",
+              "analytics/contracts.py": "b48013d36e9aaa985421706a519052cd92877fc3f3f39a0a5cf121127b6a8254",
+              "analytics/dataset.py": "577491b35241d4564f0aa99b801b4676bd3eb7f31e0ff81534178e4f2603ec28",
+              "analytics/inspection.py": "7d32d36f9f4ca19dceb4ed92d70e58724bdb92394ac62f7b2b7195665ad83e46",
+              "analytics/nlp.py": "f44349a7bda3954ddee023a207d0a15c7810e89e653c9052eea6ca787fb31805",
+              "analytics/nlp_contracts.py": "ecd8ebb0fa86054f7717318d553c3125b7fe56bccd4c1252d5eacc07286595ea",
+              "analytics/nlp_models.py": "3bde557209340c1e4c3b03084a09c2a89673de6aedd594d990a3a79c0b45968c",
+              "analytics/quality.py": "26614e90d24781175ee63e890ea820abdc3ba71a338c0a8eac68973ab4f91002",
+              "analytics/text.py": "79162336f36367f36bfb03d403dd1ed2fd13d525544c52065408aefd8aaf3b4d",
+              "analytics/text_contracts.py": "eaa4d0d7e9c82c9eed47276dd770fa6894955496b8c4ffa211ca990b8dbe817c",
+              "analytics/worker.py": "31c63ee72335dade3e877599e1354ac043e3618f550867dc25927460aa026a59",
+              "domain/__init__.py": "2dbb12e6e6559fc7cfeaa0bd919e0daed1a2b0087606b6a80365376ce3600b26",
+              "domain/capabilities.py": "0d305cf2674efd6baf422f6411988830f27fca758b2351d3624bc4f3fe40c57c",
+              "domain/contracts.py": "f876547de14f69c2c21d69a18e4af28ff1d2bb1e86a91d3b517ae7715025503b",
+              "domain/json.py": "460d139d25b367c54bc7535a099ff4de6d8d71af90a4f90914f864e71a18236f",
+              "jobs/__init__.py": "3e422efd1e5f67820bedb952921837211d5a5c953360bd7d6d1f7e69789cbf7d",
+              "jobs/limits.py": "4bbb51c061c186506137e3d46668d6ba16db56ad65f92b34a16f2ec5c4c007e2",
+              "jobs/manager.py": "ad2a6a9a0e9a0cedcc3a0497a59dfda78a3f57ef246a369007a13a64279ea550",
+              "jobs/resources.py": "b73ffbf3420ce72ca4a1dba8b2ac519c2239224b763dea9bab88110656658c19",
+              "jobs/supervision.py": "0cae684cbb07a6f3c8c63b2b8a66c2e3a0f778e5eeb903bc3e851bb6abab7f00",
+              "jobs/workers.py": "2c9c7a58f328ca607b257046b9c07de0c2bd095b7ea282e1b8725d9c81423505",
+              "modeling/__init__.py": "13027d8be106084ca581b11ced17bc5f8f0ddaeb927c7b27f55b2de67d62bb83",
+              "modeling/audio.py": "d125e1d93b972b78ee10ff65803183954168fc740ef10d85d02ff73afe482157",
+              "modeling/audio_contracts.py": "1b89af3b1552ee7e662140129bf8c826f3ffe3995417c84a703cb4269cf220c1",
+              "modeling/audio_features.py": "5a8a49770d396a6a1f1e2963dbbb3c908d04c5b1cdb4f78e313991e129987765",
+              "modeling/audio_speech.py": "d4099523006300c4d8fbab532fa0b9b3a567cb8e8269ab927cebb81a30acdf76",
+              "modeling/baseline.py": "d6a047e1a621524897fc5b2aa7f867a68da3d56aa33957072d4d6f3b47e95625",
+              "modeling/classification.py": "8325bd7adab2baf3925a2028acf69850cbe71677120848972f3cea9e3b3c3ca8",
+              "modeling/code_kernel.py": "1e3f99618d10bb91da46491b9ee77662321cdaceed6555a8dbe20962e39291b0",
+              "modeling/code_workspace.py": "ea2f11789e0d1c80d88550bbb99c26e39682d20552fc58a9b91cae5007c31151",
+              "modeling/contracts.py": "0a013b594dc6710b72001268fe0923fb979fac36ad0602b7c9a640b9248a3f79",
+              "modeling/explanation.py": "a8fd47fed21b142479c966060600aa00595b768e58e1195000b59aa27494dfb7",
+              "modeling/exploration.py": "987bf5fc7419cc0562b8df7cd2e47cd6152d5e6521a2f6e1e6c5c67212820200",
+              "modeling/families.py": "ed4cb3d88c87d673dacc3496d0943995c7ea942401bf8225566e19b3e0268986",
+              "modeling/family_contracts.py": "93528657acdaf3e89ba974923402cfed2e72a1bf610b790d25ee6a3bc4406475",
+              "modeling/graph_contracts.py": "8e3abcfb3eda7ef23b706e72b96450cc84269bd6e9778af4aad19892c536613c",
+              "modeling/graphs.py": "41f6e5de8e39e46bcc1c2af008e32c238b1ba9c025b49b5a6fb9a33c132ddcb4",
+              "modeling/history.py": "89092e5f34ae94b1cb72a21b9b1a6a6f558a57c6f38ed1026146f228cf77db64",
+              "modeling/lifecycle.py": "1c00836f8d9de2ef61b98b600d02b908459234dd3dbb4a31cde226fe81c07f54",
+              "modeling/lifecycle_worker.py": "58cc961b8f4cbc8f651e695ebea6b52c3dbc6b49394700d847627ee22e9b6f84",
+              "modeling/neural.py": "eb7b8fc39fd85fcf73799b3f645bc334a7820ae1a5ca3eb2993a0ff545f5fbc1",
+              "modeling/neural_contracts.py": "72295b0bdb3610743bf6800f391468d0c26dec3b64080fd40ec262044d27921e",
+              "modeling/optional_families.py": "bde8df0efe706a77c3e78c2f6ab44cf35a01ff2ed74b7f80bfdad585009281bd",
+              "modeling/pattern_basket.py": "d6aa38ccd500d04483bbc98445ec503ce65e6c2060ee3ecec9c45611175fa4f7",
+              "modeling/pattern_contracts.py": "b8da3a28b57991b33fa69feee8183700263e9cbe9978bdf5ef432671cd2c0fae",
+              "modeling/pattern_events.py": "d1221869a904132b6756b990ff2367a58d454a325969c4b3c251a73fcc5ea7ea",
+              "modeling/patterns.py": "54232c5beb344f02e067f8f335acfaa1f8a1d4eacb141f3479ac3e2331bbfc97",
+              "modeling/plan.py": "d8a1f6043c9a96da399b74da095f3cc47c6972477984f9b3e085e48376fc6114",
+              "modeling/preparation.py": "bbb6d86e399f61d2d86c85a5b9205680ee4dbc780bfc1854ef4783ee4a82eee1",
+              "modeling/recommendation.py": "bac4167977a62565f2411fe6ec0a6fb08c979cc184e31046db5e1bb8da0e5b85",
+              "modeling/recommendation_contracts.py": "9afadb2ec2ab17a228eeb72d376ead3f28514d87162531974ecc9b9dfb86c6ea",
+              "modeling/recommendation_math.py": "ec585143ec19ec8933b99e74d098cacb51febc3e85265d6e0cfc750862c11a21",
+              "modeling/regression.py": "6fd65943f87ec2fee438e20f16d400a1eafe6cf6ef24e64a5e54eac132da51e8",
+              "modeling/repro_verify.py": "571168935d8a09fb40c15a4760ad09d28f07f1b34e298ff1f6d68578fa5b4e06",
+              "modeling/search.py": "d8b90bb06060477bd8f4d2df0d6c6ece0825c72d9c243ee65cfd5af2e1009fef",
+              "modeling/search_contracts.py": "a82b856b338ed33e25a8d8f9fe340a60008cdd88cfca893fe04c4aaefe27d10e",
+              "modeling/signal_contracts.py": "1edcc6cbdfd13b8af74bfbebaa4c321fc1f4e1eb1ccafc109662e6d3460c66f7",
+              "modeling/signals.py": "04da330a1bd55d8c83fb8c3ca947d27f9b2c4ee5485a4ca40d884bd7f752ce37",
+              "modeling/special_runs.py": "c1b5360c73fc65179c105b8749330746a4acb896293d6726e64e318251503a83",
+              "modeling/special_targets.py": "b0abfbfa39c94f5743537fb2bdaad158b75d015f2bb7c02b4d0f0a013099dd97",
+              "modeling/stream_contracts.py": "41432c3fc518e16a19c55235a5639bc6de61d88d662868e7ee83aa0687870a3d",
+              "modeling/streams.py": "e6a196e8e79025e8beb0dc49162b846579880ef2695689ceed2c48b9fcdb0702",
+              "modeling/temporal.py": "a7f74140fa4a201e559cf3de6ae2a3c66c37c89f70e5373e9433c9289ec8415d",
+              "modeling/temporal_contracts.py": "a7f949827438b4136a0576acc0455feed01400ace0639379f8068d70fc1c6291",
+              "modeling/time_series.py": "3ce5d126a56d8ea5fa5cc277e34a9c9b9246b88dc5472fa030699ff511d1d14c",
+              "modeling/time_series_contracts.py": "7acf1fc8415fab05a533a16691d044fdf4edc539b6a4e047fd5a8bcb7d6449ab",
+              "modeling/uncertainty.py": "18459743f79438daf7236e14e696dd6f9cc7a71388251464f8b1159c38944292",
+              "modeling/unsupervised.py": "f622291e9b889aa7dba7928e22dd716436042edc58349010bfeffe4d9f3fa693",
+              "modeling/unsupervised_contracts.py": "8f695e61dfb7d2e9f04cf075e049fc2ca6b0d85f8f681d13c8c26483fd6c55ea",
+              "modeling/validation.py": "926d32f935b8bafa2154ca6522c2a78462fcec7d12f47c489349542a8d2e8245",
+              "modeling/vision.py": "5fa20f0eb90dab4c85de7e34a49bfb3a9c8369c59c22786645e50010d21f2cf1",
+              "modeling/vision_contracts.py": "09d103e2a0302b461b52109569bf6f5c57e0484806488f9fec7e92d19ce965b1",
+              "modeling/vision_metrics.py": "a9435b6d44d89659a644e15a307e195d3e86ca8e1916349f4cac3b8f4e771bc4",
+              "modeling/worker.py": "7668c26547396f289ea9addcdea95903395f6c0693c76040dbd6c5fad1d7e0f1",
+              "operations/__init__.py": "3057dbc6d9b812bf9b2aad778db59346f32918c18d3855963ded8c84538a2d89",
+              "operations/cleaning.py": "952547f346de6778896e29f7033ed71c977168a11fe99880a6ba0767f6765b17",
+              "operations/cleaning_contracts.py": "2a6e1a9234fe3b62e28af1ff518eb7cb385d34af47eec8b5d9601c7581eb0dc8",
+              "operations/contracts.py": "9147685763df3e70a23a7ac202cbb61301ee2a86a655315977948896ce504851",
+              "operations/data_contracts.py": "abd9a1c68cb13ac27f9c9edc0e91e4d47df018760f6b5ad2c769b9cfb3ddce23",
+              "operations/data_quality.py": "d5475654431190c5a2b0f63490a5c77d017e4fdc6650b3ee8443c42fa0cb8d11",
+              "operations/engine.py": "adedd572483e085070267b48c3a36414d438276429f90ed9de48c482c3bbc233",
+              "operations/formula.py": "73aa71d20562e78d06055e194a41480d86211a5f33a8c915c661af7b7dfb4e5a",
+              "operations/monitoring.py": "0f92c902fb431475d850c331e44dfcc8fe97f3b0c44a51c2e6917cdf68514bf4",
+              "operations/recipe_worker.py": "3d496a1724c200816ca4a183c4a9513d800eedc393cc88d35742d7c3d8b20e53",
+              "operations/recipes.py": "f890531237267f41521ddeea299b5f4b03e023025105b7d39cc74086616a4dd8",
+              "operations/relational.py": "d1c10afd56fbfbea134435b73f589e39a10173680b8e12985f7605436fc52135",
+              "operations/relational_contracts.py": "eb0cef0160b7a0c92c601a407fceec423699032bc8d7fe4b3bba9196c29473da",
+              "operations/types.py": "0fe52eaad36ed00788508b4e28ed0c9a34df55b7ee41e6503127dd4d87bccd87",
+              "operations/worker.py": "f6fef54a9a1374728902e546eac733e33b243eee6ce115c29e0a99062b402435",
+              "operations/workflow.py": "c1047f3f6463a3ba1e554d06dc8c5f283e2b80cc6b703087ae41a4daa87d6534",
+              "operations/workflow_cli.py": "47ad3ee0dcee4cc5adf984d00a6393eb4896e3b88e97d64aa226dddba01c2e7d",
+              "operations/workflow_contracts.py": "9b39ba4b6aed914ee689e3df42588a2cf5613bc463c3f869629eaf61858db642",
+              "operations/workflow_fingerprint.py": "9fa208ef3ce63f000049eb736bf5b1e9af8c82a55f2deea65e55a67df4be0432",
+              "operations/workflow_service.py": "f64433af7adf3cc4e6aebac623b1c516e3577763f116c60a1cd9dee9fd55a012",
+              "storage/experiment_store.py": "f994800d3ba6aae5f30ddffe8f5a777651451523410d68fd92222c577470e4ee",
+              "storage/validation_store.py": "15e4a941263a9018507689559829a009140966815888aa38a7271cb84646aa45"
+            },
+            "code_hash": "99489433f3fabc0939630055c5c205a3776898867b5d217cd5ddcabe2c72bf7a",
+            "config_hash": "32c2fd7c03fb11e22675985a6c8c822f92af0fd1b5a0f11c8faba4ffb97f7a7c",
+            "config_scope": "validation/model options + immutable PipelineId preprocessing reference",
+            "data_access_time": "captured before scheduling; run.data_access_at records first immutable snapshot read boundary",
+            "environment": {
+              "machine": "x86_64",
+              "numpy": "2.5.3",
+              "polars": "2.0.0",
+              "python": "3.13.15",
+              "scikit-learn": "1.9.1",
+              "scipy": "1.18.0",
+              "skops": "0.16.0",
+              "system": "Linux",
+              "veri-ufku": "0.1.0"
+            },
+            "environment_hash": "a968f3834713fe5c140f15dca79af105e865b3503a3b984e42b567eaa0504e92",
+            "hardware": {
+              "captured_at": "same capture boundary",
+              "device": "not_recorded; inspect method spec",
+              "machine": "x86_64",
+              "physical_memory_bytes": 32913383424,
+              "system": "Linux",
+              "visible_cpu_count": 16
+            },
+            "schema": "RunCapture/v1"
+          },
+          "details_artifact": {
+            "fingerprint": {
+              "sha256": "5ef10577f34e25f6136548534dfd8f086febcf7da8f3077cbd8ed4b910d9e2d4",
+              "size": 33508
+            },
+            "uri": "sources/5fab0111-1131-4c38-b810-7d639a940674.bin"
+          },
+          "hardware": {
+            "captured_at": "same capture boundary",
+            "device": "not_recorded; inspect method spec",
+            "machine": "x86_64",
+            "physical_memory_bytes": 32913383424,
+            "system": "Linux",
+            "visible_cpu_count": 16
+          },
+          "legacy_gaps": "Only recorded fields. Package/hardware/code/user decision may be not_recorded.",
+          "model_artifact": "not_recorded",
+          "params": {
+            "plan": {
+              "membership": {
+                "test": [],
+                "train": [],
+                "validation": []
+              },
+              "scope": "bounded DAG run artifacts; no automatic dataset head activation, no evaluation score",
+              "split_id": "dag:90a8d40006eae99fa081c201353ec5beca954728f1bbc6fce96b30b965484269"
+            },
+            "spec": {},
+            "workflow_spec": {
+              "cases": [],
+              "nodes": [
+                {
+                  "after": [],
+                  "id": "source",
+                  "inputs": {},
+                  "kind": "source",
+                  "method_version": 1,
+                  "params": {
+                    "version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+                  }
+                },
+                {
+                  "after": [],
+                  "id": "summary",
+                  "inputs": {
+                    "data": {
+                      "node": "source",
+                      "port": "data"
+                    }
+                  },
+                  "kind": "analysis",
+                  "method_version": 1,
+                  "params": {
+                    "column": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                    "ddof": 1
+                  }
+                },
+                {
+                  "after": [],
+                  "id": "quality",
+                  "inputs": {
+                    "data": {
+                      "node": "source",
+                      "port": "data"
+                    }
+                  },
+                  "kind": "quality",
+                  "method_version": 1,
+                  "params": {
+                    "column": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                    "fail_on_null": true
+                  }
+                },
+                {
+                  "after": [],
+                  "id": "fit",
+                  "inputs": {
+                    "data": {
+                      "node": "source",
+                      "port": "data"
+                    }
+                  },
+                  "kind": "train",
+                  "method_version": 1,
+                  "params": {
+                    "confirmed": true,
+                    "feature": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                    "target": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81"
+                  }
+                },
+                {
+                  "after": [],
+                  "id": "predict",
+                  "inputs": {
+                    "data": {
+                      "node": "source",
+                      "port": "data"
+                    },
+                    "model": {
+                      "node": "fit",
+                      "port": "model"
+                    }
+                  },
+                  "kind": "predict",
+                  "method_version": 1,
+                  "params": {
+                    "prediction_column": "col:3ea02a04-1c6a-438b-8fb2-b21afccdacd7"
+                  }
+                }
+              ],
+              "retries": 0,
+              "schema": "TypedDAG/v1",
+              "seed": 64,
+              "sweep": []
+            }
+          },
+          "provenance": {
+            "capability_id": "workflow.source",
+            "column_lineage_ref": null,
+            "config_revision": 0,
+            "created_at": "2026-10-15T21:03:44.125191+00:00",
+            "dataset_versions": [
+              "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+            ],
+            "environment": [
+              [
+                "workflow_signature",
+                "a0ba6f034258f0c2c86322f87cc685d0ccce50d07e6b97981ad4ed330b4e732d"
+              ]
+            ],
+            "exclusions": [],
+            "filters": [],
+            "learning_content_version": null,
+            "method_version": 1,
+            "parameters_hash": "5050622405caae9f643dc032edba24f1e632e936057ff15723f2d8365ab72b23",
+            "provenance_id": "provenance:90a8d40006eae99fa081c201353ec5beca954728f1bbc6fce96b30b965484269",
+            "row_lineage_ref": "workflow-node-artifact-membership:90a8d40006eae99fa081c201353ec5beca954728f1bbc6fce96b30b965484269",
+            "scope": "bounded DAG run artifacts; no automatic dataset head activation, no evaluation score",
+            "seed": 64,
+            "seed_reason": "deterministic fixture; no sampling",
+            "source_snapshot_ids": [
+              "snapshot:43962115-a34e-46e1-9d70-2c12b395db72"
+            ]
+          },
+          "record_kind": "neural",
+          "recorded_environment": {
+            "code": "c52e7c9b64ae779866fc5f52091930a7ed45a888d4416727611f2e89c424c765",
+            "environment": {
+              "machine": "x86_64",
+              "numpy": "2.5.3",
+              "polars": "2.0.0",
+              "python": "3.13.15",
+              "scikit-learn": "1.9.1",
+              "scipy": "1.18.0",
+              "statsmodels": "0.15.0"
+            }
+          },
+          "report_reference": {
+            "dataset_version": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+          },
+          "run_id": "run:e717a40a-f44e-47ec-bf1d-91ea7d3e40ea",
+          "schema": "WorkflowRun/v1",
+          "status": "completed"
+        }
+      },
+      {
+        "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/source",
+        "kind": "analysis",
+        "metadata": {
+          "cache_key": "7858ef591299c10d11bd85accfd2f9a9fe307b2243e6c41ada87eb2481d620aa",
+          "operation_spec": {
+            "column_ids": [],
+            "destination": "[redacted]",
+            "id": "op:10be41e4-39b4-4495-87a9-27ff291821b4",
+            "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+            "input_version_ids": [],
+            "kind": "workflow_source",
+            "learned_scope": "none",
+            "method_version": 1,
+            "output_schema": [
+              {
+                "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              },
+              {
+                "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              }
+            ],
+            "parameters": {
+              "version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718"
+            },
+            "schema_version": 1
+          },
+          "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+          "status": "completed",
+          "verified_at": "2026-10-15T21:03:44.130290+00:00",
+          "workflow_kind": "source"
+        }
+      },
+      {
+        "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/fit",
+        "kind": "model",
+        "metadata": {
+          "cache_key": "73da9d3205b79196668d7639a36cc8d635d08d56ff563506706a4022af79624e",
+          "operation_spec": {
+            "column_ids": [],
+            "destination": "[redacted]",
+            "id": "op:90001091-68ff-4fbb-b70f-c6be06940c17",
+            "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+            "input_version_ids": [],
+            "kind": "workflow_train",
+            "learned_scope": "none",
+            "method_version": 1,
+            "output_schema": [],
+            "parameters": {
+              "confirmed": true,
+              "feature": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+              "target": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81"
+            },
+            "schema_version": 1
+          },
+          "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+          "status": "completed",
+          "verified_at": "2026-10-15T21:03:45.901241+00:00",
+          "workflow_kind": "train"
+        }
+      },
+      {
+        "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/quality",
+        "kind": "analysis",
+        "metadata": {
+          "cache_key": "ff51af76782a53c844b3767d5327f39a5d524e09323fd59967665b3be61a0acd",
+          "operation_spec": {
+            "column_ids": [],
+            "destination": "[redacted]",
+            "id": "op:0310b29f-7051-418a-b07f-2f472d532251",
+            "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+            "input_version_ids": [],
+            "kind": "workflow_quality",
+            "learned_scope": "none",
+            "method_version": 1,
+            "output_schema": [
+              {
+                "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              },
+              {
+                "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              }
+            ],
+            "parameters": {
+              "column": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+              "fail_on_null": true
+            },
+            "schema_version": 1
+          },
+          "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+          "status": "completed",
+          "verified_at": "2026-10-15T21:03:45.907990+00:00",
+          "workflow_kind": "quality"
+        }
+      },
+      {
+        "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/summary",
+        "kind": "analysis",
+        "metadata": {
+          "cache_key": "6cadc9cd429bae6c3c6719514add4c8907afa5abf48c86b9f665452756b40278",
+          "operation_spec": {
+            "column_ids": [],
+            "destination": "[redacted]",
+            "id": "op:9850c753-c764-477f-9e28-eb8c3fbf091f",
+            "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+            "input_version_ids": [],
+            "kind": "workflow_analysis",
+            "learned_scope": "none",
+            "method_version": 1,
+            "output_schema": [],
+            "parameters": {
+              "column": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+              "ddof": 1
+            },
+            "schema_version": 1
+          },
+          "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+          "status": "completed",
+          "verified_at": "2026-10-15T21:03:45.910743+00:00",
+          "workflow_kind": "analysis"
+        }
+      },
+      {
+        "id": "result:1283151c-5f04-4670-8e16-42c42f852ed0/default/predict",
+        "kind": "analysis",
+        "metadata": {
+          "cache_key": "7f2e19a37757f9baaae57a79217ad48fd31feade12c1058a271c1ae432447f40",
+          "operation_spec": {
+            "column_ids": [],
+            "destination": "[redacted]",
+            "id": "op:619465bc-49cc-4307-8ffb-1e63d8a747f3",
+            "input_version_id": "dv:f46db284-98e6-4673-af4d-3167b45d9718",
+            "input_version_ids": [],
+            "kind": "workflow_predict",
+            "learned_scope": "none",
+            "method_version": 1,
+            "output_schema": [
+              {
+                "id": "col:bc87d546-53fa-4a49-adc3-48b445c0f035",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              },
+              {
+                "id": "col:2aed90f1-2b96-4484-ae9e-5b8d2f3eed81",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              },
+              {
+                "id": "col:3ea02a04-1c6a-438b-8fb2-b21afccdacd7",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              }
+            ],
+            "parameters": {
+              "prediction_column": "col:3ea02a04-1c6a-438b-8fb2-b21afccdacd7"
+            },
+            "schema_version": 1
+          },
+          "row_lineage": "run-scoped native artifact; open workflow details for membership; no universal row reconstruction",
+          "status": "completed",
+          "verified_at": "2026-10-15T21:03:45.913303+00:00",
+          "workflow_kind": "predict"
+        }
+      }
+    ],
+    "schema": "LineageGraph/v1"
+  }
+}

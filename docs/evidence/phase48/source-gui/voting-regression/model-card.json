@@ -1,0 +1,831 @@
+{
+  "baseline": {
+    "comparison": [
+      {
+        "metrics": [
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "mae",
+            "n": 18,
+            "scope": "validation",
+            "status": "valid",
+            "value": 1.4571165433500823
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "rmse",
+            "n": 18,
+            "scope": "validation",
+            "status": "valid",
+            "value": 1.709429436577681
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "maximize",
+            "metric": "r2",
+            "n": 18,
+            "scope": "validation",
+            "status": "valid",
+            "value": -0.022234031558845846
+          }
+        ],
+        "scope": "validation"
+      },
+      {
+        "metrics": [
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "mae",
+            "n": 36,
+            "scope": "cv:1",
+            "status": "valid",
+            "value": 1.5031244518227727
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "rmse",
+            "n": 36,
+            "scope": "cv:1",
+            "status": "valid",
+            "value": 1.729437529371405
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "maximize",
+            "metric": "r2",
+            "n": 36,
+            "scope": "cv:1",
+            "status": "valid",
+            "value": -0.018109037841277376
+          }
+        ],
+        "scope": "cv:1"
+      },
+      {
+        "metrics": [
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "mae",
+            "n": 36,
+            "scope": "cv:2",
+            "status": "valid",
+            "value": 1.2252304827538394
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "rmse",
+            "n": 36,
+            "scope": "cv:2",
+            "status": "valid",
+            "value": 1.5033061328630315
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "maximize",
+            "metric": "r2",
+            "n": 36,
+            "scope": "cv:2",
+            "status": "valid",
+            "value": -0.024108031788956374
+          }
+        ],
+        "scope": "cv:2"
+      }
+    ],
+    "limitation": "Final koşuda yeniden baseline seçimi yapılmaz; geliştirme koşusu kartına bakın.",
+    "strategy": "mean"
+  },
+  "candidate_selection": {
+    "parameters": {
+      "alpha": 1.0,
+      "candidates": [
+        "baseline",
+        "voting"
+      ],
+      "depth": 8,
+      "explicit_model": "voting",
+      "family_options": {
+        "C": 1,
+        "alpha": 0.1,
+        "class_balance": "none",
+        "depth": 3,
+        "device": "cpu",
+        "gamma": "scale",
+        "inner_folds": 3,
+        "kernel": "rbf",
+        "l1_ratio": 0.5,
+        "learning_rate": 0.1,
+        "matrix": "dense",
+        "max_iter": 5000,
+        "neighbors": 5,
+        "objective": "supervised",
+        "scaling": "auto",
+        "trees": 10,
+        "weight_column": "",
+        "weight_kind": "sample_weight"
+      },
+      "trees": 50,
+      "unit": "hedef birimi"
+    },
+    "rule": "explicit user family selection fixed before CV; baseline same split/folds; no universal best algorithm",
+    "selected": "voting"
+  },
+  "columns": [
+    {
+      "id": "col:ca10652d-4347-4c9e-aba3-0107bfc5d8e7",
+      "name": "x",
+      "original_name": "x",
+      "type": "Float64"
+    },
+    {
+      "id": "col:7ef5c8e0-fd99-4c8e-866d-97b2a025fc24",
+      "name": "y",
+      "original_name": "y",
+      "type": "Float64"
+    },
+    {
+      "id": "col:ca156ade-292b-4d68-b988-73a896c5ebf7",
+      "name": "category",
+      "original_name": "category",
+      "type": "String"
+    },
+    {
+      "id": "col:cb8c0731-01db-49a5-9c08-970407fe7eb1",
+      "name": "note",
+      "original_name": "note",
+      "type": "String"
+    }
+  ],
+  "dataset_version": "dv:a4ab33c2-29b1-4729-9e6a-bf6c3e1cce35",
+  "decision": null,
+  "estimator": "FamilyRegressor",
+  "features": [
+    {
+      "id": "col:ca10652d-4347-4c9e-aba3-0107bfc5d8e7",
+      "name": "x",
+      "type": "Float64",
+      "unit": ""
+    },
+    {
+      "id": "col:ca156ade-292b-4d68-b988-73a896c5ebf7",
+      "name": "category",
+      "type": "String",
+      "unit": ""
+    }
+  ],
+  "fit_scope": "development_train; validation previously used for selection",
+  "fitted_preprocessing": {
+    "child_preprocessing": [
+      {
+        "backend_notices": [],
+        "categorical_mask": [
+          false,
+          false,
+          false
+        ],
+        "class_mapping": [],
+        "convergence": "passed; native warnings guarded",
+        "feature_names": [
+          "f_ca10652d43474c9eaba30107bfc5d8e7",
+          "f_ca156ade292b4d68b98873a896c5ebf7__0",
+          "f_ca156ade292b4d68b98873a896c5ebf7__1"
+        ],
+        "fit_row_ids": [
+          "row:ce287d84-469d-428f-ae6c-aa06464aed38",
+          "row:cd868056-88d5-48bb-82ca-a6495a498f54",
+          "row:4a181646-fd8a-4edd-be18-73b51f323627",
+          "row:fe38621a-15a0-419a-9944-3a41633af42e",
+          "row:6674342e-3ba5-4365-a24e-4f8dedbf1436",
+          "row:02f0c515-bd09-4ffc-842a-5140e72751e6",
+          "row:c2dba0d8-9d07-4911-9ef0-bf0121197871",
+          "row:1007420a-638e-49c7-b1f5-7e6b34280432",
+          "row:afed27bc-bc90-4851-ad20-d82b9ad41c40",
+          "row:70c2299d-3698-4bc9-933c-7dbca71028f8",
+          "row:46dbc453-d55a-4382-a220-3eedccbaa783",
+          "row:d35dff8c-c2d4-45f8-8ada-cd0b678b776c",
+          "row:a049a890-248d-4cf2-8caa-78a719d1d55e",
+          "row:03611f5a-e8a0-4132-861f-25f54c1f34ef",
+          "row:940169ec-4e51-4c5b-8623-7275cd994ac9",
+          "row:80fb9b20-e2aa-46bd-82e0-7a3856c1c838",
+          "row:a915fe10-d2f0-4589-b9bb-4fd433b9abea",
+          "row:b5aa9d71-f1c8-4b2f-83c9-40cf4cb0b19a",
+          "row:89520e6a-35fd-45b5-9e02-9a5e0c8d75d9",
+          "row:3470c2f2-d6d2-4f03-98af-fef8c2ac2667",
+          "row:7b675df7-6c72-462e-92f8-76056e968a48",
+          "row:0462b6af-35ca-417e-a042-00f02513f172",
+          "row:18ce684f-c74a-4540-b638-7ed2230619a4",
+          "row:73dd35e5-0fec-4a4d-bf63-0b5749f2ce7b",
+          "row:0b85a815-3651-4ef3-b615-1ab4fa665f3f",
+          "row:aeb1fa66-6220-4096-983e-a17e9ff1734e",
+          "row:454a45bf-23fc-4be9-ba9a-736a286d7787",
+          "row:cb668c21-82b9-454b-bfbf-481f3bfc77df",
+          "row:16cfa2f5-5523-4b2a-a074-6cb776d401a7",
+          "row:56df6589-1c31-4fd8-86d6-55f3c87c99e1",
+          "row:2e76e562-6a0b-445b-b6b6-1dd1b9515b80",
+          "row:45e8b69d-f20f-4e85-90ef-1d944e7b5699",
+          "row:21aacf2c-61da-4b22-a288-983302fc0ad2",
+          "row:27e4050f-3660-4a65-9496-4668f06fcf61",
+          "row:6d7f668a-dcd2-4769-8334-fdc363f9f199",
+          "row:0d8a1cb3-7bd3-497c-bdbd-e57d358a9a71",
+          "row:8167a245-a234-47bb-9d5d-58d0942602ad",
+          "row:a41a2996-02d7-4b36-8518-705874bccd73",
+          "row:63de4fb9-a10a-4ade-9970-60713bd0d293",
+          "row:b0314d83-af99-4572-b88b-9c17d1b8406a",
+          "row:4bc9c520-5b19-4f68-a913-9e03f6e995a3",
+          "row:251d2ebb-f899-46cb-9af1-2d5a14bb53db",
+          "row:7e91ce0b-6119-45e7-8865-b6dba6b7b35e",
+          "row:0cf3d75a-0f95-462b-ae86-1cc453e7d333",
+          "row:a3eab6d4-957b-4386-b59d-82dcc6a0fe6b",
+          "row:e3269fe0-0e92-44f2-aaf9-d43d30e4e339",
+          "row:01b1fb04-b653-4d85-819f-5109b34a7974",
+          "row:92018ff1-80c7-4e1d-ab41-ce0b708cca65",
+          "row:c32500ca-38ca-4c4e-987f-c943f71a6de7",
+          "row:e2d859be-855e-4409-85d5-c87291e1d68d",
+          "row:7c75bada-bba6-4a28-b50b-654f50ae444d",
+          "row:9d402ff6-4251-4a20-a910-cc7489d0ab50",
+          "row:7f3f50c6-cea7-47e2-b0d6-a0a250f35d27",
+          "row:7773d9c3-cff0-448e-9d6a-6837a3bbfc0b"
+        ],
+        "iterations": 2,
+        "matrix": "dense",
+        "method": "elasticnet",
+        "native_parameters": {
+          "alpha": 0.1,
+          "copy_X": true,
+          "fit_intercept": true,
+          "l1_ratio": 0.5,
+          "max_iter": 5000,
+          "positive": false,
+          "precompute": false,
+          "random_state": 43,
+          "selection": "cyclic",
+          "tol": 0.0001,
+          "warm_start": false
+        },
+        "preprocessing": {
+          "col:ca10652d-4347-4c9e-aba3-0107bfc5d8e7": {
+            "center": true,
+            "fit_n": 54,
+            "fit_scope": "training_only",
+            "imputation": [
+              0.9816335087050351
+            ],
+            "kind": "numeric",
+            "mean": [
+              1.0331793291280962
+            ],
+            "scale": [
+              0.5238055006843942
+            ]
+          },
+          "col:ca156ade-292b-4d68-b988-73a896c5ebf7": {
+            "categories": [
+              "[\"str\", \"A\"]",
+              "[\"str\", \"B\"]"
+            ],
+            "fill": "[\"str\", \"A\"]",
+            "fit_n": 54,
+            "fit_scope": "training_only",
+            "kind": "onehot",
+            "unknown": "all-zero"
+          }
+        },
+        "support": {
+          "backend_available": true,
+          "backend_reason": "",
+          "categorical": "training-only one-hot; ordinal only declared order",
+          "dense": true,
+          "gpu": "unsupported CPU-only adapter",
+          "imbalance": "training-only balanced sample weights",
+          "method": "elasticnet",
+          "multioutput": "application schema single target; native multioutput not exposed",
+          "nan": "train-only declared imputation or reject",
+          "predict_proba": false,
+          "purpose": "regression",
+          "ranking": "separate RankingSpec/v1, no ordinary class target",
+          "row_limit": 5000,
+          "safe_persistence": "closed reviewed skops package; no pickle/joblib",
+          "scaling": "training-only standard recommended",
+          "sparse": true,
+          "weights": "fit sample_weight only; preprocessing and evaluation unweighted"
+        },
+        "weights": "none"
+      },
+      {
+        "backend_notices": [],
+        "categorical_mask": [
+          false,
+          false,
+          false
+        ],
+        "class_mapping": [],
+        "convergence": "passed; native warnings guarded",
+        "feature_names": [
+          "f_ca10652d43474c9eaba30107bfc5d8e7",
+          "f_ca156ade292b4d68b98873a896c5ebf7__0",
+          "f_ca156ade292b4d68b98873a896c5ebf7__1"
+        ],
+        "fit_row_ids": [
+          "row:ce287d84-469d-428f-ae6c-aa06464aed38",
+          "row:cd868056-88d5-48bb-82ca-a6495a498f54",
+          "row:4a181646-fd8a-4edd-be18-73b51f323627",
+          "row:fe38621a-15a0-419a-9944-3a41633af42e",
+          "row:6674342e-3ba5-4365-a24e-4f8dedbf1436",
+          "row:02f0c515-bd09-4ffc-842a-5140e72751e6",
+          "row:c2dba0d8-9d07-4911-9ef0-bf0121197871",
+          "row:1007420a-638e-49c7-b1f5-7e6b34280432",
+          "row:afed27bc-bc90-4851-ad20-d82b9ad41c40",
+          "row:70c2299d-3698-4bc9-933c-7dbca71028f8",
+          "row:46dbc453-d55a-4382-a220-3eedccbaa783",
+          "row:d35dff8c-c2d4-45f8-8ada-cd0b678b776c",
+          "row:a049a890-248d-4cf2-8caa-78a719d1d55e",
+          "row:03611f5a-e8a0-4132-861f-25f54c1f34ef",
+          "row:940169ec-4e51-4c5b-8623-7275cd994ac9",
+          "row:80fb9b20-e2aa-46bd-82e0-7a3856c1c838",
+          "row:a915fe10-d2f0-4589-b9bb-4fd433b9abea",
+          "row:b5aa9d71-f1c8-4b2f-83c9-40cf4cb0b19a",
+          "row:89520e6a-35fd-45b5-9e02-9a5e0c8d75d9",
+          "row:3470c2f2-d6d2-4f03-98af-fef8c2ac2667",
+          "row:7b675df7-6c72-462e-92f8-76056e968a48",
+          "row:0462b6af-35ca-417e-a042-00f02513f172",
+          "row:18ce684f-c74a-4540-b638-7ed2230619a4",
+          "row:73dd35e5-0fec-4a4d-bf63-0b5749f2ce7b",
+          "row:0b85a815-3651-4ef3-b615-1ab4fa665f3f",
+          "row:aeb1fa66-6220-4096-983e-a17e9ff1734e",
+          "row:454a45bf-23fc-4be9-ba9a-736a286d7787",
+          "row:cb668c21-82b9-454b-bfbf-481f3bfc77df",
+          "row:16cfa2f5-5523-4b2a-a074-6cb776d401a7",
+          "row:56df6589-1c31-4fd8-86d6-55f3c87c99e1",
+          "row:2e76e562-6a0b-445b-b6b6-1dd1b9515b80",
+          "row:45e8b69d-f20f-4e85-90ef-1d944e7b5699",
+          "row:21aacf2c-61da-4b22-a288-983302fc0ad2",
+          "row:27e4050f-3660-4a65-9496-4668f06fcf61",
+          "row:6d7f668a-dcd2-4769-8334-fdc363f9f199",
+          "row:0d8a1cb3-7bd3-497c-bdbd-e57d358a9a71",
+          "row:8167a245-a234-47bb-9d5d-58d0942602ad",
+          "row:a41a2996-02d7-4b36-8518-705874bccd73",
+          "row:63de4fb9-a10a-4ade-9970-60713bd0d293",
+          "row:b0314d83-af99-4572-b88b-9c17d1b8406a",
+          "row:4bc9c520-5b19-4f68-a913-9e03f6e995a3",
+          "row:251d2ebb-f899-46cb-9af1-2d5a14bb53db",
+          "row:7e91ce0b-6119-45e7-8865-b6dba6b7b35e",
+          "row:0cf3d75a-0f95-462b-ae86-1cc453e7d333",
+          "row:a3eab6d4-957b-4386-b59d-82dcc6a0fe6b",
+          "row:e3269fe0-0e92-44f2-aaf9-d43d30e4e339",
+          "row:01b1fb04-b653-4d85-819f-5109b34a7974",
+          "row:92018ff1-80c7-4e1d-ab41-ce0b708cca65",
+          "row:c32500ca-38ca-4c4e-987f-c943f71a6de7",
+          "row:e2d859be-855e-4409-85d5-c87291e1d68d",
+          "row:7c75bada-bba6-4a28-b50b-654f50ae444d",
+          "row:9d402ff6-4251-4a20-a910-cc7489d0ab50",
+          "row:7f3f50c6-cea7-47e2-b0d6-a0a250f35d27",
+          "row:7773d9c3-cff0-448e-9d6a-6837a3bbfc0b"
+        ],
+        "iterations": [],
+        "matrix": "dense",
+        "method": "decision_tree",
+        "native_parameters": {
+          "ccp_alpha": 0.0,
+          "criterion": "squared_error",
+          "max_depth": 3,
+          "max_features": null,
+          "max_leaf_nodes": null,
+          "min_impurity_decrease": 0.0,
+          "min_samples_leaf": 2,
+          "min_samples_split": 2,
+          "min_weight_fraction_leaf": 0.0,
+          "monotonic_cst": null,
+          "random_state": 44,
+          "splitter": "best"
+        },
+        "preprocessing": {
+          "col:ca10652d-4347-4c9e-aba3-0107bfc5d8e7": {
+            "center": false,
+            "fit_n": 54,
+            "fit_scope": "training_only",
+            "imputation": [
+              0.9816335087050351
+            ],
+            "kind": "numeric",
+            "mean": null,
+            "scale": null
+          },
+          "col:ca156ade-292b-4d68-b988-73a896c5ebf7": {
+            "categories": [
+              "[\"str\", \"A\"]",
+              "[\"str\", \"B\"]"
+            ],
+            "fill": "[\"str\", \"A\"]",
+            "fit_n": 54,
+            "fit_scope": "training_only",
+            "kind": "onehot",
+            "unknown": "all-zero"
+          }
+        },
+        "support": {
+          "backend_available": true,
+          "backend_reason": "",
+          "categorical": "training-only one-hot; ordinal only declared order",
+          "dense": true,
+          "gpu": "unsupported CPU-only adapter",
+          "imbalance": "training-only balanced sample weights",
+          "method": "decision_tree",
+          "multioutput": "application schema single target; native multioutput not exposed",
+          "nan": "train-only declared imputation or reject",
+          "predict_proba": false,
+          "purpose": "regression",
+          "ranking": "separate RankingSpec/v1, no ordinary class target",
+          "row_limit": 5000,
+          "safe_persistence": "closed reviewed skops package; no pickle/joblib",
+          "scaling": "none recommended",
+          "sparse": true,
+          "weights": "fit sample_weight only; preprocessing and evaluation unweighted"
+        },
+        "weights": "none"
+      }
+    ],
+    "ensemble_members": [
+      "elasticnet",
+      "decision_tree"
+    ],
+    "fit_row_ids": [
+      "row:ce287d84-469d-428f-ae6c-aa06464aed38",
+      "row:cd868056-88d5-48bb-82ca-a6495a498f54",
+      "row:4a181646-fd8a-4edd-be18-73b51f323627",
+      "row:fe38621a-15a0-419a-9944-3a41633af42e",
+      "row:6674342e-3ba5-4365-a24e-4f8dedbf1436",
+      "row:02f0c515-bd09-4ffc-842a-5140e72751e6",
+      "row:c2dba0d8-9d07-4911-9ef0-bf0121197871",
+      "row:1007420a-638e-49c7-b1f5-7e6b34280432",
+      "row:afed27bc-bc90-4851-ad20-d82b9ad41c40",
+      "row:70c2299d-3698-4bc9-933c-7dbca71028f8",
+      "row:46dbc453-d55a-4382-a220-3eedccbaa783",
+      "row:d35dff8c-c2d4-45f8-8ada-cd0b678b776c",
+      "row:a049a890-248d-4cf2-8caa-78a719d1d55e",
+      "row:03611f5a-e8a0-4132-861f-25f54c1f34ef",
+      "row:940169ec-4e51-4c5b-8623-7275cd994ac9",
+      "row:80fb9b20-e2aa-46bd-82e0-7a3856c1c838",
+      "row:a915fe10-d2f0-4589-b9bb-4fd433b9abea",
+      "row:b5aa9d71-f1c8-4b2f-83c9-40cf4cb0b19a",
+      "row:89520e6a-35fd-45b5-9e02-9a5e0c8d75d9",
+      "row:3470c2f2-d6d2-4f03-98af-fef8c2ac2667",
+      "row:7b675df7-6c72-462e-92f8-76056e968a48",
+      "row:0462b6af-35ca-417e-a042-00f02513f172",
+      "row:18ce684f-c74a-4540-b638-7ed2230619a4",
+      "row:73dd35e5-0fec-4a4d-bf63-0b5749f2ce7b",
+      "row:0b85a815-3651-4ef3-b615-1ab4fa665f3f",
+      "row:aeb1fa66-6220-4096-983e-a17e9ff1734e",
+      "row:454a45bf-23fc-4be9-ba9a-736a286d7787",
+      "row:cb668c21-82b9-454b-bfbf-481f3bfc77df",
+      "row:16cfa2f5-5523-4b2a-a074-6cb776d401a7",
+      "row:56df6589-1c31-4fd8-86d6-55f3c87c99e1",
+      "row:2e76e562-6a0b-445b-b6b6-1dd1b9515b80",
+      "row:45e8b69d-f20f-4e85-90ef-1d944e7b5699",
+      "row:21aacf2c-61da-4b22-a288-983302fc0ad2",
+      "row:27e4050f-3660-4a65-9496-4668f06fcf61",
+      "row:6d7f668a-dcd2-4769-8334-fdc363f9f199",
+      "row:0d8a1cb3-7bd3-497c-bdbd-e57d358a9a71",
+      "row:8167a245-a234-47bb-9d5d-58d0942602ad",
+      "row:a41a2996-02d7-4b36-8518-705874bccd73",
+      "row:63de4fb9-a10a-4ade-9970-60713bd0d293",
+      "row:b0314d83-af99-4572-b88b-9c17d1b8406a",
+      "row:4bc9c520-5b19-4f68-a913-9e03f6e995a3",
+      "row:251d2ebb-f899-46cb-9af1-2d5a14bb53db",
+      "row:7e91ce0b-6119-45e7-8865-b6dba6b7b35e",
+      "row:0cf3d75a-0f95-462b-ae86-1cc453e7d333",
+      "row:a3eab6d4-957b-4386-b59d-82dcc6a0fe6b",
+      "row:e3269fe0-0e92-44f2-aaf9-d43d30e4e339",
+      "row:01b1fb04-b653-4d85-819f-5109b34a7974",
+      "row:92018ff1-80c7-4e1d-ab41-ce0b708cca65",
+      "row:c32500ca-38ca-4c4e-987f-c943f71a6de7",
+      "row:e2d859be-855e-4409-85d5-c87291e1d68d",
+      "row:7c75bada-bba6-4a28-b50b-654f50ae444d",
+      "row:9d402ff6-4251-4a20-a910-cc7489d0ab50",
+      "row:7f3f50c6-cea7-47e2-b0d6-a0a250f35d27",
+      "row:7773d9c3-cff0-448e-9d6a-6837a3bbfc0b"
+    ],
+    "meta_rule": null,
+    "meta_training_row_ids": [],
+    "method": "voting",
+    "oof": []
+  },
+  "importance": {
+    "reason": "Bağımsız değerlendirme bölümü yok; nedensellik çıkarılamaz.",
+    "status": "unavailable"
+  },
+  "label_order": [],
+  "limitations": "Katsayı ve önemler nedensel etki değildir. İlişkili özellikler önemi paylaşabilir veya gizleyebilir. Yeni veri dağılımı değişebilir; olasılık kesinlik veya kalibrasyon garantisi değildir. Küme ve anomali adayları gerçek sınıf/veri hatası değildir; otomatik silme yok.",
+  "method": null,
+  "metrics": [
+    {
+      "evaluation_n": 18,
+      "metrics": [
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "mae",
+          "n": 18,
+          "scope": "validation",
+          "status": "valid",
+          "value": 0.10079760412012186
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "rmse",
+          "n": 18,
+          "scope": "validation",
+          "status": "valid",
+          "value": 0.12047578818346959
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "maximize",
+          "metric": "r2",
+          "n": 18,
+          "scope": "validation",
+          "status": "valid",
+          "value": 0.9949225280714701
+        }
+      ],
+      "scope": "validation",
+      "status": "valid",
+      "train_n": 54
+    },
+    {
+      "evaluation_n": 36,
+      "metrics": [
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "mae",
+          "n": 36,
+          "scope": "cv:1",
+          "status": "valid",
+          "value": 0.12833790945369372
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "rmse",
+          "n": 36,
+          "scope": "cv:1",
+          "status": "valid",
+          "value": 0.1615962797245915
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "maximize",
+          "metric": "r2",
+          "n": 36,
+          "scope": "cv:1",
+          "status": "valid",
+          "value": 0.9911111157480759
+        }
+      ],
+      "scope": "cv:1",
+      "status": "valid",
+      "train_n": 36
+    },
+    {
+      "evaluation_n": 36,
+      "metrics": [
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "mae",
+          "n": 36,
+          "scope": "cv:2",
+          "status": "valid",
+          "value": 0.11834174159116483
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "rmse",
+          "n": 36,
+          "scope": "cv:2",
+          "status": "valid",
+          "value": 0.15385318287391406
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "maximize",
+          "metric": "r2",
+          "n": 36,
+          "scope": "cv:2",
+          "status": "valid",
+          "value": 0.9892733555813212
+        }
+      ],
+      "scope": "cv:2",
+      "status": "valid",
+      "train_n": 36
+    }
+  ],
+  "preparation_spec": {
+    "allow_identifiers": false,
+    "categorical_imputation": "most_frequent",
+    "date_features": true,
+    "encoding": "onehot",
+    "family": "tree",
+    "features": [
+      "col:ca10652d-4347-4c9e-aba3-0107bfc5d8e7",
+      "col:ca156ade-292b-4d68-b988-73a896c5ebf7"
+    ],
+    "group": "",
+    "history_action": "review",
+    "history_note": "",
+    "invalid_numeric": "reject",
+    "numeric_imputation": "median",
+    "precision": "reject",
+    "prediction_context": "Before outcome",
+    "purpose": "regression",
+    "scaling": "auto",
+    "selection": "none",
+    "source_version": "dv:a4ab33c2-29b1-4729-9e6a-bf6c3e1cce35",
+    "target": "col:7ef5c8e0-fd99-4c8e-866d-97b2a025fc24",
+    "time": ""
+  },
+  "preprocessing": {
+    "category_vocabulary": null,
+    "column_lineage": [
+      {
+        "category_map": [],
+        "input_column_id": "col:ca10652d-4347-4c9e-aba3-0107bfc5d8e7",
+        "names_status": "structurally_known",
+        "output_names": [
+          "f_ca10652d43474c9eaba30107bfc5d8e7__numeric"
+        ],
+        "selected_after_fit": "all_planned",
+        "source_dtype": "Float64",
+        "source_name": "x"
+      },
+      {
+        "category_map": null,
+        "input_column_id": "col:ca156ade-292b-4d68-b988-73a896c5ebf7",
+        "names_status": "template_training_bound",
+        "output_names": [
+          "f_ca156ade292b4d68b98873a896c5ebf7__category_{training_index}"
+        ],
+        "selected_after_fit": "all_planned",
+        "source_dtype": "String",
+        "source_name": "category"
+      }
+    ],
+    "estimator_family": "tree",
+    "feature_selection_mask": null,
+    "fit_state": "not_fitted",
+    "fitted_parameters": {},
+    "schema": "PreparationPlan/v1",
+    "steps": [
+      {
+        "input_column_ids": [
+          "col:ca10652d-4347-4c9e-aba3-0107bfc5d8e7"
+        ],
+        "kind": "numeric",
+        "learned_scope": "row_local",
+        "output_names": [
+          "f_ca10652d43474c9eaba30107bfc5d8e7__numeric"
+        ],
+        "parameters": {
+          "nonfinite": "reject",
+          "precision": "reject"
+        },
+        "reason": "Kimlik ölçüm değildir; Float64 kaybı gelecekte açık politika ile denetlenir.",
+        "state": "planned"
+      },
+      {
+        "input_column_ids": [
+          "col:ca10652d-4347-4c9e-aba3-0107bfc5d8e7"
+        ],
+        "kind": "impute_numeric",
+        "learned_scope": "training_fold",
+        "output_names": [
+          "f_ca10652d43474c9eaba30107bfc5d8e7__numeric"
+        ],
+        "parameters": {
+          "all_missing": "error",
+          "strategy": "median"
+        },
+        "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz.",
+        "state": "planned"
+      },
+      {
+        "input_column_ids": [
+          "col:ca10652d-4347-4c9e-aba3-0107bfc5d8e7"
+        ],
+        "kind": "no_scaling",
+        "learned_scope": "row_local",
+        "output_names": [
+          "f_ca10652d43474c9eaba30107bfc5d8e7__numeric"
+        ],
+        "parameters": {
+          "explicit_override": false
+        },
+        "reason": "Ağaç ailesine scaling otomatik önerilmez; açık none seçiminde diğer ailelerde ölçek duyarlılığını inceleyin.",
+        "state": "planned"
+      },
+      {
+        "input_column_ids": [
+          "col:ca156ade-292b-4d68-b988-73a896c5ebf7"
+        ],
+        "kind": "impute_category",
+        "learned_scope": "training_fold",
+        "output_names": [],
+        "parameters": {
+          "all_missing": "error",
+          "strategy": "most_frequent"
+        },
+        "reason": "Kategori modunu yalnız eğitim katı öğrenir; eksik hedef doldurulmaz.",
+        "state": "planned"
+      },
+      {
+        "input_column_ids": [
+          "col:ca156ade-292b-4d68-b988-73a896c5ebf7"
+        ],
+        "kind": "encode_onehot",
+        "learned_scope": "training_fold",
+        "output_names": [
+          "f_ca156ade292b4d68b98873a896c5ebf7__category_{training_index}"
+        ],
+        "parameters": {
+          "categories": "training_only",
+          "name_binding": "training category index -> original ColumnId and category; deferred until fit",
+          "sparse": true,
+          "unknown": "ignore_with_warning"
+        },
+        "reason": "Nominal kategorilere sıralama yüklenmez; kategori sözlüğü yalnız eğitim katında öğrenilir.",
+        "state": "planned"
+      }
+    ],
+    "training_dependency": "Requires a validated split/fold protocol in Phase16; no training performed",
+    "version_id": "ml-pipeline:c87ecde9-b730-47b1-9df0-c42d8e495121"
+  },
+  "probability_supported": false,
+  "purpose": "regression",
+  "run_id": "run:7868c91b-fe46-4282-9c0e-d3382866b302",
+  "schema": "ModelCard/v1",
+  "seed": 42,
+  "snapshot_fingerprint": {
+    "sha256": "3ef0f4d6c03735fbef8d2f45edea52e9edaa2b44e4368609d0293091f12a1094",
+    "size": 10730
+  },
+  "target": {
+    "id": "col:7ef5c8e0-fd99-4c8e-866d-97b2a025fc24",
+    "name": "y",
+    "original_name": "y",
+    "type": "Float64",
+    "unit": "hedef birimi"
+  },
+  "threshold": null,
+  "versions": {
+    "numpy": "2.5.3",
+    "polars": "2.0.0",
+    "python": "3.13.15",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.0",
+    "skops": "0.16.0",
+    "veri-ufku": "0.1.0"
+  },
+  "fit_row_count": 54,
+  "split": {
+    "invalid_folds": [],
+    "method": "random",
+    "protocol_id": "protocol:6062011a4bd8dfc81a19af3d7c79f924cc038e864996d7112804080169253c01",
+    "schema": "ValidationPlan/v1",
+    "split_id": "split:89727e45104c85c4ef1c5accfc1b9d1d94968f8f5eaa4cb5adc1602863c8ffcc",
+    "membership_counts": {
+      "development": 72,
+      "folds": 2,
+      "purged": 0,
+      "test": 18,
+      "train": 54,
+      "validation": 18
+    }
+  }
+}

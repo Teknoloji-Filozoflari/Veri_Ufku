@@ -4,6 +4,17 @@ set -euo pipefail
 
 project_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
 cd -- "$project_root"
+# Read-only publication preflight, before authentication or staging.
+if [[ ! -x .venv/bin/python ]]; then
+    printf 'Kilitli ortam yok; önce uv sync --locked --group dev çalıştırın.\n' >&2
+    exit 1
+fi
+.venv/bin/python scripts/check_publish.py
+if [[ "${1:-}" == --check ]]; then exit 0; fi
+if [[ $# -gt 0 ]]; then
+    printf 'Kullanım: bash scripts/publish_github.sh [--check]\n' >&2
+    exit 1
+fi
 repository='Teknoloji-Filozoflari/Veri_Ufku'
 remote_url="https://github.com/${repository}.git"
 trap 'printf "\nİşlem tamamlanamadı. Yukarıdaki hata metnini paylaşabilirsiniz; erişim anahtarını paylaşmayın.\n" >&2' ERR
@@ -71,6 +82,7 @@ fi
 
 # Explicit project paths: never add virtual environments, credentials or local logs.
 git add -- .gitignore .python-version .github AGENTS.md README.md \
+    LICENSE CHANGELOG.md CONTRIBUTING.md packaging examples output/branding \
     Veri_Ufku_Birlestirilmis_Gelistirme_Promptlari.md \
     pyproject.toml uv.lock src tests scripts docs tools/wheels
 if ! git diff --cached --quiet; then

@@ -1,0 +1,160 @@
+{
+  "date": "2026-10-16",
+  "environment": "ENV-66",
+  "source_final": {
+    "passed": 255,
+    "skipped": 1,
+    "xml": "source-final.xml",
+    "exit": 0,
+    "note": "before final parent environment lock consolidation",
+    "name": "selected_before_final_lock"
+  },
+  "wheel_final": {
+    "passed": 255,
+    "skipped": 1,
+    "xml": "wheel-final.xml",
+    "exit": 0,
+    "note": "before final parent environment lock consolidation",
+    "name": "selected_before_final_lock"
+  },
+  "warnings": [
+    "intentional duplicate config.json ZIP tamper fixture",
+    "source/wheel shutdown ResourceWarning:261 uncollectable objects; longheap remains open"
+  ],
+  "source_gui": {
+    "passed": 1,
+    "path": "source-gui-final/measurement.json"
+  },
+  "wheel_gui": {
+    "passed": 1,
+    "path": "wheel-gui/measurement.json"
+  },
+  "optional_dask": {
+    "passed": 9,
+    "xml": "source-dask.xml",
+    "scope": "isolated local-threads backend only; remote unvalidated"
+  },
+  "additional_gui": "Mixed26-case group interrupted exit130 after failures; no success aggregate. Separate tensor4pass4GiB/basic9pass retained before consolidation. Fresh tuning2GiB RAM quota fail. Explicit4GiB/120s two-candidate search budget_exhausted (7 completed/1 canceled); final smaller one-candidate source/wheel1each passed separately.",
+  "formal_open": [
+    "GPU runtime",
+    "remote executor/mTLS/cluster-wide quotas",
+    "physical desktop",
+    "human/AT",
+    "minimum hardware",
+    "long retained heap",
+    "clean offline installer",
+    "remote CI"
+  ],
+  "search_default_2gib": {
+    "status": "failed test; actual safe RAM quota cancellation",
+    "xml": "search-gui-investigation.xml",
+    "note": "fresh process too; not a successful train GUI acceptance"
+  },
+  "wheel_optional_dask": {
+    "passed": 9,
+    "xml": "wheel-dask.xml",
+    "scope": "isolated local runtime; remote unvalidated"
+  },
+  "source_complete": {
+    "passed": 60,
+    "skipped": 1,
+    "xml": "source-complete.xml",
+    "exit": 0
+  },
+  "wheel_complete": {
+    "passed": 60,
+    "skipped": 1,
+    "xml": "wheel-complete.xml",
+    "exit": 0
+  },
+  "source_gui_complete": {
+    "passed": 1,
+    "path": "source-gui-complete/measurement.json",
+    "ram_gib": 2
+  },
+  "wheel_gui_complete": {
+    "passed": 1,
+    "path": "wheel-gui-complete/measurement.json",
+    "ram_gib": 2
+  },
+  "tensor_gui": {
+    "passed": 4,
+    "xml": "gui-investigation.xml",
+    "explicit_ram_gib": 4,
+    "scope": "before final environment lock consolidation; production default unchanged"
+  },
+  "basic_gui": {
+    "passed": 9,
+    "deselected": 1,
+    "xml": "gui-basic-final.xml",
+    "scope": "before final environment lock consolidation; model case excluded"
+  },
+  "search_4gib_120s": {
+    "status": "budget_exhausted; test failed",
+    "path": "search-gui-4gib-complete/gui.xml",
+    "completed_trials": 7,
+    "canceled_trials": 1,
+    "native_fit_reservations": 19,
+    "elapsed_seconds": 119.82056018800017,
+    "ram_app_gib": 4,
+    "ram_worker_gib": 2,
+    "wall_seconds": 120
+  },
+  "wheel_optional_dask_complete": {
+    "passed": 9,
+    "xml": "wheel-dask-complete.xml",
+    "scope": "final installed package with isolated Dask dependencies; local only"
+  },
+  "bounded_search_source": {
+    "passed": 1,
+    "path": "bounded-search-4gib/gui.xml",
+    "measurement": "bounded-search-4gib/measurement.json",
+    "app_ram_gib": 4,
+    "worker_ram_gib": 2,
+    "candidate_count": 1,
+    "curves": false,
+    "final_test_used": false,
+    "outer_folds": 3
+  },
+  "pidfd_source": {
+    "passed": 9,
+    "skipped": 1,
+    "xml": "source-pidfd-complete.xml",
+    "scope": "real pidfd mismatched identity no-op + owned matching process kill"
+  },
+  "pidfd_wheel_optional_dask": {
+    "passed": 10,
+    "xml": "wheel-pidfd-dask-complete.xml",
+    "scope": "final installed package, real local Dask and pidfd process cancellation"
+  },
+  "bounded_search_wheel": {
+    "passed": 1,
+    "path": "wheel-bounded-search-4gib/gui.xml",
+    "measurement": "wheel-bounded-search-4gib/measurement.json",
+    "app_ram_gib": 4,
+    "worker_ram_gib": 2,
+    "candidate_count": 1,
+    "curves": false,
+    "final_test_used": false,
+    "outer_folds": 3
+  },
+  "source_cache_complete": {
+    "passed": 30,
+    "xml": "source-cache-complete.xml",
+    "exit": 0
+  },
+  "wheel_cache_complete": {
+    "passed": 30,
+    "xml": "wheel-cache-complete.xml",
+    "exit": 0
+  },
+  "gates": {
+    "passed": 7,
+    "document_unit_tests": 14,
+    "articles": 406,
+    "ui_help_bindings": 190,
+    "named_fields": 963,
+    "english_core": 189,
+    "file": "gates.json"
+  }
+}

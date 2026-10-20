@@ -186,14 +186,9 @@ def main():
             learning.toggleBookmark()
             learning.toggleRead()
             capture("glossary-marks")
-            for width, height, scale, theme in (
-                (720, 560, 1.0, "light"),
-                (720, 560, 2.0, "dark"),
-            ):
+            for width, height, scale, theme in ((720, 560, 1.0, "dark"),):
                 window.setWidth(width)
                 window.setHeight(height)
-                preferences.setTextScale(scale)
-                preferences.setTheme(theme)
                 workspace = window.findChild(QQuickItem, "workspace")
                 workspace.property("contentItem").setProperty("contentY", 0)
                 capture(f"small-{theme}-{scale}")
@@ -205,7 +200,7 @@ def main():
                 wait(lambda: not window.property("infoOpen"))
                 QTest.qWait(250)
             report["checks"].append(
-                "Small 720x560 light/dark and 200% text; glossary and drawer rendered"
+                "Small 720x560 dark only and fixed text size; glossary and drawer rendered"
             )
             wait(lambda: not bridge.active)
             assert bridge.session.manager.snapshot(job).result_for(binding) is not None

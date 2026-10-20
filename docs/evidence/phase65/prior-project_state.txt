@@ -1,0 +1,54 @@
+# Veri_Ufku — aktif görev hafızası
+
+2026-10-15 DEC64-01 Faz64 bounded typed DAG teknik teslim.
+Resmî sürüyor/deneysel/isteğe bağlı; [E64](evidence/PHASE64.md),
+[ADR065](adr/065-typed-workflow-phase64.md),[kayıtlar](evidence/phase64/acceptance.json).
+Faz65 başlatılmaz. Önceki tüm resmî açıklar ve Faz63/62/61/60/59/58/57/56 durumu
+[önceki hafızada](evidence/phase64/prior-project_state.txt) korunur.
+
+Hazırla → Typed DAG: görsel ok/port diyagramı, kart/form, typed port bağlama,
+after/cycle kontrolü ve declarative JSON batch/sweep editörü. Source yerel immutable
+DatasetVersion snapshot; transform mevcut rename/drop/filter; quality numeric
+required-null (fail veya raporla-devam); analysis mevcut full profile/ddof0/1;
+train tek feature OLS/user assumptions onayı; predict güvenli JSON coefficients;
+export Parquet. Başka yöntemler hazır sayılmaz. OLS tüm upstream satırda fit,
+held-out score/final test yok. Mevcut zincirden rename/drop/filter DAG'a alınır.
+Her düğüm OperationSpec/RowId/SourceRecordId/ColumnId/Provenance/ComputeBudget;
+türetilmiş DatasetVersion run-scoped artifact, ana dataset heads değişmez.
+
+Tek registry portları, aynı Qt'siz worker/calculate GUI/CLI; worker ACTIVE/Qt/store
+almaz. Parent mevcut neural_store/ProjectStore atomik journal/experiment registry;
+ikinci kayıt sistemi yok. Tüm root DatasetVersion bağları ve eski test-use ledger
+korunur; ledger uyumsuzluğu dış eylemden önce reddedilir. Compact manifest nodes_hash,
+full immutable JSON ve hashli native artifact. GUI edit/history stale; geçmiş açma
+çalıştırmaz. Kaynak yazma/ağ/credential/import-code eylemi yok.
+
+Cache root hash/schema/semantics/version,config/method/code/env,parent key,budget;
+hit önce/sonra kaynak hash, artifact hash. Snapshot değişimi hata, bağımlı blocked;
+yeni explicit source version farklı key. Bağımsız başarısız dal diğer sonucu ezmez.
+Cache private OWNER/LOCK, yalnız sahipli .tmp-dag-* temizliği; saf I/O retry0–2.
+Export terminal/user consent; UUID-case-node yeni dosya, source/başka run overwrite
+yok. Sadece önceki aynı receipt/key/hash idempotent; orphan otomatik benimsenmez.
+Canceled run hazır export yayınlamaz. Dış dosya/proje commit dağıtık atomik değil;
+crash orphan bırakabilir, kullanıcı inceleme/yeni token gerekir.
+
+24 node;1–10000row/64col/source;8case×sweep;500000row×node upper preflight.
+Batch explicit dataset ve bijective ColumnId eşleme; type/unit/role/ordinal uyumu;
+sweep yalnız analysis.ddof0/1. Dry-run source/hash/type/cost plan, compute/cache/
+export yok, plan run saklanır. Local schedule mevcut değil/unvalidated; app kapalıysa
+otomatik iş yok; explicit CLI ve tek writer gerekir. SIGINT/SIGTERM/timeout/RSS
+ve worker ComputeBudget; üretim2GiB değişmedi. Ayrıntı ADR065.
+
+275source/275wheel seçilmiş core (yayın bariyeri son düzeltmesinden önce), ardından
+157source/157finalwheel publication-focused (13native dahil). Son source/wheel5şer
+actualGUI: eşdeğer CLI,7node train/export/cache, cancel,timeout,zincir köprüsü.
+362byte-eşit final package. Başarısız alt koşular E64/early-failures içinde korunur;
+tek aggregate gibi toplanmaz. Son durum/ortam/kanıt verification.json içinde.
+400offline makale, DAG/cache/batch3yeni konu, gerçek yardım. Varsayılan sonuç paneli
+özetleri, isteğe bağlı ayrıntılı provenance; dar/geniş screenshot ayrı.
+
+Fiziksel masaüstü/insan/AT/minimum donanım/uzun retainedheap2GiB/temiz offline
+kurulum/remoteCI ayrı açık; küçük offscreen koşuları bunları kapatmaz. Faz58 Vosk
+paketi/model yok STT runtime unvalidated; önceki Faz63 OS sandbox/managedJupyter
+ve diğer resmî açıklar değişmedi. Stage/commit/push yok; dirty/untracked teslim
+korunur. Yalnız açık yeni talimatla sonraki faz.

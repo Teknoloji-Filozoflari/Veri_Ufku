@@ -1,0 +1,934 @@
+{
+  "schema": "UnsupervisedRun/v1",
+  "run_id": "unsupervised:86b945fd-4814-4d06-a836-f08433e56c3f",
+  "dataset_version": "dv:9d6d4d0e-3292-463f-b200-9345991644f6",
+  "spec": {
+    "method": "optics",
+    "features": [
+      "col:81db42f7-6491-45b2-a4d5-36658698e3d7",
+      "col:c849e549-619c-41cd-b261-59f5c81219e8"
+    ],
+    "scaling": "none",
+    "seed": 42,
+    "clusters": 3,
+    "eps": 0.5,
+    "min_samples": 5,
+    "contamination": 0.05,
+    "iqr_multiplier": 1.5,
+    "threshold_mode": "fraction",
+    "score_threshold": 0.6,
+    "metric": "euclidean",
+    "linkage": "ward",
+    "covariance_type": "full",
+    "xi": 0.05,
+    "min_cluster_size": 5,
+    "stability_runs": 1,
+    "compare_methods": [],
+    "anomaly_mode": "outlier",
+    "training_fraction": 0.7,
+    "nu": 0.05,
+    "gamma": "scale",
+    "label_column": "",
+    "false_positive_cost": 1.0,
+    "false_negative_cost": 1.0
+  },
+  "config_revision": 18,
+  "rows": 61,
+  "fit_scope": "full_selected_dataset_version; no view filters; no holdout",
+  "compute_preflight": {
+    "rows": 61,
+    "features": 2,
+    "worst_case_bytes": 89304,
+    "quadratic": true,
+    "stability_fits": 1,
+    "policy": "no implicit sampling; full-version exploratory fit"
+  },
+  "cpu_threads": 2,
+  "row_ids": [
+    "row:ef99bb40-4944-4c9d-abb1-440f01d1f622",
+    "row:6869d4a3-ca4e-40f7-b509-803a1ec943c2",
+    "row:07d4b875-3234-4f9c-b6c0-95bf7d7a9a4e",
+    "row:299957ee-4f39-4b55-8038-1d504177d4fb",
+    "row:91a04dbb-57d6-44d7-b7ca-4a84eb35e373",
+    "row:be1b6be1-2550-4942-a2fe-2e01a0e7db14",
+    "row:289563db-e7b8-4f13-b887-42d31c42da36",
+    "row:5c317496-54f4-4957-ba09-16a708507bb7",
+    "row:13ef0d65-2933-42aa-b9de-9aebe39920b2",
+    "row:9892ebe0-d4a4-4449-bc3f-05d6b1cabdf9",
+    "row:9144c8d6-85d2-4f78-b7a8-2f324cd33018",
+    "row:c9713c9d-e405-42e5-b123-cc53224a336d",
+    "row:9281b995-27f0-4b17-bad7-9e92c1d24e7a",
+    "row:8c03ec33-e791-44d0-bd28-a59cb57335f7",
+    "row:387aea62-e321-4e97-9d86-c41369d7adba",
+    "row:ad251bd2-d566-4dae-8c75-f9affeac12f6",
+    "row:96dd2423-4c32-441f-bd90-5ae1e953e07f",
+    "row:019a0189-9db1-4603-9259-55b7200960b5",
+    "row:a39b8ac7-64c3-4dc1-b5e5-75a88ea1fd8d",
+    "row:4877744b-1d48-42b0-a2df-249c85bd1749",
+    "row:3fc362a1-4674-464f-aa0e-c94c76d01e6f",
+    "row:d1e35951-0580-4a56-8d97-3bea8e0b380e",
+    "row:465a0d4c-ef74-4a90-a51a-57a11db2b64f",
+    "row:81a657c6-64c4-493c-a4ed-8cd3ad41c274",
+    "row:13789573-8da2-450d-b6b4-aa7303f66198",
+    "row:bfbcb086-6660-4a80-9570-5194a9f6a0b5",
+    "row:596fd077-1a0a-4052-8c02-9f87d932ef5f",
+    "row:2156d511-7f51-45cf-b964-8730c64a3318",
+    "row:80ab834a-81ba-44b7-9d65-4e0942867063",
+    "row:a12b559b-73fd-46dc-b666-3f00ad5f8102",
+    "row:767b1d9d-bb23-4412-ad62-ef97a63235a2",
+    "row:77bc6a86-031c-453c-aba2-ce4f9053771a",
+    "row:bc23509e-4633-4681-9e86-8be7265c6d1d",
+    "row:ca0b81db-cff6-4d62-bb3b-b25f7fd6e953",
+    "row:a5d2a68a-3137-489e-afad-c833a94280a9",
+    "row:a7e383da-54ed-4074-8903-6447ed5e8321",
+    "row:ee8ab902-fc55-4fdd-b3a4-74661906afea",
+    "row:139bf4ca-6eb1-4a68-a917-09b2cc87c5ab",
+    "row:64d4b097-e3b1-42ef-9f9f-bc557ebef2ec",
+    "row:b2e223ad-30a1-434c-9948-0629a3577274",
+    "row:cc0e7fa6-56b5-487e-8b28-d17ef06c0d61",
+    "row:9c3f37e3-5f45-4b3e-b999-83e0b782d053",
+    "row:375a85e7-e65c-4112-a4b0-faa139df2b29",
+    "row:8c2a70a3-0140-487c-a0b8-51ae952e9812",
+    "row:8f3c4d23-920d-4b59-b5a4-d420523fc6bf",
+    "row:00585955-3ce4-49ba-a70e-ebcd684ea4a0",
+    "row:83b54b96-aea8-4d52-a078-25753a3ee0db",
+    "row:c7e30c23-8109-4cbd-bf2e-e5a6ab6235cc",
+    "row:98aade97-b370-4ab5-9196-2722fc8fe120",
+    "row:1fb4194e-c3ca-4c3e-b1b9-5c19668fb22d",
+    "row:32365461-c7db-46b4-b4a3-c8f9258decc6",
+    "row:6549b5d3-98ba-4268-b72e-37b3d3a9291a",
+    "row:b9694b1c-94b0-474c-a280-d40eb4e9de3a",
+    "row:4ce1688d-34c4-4afd-b51e-46642782b2e9",
+    "row:d75ddf31-e19d-404a-bda4-f16fea08884f",
+    "row:1baec0f0-cf1c-40ae-9f96-be4a52a0c85f",
+    "row:6dfa7160-f3f2-46d6-a743-e9acabe037bf",
+    "row:92ef5cfd-a90c-4b98-9ae9-82d55754e0d1",
+    "row:3f9e0907-1f73-402a-8e29-2ab517d55d87",
+    "row:a116d02d-2b25-49a2-8502-b5868de1520f",
+    "row:c5966d49-212c-4e56-adc6-268204592225"
+  ],
+  "fit_row_ids": [
+    "row:ef99bb40-4944-4c9d-abb1-440f01d1f622",
+    "row:6869d4a3-ca4e-40f7-b509-803a1ec943c2",
+    "row:07d4b875-3234-4f9c-b6c0-95bf7d7a9a4e",
+    "row:299957ee-4f39-4b55-8038-1d504177d4fb",
+    "row:91a04dbb-57d6-44d7-b7ca-4a84eb35e373",
+    "row:be1b6be1-2550-4942-a2fe-2e01a0e7db14",
+    "row:289563db-e7b8-4f13-b887-42d31c42da36",
+    "row:5c317496-54f4-4957-ba09-16a708507bb7",
+    "row:13ef0d65-2933-42aa-b9de-9aebe39920b2",
+    "row:9892ebe0-d4a4-4449-bc3f-05d6b1cabdf9",
+    "row:9144c8d6-85d2-4f78-b7a8-2f324cd33018",
+    "row:c9713c9d-e405-42e5-b123-cc53224a336d",
+    "row:9281b995-27f0-4b17-bad7-9e92c1d24e7a",
+    "row:8c03ec33-e791-44d0-bd28-a59cb57335f7",
+    "row:387aea62-e321-4e97-9d86-c41369d7adba",
+    "row:ad251bd2-d566-4dae-8c75-f9affeac12f6",
+    "row:96dd2423-4c32-441f-bd90-5ae1e953e07f",
+    "row:019a0189-9db1-4603-9259-55b7200960b5",
+    "row:a39b8ac7-64c3-4dc1-b5e5-75a88ea1fd8d",
+    "row:4877744b-1d48-42b0-a2df-249c85bd1749",
+    "row:3fc362a1-4674-464f-aa0e-c94c76d01e6f",
+    "row:d1e35951-0580-4a56-8d97-3bea8e0b380e",
+    "row:465a0d4c-ef74-4a90-a51a-57a11db2b64f",
+    "row:81a657c6-64c4-493c-a4ed-8cd3ad41c274",
+    "row:13789573-8da2-450d-b6b4-aa7303f66198",
+    "row:bfbcb086-6660-4a80-9570-5194a9f6a0b5",
+    "row:596fd077-1a0a-4052-8c02-9f87d932ef5f",
+    "row:2156d511-7f51-45cf-b964-8730c64a3318",
+    "row:80ab834a-81ba-44b7-9d65-4e0942867063",
+    "row:a12b559b-73fd-46dc-b666-3f00ad5f8102",
+    "row:767b1d9d-bb23-4412-ad62-ef97a63235a2",
+    "row:77bc6a86-031c-453c-aba2-ce4f9053771a",
+    "row:bc23509e-4633-4681-9e86-8be7265c6d1d",
+    "row:ca0b81db-cff6-4d62-bb3b-b25f7fd6e953",
+    "row:a5d2a68a-3137-489e-afad-c833a94280a9",
+    "row:a7e383da-54ed-4074-8903-6447ed5e8321",
+    "row:ee8ab902-fc55-4fdd-b3a4-74661906afea",
+    "row:139bf4ca-6eb1-4a68-a917-09b2cc87c5ab",
+    "row:64d4b097-e3b1-42ef-9f9f-bc557ebef2ec",
+    "row:b2e223ad-30a1-434c-9948-0629a3577274",
+    "row:cc0e7fa6-56b5-487e-8b28-d17ef06c0d61",
+    "row:9c3f37e3-5f45-4b3e-b999-83e0b782d053",
+    "row:375a85e7-e65c-4112-a4b0-faa139df2b29",
+    "row:8c2a70a3-0140-487c-a0b8-51ae952e9812",
+    "row:8f3c4d23-920d-4b59-b5a4-d420523fc6bf",
+    "row:00585955-3ce4-49ba-a70e-ebcd684ea4a0",
+    "row:83b54b96-aea8-4d52-a078-25753a3ee0db",
+    "row:c7e30c23-8109-4cbd-bf2e-e5a6ab6235cc",
+    "row:98aade97-b370-4ab5-9196-2722fc8fe120",
+    "row:1fb4194e-c3ca-4c3e-b1b9-5c19668fb22d",
+    "row:32365461-c7db-46b4-b4a3-c8f9258decc6",
+    "row:6549b5d3-98ba-4268-b72e-37b3d3a9291a",
+    "row:b9694b1c-94b0-474c-a280-d40eb4e9de3a",
+    "row:4ce1688d-34c4-4afd-b51e-46642782b2e9",
+    "row:d75ddf31-e19d-404a-bda4-f16fea08884f",
+    "row:1baec0f0-cf1c-40ae-9f96-be4a52a0c85f",
+    "row:6dfa7160-f3f2-46d6-a743-e9acabe037bf",
+    "row:92ef5cfd-a90c-4b98-9ae9-82d55754e0d1",
+    "row:3f9e0907-1f73-402a-8e29-2ab517d55d87",
+    "row:a116d02d-2b25-49a2-8502-b5868de1520f",
+    "row:c5966d49-212c-4e56-adc6-268204592225"
+  ],
+  "selected_measurements": [
+    {
+      "id": "col:81db42f7-6491-45b2-a4d5-36658698e3d7",
+      "name": "x",
+      "original_name": "x",
+      "type": "Float64"
+    },
+    {
+      "id": "col:c849e549-619c-41cd-b261-59f5c81219e8",
+      "name": "y",
+      "original_name": "y",
+      "type": "Float64"
+    }
+  ],
+  "scaling_state": null,
+  "method_state": {
+    "metric": "euclidean",
+    "linkage": null,
+    "scaling": "none",
+    "ordering": [
+      0,
+      14,
+      20,
+      26,
+      7,
+      27,
+      28,
+      18,
+      3,
+      5,
+      12,
+      23,
+      19,
+      4,
+      1,
+      2,
+      16,
+      6,
+      8,
+      10,
+      15,
+      21,
+      11,
+      25,
+      13,
+      17,
+      22,
+      29,
+      9,
+      24,
+      49,
+      34,
+      32,
+      36,
+      38,
+      40,
+      54,
+      43,
+      30,
+      41,
+      58,
+      56,
+      31,
+      57,
+      42,
+      50,
+      52,
+      48,
+      53,
+      45,
+      47,
+      55,
+      37,
+      33,
+      44,
+      59,
+      46,
+      39,
+      35,
+      51,
+      60
+    ],
+    "reachability": [
+      null,
+      0.156455184913409,
+      0.156455184913409,
+      0.139544713675005,
+      0.214346578859957,
+      0.140970861925585,
+      0.169024924215244,
+      0.086233037451835,
+      0.193004612540314,
+      0.267774084308302,
+      0.164068532394022,
+      0.200518013151406,
+      0.143824353630422,
+      0.222047091107573,
+      0.112403343022188,
+      0.164068532394022,
+      0.156455184913409,
+      0.256586187630045,
+      0.056734483172369,
+      0.174145124605596,
+      0.112403343022188,
+      0.164068532394022,
+      0.256586187630045,
+      0.147617686846122,
+      0.289018193569283,
+      0.212917719829623,
+      0.112403343022188,
+      0.05673448317234,
+      0.05673448317234,
+      0.256586187630045,
+      0.131811474857572,
+      0.148596456415536,
+      0.306377563784167,
+      0.173962994851633,
+      0.536977983118492,
+      0.287500857841641,
+      0.120903932798284,
+      0.173962994851633,
+      0.091996292981158,
+      0.234294163003866,
+      0.091617114829939,
+      0.137574520674635,
+      0.111979701029784,
+      0.091996292981158,
+      0.173962994851633,
+      0.1893553647482,
+      0.21321082122688,
+      0.1893553647482,
+      0.174297366991754,
+      10.23259060451795,
+      0.111979701029784,
+      0.29144833584091,
+      0.14900208379487,
+      0.1893553647482,
+      0.080981738472602,
+      0.1893553647482,
+      0.140759915359847,
+      0.148596456415536,
+      0.137574520674635,
+      0.168021117523818,
+      22.120835329023414
+    ],
+    "xi": 0.05,
+    "comparison": [
+      {
+        "method": "optics",
+        "metrics": {
+          "used_rows": 38,
+          "noise_excluded": 23,
+          "metric": "euclidean",
+          "scope": "non_noise",
+          "silhouette": 0.553458693765547,
+          "davies_bouldin": 0.5375236641029142,
+          "calinski_harabasz": 13819.712437903165,
+          "reason": "Internal geometry; no universal true cluster count or labeled accuracy."
+        },
+        "noise_count": 23,
+        "cluster_count": 5,
+        "assignments": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          2,
+          -1,
+          2,
+          2,
+          0,
+          -1,
+          0,
+          2,
+          1,
+          -1,
+          0,
+          0,
+          0,
+          2,
+          -1,
+          0,
+          -1,
+          -1,
+          0,
+          0,
+          0,
+          -1,
+          3,
+          -1,
+          3,
+          4,
+          -1,
+          -1,
+          3,
+          4,
+          3,
+          -1,
+          3,
+          3,
+          -1,
+          3,
+          4,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          3,
+          4,
+          3,
+          -1,
+          3,
+          4,
+          -1
+        ],
+        "aic": null,
+        "bic": null,
+        "stability": [
+          {
+            "status": "valid",
+            "adjusted_rand": 0.7891117478510029,
+            "non_noise_overlap": 24,
+            "noise_agreement": 0.7708333333333334,
+            "selected_indices": [
+              1,
+              2,
+              3,
+              4,
+              6,
+              7,
+              8,
+              10,
+              11,
+              12,
+              14,
+              15,
+              16,
+              17,
+              19,
+              20,
+              22,
+              24,
+              25,
+              26,
+              27,
+              29,
+              32,
+              33,
+              34,
+              36,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60
+            ],
+            "selected_row_ids": [
+              "row:6869d4a3-ca4e-40f7-b509-803a1ec943c2",
+              "row:07d4b875-3234-4f9c-b6c0-95bf7d7a9a4e",
+              "row:299957ee-4f39-4b55-8038-1d504177d4fb",
+              "row:91a04dbb-57d6-44d7-b7ca-4a84eb35e373",
+              "row:289563db-e7b8-4f13-b887-42d31c42da36",
+              "row:5c317496-54f4-4957-ba09-16a708507bb7",
+              "row:13ef0d65-2933-42aa-b9de-9aebe39920b2",
+              "row:9144c8d6-85d2-4f78-b7a8-2f324cd33018",
+              "row:c9713c9d-e405-42e5-b123-cc53224a336d",
+              "row:9281b995-27f0-4b17-bad7-9e92c1d24e7a",
+              "row:387aea62-e321-4e97-9d86-c41369d7adba",
+              "row:ad251bd2-d566-4dae-8c75-f9affeac12f6",
+              "row:96dd2423-4c32-441f-bd90-5ae1e953e07f",
+              "row:019a0189-9db1-4603-9259-55b7200960b5",
+              "row:4877744b-1d48-42b0-a2df-249c85bd1749",
+              "row:3fc362a1-4674-464f-aa0e-c94c76d01e6f",
+              "row:465a0d4c-ef74-4a90-a51a-57a11db2b64f",
+              "row:13789573-8da2-450d-b6b4-aa7303f66198",
+              "row:bfbcb086-6660-4a80-9570-5194a9f6a0b5",
+              "row:596fd077-1a0a-4052-8c02-9f87d932ef5f",
+              "row:2156d511-7f51-45cf-b964-8730c64a3318",
+              "row:a12b559b-73fd-46dc-b666-3f00ad5f8102",
+              "row:bc23509e-4633-4681-9e86-8be7265c6d1d",
+              "row:ca0b81db-cff6-4d62-bb3b-b25f7fd6e953",
+              "row:a5d2a68a-3137-489e-afad-c833a94280a9",
+              "row:ee8ab902-fc55-4fdd-b3a4-74661906afea",
+              "row:64d4b097-e3b1-42ef-9f9f-bc557ebef2ec",
+              "row:b2e223ad-30a1-434c-9948-0629a3577274",
+              "row:cc0e7fa6-56b5-487e-8b28-d17ef06c0d61",
+              "row:9c3f37e3-5f45-4b3e-b999-83e0b782d053",
+              "row:375a85e7-e65c-4112-a4b0-faa139df2b29",
+              "row:8c2a70a3-0140-487c-a0b8-51ae952e9812",
+              "row:8f3c4d23-920d-4b59-b5a4-d420523fc6bf",
+              "row:00585955-3ce4-49ba-a70e-ebcd684ea4a0",
+              "row:83b54b96-aea8-4d52-a078-25753a3ee0db",
+              "row:c7e30c23-8109-4cbd-bf2e-e5a6ab6235cc",
+              "row:98aade97-b370-4ab5-9196-2722fc8fe120",
+              "row:1fb4194e-c3ca-4c3e-b1b9-5c19668fb22d",
+              "row:32365461-c7db-46b4-b4a3-c8f9258decc6",
+              "row:6549b5d3-98ba-4268-b72e-37b3d3a9291a",
+              "row:b9694b1c-94b0-474c-a280-d40eb4e9de3a",
+              "row:d75ddf31-e19d-404a-bda4-f16fea08884f",
+              "row:1baec0f0-cf1c-40ae-9f96-be4a52a0c85f",
+              "row:6dfa7160-f3f2-46d6-a743-e9acabe037bf",
+              "row:92ef5cfd-a90c-4b98-9ae9-82d55754e0d1",
+              "row:3f9e0907-1f73-402a-8e29-2ab517d55d87",
+              "row:a116d02d-2b25-49a2-8502-b5868de1520f",
+              "row:c5966d49-212c-4e56-adc6-268204592225"
+            ]
+          }
+        ],
+        "stability_policy": "80% subsample without replacement; scaler refit in each sample; ARI only shared non-noise rows; no truth claim"
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "label": -1,
+      "name": "Gürültü noktaları",
+      "count": 23,
+      "measurements": [
+        {
+          "column_id": "col:81db42f7-6491-45b2-a4d5-36658698e3d7",
+          "name": "x",
+          "mean": 2.1889249916548006,
+          "min": -4.755027913246154,
+          "max": 20.0
+        },
+        {
+          "column_id": "col:c849e549-619c-41cd-b261-59f5c81219e8",
+          "name": "y",
+          "mean": 2.171553251196343,
+          "min": -4.464143403438545,
+          "max": 20.0
+        }
+      ],
+      "examples": [
+        {
+          "row_id": "row:9892ebe0-d4a4-4449-bc3f-05d6b1cabdf9",
+          "values": {
+            "x": -4.570366821940254,
+            "y": -4.386861321935493
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:8c03ec33-e791-44d0-bd28-a59cb57335f7",
+          "values": {
+            "x": -4.755027913246154,
+            "y": -4.161607868753991
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:019a0189-9db1-4603-9259-55b7200960b5",
+          "values": {
+            "x": -3.6817304129841766,
+            "y": -4.242260402599569
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:465a0d4c-ef74-4a90-a51a-57a11db2b64f",
+          "values": {
+            "x": -3.5923529734775386,
+            "y": -4.464143403438545
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:13789573-8da2-450d-b6b4-aa7303f66198",
+          "values": {
+            "x": -4.192441118232167,
+            "y": -3.3998750360972734
+          },
+          "score": null
+        }
+      ]
+    },
+    {
+      "label": 0,
+      "name": "Küme 0",
+      "count": 13,
+      "measurements": [
+        {
+          "column_id": "col:81db42f7-6491-45b2-a4d5-36658698e3d7",
+          "name": "x",
+          "mean": -3.981465639959533,
+          "min": -4.175080129822991,
+          "max": -3.7421851935935204
+        },
+        {
+          "column_id": "col:c849e549-619c-41cd-b261-59f5c81219e8",
+          "name": "y",
+          "mean": -3.8730723040806514,
+          "min": -4.0560792833889865,
+          "max": -3.59793542633364
+        }
+      ],
+      "examples": [
+        {
+          "row_id": "row:ef99bb40-4944-4c9d-abb1-440f01d1f622",
+          "values": {
+            "x": -3.9996309539927553,
+            "y": -3.910376338747459
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:299957ee-4f39-4b55-8038-1d504177d4fb",
+          "values": {
+            "x": -3.9819569192207687,
+            "y": -3.59793542633364
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:be1b6be1-2550-4942-a2fe-2e01a0e7db14",
+          "values": {
+            "x": -3.8530473849444404,
+            "y": -3.892933897551982
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:5c317496-54f4-4957-ba09-16a708507bb7",
+          "values": {
+            "x": -4.008775546738982,
+            "y": -3.7914090416625137
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:9281b995-27f0-4b17-bad7-9e92c1d24e7a",
+          "values": {
+            "x": -3.9529746740127325,
+            "y": -4.0560792833889865
+          },
+          "score": null
+        }
+      ]
+    },
+    {
+      "label": 1,
+      "name": "Küme 1",
+      "count": 5,
+      "measurements": [
+        {
+          "column_id": "col:81db42f7-6491-45b2-a4d5-36658698e3d7",
+          "name": "x",
+          "mean": -4.1256471992886405,
+          "min": -4.293555723416992,
+          "max": -3.9683757253006307
+        },
+        {
+          "column_id": "col:c849e549-619c-41cd-b261-59f5c81219e8",
+          "name": "y",
+          "mean": -4.25452111466245,
+          "min": -4.297493966498939,
+          "max": -4.186142469945982
+        }
+      ],
+      "examples": [
+        {
+          "row_id": "row:6869d4a3-ca4e-40f7-b509-803a1ec943c2",
+          "values": {
+            "x": -4.082241356608665,
+            "y": -4.267177551627182
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:07d4b875-3234-4f9c-b6c0-95bf7d7a9a4e",
+          "values": {
+            "x": -4.136401235551517,
+            "y": -4.297493966498939
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:91a04dbb-57d6-44d7-b7ca-4a84eb35e373",
+          "values": {
+            "x": -4.147661955565399,
+            "y": -4.186142469945982
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:289563db-e7b8-4f13-b887-42d31c42da36",
+          "values": {
+            "x": -3.9683757253006307,
+            "y": -4.2791404134124615
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:96dd2423-4c32-441f-bd90-5ae1e953e07f",
+          "values": {
+            "x": -4.293555723416992,
+            "y": -4.24265117182768
+          },
+          "score": null
+        }
+      ]
+    },
+    {
+      "label": 2,
+      "name": "Küme 2",
+      "count": 5,
+      "measurements": [
+        {
+          "column_id": "col:81db42f7-6491-45b2-a4d5-36658698e3d7",
+          "name": "x",
+          "mean": -4.432515259506617,
+          "min": -4.552520511337519,
+          "max": -4.367516747925308
+        },
+        {
+          "column_id": "col:c849e549-619c-41cd-b261-59f5c81219e8",
+          "name": "y",
+          "mean": -4.049383334737007,
+          "min": -4.143325982810179,
+          "max": -3.9186206923534894
+        }
+      ],
+      "examples": [
+        {
+          "row_id": "row:13ef0d65-2933-42aa-b9de-9aebe39920b2",
+          "values": {
+            "x": -4.4032643641855245,
+            "y": -4.137284728312065
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:9144c8d6-85d2-4f78-b7a8-2f324cd33018",
+          "values": {
+            "x": -4.552520511337519,
+            "y": -4.070527339322404
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:c9713c9d-e405-42e5-b123-cc53224a336d",
+          "values": {
+            "x": -4.380233944433111,
+            "y": -3.9186206923534894
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:ad251bd2-d566-4dae-8c75-f9affeac12f6",
+          "values": {
+            "x": -4.459040729651618,
+            "y": -4.143325982810179
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:d1e35951-0580-4a56-8d97-3bea8e0b380e",
+          "values": {
+            "x": -4.367516747925308,
+            "y": -3.9771579308868974
+          },
+          "score": null
+        }
+      ]
+    },
+    {
+      "label": 3,
+      "name": "Küme 3",
+      "count": 10,
+      "measurements": [
+        {
+          "column_id": "col:81db42f7-6491-45b2-a4d5-36658698e3d7",
+          "name": "x",
+          "mean": 3.933887607642434,
+          "min": 3.6898972503778933,
+          "max": 4.105776720185579
+        },
+        {
+          "column_id": "col:c849e549-619c-41cd-b261-59f5c81219e8",
+          "name": "y",
+          "mean": 3.9059060034524746,
+          "min": 3.742613056847037,
+          "max": 3.9762456044152477
+        }
+      ],
+      "examples": [
+        {
+          "row_id": "row:767b1d9d-bb23-4412-ad62-ef97a63235a2",
+          "values": {
+            "x": 4.0609415831168825,
+            "y": 3.8610077270384755
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:bc23509e-4633-4681-9e86-8be7265c6d1d",
+          "values": {
+            "x": 3.826209521049198,
+            "y": 3.941141208158651
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:ee8ab902-fc55-4fdd-b3a4-74661906afea",
+          "values": {
+            "x": 3.86104904051429,
+            "y": 3.9708139222989733
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:64d4b097-e3b1-42ef-9f9f-bc557ebef2ec",
+          "values": {
+            "x": 3.901835973933341,
+            "y": 3.8894272317700125
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:cc0e7fa6-56b5-487e-8b28-d17ef06c0d61",
+          "values": {
+            "x": 3.87159251722814,
+            "y": 3.9088958834905814
+          },
+          "score": null
+        }
+      ]
+    },
+    {
+      "label": 4,
+      "name": "Küme 4",
+      "count": 5,
+      "measurements": [
+        {
+          "column_id": "col:81db42f7-6491-45b2-a4d5-36658698e3d7",
+          "name": "x",
+          "mean": 4.299786177316902,
+          "min": 4.210738886536164,
+          "max": 4.377104493186046
+        },
+        {
+          "column_id": "col:c849e549-619c-41cd-b261-59f5c81219e8",
+          "name": "y",
+          "mean": 4.1920220776219015,
+          "min": 4.0578237737815215,
+          "max": 4.34356660223624
+        }
+      ],
+      "examples": [
+        {
+          "row_id": "row:ca0b81db-cff6-4d62-bb3b-b25f7fd6e953",
+          "values": {
+            "x": 4.269629161630123,
+            "y": 4.34356660223624
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:139bf4ca-6eb1-4a68-a917-09b2cc87c5ab",
+          "values": {
+            "x": 4.377104493186046,
+            "y": 4.206821170171227
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:8f3c4d23-920d-4b59-b5a4-d420523fc6bf",
+          "values": {
+            "x": 4.3498383328570664,
+            "y": 4.195926550810349
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:1baec0f0-cf1c-40ae-9f96-be4a52a0c85f",
+          "values": {
+            "x": 4.210738886536164,
+            "y": 4.155972291110169
+          },
+          "score": null
+        },
+        {
+          "row_id": "row:a116d02d-2b25-49a2-8502-b5868de1520f",
+          "values": {
+            "x": 4.2916200123751125,
+            "y": 4.0578237737815215
+          },
+          "score": null
+        }
+      ]
+    }
+  ],
+  "silhouette": {
+    "status": "valid",
+    "value": 0.553458693765547,
+    "used_rows": 38,
+    "noise_excluded": 23,
+    "scope": "all_non_noise",
+    "metric": "euclidean_scaled_features",
+    "reason": "Seçili/ölçeklenmiş uzayda iç ayrışma; gerçek sınıf veya yeni veri başarısı değildir."
+  },
+  "noise_count": 23,
+  "flagged_count": 0,
+  "threshold": null,
+  "score_direction": null,
+  "score_units": null,
+  "evaluation": {
+    "labels_available": false,
+    "precision": null,
+    "recall": null,
+    "reason": "Gerçek etiket yok; precision/recall hesaplanamaz. İç ayrışma doğruluk değildir."
+  },
+  "new_data": {
+    "native_support": false,
+    "available": false,
+    "reason": "Phase47: yalnız kaydedilen fit/heldout kapsamı; yeni dosya ve safe model persistence kapalı."
+  },
+  "projection": null,
+  "warning": "Kümeler fiziksel gerçek sınıflar değildir; gürültü/anomali adayları kesin veri hatası değildir. Otomatik silme yok.",
+  "provenance": {
+    "snapshot_fingerprint": {
+      "size": 8828,
+      "sha256": "2d2984043e6afa62e602aee9f37705765bbc7f6cf44c36af7cadada608502e27"
+    },
+    "snapshot_uri": "snapshots/7012c7d6-f89d-4b1a-b13f-d3799d031668.parquet",
+    "source_snapshot_id": "snapshot:dc5c4bd5-fec9-43ed-b2ee-61870a1dcf5d",
+    "created_at": "2026-10-12T20:00:45.962516+00:00",
+    "backend": "scikit-learn",
+    "backend_version": "1.9.1",
+    "numpy_version": "2.5.3",
+    "seed": 42,
+    "seed_used": true,
+    "help_content_version": 63
+  },
+  "assignments_uri": "snapshots/ea85accc-6df1-499b-8b2b-6ee1a86e1456.parquet"
+}

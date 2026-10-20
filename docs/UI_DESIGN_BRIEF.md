@@ -104,3 +104,16 @@ KABUL ÖLÇÜTLERİ
 - Öğrenme paneli kapatıldığında çalışma kesilmiyor.
 - Başlangıç ve uzman görünümü arasında veri veya proje kaybı oluşmuyor.
 - Doğrulanmayan görsel veya işlevsel davranışlar başarılı diye raporlanmıyor.
+
+2026-10-08 kullanıcı arayüz düzenlemesi: Başlangıç yardım ve ara rehber/dosya/örnek satırları kaldırıldı; Veri bilimi yol haritası başlığı; üst gelişmiş yanında uygulama kapatma simgesi; son projeler yatay sarılan düğmeler. Bütün tik kutuları ortak oval UiCheckBox; tek FolderPicker geri/üst simgeleri ve üzerine yazmayan yeni klasör oluşturma. Örnek projeler Öğren ekranında aynı seçiciye bağlı. Faz/olgunluk/kapsam değişmedi. [Gerçek kontrol](evidence/UI_HOME_REFINEMENT.md).
+
+Faz25 denetiminde mevcut çalışmanın isteğe bağlı açık tema/büyük yazı/dil
+ayarları doğrulandı; varsayılan koyu/Türkçe/%100. Tarihsel yalnız koyu tema
+kanıtları tarihsel kalır. [Güncel teknik kapsam](evidence/PHASE25.md); insan
+ve ekran okuyucu kabulü açık, yeni faz başlatılmadı.
+
+
+2026-10-10 kullanıcı veri inceleme düzenlemesi: kapalı başlıklar, gerçek tüm-sütun tablosu, sayfalı unique, describe ve not sözlüğü. Öğren Veri aşamasına dört çevrimdışı konu eklendi (katalog36/151 makale). [Gerçek kapsam](evidence/UI_DATA_INSPECTION.md); Faz27 durdurulmuş olarak kalır.
+
+
+2026-10-10 açık kullanıcı talimatı önceki genel yardım düğmesi kuralını bu kapsamda değiştirir: sayfa sağ üstünde “Bu ne işe yarar?” gösterilmez. Öğren konu merkezi ve F1 yardım altyapısı korunur. Veri başlıkları açıklamalı numaralı kartlar; başlangıç import ayrıntıları Gelişmiş altında açılır.

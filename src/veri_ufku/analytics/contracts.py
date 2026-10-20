@@ -37,7 +37,10 @@ def validate_semantics(dataset):
     for parent in parents:
         entity_id(parent, "dv")
     for value in semantics.values():
-        if not isinstance(value, dict) or set(value) != {
+        if not isinstance(value, dict) or set(value) - {
+            "description",
+            "measurement_level",
+        } != {
             "role",
             "unit",
             "ordinal_order",
@@ -48,6 +51,17 @@ def validate_semantics(dataset):
             raise ProjectError("Sütun rolü/onay geçersiz.")
         if not isinstance(value["unit"], str) or len(value["unit"]) > 200:
             raise ProjectError("Ölçüm birimi en fazla 200 karakter olmalı.")
+        if (
+            not isinstance(value.get("description", ""), str)
+            or len(value.get("description", "")) > 2000
+        ):
+            raise ProjectError("Sütun açıklaması en fazla 2000 karakter olmalı.")
+        from veri_ufku.operations.data_contracts import LEVELS
+
+        if value.get("measurement_level", "unknown") not in LEVELS:
+            raise ProjectError("Ölçüm düzeyi geçersiz.")
+        if value.get("measurement_level") == "ordinal" and value["role"] != "ordinal":
+            raise ProjectError("Ordinal ölçüm düzeyi ordinal rol gerektirir.")
         order = value["ordinal_order"]
         if (
             not isinstance(order, list)
@@ -64,16 +78,30 @@ def validate_semantics(dataset):
             raise ProjectError("Kategori sırası yalnız ordinal rolde kullanılabilir.")
 
 
-def metadata_version(dataset, column_id, role, unit, order, analysis_unit):
+def metadata_version(
+    dataset, column_id, role, unit, order, analysis_unit, description=None
+):
     result = copy.deepcopy(dataset)
     result.pop("input_version_ids", None)
     result["version_id"] = "dv:" + uid()
     result["parent_version_ids"] = [dataset["version_id"]]
     result["analysis_unit"] = analysis_unit
+    previous = dataset.get("semantic_metadata", {}).get(column_id, {})
     result.setdefault("semantic_metadata", {})[column_id] = dict(
         role=role, unit=unit, ordinal_order=list(order), confirmed=True
     )
+    if description is not None or "description" in previous:
+        result["semantic_metadata"][column_id]["description"] = (
+            description if description is not None else previous["description"]
+        )
+    if "measurement_level" in previous:
+        result["semantic_metadata"][column_id]["measurement_level"] = previous[
+            "measurement_level"
+        ]
     validate_semantics(result)
+    if "schema_contract" in result:
+        result["schema_contract"]["dataset_version"] = result["version_id"]
+        result["schema_contract"]["status"] = "requires_validation"
     return result
 
 

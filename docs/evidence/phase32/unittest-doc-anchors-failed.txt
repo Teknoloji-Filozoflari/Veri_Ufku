@@ -1,0 +1,49 @@
+/home/s-oktay/.config/matplotlib is not a writable directory
+Matplotlib created a temporary cache directory at /tmp/matplotlib-kfcw03hc because there was an issue with the default path (/home/s-oktay/.config/matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... FAIL
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_professional_dependency_plan_loss_is_rejected (test_document_contracts.DocumentContracts.test_professional_dependency_plan_loss_is_rejected) ... ok
+test_professional_method_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_professional_method_scope_loss_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_revision_cannot_hide_another_insertion (test_document_contracts.DocumentContracts.test_source_revision_cannot_hide_another_insertion) ... ok
+test_source_revision_cannot_replace_original_digest (test_document_contracts.DocumentContracts.test_source_revision_cannot_replace_original_digest) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unrecorded_source_edit_is_rejected (test_document_contracts.DocumentContracts.test_unrecorded_source_edit_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+======================================================================
+FAIL: test_current_documents (test_document_contracts.DocumentContracts.test_current_documents)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_document_contracts.py", line 46, in test_current_documents
+    self.assertEqual(CHECKER.check(self.root), [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['Missing evidence anchor: F32-S001', 'Mis[434 chars]008'] != []
+
+First list contains 13 additional elements.
+First extra element 0:
+'Missing evidence anchor: F32-S001'
+
++ []
+- ['Missing evidence anchor: F32-S001',
+-  'Missing evidence anchor: F32-S002',
+-  'Missing evidence anchor: F32-S003',
+-  'Missing evidence anchor: F32-S004',
+-  'Missing evidence anchor: F32-S005',
+-  'Missing evidence anchor: F32-P001',
+-  'Missing evidence anchor: F32-P002',
+-  'Missing evidence anchor: F32-P003',
+-  'Missing evidence anchor: F32-P004',
+-  'Missing evidence anchor: F32-P005',
+-  'Missing evidence anchor: F32-P006',
+-  'Missing evidence anchor: F32-P007',
+-  'Missing evidence anchor: F32-P008']
+
+----------------------------------------------------------------------
+Ran 14 tests in 5.646s
+
+FAILED (failures=1)

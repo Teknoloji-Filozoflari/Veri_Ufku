@@ -17,9 +17,9 @@ ApplicationWindow {
     palette.windowText: Theme.text
     palette.text: Theme.text
     palette.buttonText: Theme.text
-    palette.base: Theme.surface
-    palette.highlight: Theme.accent
-    palette.highlightedText: Theme.onAccent
+    palette.base: Theme.field
+    palette.highlight: Theme.learningTone
+    palette.highlightedText: Theme.accentText
     Shortcut { sequence: "Escape"; onActivated: example.close() }
     ScrollView {
         anchors.fill: parent
@@ -29,8 +29,13 @@ ApplicationWindow {
         ColumnLayout {
             width: parent.width
             spacing: Theme.xl
-            Label { text: "Örnek öğrenme projesi · Geçici"; font.pixelSize: Theme.heading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.WordWrap }
-            Label { text: "Aşağıdaki arama yalnız bu örneğe aittir. Gerçek dosyan, oturumun ve işlerin değişmez. Bu bir veri analizi projesi değildir; kalıcı proje kaydı henüz mevcut değil."; textFormat: Text.PlainText; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: Theme.md
+                BrandMark { objectName: "exampleLogo"; Layout.preferredWidth: 36; Layout.preferredHeight: 36 }
+                UiLabel { text: "Örnek öğrenme projesi · Geçici"; font.pixelSize: Theme.heading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+            }
+            UiLabel { text: "Aşağıdaki arama yalnız bu geçici öğrenme örneğine aittir. Gerçek dosyan, oturumun ve işlerin değişmez. Dosyadan rapora kalıcı örnek proje için Başlangıç ekranındaki sentetik örnekleri kullanabilirsin."; textFormat: Text.PlainText; Layout.fillWidth: true; wrapMode: Text.WordWrap }
             UiButton { objectName: "exampleCloseButton"; text: "Örneği kapat"; glyph: "×"; onClicked: example.close() }
             LearningCenter { Layout.fillWidth: true; library: example.library; onArticleRequested: function(articleId, origin) { example.library.openArticle(articleId) } }
             ArticleView { Layout.fillWidth: true; library: example.library; allowTry: false }

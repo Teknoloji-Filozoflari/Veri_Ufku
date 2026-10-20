@@ -1,6 +1,7 @@
 """Read-only bounded page model, explicit profile scope and semantic version edits."""
 
 import copy
+import json
 import multiprocessing as mp
 import os
 import shutil
@@ -19,26 +20,32 @@ from PySide6.QtCore import (
     Slot,
 )
 
+from veri_ufku.analytics.cache import PageCache, page_key
 from veri_ufku.analytics.contracts import ViewSpec, metadata_version
 from veri_ufku.analytics.worker import process_entry
 from veri_ufku.domain.contracts import ComputeBudget
+from veri_ufku.jobs.admission import start_controller
 from veri_ufku.storage.project_model import ProjectError, decode, encode, uid
 from veri_ufku.ui.projects import project_error_text
 
 
 class DatasetTableModel(QAbstractTableModel):
+    columnsChanged = Signal()
     RowIdRole = Qt.UserRole + 1
     SourceIdRole = Qt.UserRole + 2
+    MissingRole = Qt.UserRole + 3
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.result = None
+        self._null_cells = set()
 
     def roleNames(self):
         return {
             Qt.DisplayRole: b"display",
             self.RowIdRole: b"rowId",
             self.SourceIdRole: b"sourceRecordId",
+            self.MissingRole: b"missing",
         }
 
     def rowCount(self, parent=QModelIndex()):
@@ -48,8 +55,15 @@ class DatasetTableModel(QAbstractTableModel):
         return 0 if parent.isValid() or not self.result else len(self.result["columns"])
 
     def data(self, index, role=Qt.DisplayRole):
-        if not self.result or not index.isValid():
+        if (
+            not self.result
+            or not index.isValid()
+            or not 0 <= index.row() < self.rowCount()
+            or not 0 <= index.column() < self.columnCount()
+        ):
             return None
+        if role == self.MissingRole:
+            return (index.row(), index.column()) in self._null_cells
         if role == Qt.DisplayRole:
             return self.result["rows"][index.row()][index.column()]
         if role == self.RowIdRole:
@@ -58,6 +72,9 @@ class DatasetTableModel(QAbstractTableModel):
             return self.result["source_record_ids"][index.row()]
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
+        count = self.columnCount() if orientation == Qt.Horizontal else self.rowCount()
+        if not 0 <= section < count:
+            return None
         if role == Qt.DisplayRole and self.result:
             return (
                 self.result["columns"][section]["name"]
@@ -73,8 +90,49 @@ class DatasetTableModel(QAbstractTableModel):
         )
 
     def replace(self, result=None):
+        old_columns = (self.result or {}).get("columns", [])
+        new_columns = (result or {}).get("columns", [])
         self.beginResetModel()
         self.result = result
+        self._null_cells = {
+            tuple(cell) for cell in (result or {}).get("null_cells", ())
+        }
+        self.endResetModel()
+        if old_columns != new_columns:
+            self.columnsChanged.emit()
+
+
+class InspectionTableModel(QAbstractTableModel):
+    """Virtualized summary cells; these are statistics, never source RowIds."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.headers, self.rows = [], []
+
+    def rowCount(self, parent=QModelIndex()):
+        return 0 if parent.isValid() else len(self.rows)
+
+    def columnCount(self, parent=QModelIndex()):
+        return 0 if parent.isValid() else len(self.headers)
+
+    def data(self, index, role=Qt.DisplayRole):
+        if role == Qt.DisplayRole and index.isValid():
+            value = self.rows[index.row()][index.column()]
+            if value is None:
+                return "—"
+            return str(value)
+
+    def headerData(self, section, orientation, role=Qt.DisplayRole):
+        if role == Qt.DisplayRole:
+            return (
+                self.headers[section]
+                if orientation == Qt.Horizontal
+                else str(section + 1)
+            )
+
+    def replace(self, headers=(), rows=()):
+        self.beginResetModel()
+        self.headers, self.rows = list(headers), list(rows)
         self.endResetModel()
 
 
@@ -86,6 +144,7 @@ def latest_datasets(state):
 
 class DatasetController(QObject):
     changed = Signal()
+    rowSelected = Signal(str)
 
     def __init__(self, projects, cache, budget=ComputeBudget(), parent=None):
         super().__init__(parent)
@@ -93,6 +152,10 @@ class DatasetController(QObject):
         self.cache = Path(cache)
         self.budget = budget
         self.model = DatasetTableModel(self)
+        self.info_model = InspectionTableModel(self)
+        self.describe_model = InspectionTableModel(self)
+        self.page_cache = PageCache()
+        self.cache_key = None
         self.context = mp.get_context("spawn")
         self.process = self.connection = self.cancel_event = None
         self.workspace = None
@@ -105,11 +168,14 @@ class DatasetController(QObject):
         self.revision = 0
         self.quality_result = None
         self.profile_result = None
+        self.inventory_result = None
+        self.describe_result = None
         self.suggestions = {}
         self._error = ""
         self._message = "Dataset seçin; tablo salt okunurdur."
         self._column_search = ""
         self._selection = ""
+        self._selected_ids = []
         self.cancel_time = None
         self.timer = QTimer(self)
         self.timer.setInterval(25)
@@ -120,6 +186,8 @@ class DatasetController(QObject):
 
     busy = Property(bool, lambda self: self.process is not None, notify=changed)
     tableModel = Property(QObject, lambda self: self.model, constant=True)
+    infoModel = Property(QObject, lambda self: self.info_model, constant=True)
+    describeModel = Property(QObject, lambda self: self.describe_model, constant=True)
     datasets = Property(
         "QVariantList",
         lambda self: [
@@ -135,15 +203,25 @@ class DatasetController(QObject):
     selectedDataset = Property(str, lambda self: self.dataset_id, notify=changed)
     selectedColumn = Property(str, lambda self: self.column_id, notify=changed)
     pageOffset = Property(int, lambda self: self.offset, notify=changed)
+    pageRowCount = Property(int, lambda self: self.model.rowCount(), notify=changed)
     totalRows = Property(int, lambda self: self.total, notify=changed)
     errorText = Property(str, lambda self: self._error, notify=changed)
     message = Property(str, lambda self: self._message, notify=changed)
     selectionText = Property(str, lambda self: self._selection, notify=changed)
+    selectedRowIds = Property(
+        "QVariantList", lambda self: self._selected_ids, notify=changed
+    )
     profileResult = Property(
         "QVariantMap", lambda self: self.profile_result or {}, notify=changed
     )
     qualityResult = Property(
         "QVariantMap", lambda self: self.quality_result or {}, notify=changed
+    )
+    inventoryResult = Property(
+        "QVariantMap", lambda self: self.inventory_result or {}, notify=changed
+    )
+    describeResult = Property(
+        "QVariantMap", lambda self: self.describe_result or {}, notify=changed
     )
     filters = Property(
         "QVariantList", lambda self: list(self.view.filters), notify=changed
@@ -160,6 +238,54 @@ class DatasetController(QObject):
     columnDetails = Property(
         "QVariantMap", lambda self: self._details(), notify=changed
     )
+    dataContent = Property("QVariantMap", lambda self: self._content(), notify=changed)
+    dataDictionary = Property(
+        "QVariantList", lambda self: self._dictionary(), notify=changed
+    )
+
+    def _content(self):
+        d = self.dataset()
+        if not d:
+            return {}
+        source = next(
+            (s for s in self.projects.draft["sources"] if s["id"] == d["source_id"]),
+            {},
+        )
+        return dict(
+            rows=d["import_metadata"]["row_count"],
+            columns=len(d["import_metadata"]["columns"]),
+            source=Path(source.get("path", "")).name,
+            version=d["version_id"],
+            analysis_unit=d.get("analysis_unit", ""),
+        )
+
+    def _dictionary(self):
+        d = self.dataset()
+        if not d:
+            return []
+        roles = dict(
+            identifier="Kimlik",
+            category="Kategori",
+            measurement="Ölçüm",
+            time="Tarih / zaman",
+            text="Metin",
+            ordinal="Sıralı kategori",
+            ignored="Analizde dışarıda",
+        )
+        values = []
+        for c in d["import_metadata"]["columns"]:
+            semantics = d.get("semantic_metadata", {}).get(c["id"], {})
+            values.append(
+                dict(
+                    id=c["id"],
+                    name=c["name"],
+                    physical_type=c["type"],
+                    role=roles.get(semantics.get("role"), "Rol henüz onaylanmadı"),
+                    unit=semantics.get("unit", ""),
+                    description=semantics.get("description", ""),
+                )
+            )
+        return values
 
     def dataset(self):
         return next(
@@ -223,11 +349,17 @@ class DatasetController(QObject):
         return dict(
             c,
             role=semantics["role"] if semantics else proposal["role"],
-            confirmed=bool(semantics),
+            confirmed=semantics.get("confirmed", False) if semantics else False,
             unit=semantics["unit"] if semantics else "",
             ordinal_order=semantics["ordinal_order"] if semantics else [],
             analysis_unit=d.get("analysis_unit", ""),
-            physical_type=proposal.get("physical_type", c["type"]),
+            description=semantics.get("description", "") if semantics else "",
+            measurement_level=semantics.get("measurement_level", "unknown")
+            if semantics
+            else "unknown",
+            physical_type=self.projects.store.manifest["artifacts"][d["snapshot_uri"]][
+                "schema"
+            ].get(c["name"], c["type"]),
             proposal=proposal["role"],
             reason=proposal["reason"],
         )
@@ -269,8 +401,12 @@ class DatasetController(QObject):
         self.quality_result = self.saved_quality()
         self.profile_result = None
         self.suggestions = {}
+        self.inventory_result = self.describe_result = None
+        self.info_model.replace()
+        self.describe_model.replace()
         self.model.replace()
         self._selection = ""
+        self._selected_ids = []
         self.revision += 1
         self.changed.emit()
 
@@ -288,6 +424,9 @@ class DatasetController(QObject):
             self.view = ViewSpec()
             self.quality_result = self.saved_quality()
             self.profile_result = None
+            self.inventory_result = self.describe_result = None
+            self.info_model.replace()
+            self.describe_model.replace()
             self.offset = 0
             self.revision += 1
             self.refresh()
@@ -345,6 +484,7 @@ class DatasetController(QObject):
             self.revision += 1
             self.model.replace()
             self._selection = ""
+            self._selected_ids = []
             self.refresh()
         except (ValueError, TypeError, AttributeError) as error:
             self.fail(error)
@@ -431,8 +571,99 @@ class DatasetController(QObject):
             ),
         )
 
+    @Slot(bool, bool)
+    def inspectColumns(self, sample=True, describe=False):
+        self.start(
+            "describe" if describe else "inventory",
+            dict(view=ViewSpec().data(), sample=sample),
+        )
+
+    @Slot(bool, int, str)
+    def inspectValues(self, sample=True, offset=0, query=""):
+        self.start(
+            "profile",
+            dict(
+                view=ViewSpec().data(),
+                column_id=self.column_id,
+                sample=sample,
+                target="dataset",
+                ddof=1,
+                unique_offset=offset,
+                unique_query=query,
+            ),
+        )
+
+    @Slot(int, int, bool)
+    def selectInspectionCell(self, row, column, descriptive=False):
+        result = self.describe_result if descriptive else self.inventory_result
+        if not result:
+            return
+        columns = (
+            [c for c in result["columns"] if c.get("numeric")]
+            if descriptive
+            else result["columns"]
+        )
+        index = column - 1 if descriptive else row
+        if 0 <= index < len(columns):
+            self.selectColumn(columns[index]["id"])
+
+    def publish_inspection(self, value, descriptive):
+        columns = value["columns"]
+        if not descriptive:
+            self.info_model.replace(
+                ["Sütun", "Veri türü", "Dolu", "Null", "NaN"],
+                [
+                    [
+                        c["name"],
+                        c["physical_type"],
+                        c["non_null"],
+                        c["null"],
+                        c["nan"],
+                    ]
+                    for c in columns
+                ],
+            )
+            return
+        numeric = [c for c in columns if c.get("numeric")]
+        keys = [
+            ("Sonlu değer sayısı", "finite_n"),
+            ("Ortalama", "mean"),
+            ("Standart sapma (ddof=1)", "std"),
+            ("En küçük", "minimum"),
+            ("%25", "0.25"),
+            ("Medyan (%50)", "0.5"),
+            ("%75", "0.75"),
+            ("En büyük", "maximum"),
+        ]
+        rows = []
+        for label, key in keys:
+            row = [label]
+            for c in numeric:
+                n = c["numeric"]
+                value = (
+                    None
+                    if n["suppressed"]
+                    else n["quantiles"].get(key)
+                    if key.startswith("0.")
+                    else n.get(key)
+                )
+                row.append(value)
+            rows.append(row)
+        self.describe_model.replace(["İstatistik"] + [c["name"] for c in numeric], rows)
+
     @Slot(str, str, str, str)
-    def applyRole(self, role, unit, order, analysis_unit):
+    @Slot(str, str, str, str, str)
+    def applyRole(
+        self,
+        role,
+        unit,
+        order,
+        analysis_unit,
+        description=None,
+        *,
+        confirm=True,
+        ordinal_order=None,
+    ):
         if self.busy or self.projects.busy or self.projects.readOnly:
             return self.fail(
                 ProjectError("Rol değişikliği için yazılabilir ve boşta proje gerekli.")
@@ -446,9 +677,15 @@ class DatasetController(QObject):
                 self.column_id,
                 role,
                 unit,
-                order.split("|") if order else [],
+                ordinal_order
+                if ordinal_order is not None
+                else order.split("|")
+                if order
+                else [],
                 analysis_unit,
+                description,
             )
+            result["semantic_metadata"][self.column_id]["confirmed"] = confirm
             from veri_ufku.operations.contracts import activate, build
 
             spec = build(
@@ -493,6 +730,34 @@ class DatasetController(QObject):
         except (ValueError, TypeError) as error:
             self.fail(error)
 
+    @Slot(str, result=bool)
+    def applyDescription(self, description):
+        d = self.dataset()
+        if not d or not self.column_id:
+            self.fail(ProjectError("Açıklama eklemek için bir sütun seçin."))
+            return False
+        from veri_ufku.analytics.dataset import suggest_role
+        from veri_ufku.operations.types import dtype_of
+
+        previous = d.get("semantic_metadata", {}).get(self.column_id, {})
+        c = next(
+            c for c in d["import_metadata"]["columns"] if c["id"] == self.column_id
+        )
+        role = (
+            previous.get("role") or suggest_role(c["name"], dtype_of(c["type"]), [])[0]
+        )
+        version = d["version_id"]
+        self.applyRole(
+            role,
+            previous.get("unit", ""),
+            "",
+            d.get("analysis_unit", ""),
+            description,
+            confirm=previous.get("confirmed", False),
+            ordinal_order=previous.get("ordinal_order", []),
+        )
+        return self.dataset()["version_id"] != version
+
     @Slot()
     def saveProfile(self):
         if not self.profile_result or self.projects.readOnly or self.projects.busy:
@@ -520,6 +785,8 @@ class DatasetController(QObject):
     def selectRow(self, index):
         if self.model.result and 0 <= index < self.model.rowCount():
             result = self.model.result
+            self._selected_ids = [result["row_ids"][index]]
+            self.rowSelected.emit(result["row_ids"][index])
             source_id = result["source_record_ids"][index]
             origin = (
                 "SourceRecordId " + source_id
@@ -528,6 +795,38 @@ class DatasetController(QObject):
             )
             self._selection = f"Görüntü sırası {result['offset'] + index + 1} · RowId {result['row_ids'][index]} · {origin}"
             self.changed.emit()
+
+    @Slot(result=bool)
+    def copyVisibleSelection(self):
+        """Explicit clipboard action; bounded displayed values, never a full read."""
+        from PySide6.QtGui import QGuiApplication
+
+        result = self.model.result
+        if not result:
+            return False
+        selected = set(self._selected_ids)
+        rows = [
+            dict(row_id=row_id, displayed_values=result["rows"][index])
+            for index, row_id in enumerate(result["row_ids"])
+            if row_id in selected
+        ]
+        if not rows:
+            return False
+        QGuiApplication.clipboard().setText(
+            json.dumps(
+                dict(columns=[c["name"] for c in result["columns"]], rows=rows),
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        self._message = "Bu sayfada seçili satırların görünen metni JSON olarak kopyalandı; kısaltılmış hücreler tam veri değildir."
+        self.changed.emit()
+        return True
+
+    def selectChartRows(self, row_ids, count):
+        self._selected_ids = list(row_ids)
+        self._selection = f"Grafik seçimi: {count} gerçek RowId; bu sayfada {len(row_ids)} eşleşme. Toplulaştırılmış nokta tüm üyelerini seçer."
+        self.changed.emit()
 
     def start(self, action, parameters):
         if self.busy or self.projects.busy:
@@ -547,6 +846,7 @@ class DatasetController(QObject):
                 columns=copy.deepcopy(d["import_metadata"]["columns"]),
                 row_count=d["import_metadata"]["row_count"],
                 import_bad_count=d["import_metadata"].get("bad_count", 0),
+                import_settings=copy.deepcopy(d["import_metadata"].get("settings", {})),
                 version_id=d["version_id"],
                 snapshot_uri=d["snapshot_uri"],
                 source_snapshot_id=d["import_metadata"]["source_snapshot_id"],
@@ -560,11 +860,15 @@ class DatasetController(QObject):
                 self.column_id,
             )
             self.action = action
+            if action == "page":
+                self.cache_key = page_key(request, parameters)
+                cached = self.page_cache.get(self.cache_key)
+                if cached is not None:
+                    parameters = dict(parameters, cached_page=cached)
             self.started = time.monotonic()
             self.cancel_time = None
             self.cancel_event = self.context.Event()
             self.connection, sender = self.context.Pipe(duplex=False)
-            os.environ.setdefault("POLARS_MAX_THREADS", str(self.budget.cpu_threads))
             self.process = self.context.Process(
                 target=process_entry,
                 args=(
@@ -577,7 +881,8 @@ class DatasetController(QObject):
                     self.budget,
                 ),
             )
-            self.process.start()
+            if not start_controller(self, sender):
+                return
             sender.close()
             self.projects.dataset_active = True
             self.projects.changed.emit()
@@ -661,13 +966,21 @@ class DatasetController(QObject):
             elif kind == "error":
                 self._error = value
             elif self.action == "page":
+                self.page_cache.put(self.cache_key, value)
                 self.model.replace(value)
                 self.total = value["total"]
-                self.suggestions = value["suggestions"]
+                self.suggestions = copy.deepcopy(value["suggestions"])
                 self._message = f"Sayfa: {value['offset'] + 1 if value['rows'] else 0}–{value['offset'] + len(value['rows'])}; model en fazla200 kayıt taşır."
             elif self.action == "quality":
                 self.quality_result = value
                 self._message = f"Kalite taraması: {value['scope']} · {value['used_n']}/{value['population_n']} kayıt; veri değiştirilmedi."
+            elif self.action in {"inventory", "describe"}:
+                self.publish_inspection(value, self.action == "describe")
+                if self.action == "inventory":
+                    self.inventory_result = value
+                else:
+                    self.describe_result = value
+                self._message = f"Sütun özeti: {value['scope']} · {value['used_n']}/{value['population_n']} kayıt; veri değiştirilmedi."
             else:
                 self.profile_result = value
                 self.suggestions[value["column_id"]] = dict(

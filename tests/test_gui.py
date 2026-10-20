@@ -28,7 +28,27 @@ def test_real_qml_buttons_responsiveness_error_cancel_and_stale(tmp_path, monkey
         monkeypatch.setenv(variable, str(tmp_path / folder))
     app, window, bridge = create_application()
     manager = bridge.session.manager
+    # Assert responsiveness/cancel while a real CPU job is still running;
+    # startup/rendering can outlast the short default demonstration.
+    from veri_ufku.domain.contracts import DemoParameters, JobSpec
+
+    def start_fixture(capability_id):
+        parameters = (
+            DemoParameters(units=80, pause_seconds=0.1)
+            if capability_id == "demo.cpu"
+            else DemoParameters()
+        )
+        return manager.submit(
+            JobSpec(
+                capability_id, bridge.session.binding, parameters, bridge.session.budget
+            )
+        )
+
+    monkeypatch.setattr(bridge.session, "start", start_fixture)
     try:
+        # Complete the initial window/layout frame before measuring concurrent
+        # worker responsiveness; startup rendering is a separate acceptance gate.
+        spin(app, lambda: not window.grabWindow().isNull())
         cpu = window.findChild(QObject, "cpuButton")
         assert cpu.property("text") == "CPU denemesini başlat"
         ticks = []
@@ -94,6 +114,55 @@ def test_readme_entry_point_smoke(tmp_path):
     assert "GUI_SMOKE PASS" in result.stdout
 
 
+def test_user_status_text_is_literal_qml_text(tmp_path, monkeypatch):
+    from PySide6.QtQml import QQmlEngine, QQmlExpression
+    from test_import_gui import setup, teardown
+
+    app, window, _, _, _ = setup(tmp_path, monkeypatch)
+    try:
+        notice = window.findChild(QObject, "taskNotice")
+        message = '<b>İşlem</b><img src="https://invalid.example/image.png">'
+        assert notice.setProperty("detail", message)
+        label = notice.findChild(QObject, "stateDetail")
+        assert label.property("text") == message
+        expression = QQmlExpression(
+            QQmlEngine.contextForObject(label), label, "textFormat === Text.PlainText"
+        )
+        assert expression.evaluate()[0] is True
+        assert not expression.hasError()
+    finally:
+        teardown(app, window)
+
+
+def test_primary_button_text_is_readable_in_fixed_dark_theme(tmp_path, monkeypatch):
+    from PySide6.QtQml import QQmlEngine, QQmlExpression
+    from test_import_gui import setup, teardown
+
+    app, window, _, _, _ = setup(tmp_path, monkeypatch)
+    try:
+        button = window.findChild(QObject, "cpuButton")
+        button.setProperty("primary", True)
+        label = button.property("contentItem")
+        expected = "#24170e"
+        app.processEvents()
+        assert label.property("color").isValid()
+        assert label.property("color").name() == expected
+        expression = QQmlExpression(
+            QQmlEngine.contextForObject(window),
+            window,
+            "palette.highlightedText.toString()",
+        )
+        assert expression.evaluate()[0] == expected
+        # A disabled primary button keeps a readable label in the fixed dark palette.
+        button.setProperty("enabled", False)
+        app.processEvents()
+        disabled = "#919cad"
+        assert label.property("color").name() == disabled
+        button.setProperty("enabled", True)
+    finally:
+        teardown(app, window)
+
+
 def test_english_startup_uses_same_qml_with_local_configuration(tmp_path):
     config = tmp_path / "config/veri_ufku"
     config.mkdir(parents=True)
@@ -137,7 +206,18 @@ def test_bad_configuration_is_visible_and_never_logged_verbatim(tmp_path):
         "from PySide6.QtCore import QObject; "
         "app, window, bridge = create_application(); "
         "assert bridge is None; "
+        'assert not window.findChild(QObject,"workspace").property("enabled"); '
+        'assert not window.findChild(QObject,"newProjectButton").property("enabled"); '
+        'window.setProperty("selectedSection",3); app.processEvents(); '
+        'assert not window.findChild(QObject,"chartCreate").property("enabled"); '
+        'window.setProperty("selectedSection",6); app.processEvents(); '
+        'assert not window.findChild(QObject,"exportData").property("enabled"); '
+        'assert window.findChild(QObject,"startupWarning").property("visible"); '
+        'assert not window.findChild(QObject,"openProjectShortcut").property("enabled"); '
+        'assert not window.findChild(QObject,"saveProjectShortcut").property("enabled"); '
         'print(window.findChild(QObject,"errorLabel").property("text")); '
+        'window.setProperty("selectedSection",7); '
+        'assert window.findChild(QObject,"workspace").property("enabled"); '
         "app._veri_ufku_resources[-1]()"
     )
     completed = subprocess.run(
@@ -167,31 +247,31 @@ def test_phase02_keyboard_preferences_and_view_preserve_session(tmp_path, monkey
         binding = bridge.session.binding
         bridge.start("demo.io")
         job_id = bridge.job_id
-        theme = window.findChild(QQuickItem, "themePicker")
-        theme.forceActiveFocus()
-        QTest.keyClick(window, Qt.Key.Key_Space)
-        QTest.keyClick(window, Qt.Key.Key_End)
-        QTest.keyClick(window, Qt.Key.Key_Return)
-        spin(app, lambda: preferences.theme == "dark")
-        view = window.findChild(QQuickItem, "viewPicker")
+        assert window.findChild(QQuickItem, "themeButton") is None
+        assert window.findChild(QQuickItem, "scalePicker") is None
+        assert window.property("darkTheme")
+        assert window.findChild(QQuickItem, "beginnerButton").property("checked")
+        view = window.findChild(QQuickItem, "advancedButton")
         view.forceActiveFocus()
         QTest.keyClick(window, Qt.Key.Key_Space)
-        QTest.keyClick(window, Qt.Key.Key_End)
-        QTest.keyClick(window, Qt.Key.Key_Return)
         spin(app, lambda: preferences.view == "advanced")
         assert window.property("advanced")
+        assert view.property("checked")
+        assert not window.findChild(QQuickItem, "beginnerButton").property("checked")
         assert window.findChild(QQuickItem, "technicalSettings").isVisible()
         assert bridge.session.binding == binding
         assert bridge.job_id == job_id
         spin(app, lambda: not bridge.active)
         result = bridge.resultText
-        preferences.setView("beginner")
+        beginner = window.findChild(QQuickItem, "beginnerButton")
+        beginner.forceActiveFocus()
+        QTest.keyClick(window, Qt.Key.Key_Space)
         app.processEvents()
         assert not window.findChild(QQuickItem, "technicalSettings").isVisible()
         assert bridge.resultText == result
         assert window.findChild(QQuickItem, "resultLabel").isVisible()
-        assert window.findChild(QQuickItem, "openFileButton").isEnabled()
-        assert not window.findChild(QQuickItem, "sampleButton").isEnabled()
+        assert window.findChild(QQuickItem, "openFileButton") is None
+        assert window.findChild(QQuickItem, "sampleButton") is None
         # Preferences survive a new process and select the same QML presentation.
         source = (
             "from veri_ufku.app import create_application; "
@@ -224,46 +304,41 @@ def visual_item(item, name):
     return None
 
 
-def test_phase02_resize_help_navigation_and_system_theme(tmp_path, monkeypatch):
+def test_phase02_resize_help_navigation_and_fixed_dark_theme(tmp_path, monkeypatch):
     from PySide6.QtCore import QPointF, Qt
     from PySide6.QtQuick import QQuickItem
 
     for name in ("CONFIG", "STATE", "CACHE"):
         monkeypatch.setenv(f"XDG_{name}_HOME", str(tmp_path / name.lower()))
     app, window, bridge = create_application()
-    preferences = app._veri_ufku_resources[-2]
     from PySide6.QtGui import QColor, QPalette
 
     original_palette = app.palette()
     try:
         spin(app, lambda: not window.grabWindow().isNull())
-        for width, height, scale in [
-            (720, 560, 1.0),
-            (1366, 900, 1.0),
-            (720, 560, 2.0),
-        ]:
+        for width, height in [(720, 560), (1366, 900)]:
             window.setWidth(width)
             window.setHeight(height)
-            preferences.setTextScale(scale)
             app.processEvents()
             QTest.qWait(60)
             workspace = window.findChild(QQuickItem, "workspace")
             assert workspace.width() >= 320
             assert workspace.height() >= 200
+            window.setProperty("selectedSection", 7)
+            app.processEvents()
             help_button = window.findChild(QQuickItem, "helpButton")
-            point = help_button.mapToScene(
-                QPointF(help_button.width() / 2, help_button.height() / 2)
-            )
-            assert 0 <= point.x() <= window.width()
-            assert 0 <= point.y() <= window.height()
-            QTest.mouseClick(window, Qt.MouseButton.LeftButton, pos=point.toPoint())
+            assert help_button.isVisible()
+            window.setProperty("selectedSection", 1)
+            app.processEvents()
+            assert help_button.isVisible()
+            origin = window.findChild(QQuickItem, "beginnerButton")
+            origin.forceActiveFocus()
+            QTest.keyClick(window, Qt.Key.Key_F1)
             spin(app, lambda: window.property("infoOpen"))
             QTest.keyClick(window, Qt.Key.Key_Escape)
             spin(app, lambda: not window.property("infoOpen"))
-            assert help_button.hasActiveFocus()
-        preferences.setTextScale(1.0)
-        preferences.setTheme("system")
-        # Offscreen has no OS color scheme; exercise the real palette fallback.
+            assert origin.hasActiveFocus()
+        # OS palette changes cannot activate a light application theme.
         assert app.styleHints().colorScheme() == Qt.ColorScheme.Unknown
         palette = QPalette(original_palette)
         palette.setColor(QPalette.ColorRole.Window, QColor("#111827"))
@@ -271,7 +346,7 @@ def test_phase02_resize_help_navigation_and_system_theme(tmp_path, monkeypatch):
         spin(app, lambda: window.property("darkTheme"))
         palette.setColor(QPalette.ColorRole.Window, QColor("#ffffff"))
         app.setPalette(palette)
-        spin(app, lambda: not window.property("darkTheme"))
+        spin(app, lambda: window.property("darkTheme"))
         first = visual_item(window.contentItem(), "nav0")
         first.forceActiveFocus()
         QTest.keyClick(window, Qt.Key.Key_Tab)
@@ -283,15 +358,25 @@ def test_phase02_resize_help_navigation_and_system_theme(tmp_path, monkeypatch):
         spin(app, lambda: window.property("selectedSection") == 1)
         notice = window.findChild(QQuickItem, "availabilityNotice")
         assert not notice.isVisible()
-        assert window.findChild(QQuickItem, "chooseCsvButton").isVisible()
+        assert window.property("dataPane") == ""
+        assert window.findChild(QQuickItem, "dataSectionHeadings").isVisible()
+        assert window.findChild(QQuickItem, "dataContentPanel") is None
         window.setProperty("selectedSection", 2)
         app.processEvents()
         assert not notice.isVisible()
         assert window.findChild(QQuickItem, "operationPreview").isVisible()
         window.setProperty("selectedSection", 3)
         app.processEvents()
-        assert notice.isVisible()
-        assert notice.property("heading") == "Henüz mevcut değil"
+        assert not notice.isVisible()
+        assert window.findChild(QQuickItem, "chartCreate").isVisible()
+        window.setProperty("selectedSection", 4)
+        app.processEvents()
+        assert not notice.isVisible()
+        assert window.findChild(QQuickItem, "statisticsPreflight").isVisible()
+        window.setProperty("selectedSection", 5)
+        app.processEvents()
+        assert not notice.isVisible()
+        assert window.findChild(QQuickItem, "preparationScan").isVisible()
         QTest.keyClick(window, Qt.Key.Key_1, Qt.KeyboardModifier.ControlModifier)
         spin(app, lambda: window.property("selectedSection") == 0)
         # A keyboard-focused control below the fold is brought into view.

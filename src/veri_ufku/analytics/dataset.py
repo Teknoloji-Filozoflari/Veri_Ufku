@@ -211,8 +211,25 @@ def page(request, view, offset=0, control=None):
         token = "__vu_view_order"
         while token in schema:
             token += "_"
+        semantics = request.get("semantic_metadata", {}).get(view.sort_column, {})
+        sort_name = name
+        if (
+            semantics.get("role") == "ordinal"
+            and semantics.get("confirmed")
+            and semantics.get("ordinal_order")
+        ):
+            sort_name = token + "_ordinal"
+            query = query.with_columns(
+                pl.col(name)
+                .replace_strict(
+                    {v: i for i, v in enumerate(semantics["ordinal_order"])},
+                    default=None,
+                    return_dtype=pl.Int64,
+                )
+                .alias(sort_name)
+            )
         query = query.with_row_index(token).sort(
-            [name, token, "__vu_row_id"],
+            [sort_name, token, "__vu_row_id"],
             descending=[view.descending, False, False],
             nulls_last=True,
         )
@@ -223,6 +240,14 @@ def page(request, view, offset=0, control=None):
         .collect(engine="streaming")
     )
     rows = []
+    # Preserve null identity separately from the display string (a literal em dash
+    # or the word "null" in a source string is not a missing observation).
+    null_cells = [
+        [row, column]
+        for column, name in enumerate(selected)
+        for row, missing in enumerate(frame[name].is_null().to_list())
+        if missing
+    ]
     payload_bytes = 0
     for row in range(frame.height):
         control.check()
@@ -263,6 +288,7 @@ def page(request, view, offset=0, control=None):
     checked(request, control)
     return dict(
         rows=rows,
+        null_cells=null_cells,
         columns=columns,
         row_ids=frame["__vu_row_id"].to_list(),
         source_record_ids=frame["__vu_source_record_id"].to_list(),
@@ -296,7 +322,14 @@ def value_key(value):
     return str(value)
 
 
-def profile(request, spec, workspace, control=None):
+def profile(request, spec, workspace, control=None, unique_offset=0, unique_query=""):
+    if (
+        type(unique_offset) is not int
+        or unique_offset < 0
+        or not isinstance(unique_query, str)
+        or len(unique_query) > 200
+    ):
+        raise ProjectError("Benzersiz değer sayfası veya araması geçersiz.")
     control = control or Control()
     checked(request, control)
     spec.validate(request["columns"])
@@ -403,7 +436,11 @@ def profile(request, spec, workspace, control=None):
                 control.disk(workspace)
                 control.progress("Sütun profilini tarama", used, limit)
             proposal, reason = suggest_role(name, dtype, original_values)
-            role = role_data["role"] if role_data else proposal
+            role = (
+                role_data["role"]
+                if role_data and role_data.get("confirmed", True)
+                else proposal
+            )
             unique = (
                 None
                 if nested
@@ -526,6 +563,23 @@ def profile(request, spec, workspace, control=None):
             if not nested
             else "unsupported nested exact unique",
             examples=examples,
+            unique_values=[]
+            if nested
+            else [
+                dict(value=value, count=count)
+                for value, count in db.execute(
+                    "SELECT value, count FROM frequencies WHERE instr(value, ?) > 0 ORDER BY first_seen LIMIT 200 OFFSET ?",
+                    (unique_query, unique_offset),
+                )
+            ],
+            unique_matching=None
+            if nested
+            else db.execute(
+                "SELECT count(*) FROM frequencies WHERE instr(value, ?) > 0",
+                (unique_query,),
+            ).fetchone()[0],
+            unique_offset=unique_offset,
+            unique_query=unique_query,
             frequencies=top,
             frequency_other_count=used - stats["null"] - sum(t["count"] for t in top)
             if not nested

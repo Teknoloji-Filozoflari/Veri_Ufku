@@ -20,12 +20,13 @@ class PresentationPreferences(QObject):
     changed = Signal()
     errorChanged = Signal()
 
-    def __init__(self, config_path: Path, parent=None):
+    def __init__(self, config_path: Path, parent=None, locale="tr"):
         super().__init__(parent)
         self.path = config_path / "ui-preferences.json"
-        self._theme = "system"
         self._view = "beginner"
-        self._scale = 1.0
+        self._theme = "dark"
+        self._text_scale = 1.0
+        self._locale = locale
         self._error = ""
         self._writable = True
         try:
@@ -33,27 +34,41 @@ class PresentationPreferences(QObject):
                 if self.path.stat().st_size > 4096:
                     raise ValueError("Preferences too large")
                 data = json.loads(self.path.read_text())
-                if not isinstance(data, dict) or set(data) != {
-                    "schema_version",
-                    "theme",
-                    "view",
-                    "text_scale",
-                }:
+                if not isinstance(data, dict):
                     raise ValueError("Unsupported preferences")
-                if (
-                    type(data["schema_version"]) is not int
-                    or data["schema_version"] != 1
-                    or data["theme"] not in {"light", "dark", "system"}
-                    or data["view"] not in {"beginner", "advanced"}
-                    or type(data["text_scale"]) not in {int, float}
-                    or data["text_scale"] not in {1.0, 1.25, 1.5, 2.0}
-                ):
+                version = data.get("schema_version")
+                fields = {"schema_version", "view"}
+                if version in {1, 2}:
+                    fields.add("theme")
+                    if data.get("theme") not in {"light", "dark", "system"}:
+                        raise ValueError("Invalid legacy preferences")
+                if type(version) is not int or version not in {1, 2, 3, 4}:
+                    raise ValueError("Unsupported preferences")
+                if version == 1:
+                    fields.add("text_scale")
+                    if type(data.get("text_scale")) not in {int, float} or data[
+                        "text_scale"
+                    ] not in {1.0, 1.25, 1.5, 2.0}:
+                        raise ValueError("Invalid preferences")
+                if version == 4:
+                    fields.update({"theme", "text_scale", "locale"})
+                    if data.get("theme") not in {"dark", "light"} or data.get(
+                        "locale"
+                    ) not in {"tr", "en"}:
+                        raise ValueError("Invalid display preference")
+                    if type(data.get("text_scale")) not in {int, float} or data[
+                        "text_scale"
+                    ] not in {1.0, 1.25, 1.5, 2.0}:
+                        raise ValueError("Invalid text size")
+                if set(data) != fields or data["view"] not in {"beginner", "advanced"}:
                     raise ValueError("Invalid preferences")
-                self._theme, self._view, self._scale = (
-                    data["theme"],
-                    data["view"],
-                    data["text_scale"],
-                )
+                # Read legacy theme/size without applying them. Explicit level changes
+                # publish schema 3; merely opening preserves the old file.
+                self._view = data["view"]
+                if version == 4:
+                    self._theme = data["theme"]
+                    self._text_scale = data["text_scale"]
+                    self._locale = data["locale"]
         except (OSError, ValueError, TypeError):
             self._writable = False
             self._error = tr(
@@ -61,27 +76,28 @@ class PresentationPreferences(QObject):
             )
 
     @Property(str, notify=changed)
-    def theme(self):
-        return self._theme
-
-    @Property(str, notify=changed)
     def view(self):
         return self._view
-
-    @Property(float, notify=changed)
-    def textScale(self):
-        return self._scale
 
     @Property(str, notify=errorChanged)
     def errorText(self):
         return self._error
 
-    def _save(self, theme, view, scale):
+    theme = Property(str, lambda self: self._theme, notify=changed)
+    textScale = Property(float, lambda self: self._text_scale, notify=changed)
+    locale = Property(str, lambda self: self._locale, notify=changed)
+
+    def _save(self, view=None, theme=None, text_scale=None, locale=None):
         if not self._writable:
             return
-        data = json.dumps(
-            {"schema_version": 1, "theme": theme, "view": view, "text_scale": scale}
-        ).encode()
+        state = dict(
+            schema_version=4,
+            view=view or self._view,
+            theme=theme or self._theme,
+            text_scale=text_scale if text_scale is not None else self._text_scale,
+            locale=locale or self._locale,
+        )
+        data = json.dumps(state).encode()
         file = QSaveFile(str(self.path))
         file.setDirectWriteFallback(False)
         if not file.open(QIODevice.OpenModeFlag.WriteOnly):
@@ -101,7 +117,10 @@ class PresentationPreferences(QObject):
         if not file.commit():
             self._save_failed()
             return
-        self._theme, self._view, self._scale = theme, view, scale
+        self._view = state["view"]
+        self._theme = state["theme"]
+        self._text_scale = state["text_scale"]
+        self._locale = state["locale"]
         self._error = ""
         self.changed.emit()
         self.errorChanged.emit()
@@ -113,16 +132,21 @@ class PresentationPreferences(QObject):
         self.errorChanged.emit()
 
     @Slot(str)
-    def setTheme(self, value):
-        if value in {"light", "dark", "system"}:
-            self._save(value, self._view, self._scale)
-
-    @Slot(str)
     def setView(self, value):
         if value in {"beginner", "advanced"}:
-            self._save(self._theme, value, self._scale)
+            self._save(value)
+
+    @Slot(str)
+    def setTheme(self, value):
+        if value in {"dark", "light"}:
+            self._save(theme=value)
 
     @Slot(float)
     def setTextScale(self, value):
         if value in {1.0, 1.25, 1.5, 2.0}:
-            self._save(self._theme, self._view, value)
+            self._save(text_scale=value)
+
+    @Slot(str)
+    def setLocale(self, value):
+        if value in {"tr", "en"}:
+            self._save(locale=value)

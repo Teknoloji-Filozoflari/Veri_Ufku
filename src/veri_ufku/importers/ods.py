@@ -1,11 +1,12 @@
 """Bounded ODS table reader using stdlib; no formula, script or link execution."""
 
+import stat
 import zipfile
 from datetime import date
 from decimal import Decimal
 from xml.etree import ElementTree as ET
 
-from veri_ufku.importers.delimited import headers
+from veri_ufku.importers.delimited import Control, headers
 from veri_ufku.importers.native import canonical
 from veri_ufku.storage.project_model import ProjectError
 
@@ -20,17 +21,31 @@ def attr(cell, ns, name, default=None):
     return cell.get("{" + NS[ns] + "}" + name, default)
 
 
-def document(path):
+def document(path, control=None):
+    control = control or Control()
+    control.check()
     try:
         with zipfile.ZipFile(path) as archive:
             entries = archive.infolist()
             if (
                 len(entries) > 10000
                 or len({e.filename for e in entries}) != len(entries)
-                or any(e.flag_bits & 1 for e in entries)
-                or sum(e.file_size for e in entries) > 256 * 1024**2
+                or any(
+                    e.flag_bits & 1
+                    or e.filename.startswith("/")
+                    or "\\" in e.filename
+                    or any(p in ("..", "") for p in e.filename.rstrip("/").split("/"))
+                    or stat.S_ISLNK(e.external_attr >> 16)
+                    for e in entries
+                )
+                or sum(e.file_size for e in entries)
+                > min(256 * 1024**2, control.budget.temp_disk_bytes)
             ):
                 raise ProjectError("ODS arşiv boyutu/şifre/tekrar sınırı dışında.")
+            if archive.getinfo("mimetype").file_size != len(
+                b"application/vnd.oasis.opendocument.spreadsheet"
+            ):
+                raise ProjectError("ODS mimetype boyutu uyuşmuyor.")
             if (
                 archive.read("mimetype")
                 != b"application/vnd.oasis.opendocument.spreadsheet"
@@ -40,9 +55,12 @@ def document(path):
             if info.file_size > 64 * 1024**2:
                 raise ProjectError("ODS content.xml64MiB sınırını aşıyor.")
             raw = archive.read("content.xml")
-            if b"<!DOCTYPE" in raw.upper() or b"<!ENTITY" in raw.upper():
+            control.check()
+            normalized = raw.replace(b"\x00", b"").upper()
+            if b"<!DOCTYPE" in normalized or b"<!ENTITY" in normalized:
                 raise ProjectError("ODS XML DTD/entity kabul edilmez.")
             root = ET.fromstring(raw)
+            control.check()
             sheets = root.findall("./office:body/office:spreadsheet/table:table", NS)
             result = {attr(s, "table", "name"): s for s in sheets}
             if not result or len(result) != len(sheets) or None in result:
@@ -98,7 +116,7 @@ def value(cell, settings):
 
 
 def records(snapshot, settings, control):
-    sheets = document(snapshot["path"])
+    sheets = document(snapshot["path"], control)
     if settings.sheet not in sheets:
         raise ProjectError("ODS sayfasını seçin.")
     if settings.cell_range:

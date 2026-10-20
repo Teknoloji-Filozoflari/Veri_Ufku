@@ -1,0 +1,21 @@
+{
+  "id": "E45-VISUAL",
+  "date": "2026-10-12",
+  "environment": "ENV-45",
+  "reviewer": "Developer image inspection; not user/AT/physical desktop acceptance",
+  "reviewed": [
+    "source-gui/survival_km-normal/diagnostic_png.png",
+    "source-gui/survival_cox-normal/diagnostic_png.png",
+    "source-gui/survival_km-noevents/diagnostic_png.png",
+    "source-gui/survival_km-normal/survivalRiskTable-1000.png"
+  ],
+  "findings": [
+    "KM risk counts readable and agree with hand fixture",
+    "All-censored KM remains1 through observed followup, not beyond",
+    "Cox baseline step curve preserves event-time hazard jumps and selected horizon; query times marked",
+    "Schoenfeld scatter uses log event time and labels descriptive/Breslow means/Efron approximation",
+    "1000px actual QML risk table shows event/censor/risk and eligibility boundary; safe prediction disabled for nonmodel"
+  ],
+  "automated_coverage": "8 cases×2 widths×4positions in source and wheel;64PNG and40safe exports per package",
+  "limits": "Human usability/AT/minhardware/physicaldesktop and clean offline install remain open"
+}

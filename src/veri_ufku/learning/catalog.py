@@ -117,11 +117,13 @@ def validate(data):
         for block in article["guide"]:
             if (
                 not isinstance(block, dict)
-                or set(block) != {"kind", "text"}
+                or set(block) not in ({"kind", "text"}, {"kind", "text", "heading"})
                 or block["kind"] not in {"paragraph", "note"}
             ):
                 raise ValueError("Unsupported learning block")
             text(block["text"])
+            if "heading" in block:
+                text(block["heading"])
         for field in ("related", "contexts"):
             if not isinstance(article[field], list) or not article[field]:
                 raise ValueError("Invalid learning links")
@@ -241,4 +243,7 @@ def validate_bindings(root, catalog=None):
             count += 1
     if count < 1:
         raise ValueError("No declared UI help bindings")
+    from veri_ufku.learning.curriculum import Curriculum
+
+    Curriculum(catalog).coverage()
     return count

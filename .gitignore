@@ -6,5 +6,24 @@ __pycache__/
 dist/
 build/
 
+# Local credentials and machine-specific agent state (never publication inputs)
+.env
+.env.*
+!.env.example
+/.aws/
+/.codex/
+/.agents/
+/.local/
+
+# Reproducible test/editor outputs; evidence under docs is deliberately retained
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ipynb_checkpoints/
+*.egg-info/
+*.swp
+*.swo
+
 # Empty pre-publication Git directory backup
 .git-before-github.*/

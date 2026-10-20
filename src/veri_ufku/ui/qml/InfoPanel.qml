@@ -11,8 +11,8 @@ Rectangle {
     onArticleIdChanged: if (helpScroll.contentItem) helpScroll.contentItem.contentY = 0
     signal closeRequested()
     function focusFirst() { closeButton.forceActiveFocus() }
-    color: Theme.surface
-    border.color: Theme.border
+    color: Theme.mintSurface
+    border.color: Theme.learningTone
     ScrollView {
         id: helpScroll
         anchors.fill: parent
@@ -22,7 +22,7 @@ Rectangle {
         ColumnLayout {
             width: parent.width
             spacing: Theme.lg
-            UiButton {
+            UiButton { tone: "mint";
                 id: closeButton
                 objectName: "helpCloseButton"
                 text: qsTranslate("Shell", "Close information")
@@ -30,9 +30,9 @@ Rectangle {
                 Layout.fillWidth: true
                 onClicked: panel.closeRequested()
             }
-            Label { text: qsTranslate("Shell", "What is this for?"); font.pixelSize: Theme.subheading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+            UiLabel { text: qsTranslate("Shell", "What is this for?"); color: Theme.learningTone; font.pixelSize: Theme.subheading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.WordWrap }
             ArticleView { Layout.fillWidth: true; library: panel.library }
-            Label { text: qsTranslate("Shell", "Closing this panel preserves your view, task and results."); color: Theme.secondary; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+            UiLabel { text: qsTranslate("Shell", "Closing this panel preserves your view, task and results."); color: Theme.secondary; Layout.fillWidth: true; wrapMode: Text.WordWrap }
         }
     }
 }

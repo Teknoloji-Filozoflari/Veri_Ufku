@@ -1,0 +1,93 @@
+[
+  {
+    "name": "lint-final",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+    "date": "2026-10-09T23:28:28.541223+00:00",
+    "seconds": 0.043536950997804524,
+    "exit_code": 0
+  },
+  {
+    "name": "source-gui",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/measure_data_inspection.py",
+      "--output",
+      "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-inspection-continuation/source"
+    ],
+    "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+    "date": "2026-10-09T23:28:36.359485+00:00",
+    "seconds": 7.81820191999941,
+    "exit_code": 0
+  },
+  {
+    "name": "wheel-build",
+    "command": [
+      "uv",
+      "build",
+      "--wheel",
+      "--no-build-isolation",
+      "--out-dir",
+      "/tmp/vu-inspection-continuation-dist"
+    ],
+    "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+    "date": "2026-10-09T23:28:36.500761+00:00",
+    "seconds": 0.1411780650014407,
+    "exit_code": 0
+  },
+  {
+    "name": "wheel-install",
+    "command": [
+      "uv",
+      "pip",
+      "install",
+      "--no-deps",
+      "--target",
+      "/tmp/vu-inspection-continuation-installed",
+      "/tmp/vu-inspection-continuation-dist/veri_ufku-0.1.0-py3-none-any.whl"
+    ],
+    "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+    "date": "2026-10-09T23:28:36.517075+00:00",
+    "seconds": 0.01613242300300044,
+    "exit_code": 0
+  },
+  {
+    "name": "wheel-gui",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_data_inspection.py",
+      "--package-root",
+      "/tmp/vu-inspection-continuation-installed",
+      "--output",
+      "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/ui-data-inspection-continuation/wheel"
+    ],
+    "cwd": "/tmp",
+    "date": "2026-10-09T23:28:44.482005+00:00",
+    "seconds": 7.964755215001787,
+    "exit_code": 0
+  },
+  {
+    "name": "wheel-entry",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "/tmp/vu-inspection-continuation-installed/veri_ufku/__main__.py",
+      "--smoke-test"
+    ],
+    "cwd": "/tmp",
+    "date": "2026-10-09T23:28:45.307860+00:00",
+    "seconds": 0.8257369669991022,
+    "exit_code": 0
+  }
+]

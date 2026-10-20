@@ -27,10 +27,33 @@ def calculate(request, specification, workspace, control=None):
     control = control or Control()
     checked(request, control)
     spec = validate(specification, request)
+    if spec.kind.startswith("workflow_"):
+        raise ProjectError(
+            "Workflow OperationSpec yalnız typed DAG runner içinde çalışır."
+        )
     diagnostics = {}
     relation = None
     prepared_output = None
-    if spec.kind in RELATIONAL:
+    from veri_ufku.geo import OPERATION_KINDS as GEO_KINDS
+    from veri_ufku.operations.data_contracts import KINDS as CONTRACTS
+
+    if spec.kind in GEO_KINDS:
+        from veri_ufku.geo.operations import execute
+
+        if request.get("secondary"):
+            checked(request["secondary"], control)
+        spec, prepared_output, diagnostics, relation = execute(
+            request, spec, workspace, control
+        )
+    elif spec.kind in CONTRACTS:
+        from veri_ufku.operations.data_quality import execute
+
+        if request.get("secondary"):
+            checked(request["secondary"], control)
+        spec, prepared_output, diagnostics, relation = execute(
+            request, spec, workspace, control
+        )
+    elif spec.kind in RELATIONAL:
         from veri_ufku.operations.relational import execute
 
         if request.get("secondary"):
@@ -55,7 +78,15 @@ def calculate(request, specification, workspace, control=None):
             [c["name"] for c in request["columns"] if c["id"] in spec.column_ids]
         )
     elif spec.kind == "filter":
-        query, _, _ = filtered(request, filter_view(spec))
+        if "row_ids" in spec.parameters:
+            requested = spec.parameters["row_ids"]
+            query = query.filter(pl.col("__vu_row_id").is_in(requested))
+            if query.select(pl.len()).collect().item() != len(requested):
+                raise ProjectError(
+                    "Grafik seçimi mevcut kaynakta olmayan RowId içeriyor; filtre uygulanmadı."
+                )
+        else:
+            query, _, _ = filtered(request, filter_view(spec))
     output = prepared_output or Path(workspace) / (uid() + ".parquet")
     try:
         control.progress("Tam veri üzerinde işlem önizlemesi", 0, None)
@@ -186,7 +217,7 @@ def calculate(request, specification, workspace, control=None):
             if relation
             else "identity_projection:" + request["version_id"],
             column_lineage_ref=spec.id,
-            learning_content_version="10",
+            learning_content_version="48" if spec.kind in CONTRACTS else "10",
         )
         return dict(
             spec=spec.data(),
@@ -202,7 +233,7 @@ def calculate(request, specification, workspace, control=None):
                 "reason": "Giriş sürümü, ColumnId ve tipli parametreler doğrulandı.",
             },
             validation={
-                "valid": True,
+                "valid": diagnostics.get("publication_allowed", True),
                 "identity_unique": True,
                 "snapshot_verified": True,
             },
@@ -233,6 +264,7 @@ def transformed_dataset(parent, result, uri, secondary=None):
             "columns": parent["import_metadata"]["columns"],
             "settings": parent["import_metadata"]["settings"],
             "version_id": parent["version_id"],
+            "entity_resolution": parent.get("entity_resolution", {}),
             **(
                 {
                     "secondary": {
@@ -247,6 +279,7 @@ def transformed_dataset(parent, result, uri, secondary=None):
         },
     )
     dataset = copy.deepcopy(parent)
+    dataset.pop("derived_analysis", None)
     dataset.pop("forked_from_version_id", None)
     dataset.pop("input_version_ids", None)
     dataset.update(
@@ -260,6 +293,12 @@ def transformed_dataset(parent, result, uri, secondary=None):
         dataset["input_version_ids"] = list(spec.input_version_ids)
     dataset["import_metadata"]["columns"] = copy.deepcopy(list(spec.output_schema))
     dataset["import_metadata"]["row_count"] = result["impact"]["after_rows"]
+    if result.get("diagnostics", {}).get("geospatial"):
+        dataset["import_metadata"]["settings"]["format_metadata"] = {
+            "parts": [
+                {"geospatial": copy.deepcopy(result["diagnostics"]["geospatial"])}
+            ]
+        }
     if "semantic_metadata" in dataset:
         ids = {c["id"] for c in spec.output_schema}
         dataset["semantic_metadata"] = {
@@ -270,4 +309,44 @@ def transformed_dataset(parent, result, uri, secondary=None):
             dataset.get("semantic_metadata", {}).pop(column_id, None)
     if spec.kind == "roles":
         dataset.update(copy.deepcopy(spec.parameters))
+    if "schema_contract" in dataset:
+        dataset["schema_contract"]["dataset_version"] = dataset["version_id"]
+        dataset["schema_contract"]["status"] = "requires_validation"
+    if spec.kind == "schema_contract":
+        dataset.update(
+            semantic_metadata=copy.deepcopy(spec.parameters["semantic_metadata"]),
+            analysis_unit=spec.parameters["analysis_unit"],
+        )
+        dataset["schema_contract"] = dict(
+            dataset_version=dataset["version_id"],
+            definition_version=parent["version_id"],
+            definition=copy.deepcopy(spec.parameters["contract"]),
+            status="requires_validation",
+        )
+    if spec.kind == "contract_check":
+        dataset["schema_contract"] = dict(
+            dataset_version=dataset["version_id"],
+            definition_version=parent["version_id"],
+            definition=copy.deepcopy(spec.parameters["contract"]),
+            status="checked",
+            report_operation=spec.id,
+        )
+    if spec.kind == "entity_merge":
+        dataset["entity_resolution"] = dict(
+            canonical_column=spec.parameters["canonical_column"],
+            decision_operation=spec.id,
+            input_version=parent["version_id"],
+        )
+    # A removed/converted schema retains its historical definition, never pretends valid.
+    if "schema_contract" in dataset:
+        ids = {c["id"] for c in spec.output_schema}
+        if any(
+            r["column_id"] and r["column_id"] not in ids
+            for r in dataset["schema_contract"]["definition"]["rules"]
+        ):
+            dataset["schema_contract"]["status"] = "inapplicable"
+    if "entity_resolution" in dataset and dataset["entity_resolution"][
+        "canonical_column"
+    ] not in {c["id"] for c in spec.output_schema}:
+        dataset.pop("entity_resolution")
     return dataset

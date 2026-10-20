@@ -15,16 +15,25 @@ from PySide6.QtCore import (
 )
 
 from veri_ufku.learning.catalog import SCREEN_CONTEXTS, Catalog
+from veri_ufku.learning.curriculum import Curriculum
+from veri_ufku.learning.taxonomy import CONTEXT_ONLY, learning_tree
 
 
 class LearningController(QObject):
     changed = Signal()
     resultsChanged = Signal()
     exampleRequested = Signal()
+    articleOpened = Signal()
 
     def __init__(self, config_path: Path, parent=None, *, sandbox=False, catalog=None):
         super().__init__(parent)
         self.catalog = catalog or Catalog()
+        self.curriculum = Curriculum(self.catalog)
+        self._lesson_id = "mean-median"
+        self._lesson_path = "data"
+        self._lesson_progress = {}
+        self._lesson_feedback = ""
+        self._favorites_only = False
         self.path = config_path / "learning-marks.json"
         self._article_id = "learn"
         self._query = ""
@@ -52,16 +61,14 @@ class LearningController(QObject):
             if self.path.stat().st_size > 64_000:
                 raise ValueError("Reading marks too large")
             data = json.loads(self.path.read_text())
-            if not isinstance(data, dict) or set(data) != {
-                "schema_version",
-                "enabled",
-                "read",
-                "bookmarks",
-            }:
+            if not isinstance(data, dict) or set(data) not in (
+                {"schema_version", "enabled", "read", "bookmarks"},
+                {"schema_version", "enabled", "read", "bookmarks", "lessons"},
+            ):
                 raise ValueError("Invalid reading marks")
             if (
                 type(data["schema_version"]) is not int
-                or data["schema_version"] != 1
+                or data["schema_version"] not in (1, 2)
                 or type(data["enabled"]) is not bool
             ):
                 raise ValueError("Unsupported reading marks")
@@ -71,6 +78,20 @@ class LearningController(QObject):
                     for key in data[field]
                 ):
                     raise ValueError("Invalid article marks")
+            progress = data.get("lessons", {})
+            if (
+                data["schema_version"] == 2
+                and "lessons" not in data
+                or data["schema_version"] == 1
+                and "lessons" in data
+                or not isinstance(progress, dict)
+                or any(
+                    k not in self.curriculum.lessons or type(v) is not int or v < 1
+                    for k, v in progress.items()
+                )
+            ):
+                raise ValueError("Invalid lesson progress")
+            self._lesson_progress = progress if data["enabled"] else {}
             self._enabled, self._read, self._bookmarks = (
                 data["enabled"],
                 set(data["read"]),
@@ -80,15 +101,18 @@ class LearningController(QObject):
             self._writable = False
             self._error = "Okuma tercihleri okunamadı. Mevcut dosya korundu; yardım okumaya devam edebilirsin."
 
-    def _save_marks(self, enabled, read, bookmarks):
+    def _save_marks(self, enabled, read, bookmarks, lessons=None):
         if self._sandbox or not self._writable:
             return False
         data = json.dumps(
             dict(
-                schema_version=1,
+                schema_version=2,
                 enabled=enabled,
                 read=sorted(read),
                 bookmarks=sorted(bookmarks),
+                lessons=(self._lesson_progress if lessons is None else lessons)
+                if enabled
+                else {},
             )
         ).encode()
         file = QSaveFile(str(self.path))
@@ -106,6 +130,9 @@ class LearningController(QObject):
             self.changed.emit()
             return False
         self._enabled, self._read, self._bookmarks = enabled, read, bookmarks
+        self._lesson_progress = (
+            (self._lesson_progress if lessons is None else lessons) if enabled else {}
+        )
         self.resultsChanged.emit()
         self._error = ""
         self.changed.emit()
@@ -123,7 +150,17 @@ class LearningController(QObject):
                 bookmarked=a["id"] in self._bookmarks,
             )
             for a in self.catalog.search(self._query, self._category, self._glossary)
+            if a["id"] not in CONTEXT_ONLY
         ]
+
+    @Property("QVariantList", notify=resultsChanged)
+    def tree(self):
+        return learning_tree(
+            self.results,
+            include_empty=not (
+                self._query or self._category != "Tümü" or self._glossary
+            ),
+        )
 
     @Property("QVariantMap", notify=changed)
     def article(self):
@@ -253,6 +290,7 @@ class LearningController(QObject):
             self.changed.emit()
             return False
         self._article_id = article_id
+        self.articleOpened.emit()
         if self._writable:
             self._error = ""
         self.changed.emit()
@@ -300,3 +338,125 @@ class LearningController(QObject):
         example.resultsChanged.emit()
         example.changed.emit()
         self.exampleRequested.emit()
+
+    lesson = Property(
+        "QVariantMap", lambda s: s.curriculum.lessons[s._lesson_id], notify=changed
+    )
+    lessonPaths = Property(
+        "QVariantList", lambda s: s.curriculum.data["paths"], constant=True
+    )
+    lessonPath = Property(str, lambda s: s._lesson_path, notify=changed)
+    lessonFeedback = Property(str, lambda s: s._lesson_feedback, notify=changed)
+    lessonCompleted = Property(
+        bool,
+        lambda s: s._lesson_progress.get(s._lesson_id) == s.lesson["version"],
+        notify=changed,
+    )
+    lessonProgressText = Property(
+        str,
+        lambda s: (
+            "Bu sürüm tamamlandı işaretli"
+            if s.lessonCompleted
+            else "Önceki sürümde işaretli; yeni sürüm okunmuş sayılmaz"
+            if s._lesson_id in s._lesson_progress
+            else "Tamamlandı işareti yok; araç kullanımını engellemez"
+        ),
+        notify=changed,
+    )
+    lessonPrerequisites = Property(
+        "QVariantList",
+        lambda s: [
+            dict(id=k, title=s.curriculum.lessons[k]["title"])
+            for k in s.lesson["prerequisites"]
+        ],
+        notify=changed,
+    )
+    lessons = Property(
+        "QVariantList",
+        lambda s: (
+            s.curriculum.search(
+                s._query, s._lesson_path, s._bookmarks if s._favorites_only else ()
+            )
+            if not s._favorites_only or s._bookmarks
+            else []
+        ),
+        notify=changed,
+    )
+    favoriteLessonsOnly = Property(bool, lambda s: s._favorites_only, notify=changed)
+    conceptEdges = Property(
+        "QVariantList",
+        lambda s: [
+            dict(
+                source=p,
+                target=v["id"],
+                label=s.curriculum.lessons[p]["title"] + " → " + v["title"],
+            )
+            for v in s.curriculum.data["lessons"]
+            for p in v["prerequisites"]
+        ],
+        constant=True,
+    )
+
+    @Property("QVariantList", notify=changed)
+    def moduleArticles(self):
+        ids = list(
+            dict.fromkeys(
+                a
+                for row in self.curriculum.coverage()
+                if row["path"] == self._lesson_path
+                for a in row["articles"]
+            )
+        )
+        return [
+            dict(
+                id=k,
+                title=self.catalog.articles[k]["title"],
+                coverage="Makale bağlantısı; her modüle ayrı interaktif lab iddiası yok",
+            )
+            for k in ids
+        ]
+
+    @Slot(str)
+    def setLessonPath(self, ident):
+        if ident in self.curriculum.paths:
+            self._lesson_path = ident
+            self.changed.emit()
+
+    @Slot(bool)
+    def setFavoriteLessonsOnly(self, value):
+        self._favorites_only = value
+        self.changed.emit()
+
+    @Slot(str, result=bool)
+    def openLesson(self, ident):
+        if ident not in self.curriculum.lessons:
+            return False
+        self._lesson_id = ident
+        self._lesson_path = self.lesson["path"]
+        self._lesson_feedback = ""
+        self.openArticle(self.lesson["article_id"])
+        self.changed.emit()
+        return True
+
+    @Slot(int)
+    def answerLesson(self, index):
+        check = self.lesson["check"]
+        if 0 <= index < len(check["options"]):
+            self._lesson_feedback = (
+                ("Uygun yorum. " if index == check["correct"] else "Tekrar düşün. ")
+                + check["feedback"][index]
+                + " Puan/sertifika verilmez; devam edebilirsin."
+            )
+            self.changed.emit()
+
+    @Slot()
+    def completeLesson(self):
+        if self._enabled:
+            self._save_marks(
+                True,
+                self._read,
+                self._bookmarks,
+                dict(
+                    self._lesson_progress, **{self._lesson_id: self.lesson["version"]}
+                ),
+            )

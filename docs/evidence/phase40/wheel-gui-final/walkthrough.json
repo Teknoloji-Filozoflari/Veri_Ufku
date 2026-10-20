@@ -1,0 +1,349 @@
+{
+  "id": "E40-GUI",
+  "environment": "ENV-40",
+  "python": "3.13.15",
+  "qt": "6.11.2",
+  "package_file": "/tmp/veri-ufku-phase40-final-installed/veri_ufku/__init__.py",
+  "started": "2026-10-11T18:55:16.726203+00:00",
+  "models": [
+    {
+      "method": "ols",
+      "artifacts": [
+        {
+          "kind": "result",
+          "path": "ols/model-result.json",
+          "bytes": 7070,
+          "sha256": "1ee2c46d6fad0cac2474cd76aef92f15b0422603daef67c57a2417c585d7bc26"
+        },
+        {
+          "kind": "members",
+          "path": "ols/model-members.parquet",
+          "bytes": 1315,
+          "sha256": "7695fb0564e40947ecc2a64918b8e37e830eabd7b4a41670f40334d9b8533e23"
+        },
+        {
+          "kind": "diagnostic",
+          "path": "ols/model-diagnostic.svg",
+          "bytes": 83423,
+          "sha256": "cf2c736053acc1728432a1c5cac3d436d96abb813da443cc7a3807807ba40a95"
+        },
+        {
+          "kind": "diagnostic_png",
+          "path": "ols/model-diagnostic.png",
+          "bytes": 74153,
+          "sha256": "85c19ca830fdd2b347d70a1d0a2f1efe8acaa365057356c4bc8523cc44cf9429"
+        }
+      ],
+      "screenshots": [
+        "ols/modelsMethod.png",
+        "ols/modelsSummary.png",
+        "ols/modelsDiagnostic.png"
+      ],
+      "prediction": {
+        "prediction": true,
+        "prediction_kind": "mean response",
+        "result_save": true,
+        "model_save": true,
+        "prediction_interval": false,
+        "reason": "safe JSON coefficients/design; no executable pickle; repeated ANOVA is inference only; no held-out score"
+      }
+    },
+    {
+      "method": "wls",
+      "artifacts": [
+        {
+          "kind": "result",
+          "path": "wls/model-result.json",
+          "bytes": 7240,
+          "sha256": "9f5f9a89d72d1065b0ffc3946bf35abfcb1fe01c7053115e8ef67be58ff8ac3f"
+        },
+        {
+          "kind": "members",
+          "path": "wls/model-members.parquet",
+          "bytes": 1315,
+          "sha256": "e958e05c2b5b80e421e9fa861d7f22701e46ef80f8c5a34a9e903f04cdee537d"
+        },
+        {
+          "kind": "diagnostic",
+          "path": "wls/model-diagnostic.svg",
+          "bytes": 81582,
+          "sha256": "4e43289b1dd54650346766239ed514cb8fa1362d9013c6e743f2b44491b0be36"
+        },
+        {
+          "kind": "diagnostic_png",
+          "path": "wls/model-diagnostic.png",
+          "bytes": 73989,
+          "sha256": "45350c49b5e788c928070ce925b4916738a91c5758e5b55f3b4d6e1bb79ea7d6"
+        }
+      ],
+      "screenshots": [
+        "wls/modelsMethod.png",
+        "wls/modelsSummary.png",
+        "wls/modelsDiagnostic.png"
+      ],
+      "prediction": {
+        "prediction": true,
+        "prediction_kind": "mean response",
+        "result_save": true,
+        "model_save": true,
+        "prediction_interval": false,
+        "reason": "safe JSON coefficients/design; no executable pickle; repeated ANOVA is inference only; no held-out score"
+      }
+    },
+    {
+      "method": "glm_binomial",
+      "artifacts": [
+        {
+          "kind": "result",
+          "path": "glm_binomial/model-result.json",
+          "bytes": 4982,
+          "sha256": "1314381874d379a4f58418f50e97550753cd978cca72c9021e9f17bd40d9cf0e"
+        },
+        {
+          "kind": "members",
+          "path": "glm_binomial/model-members.parquet",
+          "bytes": 1048,
+          "sha256": "39cf6824b49ed5f5f5d9f82304a7751647f4c89ad525b22bb71d39e95fa8e0e2"
+        },
+        {
+          "kind": "diagnostic",
+          "path": "glm_binomial/model-diagnostic.svg",
+          "bytes": 77327,
+          "sha256": "113b2d8be41d475710499bde6b977f16663fbf3d59a47ca7b12f4a2d86452c9a"
+        },
+        {
+          "kind": "diagnostic_png",
+          "path": "glm_binomial/model-diagnostic.png",
+          "bytes": 67781,
+          "sha256": "db742e2d286338bbbcc64b8a1a097bc7393a2188ce26fe523384d03ab3846250"
+        }
+      ],
+      "screenshots": [
+        "glm_binomial/modelsMethod.png",
+        "glm_binomial/modelsSummary.png",
+        "glm_binomial/modelsDiagnostic.png"
+      ],
+      "prediction": {
+        "prediction": true,
+        "prediction_kind": "mean response/probability",
+        "result_save": true,
+        "model_save": true,
+        "prediction_interval": false,
+        "reason": "safe JSON coefficients/design; no executable pickle; repeated ANOVA is inference only; no held-out score"
+      }
+    },
+    {
+      "method": "glm_poisson",
+      "artifacts": [
+        {
+          "kind": "result",
+          "path": "glm_poisson/model-result.json",
+          "bytes": 5005,
+          "sha256": "696237d36c9d9f9eb476e138fc40d2077961e0271cc9c971296dfffdabeaa971"
+        },
+        {
+          "kind": "members",
+          "path": "glm_poisson/model-members.parquet",
+          "bytes": 1049,
+          "sha256": "836675086f494e66fbe22524381e7013ceeb465696028c9c3d2ca64e544f8d96"
+        },
+        {
+          "kind": "diagnostic",
+          "path": "glm_poisson/model-diagnostic.svg",
+          "bytes": 76476,
+          "sha256": "15d7bf0eb3670f75e6beac27bf23147b661238faade08eb610694ebf93c2c778"
+        },
+        {
+          "kind": "diagnostic_png",
+          "path": "glm_poisson/model-diagnostic.png",
+          "bytes": 67233,
+          "sha256": "140bd3d8f6f185b9787005da7ad7b954e12128d5c1c52b1a3da4c23bc47d0afc"
+        }
+      ],
+      "screenshots": [
+        "glm_poisson/modelsMethod.png",
+        "glm_poisson/modelsSummary.png",
+        "glm_poisson/modelsDiagnostic.png"
+      ],
+      "prediction": {
+        "prediction": true,
+        "prediction_kind": "mean response/probability",
+        "result_save": true,
+        "model_save": true,
+        "prediction_interval": false,
+        "reason": "safe JSON coefficients/design; no executable pickle; repeated ANOVA is inference only; no held-out score"
+      }
+    },
+    {
+      "method": "glm_negative_binomial",
+      "artifacts": [
+        {
+          "kind": "result",
+          "path": "glm_negative_binomial/model-result.json",
+          "bytes": 5192,
+          "sha256": "a8ffe970d248a13b1714336fffc5111a85b6fac6a88d9f8634f0ea730b3c3efe"
+        },
+        {
+          "kind": "members",
+          "path": "glm_negative_binomial/model-members.parquet",
+          "bytes": 1046,
+          "sha256": "7992a70d010582ee0d8ba7f312358601a8b286b45d1d7947de76d9205c892fae"
+        },
+        {
+          "kind": "diagnostic",
+          "path": "glm_negative_binomial/model-diagnostic.svg",
+          "bytes": 78910,
+          "sha256": "e575c26b2b056f1a3c8b347484219a641cb7c29b3626b875399e1de0182bad18"
+        },
+        {
+          "kind": "diagnostic_png",
+          "path": "glm_negative_binomial/model-diagnostic.png",
+          "bytes": 68982,
+          "sha256": "5126a3cd80f4ffdc4c77982dfcfd2cf0fb5706a8fd40e76495335508a6995ee5"
+        }
+      ],
+      "screenshots": [
+        "glm_negative_binomial/modelsMethod.png",
+        "glm_negative_binomial/modelsSummary.png",
+        "glm_negative_binomial/modelsDiagnostic.png"
+      ],
+      "prediction": {
+        "prediction": true,
+        "prediction_kind": "mean response/probability",
+        "result_save": true,
+        "model_save": true,
+        "prediction_interval": false,
+        "reason": "safe JSON coefficients/design; no executable pickle; repeated ANOVA is inference only; no held-out score"
+      }
+    },
+    {
+      "method": "quantile",
+      "artifacts": [
+        {
+          "kind": "result",
+          "path": "quantile/model-result.json",
+          "bytes": 4579,
+          "sha256": "e71cb382a63ef027f02f9668edcdb3e928519045bd9a69e6914028337693613f"
+        },
+        {
+          "kind": "members",
+          "path": "quantile/model-members.parquet",
+          "bytes": 1311,
+          "sha256": "47c6c1296889007b6a99757becf25a509d24e234d17166c4001ff1a35d8db1c0"
+        },
+        {
+          "kind": "diagnostic",
+          "path": "quantile/model-diagnostic.svg",
+          "bytes": 78593,
+          "sha256": "09559616141bc264cc04e5ece59f5a8f14f9ee5961f74ea2d46cab2c1e50ab49"
+        },
+        {
+          "kind": "diagnostic_png",
+          "path": "quantile/model-diagnostic.png",
+          "bytes": 69912,
+          "sha256": "cfafd578796a3624bd5ca7fdc0977a2d2ca9682eb658248fa47b3d58f602cbf5"
+        }
+      ],
+      "screenshots": [
+        "quantile/modelsMethod.png",
+        "quantile/modelsSummary.png",
+        "quantile/modelsDiagnostic.png"
+      ],
+      "prediction": {
+        "prediction": true,
+        "prediction_kind": "conditional quantile",
+        "result_save": true,
+        "model_save": true,
+        "prediction_interval": false,
+        "reason": "safe JSON coefficients/design; no executable pickle; repeated ANOVA is inference only; no held-out score"
+      }
+    },
+    {
+      "method": "mixed",
+      "artifacts": [
+        {
+          "kind": "result",
+          "path": "mixed/model-result.json",
+          "bytes": 4129,
+          "sha256": "29b6e7de7648c2c13f93c9960dfdf650db754170596214553b80b59b796678f3"
+        },
+        {
+          "kind": "members",
+          "path": "mixed/model-members.parquet",
+          "bytes": 3450,
+          "sha256": "8d828a7601fc5f6f2b4377e72112f661a4861e4f501cc3a04a3fff6219bd0df8"
+        },
+        {
+          "kind": "diagnostic",
+          "path": "mixed/model-diagnostic.svg",
+          "bytes": 109599,
+          "sha256": "e5dd9b1a072c61db5a277fc86e032438b20cfac2d3294189fbf26b7efd0b2a82"
+        },
+        {
+          "kind": "diagnostic_png",
+          "path": "mixed/model-diagnostic.png",
+          "bytes": 71803,
+          "sha256": "cd2ab31fcd0ac5ca6a794c5ba950f4780f87969b5da19edd45a71eeb39010fbe"
+        }
+      ],
+      "screenshots": [
+        "mixed/modelsMethod.png",
+        "mixed/modelsSummary.png",
+        "mixed/modelsDiagnostic.png"
+      ],
+      "prediction": {
+        "prediction": true,
+        "prediction_kind": "marginal fixed effect",
+        "result_save": true,
+        "model_save": true,
+        "prediction_interval": false,
+        "reason": "safe JSON coefficients/design; no executable pickle; repeated ANOVA is inference only; no held-out score"
+      }
+    },
+    {
+      "method": "repeated",
+      "artifacts": [
+        {
+          "kind": "result",
+          "path": "repeated/model-result.json",
+          "bytes": 3692,
+          "sha256": "082831f00e7de67eaaf0f59daa8262cfa9cea8851c1bb8149e8c44a3d1427c8e"
+        },
+        {
+          "kind": "members",
+          "path": "repeated/model-members.parquet",
+          "bytes": 1524,
+          "sha256": "1b95449763c2d0fd7cfb4f520bb2b86d99d1c04c682ab50d50cccaec4a64c1d9"
+        },
+        {
+          "kind": "diagnostic",
+          "path": "repeated/model-diagnostic.svg",
+          "bytes": 87590,
+          "sha256": "7ba4315f7e335ccd735c90f8f9e0573f2b5b933f0a58a1537a13e0e62e936e80"
+        },
+        {
+          "kind": "diagnostic_png",
+          "path": "repeated/model-diagnostic.png",
+          "bytes": 76836,
+          "sha256": "8ade5c44befacbd5819dbaf8c0ccd7639515b363e48c1d92646e670a5bc5fae7"
+        }
+      ],
+      "screenshots": [
+        "repeated/modelsMethod.png",
+        "repeated/modelsSummary.png",
+        "repeated/modelsDiagnostic.png"
+      ],
+      "prediction": {
+        "prediction": false,
+        "prediction_kind": "mean response",
+        "result_save": true,
+        "model_save": false,
+        "prediction_interval": false,
+        "reason": "safe JSON coefficients/design; no executable pickle; repeated ANOVA is inference only; no held-out score"
+      }
+    }
+  ],
+  "passed": true,
+  "seconds": 103.03515786200023,
+  "finished": "2026-10-11T18:56:59.761374+00:00"
+}

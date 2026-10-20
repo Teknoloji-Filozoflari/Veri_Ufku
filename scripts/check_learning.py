@@ -7,6 +7,12 @@ from veri_ufku.learning.catalog import Catalog, validate_bindings
 if __name__ == "__main__":
     catalog = Catalog()
     count = validate_bindings(Path(__file__).resolve().parents[1], catalog)
+    from veri_ufku.learning.curriculum import Curriculum
+
+    curriculum = Curriculum(catalog)
+    print(
+        f"PASS: {len(curriculum.lessons)} lessons / {len(curriculum.paths)} paths; {len(curriculum.coverage())} modules covered (interactive vs article-linked explicit)"
+    )
     print(
         f"PASS: {len(catalog.articles)} offline articles; {count} UI bindings; all capability links"
     )

@@ -12,3 +12,22 @@ function reveal(control) {
         container = container.parent
     }
 }
+
+function findNamed(item, name) {
+    if (item.objectName === name && item.visible && item.enabled) return item
+    for (let child of item.children) {
+        let found = findNamed(child, name)
+        if (found) return found
+    }
+    return null
+}
+function retainPickerFocus(control) {
+    if (!control.activeFocus || !control.objectName) return
+    const name = control.objectName
+    let root = control
+    while (root.parent) root = root.parent
+    Qt.callLater(function() {
+        const replacement = findNamed(root, name)
+        if (replacement) replacement.forceActiveFocus()
+    })
+}

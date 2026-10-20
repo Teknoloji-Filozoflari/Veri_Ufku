@@ -71,6 +71,10 @@ def file_hash(path):
 
 def source_fingerprint(path):
     path = Path(path).resolve(strict=True)
+    if path.is_dir():
+        from veri_ufku.importers.sources import directory_fingerprint
+
+        return directory_fingerprint(path)
     if not path.is_file():
         raise ProjectError("Kaynak normal bir dosya olmalı.")
     before = path.stat()
@@ -295,11 +299,21 @@ class ProjectStore:
     def _db(self, write=False):
         path = self.path("metadata.sqlite")
         if path.exists() and (
-            not path.is_file() or path.stat().st_size > 256 * 1024**2
+            not path.is_file()
+            or path.stat().st_size > 256 * 1024**2
+            or path.stat().st_nlink != 1
         ):
-            raise ProjectError("SQLite metadata boyutu sınır dışında (256 MiB).")
+            raise ProjectError(
+                "SQLite metadata boyutu/türü/bağ sayısı geçersiz (256 MiB); dış dosyaya yazılmadı."
+            )
         for suffix in ("-journal", "-wal", "-shm"):
-            self.path("metadata.sqlite" + suffix)
+            companion = self.path("metadata.sqlite" + suffix)
+            if companion.exists() and (
+                not companion.is_file() or companion.stat().st_nlink != 1
+            ):
+                raise ProjectError(
+                    "SQLite yardımcı dosyası özel normal dosya olmalı; dış dosyaya yazılmadı."
+                )
         if write:
             self._guard()
             db = sqlite3.connect(path, timeout=1)
@@ -363,7 +377,7 @@ class ProjectStore:
             identifier(preview["commit_id"])
             if type(preview["format_version"]) is not int or preview[
                 "format_version"
-            ] not in (0, 1, 2, 3, SCHEMA_VERSION):
+            ] not in tuple(range(SCHEMA_VERSION + 1)):
                 raise ProjectError(
                     "Bilinmeyen gelecek proje şema sürümü; proje değiştirilmedi."
                 )
@@ -380,7 +394,7 @@ class ProjectStore:
                 with store._db(True) as db:
                     db.execute("SELECT 1 FROM commits LIMIT 1").fetchall()
             store._load("ACTIVE")
-            if store.manifest["format_version"] in (1, 2, 3):
+            if 0 < store.manifest["format_version"] < SCHEMA_VERSION:
                 store.notice += f" Şema {store.manifest['format_version']} açıldı; sonraki açık kayıt şema {SCHEMA_VERSION} olarak yayımlanır, eski commit korunur."
             if store.manifest["format_version"] == 0:
                 store.read_only = True
@@ -417,12 +431,8 @@ class ProjectStore:
                 "Aktif kayıt işaretçisi bozuk. Sağlam kayıt seçilmeden proje değiştirilmeyecek."
             )
         identifier(p["commit_id"])
-        if type(p["format_version"]) is not int or p["format_version"] not in (
-            0,
-            1,
-            2,
-            3,
-            SCHEMA_VERSION,
+        if type(p["format_version"]) is not int or p["format_version"] not in tuple(
+            range(SCHEMA_VERSION + 1)
         ):
             raise ProjectError(
                 "Bilinmeyen gelecek proje şema sürümü; proje değiştirilmedi."
@@ -454,6 +464,55 @@ class ProjectStore:
                 raise ProjectError(
                     "Bağlı veri kopyası eksik veya değişmiş; proje değiştirilmedi."
                 )
+        from veri_ufku.storage.validation_store import load_run
+
+        for result in state["results"]:
+            if "text_analysis" in result:
+                from veri_ufku.storage.text_store import load as load_text
+
+                original_state, original_manifest = self.state, self.manifest
+                try:
+                    self.state, self.manifest = state, manifest
+                    load_text(self, result)
+                finally:
+                    self.state, self.manifest = original_state, original_manifest
+            if "time_series" in result:
+                from veri_ufku.storage.time_series_store import load as load_series
+
+                original_state, original_manifest = self.state, self.manifest
+                try:
+                    self.state, self.manifest = state, manifest
+                    load_series(self, result)
+                finally:
+                    self.state, self.manifest = original_state, original_manifest
+            if "unsupervised" in result:
+                from veri_ufku.storage.unsupervised_store import load
+
+                original_state, original_manifest = self.state, self.manifest
+                try:
+                    self.state = state
+                    self.manifest = manifest
+                    load(self, result)
+                finally:
+                    self.state = original_state
+                    self.manifest = original_manifest
+            if "explanation" in result:
+                from veri_ufku.storage.explanation_store import load as load_explanation
+
+                original_state, original_manifest = self.state, self.manifest
+                try:
+                    self.state, self.manifest = state, manifest
+                    load_explanation(self, result)
+                finally:
+                    self.state, self.manifest = original_state, original_manifest
+            if result.get("baseline", {}).get("details_uri"):
+                # Set the validation context without changing the authoritative state.
+                original_state = self.state
+                try:
+                    self.state = state
+                    load_run(self, result)
+                finally:
+                    self.state = original_state
         for uri, info in manifest["artifacts"].items():
             if info["kind"] == "parquet":
                 import polars as pl
@@ -529,9 +588,7 @@ class ProjectStore:
         tx.mkdir(mode=0o700)
         path = tx / "snapshot.parquet"
         estimate = frame.estimated_size() * 2 + MAX_MANIFEST
-        if shutil.disk_usage(self.base).free < estimate + max(
-            64 * 1024**2, estimate // 10
-        ):
+        if shutil.disk_usage(self.base).free < estimate + max(1024**3, estimate // 10):
             raise ProjectError("Parquet snapshot için yeterli disk alanı yok.")
         with open(path, "xb") as output:
             frame.write_parquet(CheckedWriter(output, checkpoint))
@@ -548,13 +605,27 @@ class ProjectStore:
         self.pending[uri] = (path, info)
         return uri
 
-    def publish_operation(self, result, *, checkpoint=lambda point: None):
+    def publish_operation(self, result, *, checkpoint=lambda point: None, _defer=False):
         """Adopt a completed preview through the existing sole ACTIVE publication path."""
         self._guard()
+        if result.get("diagnostics", {}).get("publication_allowed") is False:
+            raise ProjectError(
+                "Bu önizlemede yayın engellendi; ihlal politikası veya insan onayı gerekli."
+            )
         import polars as pl
 
         from veri_ufku.operations.contracts import activate, active_datasets
         from veri_ufku.operations.engine import transformed_dataset
+
+        def artifact_info(uri):
+            return (
+                self.pending[uri][1]
+                if uri in self.pending
+                else self.manifest["artifacts"][uri]
+            )
+
+        def snapshot(uri):
+            return self.pending[uri][0] if uri in self.pending else self.path(uri)
 
         previous, pending = copy.deepcopy(self.state), dict(self.pending)
         try:
@@ -571,13 +642,20 @@ class ProjectStore:
                     "Önizleme eski veri sürümüne bağlı; yeniden önizleyin."
                 )
             secondary = None
-            if result["spec"].get("kind") in ("join", "append"):
+            if result["spec"].get("kind") in ("join", "append", "geo_join") or (
+                result["spec"].get("kind") == "contract_check"
+                and result["spec"].get("input_version_ids")
+            ):
                 secondary = next(
                     (
                         d
                         for d in active_datasets(self.state)
                         if d["version_id"]
-                        == result["spec"]["parameters"]["secondary_version_id"]
+                        == (
+                            result["spec"]["input_version_ids"][1]
+                            if result["spec"]["kind"] == "contract_check"
+                            else result["spec"]["parameters"]["secondary_version_id"]
+                        )
                     ),
                     None,
                 )
@@ -585,13 +663,13 @@ class ProjectStore:
                     raise ProjectError(
                         "İkinci dataset sürümü değişmiş; tekrar önizleyin."
                     )
-                artifact = self.manifest["artifacts"][secondary["snapshot_uri"]]
-                if file_hash(self.path(secondary["snapshot_uri"])) != {
+                artifact = artifact_info(secondary["snapshot_uri"])
+                if file_hash(snapshot(secondary["snapshot_uri"])) != {
                     k: artifact[k] for k in ("sha256", "size")
                 }:
                     raise ProjectError("İkinci giriş snapshot değişmiş.")
-            source_artifact = self.manifest["artifacts"][parent["snapshot_uri"]]
-            if file_hash(self.path(parent["snapshot_uri"])) != {
+            source_artifact = artifact_info(parent["snapshot_uri"])
+            if file_hash(snapshot(parent["snapshot_uri"])) != {
                 k: source_artifact[k] for k in ("sha256", "size")
             }:
                 raise ProjectError("Giriş snapshot değişmiş; işlem uygulanmadı.")
@@ -606,6 +684,52 @@ class ProjectStore:
                 raise ProjectError("İşlem yayını için disk alanı yetersiz.")
             tx = self.path("staging") / uid()
             tx.mkdir(mode=0o700)
+            from veri_ufku.operations.data_contracts import KINDS as CONTRACT_KINDS
+
+            if result["spec"]["kind"] in CONTRACT_KINDS:
+                # Parent distrusts worker diagnostics: re-evaluate the closed recipe
+                # from immutable inputs before committing. No Qt/ACTIVE in workers.
+                from veri_ufku.importers.delimited import Control
+                from veri_ufku.operations.contracts import validate as validate_spec
+                from veri_ufku.operations.data_quality import execute as verify_contract
+
+                def verification_request(d):
+                    a = artifact_info(d["snapshot_uri"])
+                    return dict(
+                        path=str(snapshot(d["snapshot_uri"])),
+                        fingerprint={k: a[k] for k in ("sha256", "size")},
+                        columns=d["import_metadata"]["columns"],
+                        row_count=d["import_metadata"]["row_count"],
+                        version_id=d["version_id"],
+                        semantic_metadata=d.get("semantic_metadata", {}),
+                        entity_resolution=d.get("entity_resolution", {}),
+                    )
+
+                verification = verification_request(parent)
+                if secondary:
+                    verification["secondary"] = verification_request(secondary)
+                _, expected_path, expected_diagnostics, expected_relation = (
+                    verify_contract(
+                        verification,
+                        validate_spec(result["spec"], verification),
+                        tx,
+                        Control(),
+                    )
+                )
+                if (
+                    expected_diagnostics.get("publication_allowed") is False
+                    or encode(expected_diagnostics)
+                    != encode(result.get("diagnostics", {}))
+                    or file_hash(expected_path) != result["fingerprint"]
+                    or (file_hash(expected_relation) if expected_relation else None)
+                    != result.get("lineage_fingerprint")
+                ):
+                    raise ProjectError(
+                        "Sözleşme/insan kararı çıktısı girişlerden yeniden doğrulanamadı; yayın yapılmadı."
+                    )
+                expected_path.unlink()
+                if expected_relation:
+                    expected_relation.unlink()
             output = tx / "operation.parquet"
             with open(path, "rb") as stream, open(output, "xb") as target:
                 while block := stream.read(1024 * 1024):
@@ -637,7 +761,7 @@ class ProjectStore:
 
             if result["spec"]["kind"] in NEW_ROWS and not result.get("lineage_path"):
                 raise ProjectError("Yeni satır üreten işlemde kalıcı köken zorunlu.")
-            primary_types = self.manifest["artifacts"][parent["snapshot_uri"]]["schema"]
+            primary_types = artifact_info(parent["snapshot_uri"])["schema"]
             by_id = {c["id"]: c["name"] for c in parent["import_metadata"]["columns"]}
             for c in result["spec"]["output_schema"]:
                 expected = (
@@ -717,7 +841,7 @@ class ProjectStore:
                     inputs = [parent] + ([secondary] if secondary else [])
                     valid = pl.concat(
                         [
-                            pl.scan_parquet(self.path(d["snapshot_uri"])).select(
+                            pl.scan_parquet(snapshot(d["snapshot_uri"])).select(
                                 pl.lit(d["version_id"]).alias("input_version_id"),
                                 pl.col("__vu_row_id").alias("input_row_id"),
                                 pl.col("__vu_source_record_id").alias(
@@ -772,6 +896,9 @@ class ProjectStore:
                     version_id="dv:" + uid(),
                     forked_from_version_id=parent["version_id"],
                 )
+                if "schema_contract" in base:
+                    base["schema_contract"]["dataset_version"] = base["version_id"]
+                    base["schema_contract"]["status"] = "requires_validation"
                 for field in (
                     "parent_version_ids",
                     "operation_id",
@@ -815,7 +942,8 @@ class ProjectStore:
                 )
             )
             activate(self.state, dataset)
-            self.save(checkpoint=checkpoint)
+            if not _defer:
+                self.save(checkpoint=checkpoint)
             return dataset
         except BaseException:
             pointer = decode(self._read("ACTIVE", 4096))
@@ -832,9 +960,24 @@ class ProjectStore:
         import polars as pl
 
         previous, pending = copy.deepcopy(self.state), dict(self.pending)
+        staging_before = set(self.path("staging").iterdir())
         source = result["capture"]
         if Path(source["original"]).is_relative_to(self.root):
             raise ProjectError("Proje dosyası kaynak olarak kullanılamaz.")
+
+        def verify_import_source():
+            if source.get("strict_source"):
+                from veri_ufku.importers.delimited import Control, verify_capture
+                from veri_ufku.importers.sources import verify_sources
+
+                class PublicationControl(Control):
+                    def check(self):
+                        checkpoint("import_source_verify")
+                        super().check()
+
+                control = PublicationControl()
+                verify_capture(source, control)
+                verify_sources(source, control)
 
         def adopt(path, kind, expected=None):
             checkpoint("import_copy_begin")
@@ -877,6 +1020,7 @@ class ProjectStore:
             return uri, rows
 
         try:
+            verify_import_source()
             snapshot_uri, count = adopt(
                 result["path"], "parquet", result["artifact_fingerprint"]
             )
@@ -892,6 +1036,9 @@ class ProjectStore:
             copy_uri = (
                 adopt(source["path"], "source", source["fingerprint"])[0]
                 if portable
+                or source.get("connector")
+                or result.get("adapter_id")
+                in ("image_dataset", "audio_dataset", "graphml", "gexf")
                 else None
             )
             ref = dict(
@@ -900,6 +1047,11 @@ class ProjectStore:
                 fingerprint=source["fingerprint"],
                 copy_uri=copy_uri,
             )
+            if source.get("connector"):
+                from veri_ufku.importers.connectors import metadata_valid
+
+                metadata_valid(source["connector"])
+                ref["connector"] = copy.deepcopy(source["connector"])
             schema = result["schema"]
             metadata = dict(
                 columns=[
@@ -941,6 +1093,11 @@ class ProjectStore:
                 environment=(
                     ("python", platform.python_version()),
                     ("polars", pl.__version__),
+                )
+                + tuple(
+                    pair
+                    for pair in result.get("environment", ())
+                    if pair[0] not in ("python", "polars")
                 ),
                 created_at=datetime.now(UTC).isoformat(),
                 scope="full",
@@ -950,7 +1107,7 @@ class ProjectStore:
                 row_lineage_ref=snapshot_uri,
                 column_lineage_ref=dataset["dataset_id"],
                 exclusions=(quarantine_uri,) if quarantine_uri else (),
-                learning_content_version="10",
+                learning_content_version=result.get("learning_content_version", "10"),
             )
             self.state["operations"].append(
                 dict(
@@ -968,6 +1125,7 @@ class ProjectStore:
                     provenance=decode(encode(asdict(provenance))),
                 )
             )
+            verify_import_source()
             self.save(checkpoint=checkpoint)
             return dataset
         except BaseException:
@@ -981,10 +1139,28 @@ class ProjectStore:
                 self.state, self.pending = previous, pending
             raise
 
+        finally:
+            # This publication owns only directories created after its admission.
+            # Committed artifacts have independent hard links; earlier pending
+            # edits/autosaves and recovery artifacts must remain untouched.
+            for path in set(self.path("staging").iterdir()) - staging_before:
+                if path.is_dir() and not path.is_symlink():
+                    shutil.rmtree(path, ignore_errors=True)
+                elif path.is_file() and not path.is_symlink():
+                    path.unlink()
+
     def source_statuses(self):
         statuses = {}
         for source in self.state["sources"]:
             try:
+                if source.get("connector"):
+                    statuses[source["id"]] = (
+                        "captured"
+                        if file_hash(self.path(source["copy_uri"]))
+                        == source["fingerprint"]
+                        else "changed"
+                    )
+                    continue
                 statuses[source["id"]] = (
                     "unchanged"
                     if source_fingerprint(source["path"]) == source["fingerprint"]
@@ -1000,6 +1176,10 @@ class ProjectStore:
         self._guard()
         fp = source_fingerprint(path)
         source = next((s for s in self.state["sources"] if s["id"] == source_id), None)
+        if source and source.get("connector"):
+            raise ProjectError(
+                "Bağlantı snapshot'ı dosyayla yeniden bağlanmaz; Veri içinden açıkça yeni bağlantı okuması başlatın."
+            )
         if source is None or fp != source["fingerprint"]:
             raise ProjectError(
                 "Seçilen dosya kayıtlı veri sürümüyle aynı değil. Eski sonuçlar korunur; yeni veri için ayrı içe aktarma gerekir."
@@ -1016,7 +1196,7 @@ class ProjectStore:
             dict(
                 result,
                 current=all(
-                    statuses[versions[v]["source_id"]] == "unchanged"
+                    statuses[versions[v]["source_id"]] in ("unchanged", "captured")
                     and latest[versions[v]["dataset_id"]] == v
                     for v in result["dataset_version_ids"]
                 ),
@@ -1033,10 +1213,19 @@ class ProjectStore:
             and decode(self._read("ACTIVE", 4096))["commit_id"] != self.commit_id
         ):
             raise ProjectError("Aktif proje sürümü değişmiş; kayıt durduruldu.")
+        from veri_ufku.storage.experiment_store import quota, usage
+
+        additional = sum(
+            info["size"]
+            for uri, (_, info) in self.pending.items()
+            if not self.path(uri).exists()
+        )
+        if usage(self) + additional > quota(self.state):
+            raise ProjectError(
+                "Artifact disk kotası aşıldı. Otomatik silme yok; quota artırın veya ayrı projeye export edin. Arşivleme disk boşaltmaz."
+            )
         estimate = sum(info["size"] for _, info in self.pending.values()) + MAX_MANIFEST
-        if shutil.disk_usage(self.base).free < estimate + max(
-            64 * 1024**2, estimate // 10
-        ):
+        if shutil.disk_usage(self.base).free < estimate + max(1024**3, estimate // 10):
             raise ProjectError("Kayıt için yeterli geçici disk alanı yok.")
         commit = uid()
         tx = self.path("staging") / uid()
@@ -1129,15 +1318,47 @@ class ProjectStore:
         checkpoint("root_synced")
         if not autosave:
             self.manifest, self.commit_id = manifest, commit
+            consumed = {path.parent for path, _ in self.pending.values()}
             self.pending.clear()
+            for directory in consumed | {tx}:
+                if (
+                    directory.parent == self.path("staging")
+                    and directory.is_dir()
+                    and not directory.is_symlink()
+                ):
+                    shutil.rmtree(directory, ignore_errors=True)
         # Autosave keeps pending refs for later manual save. It cannot change ACTIVE.
         return commit
 
-    def restore_autosave(self):
+    def preview_autosave(self):
+        original = self.state, self.manifest, self.commit_id
+        try:
+            self._load("AUTOSAVE")
+            if self.manifest["parent_commit"] != original[2]:
+                raise ProjectError(
+                    "Otomatik kayıt başka bir temel sürüme ait; yüklenemez."
+                )
+            return dict(
+                commit_id=self.commit_id,
+                created_at=self.manifest["created_at"],
+                name=self.state["name"],
+                datasets=len(self.state["datasets"]),
+                operations=len(self.state["operations"]),
+                results=len(self.state["results"]),
+                active_commit=original[2],
+            )
+        finally:
+            self.state, self.manifest, self.commit_id = original
+
+    def restore_autosave(self, expected_commit=None):
         self._guard()
         active, original, original_state = self.commit_id, self.manifest, self.state
         try:
             self._load("AUTOSAVE")
+            if expected_commit is not None and self.commit_id != expected_commit:
+                raise ProjectError(
+                    "Kurtarma kaydı önizlemeden sonra değişti; yeniden inceleyin."
+                )
             recovered, recovered_manifest = self.state, self.manifest
             if recovered_manifest["parent_commit"] != active:
                 raise ProjectError(

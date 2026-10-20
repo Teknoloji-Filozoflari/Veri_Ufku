@@ -65,15 +65,15 @@ def test_offline_qml_search_context_depth_critical_close_and_example_isolation(
         assert visual_item(
             window.contentItem(), "learningArticle-mean-median"
         ).hasActiveFocus()
-        # Model screen opens prediction, and related concept opens leakage.
+        # Model preparation screen opens its concept and training scope.
         window.setProperty("selectedSection", 5)
         QTest.keyClick(window, Qt.Key.Key_F1)
         spin(app, lambda: window.property("infoOpen"))
-        assert learning.article["id"] == "prediction"
-        related = visual_item(window.contentItem(), "related-leakage")
+        assert learning.article["id"] == "model-preparation"
+        related = visual_item(window.contentItem(), "related-model-training-fold")
         related.forceActiveFocus()
         QTest.keyClick(window, Qt.Key.Key_Space)
-        assert learning.article["id"] == "leakage"
+        assert learning.article["id"] == "model-training-fold"
         depth = visual_item(window.contentItem(), "articleDepthPicker")
         depth.forceActiveFocus()
         QTest.keyClick(window, Qt.Key.Key_Space)
@@ -82,10 +82,19 @@ def test_offline_qml_search_context_depth_critical_close_and_example_isolation(
         spin(app, lambda: learning.depth == 2)
         preferences.setView("advanced")
         app.processEvents()
-        assert "Test verisiyle" in learning.article["critical"]
+        assert "yalnız eğitimden" in learning.article["critical"]
+        assert "hedef veya geleceğin bilgisi" in learning.article["critical"]
         warning = visual_item(window.contentItem(), "criticalWarning")
         assert warning.isVisible()
         # Jobs are not stopped or rebound by reading/closing either help layout.
+        # Keep the real worker active through the help/resize/focus sequence;
+        # a completed demo legitimately hides/disables its cancel origin.
+        from veri_ufku.domain.contracts import DemoParameters
+
+        monkeypatch.setattr(
+            "veri_ufku.services.demo.DemoParameters",
+            lambda: DemoParameters(units=600, pause_seconds=0.1),
+        )
         bridge.start("demo.io")
         job = bridge.job_id
         binding = bridge.session.binding
@@ -98,7 +107,8 @@ def test_offline_qml_search_context_depth_critical_close_and_example_isolation(
         window.setProperty("selectedSection", 0)
         window.setProperty("showDemo", True)
         app.processEvents()
-        cpu = window.findChild(QQuickItem, "taskHelpButton")
+        assert window.findChild(QQuickItem, "taskHelpButton") is None
+        cpu = window.findChild(QQuickItem, "cancelButton")
         cpu.forceActiveFocus()
         QTest.keyClick(window, Qt.Key.Key_F1)
         spin(app, lambda: window.property("infoOpen"))
@@ -111,7 +121,8 @@ def test_offline_qml_search_context_depth_critical_close_and_example_isolation(
         window.setWidth(1366)
         window.setHeight(900)
         window.setProperty("selectedSection", 7)
-        window.findChild(QQuickItem, "helpButton").clicked.emit()
+        visual_item(window.contentItem(), "learningSearch").forceActiveFocus()
+        QTest.keyClick(window, Qt.Key.Key_F1)
         try_button = visual_item(window.contentItem(), "tryLearningButton")
         try_button.forceActiveFocus()
         QTest.keyClick(window, Qt.Key.Key_Space)
@@ -125,11 +136,12 @@ def test_offline_qml_search_context_depth_critical_close_and_example_isolation(
         window.requestActivate()
         QTest.qWait(100)
         assert bridge.job_id == job
-        spin(app, lambda: not bridge.active)
+        spin(app, lambda: not bridge.active, timeout=120000)
         assert bridge.session.manager.snapshot(job).result_for(binding) is not None
         result = bridge.resultText
         window.setProperty("selectedSection", 7)
-        window.findChild(QQuickItem, "helpButton").clicked.emit()
+        visual_item(window.contentItem(), "learningSearch").forceActiveFocus()
+        QTest.keyClick(window, Qt.Key.Key_F1)
         QTest.qWait(250)
         QTest.keyClick(window, Qt.Key.Key_Escape)
         spin(app, lambda: not window.property("infoOpen"))
@@ -149,7 +161,11 @@ def test_article_markup_is_rendered_as_plain_text(tmp_path, monkeypatch):
     try:
         payload = '<img src="https://invalid.example/private"><script>alert(1)</script>'
         learning.catalog.articles["home"]["summary"] = payload
-        window.findChild(QQuickItem, "helpButton").clicked.emit()
+        window.requestActivate()
+        app.processEvents()
+        QTest.qWait(50)
+        window.findChild(QQuickItem, "beginnerButton").forceActiveFocus()
+        QTest.keyClick(window, Qt.Key_F1)
         spin(app, lambda: window.property("infoOpen"))
         label = visual_item(window.contentItem(), "articleSummary")
         assert label.property("text") == payload
@@ -158,10 +174,9 @@ def test_article_markup_is_rendered_as_plain_text(tmp_path, monkeypatch):
         assert QQmlExpression(
             qmlContext(label), label, "textFormat === Text.PlainText"
         ).evaluate()[0]
-        # A picker below the fold becomes visible when focused at 200% in the drawer.
+        # A picker below the fold becomes visible when focused in the narrow drawer.
         window.setWidth(720)
         window.setHeight(560)
-        app._veri_ufku_resources[-2].setTextScale(2.0)
         QTest.qWait(300)
         drawer = window.findChild(QObject, "informationDrawer")
         picker = visual_item(drawer.property("contentItem"), "articleDepthPicker")
