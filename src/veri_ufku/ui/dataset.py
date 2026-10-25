@@ -76,11 +76,20 @@ class DatasetTableModel(QAbstractTableModel):
         if not 0 <= section < count:
             return None
         if role == Qt.DisplayRole and self.result:
-            return (
-                self.result["columns"][section]["name"]
-                if orientation == Qt.Horizontal
-                else str(self.result["offset"] + section + 1)
-            )
+            if orientation != Qt.Horizontal:
+                return str(self.result["offset"] + section + 1)
+            column = self.result["columns"][section]
+            parts = [
+                column["name"],
+                column.get("type") or column.get("physical_type", ""),
+            ]
+            role_label = column.get("role_label") or ""
+            if role_label:
+                parts.append(role_label)
+            description = (column.get("description") or "").strip()
+            if description:
+                parts.append(description[:48] + ("…" if len(description) > 48 else ""))
+            return " · ".join(part for part in parts if part)
 
     def flags(self, index):
         return (
@@ -315,11 +324,27 @@ class DatasetController(QObject):
         d = self.dataset()
         if not d:
             return []
+        roles = dict(
+            identifier="Kimlik",
+            category="Kategori",
+            measurement="Ölçüm",
+            time="Tarih / zaman",
+            text="Metin",
+            ordinal="Sıralı kategori",
+            ignored="Analizde dışarıda",
+        )
         return [
             dict(
                 c,
                 physical_type=self.suggestions.get(c["id"], {}).get(
                     "physical_type", c["type"]
+                ),
+                role=roles.get(
+                    (d.get("semantic_metadata", {}).get(c["id"], {}) or {}).get("role"),
+                    "Rol henüz onaylanmadı",
+                ),
+                description=(d.get("semantic_metadata", {}).get(c["id"], {}) or {}).get(
+                    "description", ""
                 ),
                 hidden=c["id"] in self.view.hidden,
                 selected=c["id"] == self.column_id,
@@ -967,10 +992,36 @@ class DatasetController(QObject):
                 self._error = value
             elif self.action == "page":
                 self.page_cache.put(self.cache_key, value)
+                roles = dict(
+                    identifier="Kimlik",
+                    category="Kategori",
+                    measurement="Ölçüm",
+                    time="Tarih / zaman",
+                    text="Metin",
+                    ordinal="Sıralı kategori",
+                    ignored="Analizde dışarıda",
+                )
+                dataset = self.dataset() or {}
+                semantics = dataset.get("semantic_metadata", {})
+                annotated = []
+                for column in value["columns"]:
+                    meta = semantics.get(column["id"], {})
+                    annotated.append(
+                        dict(
+                            column,
+                            role_label=roles.get(meta.get("role"), ""),
+                            description=meta.get("description", ""),
+                        )
+                    )
+                value = dict(value, columns=annotated)
                 self.model.replace(value)
                 self.total = value["total"]
                 self.suggestions = copy.deepcopy(value["suggestions"])
-                self._message = f"Sayfa: {value['offset'] + 1 if value['rows'] else 0}–{value['offset'] + len(value['rows'])}; model en fazla200 kayıt taşır."
+                self._message = (
+                    f"Sayfa: {value['offset'] + 1 if value['rows'] else 0}–"
+                    f"{value['offset'] + len(value['rows'])} / {value['total']} "
+                    f"(görünen sayfa; tam veri değil). Model en fazla200 kayıt taşır."
+                )
             elif self.action == "quality":
                 self.quality_result = value
                 self._message = f"Kalite taraması: {value['scope']} · {value['used_n']}/{value['population_n']} kayıt; veri değiştirilmedi."

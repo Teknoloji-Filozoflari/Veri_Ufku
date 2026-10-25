@@ -9,9 +9,28 @@ ColumnLayout {
     property alias contractExpanded: contractToggle.checked
     property string pane: "profile"
     property string helpContext: "dataset.profile"
+    property bool autoPageRequested: false
     signal helpRequested(var origin, string context)
     signal showValues()
     spacing: Theme.md
+    function requestAutoPage() {
+        if (panel.autoPageRequested || panel.pane !== "rows" || !panel.visible)
+            return
+        if (!dataView || dataView.datasets.length === 0 || dataView.pageRowCount > 0)
+            return
+        if (dataView.busy || projects.busy)
+            return
+        panel.autoPageRequested = true
+        Qt.callLater(function() {
+            if (panel.pane === "rows" && !dataView.busy && !projects.busy && dataView.pageRowCount === 0)
+                dataView.refresh()
+        })
+    }
+    onPaneChanged: {
+        if (panel.pane !== "rows") panel.autoPageRequested = false
+        else panel.requestAutoPage()
+    }
+    onVisibleChanged: if (panel.visible) panel.requestAutoPage()
     UiLabel { text: qsTr("Verini tanı"); font.pixelSize: Theme.heading; font.bold: true; wrapMode: Text.Wrap; Layout.fillWidth: true }
     UiCombo { accessibleLabel: qsTr("Veri kümesi");
         visible: panel.pane !== "profile" || dataView.datasets.length > 1
@@ -42,9 +61,17 @@ ColumnLayout {
         UiButton { tone: "cyan"; objectName: "loadDatasetButton"; text: qsTr("Tabloyu aç / yenile"); enabled: !projects.busy && dataView.datasets.length > 0; onClicked: dataView.refresh(); Layout.fillWidth: true; multiline: true }
         UiButton { tone: "mint"; text: qsTr("Veri profili ne işe yarar?"); onClicked: panel.helpRequested(this, "dataset.profile"); Layout.fillWidth: true; multiline: true }
     }
+    UiLabel {
+        objectName: "datasetPageScope"
+        text: qsTr("Görünen sayfa tüm veri değildir. Sayfalama en fazla 200 satır taşır; filtre/sıralama görünüm dönüşümüdür, yeni veri sürümü üretmez.")
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+        color: Theme.warning
+        font.bold: true
+    }
     UiLabel { text: dataView.viewSummary; Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
-    UiLabel { text: qsTr("Tablo salt okunurdur. Arama sütun adlarını arar; gizleme veriyi silmez. Filtre ve sıralama tüm veriye uygulanır. Tablo filtresi profil kapsamından ayrı seçilir."); Layout.fillWidth: true; wrapMode: Text.Wrap }
-    UiCheckBox { id: tableTools; objectName: "datasetToolsToggle"; text: qsTr("Sütunlar, sıralama ve filtreler"); Layout.fillWidth: true }
+    UiLabel { text: qsTr("Tablo salt okunurdur. Arama sütun adlarını arar; gizleme veriyi silmez. Filtre ve sıralama tüm veriye uygulanır. Tablo filtresi profil kapsamından ayrı seçilir. Sütun seçimi diğer ekranlarda korunur."); Layout.fillWidth: true; wrapMode: Text.Wrap }
+    UiCheckBox { id: tableTools; objectName: "datasetToolsToggle"; text: qsTr("Sütunlar, sıralama ve filtreler"); checked: true; Layout.fillWidth: true }
     ColumnLayout {
         visible: tableTools.checked
         Layout.fillWidth: true
@@ -93,14 +120,17 @@ ColumnLayout {
         keyNavigationEnabled: false
         delegate: Rectangle {
             required property var display
-            implicitWidth: 180 * Theme.scale
-            implicitHeight: 40 * Theme.scale
+            implicitWidth: 200 * Theme.scale
+            implicitHeight: 52 * Theme.scale
             color: Theme.raised
             UiLabel {
                 anchors.fill: parent
                 anchors.margins: Theme.sm
                 text: parent.display
                 font.bold: true
+                font.pixelSize: Theme.small
+                wrapMode: Text.WordWrap
+                maximumLineCount: 3
                 elide: Text.ElideRight
                 verticalAlignment: Text.AlignVCenter
             }
@@ -137,11 +167,11 @@ ColumnLayout {
             function onColumnsChanged() { table.clearColumnWidths(); table.forceLayout() }
         }
         Layout.fillWidth: true
-        Layout.preferredHeight: 360 * Theme.scale
+        Layout.preferredHeight: Math.max(420, Math.min(560, panel.height > 0 ? panel.height * 0.55 : 480)) * Theme.scale
         clip: true
         reuseItems: true
         model: dataView.tableModel
-        columnWidthProvider: function(column) { let explicit = explicitColumnWidth(column); return explicit >= 0 ? Math.max(72 * Theme.scale, explicit) : 180 * Theme.scale }
+        columnWidthProvider: function(column) { let explicit = explicitColumnWidth(column); return explicit >= 0 ? Math.max(96 * Theme.scale, explicit) : 200 * Theme.scale }
         rowHeightProvider: function(row) { return 34 * Theme.scale }
         ScrollBar.horizontal: ScrollBar {}
         ScrollBar.vertical: ScrollBar {}

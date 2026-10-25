@@ -4,7 +4,7 @@
 var stages = [
     { id: "goal", title: "Amaç ve kaynak", shortTitle: "Amaç", section: 0, pane: "", symbol: "home", tone: "warm" },
     { id: "load", title: "Yükle ve kontrol et", shortTitle: "Yükle", section: 1, pane: "import", symbol: "table", tone: "cyan" },
-    { id: "columns", title: "Sütunları tanı", shortTitle: "Sütunlar", section: 1, pane: "profile", symbol: "table", tone: "cyan" },
+    { id: "columns", title: "Sütunları tanı", shortTitle: "Sütunlar", section: 1, pane: "rows", symbol: "table", tone: "cyan" },
     { id: "summary", title: "Temel veri özeti", shortTitle: "Özet", section: 1, pane: "describe", symbol: "table", tone: "cyan" },
     { id: "missing", title: "Eksik veri", shortTitle: "Eksik", section: 1, pane: "quality", symbol: "table", tone: "cyan" },
     { id: "explore", title: "Desenleri keşfet", shortTitle: "Keşfet", section: 3, pane: "", symbol: "chart", tone: "violet" },

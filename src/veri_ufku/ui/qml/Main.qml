@@ -709,11 +709,11 @@ ApplicationWindow {
                     Repeater {
                         id: dataHeadings
                         model: [
+                            {id:"rows", title:"Veri tablosu", detail:"Ana yüzey: kayıtları satır satır incele; sütun seç, sırala, filtrele."},
                             {id:"import", title:"Veriyi projeye aktar", detail:"Dosyanı seç, önizle ve projenle birlikte sakla."},
                             {id:"profile", title:"Veri profili", detail:"Sütun başlıklarını ve veri türlerini birlikte gör."},
                             {id:"values", title:"Sütun değerleri", detail:"Bir sütundaki değerleri ve tekrarlarını incele."},
                             {id:"describe", title:"Özet istatistikler", detail:"Sayısal sütunların dağılımını ve temel ölçülerini gör."},
-                            {id:"rows", title:"Veri tablosu", detail:"Kayıtlarını satır satır incele."},
                             {id:"quality", title:"Veri kalitesi", detail:"Eksik ve şüpheli kayıtları değerlendir."}
                         ]
                         ColumnLayout {

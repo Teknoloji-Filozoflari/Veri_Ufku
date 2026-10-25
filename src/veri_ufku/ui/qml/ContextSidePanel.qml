@@ -103,13 +103,15 @@ Frame {
                     delegate: ItemDelegate {
                         required property var modelData
                         width: columnList.width
-                        text: modelData.name + " · " + (modelData.physical_type || "")
+                        text: modelData.name + " · " + (modelData.physical_type || "") + (modelData.role ? " · " + modelData.role : "")
                         highlighted: dataView && dataView.selectedColumn === modelData.id
                         onClicked: {
                             dataView.selectColumn(modelData.id)
                             panel.columnChosen(modelData.id)
                         }
                         Accessible.name: text
+                        ToolTip.visible: hovered && !!(modelData.description)
+                        ToolTip.text: modelData.description || ""
                     }
                 }
                 UiLabel {

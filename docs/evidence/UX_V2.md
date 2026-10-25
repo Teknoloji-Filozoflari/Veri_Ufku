@@ -49,3 +49,13 @@ Bilinen açıklar (düzeltilmedi): Default 2GiB full generic-cancel; source clos
 | Kapılar | docs/artifacts/learning/usability/Ruff/format PASS; smoke PASS; odaklı UI 28 PASS (`ux2-pytest.log`) |
 | Korunan | selectedSection 0–7, nav0–7, proje draft/sürüm değişmedi |
 | Resmî kabul | açık |
+
+## UX3 — Tablo (2026-10-25)
+
+| Alan | Değer |
+|---|---|
+| Kimlik | UX3-TABLE-20261025 |
+| Kod | `DatasetPanel.qml`, `dataset.py` header/annotate, `UxStages.js`, `Main.qml` accordion sırası, `tests/test_ux3_table_gui.py` |
+| Kapılar | docs/…/Ruff/smoke; `ux3-pytest.log` 23 PASS |
+| Korunan | RowId/ColumnId; filtre→sürüm yok; kaynak byte eşit |
+| Resmî kabul | açık |

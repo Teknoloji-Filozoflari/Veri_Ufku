@@ -23,7 +23,7 @@ def test_ux2_stage_strip_context_panel_and_narrow_center(tmp_path, monkeypatch):
         stage2.clicked.emit()
         spin(app, lambda: window.property("uxStage") == 2)
         assert window.property("selectedSection") == 1
-        assert window.property("dataPane") == "profile"
+        assert window.property("dataPane") == "rows"
         assert item("nav1") is not None
 
         toggle = item("contextPanelToggle")
@@ -39,7 +39,7 @@ def test_ux2_stage_strip_context_panel_and_narrow_center(tmp_path, monkeypatch):
         item("contextPanelClose").clicked.emit()
         spin(app, lambda: not window.property("contextPanelOpen"))
         assert window.property("selectedSection") == 1
-        assert window.property("dataPane") == "profile"
+        assert window.property("dataPane") == "rows"
 
         for section, probe in (
             (2, "operationPreview"),

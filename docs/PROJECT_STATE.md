@@ -20,8 +20,11 @@ bağı. Kod yok. Kullanıcıya bırakılan: gerçek yeni başlayanlarla gösteri
 **UX2 teknik teslim:** Sol `StageStrip` (10 aşama), açılır `ContextSidePanel`
 (sütunlar / Bu adımı öğren), üst bağlam düğmesi, alt durum (aşama + veri kapsamı).
 Mevcut 8 bölüm nav ve ekranlar korundu; proje/veri sözleşmesi değişmedi.
-Test: `test_ux2_shell_gui` + odaklı UI 28 PASS; smoke/Ruff/docs/learning/usability PASS.
-Sonraki: UX3 tablo ve sütun çalışması.
+Test: `test_ux2_shell_gui` + odaklı UI; smoke/Ruff/docs/learning/usability PASS.
+
+**UX3 teknik teslim:** Tablo merkeze (rows ilk accordion; aşama2→rows; otomatik sayfa);
+başlıkta tür/rol/açıklama; sayfa≠tam veri uyarısı; sütun seçimi korunur; filtre
+sürüm üretmez. 23 odaklı GUI PASS. Sonraki: UX4 Veri alanı (örnek + Verilerim).
 
 ---
 
