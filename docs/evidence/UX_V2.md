@@ -116,3 +116,17 @@ Bilinen açıklar (düzeltilmedi): Default 2GiB full generic-cancel; source clos
 | Kapılar | `ux9-pytest.log` 3 PASS; docs/learning/usability/artifacts PASS; smoke GUI_SMOKE PASS; Ruff PASS |
 | Kabul | aday işaretli; auto_fit=false; learned_scope=training_fold; yapı korunur; fit kullanıcı düğmesi; test tek final onay |
 | Resmî kabul | açık |
+
+## UX10 — Rapor / bütünleşik kabul (2026-10-25)
+
+| Alan | Değer |
+|---|---|
+| Kimlik | UX10-REPORT-20261025 |
+| Ortam | CPython 3.13.15 `.venv`; QT offscreen/software; sonra `uv sync --frozen --all-extras` (tam suite denemesi) |
+| Kod | `exports/ux_report_context.py`, `DatasetController.uxReportContext`, `ReportBuilder.appendUxContext`, `tests/test_ux10_report_e2e.py` |
+| Kapılar | `ux10-pytest-ux-all.log` 15 PASS; `ux10-pytest-related.log` 81 PASS; smoke GUI_SMOKE PASS; docs/learning/usability/artifacts/Ruff PASS |
+| Tam suite | `ux10-pytest-full.log` — ~%70 ilerlerken çok sayıda F; PASS iddia edilmez; kesildi |
+| Arayüz | 1366/dar ekran görüntüsü bu oturumda alınmadı; UX2 kabuk + smoke offscreen |
+| Performans | Yeni ağır yol yok; PERFORMANCE.md sınırları referans; yeni ölçüm yok |
+| Açık / kullanıcıya | insan gösterimi; metin onayı; resmî kabul; AT/minHW/offline/remoteCI/longheap; push/merge |
+| Resmî kabul | açık |

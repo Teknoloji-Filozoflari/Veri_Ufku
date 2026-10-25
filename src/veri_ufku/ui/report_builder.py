@@ -125,6 +125,53 @@ class ReportBuilderController(MonitoringController):
             self.fail(e)
             return text
 
+    @Slot(str, str, result=str)
+    def appendUxContext(self, text, context_json):
+        """UX10: not/grafik/karar/model özetini note bloğu olarak tarife bağla."""
+        try:
+            from veri_ufku.exports.ux_report_context import (
+                build_context,
+                context_note_text,
+            )
+
+            raw = recipe(parse(text))
+            payload = parse(context_json) if context_json else {}
+            if not isinstance(payload, dict):
+                payload = {}
+            context = build_context(
+                dataset_version=str(payload.get("dataset_version") or ""),
+                row_count=payload.get("row_count"),
+                column_count=payload.get("column_count"),
+                chart_notes=payload.get("chart_notes") or {},
+                outlier_candidates={
+                    "applied": payload.get("outlier_candidates_applied"),
+                    "union_row_ids": [
+                        f"r{i}" for i in range(int(payload.get("outlier_union_n") or 0))
+                    ],
+                },
+                model_candidates={
+                    "status": payload.get("model_status"),
+                    "auto_fit": payload.get("model_auto_fit"),
+                    "starter_model": payload.get("model_starter"),
+                    "structure": payload.get("model_structure"),
+                },
+                scope_note=str(payload.get("scope_note") or ""),
+            )
+            body = context_note_text(context)
+            if len(body) > 2000:
+                body = body[:1997] + "..."
+            raw["blocks"].append(
+                dict(
+                    kind="note",
+                    title="UX bağlam · sürüm ve sınırlamalar",
+                    text=body,
+                )
+            )
+            return dump(recipe(raw))
+        except (ValueError, TypeError, KeyError, ProjectError) as e:
+            self.fail(e)
+            return text
+
     @Slot(str, str, str, str, result=str)
     def appendBlock(self, text, kind, dataset_id, record_id):
         try:

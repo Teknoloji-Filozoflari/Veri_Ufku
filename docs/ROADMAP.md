@@ -19,7 +19,7 @@ Açık kullanıcı talimatı: Project store `veri-ufku-gelistirme-promptu.md`. Y
 |7 Keşif| **Teknik tamamlandı:** grafik yorumu + RowId işaret | sürüyor; resmî kabul ayrı |
 |8 Aykırı/hazırla| **Teknik tamamlandı:** üç yöntem aday listesi; Uygula yolu mevcut | sürüyor; resmî kabul ayrı |
 |9 Model| **Teknik tamamlandı:** gerekçeli aday listesi; train-fold sızıntı testi; fit kullanıcı eylemi | sürüyor; resmî kabul ayrı |
-|10 Rapor/kabul| açık | — |
+|10 Rapor/kabul| **Teknik tamamlandı:** UX bağlam→rapor; e2e parçaları; belgeler; tam suite PASS iddiası yok | sürüyor; resmî/insan/AT ayrı |
 
 ---
 

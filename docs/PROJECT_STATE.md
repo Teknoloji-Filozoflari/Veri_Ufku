@@ -47,7 +47,15 @@ karar yok (Hazırla Önizle+Uygula).
 **UX9 teknik teslim:** Gerekçeli yöntem adayları (`modeling/candidates.py`,
 ValidationPanel çerçevesi); status=aday; auto_fit=false; ön işleme
 `training_fold` sızıntı testi; mevcut preparation/validation yolları; final test
-ayrı onay. Sonraki: UX10 rapor/kabul.
+ayrı onay.
+
+**UX10 teknik teslim:** Rapor UX bağlamı (`exports/ux_report_context.py`,
+ReportBuilder append); Bölüm11 e2e parçaları otomatik; UX+prep/validation/report
+81 pytest PASS; smoke GUI_SMOKE PASS; docs/learning/usability/artifacts/Ruff PASS.
+Tam pytest `--all-extras` denemesi çok sayıda F ile yarıda (PASS iddia edilmez).
+1366 ekran görüntüsü bu oturumda alınmadı (offscreen smoke + UX2 kabuk testleri).
+Resmî kabul / insan gösterimi / AT / minHW / offline / remoteCI / longheap açık.
+UX0–UX10 teknik zincir tamam; Faz72+ başlatılmadı.
 
 ---
 

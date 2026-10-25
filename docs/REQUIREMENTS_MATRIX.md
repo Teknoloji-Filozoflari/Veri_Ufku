@@ -1562,3 +1562,11 @@ F29-S003/F29-P002/F29-P003 modül keşfi dar pencere düzeltmesinin yolu
 ve kurulu wheel tekrarları aynı kayıttadır. 724 pytest/14 kilitli unittest
 başarılı; sistem Python60 import hatası ayrı başarısız kanıttır.
 Mevcut teknik kabul, faz durumu, olgunluk ve kapsam değiştirilmedi.
+
+## UX V2 teknik not (Faz numarası değil; 2026-10-25)
+
+Açık kullanıcı görevi UX0–UX10; yerel dal `ux-v2`; push yok. Teknik teslim
+[PROJECT_STATE](PROJECT_STATE.md) / [ROADMAP](ROADMAP.md) / [evidence/UX_V2.md](evidence/UX_V2.md).
+Yeni zorunlu gereksinim kimliği tahsis edilmedi; mevcut F02/F07/F12/F15/F16/F17
+yetenekleri arayüz akışına bağlandı. Resmî kabul, insan/AT, minHW, offline kurulum,
+remote CI ve longheap AGENTS açıklarına göre ayrı kalır.

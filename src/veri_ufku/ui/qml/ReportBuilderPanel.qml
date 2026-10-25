@@ -20,10 +20,29 @@ ColumnLayout {
         visible: expanded.checked
         Layout.fillWidth: true
         UiLabel { text: "Kayıtlı dataset/run ve artifact'lardan çevrimdışı rapor. Oluşturma mevcut analizi yeniden hesaplamaz. Keşifsel/doğrulayıcı ayrımını, model seçimini ve test kullanımını açıklayın. Kullanıcı metni hesap kanıtı değildir."; wrapMode: Text.WordWrap; Layout.fillWidth: true }
+        UiLabel {
+            objectName: "uxReportContextSummary"
+            text: {
+                let ctx = dataView.uxReportContext(JSON.stringify(preparation.modelCandidates || {}))
+                return qsTr("Bağlam: sürüm ") + (ctx.dataset_version || qsTr("yok")) + qsTr(" · grafik notu ") + (ctx.chart_note_count || 0) + qsTr(" · aykırı aday n=") + (ctx.outlier_union_n || 0) + qsTr(" (uygulandı=") + (ctx.outlier_candidates_applied ? qsTr("evet") : qsTr("hayır")) + qsTr(") · model ") + (ctx.model_status || "aday") + qsTr(" auto_fit=") + (ctx.model_auto_fit ? qsTr("evet") : qsTr("hayır")) + "\n" + (ctx.provenance_note || "")
+            }
+            wrapMode: Text.Wrap
+            Layout.fillWidth: true
+            color: Theme.secondary
+        }
         Flow {
             spacing: Theme.sm; Layout.fillWidth: true
             UiButton { text: "Bilimsel preset"; onClicked: recipe.text=reportBuilder.template("scientific") }
             UiButton { text: "Kısa preset"; onClicked: recipe.text=reportBuilder.template("brief") }
+            UiButton {
+                objectName: "reportBuilderAppendUxContext"
+                text: qsTr("UX bağlamını (sürüm/not/sınır) tarife ekle")
+                onClicked: {
+                    reviewed.checked = false
+                    let ctx = dataView.uxReportContext(JSON.stringify(preparation.modelCandidates || {}))
+                    recipe.text = reportBuilder.appendUxContext(recipe.text, JSON.stringify(ctx))
+                }
+            }
             UiButton { objectName: "reportBuilderHelp"; text: "Bilimsel rapor yardımı"; helpContext: "report.builder"; onClicked: helpRequested(this,"report.builder") }
         }
         UiCombo { id: dataset; objectName: "reportBuilderDataset"; accessibleLabel: "Rapora bağlanacak dataset sürümü"; model: reportBuilder.datasets; textRole: "label"; valueRole: "id"; Layout.fillWidth: true }

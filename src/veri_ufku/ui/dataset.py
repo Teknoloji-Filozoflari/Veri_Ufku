@@ -688,6 +688,31 @@ class DatasetController(QObject):
     def chartNote(self, chart_key):
         return self.chart_notes.get(str(chart_key or ""), "")
 
+    @Slot(str, result="QVariantMap")
+    def uxReportContext(self, model_candidates_json=""):
+        """UX10: grafik notu / aykırı / model bağlamını rapor bağlanabilir özet."""
+        import json
+
+        from veri_ufku.exports.ux_report_context import build_context
+
+        d = self.dataset()
+        models = {}
+        raw = (model_candidates_json or "").strip()
+        if raw:
+            try:
+                models = json.loads(raw)
+            except (TypeError, ValueError, json.JSONDecodeError):
+                models = {}
+        return build_context(
+            dataset_version=(d or {}).get("version_id", ""),
+            row_count=(d or {}).get("import_metadata", {}).get("row_count"),
+            column_count=len((d or {}).get("import_metadata", {}).get("columns") or []),
+            chart_notes=self.chart_notes,
+            outlier_candidates=self.outlier_candidates or {},
+            model_candidates=models if isinstance(models, dict) else {},
+            scope_note=self._view_summary() if d else "",
+        )
+
     @Slot(bool, str, int)
     def computeProfile(self, sample=True, target="dataset", ddof=1):
         self.start(
