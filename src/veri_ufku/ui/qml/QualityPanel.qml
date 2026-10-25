@@ -71,6 +71,34 @@ ColumnLayout {
     }
     UiLabel { visible: !!dataView.qualityResult.import_exclusions; text: "Import dışında bırakılan kayıt: "+(dataView.qualityResult.import_exclusions || {}).count+". Karantina kayıtları dataset taramasına dahil değildir; import raporundan incelenir."; Layout.fillWidth: true; wrapMode: Text.Wrap }
     Repeater { model: dataView.qualityResult.warnings || []; UiLabel { required property string modelData; text: modelData; Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.warning } }
+    UiLabel { text: qsTr("Eksik satır silme — etki önizlemesi"); font.pixelSize: Theme.subheading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.Wrap }
+    UiLabel { text: qsTr("Otomatik silme yok. Önizleme karar uygulamaz; not alıp Hazırla aşamasında açıkça Uygula dersin."); color: Theme.secondary; Layout.fillWidth: true; wrapMode: Text.Wrap }
+    UiCombo { accessibleLabel: qsTr("Eksik sütun"); id: missingColumn; objectName: "missingImpactColumn"; model: dataView.datasetColumns; textRole: "name"; valueRole: "id"; Layout.fillWidth: true }
+    UiCombo { accessibleLabel: qsTr("Karşılaştırma ölçümü (isteğe bağlı)"); id: missingCompare; objectName: "missingImpactCompare"; model: [{id:"",name:qsTr("Yok")}].concat(dataView.datasetColumns); textRole: "name"; valueRole: "id"; Layout.fillWidth: true }
+    UiButton {
+        objectName: "missingImpactPreview"
+        text: qsTr("Silme etkisini önizle")
+        tone: "cyan"
+        enabled: !projects.busy && !dataView.busy && missingColumn.currentIndex >= 0
+        Layout.fillWidth: true
+        multiline: true
+        onClicked: dataView.previewMissingDrop(missingColumn.currentValue, missingCompare.currentValue || "")
+    }
+    UiLabel {
+        objectName: "missingImpactResult"
+        visible: !!dataView.missingImpact.dataset_version
+        text: qsTr("Bu sütundaki eksik satırlar silinirse ") + dataView.missingImpact.missing_n + " / " + dataView.missingImpact.total_n + qsTr(" satır (%") + (dataView.missingImpact.lost_ratio * 100).toFixed(2) + qsTr(") kaybolur; kalan ") + dataView.missingImpact.remaining_n + ".\n" + (dataView.missingImpact.compare_column ? (qsTr("Ölçüm ") + dataView.missingImpact.compare_column + qsTr(": ortalama ") + dataView.missingImpact.mean_before.toFixed(4) + " → " + dataView.missingImpact.mean_after.toFixed(4) + qsTr("; medyan ") + dataView.missingImpact.median_before.toFixed(4) + " → " + dataView.missingImpact.median_after.toFixed(4) + ".\n") : "") + qsTr("Sürüm: ") + dataView.missingImpact.dataset_version + qsTr(". ") + dataView.missingImpact.note
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+        color: Theme.warning
+    }
+    UiTextField {
+        id: missingDecisionNote
+        objectName: "missingDecisionNote"
+        placeholderText: qsTr("Karar notu (uygulama yok; yalnız hatırlatma)")
+        Layout.fillWidth: true
+        Accessible.name: qsTr("Eksik veri karar notu")
+    }
     UiLabel { visible: !!dataView.qualityResult.dataset_version && (dataView.qualityResult.findings || []).length===0; text: "Bu kapsam ve kurallarla bulgu bulunmadı; verinin kusursuz olduğu anlamına gelmez."; Layout.fillWidth: true; wrapMode: Text.Wrap }
     Repeater {
         model: dataView.qualityResult.findings || []

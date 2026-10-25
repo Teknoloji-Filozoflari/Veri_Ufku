@@ -176,6 +176,7 @@ class DatasetController(QObject):
         self.total = 0
         self.revision = 0
         self.quality_result = None
+        self.missing_impact = None
         self.profile_result = None
         self.inventory_result = None
         self.describe_result = None
@@ -581,6 +582,38 @@ class DatasetController(QObject):
         )
         self.projects.changed.emit()
         self._message = "Kalite raporu taslağa eklendi; Projeyi kaydet ile kalıcı olur."
+        self.changed.emit()
+
+    missingImpact = Property(
+        "QVariantMap", lambda self: self.missing_impact or {}, notify=changed
+    )
+
+    @Slot(str, str)
+    def previewMissingDrop(self, column_id, compare_column_id=""):
+        """Read-only impact preview; never mutates dataset or source."""
+        from veri_ufku.analytics.dataset import missing_drop_impact
+
+        self._error = ""
+        try:
+            d = self.dataset()
+            if not d:
+                raise ProjectError("Önce dataset içe aktarın.")
+            columns = {c["id"]: c["name"] for c in d["import_metadata"]["columns"]}
+            if column_id not in columns:
+                raise ProjectError("Etki önizlemesi için sütun seçin.")
+            compare_name = columns.get(compare_column_id) if compare_column_id else None
+            path = str(self.projects.store.path(d["snapshot_uri"]))
+            impact = missing_drop_impact(path, columns[column_id], compare_name)
+            impact["dataset_version"] = d["version_id"]
+            impact["column_id"] = column_id
+            self.missing_impact = impact
+            self._message = (
+                f"Eksik silme etki önizlemesi: {impact['missing_n']} / {impact['total_n']} "
+                f"satır (%{impact['lost_ratio'] * 100:.2f}) kaybolurdu. Uygulanmadı."
+            )
+        except (OSError, ValueError, ProjectError) as error:
+            self.missing_impact = None
+            return self.fail(error)
         self.changed.emit()
 
     @Slot(bool, str, int)

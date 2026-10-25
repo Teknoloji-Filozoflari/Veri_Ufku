@@ -80,3 +80,12 @@ Bilinen açıklar (düzeltilmedi): Default 2GiB full generic-cancel; source clos
 | Kapılar | docs/…/Ruff/smoke; `ux5-pytest.log` |
 | Kullanıcıya bırakılan | Taslak metinlerin son onayı |
 | Resmî kabul | açık |
+
+## UX6 — Özet / eksik (2026-10-25)
+
+| Alan | Değer |
+|---|---|
+| Kimlik | UX6-MISSING-20261025 |
+| Kod | `missing_drop_impact`, `previewMissingDrop`, QualityPanel UI, `tests/test_ux6_missing_*.py` |
+| Kapılar | `ux6-pytest.log` 2 PASS; Ruff/docs/smoke |
+| Resmî kabul | açık |

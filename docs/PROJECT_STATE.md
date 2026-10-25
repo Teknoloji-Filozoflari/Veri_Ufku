@@ -33,7 +33,10 @@ Karar: şema göçüsü yok.
 
 **UX5 teknik teslim:** `ux_v2_stages.json` (taslak aşama+sözlük), `UxContentController`,
 FirstRunTour (atlanabilir), bağlam paneli «Bu adımı öğren» metinleri. Kritik uyarı
-sonuç yanında kalır sözleşmesi. Sonraki: UX6 özet/eksik.
+sonuç yanında kalır sözleşmesi.
+
+**UX6 teknik teslim:** `missing_drop_impact` + QualityPanel etki önizlemesi; karar
+uygulanmaz; sürüm/kaynak korunur (test). Sonraki: UX7 keşif.
 
 ---
 
