@@ -24,7 +24,12 @@ Test: `test_ux2_shell_gui` + odaklı UI; smoke/Ruff/docs/learning/usability PASS
 
 **UX3 teknik teslim:** Tablo merkeze (rows ilk accordion; aşama2→rows; otomatik sayfa);
 başlıkta tür/rol/açıklama; sayfa≠tam veri uyarısı; sütun seçimi korunur; filtre
-sürüm üretmez. 23 odaklı GUI PASS. Sonraki: UX4 Veri alanı (örnek + Verilerim).
+sürüm üretmez. 23 odaklı GUI PASS.
+
+**UX4 teknik teslim:** Çevrimdışı `assets/examples/catalog.json`; Verilerim =
+XDG `library-index.json` + dosya kopyası (ikinci ProjectStore yok). Import panelinde
+Örnek/Verilerim; silme onayı; girdi silinince mevcut proje bozulmaz (test).
+Karar: şema göçüsü yok. Sonraki: UX5 öğretim.
 
 ---
 

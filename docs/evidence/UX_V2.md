@@ -59,3 +59,14 @@ Bilinen açıklar (düzeltilmedi): Default 2GiB full generic-cancel; source clos
 | Kapılar | docs/…/Ruff/smoke; `ux3-pytest.log` 23 PASS |
 | Korunan | RowId/ColumnId; filtre→sürüm yok; kaynak byte eşit |
 | Resmî kabul | açık |
+
+## UX4 — Veri alanı (2026-10-25)
+
+| Alan | Değer |
+|---|---|
+| Kimlik | UX4-LIBRARY-20261025 |
+| Kod | `catalog.json`, `storage/user_library.py`, `ui/data_library.py`, `DataLibraryPanel.qml`, ImportPanel kancası, `tests/test_ux4_library*.py` |
+| Karar | Verilerim = XDG indeks + kopya; ProjectStore şema göçüsü yok; import `choose` yolu |
+| Kapılar | docs/artifacts/learning/usability/Ruff/smoke; `ux4-pytest.log` 8 PASS |
+| Test düzeltmesi | `test_import_gui` helpButton: kabuk F1 her zaman görünür (hatalı “gizli” beklentisi) |
+| Resmî kabul | açık |

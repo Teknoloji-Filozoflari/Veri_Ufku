@@ -32,6 +32,18 @@ ColumnLayout {
     UiLabel { Layout.minimumWidth: 0; wrapMode: Text.Wrap; text: qsTr("Veri içe aktar"); font.pixelSize: Theme.heading; font.bold: true; Layout.fillWidth: true }
     UiLabel { visible: !projects.opened; text: qsTr("Dosyanı aktarmak için önce bir proje oluştur veya aç."); Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
     UiButton { objectName: "importProjectButton"; visible: !projects.opened; text: qsTr("Proje oluştur / aç"); tone: "cyan"; onClicked: panel.projectRequested() }
+    UiCheckBox {
+        id: libraryToggle
+        objectName: "importLibraryToggle"
+        text: qsTr("Örnek katalog ve Verilerim")
+        Layout.fillWidth: true
+    }
+    Loader {
+        active: libraryToggle.checked
+        visible: active
+        Layout.fillWidth: true
+        sourceComponent: Component { DataLibraryPanel { onHelpRequested: function(origin, context) { panel.helpRequested(origin, context) } } }
+    }
     UiLabel { text: qsTr("Dosyanı seç veya aşağıya bırak. Uygulama dosya biçimini algılar ve önizlemeyi hazırlar. Kaynak dosyan değişmez."); Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
     UiButton { objectName: "chooseCsvButton"; text: qsTr("Dosya seç"); tone: "cyan"; enabled: !imports.busy && !projects.busy; onClicked: picker.open() }
     UiButton { objectName: "chooseDatasetFolder"; text: "Dataset klasörü seç"; property string helpContext: "import-partition"; enabled: !imports.busy && !projects.busy; onClicked: datasetPicker.open() }

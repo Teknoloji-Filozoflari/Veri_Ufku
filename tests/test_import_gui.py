@@ -346,7 +346,8 @@ def test_basic_import_project_route_advanced_settings_and_success(
         panel = window.findChild(QObject, "csvImportPanel")
         project_button = window.findChild(QQuickItem, "importProjectButton")
         assert not project_button.isVisible()
-        assert not window.findChild(QQuickItem, "helpButton").isVisible()
+        # Kabuk helpButton (F1) her zaman görünür; import paneli bunu gizlemez.
+        assert window.findChild(QQuickItem, "helpButton").isVisible()
         assert projects.closeProject()
         app.processEvents()
         assert project_button.isVisible()

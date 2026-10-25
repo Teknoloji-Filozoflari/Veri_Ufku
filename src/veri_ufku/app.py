@@ -175,6 +175,11 @@ def create_application():
     engine._repro_resources = reproducibility
     engine.rootContext().setContextProperty("reproducibility", reproducibility)
     guide = GuideController(projects, imports, data_view, engine)
+    from veri_ufku.ui.data_library import DataLibraryController
+
+    data_library = DataLibraryController(paths, projects, imports, guide, engine)
+    engine._data_library_resources = data_library
+    engine.rootContext().setContextProperty("dataLibrary", data_library)
     statistics = StatisticsController(
         data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
     )

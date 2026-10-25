@@ -13,7 +13,7 @@ Açık kullanıcı talimatı: Project store `veri-ufku-gelistirme-promptu.md`. Y
 |1 Şartname| **Teknik tamamlandı:** [UX_WORKSPACE_V2.md](UX_WORKSPACE_V2.md); bölge/durum/eşleme; kod yok | sürüyor; kullanıcı gösterimi ayrı |
 |2 Kabuk| **Teknik tamamlandı:** StageStrip + ContextSidePanel; mevcut ekranlar; smoke | sürüyor; resmî kabul ayrı |
 |3 Tablo| **Teknik tamamlandı:** tablo merkez; başlık tür/rol; sayfa kapsamı; 23 GUI PASS | sürüyor; resmî kabul ayrı |
-|4 Veri alanı| açık | — |
+|4 Veri alanı| **Teknik tamamlandı:** örnek katalog + Verilerim (XDG indeks); proje şeması aynı | sürüyor; resmî kabul ayrı |
 |5 Öğretim| açık | — |
 |6 Özet/eksik| açık | — |
 |7 Keşif| açık | — |
