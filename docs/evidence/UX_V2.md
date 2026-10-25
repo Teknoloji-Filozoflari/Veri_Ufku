@@ -105,3 +105,14 @@ Bilinen açıklar (düzeltilmedi): Default 2GiB full generic-cancel; source clos
 | Kimlik | UX8-OUTLIER-20261025 |
 | Kod | `analytics/outliers.py`, OperationsPanel aday çerçevesi, `tests/test_ux7_ux8_outliers.py` |
 | Kapı | `ux7-ux8-pytest.log`; üç yöntem; applied=false |
+
+## UX9 — Yöntem/model (2026-10-25)
+
+| Alan | Değer |
+|---|---|
+| Kimlik | UX9-MODEL-20261025 |
+| Ortam | CPython 3.13.15 `.venv`; QT offscreen/software |
+| Kod | `modeling/candidates.py`, `PreparationController.modelCandidates`, ValidationPanel aday çerçevesi, `tests/test_ux9_model_candidates.py` |
+| Kapılar | `ux9-pytest.log` 3 PASS; docs/learning/usability/artifacts PASS; smoke GUI_SMOKE PASS; Ruff PASS |
+| Kabul | aday işaretli; auto_fit=false; learned_scope=training_fold; yapı korunur; fit kullanıcı düğmesi; test tek final onay |
+| Resmî kabul | açık |

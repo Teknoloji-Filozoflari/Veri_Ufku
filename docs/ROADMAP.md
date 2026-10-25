@@ -18,7 +18,7 @@ Açık kullanıcı talimatı: Project store `veri-ufku-gelistirme-promptu.md`. Y
 |6 Özet/eksik| **Teknik tamamlandı:** eksik silme etki önizlemesi (uygulamasız) | sürüyor; resmî kabul ayrı |
 |7 Keşif| **Teknik tamamlandı:** grafik yorumu + RowId işaret | sürüyor; resmî kabul ayrı |
 |8 Aykırı/hazırla| **Teknik tamamlandı:** üç yöntem aday listesi; Uygula yolu mevcut | sürüyor; resmî kabul ayrı |
-|9 Model| açık | — |
+|9 Model| **Teknik tamamlandı:** gerekçeli aday listesi; train-fold sızıntı testi; fit kullanıcı eylemi | sürüyor; resmî kabul ayrı |
 |10 Rapor/kabul| açık | — |
 
 ---

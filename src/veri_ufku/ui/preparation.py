@@ -90,6 +90,25 @@ class PreparationController(QObject):
         ],
         notify=changed,
     )
+    modelCandidates = Property(
+        "QVariantMap", lambda self: self.candidate_bundle(), notify=changed
+    )
+
+    def candidate_bundle(self):
+        from veri_ufku.modeling.candidates import suggest_candidates
+
+        spec = (self.result or {}).get("spec") or {}
+        return suggest_candidates(
+            spec.get("purpose", ""),
+            has_group=bool(spec.get("group")),
+            has_time=bool(spec.get("time")),
+        )
+
+    @Slot(str, bool, bool, result="QVariantMap")
+    def previewCandidates(self, purpose, has_group, has_time):
+        from veri_ufku.modeling.candidates import suggest_candidates
+
+        return suggest_candidates(purpose, has_group=has_group, has_time=has_time)
 
     def selected_source(self):
         origin = self.data.dataset()

@@ -20,7 +20,14 @@ ColumnLayout {
     Connections { target:preparation; function onChanged(){if(panel.lastSource!==preparation.sourceVersion){panel.lastSource=preparation.sourceVersion;panel.chosenFeatures=preparation.columns.filter(c=>!c.identifier_candidate&&c.role!=="ignored").map(c=>c.id)}} }
     Component.onCompleted:{lastSource=preparation.sourceVersion;chosenFeatures=preparation.columns.filter(c=>!c.identifier_candidate&&c.role!=="ignored").map(c=>c.id);if(preparation.current&&preparation.report.spec)restore()}
     UiLabel { text:"Modelleme için veri hazırlığı"; font.pixelSize:Theme.heading;font.bold:true;Layout.fillWidth:true;wrapMode:Text.Wrap }
-    UiLabel { text:"Bu ekran genel temizlikten ayrı bir hazırlama planı üretir. Tüm veri üzerinde fit, eğitim veya değerlendirme yapılmaz. Rapor sızıntısızlık garantisi vermez.";color:Theme.warning;Layout.fillWidth:true;wrapMode:Text.Wrap }
+    UiLabel { text:"Bu ekran genel temizlikten ayrı bir hazırlama planı üretir. Tüm veri üzerinde fit, eğitim veya değerlendirme yapılmaz. Rapor sızıntısızlık garantisi vermez. Aşağıdaki yöntem önerileri adaydır; plan kaydı model fit etmez.";color:Theme.warning;Layout.fillWidth:true;wrapMode:Text.Wrap }
+    UiLabel {
+        objectName: "preparationCandidateHint"
+        text: qsTr("Yöntem önerileri adaydır; otomatik fit yok. Gerekçe ve train/validation/test planı değerlendirme panelinde görünür. Ön işleme yalnız eğitim fold'unda öğrenilir.")
+        color: Theme.secondary
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+    }
     UiCheckBox { id:settings;objectName:"preparationSettings";text:"Amaç, alanlar ve hazırlama seçeneklerini göster";checked:true;Layout.fillWidth:true }
     ColumnLayout {
         visible:settings.checked;Layout.fillWidth:true;spacing:Theme.md

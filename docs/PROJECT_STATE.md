@@ -42,7 +42,12 @@ uygulanmaz; sürüm/kaynak korunur (test).
 veri sürümü değiştirmez.
 
 **UX8 teknik teslim:** IQR / dayanıklı z / klasik z aday listesi; birleşik RowId;
-karar yok (Hazırla Önizle+Uygula). Sonraki: UX9 model.
+karar yok (Hazırla Önizle+Uygula).
+
+**UX9 teknik teslim:** Gerekçeli yöntem adayları (`modeling/candidates.py`,
+ValidationPanel çerçevesi); status=aday; auto_fit=false; ön işleme
+`training_fold` sızıntı testi; mevcut preparation/validation yolları; final test
+ayrı onay. Sonraki: UX10 rapor/kabul.
 
 ---
 

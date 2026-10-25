@@ -21,6 +21,39 @@ ColumnLayout {
     property string pipeline:""
     UiLabel { text:"Ayırma, çapraz doğrulama ve baseline";font.pixelSize:Theme.heading;font.bold:true;Layout.fillWidth:true;wrapMode:Text.Wrap }
     UiLabel { text:"Önce engelsiz bir sayısal/kategori hazırlama planı oluştur. Testi son seçiminden sonra ayrı değerlendir; test sonucuyla ayar seçme. Her test kullanımı ve sonraki koşu seçimi projede kalır.";color:Theme.warning;Layout.fillWidth:true;wrapMode:Text.Wrap }
+    ColumnLayout {
+        objectName: "modelCandidateFrame"
+        visible: !!(preparation.modelCandidates && preparation.modelCandidates.candidates && preparation.modelCandidates.candidates.length)
+        Layout.fillWidth: true
+        spacing: Theme.sm
+        UiLabel {
+            text: qsTr("Gerekçeli yöntem adayları (henüz fit yok)")
+            font.bold: true
+            Layout.fillWidth: true
+            wrapMode: Text.Wrap
+        }
+        UiLabel {
+            objectName: "modelCandidatePolicy"
+            text: (preparation.modelCandidates.disclaimer || "") + "\n" + (preparation.modelCandidates.leakage_policy || "") + "\n" + (preparation.modelCandidates.test_policy || "") + "\nYapı: " + (preparation.modelCandidates.structure || "") + " — " + (preparation.modelCandidates.structure_note || "") + "\nPlan: " + (preparation.modelCandidates.split_plan || "") + " · başlangıç modeli: " + (preparation.modelCandidates.starter_model || "") + " · durum: " + (preparation.modelCandidates.status || "aday")
+            color: Theme.secondary
+            Layout.fillWidth: true
+            wrapMode: Text.Wrap
+        }
+        Repeater {
+            model: preparation.modelCandidates.candidates || []
+            ColumnLayout {
+                required property var modelData
+                Layout.fillWidth: true
+                spacing: Theme.xs
+                UiLabel {
+                    objectName: "modelCandidate_" + modelData.id
+                    text: qsTr("Aday · ") + modelData.label + " (" + modelData.id + ")\nNeden uygun olabilir: " + modelData.why_suitable + "\nNe zaman değil: " + modelData.when_not_suitable + "\nHazırlık: " + modelData.preparation_needed + "\nÖlçüler: " + (modelData.metrics || []).join(", ") + " · seçili=" + (modelData.selected ? "evet" : "hayır") + " · fit=" + (modelData.fitted ? "evet" : "hayır")
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                }
+            }
+        }
+    }
     UiCheckBox { id:settings;objectName:"validationSettings";text:"Değerlendirme protokolünü göster";checked:true;Layout.fillWidth:true }
     UiLabel { visible:!!panel.protocolBlock;text:panel.protocolBlock;color:Theme.warning;Layout.fillWidth:true;wrapMode:Text.Wrap }
     ColumnLayout { visible:settings.checked;Layout.fillWidth:true;spacing:Theme.sm
