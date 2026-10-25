@@ -39,3 +39,13 @@ Bilinen açıklar (düzeltilmedi): Default 2GiB full generic-cancel; source clos
 | Kod | Yok |
 | Belge kapısı | `check_docs.py` (commit öncesi) |
 | Kullanıcıya bırakılan | Gerçek yeni başlayanlarla gösterim (§8) |
+
+## UX2 — Kabuk (2026-10-25)
+
+| Alan | Değer |
+|---|---|
+| Kimlik | UX2-SHELL-20261025 |
+| Kod | `Main.qml`, `StageStrip.qml`, `ContextSidePanel.qml`, `UxStages.js`, `tests/test_ux2_shell_gui.py` |
+| Kapılar | docs/artifacts/learning/usability/Ruff/format PASS; smoke PASS; odaklı UI 28 PASS (`ux2-pytest.log`) |
+| Korunan | selectedSection 0–7, nav0–7, proje draft/sürüm değişmedi |
+| Resmî kabul | açık |

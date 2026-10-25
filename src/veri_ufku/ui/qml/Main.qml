@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
 import "RoadmapSteps.js" as Roadmap
+import "UxStages.js" as UxStages
 
 ApplicationWindow {
     id: window
@@ -30,6 +31,22 @@ ApplicationWindow {
     palette.dark: Theme.secondary
     palette.placeholderText: Theme.secondary
     property int selectedSection: 0
+    property int uxStage: 0
+    property bool contextPanelOpen: false
+    property string centerView: "table"
+    readonly property var uxStageInfo: UxStages.stageAt(uxStage)
+    readonly property var uxStageQuestions: [
+        qsTr("Ne öğrenmek istiyorum?"),
+        qsTr("Dosya doğru okundu mu?"),
+        qsTr("Her sütun ne demek?"),
+        qsTr("Veri genel olarak neye benziyor?"),
+        qsTr("Ne kadarı eksik, silersem ne olur?"),
+        qsTr("Dağılım ve ilişkiler nasıl?"),
+        qsTr("Sıra dışı gözlemler hangileri?"),
+        qsTr("Bu bulgulara göre ne yapmalıyım?"),
+        qsTr("Bu soruya hangi yöntem uyar?"),
+        qsTr("Ne buldum, ne kadar güvenebilirim?")
+    ]
     // -1 follows the window; an explicit user choice lasts for this session.
     property int navigationMode: -1
     readonly property bool compactNavigation: navigationMode < 0 ? width < 1000 * Theme.scale : navigationMode === 1
@@ -37,11 +54,24 @@ ApplicationWindow {
     function openDataPane(pane) {
         dataPane = pane
         dataTabs.currentIndex = pane === "import" ? 1 : pane === "quality" ? 2 : pane ? 0 : -1
+        window.syncUxStageFromSection()
         if (pane) Qt.callLater(function() {
             let name = pane === "profile" ? "inventoryTable" : pane === "describe" ? "computeDescribe" : pane === "values" ? "valuesColumn" : pane === "rows" ? "loadDatasetButton" : ""
             let control = name ? window.findVisibleItem(window.contentItem, name) : null
             if (control && control.enabled) control.forceActiveFocus()
         })
+    }
+    function syncUxStageFromSection() {
+        uxStage = UxStages.indexForSection(selectedSection, dataPane)
+    }
+    function navigateUxStage(index, origin) {
+        let stage = UxStages.stageAt(index)
+        uxStage = index
+        selectedSection = stage.section
+        if (stage.section === 1) openDataPane(stage.pane || "profile")
+        else dataPane = ""
+        if (origin) origin.forceActiveFocus()
+        workspace.contentItem.contentY = 0
     }
     readonly property var sectionTones: ["warm", "cyan", "violet", "cyan", "violet", "violet", "warm", "mint"]
     readonly property color sectionAccent: Theme.toneColor(sectionTones[selectedSection])
@@ -75,11 +105,16 @@ ApplicationWindow {
     ]
     function navigate(index, origin) {
         selectedSection = index
+        window.syncUxStageFromSection()
         if (infoOpen) learning.openContext(learning.screenContexts[index])
         if (origin) origin.forceActiveFocus()
         workspace.contentItem.contentY = 0
     }
-    onSelectedSectionChanged: workspace.contentItem.contentY = 0
+    onSelectedSectionChanged: {
+        workspace.contentItem.contentY = 0
+        window.syncUxStageFromSection()
+    }
+    onDataPaneChanged: window.syncUxStageFromSection()
     function openReading(origin, articleId) {
         helpOrigin = origin
         helpOriginName = origin.objectName
@@ -352,6 +387,13 @@ ApplicationWindow {
                         onClicked: preferences.setView("advanced")
                     }
                     UiIconButton {
+                        objectName: "contextPanelToggle"
+                        symbol: "sliders"
+                        accessibleLabel: window.contextPanelOpen ? qsTr("Bağlam panelini kapat") : qsTr("Bağlam panelini aç")
+                        checked: window.contextPanelOpen
+                        onClicked: window.contextPanelOpen = !window.contextPanelOpen
+                    }
+                    UiIconButton {
                         id: displayButton
                         objectName: "displayButton"
                         symbol: "settings"
@@ -409,6 +451,23 @@ ApplicationWindow {
                 elide: Text.ElideRight
             }
             UiLabel {
+                objectName: "uxStageStatus"
+                visible: window.width >= 900 * Theme.scale
+                text: qsTr("Aşama") + " " + window.uxStage + " · " + window.uxStageInfo.shortTitle
+                font.pixelSize: Theme.small
+                color: Theme.secondary
+                elide: Text.ElideRight
+            }
+            UiLabel {
+                objectName: "datasetScopeStatus"
+                visible: window.width >= 1100 * Theme.scale && dataView && dataView.datasets && dataView.datasets.length > 0
+                text: dataView.viewSummary || ""
+                font.pixelSize: Theme.small
+                color: Theme.secondary
+                elide: Text.ElideRight
+                Layout.maximumWidth: window.width * 0.28
+            }
+            UiLabel {
                 visible: window.width >= 1000 * Theme.scale
                 text: qsTr("Yardım F1 · Yöntem ara Ctrl+K")
                 font.pixelSize: Theme.small
@@ -440,9 +499,16 @@ ApplicationWindow {
                 ColumnLayout {
                     width: parent.width
                     spacing: Theme.sm
+                    StageStrip {
+                        visible: !window.advanced
+                        compact: window.compactNavigation
+                        currentStage: window.uxStage
+                        Layout.fillWidth: true
+                        onStageChosen: function(index, origin) { window.navigateUxStage(index, origin) }
+                    }
                     UiLabel {
                         visible: !window.compactNavigation
-                        text: qsTr("ÇALIŞMA ALANI")
+                        text: window.advanced ? qsTr("ÇALIŞMA ALANI") : qsTr("BÖLÜMLER")
                         color: Theme.muted
                         font.pixelSize: Theme.small
                         font.letterSpacing: 1
@@ -1125,6 +1191,22 @@ ApplicationWindow {
                     }
                 }
                 Item { Layout.preferredHeight: Theme.xl }
+            }
+        }
+        ContextSidePanel {
+            id: contextPanel
+            objectName: "contextSidePanelHost"
+            Layout.fillHeight: true
+            Layout.preferredWidth: Math.min(300 * Theme.scale, Math.max(220, window.width * 0.22))
+            visible: window.contextPanelOpen && !(window.dockInfo && window.infoOpen && !window.readingOpen)
+            uxStage: window.uxStage
+            stageTitle: window.uxStageInfo.title
+            stageQuestion: window.uxStageQuestions[window.uxStage] || ""
+            onCloseRequested: window.contextPanelOpen = false
+            onLearnRequested: function(origin) { window.openInformation(origin) }
+            onColumnChosen: function(columnId) {
+                if (window.selectedSection !== 1) window.navigate(1, null)
+                if (!window.dataPane || window.dataPane === "import") window.openDataPane("profile")
             }
         }
         InfoPanel {

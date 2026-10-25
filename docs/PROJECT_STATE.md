@@ -16,7 +16,12 @@ usability/Ruff/format PASS; `veri-ufku --smoke-test` GUI_SMOKE PASS; odaklı UI
 **UX1 teknik teslim:** [UX_WORKSPACE_V2.md](UX_WORKSPACE_V2.md) bölge yerleşimi,
 aşama şeridi, durum tabloları, mevcut ekran eşlemesi; DESIGN_SYSTEM/UI_DESIGN_BRIEF
 bağı. Kod yok. Kullanıcıya bırakılan: gerçek yeni başlayanlarla gösterim.
-Sonraki: UX2 çalışma alanı kabuğu.
+
+**UX2 teknik teslim:** Sol `StageStrip` (10 aşama), açılır `ContextSidePanel`
+(sütunlar / Bu adımı öğren), üst bağlam düğmesi, alt durum (aşama + veri kapsamı).
+Mevcut 8 bölüm nav ve ekranlar korundu; proje/veri sözleşmesi değişmedi.
+Test: `test_ux2_shell_gui` + odaklı UI 28 PASS; smoke/Ruff/docs/learning/usability PASS.
+Sonraki: UX3 tablo ve sütun çalışması.
 
 ---
 
