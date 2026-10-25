@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "status": "taslak — kullanıcı incelemesi bekliyor",
+  "glossary": [
+    {"term": "sütun", "also": "değişken", "definition": "Tablodaki dikey alan; her gözlem için bir özellik veya ölçüm."},
+    {"term": "satır", "also": "gözlem", "definition": "Tablodaki bir kayıt; tek bir birime ait değerler."},
+    {"term": "veri türü", "also": "", "definition": "Sütundaki değerlerin fiziksel biçimi (sayı, metin, tarih…)."},
+    {"term": "eksik değer", "also": "null", "definition": "Ölçülmemiş veya bilinmeyen hücre; sıfır veya boş metinle karıştırılmaz."},
+    {"term": "aykırı değer", "also": "inceleme adayı", "definition": "Dağılıma göre sıra dışı görünen gözlem; otomatik hata değildir."},
+    {"term": "dağılım", "also": "", "definition": "Bir ölçümün değerlerinin nasıl yayıldığı."},
+    {"term": "ortalama", "also": "", "definition": "Sayısal değerlerin toplamının adede bölümü; uç değerlerden etkilenir."},
+    {"term": "medyan", "also": "", "definition": "Sıralı değerlerin ortasındaki değer; uçlara daha dayanıklıdır."},
+    {"term": "standart sapma", "also": "", "definition": "Değerlerin ortalamadan tipik sapma ölçüsü."},
+    {"term": "çeyrek", "also": "IQR", "definition": "Dağılımı dörtte birlik dilimlere bölen konumlar; IQR orta %50’nin genişliğidir."},
+    {"term": "korelasyon", "also": "", "definition": "İki sayısal sütun birlikte değişme eğilimi; nedensellik değildir."},
+    {"term": "hedef", "also": "", "definition": "Tahmin etmeye çalıştığınız sütun."},
+    {"term": "özellik", "also": "", "definition": "Modelin girdi olarak kullandığı sütunlar."},
+    {"term": "eğitim/doğrulama/test", "also": "", "definition": "Veriyi öğrenme, ayar seçme ve son ölçüm için ayırma; test yalnız bir kez kullanılır."},
+    {"term": "sızıntı", "also": "", "definition": "Test veya gelecekte bilinmeyecek bilginin eğitimde kullanılması; sonuçları şişirir."}
+  ],
+  "stages": [
+    {
+      "id": "goal",
+      "short": "Ne öğrenmek istediğini ve verinin nereden geleceğini seç.",
+      "detail": "Amaç kartları yön gösterir; zorunlu sihirbaz değildir. Hedef seçmeden modelleme zorlanmaz. Kaynak: kendi dosyan, Verilerim veya çevrimdışı örnek.",
+      "critical_note": "Kritik uyarılar bu metinde gömülü değildir; sonuç yanında kalır."
+    },
+    {
+      "id": "load",
+      "short": "Dosyanın doğru okunup okunmadığını önizlemede kontrol et.",
+      "detail": "Ayraç, encoding ve tür önerilerini incele. Kaynak dosya değişmez; çalışma kopyası projede tutulur.",
+      "critical_note": ""
+    },
+    {
+      "id": "columns",
+      "short": "Her sütunun ne anlama geldiğini, türünü ve rolünü not et.",
+      "detail": "Kimlik, ölçüm, kategori, tarih, hedef veya özellik rollerini sen onaylarsın. Öneri onaysız kesinleşmez.",
+      "critical_note": ""
+    },
+    {
+      "id": "summary",
+      "short": "Satır/sütun özeti, dağılım ölçüleri ve korelasyona bak.",
+      "detail": "Ortalama, medyan, çeyrekler ve korelasyon matrisi/ısı haritası genel resmi verir. Korelasyon nedensellik değildir.",
+      "critical_note": "Korelasyon ≠ nedensellik — sonuç yanında hatırlatılır."
+    },
+    {
+      "id": "missing",
+      "short": "Eksiklerin nerede olduğunu ve silersen ne kaybedeceğini gör.",
+      "detail": "Etki önizlemesi satır kaybını gösterir; otomatik silme yoktur. Karar notu al, uygulama Hazırla’dadır.",
+      "critical_note": ""
+    },
+    {
+      "id": "explore",
+      "short": "Sütun seçerek dağılım ve ilişkileri grafiklerle incele.",
+      "detail": "Rehberli amaç veya katalogdan grafik kur. Her sonuçta n, filtre ve sürüm görünür. Grafik veriyi değiştirmez.",
+      "critical_note": ""
+    },
+    {
+      "id": "outliers",
+      "short": "Sıra dışı adayları yöntemlerle listele; henüz karar verme.",
+      "detail": "IQR, dayanıklı z ve klasik z yan yana aday üretir. Grafikte işaretlenenlerle aynı RowId kümesi kullanılır. Aday hata değildir.",
+      "critical_note": ""
+    },
+    {
+      "id": "prepare",
+      "short": "Kararlarını önizle; açıkça Uygula dersen yeni sürüm oluşur.",
+      "detail": "Kaynak korunur. Geri alma işlem geçmişinden yapılır. Önizlemesiz kalıcı değişiklik yoktur.",
+      "critical_note": ""
+    },
+    {
+      "id": "model",
+      "short": "Soruna uygun aday yöntemleri gerekçesiyle gör; sen seçmeden fit yok.",
+      "detail": "Train/validation/test planı ve sızıntı önlemleri mevcut validation yolunu kullanır. Test yalnız bir kez nihai ölçümde.",
+      "critical_note": ""
+    },
+    {
+      "id": "report",
+      "short": "Bulgularını sürüm, kapsam ve sınırlarla birlikte kaydet.",
+      "detail": "HTML/PDF ayrı hedefe yazılır; kaynak dosyanın üzerine sessizce yazılmaz.",
+      "critical_note": ""
+    }
+  ]
+}

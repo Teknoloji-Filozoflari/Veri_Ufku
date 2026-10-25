@@ -180,6 +180,11 @@ def create_application():
     data_library = DataLibraryController(paths, projects, imports, guide, engine)
     engine._data_library_resources = data_library
     engine.rootContext().setContextProperty("dataLibrary", data_library)
+    from veri_ufku.ui.ux_content import UxContentController
+
+    ux_content = UxContentController(paths.config, engine)
+    engine._ux_content_resources = ux_content
+    engine.rootContext().setContextProperty("uxContent", ux_content)
     statistics = StatisticsController(
         data_view, projects, charts, paths.cache / "statistics", settings.budget, engine
     )

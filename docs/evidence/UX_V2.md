@@ -70,3 +70,13 @@ Bilinen açıklar (düzeltilmedi): Default 2GiB full generic-cancel; source clos
 | Kapılar | docs/artifacts/learning/usability/Ruff/smoke; `ux4-pytest.log` 8 PASS |
 | Test düzeltmesi | `test_import_gui` helpButton: kabuk F1 her zaman görünür (hatalı “gizli” beklentisi) |
 | Resmî kabul | açık |
+
+## UX5 — Öğretim (2026-10-25)
+
+| Alan | Değer |
+|---|---|
+| Kimlik | UX5-TEACH-20261025 |
+| Kod | `ux_v2_stages.json`, `ui/ux_content.py`, `FirstRunTour.qml`, ContextSidePanel, `tests/test_ux5_content.py` |
+| Kapılar | docs/…/Ruff/smoke; `ux5-pytest.log` |
+| Kullanıcıya bırakılan | Taslak metinlerin son onayı |
+| Resmî kabul | açık |

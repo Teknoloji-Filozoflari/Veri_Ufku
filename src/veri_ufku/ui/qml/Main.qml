@@ -394,6 +394,12 @@ ApplicationWindow {
                         onClicked: window.contextPanelOpen = !window.contextPanelOpen
                     }
                     UiIconButton {
+                        objectName: "uxTourReopen"
+                        symbol: "book"
+                        accessibleLabel: qsTr("Kısa turu yeniden aç")
+                        onClicked: { uxContent.reopenTour(); firstRunTour.open() }
+                    }
+                    UiIconButton {
                         id: displayButton
                         objectName: "displayButton"
                         symbol: "settings"
@@ -1274,6 +1280,17 @@ ApplicationWindow {
         }
         onOpened: { readerScroll.contentItem.contentY = 0; readerScroll.forceActiveFocus() }
         Connections { target: learning; function onChanged() { if (window.readingOpen) readerScroll.contentItem.contentY = 0 } }
+    }
+    FirstRunTour {
+        id: firstRunTour
+        parent: Overlay.overlay
+        Component.onCompleted: if (uxContent.tourOpen) Qt.callLater(function() { firstRunTour.open() })
+    }
+    Connections {
+        target: uxContent
+        function onChanged() {
+            if (uxContent.tourOpen && !firstRunTour.opened) firstRunTour.open()
+        }
     }
     Drawer {
         id: infoDrawer

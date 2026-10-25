@@ -8,6 +8,7 @@ Frame {
     property int uxStage: 0
     property string stageTitle: ""
     property string stageQuestion: ""
+    readonly property var stageLearnText: uxContent.stageAt(uxStage)
     signal closeRequested()
     signal learnRequested(var origin)
     signal columnChosen(string columnId)
@@ -130,16 +131,43 @@ Frame {
                     Layout.fillWidth: true
                     wrapMode: Text.Wrap
                 }
+                UiLabel {
+                    objectName: "contextStageShort"
+                    text: panel.stageLearnText.short || ""
+                    font.bold: true
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                }
+                UiLabel {
+                    objectName: "contextStageDetail"
+                    text: panel.stageLearnText.detail || ""
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                }
+                UiLabel {
+                    visible: !!(panel.stageLearnText.critical_note)
+                    text: panel.stageLearnText.critical_note || ""
+                    color: Theme.warning
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                }
+                UiLabel {
+                    text: uxContent.draftStatus
+                    color: Theme.muted
+                    font.pixelSize: Theme.small
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                }
                 UiButton {
                     objectName: "contextLearnButton"
                     tone: "mint"
-                    text: qsTr("Bu adımı öğren")
+                    text: qsTr("Bu adımı öğren (çevrimdışı yardım)")
                     Layout.fillWidth: true
                     multiline: true
                     onClicked: panel.learnRequested(this)
                 }
                 UiLabel {
-                    text: qsTr("Kritik uyarılar bu paneline gömülmez; sonuçların yanında kalır.")
+                    text: qsTr("Kritik uyarılar bu paneline gömülmez; sonucun yanında kalır. Paneli kapatmak seçim ve sonucu değiştirmez.")
                     color: Theme.secondary
                     font.pixelSize: Theme.small
                     Layout.fillWidth: true

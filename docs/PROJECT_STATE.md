@@ -29,7 +29,11 @@ sürüm üretmez. 23 odaklı GUI PASS.
 **UX4 teknik teslim:** Çevrimdışı `assets/examples/catalog.json`; Verilerim =
 XDG `library-index.json` + dosya kopyası (ikinci ProjectStore yok). Import panelinde
 Örnek/Verilerim; silme onayı; girdi silinince mevcut proje bozulmaz (test).
-Karar: şema göçüsü yok. Sonraki: UX5 öğretim.
+Karar: şema göçüsü yok.
+
+**UX5 teknik teslim:** `ux_v2_stages.json` (taslak aşama+sözlük), `UxContentController`,
+FirstRunTour (atlanabilir), bağlam paneli «Bu adımı öğren» metinleri. Kritik uyarı
+sonuç yanında kalır sözleşmesi. Sonraki: UX6 özet/eksik.
 
 ---
 
