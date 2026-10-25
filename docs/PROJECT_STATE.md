@@ -1,5 +1,22 @@
 # Veri_Ufku — aktif görev hafızası
 
+## UX V2 (aktif — yerel `ux-v2`)
+
+2026-10-25: Açık kullanıcı talimatı ile UX0–UX10 arayüz/akış görevi başladı.
+Teknik Faz72+ başlatılmadı. Push yok; untracked `docs/PRODUCT_DIRECTION_JASP_ORANGE.md`
+korunur ve commit’e karıştırılmaz.
+
+**UX0 teknik teslim:** salt okunur denetim. [UX_V2_AUDIT.md](UX_V2_AUDIT.md),
+[kanıt](evidence/UX_V2.md). H1/H3 doğrulandı; H2/H4 kısmen. Verilerim eksik;
+eksik-etki ve üç yöntemli aykırı birleşik aşama kısmi. Taban: docs/artifacts/learning/
+usability/Ruff/format PASS; `veri-ufku --smoke-test` GUI_SMOKE PASS; odaklı UI
+26 pytest PASS. Tam suite/wheel/fiziksel/AT/minHW/offline/remoteCI/longheap
+çalıştırılmadı veya bilinen açık. Resmî kabul ayrı.
+
+Sonraki: UX1 tasarım şartnamesi (`docs/UX_WORKSPACE_V2.md`).
+
+---
+
 2026-10-21 kullanıcı README yenileme ve GitHub gönderimini açıkça istedi.
 README ürün amacı/hedef kullanıcı/başlangıç-Öğren-gelişmiş akışı, gerçek ekranlar,
 kurulum, yöntem kapsamı ve deneysel sınırlarla yenilendi. Önceki uzun README

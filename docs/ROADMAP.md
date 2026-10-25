@@ -3,6 +3,27 @@
 2026-10-13 Europe/Istanbul; ana kayıt REQUIREMENTS_MATRIX.md; hafıza PROJECT_STATE.md.
 Bu belge yeni faz yetkisi vermez.
 
+## UX V2 (arayüz/akış — teknik Faz’dan bağımsız)
+
+Açık kullanıcı talimatı: Project store `veri-ufku-gelistirme-promptu.md`. Yerel dal `ux-v2`; push yok.
+
+| UX | Teknik teslim | Resmî / kapsam |
+|---|---|---|
+|0 Denetim| **Teknik tamamlandı:** [UX_V2_AUDIT.md](UX_V2_AUDIT.md), [E UX_V2](evidence/UX_V2.md); H1–H4; taban kapılar + 26 UI pytest + smoke | sürüyor; resmî kabul ayrı; bilinen AGENTS açıkları korunur |
+|1 Şartname| açık | — |
+|2 Kabuk| açık | — |
+|3 Tablo| açık | — |
+|4 Veri alanı| açık | — |
+|5 Öğretim| açık | — |
+|6 Özet/eksik| açık | — |
+|7 Keşif| açık | — |
+|8 Aykırı/hazırla| açık | — |
+|9 Model| açık | — |
+|10 Rapor/kabul| açık | — |
+
+---
+
+
 | Faz | Teknik teslim | Resmî durum / kapsam |
 |---|---|---|
 |30| Yerel formatlar; büyük SAS açık | sürüyor / deneysel / zorunlu |

@@ -1,0 +1,46 @@
+=== check_docs ===
+cmd: uv run --frozen python scripts/check_docs.py
+exit=0 elapsed=1s
+--- tail ---
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+=== check_artifacts ===
+cmd: uv run --frozen python scripts/check_artifacts.py
+exit=0 elapsed=0s
+--- tail ---
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+
+=== check_learning ===
+cmd: uv run --frozen python scripts/check_learning.py
+exit=0 elapsed=1s
+--- tail ---
+PASS: 10 lessons / 8 paths; 416 modules covered (interactive vs article-linked explicit)
+PASS: 414 offline articles; 217 UI bindings; all capability links
+
+=== check_usability ===
+cmd: uv run --frozen python scripts/check_usability.py
+exit=0 elapsed=1s
+--- tail ---
+PASS: 414 articles; 1014 named fields; 216 finished core English messages
+
+=== ruff_check ===
+cmd: uv run --frozen ruff check src tests scripts
+exit=0 elapsed=0s
+--- tail ---
+[1;32mAll checks passed![0m
+
+=== ruff_format ===
+cmd: uv run --frozen ruff format --check src tests scripts
+exit=0 elapsed=0s
+--- tail ---
+566 files already formatted
+
+=== smoke_test ===
+cmd: uv run --frozen veri-ufku --smoke-test
+exit=0 elapsed=3s
+GUI_SMOKE PASS
+=== pytest_ui_focused ===
+cmd: pytest tests/test_gui.py tests/test_ui_renewal.py tests/test_journey_gui.py tests/test_data_inspection.py tests/test_data_workspace_gui.py -q
+exit=0 elapsed=44s
+..........................                                               [100%]
+26 passed in 44.13s

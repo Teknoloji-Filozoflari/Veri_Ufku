@@ -1,0 +1,31 @@
+# Veri_Ufku — UX V2 kanıt günlüğü
+
+Yerel dal `ux-v2`. Push yok. Untracked kullanıcı dosyası `docs/PRODUCT_DIRECTION_JASP_ORANGE.md` commit’lere karıştırılmaz.
+Ana denetim: [UX_V2_AUDIT.md](../UX_V2_AUDIT.md). Ayrıntılı loglar: `docs/evidence/ux-v2/`.
+
+## UX0 — Denetim (2026-10-25)
+
+| Alan | Değer |
+|---|---|
+| Kimlik | UX0-AUDIT-20261025 |
+| Ortam | CachyOS Linux; CPython 3.13.15 `.venv`; `QT_QPA_PLATFORM=offscreen` `QT_QUICK_BACKEND=software` |
+| HEAD başlangıç | `54c3a891` |
+| Kod değişikliği | Yok (salt okunur) |
+
+### Kapılar
+
+| Dosya / log | Sonuç |
+|---|---|
+| `ux-v2/baseline-env.txt` | Ortam + başlangıç git status |
+| `ux-v2/baseline-gates.log` | check_docs/artifacts/learning/usability, ruff, format, smoke, focused pytest özeti |
+| `ux-v2/check_docs.log` … `ruff_format.log` | Tekil exit 0 |
+| `ux-v2/smoke_test.log` | `GUI_SMOKE PASS` |
+| `ux-v2/pytest_ui_focused.log` | 26 passed in 44.13s |
+| `ux-v2/baseline-ui-junit.xml` | JUnit |
+
+Bilinen açıklar (düzeltilmedi): Default 2GiB full generic-cancel; source close/open ara failures; longheap; minHW; fiziksel; insan/AT; offline installer; remote CI.
+
+### Teknik teslim / resmî kabul
+
+- Teknik teslim: denetim raporu + bu kanıt.
+- Resmî kabul: açık.
