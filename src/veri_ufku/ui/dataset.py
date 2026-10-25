@@ -177,6 +177,9 @@ class DatasetController(QObject):
         self.revision = 0
         self.quality_result = None
         self.missing_impact = None
+        self.outlier_candidates = None
+        self.chart_marked_ids = []
+        self.chart_notes = {}
         self.profile_result = None
         self.inventory_result = None
         self.describe_result = None
@@ -587,6 +590,12 @@ class DatasetController(QObject):
     missingImpact = Property(
         "QVariantMap", lambda self: self.missing_impact or {}, notify=changed
     )
+    outlierCandidates = Property(
+        "QVariantMap", lambda self: self.outlier_candidates or {}, notify=changed
+    )
+    chartMarkedIds = Property(
+        "QVariantList", lambda self: list(self.chart_marked_ids), notify=changed
+    )
 
     @Slot(str, str)
     def previewMissingDrop(self, column_id, compare_column_id=""):
@@ -615,6 +624,69 @@ class DatasetController(QObject):
             self.missing_impact = None
             return self.fail(error)
         self.changed.emit()
+
+    @Slot(str)
+    def computeOutlierCandidates(self, column_id):
+        from veri_ufku.analytics.outliers import candidate_methods
+
+        self._error = ""
+        try:
+            d = self.dataset()
+            if not d:
+                raise ProjectError("Önce dataset içe aktarın.")
+            columns = {c["id"]: c["name"] for c in d["import_metadata"]["columns"]}
+            if column_id not in columns:
+                raise ProjectError("Aykırı aday için sayısal sütun seçin.")
+            path = str(self.projects.store.path(d["snapshot_uri"]))
+            result = candidate_methods(path, columns[column_id])
+            result["dataset_version"] = d["version_id"]
+            result["column_id"] = column_id
+            # Merge chart-marked RowIds into the shared candidate universe.
+            marked = [row for row in self.chart_marked_ids if row]
+            result["chart_marked_row_ids"] = marked
+            result["same_as_chart"] = (
+                set(marked).issubset(set(result["union_row_ids"])) or not marked
+            )
+            self.outlier_candidates = result
+            self._selected_ids = list(result["union_row_ids"][:200])
+            self._selection = (
+                f"Aykırı inceleme adayları: birleşik {len(result['union_row_ids'])} RowId; "
+                "karar yok, veri değişmedi."
+            )
+            self._message = self._selection + " " + result["disclaimer"]
+        except (OSError, ValueError, ProjectError) as error:
+            self.outlier_candidates = None
+            return self.fail(error)
+        self.changed.emit()
+
+    @Slot("QVariantList")
+    def markChartRows(self, row_ids):
+        """Stage-5 chart marks feed the shared candidate RowId set (no mutation)."""
+        self.chart_marked_ids = [str(row) for row in (row_ids or [])][:5000]
+        if self.outlier_candidates:
+            self.outlier_candidates = dict(
+                self.outlier_candidates,
+                chart_marked_row_ids=list(self.chart_marked_ids),
+            )
+        self._message = (
+            f"Grafikte {len(self.chart_marked_ids)} RowId işaretlendi; "
+            "aday kümesiyle aynı kimlik uzayı kullanılır. Veri sürümü değişmedi."
+        )
+        self.changed.emit()
+
+    @Slot(str, str)
+    def saveChartNote(self, chart_key, note):
+        key = str(chart_key or "")[:200]
+        text = str(note or "")[:4000]
+        if not key:
+            return
+        self.chart_notes[key] = text
+        self._message = "Grafik yorumu oturumda saklandı; veri sürümü değişmedi."
+        self.changed.emit()
+
+    @Slot(str, result=str)
+    def chartNote(self, chart_key):
+        return self.chart_notes.get(str(chart_key or ""), "")
 
     @Slot(bool, str, int)
     def computeProfile(self, sample=True, target="dataset", ddof=1):

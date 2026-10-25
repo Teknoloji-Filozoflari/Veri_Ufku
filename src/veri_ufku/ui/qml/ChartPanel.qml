@@ -183,6 +183,23 @@ ColumnLayout {
     UiButton { objectName:"chartSelectionExportContext"; text:"Seçimi statik çıktıya işle (yalnız görünüm)"; enabled:charts.current && !charts.busy; onClicked:charts.freezeSelection() }
     UiLabel { text:"Brushing yalnız tablo vurgusudur; dataset değişmez. Filtreli yeni dataset: Veri → filtreyi hazırla → Dönüştür → Filtre. 3D bu fazda etkin değil; perspektif/örtüşme nedeniyle pair/facet 2D seçin."; Layout.fillWidth:true; wrapMode:Text.Wrap }
     UiLabel { objectName:"chartSelection"; text:qsTr("Seçim: ")+(charts.selectionResult.count||0)+" RowId · "+(charts.selectionResult.scope||"seçim yok")+"\n"+(charts.selectionResult.row_ids||[]).slice(0,5).join(", "); Layout.fillWidth:true; wrapMode:Text.Wrap }
+    UiLabel { text:qsTr("Grafik veriyi değiştirmez; sürüm kimliği aynı kalır. İşaretlenen noktalar Aşama 6 aday kümesiyle aynı RowId uzayını kullanır."); color:Theme.secondary; Layout.fillWidth:true; wrapMode:Text.Wrap }
+    UiTextArea {
+        id: chartNote
+        objectName: "chartInterpretationNote"
+        placeholderText: qsTr("Grafik yorumu / bulgu notu (taslak)")
+        Layout.fillWidth: true
+        Layout.preferredHeight: 72 * Theme.scale
+        Accessible.name: qsTr("Grafik yorumu")
+    }
+    UiButton {
+        objectName: "chartSaveNote"
+        text: qsTr("Yorumu kaydet (veri değişmez)")
+        enabled: !!charts.chartResult.dataset_version
+        Layout.fillWidth: true
+        multiline: true
+        onClicked: dataView.saveChartNote(charts.chartResult.dataset_version + ":" + (panel.kindValues[kind.currentIndex] || "chart"), chartNote.text)
+    }
     UiCheckBox { id:details; text:"Grafik verisi ve ham (ağırlıksız) sütun özeti"; Layout.fillWidth:true }
     ColumnLayout {
         visible:details.checked; Layout.fillWidth:true

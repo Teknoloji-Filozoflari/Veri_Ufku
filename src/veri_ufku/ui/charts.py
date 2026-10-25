@@ -449,6 +449,8 @@ class ChartController(QObject):
                 self.selection = value
                 if "page_row_ids" in value:
                     self.data.selectChartRows(value["page_row_ids"], value["count"])
+                    if hasattr(self.data, "markChartRows"):
+                        self.data.markChartRows(value.get("row_ids") or value["page_row_ids"])
                 self._message = f"Seçim: {value['count']} RowId; {len(value['point_ids'])} görünür nokta. Örneklenmemiş kayıtlar nokta seçimiyle seçilmez."
             elif keep:
                 if self.result_workspace:
