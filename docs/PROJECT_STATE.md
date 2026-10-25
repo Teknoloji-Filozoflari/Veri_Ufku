@@ -13,7 +13,10 @@ usability/Ruff/format PASS; `veri-ufku --smoke-test` GUI_SMOKE PASS; odaklı UI
 26 pytest PASS. Tam suite/wheel/fiziksel/AT/minHW/offline/remoteCI/longheap
 çalıştırılmadı veya bilinen açık. Resmî kabul ayrı.
 
-Sonraki: UX1 tasarım şartnamesi (`docs/UX_WORKSPACE_V2.md`).
+**UX1 teknik teslim:** [UX_WORKSPACE_V2.md](UX_WORKSPACE_V2.md) bölge yerleşimi,
+aşama şeridi, durum tabloları, mevcut ekran eşlemesi; DESIGN_SYSTEM/UI_DESIGN_BRIEF
+bağı. Kod yok. Kullanıcıya bırakılan: gerçek yeni başlayanlarla gösterim.
+Sonraki: UX2 çalışma alanı kabuğu.
 
 ---
 

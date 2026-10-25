@@ -29,3 +29,13 @@ Bilinen açıklar (düzeltilmedi): Default 2GiB full generic-cancel; source clos
 
 - Teknik teslim: denetim raporu + bu kanıt.
 - Resmî kabul: açık.
+
+## UX1 — Şartname (2026-10-25)
+
+| Alan | Değer |
+|---|---|
+| Kimlik | UX1-SPEC-20261025 |
+| Çıktı | [UX_WORKSPACE_V2.md](../UX_WORKSPACE_V2.md) |
+| Kod | Yok |
+| Belge kapısı | `check_docs.py` (commit öncesi) |
+| Kullanıcıya bırakılan | Gerçek yeni başlayanlarla gösterim (§8) |

@@ -10,7 +10,7 @@ Açık kullanıcı talimatı: Project store `veri-ufku-gelistirme-promptu.md`. Y
 | UX | Teknik teslim | Resmî / kapsam |
 |---|---|---|
 |0 Denetim| **Teknik tamamlandı:** [UX_V2_AUDIT.md](UX_V2_AUDIT.md), [E UX_V2](evidence/UX_V2.md); H1–H4; taban kapılar + 26 UI pytest + smoke | sürüyor; resmî kabul ayrı; bilinen AGENTS açıkları korunur |
-|1 Şartname| açık | — |
+|1 Şartname| **Teknik tamamlandı:** [UX_WORKSPACE_V2.md](UX_WORKSPACE_V2.md); bölge/durum/eşleme; kod yok | sürüyor; kullanıcı gösterimi ayrı |
 |2 Kabuk| açık | — |
 |3 Tablo| açık | — |
 |4 Veri alanı| açık | — |
