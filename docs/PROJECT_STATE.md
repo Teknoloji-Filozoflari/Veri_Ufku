@@ -36,7 +36,13 @@ FirstRunTour (atlanabilir), bağlam paneli «Bu adımı öğren» metinleri. Kri
 sonuç yanında kalır sözleşmesi.
 
 **UX6 teknik teslim:** `missing_drop_impact` + QualityPanel etki önizlemesi; karar
-uygulanmaz; sürüm/kaynak korunur (test). Sonraki: UX7 keşif.
+uygulanmaz; sürüm/kaynak korunur (test).
+
+**UX7 teknik teslim:** Grafik yorum alanı; brushing→ortak RowId işaretleri; grafik
+veri sürümü değiştirmez.
+
+**UX8 teknik teslim:** IQR / dayanıklı z / klasik z aday listesi; birleşik RowId;
+karar yok (Hazırla Önizle+Uygula). Sonraki: UX9 model.
 
 ---
 

@@ -89,3 +89,19 @@ Bilinen açıklar (düzeltilmedi): Default 2GiB full generic-cancel; source clos
 | Kod | `missing_drop_impact`, `previewMissingDrop`, QualityPanel UI, `tests/test_ux6_missing_*.py` |
 | Kapılar | `ux6-pytest.log` 2 PASS; Ruff/docs/smoke |
 | Resmî kabul | açık |
+
+## UX7 — Keşif (2026-10-25)
+
+| Alan | Değer |
+|---|---|
+| Kimlik | UX7-EXPLORE-20261025 |
+| Kod | ChartPanel yorum, `saveChartNote` / `markChartRows` |
+| Kapı | grafik veri değiştirmez (mevcut chart testleri + smoke) |
+
+## UX8 — Aykırı (2026-10-25)
+
+| Alan | Değer |
+|---|---|
+| Kimlik | UX8-OUTLIER-20261025 |
+| Kod | `analytics/outliers.py`, OperationsPanel aday çerçevesi, `tests/test_ux7_ux8_outliers.py` |
+| Kapı | `ux7-ux8-pytest.log`; üç yöntem; applied=false |

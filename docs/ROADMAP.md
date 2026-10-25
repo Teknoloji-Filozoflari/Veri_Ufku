@@ -16,8 +16,8 @@ Açık kullanıcı talimatı: Project store `veri-ufku-gelistirme-promptu.md`. Y
 |4 Veri alanı| **Teknik tamamlandı:** örnek katalog + Verilerim (XDG indeks); proje şeması aynı | sürüyor; resmî kabul ayrı |
 |5 Öğretim| **Teknik tamamlandı:** taslak aşama metinleri + tur; sözlük dosyası | sürüyor; metin onayı kullanıcıda |
 |6 Özet/eksik| **Teknik tamamlandı:** eksik silme etki önizlemesi (uygulamasız) | sürüyor; resmî kabul ayrı |
-|7 Keşif| açık | — |
-|8 Aykırı/hazırla| açık | — |
+|7 Keşif| **Teknik tamamlandı:** grafik yorumu + RowId işaret | sürüyor; resmî kabul ayrı |
+|8 Aykırı/hazırla| **Teknik tamamlandı:** üç yöntem aday listesi; Uygula yolu mevcut | sürüyor; resmî kabul ayrı |
 |9 Model| açık | — |
 |10 Rapor/kabul| açık | — |
 

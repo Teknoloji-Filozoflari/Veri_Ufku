@@ -9,6 +9,44 @@ ColumnLayout {
     spacing: Theme.lg
     UiLabel { text: "İşlem önizlemesi ve geçmişi"; font.pixelSize: Theme.heading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.WordWrap }
     UiLabel { text: "Kaynak dosya ve ilk içe aktarma sürümü korunur. İşlemler yeni çalışma sürümü üretir. Tablo salt okunurdur; filtre/sıralama görünümü veriyi kendiliğinden değiştirmez."; Layout.fillWidth: true; wrapMode: Text.WordWrap; color: Theme.secondary }
+    Frame {
+        objectName: "outlierCandidateFrame"
+        Layout.fillWidth: true
+        padding: Theme.md
+        background: Rectangle { color: Theme.surface; border.color: Theme.border; radius: Theme.radius }
+        ColumnLayout {
+            width: parent.width
+            spacing: Theme.sm
+            UiLabel { text: qsTr("Aykırı inceleme adayları (karar yok)"); font.bold: true; Layout.fillWidth: true; wrapMode: Text.Wrap }
+            UiLabel { text: qsTr("IQR, dayanıklı z ve klasik z yan yana. Aday hata değildir. Grafik işaretleri aynı RowId kümesine bağlanır. Silme/sınırlama yalnız Önizle+Uygula ile."); color: Theme.secondary; Layout.fillWidth: true; wrapMode: Text.Wrap }
+            UiCombo { accessibleLabel: qsTr("Aday sütunu"); id: outlierColumn; objectName: "outlierCandidateColumn"; model: dataView.datasetColumns; textRole: "name"; valueRole: "id"; Layout.fillWidth: true }
+            UiButton {
+                objectName: "outlierCandidateCompute"
+                text: qsTr("Üç yöntemle aday listesi")
+                tone: "violet"
+                enabled: !projects.busy && !dataView.busy && outlierColumn.currentIndex >= 0
+                Layout.fillWidth: true
+                multiline: true
+                onClicked: dataView.computeOutlierCandidates(outlierColumn.currentValue)
+            }
+            UiLabel {
+                objectName: "outlierCandidateSummary"
+                visible: !!dataView.outlierCandidates.dataset_version
+                text: qsTr("Birleşik aday: ") + (dataView.outlierCandidates.union_row_ids || []).length + qsTr(" · kullanılan n=") + dataView.outlierCandidates.used_n + qsTr(" · dışlanan eksik=") + dataView.outlierCandidates.excluded_missing + "\n" + dataView.outlierCandidates.disclaimer + qsTr("\nSürüm: ") + dataView.outlierCandidates.dataset_version + (dataView.outlierCandidates.chart_marked_row_ids && dataView.outlierCandidates.chart_marked_row_ids.length ? qsTr("\nGrafik işaretleri: ") + dataView.outlierCandidates.chart_marked_row_ids.length : "")
+                Layout.fillWidth: true
+                wrapMode: Text.Wrap
+            }
+            Repeater {
+                model: dataView.outlierCandidates.methods || []
+                UiLabel {
+                    required property var modelData
+                    text: modelData.method + " · n=" + modelData.count + " · " + modelData.note
+                    Layout.fillWidth: true
+                    wrapMode: Text.Wrap
+                }
+            }
+        }
+    }
     UiCombo { accessibleLabel: qsTr("Veri kümesi"); id: dataset; Layout.fillWidth: true; model: dataView.datasets; textRole: "label"; valueRole: "id"; currentIndex: dataView.datasets.findIndex(d => d.id === dataView.selectedDataset); enabled: !projects.busy; onActivated: dataView.selectDataset(currentValue) }
     UiCombo { accessibleLabel: "İşlem türü"; id: kind; objectName: "operationKind"; Layout.fillWidth: true; model: ["Sütunu yeniden adlandır", "Sütunu çıkar", "Görünüm filtrelerini veriye uygula", "Temizlik araçları", "Yeni kolon / tablo dönüşümleri","Mekânsal işlemler"]; enabled: !operations.busy; onActivated: operations.discardPreview() }
     UiCombo { accessibleLabel: "İşlem sütunu"; id: column; objectName: "operationColumn"; Layout.fillWidth: true; model: dataView.datasetColumns; textRole: "name"; valueRole: "id"; visible: kind.currentIndex < 2; enabled: !operations.busy; onActivated: operations.discardPreview() }
