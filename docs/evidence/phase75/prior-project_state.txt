@@ -1,0 +1,68 @@
+# Veri_Ufku — aktif görev hafızası
+
+2026-10-16 DEC74-01 açık Faz74: profesyonel Linux dağıtımı/core-extras ve environment
+paneli teknik teslim. Resmî sürüyor/deneysel/isteğe bağlı; [E74](evidence/PHASE74.md),
+[ADR075](adr/075-professional-distribution-phase74.md). Önceki [tam durum](evidence/phase74/prior-project_state.txt)
+ve bütün resmî açıklar korunur. Faz75 açık kullanıcı talimatı olmadan başlatılmaz.
+
+Python3.13.15/PySide6/QML, ürün adı Veri_Ufku. Tek Capability registry, ProjectStore,
+ComputeBudget, Provenance, RowId/ColumnId/SourceRecordId ve tek-yazıcı atomik protokol
+korunur. Core28 Python distribution; formats/arrays/geospatial/audio/graphs/
+statistics-advanced ayrı extras; mevcut neural/bayes/connectors/privacy/audio-speech
+korunur. Lock123packages, hash f9446a2efcd2277e370a7b79a98cf9309e8bb804f4911f64c1b3999b9167bdc1.
+Core sync `uv sync --locked --group dev`; bütün geçmiş optional testler için ayrıca
+`--all-extras`. Optional arrays/audio/graphs importları lazy; backend yoksa explicit
+kullanımda kontrollü unavailable. Core startup optional kurulumuna bağımlı değil.
+
+Rapor → Paket / bağımlılık / worker ortamı durumu: environment.inspect/profile/
+update-plan. Explicit metadata scan, artifact recorded backend versions, Qt/QML/
+plugin/native dağıtım ve GPU driver presence; execution guarantee değil. Onaylı
+metadata-only export/import2MiB; shell/install/environment switch yok. Cache yalnız
+explicit flat64file/64MiB bytes/hash; model deserialize yok. Ayrı worker environment
+provisioning/routing **mevcut değil**; uyumsuz stack'ler tek Python'a sığmış sayılmaz.
+Worker immutable request/spawn/admission/supervisor/budget; Qt/ACTIVE yok.
+
+Yerel .flatpak2GiB SHA256 update planner integrity-only; dosya biçimi/publisher
+signature/authenticated release doğrulamaz. GUI install/restart yapmaz; host Flatpak
+kullanıcı seçimi. Ayrı app commit rollback ve kapalı proje tam yedeği; app downgrade
+schema migration'ını geri almaz, yedek ayrı klasöre açılır. Genel local extra/wheelhouse/
+weight kurucusu ve tam temiz OS offline installer mevcut değil. Model-specific yerel
+model yolları eski adaptör kapsamındadır; cache inspector model desteği kanıtlamaz.
+
+Seçili yol Flatpak (AppImage yok). Exact KDE Platform/SDK6.11/BaseApp commit/native
+hashler, selected closure +installed RECORD validation. Core ve seçili arrays/
+geospatial/CPU neural gerçek Platform runtime no-network smoke PASS; real bundle
+/tmp izole FLATPAK_USER_DIR install, runtime önceden kurulu readonly deployment reuse.
+Core GUI/spawn import4row→mean2.5/sklearn predict8/save/reopen; schema4 empty fixture→7,
+eski manifest korunur. Karmaşık legacy model/downgrade garantisi değil.
+Portal ilk flatpak-build mount failure saklı; installed flatpak-run real Documents
+read grant →GUI/worker2row PASS. Origin folder açılmaz, home/Documents/Downloads
+izinleri kaldırılmış, network unshared. İnsan FileChooser testi değil.
+
+Geospatial native pyproj/shapely/pyogrio/rasterio, NetCDF3D slice/Pint offset ve CPU
+TorchMLP30step loss düşüşü gerçek. GPU/model download yok. CachyOS rolling Linux7.2.9-2
+x86_64 host glibc2.44, sandbox glibc2.42/CPython3.13.15;32GB/Ryzen7 8845HS.
+Pardus/Debian/ayrı Arch/GPU/temiz OS offline installer/insan chooser/remote CI test
+edilmedi. Bu smoke minimum donanım veya performans iddiası değildir.
+
+Türkçe/İngilizce install ve API/contribution rehberi, notices/core29/pro61 Python
+CycloneDX SBOM; OS/runtime/native/model-data tam SBOM değil. Explicit core/pro OSV
+scan no-matches-in-scanned-scope, ilk sandbox unavailable saklı. Public names/versions
+haricinde veri gönderilmedi. Manual read-only full-SHA pinned release candidate CI,
+remote çalıştırılmadı, dış release yok, candidate unsigned. Birden çok model ortamını
+otomatik kurma yok; toolchain/env import kullanıcı kodu import etmez.
+
+Son test sayıları, package hashleri, source/wheel byte parity ve açık kontroller
+[E74](evidence/PHASE74.md) / acceptance.json içinde; önceki faz sonucu bu fazda yeniden
+koşulmuş sayılmaz.414article/content90,416static caps;10interactive/406article-linked.
+Default2GiB yeni environment GUI proof ayrı; önceki longheap/2GiB/fiziksel/insan/AT/
+minHW/keyring/offlineinstaller/remoteCI açıkları korunur. Stage/commit/push yok.
+
+Nihai E74:157source/157wheel focused PASS (arrays10each sandbox dışında),1each
+separate actual environment GUI PASS;431byte parity source/wheel/iki Flatpak profile.
+147source final PASS76.31s;100wheel80.29s+47wheel3.16s;14document16.566s PASS.
+İlk restricted Zarr fixture wait/SIGTERM ve disk rezervi50fail/97pass kaydı saklı;
+aynı arrays outside10/10each geçti, kesin restricted-root-cause açık. Son core269MiB
+ve professional460MiB gerçek bundle→/tmp isolated install→Platform offline smoke PASS.
+Core son portal pass; runtime preinstalled, clean OS değildir. Nihai SHA256/build/
+komut ve acceptance.json E74'te. Candidate unsigned/local /tmp, dış yayınlama yok.

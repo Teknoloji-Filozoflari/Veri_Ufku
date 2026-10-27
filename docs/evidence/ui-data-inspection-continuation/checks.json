@@ -1,0 +1,176 @@
+[
+  {
+    "name": "sync",
+    "command": [
+      "uv",
+      "sync",
+      "--locked",
+      "--group",
+      "dev"
+    ],
+    "date": "2026-10-09T23:28:06.734837+00:00",
+    "seconds": 0.009211956999934046,
+    "exit_code": 0
+  },
+  {
+    "name": "format",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "date": "2026-10-09T23:28:06.752839+00:00",
+    "seconds": 0.01794396900004358,
+    "exit_code": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "date": "2026-10-09T23:28:06.771618+00:00",
+    "seconds": 0.018705418002355145,
+    "exit_code": 1
+  },
+  {
+    "name": "format-check",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "date": "2026-10-09T23:28:06.788327+00:00",
+    "seconds": 0.016623858002276393,
+    "exit_code": 0
+  },
+  {
+    "name": "docs",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_docs.py"
+    ],
+    "date": "2026-10-09T23:28:06.892433+00:00",
+    "seconds": 0.10401073399771121,
+    "exit_code": 0
+  },
+  {
+    "name": "artifacts",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_artifacts.py"
+    ],
+    "date": "2026-10-09T23:28:07.017520+00:00",
+    "seconds": 0.12428603700027452,
+    "exit_code": 0
+  },
+  {
+    "name": "learning",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_learning.py"
+    ],
+    "date": "2026-10-09T23:28:07.075577+00:00",
+    "seconds": 0.05795816500176443,
+    "exit_code": 0
+  },
+  {
+    "name": "usability",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_usability.py"
+    ],
+    "date": "2026-10-09T23:28:07.165324+00:00",
+    "seconds": 0.08957360999920638,
+    "exit_code": 0
+  },
+  {
+    "name": "pytest",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "pytest",
+      "-q",
+      "--junitxml=docs/evidence/ui-data-inspection-continuation/pytest.xml"
+    ],
+    "date": "2026-10-09T23:32:08.748962+00:00",
+    "seconds": 241.58344208500057,
+    "exit_code": 1
+  },
+  {
+    "name": "unittest",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "date": "2026-10-09T23:32:13.851031+00:00",
+    "seconds": 5.101889101999404,
+    "exit_code": 0
+  },
+  {
+    "name": "keyboard",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/measure_phase25.py",
+      "--output",
+      "docs/evidence/ui-data-inspection-continuation/keyboard.json"
+    ],
+    "date": "2026-10-09T23:32:40.458818+00:00",
+    "seconds": 26.60759368300205,
+    "exit_code": 0
+  },
+  {
+    "name": "entry",
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "veri-ufku",
+      "--smoke-test"
+    ],
+    "date": "2026-10-09T23:32:41.203354+00:00",
+    "seconds": 0.7444235229995684,
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,13 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+________ test_basic_import_project_route_advanced_settings_and_success _________
+tests/test_import_gui.py:349: in test_basic_import_project_route_advanced_settings_and_success
+    assert not window.findChild(QQuickItem, "helpButton").isVisible()
+E   assert not True
+E    +  where True = <built-in method isVisible of PySide6.QtQuick.QQuickItem object at 0x7f92486784c0>()
+E    +    where <built-in method isVisible of PySide6.QtQuick.QQuickItem object at 0x7f92486784c0> = <PySide6.QtQuick.QQuickItem(0x17fba6f0, id="helpButton", name="helpButton", parent=0x17f17120, geometry=782,0 158x40) at 0x7f92486784c0>.isVisible
+E    +      where <PySide6.QtQuick.QQuickItem(0x17fba6f0, id="helpButton", name="helpButton", parent=0x17f17120, geometry=782,0 158x40) at 0x7f92486784c0> = <built-in method findChild of PySide6.QtQuick.QQuickWindow object at 0x7f924aa3a680>(QQuickItem, 'helpButton')
+E    +        where <built-in method findChild of PySide6.QtQuick.QQuickWindow object at 0x7f924aa3a680> = <PySide6.QtQuick.QQuickWindow(0x17da8df0 active exposed, visibility=QWindow::Windowed, flags=QFlags<Qt::WindowType>(Window), title="Veri_Ufku", name="mainWindow", geometry=2,2 1200x800) at 0x7f924aa3a680>.findChild
+=========================== short test summary info ============================
+FAILED tests/test_import_gui.py::test_basic_import_project_route_advanced_settings_and_success
+1 failed, 3 passed in 1.88s

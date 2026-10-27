@@ -1,0 +1,25 @@
+PASS violin
+PASS kde
+PASS ecdf
+PASS rug
+PASS strip
+PASS swarm
+PASS qq
+Traceback (most recent call last):
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase35.py", line 157, in <module>
+    main()
+    ~~~~^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase35.py", line 138, in main
+    test_qml_distribution_help_worker_exports_and_reopen(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        work, patch, kind, render
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_distributions_gui.py", line 101, in test_qml_distribution_help_worker_exports_and_reopen
+    render(app, window, kind, "chartImage", charts.result)
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase35.py", line 73, in render
+    assert result["dataset_version"] in text and "DPI=" in text
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

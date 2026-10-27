@@ -1,0 +1,807 @@
+{
+  "result": {
+    "comparison": {
+      "schema": "ReproComparison/v1",
+      "status": "matched",
+      "difference_count": 0,
+      "differences": [],
+      "differences_truncated": false,
+      "policy": {
+        "schema": "ReproTolerance/v1",
+        "mode": "exact",
+        "profile": "Decimal80 profile strings/counts/scope exact; no epsilon for integers/Decimal/identities",
+        "float64_workflow": {
+          "rtol": "0",
+          "atol": "0",
+          "fields": [
+            "coefficients",
+            "predictions"
+          ],
+          "reason": "Bounded OLS Float64 coefficient/matrix prediction; small platform rounding allowance in output units. Not a universal statistical equivalence or conditioning guarantee; inspect differences. Environment/backend lock must still match."
+        },
+        "identities": "RowId/SourceRecordId/ColumnId, integer counts, categories and null masks exact",
+        "supported_method": "profile"
+      },
+      "reference_hash": "5c277983555a1a517865230f7695c0943bc388ca778da9634be05f2f58cd6e05",
+      "actual_hash": "5c277983555a1a517865230f7695c0943bc388ca778da9634be05f2f58cd6e05",
+      "scope": "defined analytical projection only; timestamps/cache/run UUIDs/visual layout not compared; original source hash must match",
+      "bundle_fingerprint": {
+        "sha256": "753e0618b4ad09fc25976b1a4af9587a3cb2354a0b44dc6551646db4d0866165",
+        "size": 7625
+      },
+      "source_status": "all exact hashes verified",
+      "data_access": "explicit read-only local project",
+      "environment_hash": "a32cfc8b8127b17fe914b2e25be4e569a7ebbaeeae5921cf6873672c862e0197",
+      "replay_kind": "profile"
+    },
+    "receipt": {
+      "path": "/tmp/pytest-of-s-oktay/pytest-160/test_gui_report_lineage_refere0/compare.vureprotest",
+      "size": 1878,
+      "sha256": "a8e0aa7d65c37069a8e3b9409828570f6d7adbf573e2c5396fd301f79836a98c"
+    },
+    "status": "matched"
+  },
+  "preview": {
+    "schema": "ReproPlan/v1",
+    "focus": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a",
+    "project_id": "f7332a6d-064a-4df6-a1e3-bd8547a989cd",
+    "commit_id": "a9ad20fe-a148-492c-b831-b157ec374ae6",
+    "lineage": {
+      "schema": "LineageGraph/v1",
+      "focus": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a",
+      "nodes": [
+        {
+          "id": "source:710e8033-609a-48c5-86b5-1749f40a5c96",
+          "kind": "source",
+          "metadata": {
+            "version": {
+              "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4",
+              "size": 840
+            },
+            "snapshot": {
+              "uri": "sources/348d243b-338b-43f0-aed2-ed139f93ab74.bin",
+              "fingerprint": {
+                "size": 840,
+                "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4"
+              }
+            },
+            "source_location": "[redacted]",
+            "source_adapter": "not_recorded",
+            "provenance": "not_recorded"
+          }
+        },
+        {
+          "id": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+          "kind": "dataset",
+          "metadata": {
+            "dataset_id": "dataset:a88da2a1-9f57-465e-9234-baeeb9a1f0d8",
+            "version": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+            "snapshot": {
+              "uri": "snapshots/94317f8d-6ea1-45cf-8796-c7a7404c4ead.parquet",
+              "fingerprint": {
+                "size": 4349,
+                "sha256": "3b9c9dc355d25fddfa40c2a3586d237914fcff083badc68bb8dfdb4bfbcedbfe"
+              }
+            },
+            "schema": [
+              {
+                "id": "col:7ef7cada-6dda-4d15-a8fd-7fd5f1a428cf",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              },
+              {
+                "id": "col:b6f9896d-295a-4ed3-91e4-9f164ddbe57b",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              }
+            ],
+            "schema_contract": "not_recorded",
+            "semantic_metadata": {},
+            "rows": 4,
+            "row_lineage": {
+              "status": "preserved_identity_or_not_recorded; inspect operation policy"
+            },
+            "source_snapshot_id": "snapshot:e19bf35c-a9e9-4ba7-a78c-9ea6e00b0ff5"
+          }
+        },
+        {
+          "id": "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab",
+          "kind": "analysis",
+          "metadata": {
+            "record_kind": "profile",
+            "run_id": "not_recorded",
+            "schema": "not_recorded",
+            "params": {},
+            "provenance": {
+              "capability_id": "dataset.profile",
+              "column_lineage_ref": "col:7ef7cada-6dda-4d15-a8fd-7fd5f1a428cf",
+              "config_revision": 4,
+              "created_at": "2026-10-15T21:00:41.803462+00:00",
+              "dataset_versions": [
+                "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9"
+              ],
+              "environment": [
+                [
+                  "polars",
+                  "2.0.0"
+                ],
+                [
+                  "arithmetic",
+                  "Decimal precision80"
+                ]
+              ],
+              "exclusions": [
+                "null",
+                "NaN",
+                "+infinity",
+                "-infinity"
+              ],
+              "filters": [],
+              "learning_content_version": "6",
+              "method_version": 1,
+              "parameters_hash": "3fa9fdb33a7023fdb15121f8e75c9d877d8bc53b8fb3484c4d555105903633e5",
+              "provenance_id": "prov:ba225889-63c4-4e71-bf2e-5ebedb6412db",
+              "row_lineage_ref": "snapshots/94317f8d-6ea1-45cf-8796-c7a7404c4ead.parquet",
+              "scope": "full",
+              "seed": null,
+              "seed_reason": "Tam tarama; örnekleme yok",
+              "source_snapshot_ids": [
+                "snapshot:e19bf35c-a9e9-4ba7-a78c-9ea6e00b0ff5"
+              ]
+            },
+            "capture": "not_recorded",
+            "recorded_environment": "not_recorded",
+            "hardware": "not_recorded",
+            "model_artifact": "not_recorded",
+            "details_artifact": "not_recorded",
+            "status": "not_recorded",
+            "report_reference": {
+              "dataset_version": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9"
+            },
+            "legacy_gaps": "Only recorded fields. Package/hardware/code/user decision may be not_recorded."
+          }
+        },
+        {
+          "id": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a",
+          "kind": "report",
+          "metadata": {
+            "record_kind": "export",
+            "run_id": "not_recorded",
+            "schema": "not_recorded",
+            "params": {},
+            "provenance": "not_recorded",
+            "capture": "not_recorded",
+            "recorded_environment": "not_recorded",
+            "hardware": "not_recorded",
+            "model_artifact": "not_recorded",
+            "details_artifact": "not_recorded",
+            "status": "not_recorded",
+            "report_reference": {
+              "format": "html",
+              "published": {
+                "path": "[redacted]",
+                "sha256": "81443f3bafdf1d44ae3c454dafb5223fb3f8283b15108547fd7f51dde749f617",
+                "size": 1026972
+              },
+              "dataset_version": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+              "lineage_record_ids": [
+                "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab"
+              ],
+              "lineage_context_version": 1
+            },
+            "legacy_gaps": "Only recorded fields. Package/hardware/code/user decision may be not_recorded."
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "source:710e8033-609a-48c5-86b5-1749f40a5c96",
+          "target": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+          "relation": "import_or_source_reference"
+        },
+        {
+          "source": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+          "target": "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab",
+          "relation": "recorded_dataset_input"
+        },
+        {
+          "source": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+          "target": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a",
+          "relation": "recorded_dataset_input"
+        },
+        {
+          "source": "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab",
+          "target": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a",
+          "relation": "included_in_report"
+        }
+      ],
+      "limits": [
+        "Dataset-level links use only recorded identities.",
+        "RowId is not global across all datasets. Multi-source row edges only when a lineage Parquet was recorded; no reverse relation is fabricated.",
+        "Old reports without record IDs trace to dataset only; analyses/models not guessed.",
+        "Current machine information is not historical run hardware."
+      ]
+    },
+    "references": [
+      {
+        "version_id": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+        "source_snapshot_id": "snapshot:e19bf35c-a9e9-4ba7-a78c-9ea6e00b0ff5",
+        "uri": "snapshots/94317f8d-6ea1-45cf-8796-c7a7404c4ead.parquet",
+        "fingerprint": {
+          "size": 4349,
+          "sha256": "3b9c9dc355d25fddfa40c2a3586d237914fcff083badc68bb8dfdb4bfbcedbfe"
+        },
+        "rows": 4,
+        "columns": [
+          {
+            "id": "col:7ef7cada-6dda-4d15-a8fd-7fd5f1a428cf",
+            "type": "Float64"
+          },
+          {
+            "id": "col:b6f9896d-295a-4ed3-91e4-9f164ddbe57b",
+            "type": "Float64"
+          }
+        ],
+        "semantic_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "column_schema_hash": "33a9a25bd07fb8604f041eaa352f5d171fb13e7bd38c5b8a3d88b3e61aeca39a",
+        "access": "local project snapshot or explicit included native data; no credential or network resolver"
+      }
+    ],
+    "replay": {
+      "kind": "profile",
+      "version": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+      "recipe": {
+        "column_id": "col:7ef7cada-6dda-4d15-a8fd-7fd5f1a428cf",
+        "sample": false,
+        "ddof": 1,
+        "sample_limit": 10000
+      },
+      "reference": {
+        "counts": {
+          "empty_string": 0,
+          "nan": 0,
+          "negative_infinity": 0,
+          "null": 0,
+          "positive_infinity": 0,
+          "valid": 4
+        },
+        "numeric": {
+          "arithmetic": "Decimal precision80; sqrt rounded half-even",
+          "ddof": 1,
+          "exclusions": "null, NaN, +infinity, -infinity",
+          "finite_n": 4,
+          "maximum": "4",
+          "mean": "2.5",
+          "median": "2.5",
+          "minimum": "1",
+          "quantile_method": "linear h=(n-1)*q",
+          "quantiles": {
+            "0.05": "1.15",
+            "0.25": "1.75",
+            "0.5": "2.5",
+            "0.75": "3.25",
+            "0.95": "3.85"
+          },
+          "std": "1.2909944487358056283930884665941332036109739017638636088625245887044943639789930",
+          "suppressed": false
+        },
+        "used_n": 4,
+        "population_n": 4,
+        "scope": "full",
+        "sampling_method": "none",
+        "representative_sample": null
+      }
+    },
+    "rerun_supported": true,
+    "rerun_reason": "profile Decimal80 / bounded workflow numeric projection; compare defined fields only",
+    "include_data": false,
+    "estimated_data_bytes": 0,
+    "redactions": [
+      {
+        "field": "root.lineage.nodes.0.metadata.source_location",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.1.metadata.schema.0.name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.1.metadata.schema.0.original_name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.1.metadata.schema.1.name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.1.metadata.schema.1.original_name",
+        "reason": "secret/location/free-text field"
+      },
+      {
+        "field": "root.lineage.nodes.3.metadata.report_reference.published.path",
+        "reason": "secret/location/free-text field"
+      }
+    ],
+    "storage": {
+      "artifact_usage_bytes": 5189,
+      "quota_bytes": 4294967296,
+      "snapshot": "immutable native copy retained by project; bundle data inclusion is a separate choice",
+      "reference": "version/URI/hash/schema only; access to original local project required without included data",
+      "retention": "retain historical snapshots/artifacts; no automatic deletion/GC; archive does not reclaim disk",
+      "deletion": "Deleting project/bundle may permanently lose snapshots and reproducibility; no delete operation here"
+    },
+    "sensitive_content": "Aggregates/config may be sensitive. Data inclusion can contain personal/raw values and native row identifiers; user review required. Pattern scan is not a universal secret detector.",
+    "retention": "No automatic expiration or deletion. Reference-only bundle does not preserve source bytes.",
+    "captured_hardware": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "visible_cpu_count": 2,
+      "physical_memory_bytes": 32913383424,
+      "device": "cpu",
+      "gpu": "not_probed",
+      "scope": "captured now; not attributed to historical runs",
+      "backend_versions": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.0",
+        "polars": "2.0.0",
+        "statsmodels": "0.15.0"
+      }
+    },
+    "preview_hash": "3425991c5e01fe95a94657888b88c08072dc9ac7272cc82a13fbddc66ba7ed80"
+  },
+  "opened": {
+    "manifest": {
+      "bundle_id": "bundle:17ebe306-7da2-45a5-818c-3316b49601b9",
+      "commit_id": "a9ad20fe-a148-492c-b831-b157ec374ae6",
+      "created_at": "2026-10-15T21:01:06.314909+00:00",
+      "focus": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a",
+      "help": {
+        "articles": {
+          "repro-environment": 1,
+          "repro-lineage": 1,
+          "repro-record": 1,
+          "repro-snapshot": 1,
+          "repro-tolerance": 1
+        },
+        "content_version": 81
+      },
+      "include_data": false,
+      "members": {
+        "README.txt": {
+          "sha256": "b0df5319d05293d776881ac0c4c0d5c7f6fd78e8af6bf8c25a0bc8f043be3b17",
+          "size": 597
+        },
+        "config.json": {
+          "sha256": "6989124e76a77171b1905c8d81ef445bf99ee15ba58ccc89013792efc95e4b5f",
+          "size": 880
+        },
+        "environment.lock.json": {
+          "sha256": "6f8edb2f74feb65ce2b310490e36bd90e54a1b97b52a3cba3f99c47ef48ec277",
+          "size": 1793
+        },
+        "hardware.json": {
+          "sha256": "3117b43b20124f7bb65dd191485ebceb2ab7aa8f5d2133f060487de2e7a6205d",
+          "size": 281
+        },
+        "lineage.json": {
+          "sha256": "750950dee3d3161276c313370da55343e1690304f8f6fd09605ea82049ef973b",
+          "size": 4418
+        },
+        "redaction-preview.json": {
+          "sha256": "51b16fd4ab172da0bf12c7531987f02a78443561f6e5e3dc4640f470b4981bb4",
+          "size": 868
+        },
+        "reference-report.json": {
+          "sha256": "b609940b1f77623e33ddc9febdb66cbfad957fa9196d0809f0f1cf8b7e3957f7",
+          "size": 621
+        },
+        "requirements.lock": {
+          "sha256": "d670fe0d122f945d94e8d10822e0207a5493190ba7fd11f8217c2e14dc639d1f",
+          "size": 1056
+        },
+        "storage-policy.json": {
+          "sha256": "d88f6120a3399de83e4a52d2530bb822c4afae9161ec59ce585edb2e55400d92",
+          "size": 484
+        }
+      },
+      "methods": {
+        "profile": 1,
+        "workflow": 1
+      },
+      "project_id": "f7332a6d-064a-4df6-a1e3-bd8547a989cd",
+      "project_schema": 7,
+      "references": [
+        {
+          "access": "local project snapshot or explicit included native data; no credential or network resolver",
+          "column_schema_hash": "33a9a25bd07fb8604f041eaa352f5d171fb13e7bd38c5b8a3d88b3e61aeca39a",
+          "columns": [
+            {
+              "id": "col:7ef7cada-6dda-4d15-a8fd-7fd5f1a428cf",
+              "type": "Float64"
+            },
+            {
+              "id": "col:b6f9896d-295a-4ed3-91e4-9f164ddbe57b",
+              "type": "Float64"
+            }
+          ],
+          "fingerprint": {
+            "sha256": "3b9c9dc355d25fddfa40c2a3586d237914fcff083badc68bb8dfdb4bfbcedbfe",
+            "size": 4349
+          },
+          "rows": 4,
+          "semantic_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "source_snapshot_id": "snapshot:e19bf35c-a9e9-4ba7-a78c-9ea6e00b0ff5",
+          "uri": "snapshots/94317f8d-6ea1-45cf-8796-c7a7404c4ead.parquet",
+          "version_id": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9"
+        }
+      ],
+      "rerun_reason": "profile Decimal80 / bounded workflow numeric projection; compare defined fields only",
+      "rerun_supported": true,
+      "safe_artifacts": "closed config/reference aggregate JSON and opt-in native snapshots only; arbitrary model object or executable never included",
+      "schema": "ReproBundle/v1"
+    },
+    "lineage": {
+      "edges": [
+        {
+          "relation": "import_or_source_reference",
+          "source": "source:710e8033-609a-48c5-86b5-1749f40a5c96",
+          "target": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9"
+        },
+        {
+          "relation": "recorded_dataset_input",
+          "source": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+          "target": "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab"
+        },
+        {
+          "relation": "recorded_dataset_input",
+          "source": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+          "target": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a"
+        },
+        {
+          "relation": "included_in_report",
+          "source": "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab",
+          "target": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a"
+        }
+      ],
+      "focus": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a",
+      "limits": [
+        "Dataset-level links use only recorded identities.",
+        "RowId is not global across all datasets. Multi-source row edges only when a lineage Parquet was recorded; no reverse relation is fabricated.",
+        "Old reports without record IDs trace to dataset only; analyses/models not guessed.",
+        "Current machine information is not historical run hardware."
+      ],
+      "nodes": [
+        {
+          "id": "source:710e8033-609a-48c5-86b5-1749f40a5c96",
+          "kind": "source",
+          "metadata": {
+            "provenance": "not_recorded",
+            "snapshot": {
+              "fingerprint": {
+                "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4",
+                "size": 840
+              },
+              "uri": "sources/348d243b-338b-43f0-aed2-ed139f93ab74.bin"
+            },
+            "source_adapter": "not_recorded",
+            "source_location": "[redacted]",
+            "version": {
+              "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4",
+              "size": 840
+            }
+          }
+        },
+        {
+          "id": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+          "kind": "dataset",
+          "metadata": {
+            "dataset_id": "dataset:a88da2a1-9f57-465e-9234-baeeb9a1f0d8",
+            "row_lineage": {
+              "status": "preserved_identity_or_not_recorded; inspect operation policy"
+            },
+            "rows": 4,
+            "schema": [
+              {
+                "id": "col:7ef7cada-6dda-4d15-a8fd-7fd5f1a428cf",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              },
+              {
+                "id": "col:b6f9896d-295a-4ed3-91e4-9f164ddbe57b",
+                "name": "[redacted]",
+                "original_name": "[redacted]",
+                "type": "Float64"
+              }
+            ],
+            "schema_contract": "not_recorded",
+            "semantic_metadata": {},
+            "snapshot": {
+              "fingerprint": {
+                "sha256": "3b9c9dc355d25fddfa40c2a3586d237914fcff083badc68bb8dfdb4bfbcedbfe",
+                "size": 4349
+              },
+              "uri": "snapshots/94317f8d-6ea1-45cf-8796-c7a7404c4ead.parquet"
+            },
+            "source_snapshot_id": "snapshot:e19bf35c-a9e9-4ba7-a78c-9ea6e00b0ff5",
+            "version": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9"
+          }
+        },
+        {
+          "id": "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab",
+          "kind": "analysis",
+          "metadata": {
+            "capture": "not_recorded",
+            "details_artifact": "not_recorded",
+            "hardware": "not_recorded",
+            "legacy_gaps": "Only recorded fields. Package/hardware/code/user decision may be not_recorded.",
+            "model_artifact": "not_recorded",
+            "params": {},
+            "provenance": {
+              "capability_id": "dataset.profile",
+              "column_lineage_ref": "col:7ef7cada-6dda-4d15-a8fd-7fd5f1a428cf",
+              "config_revision": 4,
+              "created_at": "2026-10-15T21:00:41.803462+00:00",
+              "dataset_versions": [
+                "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9"
+              ],
+              "environment": [
+                [
+                  "polars",
+                  "2.0.0"
+                ],
+                [
+                  "arithmetic",
+                  "Decimal precision80"
+                ]
+              ],
+              "exclusions": [
+                "null",
+                "NaN",
+                "+infinity",
+                "-infinity"
+              ],
+              "filters": [],
+              "learning_content_version": "6",
+              "method_version": 1,
+              "parameters_hash": "3fa9fdb33a7023fdb15121f8e75c9d877d8bc53b8fb3484c4d555105903633e5",
+              "provenance_id": "prov:ba225889-63c4-4e71-bf2e-5ebedb6412db",
+              "row_lineage_ref": "snapshots/94317f8d-6ea1-45cf-8796-c7a7404c4ead.parquet",
+              "scope": "full",
+              "seed": null,
+              "seed_reason": "Tam tarama; örnekleme yok",
+              "source_snapshot_ids": [
+                "snapshot:e19bf35c-a9e9-4ba7-a78c-9ea6e00b0ff5"
+              ]
+            },
+            "record_kind": "profile",
+            "recorded_environment": "not_recorded",
+            "report_reference": {
+              "dataset_version": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9"
+            },
+            "run_id": "not_recorded",
+            "schema": "not_recorded",
+            "status": "not_recorded"
+          }
+        },
+        {
+          "id": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a",
+          "kind": "report",
+          "metadata": {
+            "capture": "not_recorded",
+            "details_artifact": "not_recorded",
+            "hardware": "not_recorded",
+            "legacy_gaps": "Only recorded fields. Package/hardware/code/user decision may be not_recorded.",
+            "model_artifact": "not_recorded",
+            "params": {},
+            "provenance": "not_recorded",
+            "record_kind": "export",
+            "recorded_environment": "not_recorded",
+            "report_reference": {
+              "dataset_version": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+              "format": "html",
+              "lineage_context_version": 1,
+              "lineage_record_ids": [
+                "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab"
+              ],
+              "published": {
+                "path": "[redacted]",
+                "sha256": "81443f3bafdf1d44ae3c454dafb5223fb3f8283b15108547fd7f51dde749f617",
+                "size": 1026972
+              }
+            },
+            "run_id": "not_recorded",
+            "schema": "not_recorded",
+            "status": "not_recorded"
+          }
+        }
+      ],
+      "schema": "LineageGraph/v1"
+    },
+    "status": "integrity_verified; no execution",
+    "fingerprint": {
+      "sha256": "753e0618b4ad09fc25976b1a4af9587a3cb2354a0b44dc6551646db4d0866165",
+      "size": 7625
+    }
+  },
+  "graph": {
+    "edges": [
+      {
+        "relation": "import_or_source_reference",
+        "source": "source:710e8033-609a-48c5-86b5-1749f40a5c96",
+        "target": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9"
+      },
+      {
+        "relation": "recorded_dataset_input",
+        "source": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+        "target": "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab"
+      },
+      {
+        "relation": "recorded_dataset_input",
+        "source": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+        "target": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a"
+      },
+      {
+        "relation": "included_in_report",
+        "source": "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab",
+        "target": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a"
+      }
+    ],
+    "focus": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a",
+    "limits": [
+      "Dataset-level links use only recorded identities.",
+      "RowId is not global across all datasets. Multi-source row edges only when a lineage Parquet was recorded; no reverse relation is fabricated.",
+      "Old reports without record IDs trace to dataset only; analyses/models not guessed.",
+      "Current machine information is not historical run hardware."
+    ],
+    "nodes": [
+      {
+        "id": "source:710e8033-609a-48c5-86b5-1749f40a5c96",
+        "kind": "source",
+        "metadata": {
+          "provenance": "not_recorded",
+          "snapshot": {
+            "fingerprint": {
+              "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4",
+              "size": 840
+            },
+            "uri": "sources/348d243b-338b-43f0-aed2-ed139f93ab74.bin"
+          },
+          "source_adapter": "not_recorded",
+          "source_location": "[redacted]",
+          "version": {
+            "sha256": "808c4b8f6214daca81feb3d97936eb2369db6d9597d2e94804a203e44933e1d4",
+            "size": 840
+          }
+        }
+      },
+      {
+        "id": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+        "kind": "dataset",
+        "metadata": {
+          "dataset_id": "dataset:a88da2a1-9f57-465e-9234-baeeb9a1f0d8",
+          "row_lineage": {
+            "status": "preserved_identity_or_not_recorded; inspect operation policy"
+          },
+          "rows": 4,
+          "schema": [
+            {
+              "id": "col:7ef7cada-6dda-4d15-a8fd-7fd5f1a428cf",
+              "name": "[redacted]",
+              "original_name": "[redacted]",
+              "type": "Float64"
+            },
+            {
+              "id": "col:b6f9896d-295a-4ed3-91e4-9f164ddbe57b",
+              "name": "[redacted]",
+              "original_name": "[redacted]",
+              "type": "Float64"
+            }
+          ],
+          "schema_contract": "not_recorded",
+          "semantic_metadata": {},
+          "snapshot": {
+            "fingerprint": {
+              "sha256": "3b9c9dc355d25fddfa40c2a3586d237914fcff083badc68bb8dfdb4bfbcedbfe",
+              "size": 4349
+            },
+            "uri": "snapshots/94317f8d-6ea1-45cf-8796-c7a7404c4ead.parquet"
+          },
+          "source_snapshot_id": "snapshot:e19bf35c-a9e9-4ba7-a78c-9ea6e00b0ff5",
+          "version": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9"
+        }
+      },
+      {
+        "id": "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab",
+        "kind": "analysis",
+        "metadata": {
+          "capture": "not_recorded",
+          "details_artifact": "not_recorded",
+          "hardware": "not_recorded",
+          "legacy_gaps": "Only recorded fields. Package/hardware/code/user decision may be not_recorded.",
+          "model_artifact": "not_recorded",
+          "params": {},
+          "provenance": {
+            "capability_id": "dataset.profile",
+            "column_lineage_ref": "col:7ef7cada-6dda-4d15-a8fd-7fd5f1a428cf",
+            "config_revision": 4,
+            "created_at": "2026-10-15T21:00:41.803462+00:00",
+            "dataset_versions": [
+              "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9"
+            ],
+            "environment": [
+              [
+                "polars",
+                "2.0.0"
+              ],
+              [
+                "arithmetic",
+                "Decimal precision80"
+              ]
+            ],
+            "exclusions": [
+              "null",
+              "NaN",
+              "+infinity",
+              "-infinity"
+            ],
+            "filters": [],
+            "learning_content_version": "6",
+            "method_version": 1,
+            "parameters_hash": "3fa9fdb33a7023fdb15121f8e75c9d877d8bc53b8fb3484c4d555105903633e5",
+            "provenance_id": "prov:ba225889-63c4-4e71-bf2e-5ebedb6412db",
+            "row_lineage_ref": "snapshots/94317f8d-6ea1-45cf-8796-c7a7404c4ead.parquet",
+            "scope": "full",
+            "seed": null,
+            "seed_reason": "Tam tarama; örnekleme yok",
+            "source_snapshot_ids": [
+              "snapshot:e19bf35c-a9e9-4ba7-a78c-9ea6e00b0ff5"
+            ]
+          },
+          "record_kind": "profile",
+          "recorded_environment": "not_recorded",
+          "report_reference": {
+            "dataset_version": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9"
+          },
+          "run_id": "not_recorded",
+          "schema": "not_recorded",
+          "status": "not_recorded"
+        }
+      },
+      {
+        "id": "result:c07fef23-18a2-4fef-99fa-0c4ad1adec8a",
+        "kind": "report",
+        "metadata": {
+          "capture": "not_recorded",
+          "details_artifact": "not_recorded",
+          "hardware": "not_recorded",
+          "legacy_gaps": "Only recorded fields. Package/hardware/code/user decision may be not_recorded.",
+          "model_artifact": "not_recorded",
+          "params": {},
+          "provenance": "not_recorded",
+          "record_kind": "export",
+          "recorded_environment": "not_recorded",
+          "report_reference": {
+            "dataset_version": "dv:3881bbee-bb11-4ad4-97d0-baa05dc8d7c9",
+            "format": "html",
+            "lineage_context_version": 1,
+            "lineage_record_ids": [
+              "result:f1e5b785-3aea-4f8c-9741-80477e77d4ab"
+            ],
+            "published": {
+              "path": "[redacted]",
+              "sha256": "81443f3bafdf1d44ae3c454dafb5223fb3f8283b15108547fd7f51dde749f617",
+              "size": 1026972
+            }
+          },
+          "run_id": "not_recorded",
+          "schema": "not_recorded",
+          "status": "not_recorded"
+        }
+      }
+    ],
+    "schema": "LineageGraph/v1"
+  }
+}

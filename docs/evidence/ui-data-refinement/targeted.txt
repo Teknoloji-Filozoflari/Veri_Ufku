@@ -1,0 +1,99 @@
+.......................................................................F [ 96%]
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+___________ test_textarea_tab_exits_and_picker_survives_type_update ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-7/test_textarea_tab_exits_and_pi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fea6a3316a0>
+
+    def test_textarea_tab_exits_and_picker_survives_type_update(tmp_path, monkeypatch):
+        from PySide6.QtQuick import QQuickItem
+        from test_gui import visual_item
+    
+        app, window, _, _, imports = setup(tmp_path, monkeypatch)
+        try:
+            window.setProperty("selectedSection", 1)
+            source = tmp_path / "keyboard.csv"
+            source.write_text("x,y\n1.5,2.5\n3.5,4.5\n")
+            imports.choose(str(source))
+            spin(app, lambda: not imports.busy)
+            imports.setOption("header_row", 1)
+            imports.refreshPreview()
+            spin(app, lambda: not imports.busy)
+            imports.importData()
+            spin(app, lambda: not imports.busy)
+            engine = app._veri_ufku_resources[0]
+            data = engine._dataset_resources
+            data.selectColumn(data.datasetColumns[0]["id"])
+            window.findChild(QObject, "datasetTabs").setProperty("currentIndex", 0)
+            window.setProperty("dataPane", "notes")
+            QTest.qWait(30)
+            field = window.findChild(QQuickItem, "columnDescription")
+            field.forceActiveFocus()
+            QTest.keyClick(window, Qt.Key_Tab)
+            assert not field.hasActiveFocus()
+            original = field.property("text")
+            QTest.keyClick(window, Qt.Key_Tab, Qt.ShiftModifier)
+            assert field.hasActiveFocus() and field.property("text") == original
+            imports.refreshPreview()
+            spin(app, lambda: not imports.busy)
+            window.findChild(QObject, "datasetTabs").setProperty("currentIndex", 1)
+            window.findChild(QObject, "importAdvancedButton").clicked.emit()
+            QTest.qWait(50)
+            picker = visual_item(window.contentItem(), "importType_x")
+            assert picker
+            picker.forceActiveFocus()
+            for expected in (1, 2):
+                QTest.keyClick(window, Qt.Key_Down)
+                QTest.qWait(30)
+                replacement = visual_item(window.contentItem(), "importType_x")
+>               assert replacement.property("currentIndex") == expected
+E               assert 4 == 1
+E                +  where 4 = <built-in method property of PySide6.QtQuick.QQuickItem object at 0x7fea69ca0e00>('currentIndex')
+E                +    where <built-in method property of PySide6.QtQuick.QQuickItem object at 0x7fea69ca0e00> = <PySide6.QtQuick.QQuickItem(0x5a4f180, name="importType_x", parent=0x5ae9e90, geometry=896,0 40x40) at 0x7fea69ca0e00>.property
+
+tests/test_usability.py:238: AssertionError
+____ test_data_content_dictionary_persists_and_view_does_not_change_counts _____
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-7/test_data_content_dictionary_p0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fea6b340980>
+
+    def test_data_content_dictionary_persists_and_view_does_not_change_counts(
+        tmp_path, monkeypatch
+    ):
+        app, window, projects, data, source = load(tmp_path, monkeypatch, 12)
+        original = source.read_bytes()
+        try:
+            window.setProperty("selectedSection", 1)
+            tabs = window.findChild(QObject, "datasetTabs")
+            tabs.setProperty("currentIndex", 0)
+            app.processEvents()
+            window.setProperty("dataPane", "notes")
+            app.processEvents()
+            assert visual_item(window.contentItem(), "dataHeading_import").property(
+                "visible"
+            )
+            assert window.findChild(QObject, "dataContentPanel").property("visible")
+            assert data.dataContent["rows"] == 12
+            assert data.dataContent["columns"] == 3
+            assert data.dataContent["source"] == "sample.csv"
+            amount = data.dataset()["import_metadata"]["columns"][1]["id"]
+            data.selectColumn(amount)
+            window.findChild(QObject, "columnDescription").setProperty(
+                "text", "Satışın Türk lirası cinsinden tutarı."
+            )
+            window.findChild(QObject, "columnRole").setProperty("currentIndex", 2)
+            window.findChild(QObject, "columnUnit").setProperty("text", "TL")
+            window.findChild(QObject, "datasetAnalysisUnit").setProperty("text", "satış")
+            snapshot = data.dataset()["snapshot_uri"]
+            window.findChild(QObject, "applyColumnRole").clicked.emit()
+>           assert data.errorText == ""
+E           AssertionError: assert 'Rol değişikl...roje gerekli.' == ''
+E             
+E             + Rol değişikliği için yazılabilir ve boşta proje gerekli.
+
+tests/test_dataset_gui.py:146: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_usability.py::test_textarea_tab_exits_and_picker_survives_type_update
+FAILED tests/test_dataset_gui.py::test_data_content_dictionary_persists_and_view_does_not_change_counts
+2 failed, 73 passed in 30.09s

@@ -1,0 +1,97 @@
+2026-10-06 ENV-03-HEADLESS; isolated XDG; offscreen/software; UV_CACHE_DIR=/tmp/veri-ufku-ci-cache
+
+$ uv sync --locked --group dev
+Resolved 16 packages in 0.84ms
+Checked 15 packages in 0.15ms
+Exit: 0
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+Exit: 0
+
+$ uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+Exit: 0
+
+$ uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+Exit: 0
+
+$ uv run --frozen python scripts/check_learning.py
+PASS: 13 offline articles; 6 UI bindings; all capability links
+Exit: 0
+
+$ uv run --frozen ruff check src tests scripts
+All checks passed!
+Exit: 0
+
+$ uv run --frozen ruff format --check src tests scripts
+38 files already formatted
+Exit: 0
+
+$ uv run --frozen pytest -q
+......................................................                   [100%]
+54 passed in 13.88s
+Exit: 0
+
+$ uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.222s
+
+OK
+Exit: 0
+
+$ uv run --frozen veri-ufku --smoke-test
+GUI_SMOKE PASS
+Exit: 0
+
+$ uv build --wheel --offline --no-build-isolation --out-dir /tmp/veri-ufku-phase03-wheel
+Building wheel...
+Successfully built /tmp/veri-ufku-phase03-wheel/veri_ufku-0.1.0-py3-none-any.whl
+Exit: 0
+
+Wheel byte verification: 10 content/QML/JS/translation modules matched source.
+PASS: extracted wheel offline search, context and real QML resources
+Exit: 0
+
+Final evidence/status consistency checks:
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+Exit: 0
+$ uv run --frozen ruff check src tests scripts
+All checks passed!
+Exit: 0
+$ uv run --frozen ruff format --check src tests scripts
+38 files already formatted
+Exit: 0
+$ uv run --frozen pytest -q tests/test_document_contracts.py
+.........                                                                [100%]
+9 passed in 0.22s
+Exit: 0
+$ bash -n scripts/publish_github.sh
+Exit: 0
+$ git diff --check
+Exit: 0
+
+Desktop probe retry after one Escape timeout: Critical help focus: True helpCloseButton; PASS: Phase03 desktop, 6 checks, 11 screenshots.
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+Exit: 0
+$ uv run --frozen ruff check src tests scripts
+All checks passed!
+Exit: 0
+$ uv run --frozen ruff format --check src tests scripts
+38 files already formatted
+Exit: 0
+$ git diff --check
+Exit: 0

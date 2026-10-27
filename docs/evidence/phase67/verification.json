@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-16",
+  "environment": "ENV-67",
+  "source_core": {
+    "passed": 227,
+    "skipped": 1,
+    "xml": "source-core.xml",
+    "note": "before final registry metadata completion; source monitor19 included"
+  },
+  "wheel_core": {
+    "passed": 227,
+    "skipped": 1,
+    "xml": "wheel-core.xml",
+    "note": "before final registry metadata completion"
+  },
+  "source_actual_gui": {
+    "passed": 2,
+    "path": "source-walkthrough/gui.xml",
+    "note": "drift2GiB/shadow4GiB; before metadata completion"
+  },
+  "wheel_actual_gui": {
+    "passed": 2,
+    "path": "wheel-walkthrough/gui.xml",
+    "note": "same budgets; before metadata completion"
+  },
+  "real_api_source": {
+    "passed": 2,
+    "xml": "source-real-api.xml"
+  },
+  "real_api_wheel": {
+    "passed": 2,
+    "xml": "wheel-real-api.xml",
+    "note": "before registry metadata completion; ephemeral bearer, real batch worker"
+  },
+  "registry_full_focused": {
+    "status": "first64pass/1fail each; final source/wheel65pass after common contract metadata fix",
+    "source": "source-complete.xml",
+    "wheel": "wheel-complete.xml"
+  },
+  "delivery_final": {
+    "source_passed": 65,
+    "source_xml": "source-delivery.xml",
+    "wheel_passed": 65,
+    "wheel_xml": "wheel-delivery.xml",
+    "note": "native engine/CLI/registry/lineage final Python; before readability-only QML presentation",
+    "package_files": 381
+  },
+  "warnings": [
+    "intentional duplicate ZIP config.json tamper fixture warning"
+  ],
+  "formal_open": [
+    "physical desktop",
+    "human/AT",
+    "minimum hardware",
+    "long retained heap",
+    "clean offline installer",
+    "remote CI",
+    "OS sandbox/security exposure audit",
+    "Secret Service provisioning acceptance",
+    "previous phases open gates"
+  ],
+  "delivery_drift_gui": {
+    "source_passed": 1,
+    "source_deselected": 1,
+    "source_path": "source-delivery-gui/gui.xml",
+    "wheel_passed": 1,
+    "wheel_deselected": 1,
+    "wheel_path": "wheel-delivery-gui/gui.xml",
+    "note": "final metadata contract; before QML readability edit"
+  },
+  "readable_gui": {
+    "source_passed": 2,
+    "source_path": "source-readable/gui.xml",
+    "wheel_passed": 2,
+    "wheel_path": "wheel-readable/gui.xml",
+    "budgets": "drift2GiB, shadow/rollback explicit4GiB",
+    "note": "final readable QML package; complete actual source/wheel paths"
+  },
+  "wrapped_gui_final": {
+    "source_passed": 1,
+    "source_deselected": 1,
+    "source_path": "source-wrapped/gui.xml",
+    "wheel_passed": 1,
+    "wheel_deselected": 1,
+    "wheel_path": "wheel-wrapped/gui.xml",
+    "note": "intermediate TextArea wrapping; subsequent inspection found left-edge clipping, corrected in label_gui_final"
+  },
+  "label_gui_final": {
+    "source_passed": 1,
+    "source_deselected": 1,
+    "source_path": "source-label-final/gui.xml",
+    "wheel_passed": 1,
+    "wheel_deselected": 1,
+    "wheel_path": "wheel-label-final/gui.xml",
+    "note": "final PlainText UiLabel in keyboard-focusable bounded ScrollView; source/wheel 1000px render inspected; QML presentation only after readable2each model/drift GUI",
+    "budget": "drift default2GiB"
+  }
+}

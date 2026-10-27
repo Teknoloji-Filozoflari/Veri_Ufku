@@ -1,0 +1,1476 @@
+{
+  "exitstatus": 0,
+  "cases": [
+    {
+      "nodeid": "tests/test_cleaning.py::test_fill_hand_values_counts_and_undo[constant-expected0]",
+      "outcome": "passed",
+      "seconds": 1.3807408190004935,
+      "test_file_sha256": "19752fe2249e0f3a94d803aff5bdb6ddfa094a951b75547605e88db0d9697572",
+      "reference_assertions": [
+        "assert after[\"v\"].to_list() == expected",
+        "assert (\n            result[\"impact\"][\"changed_cells\"] == 1\n            and result[\"impact\"][\"new_nulls\"] == 0\n        )",
+        "assert result[\"spec\"][\"learned_scope\"] == (\n            \"none\" if method == \"constant\" else \"dataset\"\n        )",
+        "assert after[\"__vu_row_id\"].to_list() == before[\"__vu_row_id\"].to_list()",
+        "assert pl.read_parquet(\n            store.path(active_datasets(store.state)[0][\"snapshot_uri\"])\n        ).equals(before)",
+        "assert pl.read_parquet(store.path(d[\"snapshot_uri\"])).equals(after)",
+        "assert Path(req[\"path\"]).read_bytes() == source"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "74a77c19a3ae189d303892d3b41f2db6505d5de7023f3b73c10a8ea9ce614b67"
+        },
+        {
+          "path": "project/commits/1b959167-fb61-4e2a-90b0-8f5d06e8538c/manifest.json",
+          "bytes": 467,
+          "sha256": "82f05819ffd75407f0fb20ef344bf9026a95379f97ae6ef68448a887d4807d35"
+        },
+        {
+          "path": "project/commits/5f9383ad-a727-406f-bcc7-d6a7de391f0a/manifest.json",
+          "bytes": 6357,
+          "sha256": "b3b30cb9101863e9cdc0015917845f9072b02f7914c78b5e7273081fdf8fd90c"
+        },
+        {
+          "path": "project/commits/e79eb642-6146-4969-b16d-365557c8e4e8/manifest.json",
+          "bytes": 12096,
+          "sha256": "b6c73ed443f12ae7d4d6e21f00d16a3a770b742f6edebd49a2ac1c87f61e38c7"
+        },
+        {
+          "path": "project/commits/e994edbe-c658-40a7-9eae-41049a639a54/manifest.json",
+          "bytes": 12096,
+          "sha256": "d38432f4f7270465ae897a75b1ec2709bcd20f95ebe5b17026f40b4d6dcc9b4f"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 45056,
+          "sha256": "8a5a8f9feb737f160cfcbd343e81bb1c18050e47650cd623e1d5a17b55729c4b"
+        },
+        {
+          "path": "project/snapshots/47b26e73-8edb-4d72-86c3-4e33c38bec49.parquet",
+          "bytes": 4364,
+          "sha256": "15ddec50564c79beb14eb6bc989d2e1fee0d8317cc8d998ef84b1f34c1ff921f"
+        },
+        {
+          "path": "project/snapshots/855837bf-09fe-4dc9-8ece-b630003cf8ad.parquet",
+          "bytes": 4365,
+          "sha256": "7b7819efbe96a443015320e32e8be0b1a40ed25e0002afb5643328e9268dba4b"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 871,
+          "sha256": "2d4c6c87032b23a3ac0245321b5a5e8b199d5b298b1be6bb9108d87cd6eacb7d"
+        },
+        {
+          "path": "work/b053072c-048d-400e-89f6-b9d062850ed9.dataset.parquet",
+          "bytes": 4364,
+          "sha256": "15ddec50564c79beb14eb6bc989d2e1fee0d8317cc8d998ef84b1f34c1ff921f"
+        },
+        {
+          "path": "work/d5f503c1-7189-4810-8c65-850f7b07f7ef.source",
+          "bytes": 871,
+          "sha256": "2d4c6c87032b23a3ac0245321b5a5e8b199d5b298b1be6bb9108d87cd6eacb7d"
+        },
+        {
+          "path": "work/f6f15b31-5d8d-4e03-a720-8c15741430fa.parquet",
+          "bytes": 4365,
+          "sha256": "7b7819efbe96a443015320e32e8be0b1a40ed25e0002afb5643328e9268dba4b"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_cleaning.py::test_fill_hand_values_counts_and_undo[mean-expected1]",
+      "outcome": "passed",
+      "seconds": 0.027315088000250398,
+      "test_file_sha256": "19752fe2249e0f3a94d803aff5bdb6ddfa094a951b75547605e88db0d9697572",
+      "reference_assertions": [
+        "assert after[\"v\"].to_list() == expected",
+        "assert (\n            result[\"impact\"][\"changed_cells\"] == 1\n            and result[\"impact\"][\"new_nulls\"] == 0\n        )",
+        "assert result[\"spec\"][\"learned_scope\"] == (\n            \"none\" if method == \"constant\" else \"dataset\"\n        )",
+        "assert after[\"__vu_row_id\"].to_list() == before[\"__vu_row_id\"].to_list()",
+        "assert pl.read_parquet(\n            store.path(active_datasets(store.state)[0][\"snapshot_uri\"])\n        ).equals(before)",
+        "assert pl.read_parquet(store.path(d[\"snapshot_uri\"])).equals(after)",
+        "assert Path(req[\"path\"]).read_bytes() == source"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "01632a268364be1c7782ba06986666494f884993f58889b4821bd722e44a3592"
+        },
+        {
+          "path": "project/commits/b11c590d-4475-48cf-9942-3c014b9a1e29/manifest.json",
+          "bytes": 12274,
+          "sha256": "27565dc9658f354de99c2a4131cf4f7bb4b41702ec6111eb58bfbf968f949fe4"
+        },
+        {
+          "path": "project/commits/dfc49f3c-b1d9-4c3f-9217-9fabd7544b11/manifest.json",
+          "bytes": 467,
+          "sha256": "68a76e4bf3399dbde00c00522790681ffd58bce192e4a617727ae2f140a25228"
+        },
+        {
+          "path": "project/commits/f9ddd8bc-96ac-40b5-bf1b-aa4101a16031/manifest.json",
+          "bytes": 12274,
+          "sha256": "80bca69b0868225decf780fd05a3008e3ab1eece81fa870ce139bc0667e46aac"
+        },
+        {
+          "path": "project/commits/fd16e356-5f6e-4463-b786-86bce0dd8a60/manifest.json",
+          "bytes": 6357,
+          "sha256": "73d46a54bb0ade5c15d5461dd7711eb9098e948ff707292460e106fe08809c38"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 40960,
+          "sha256": "3436ee97075f44b4e11d717a5b9c86461431a36f53ff28f534745108be280929"
+        },
+        {
+          "path": "project/snapshots/1e610dcf-2faf-4a7c-af57-3435506ceef8.parquet",
+          "bytes": 4367,
+          "sha256": "06d6b8a34c7ceda3cd5b40eae9d8eed9e2e676bf316f9a92c1ade6640c690514"
+        },
+        {
+          "path": "project/snapshots/6c74f9a3-11b2-4171-affa-f8fa75e3c44f.parquet",
+          "bytes": 4366,
+          "sha256": "d4db018bc1af174a2773db409058245dfceb5959332d0d1933247560feb45b41"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 871,
+          "sha256": "2d4c6c87032b23a3ac0245321b5a5e8b199d5b298b1be6bb9108d87cd6eacb7d"
+        },
+        {
+          "path": "work/373e872a-a0f7-4fff-b3ef-bf4c442f3887.source",
+          "bytes": 871,
+          "sha256": "2d4c6c87032b23a3ac0245321b5a5e8b199d5b298b1be6bb9108d87cd6eacb7d"
+        },
+        {
+          "path": "work/5d4acc71-3e50-406e-ab9c-067c6d523063.dataset.parquet",
+          "bytes": 4366,
+          "sha256": "d4db018bc1af174a2773db409058245dfceb5959332d0d1933247560feb45b41"
+        },
+        {
+          "path": "work/686971b3-19c8-41a9-9a25-6a45cc1745c0.parquet",
+          "bytes": 4367,
+          "sha256": "06d6b8a34c7ceda3cd5b40eae9d8eed9e2e676bf316f9a92c1ade6640c690514"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_cleaning.py::test_fill_hand_values_counts_and_undo[median-expected2]",
+      "outcome": "passed",
+      "seconds": 0.026708526998845628,
+      "test_file_sha256": "19752fe2249e0f3a94d803aff5bdb6ddfa094a951b75547605e88db0d9697572",
+      "reference_assertions": [
+        "assert after[\"v\"].to_list() == expected",
+        "assert (\n            result[\"impact\"][\"changed_cells\"] == 1\n            and result[\"impact\"][\"new_nulls\"] == 0\n        )",
+        "assert result[\"spec\"][\"learned_scope\"] == (\n            \"none\" if method == \"constant\" else \"dataset\"\n        )",
+        "assert after[\"__vu_row_id\"].to_list() == before[\"__vu_row_id\"].to_list()",
+        "assert pl.read_parquet(\n            store.path(active_datasets(store.state)[0][\"snapshot_uri\"])\n        ).equals(before)",
+        "assert pl.read_parquet(store.path(d[\"snapshot_uri\"])).equals(after)",
+        "assert Path(req[\"path\"]).read_bytes() == source"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "5340015d38a8affaece4f722e597745848daa7c31232029d54a9bcb0ed32c4d0"
+        },
+        {
+          "path": "project/commits/2489f96d-1858-47ed-b2f6-0e04dece618f/manifest.json",
+          "bytes": 12305,
+          "sha256": "5bf45424d17f8b374c91cd6799423d118b4840c0db5de53e1df4073a286f6a26"
+        },
+        {
+          "path": "project/commits/3e479873-8aee-407b-9c59-f6a3f8579815/manifest.json",
+          "bytes": 6357,
+          "sha256": "d4aecf8723ea324d879a390a46633d98365fa686411eaa9cff22eba8e1bfbc3c"
+        },
+        {
+          "path": "project/commits/cd2f65da-5181-409e-baa2-33ee85ca67d9/manifest.json",
+          "bytes": 467,
+          "sha256": "19d2d68625e5e333e22aef42dd2c4f6cca830acc40afdcd874f7d81bb1032b80"
+        },
+        {
+          "path": "project/commits/e4d6db3c-fad3-451b-b422-cc245fca3e89/manifest.json",
+          "bytes": 12305,
+          "sha256": "a9574c2fe582d2cddbbc887b3364b70efa43720ad2834e4ae919d1e79c5e9cdc"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 40960,
+          "sha256": "695ddf696299952b9fb9687e614a0d2b0fabf5a89e2f931e6f19c135098c699d"
+        },
+        {
+          "path": "project/snapshots/4883cf99-7992-4d9e-9dc0-9480d8bd6e40.parquet",
+          "bytes": 4365,
+          "sha256": "14d07478cc47d13f46b0a7734e07439ecfb83ac47b8cf88bcddc629603e63d98"
+        },
+        {
+          "path": "project/snapshots/6c13295c-2572-4979-9f6e-bb52ec8c8430.parquet",
+          "bytes": 4365,
+          "sha256": "895f78f65e57af69d084043cc940146c4c1b3ade0365b4cbd288cc8c3e6b3051"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 871,
+          "sha256": "2d4c6c87032b23a3ac0245321b5a5e8b199d5b298b1be6bb9108d87cd6eacb7d"
+        },
+        {
+          "path": "work/11269b40-12dc-4ab0-8975-158c78b97b94.source",
+          "bytes": 871,
+          "sha256": "2d4c6c87032b23a3ac0245321b5a5e8b199d5b298b1be6bb9108d87cd6eacb7d"
+        },
+        {
+          "path": "work/75a90b47-1a74-484c-b6bf-d37200122c27.dataset.parquet",
+          "bytes": 4365,
+          "sha256": "14d07478cc47d13f46b0a7734e07439ecfb83ac47b8cf88bcddc629603e63d98"
+        },
+        {
+          "path": "work/8f37c3a8-fcff-44e4-ac68-c8f8d2de983f.parquet",
+          "bytes": 4365,
+          "sha256": "895f78f65e57af69d084043cc940146c4c1b3ade0365b4cbd288cc8c3e6b3051"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_cleaning.py::test_dedup_order_equality_and_all_member_lineage[first-expected_ids0]",
+      "outcome": "passed",
+      "seconds": 0.029034757999397698,
+      "test_file_sha256": "19752fe2249e0f3a94d803aff5bdb6ddfa094a951b75547605e88db0d9697572",
+      "reference_assertions": [
+        "assert f[\"record\"].to_list() == expected_ids",
+        "assert r[\"impact\"][\"removed_rows\"] == 1",
+        "assert relation.height == 4 and relation[\"retained\"].sum() == 3",
+        "assert set(relation[\"row_id\"]) == set(old[\"__vu_row_id\"])",
+        "assert members[\"survivor_row_id\"].n_unique() == 1",
+        "assert members[\"group_id\"].n_unique() == 1",
+        "assert pl.read_parquet(\n            store.path(active_datasets(store.state)[0][\"snapshot_uri\"])\n        ).equals(old)"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "6d19e09e01e7348b3fcd07abf2242fd81a489bffc90169b041cbb1edc07f7e32"
+        },
+        {
+          "path": "project/commits/0fc2dcb5-889f-4f49-beca-754a1b7de89a/manifest.json",
+          "bytes": 14050,
+          "sha256": "18f220579763348894cb0e21aa25eb42e11ad8e721bec4edfbc9cf60837194cc"
+        },
+        {
+          "path": "project/commits/1e8b48ab-0891-4c60-84b0-9668fe689740/manifest.json",
+          "bytes": 6797,
+          "sha256": "7646b527081260ac36ecd2a6992b4083afb725fd8a237b0d9f1599d5b1c0feff"
+        },
+        {
+          "path": "project/commits/35a749fc-5546-4157-ae93-aaecec693b81/manifest.json",
+          "bytes": 467,
+          "sha256": "8f393b63f543b10d0dadc011f8d23f3669be30156e401e71fd72c40a86e3234b"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 36864,
+          "sha256": "b97568d6061738a8cc5c1273d2d09ad6318ca2c79aa5ba51bab01b41a26d6556"
+        },
+        {
+          "path": "project/snapshots/b0a30808-20b3-4ff4-bc51-b7c97f89b73f.parquet",
+          "bytes": 3367,
+          "sha256": "17ac539a9404ce868b56797c3d37574c68e625ab34200ff337e30f3f646c26ba"
+        },
+        {
+          "path": "project/snapshots/c56c256a-8c97-4147-8a87-b0fa004288ad.parquet",
+          "bytes": 4975,
+          "sha256": "c9005ee3cade33a109c0cf5d7ae0f82b66fa6a6f1d5a65f7552f810b5bf133bb"
+        },
+        {
+          "path": "project/snapshots/ebee03f7-7693-4573-a159-2ea372c7d5f8.parquet",
+          "bytes": 4923,
+          "sha256": "bd79078b603df8038fd95f170fff74cd2fc905cf53537c07dc40735c66499a72"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1481,
+          "sha256": "8333718d0e484e82deef0a7cbcd13ec4e3d4b0996c91a0053f62f9359490b31e"
+        },
+        {
+          "path": "work/670e2bf4-a388-4f73-bd4c-8c4fc43f5d59.dataset.parquet",
+          "bytes": 4975,
+          "sha256": "c9005ee3cade33a109c0cf5d7ae0f82b66fa6a6f1d5a65f7552f810b5bf133bb"
+        },
+        {
+          "path": "work/6a3979da-7332-4773-9c2d-4fd5d8ff9898-lineage.parquet",
+          "bytes": 3367,
+          "sha256": "17ac539a9404ce868b56797c3d37574c68e625ab34200ff337e30f3f646c26ba"
+        },
+        {
+          "path": "work/9f0109a5-0916-48a9-9267-58d1ae2ea4fc.source",
+          "bytes": 1481,
+          "sha256": "8333718d0e484e82deef0a7cbcd13ec4e3d4b0996c91a0053f62f9359490b31e"
+        },
+        {
+          "path": "work/dae65b58-9a1f-4ce5-bf23-aa12886250a7.parquet",
+          "bytes": 4923,
+          "sha256": "bd79078b603df8038fd95f170fff74cd2fc905cf53537c07dc40735c66499a72"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_cleaning.py::test_dedup_order_equality_and_all_member_lineage[last-expected_ids1]",
+      "outcome": "passed",
+      "seconds": 0.029256090998387663,
+      "test_file_sha256": "19752fe2249e0f3a94d803aff5bdb6ddfa094a951b75547605e88db0d9697572",
+      "reference_assertions": [
+        "assert f[\"record\"].to_list() == expected_ids",
+        "assert r[\"impact\"][\"removed_rows\"] == 1",
+        "assert relation.height == 4 and relation[\"retained\"].sum() == 3",
+        "assert set(relation[\"row_id\"]) == set(old[\"__vu_row_id\"])",
+        "assert members[\"survivor_row_id\"].n_unique() == 1",
+        "assert members[\"group_id\"].n_unique() == 1",
+        "assert pl.read_parquet(\n            store.path(active_datasets(store.state)[0][\"snapshot_uri\"])\n        ).equals(old)"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "5fa652168896d4fce2b7b7236a5e9ea889aa704269ed006f360c21c81cfdad1b"
+        },
+        {
+          "path": "project/commits/23ed9eab-0ef5-4d86-8e9e-e35cd8b6c6b3/manifest.json",
+          "bytes": 467,
+          "sha256": "ece2b9c014902646b938a76f7cb49d64d10eded83730a31acd52b605ea597294"
+        },
+        {
+          "path": "project/commits/b3812aca-219e-4f8e-94b6-47c8d7d5d337/manifest.json",
+          "bytes": 14049,
+          "sha256": "6bf61b5a8de059e65848c389a1cd0e8d105e26e1e746b885280f1845703d6ce2"
+        },
+        {
+          "path": "project/commits/c010216c-add6-4f70-9933-80e303f0f72a/manifest.json",
+          "bytes": 6797,
+          "sha256": "8adf6e7a5d3b069386a118d1fb1f767726dd3af5065cff02c0688d70f7e5d126"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 36864,
+          "sha256": "a7f7bb036512819b5ccbbe0b68660d07f9bee8e875ee13174a82d7b43b213d15"
+        },
+        {
+          "path": "project/snapshots/28fb75c2-a61a-4caf-8240-b079f0170534.parquet",
+          "bytes": 3369,
+          "sha256": "49149e5860f8e96300d7ade5a0d27be7bca0bb172e100e5d00b6690edaf6e2fa"
+        },
+        {
+          "path": "project/snapshots/3d286ccd-410a-452b-b5a2-219b6a1d10ca.parquet",
+          "bytes": 4923,
+          "sha256": "ab7b212d8386cb2fcc1ac7e7e85625a784c802ae8baa49b2c64742fe12539c8b"
+        },
+        {
+          "path": "project/snapshots/7db0f58e-1c4e-495e-ae0d-1548770792f0.parquet",
+          "bytes": 4975,
+          "sha256": "a293a61bca8cf0c9674b6cc7dfbf88a33a1fe51306698917b46bd41468bdb081"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1481,
+          "sha256": "8333718d0e484e82deef0a7cbcd13ec4e3d4b0996c91a0053f62f9359490b31e"
+        },
+        {
+          "path": "work/2798acc5-71b3-4484-b89e-19870c8b15f3.dataset.parquet",
+          "bytes": 4975,
+          "sha256": "a293a61bca8cf0c9674b6cc7dfbf88a33a1fe51306698917b46bd41468bdb081"
+        },
+        {
+          "path": "work/db5fe73b-23cc-4ced-b59e-1398f8a093bc.parquet",
+          "bytes": 4923,
+          "sha256": "ab7b212d8386cb2fcc1ac7e7e85625a784c802ae8baa49b2c64742fe12539c8b"
+        },
+        {
+          "path": "work/ec716c7e-fbbc-4466-85e5-438107723a5f.source",
+          "bytes": 1481,
+          "sha256": "8333718d0e484e82deef0a7cbcd13ec4e3d4b0996c91a0053f62f9359490b31e"
+        },
+        {
+          "path": "work/fbca5f6e-8eeb-4c6e-a69f-c874192792c7-lineage.parquet",
+          "bytes": 3369,
+          "sha256": "49149e5860f8e96300d7ade5a0d27be7bca0bb172e100e5d00b6690edaf6e2fa"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_charts.py::test_hand_histogram_box_missing_and_exact_summary",
+      "outcome": "passed",
+      "seconds": 0.04328256900043925,
+      "test_file_sha256": "60777d9b1a66be8c92426335b6c0699c9339904c4742e49abefa50e7f7f70330",
+      "reference_assertions": [
+        "assert [p[\"n\"] for p in result[\"points\"]] == [2, 2]",
+        "assert result[\"details\"][\"bin_edges\"] == [1.0, 2.5, 4.0]",
+        "assert result[\"details\"][\"excluded_rows\"] == 3",
+        "assert Decimal(result[\"summary\"][0][\"numeric\"][\"mean\"]) == Decimal(\"2.5\")",
+        "assert Decimal(result[\"summary\"][0][\"numeric\"][\"median\"]) == Decimal(\"2.5\")",
+        "assert set(picked[\"row_ids\"]) == set(original[:2]) and picked[\"count\"] == 2",
+        "assert (box[\"q1\"], box[\"y\"], box[\"q3\"], box[\"whislo\"], box[\"whishi\"]) == (\n            1.75,\n            2.5,\n            3.25,\n            1.0,\n            4.0,\n        )",
+        "assert [p[\"null_count\"] for p in missing[\"points\"]] == [1, 1]",
+        "assert (\n            missing[\"points\"][0][\"nan\"] == 1\n            and missing[\"points\"][0][\"positive_infinity\"] == 1\n        )",
+        "assert missing[\"points\"][0][\"y\"] == 1 / 7",
+        "assert missing[\"points\"][1][\"y\"] == 1 / 7"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "9e383e67baf833782b8c1ce07ad9b5e899adf20c09c07a6ba3e6b33b8bb53a6b"
+        },
+        {
+          "path": "project/commits/3d1e731a-90e2-4ceb-aaa9-95c97c94875e/manifest.json",
+          "bytes": 467,
+          "sha256": "a4659bdf2f178c1f925f6ff6a3b4bf5947a7b67eeb2edff234bf958cc57f04e6"
+        },
+        {
+          "path": "project/commits/3e0c7d8e-2723-460a-a748-eb87d287b1ac/manifest.json",
+          "bytes": 6385,
+          "sha256": "0fa239fa14b00c5073ce7a9098c8dd851fbee7fafae7580f3884cc823f739b25"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "a685d5c5546d039362d13f0b5beea4f001a71f2fd31792ddfe217178a4d2ec5e"
+        },
+        {
+          "path": "project/snapshots/706fe6d7-68f4-4015-94dc-6864c47f40c1.parquet",
+          "bytes": 4455,
+          "sha256": "71a05ad71d080c5ba70155394b0ba4f37db50d29b65dff12dc2530e74b672e45"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 801,
+          "sha256": "c96ab9cc27e153f2cb545e58b265d62e192471236431049fc37a421e3122ec91"
+        },
+        {
+          "path": "work/42228d80-c72f-4b7c-9ee5-66078b79e573.source",
+          "bytes": 801,
+          "sha256": "c96ab9cc27e153f2cb545e58b265d62e192471236431049fc37a421e3122ec91"
+        },
+        {
+          "path": "work/be1e23e0-b08e-4bdc-b77e-028f4790b69a.dataset.parquet",
+          "bytes": 4455,
+          "sha256": "71a05ad71d080c5ba70155394b0ba4f37db50d29b65dff12dc2530e74b672e45"
+        },
+        {
+          "path": "work/chart-data.parquet",
+          "bytes": 1828,
+          "sha256": "9b3a53643e056a04f3baa3fd86031a1accd72367f78e1dfd1d907e3f86e0fdee"
+        },
+        {
+          "path": "work/chart-members.parquet",
+          "bytes": 1282,
+          "sha256": "e4c56f723707a75ce6fc9bc6f33db8435781a3c2f3436b7ea982522ea8c509d8"
+        },
+        {
+          "path": "work/chart-result.json",
+          "bytes": 6405,
+          "sha256": "3f2a33c0ba1b7d63e2ec9d03f0f9bca6d810c8d2f34024c6a4b28210649cd29c"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_charts.py::test_real_matplotlib_png_svg_persist_reopen_and_protected_export[histogram]",
+      "outcome": "passed",
+      "seconds": 0.29176823799934937,
+      "test_file_sha256": "60777d9b1a66be8c92426335b6c0699c9339904c4742e49abefa50e7f7f70330",
+      "reference_assertions": [
+        "assert png.startswith(b\"\\x89PNG\\r\\n\\x1a\\n\")",
+        "assert \"<svg\" in svg and \"Türkçe ölçüm\" in svg and r[\"version_id\"] in svg",
+        "assert path.read_bytes() == png",
+        "assert Path(r[\"path\"]).read_bytes() == source",
+        "assert (\n            saved[\"spec\"][\"title\"] == \"Türkçe ölçüm\" and saved[\"spec\"][\"yunit\"] == \"kg\"\n        )",
+        "assert len(saved[\"artifact_uris\"]) == 6",
+        "assert reopened.state[\"results\"][-1][\"chart\"] == saved",
+        "assert reopened.path(saved[\"artifact_uris\"][\"png\"]).read_bytes() == png"
+      ],
+      "fixture_files": [
+        {
+          "path": "plot.png",
+          "bytes": 36546,
+          "sha256": "05b65729b3357fe53971906b12c7b231a0aabcbb37ec49599fb5d60a33d00668"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "4979b4f1b4f9b668be06ca6f245eb38586d940b153178d09225364d97f5aedc3"
+        },
+        {
+          "path": "project/commits/39a7e61c-b3fa-48ca-b526-aba65be5497f/manifest.json",
+          "bytes": 6555,
+          "sha256": "3add8cac5bc5ac29c2fd42930a5f521feec8e9ceccd5f81ba24d185ad5a2ec7c"
+        },
+        {
+          "path": "project/commits/cc2e7cfd-c363-48eb-b434-26cbc2c698d5/manifest.json",
+          "bytes": 17464,
+          "sha256": "f0d61a6930ac060ad55da2c40f1132f6890cb82433d3d0751b6fb51ad552d96d"
+        },
+        {
+          "path": "project/commits/e00f889e-382f-44e0-99c0-885d111ff71e/manifest.json",
+          "bytes": 467,
+          "sha256": "348d5e49338919f12b0945aa51aa71f5d0768893856e2bb3ab5ba5ca03bd4802"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 40960,
+          "sha256": "d89070bfecbc72f9554957d888b1a6e4a0d4efe1e6d53ecaf570e94e349ec9fd"
+        },
+        {
+          "path": "project/snapshots/0cfb5bb4-4c3c-40b8-bd24-59ba92cfeaec.parquet",
+          "bytes": 1327,
+          "sha256": "132524852e39dba6e1c65b286d40841e669eb961755125289eb172c8bbceadd3"
+        },
+        {
+          "path": "project/snapshots/ddbd29ba-c941-478a-94da-3620b7d8ef11.parquet",
+          "bytes": 1885,
+          "sha256": "756e44c8387e7c558ae5d37a89209cb5b538f636e21639aa15b3c9af1d1343f0"
+        },
+        {
+          "path": "project/snapshots/e96d1305-2f19-4f32-9ee5-34c4ea386377.parquet",
+          "bytes": 4694,
+          "sha256": "bdb58ac45dbfe608e2ecb42e6e7136a92feb0bed2290153d3f4de152842cd083"
+        },
+        {
+          "path": "project/sources/544b39e6-8335-4744-89ef-97ade6255d87.bin",
+          "bytes": 36546,
+          "sha256": "05b65729b3357fe53971906b12c7b231a0aabcbb37ec49599fb5d60a33d00668"
+        },
+        {
+          "path": "project/sources/c153ec68-0d80-4197-b8ab-1ecd7d243385.bin",
+          "bytes": 10151,
+          "sha256": "cc153b95cf1cd146a48b144d96c62744a6196357e8149015e61ba635bd421b8e"
+        },
+        {
+          "path": "project/sources/c3bd381b-75b8-46d9-8e68-f6fe620ffb6e.bin",
+          "bytes": 21425,
+          "sha256": "8f7b21f8598d2ec093451b42ff4d0e3cf76ac340abdc8b83fc91674778e38f0f"
+        },
+        {
+          "path": "project/sources/cc6350af-7f81-42c3-a3e1-08ceec62d015.bin",
+          "bytes": 54177,
+          "sha256": "e8b1ac4ab0f256b74db100ddef350b653c2f0d0a6a06efb612142e9884a17f34"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/b48ccbf3-d3d8-4b36-be2c-493185047c09.source",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/chart-data.parquet",
+          "bytes": 1885,
+          "sha256": "756e44c8387e7c558ae5d37a89209cb5b538f636e21639aa15b3c9af1d1343f0"
+        },
+        {
+          "path": "work/chart-members.parquet",
+          "bytes": 1327,
+          "sha256": "132524852e39dba6e1c65b286d40841e669eb961755125289eb172c8bbceadd3"
+        },
+        {
+          "path": "work/chart-result.json",
+          "bytes": 10151,
+          "sha256": "cc153b95cf1cd146a48b144d96c62744a6196357e8149015e61ba635bd421b8e"
+        },
+        {
+          "path": "work/chart.pdf",
+          "bytes": 21425,
+          "sha256": "8f7b21f8598d2ec093451b42ff4d0e3cf76ac340abdc8b83fc91674778e38f0f"
+        },
+        {
+          "path": "work/chart.png",
+          "bytes": 36546,
+          "sha256": "05b65729b3357fe53971906b12c7b231a0aabcbb37ec49599fb5d60a33d00668"
+        },
+        {
+          "path": "work/chart.svg",
+          "bytes": 54177,
+          "sha256": "e8b1ac4ab0f256b74db100ddef350b653c2f0d0a6a06efb612142e9884a17f34"
+        },
+        {
+          "path": "work/eb6b92dd-a729-496c-8211-07bd20f61ec2.dataset.parquet",
+          "bytes": 4694,
+          "sha256": "bdb58ac45dbfe608e2ecb42e6e7136a92feb0bed2290153d3f4de152842cd083"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_charts.py::test_real_matplotlib_png_svg_persist_reopen_and_protected_export[box]",
+      "outcome": "passed",
+      "seconds": 0.1771597330007353,
+      "test_file_sha256": "60777d9b1a66be8c92426335b6c0699c9339904c4742e49abefa50e7f7f70330",
+      "reference_assertions": [
+        "assert png.startswith(b\"\\x89PNG\\r\\n\\x1a\\n\")",
+        "assert \"<svg\" in svg and \"Türkçe ölçüm\" in svg and r[\"version_id\"] in svg",
+        "assert path.read_bytes() == png",
+        "assert Path(r[\"path\"]).read_bytes() == source",
+        "assert (\n            saved[\"spec\"][\"title\"] == \"Türkçe ölçüm\" and saved[\"spec\"][\"yunit\"] == \"kg\"\n        )",
+        "assert len(saved[\"artifact_uris\"]) == 6",
+        "assert reopened.state[\"results\"][-1][\"chart\"] == saved",
+        "assert reopened.path(saved[\"artifact_uris\"][\"png\"]).read_bytes() == png"
+      ],
+      "fixture_files": [
+        {
+          "path": "plot.png",
+          "bytes": 29869,
+          "sha256": "6ba74f98ec0663ffa8ea03a8fa1ede5bbc339855568c4c7d414884020e70114c"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "c7b3ef8475b977c8ce4be6b27dee004eda9df11aad5c6f78ad91bcaf03e14dd9"
+        },
+        {
+          "path": "project/commits/4cb1e533-a213-4912-a96a-a1bfe176f01e/manifest.json",
+          "bytes": 17311,
+          "sha256": "619f1a6823814b4ff8a7ccd618e2928509042588819e09f7e82f6ad64e6ae6d6"
+        },
+        {
+          "path": "project/commits/a5146544-81ef-4af0-a307-6657fc78a39f/manifest.json",
+          "bytes": 467,
+          "sha256": "109495c70caf8252969072f458cd1e50610e931fa80b0aa2eab1b45eabcc8d65"
+        },
+        {
+          "path": "project/commits/c3e57d53-3b2c-4e89-8f5c-13476fd0ad57/manifest.json",
+          "bytes": 6555,
+          "sha256": "61261edfffd67733db3c4efa26cd510e645c05702b1086155fd292de66145556"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 40960,
+          "sha256": "5efe9dc9a56bccd5548fb6a6242b40c47ea1ae3b6c4f6b5a5439be2b13a8ead7"
+        },
+        {
+          "path": "project/snapshots/448f881f-c01e-404c-add3-26750c514296.parquet",
+          "bytes": 1319,
+          "sha256": "6a0f87de93039bc68f6a972b3633eceda322c84b8d744e8e8a5fde29af3fe529"
+        },
+        {
+          "path": "project/snapshots/7ba4eabc-9e21-4db9-a04b-ab7486743820.parquet",
+          "bytes": 1782,
+          "sha256": "2c1d2688e799e034030d3a1e4f3ee752aa8ee78f0f008a98e45d660c725ff21c"
+        },
+        {
+          "path": "project/snapshots/ec664d43-8ac0-452c-9667-8552e0d6bbc0.parquet",
+          "bytes": 4695,
+          "sha256": "7a11cb6e6c18b482cb84b2ab83b801551b12332731658591e2f9db3c59397390"
+        },
+        {
+          "path": "project/sources/3b0ddb00-8ec0-4329-93bf-0ae4d5299349.bin",
+          "bytes": 9963,
+          "sha256": "13944f49b20ad4a64a837b952acd61ad07c1277e578860b782fdc9317a173d72"
+        },
+        {
+          "path": "project/sources/9a10823b-bf53-46f7-a3b2-6fee1fd04518.bin",
+          "bytes": 29869,
+          "sha256": "6ba74f98ec0663ffa8ea03a8fa1ede5bbc339855568c4c7d414884020e70114c"
+        },
+        {
+          "path": "project/sources/a7610cac-3bbd-4570-a663-fa8e655df9a4.bin",
+          "bytes": 47996,
+          "sha256": "b34b57fc1b16e204982a9531e7c54606fab1e020ba8b671db54c2a305b843dd6"
+        },
+        {
+          "path": "project/sources/b0f0f0c9-a4b5-4254-a469-6f8c368b7590.bin",
+          "bytes": 20871,
+          "sha256": "33a4ca8d02e44764b3e13577a981ad5c8b20d57748a7d06b77a92565eebc8790"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/45791a2a-8a3f-4dc1-8930-fbf6662d8c53.dataset.parquet",
+          "bytes": 4695,
+          "sha256": "7a11cb6e6c18b482cb84b2ab83b801551b12332731658591e2f9db3c59397390"
+        },
+        {
+          "path": "work/chart-data.parquet",
+          "bytes": 1782,
+          "sha256": "2c1d2688e799e034030d3a1e4f3ee752aa8ee78f0f008a98e45d660c725ff21c"
+        },
+        {
+          "path": "work/chart-members.parquet",
+          "bytes": 1319,
+          "sha256": "6a0f87de93039bc68f6a972b3633eceda322c84b8d744e8e8a5fde29af3fe529"
+        },
+        {
+          "path": "work/chart-result.json",
+          "bytes": 9963,
+          "sha256": "13944f49b20ad4a64a837b952acd61ad07c1277e578860b782fdc9317a173d72"
+        },
+        {
+          "path": "work/chart.pdf",
+          "bytes": 20871,
+          "sha256": "33a4ca8d02e44764b3e13577a981ad5c8b20d57748a7d06b77a92565eebc8790"
+        },
+        {
+          "path": "work/chart.png",
+          "bytes": 29869,
+          "sha256": "6ba74f98ec0663ffa8ea03a8fa1ede5bbc339855568c4c7d414884020e70114c"
+        },
+        {
+          "path": "work/chart.svg",
+          "bytes": 47996,
+          "sha256": "b34b57fc1b16e204982a9531e7c54606fab1e020ba8b671db54c2a305b843dd6"
+        },
+        {
+          "path": "work/d142d38a-9425-4e41-9b62-bff7632412d0.source",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_charts.py::test_real_matplotlib_png_svg_persist_reopen_and_protected_export[bar]",
+      "outcome": "passed",
+      "seconds": 0.1989412450002419,
+      "test_file_sha256": "60777d9b1a66be8c92426335b6c0699c9339904c4742e49abefa50e7f7f70330",
+      "reference_assertions": [
+        "assert png.startswith(b\"\\x89PNG\\r\\n\\x1a\\n\")",
+        "assert \"<svg\" in svg and \"Türkçe ölçüm\" in svg and r[\"version_id\"] in svg",
+        "assert path.read_bytes() == png",
+        "assert Path(r[\"path\"]).read_bytes() == source",
+        "assert (\n            saved[\"spec\"][\"title\"] == \"Türkçe ölçüm\" and saved[\"spec\"][\"yunit\"] == \"kg\"\n        )",
+        "assert len(saved[\"artifact_uris\"]) == 6",
+        "assert reopened.state[\"results\"][-1][\"chart\"] == saved",
+        "assert reopened.path(saved[\"artifact_uris\"][\"png\"]).read_bytes() == png"
+      ],
+      "fixture_files": [
+        {
+          "path": "plot.png",
+          "bytes": 37198,
+          "sha256": "1b6b6bb2431f707e8a44eb31de7c5eb61e9553570c65e185c75f4cd5faf733ab"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "25e1381a1ab5bf4b07736adad9e6d312dd5e85fd1063750d7c8f38fdca553d52"
+        },
+        {
+          "path": "project/commits/b5920596-5d9e-4ff9-8fff-c4473cd0469a/manifest.json",
+          "bytes": 467,
+          "sha256": "95663feca472935eebb83b2e553ed7278e357b655440469703986c6d8a76703c"
+        },
+        {
+          "path": "project/commits/df9b9e19-c8fd-493b-8373-6c7c6f6b6baf/manifest.json",
+          "bytes": 17505,
+          "sha256": "a4e4f32fb8439292f9c755c9cd6ef54bdfdf35a23eebf0e7cc4026cc0c2f729b"
+        },
+        {
+          "path": "project/commits/f3ebaa30-a5a2-45ec-ac0a-80fd9fbdd902/manifest.json",
+          "bytes": 6555,
+          "sha256": "d3b2f567f5c64f3b535f7de51926d5e2e8d6c7c46527bc508b025201bfdad05f"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 40960,
+          "sha256": "88003ef8ed429d90a323127955c9e5927a40ea93f09b8bce94867f6ff6931ac8"
+        },
+        {
+          "path": "project/snapshots/3e29a16a-0604-4611-9b8f-0c00710f6670.parquet",
+          "bytes": 1806,
+          "sha256": "30449c73732b317652f2a99ca00ceda9c63e4cde6d99628683d35fc328ee8e89"
+        },
+        {
+          "path": "project/snapshots/54aa5654-efcc-4025-a41c-55986d17f2f9.parquet",
+          "bytes": 4696,
+          "sha256": "4fb5cc671b6b47220b62e6a2283eb3f39eba9ac2fa5e5de4ce51d5068477f3b2"
+        },
+        {
+          "path": "project/snapshots/5de4427e-9fe4-485b-9e4c-967d07bdc20f.parquet",
+          "bytes": 1329,
+          "sha256": "69e201b31e2cfd4b6ec98ee20f70ba0f20f2bc0573311b8bf8a0249f42c33945"
+        },
+        {
+          "path": "project/sources/38fa2f50-3ed6-4dcb-a30d-94f677f6fcba.bin",
+          "bytes": 37198,
+          "sha256": "1b6b6bb2431f707e8a44eb31de7c5eb61e9553570c65e185c75f4cd5faf733ab"
+        },
+        {
+          "path": "project/sources/8e05eeaf-c432-4f40-9980-a05538bddbe3.bin",
+          "bytes": 10206,
+          "sha256": "2c3ca3f69c6e0c55c96e0bbe743bb7e91f2ecef6e6095fd4352d43e3bd7ac8a5"
+        },
+        {
+          "path": "project/sources/bc135f55-9d11-49c0-becd-a32b17be5a86.bin",
+          "bytes": 50359,
+          "sha256": "b5ed3494586d12f0d30b29e93b8d07b5f3f82d2a91482baa644037975443cb84"
+        },
+        {
+          "path": "project/sources/f16db9f6-665b-4ea0-ab20-a8af019b0d4f.bin",
+          "bytes": 22378,
+          "sha256": "666f95f13b614433216e413b257281d3eb30195be65b85198be48318238fbe3c"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/2587f92a-5366-46f4-bebd-f8b7a5c30b7e.dataset.parquet",
+          "bytes": 4696,
+          "sha256": "4fb5cc671b6b47220b62e6a2283eb3f39eba9ac2fa5e5de4ce51d5068477f3b2"
+        },
+        {
+          "path": "work/9ff5dd40-d4e8-4b5d-a362-510e042b2236.source",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/chart-data.parquet",
+          "bytes": 1806,
+          "sha256": "30449c73732b317652f2a99ca00ceda9c63e4cde6d99628683d35fc328ee8e89"
+        },
+        {
+          "path": "work/chart-members.parquet",
+          "bytes": 1329,
+          "sha256": "69e201b31e2cfd4b6ec98ee20f70ba0f20f2bc0573311b8bf8a0249f42c33945"
+        },
+        {
+          "path": "work/chart-result.json",
+          "bytes": 10206,
+          "sha256": "2c3ca3f69c6e0c55c96e0bbe743bb7e91f2ecef6e6095fd4352d43e3bd7ac8a5"
+        },
+        {
+          "path": "work/chart.pdf",
+          "bytes": 22378,
+          "sha256": "666f95f13b614433216e413b257281d3eb30195be65b85198be48318238fbe3c"
+        },
+        {
+          "path": "work/chart.png",
+          "bytes": 37198,
+          "sha256": "1b6b6bb2431f707e8a44eb31de7c5eb61e9553570c65e185c75f4cd5faf733ab"
+        },
+        {
+          "path": "work/chart.svg",
+          "bytes": 50359,
+          "sha256": "b5ed3494586d12f0d30b29e93b8d07b5f3f82d2a91482baa644037975443cb84"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_charts.py::test_real_matplotlib_png_svg_persist_reopen_and_protected_export[line]",
+      "outcome": "passed",
+      "seconds": 0.20666214399898308,
+      "test_file_sha256": "60777d9b1a66be8c92426335b6c0699c9339904c4742e49abefa50e7f7f70330",
+      "reference_assertions": [
+        "assert png.startswith(b\"\\x89PNG\\r\\n\\x1a\\n\")",
+        "assert \"<svg\" in svg and \"Türkçe ölçüm\" in svg and r[\"version_id\"] in svg",
+        "assert path.read_bytes() == png",
+        "assert Path(r[\"path\"]).read_bytes() == source",
+        "assert (\n            saved[\"spec\"][\"title\"] == \"Türkçe ölçüm\" and saved[\"spec\"][\"yunit\"] == \"kg\"\n        )",
+        "assert len(saved[\"artifact_uris\"]) == 6",
+        "assert reopened.state[\"results\"][-1][\"chart\"] == saved",
+        "assert reopened.path(saved[\"artifact_uris\"][\"png\"]).read_bytes() == png"
+      ],
+      "fixture_files": [
+        {
+          "path": "plot.png",
+          "bytes": 43356,
+          "sha256": "5b232b990a95ec6843715d19eff0b7168dcd40ba56173ee2d8df9dac041d8cad"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "3e2deacdf60192060afca59f2452b05f4612f85467b22642dfc1dd41c5147336"
+        },
+        {
+          "path": "project/commits/399cf542-a732-4e8a-bfec-8d2280832c0a/manifest.json",
+          "bytes": 467,
+          "sha256": "a0cbb39bb3e262bd0c907f3ff0e08ea6168f611b7b8442a6b74ca865405974b9"
+        },
+        {
+          "path": "project/commits/cf0b3f24-19be-47db-8335-a125be693203/manifest.json",
+          "bytes": 17580,
+          "sha256": "1ea2c37b25c863d8dc74de776926d7b037d6a249c38b669455a4f36cb57f2016"
+        },
+        {
+          "path": "project/commits/dd16d917-9cc0-4b38-8c4c-30a75cc4cb2b/manifest.json",
+          "bytes": 6555,
+          "sha256": "c4c729da6c882001be1cf3e61b500d19d76798e039f3245c2c6664b7f986ed79"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 40960,
+          "sha256": "b79a87acfc80b5a976faab2572d8db370891260e7b6b0153708f46cba0ce5eff"
+        },
+        {
+          "path": "project/snapshots/3fb81af8-2b08-495f-af69-bc6d57e2458e.parquet",
+          "bytes": 1336,
+          "sha256": "b3892c8e538306fe1940ce0f585f650e161833af87ca2772e5db841197f5e524"
+        },
+        {
+          "path": "project/snapshots/76e93f9e-c9cb-404d-aa1a-b44a0b81af7b.parquet",
+          "bytes": 1842,
+          "sha256": "42fa1e7554d6807cc03389b8ba4e660a116a9e0411fd325a66ef60e40f66fc0d"
+        },
+        {
+          "path": "project/snapshots/d607781b-7f4c-4b52-b42b-c8a25ac5c231.parquet",
+          "bytes": 4699,
+          "sha256": "703be24ce54236709fed854b889b117e82e14e9dde3b117303e1a2b2fe9715ba"
+        },
+        {
+          "path": "project/sources/4c1a6170-84fb-4407-a3c2-ab8ede5047e7.bin",
+          "bytes": 52123,
+          "sha256": "c3be3c9a1d662c6c124c6140173415ebeb2141d49d425fa0f9f7a4eb366cc9c4"
+        },
+        {
+          "path": "project/sources/786b76ac-322a-47a8-9937-fb04963c246a.bin",
+          "bytes": 10372,
+          "sha256": "a1a875201e78aca9bfbcf9d559aea29dec840df79f3dd6f6b7e78b65924a94cd"
+        },
+        {
+          "path": "project/sources/8f7f1327-811b-4f1c-b261-93f7964fd250.bin",
+          "bytes": 21989,
+          "sha256": "2e114a3fc95291c4f1129bebc3d92851b3bc789fe47a3a34604799c8ee25d516"
+        },
+        {
+          "path": "project/sources/9a2ecd70-ff65-4634-a613-9c01b5322359.bin",
+          "bytes": 43356,
+          "sha256": "5b232b990a95ec6843715d19eff0b7168dcd40ba56173ee2d8df9dac041d8cad"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/4a738157-19c7-42f7-8615-943c0aa5007f.source",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/4ae9825e-16b3-4e6a-aa3c-dde73a674bdc.dataset.parquet",
+          "bytes": 4699,
+          "sha256": "703be24ce54236709fed854b889b117e82e14e9dde3b117303e1a2b2fe9715ba"
+        },
+        {
+          "path": "work/chart-data.parquet",
+          "bytes": 1842,
+          "sha256": "42fa1e7554d6807cc03389b8ba4e660a116a9e0411fd325a66ef60e40f66fc0d"
+        },
+        {
+          "path": "work/chart-members.parquet",
+          "bytes": 1336,
+          "sha256": "b3892c8e538306fe1940ce0f585f650e161833af87ca2772e5db841197f5e524"
+        },
+        {
+          "path": "work/chart-result.json",
+          "bytes": 10372,
+          "sha256": "a1a875201e78aca9bfbcf9d559aea29dec840df79f3dd6f6b7e78b65924a94cd"
+        },
+        {
+          "path": "work/chart.pdf",
+          "bytes": 21989,
+          "sha256": "2e114a3fc95291c4f1129bebc3d92851b3bc789fe47a3a34604799c8ee25d516"
+        },
+        {
+          "path": "work/chart.png",
+          "bytes": 43356,
+          "sha256": "5b232b990a95ec6843715d19eff0b7168dcd40ba56173ee2d8df9dac041d8cad"
+        },
+        {
+          "path": "work/chart.svg",
+          "bytes": 52123,
+          "sha256": "c3be3c9a1d662c6c124c6140173415ebeb2141d49d425fa0f9f7a4eb366cc9c4"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_charts.py::test_real_matplotlib_png_svg_persist_reopen_and_protected_export[scatter]",
+      "outcome": "passed",
+      "seconds": 0.21359074400061218,
+      "test_file_sha256": "60777d9b1a66be8c92426335b6c0699c9339904c4742e49abefa50e7f7f70330",
+      "reference_assertions": [
+        "assert png.startswith(b\"\\x89PNG\\r\\n\\x1a\\n\")",
+        "assert \"<svg\" in svg and \"Türkçe ölçüm\" in svg and r[\"version_id\"] in svg",
+        "assert path.read_bytes() == png",
+        "assert Path(r[\"path\"]).read_bytes() == source",
+        "assert (\n            saved[\"spec\"][\"title\"] == \"Türkçe ölçüm\" and saved[\"spec\"][\"yunit\"] == \"kg\"\n        )",
+        "assert len(saved[\"artifact_uris\"]) == 6",
+        "assert reopened.state[\"results\"][-1][\"chart\"] == saved",
+        "assert reopened.path(saved[\"artifact_uris\"][\"png\"]).read_bytes() == png"
+      ],
+      "fixture_files": [
+        {
+          "path": "plot.png",
+          "bytes": 32962,
+          "sha256": "8c72d73fef677950a7d7128577d77ef4231ccea362414941461f070d37ad9c9f"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "31e19cf67c7243e3d62f79095da755aa29d040e070ed0015465693c92489bc63"
+        },
+        {
+          "path": "project/commits/3c3752f2-617b-418a-afd4-8126f32aa996/manifest.json",
+          "bytes": 467,
+          "sha256": "4b34dda413367d6b9ece52c07ed54f636518a6c8059f34833b031075622a28a6"
+        },
+        {
+          "path": "project/commits/7e242485-0a84-460a-9b1c-ad5c9afda7c9/manifest.json",
+          "bytes": 6555,
+          "sha256": "37c587a0b7bb39edce20ce19216a6298a1c3c5ef0b671f6f3d6df0ad2d109104"
+        },
+        {
+          "path": "project/commits/8de02c31-f4b5-4590-ba85-498658fd57ac/manifest.json",
+          "bytes": 17600,
+          "sha256": "fd30922e56fddb7a9b7dac88c28db22c34f172a09caedba06e8e591f2277905b"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 40960,
+          "sha256": "91f77165418b08a93733ec7dce0173d190cc6af8faf7a73a01ded23333151995"
+        },
+        {
+          "path": "project/snapshots/43a7c07b-f80d-410a-a3a5-9ce739c3752f.parquet",
+          "bytes": 1333,
+          "sha256": "540550308fa81778e8b5db990bf1e4adac16b1a8d631c463f2ddfd258e2d6a25"
+        },
+        {
+          "path": "project/snapshots/ba5bac06-66bd-4cc2-909c-eec89f23a075.parquet",
+          "bytes": 1814,
+          "sha256": "f465d734800ea9675f783d22351db27de78aacc7dfe42401ee6551b56f81d8cd"
+        },
+        {
+          "path": "project/snapshots/cec1995a-91d8-47dd-9364-1dd9487f2086.parquet",
+          "bytes": 4695,
+          "sha256": "a67fc0eed30cb92973986ce3db4f9f862222367ccc7d00490324fceeab318621"
+        },
+        {
+          "path": "project/sources/2583751b-891d-4120-b8c6-b11302698526.bin",
+          "bytes": 22766,
+          "sha256": "4292e40cd7513062b4e1f001f84d53adbe749d6f905df37de7667f020b7cad60"
+        },
+        {
+          "path": "project/sources/2cc1e350-4704-47a2-b2a9-1d51724cd52f.bin",
+          "bytes": 32962,
+          "sha256": "8c72d73fef677950a7d7128577d77ef4231ccea362414941461f070d37ad9c9f"
+        },
+        {
+          "path": "project/sources/32d1f956-bb02-4321-bb90-3e974d55fc29.bin",
+          "bytes": 10385,
+          "sha256": "e0da26b175352afcfc645360806edda5529ef7b06d259c8dbec1fdcdf8dfd528"
+        },
+        {
+          "path": "project/sources/be7d9191-9949-4d05-865b-62bc7f9619b2.bin",
+          "bytes": 56018,
+          "sha256": "efe52a28ef018334faf0284cf91eab24ed8ec1b99b6bb4777b9d6ab67546e73c"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/3c946caa-c2fe-4a4b-b961-c728d7c1ef9c.source",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/88dbb053-f26b-4bd3-95e1-3c60ec6ccfc5.dataset.parquet",
+          "bytes": 4695,
+          "sha256": "a67fc0eed30cb92973986ce3db4f9f862222367ccc7d00490324fceeab318621"
+        },
+        {
+          "path": "work/chart-data.parquet",
+          "bytes": 1814,
+          "sha256": "f465d734800ea9675f783d22351db27de78aacc7dfe42401ee6551b56f81d8cd"
+        },
+        {
+          "path": "work/chart-members.parquet",
+          "bytes": 1333,
+          "sha256": "540550308fa81778e8b5db990bf1e4adac16b1a8d631c463f2ddfd258e2d6a25"
+        },
+        {
+          "path": "work/chart-result.json",
+          "bytes": 10385,
+          "sha256": "e0da26b175352afcfc645360806edda5529ef7b06d259c8dbec1fdcdf8dfd528"
+        },
+        {
+          "path": "work/chart.pdf",
+          "bytes": 22766,
+          "sha256": "4292e40cd7513062b4e1f001f84d53adbe749d6f905df37de7667f020b7cad60"
+        },
+        {
+          "path": "work/chart.png",
+          "bytes": 32962,
+          "sha256": "8c72d73fef677950a7d7128577d77ef4231ccea362414941461f070d37ad9c9f"
+        },
+        {
+          "path": "work/chart.svg",
+          "bytes": 56018,
+          "sha256": "efe52a28ef018334faf0284cf91eab24ed8ec1b99b6bb4777b9d6ab67546e73c"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_charts.py::test_real_matplotlib_png_svg_persist_reopen_and_protected_export[correlation]",
+      "outcome": "passed",
+      "seconds": 0.26819179599988274,
+      "test_file_sha256": "60777d9b1a66be8c92426335b6c0699c9339904c4742e49abefa50e7f7f70330",
+      "reference_assertions": [
+        "assert png.startswith(b\"\\x89PNG\\r\\n\\x1a\\n\")",
+        "assert \"<svg\" in svg and \"Türkçe ölçüm\" in svg and r[\"version_id\"] in svg",
+        "assert path.read_bytes() == png",
+        "assert Path(r[\"path\"]).read_bytes() == source",
+        "assert (\n            saved[\"spec\"][\"title\"] == \"Türkçe ölçüm\" and saved[\"spec\"][\"yunit\"] == \"kg\"\n        )",
+        "assert len(saved[\"artifact_uris\"]) == 6",
+        "assert reopened.state[\"results\"][-1][\"chart\"] == saved",
+        "assert reopened.path(saved[\"artifact_uris\"][\"png\"]).read_bytes() == png"
+      ],
+      "fixture_files": [
+        {
+          "path": "plot.png",
+          "bytes": 37417,
+          "sha256": "22def25d25ecd444ee05e3a8d318a1e666c983da60493d50938dd99cf193b1ed"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "16d72ff96cd547e14281c9a8820f81b9292fc5d0338cabc914f8a89b72b531cd"
+        },
+        {
+          "path": "project/commits/39d7c24a-c371-46c0-87c6-2071f440a278/manifest.json",
+          "bytes": 17869,
+          "sha256": "e750247966e4869f2f0f9f29f169f8eaa6f8200067b8ee11872e2e07b5fe5072"
+        },
+        {
+          "path": "project/commits/3e594a4b-1b6e-4a96-8200-15b70a43003a/manifest.json",
+          "bytes": 6555,
+          "sha256": "0d1228e53608e57541e4187de935b189fbe6a3a69926f7a5d8c135982f90acf1"
+        },
+        {
+          "path": "project/commits/e570d701-1edb-489d-934b-2338690b0661/manifest.json",
+          "bytes": 467,
+          "sha256": "61041629bd6c0f60445fdd5c5b1a64072b53e2b2254f7e1764899d8ff77e4a7b"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 40960,
+          "sha256": "1296ddb13d707fa698bd050e9b8543222ca33a3f60dcc51114b2d7dc9c153e6e"
+        },
+        {
+          "path": "project/snapshots/1ed018e5-4f82-4861-a27b-0dac35c15889.parquet",
+          "bytes": 1873,
+          "sha256": "87bde3248b324089d3c6acfe0ed8d764920ac390a55b7549c6cb1fff4e025c01"
+        },
+        {
+          "path": "project/snapshots/58abe8d4-c099-4cd9-9fa9-33ba36de19ac.parquet",
+          "bytes": 1337,
+          "sha256": "ef38e03c0f9fe533edd87c8a658e8897f2ee77997527c6468a2d3bdc19a6158f"
+        },
+        {
+          "path": "project/snapshots/a8fb5c1a-cf41-49e6-93ec-22bac121cf65.parquet",
+          "bytes": 4695,
+          "sha256": "8ee9eb4b61c26617a41b9bd560f5ad6b0f15f176b84793cbfc2fb48aa976da05"
+        },
+        {
+          "path": "project/sources/05901754-acd4-425a-be1f-bf490cc60b1a.bin",
+          "bytes": 23499,
+          "sha256": "2e59fa5f929e04afb8cd7a27a0cca837f6a2419de2f78d17d5d6268a7f96e05e"
+        },
+        {
+          "path": "project/sources/9743dcb0-595c-4e0e-9bb5-79a01cf6b11e.bin",
+          "bytes": 10749,
+          "sha256": "9f3ba72ff0e05d7e498eecc1a5bb81f9005b78ef345edd04e4abde5a69352efa"
+        },
+        {
+          "path": "project/sources/a89051a2-744a-4189-b4a9-538fa6e44cb2.bin",
+          "bytes": 37417,
+          "sha256": "22def25d25ecd444ee05e3a8d318a1e666c983da60493d50938dd99cf193b1ed"
+        },
+        {
+          "path": "project/sources/dbfb6611-b1a5-4a1b-8577-ac8c3ab6d7d7.bin",
+          "bytes": 57496,
+          "sha256": "fd9436e5d427a01b923065a089c2fdc6d9833778ad1ca99a07afaed94dac7980"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/chart-data.parquet",
+          "bytes": 1873,
+          "sha256": "87bde3248b324089d3c6acfe0ed8d764920ac390a55b7549c6cb1fff4e025c01"
+        },
+        {
+          "path": "work/chart-members.parquet",
+          "bytes": 1337,
+          "sha256": "ef38e03c0f9fe533edd87c8a658e8897f2ee77997527c6468a2d3bdc19a6158f"
+        },
+        {
+          "path": "work/chart-result.json",
+          "bytes": 10749,
+          "sha256": "9f3ba72ff0e05d7e498eecc1a5bb81f9005b78ef345edd04e4abde5a69352efa"
+        },
+        {
+          "path": "work/chart.pdf",
+          "bytes": 23499,
+          "sha256": "2e59fa5f929e04afb8cd7a27a0cca837f6a2419de2f78d17d5d6268a7f96e05e"
+        },
+        {
+          "path": "work/chart.png",
+          "bytes": 37417,
+          "sha256": "22def25d25ecd444ee05e3a8d318a1e666c983da60493d50938dd99cf193b1ed"
+        },
+        {
+          "path": "work/chart.svg",
+          "bytes": 57496,
+          "sha256": "fd9436e5d427a01b923065a089c2fdc6d9833778ad1ca99a07afaed94dac7980"
+        },
+        {
+          "path": "work/de27cb80-1b98-420d-a6ed-a68c1310f4d6.dataset.parquet",
+          "bytes": 4695,
+          "sha256": "8ee9eb4b61c26617a41b9bd560f5ad6b0f15f176b84793cbfc2fb48aa976da05"
+        },
+        {
+          "path": "work/f2990fbb-3492-4c5a-9d40-ab561e7517d3.source",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_charts.py::test_real_matplotlib_png_svg_persist_reopen_and_protected_export[missing]",
+      "outcome": "passed",
+      "seconds": 0.17101603700029955,
+      "test_file_sha256": "60777d9b1a66be8c92426335b6c0699c9339904c4742e49abefa50e7f7f70330",
+      "reference_assertions": [
+        "assert png.startswith(b\"\\x89PNG\\r\\n\\x1a\\n\")",
+        "assert \"<svg\" in svg and \"Türkçe ölçüm\" in svg and r[\"version_id\"] in svg",
+        "assert path.read_bytes() == png",
+        "assert Path(r[\"path\"]).read_bytes() == source",
+        "assert (\n            saved[\"spec\"][\"title\"] == \"Türkçe ölçüm\" and saved[\"spec\"][\"yunit\"] == \"kg\"\n        )",
+        "assert len(saved[\"artifact_uris\"]) == 6",
+        "assert reopened.state[\"results\"][-1][\"chart\"] == saved",
+        "assert reopened.path(saved[\"artifact_uris\"][\"png\"]).read_bytes() == png"
+      ],
+      "fixture_files": [
+        {
+          "path": "plot.png",
+          "bytes": 31050,
+          "sha256": "d4d4a8af2e513414ebede04e74df072a38fffcbfbdc6000363b2a81d82e62887"
+        },
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "d524b2357f25e581d1669f31e28c86ad528a3e1869fbc40ac22a2b9e26190aa2"
+        },
+        {
+          "path": "project/commits/3a4ff1ce-0f86-415b-a842-37721721883a/manifest.json",
+          "bytes": 17482,
+          "sha256": "bb84c51a0508a38e4f2907eaf9bdb4d8dfa7dae336e20659a2e36848946fb951"
+        },
+        {
+          "path": "project/commits/e44a637d-1f66-454f-9716-a41bbeb2fbc8/manifest.json",
+          "bytes": 467,
+          "sha256": "f66e1996b8c47b4a827f21be9b97a82cf664c5bee1558c6321f0e3d05f93003a"
+        },
+        {
+          "path": "project/commits/fefad0ec-4a53-480e-96b6-911baa114877/manifest.json",
+          "bytes": 6555,
+          "sha256": "31a137be680cd3da888ba978a3918c32734ceae2a597c09f5cc61149d5af33e7"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 40960,
+          "sha256": "bed85e9a43a3ff0524fe31375b827a046f2a26a110e679d7fb6937aeac083b0d"
+        },
+        {
+          "path": "project/snapshots/01fecc14-a815-4156-b6a6-2301a84a03f3.parquet",
+          "bytes": 4695,
+          "sha256": "2caa587808d22785386a6a8b22216374a78db952ae9120dd3ba83e9d90377cad"
+        },
+        {
+          "path": "project/snapshots/45cbafe1-7afb-4cbb-b29d-1408ae3f3050.parquet",
+          "bytes": 416,
+          "sha256": "cb0814c02870028f90edfce94328a0871c72d1994c3a27185c2d505978287914"
+        },
+        {
+          "path": "project/snapshots/9fff11d9-6c8d-4ffb-83e2-eb4463e95a91.parquet",
+          "bytes": 1794,
+          "sha256": "f793049295493b678621c40eae09ae90bf7a6d3a4d735196b5b5f86c05dbcd92"
+        },
+        {
+          "path": "project/sources/1ca25297-eec6-438b-9c35-c69dd41423c9.bin",
+          "bytes": 21562,
+          "sha256": "304a990643d85e1240770a54dc2407f39ecddd1c84d4dbe6538758123108c03a"
+        },
+        {
+          "path": "project/sources/2ce7cc72-b656-4a9c-b5b6-cadb6ad48758.bin",
+          "bytes": 31050,
+          "sha256": "d4d4a8af2e513414ebede04e74df072a38fffcbfbdc6000363b2a81d82e62887"
+        },
+        {
+          "path": "project/sources/67f609eb-72d7-44c5-9464-898f6128f64c.bin",
+          "bytes": 48298,
+          "sha256": "ff63d29ce405d773c5ff6503392d168f78d7c50bec49a6c1f63f018be4db68a2"
+        },
+        {
+          "path": "project/sources/b729040c-b2af-4fb4-a193-c24d00142653.bin",
+          "bytes": 10312,
+          "sha256": "59eae7a37694cf352dab04eee8d40331e6efa1aaa524cf9deaf6538374744a4b"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/9f99c853-a22d-46c5-a163-5be4951b1120.source",
+          "bytes": 1201,
+          "sha256": "a2d211737506a11854303af72dbc5a46505d59f0390692296acb8fb713f04793"
+        },
+        {
+          "path": "work/chart-data.parquet",
+          "bytes": 1794,
+          "sha256": "f793049295493b678621c40eae09ae90bf7a6d3a4d735196b5b5f86c05dbcd92"
+        },
+        {
+          "path": "work/chart-members.parquet",
+          "bytes": 416,
+          "sha256": "cb0814c02870028f90edfce94328a0871c72d1994c3a27185c2d505978287914"
+        },
+        {
+          "path": "work/chart-result.json",
+          "bytes": 10312,
+          "sha256": "59eae7a37694cf352dab04eee8d40331e6efa1aaa524cf9deaf6538374744a4b"
+        },
+        {
+          "path": "work/chart.pdf",
+          "bytes": 21562,
+          "sha256": "304a990643d85e1240770a54dc2407f39ecddd1c84d4dbe6538758123108c03a"
+        },
+        {
+          "path": "work/chart.png",
+          "bytes": 31050,
+          "sha256": "d4d4a8af2e513414ebede04e74df072a38fffcbfbdc6000363b2a81d82e62887"
+        },
+        {
+          "path": "work/chart.svg",
+          "bytes": 48298,
+          "sha256": "ff63d29ce405d773c5ff6503392d168f78d7c50bec49a6c1f63f018be4db68a2"
+        },
+        {
+          "path": "work/dc8d22a9-f16b-4e3e-883b-5aaf93af7174.dataset.parquet",
+          "bytes": 4695,
+          "sha256": "2caa587808d22785386a6a8b22216374a78db952ae9120dd3ba83e9d90377cad"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    }
+  ]
+}

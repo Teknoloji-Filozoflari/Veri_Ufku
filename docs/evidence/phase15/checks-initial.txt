@@ -1,0 +1,73 @@
+$ python3 scripts/check_docs.py
+Broken local link: docs/ENVIRONMENT.md:evidence/phase15/wheel.json
+Broken local link: docs/evidence/PHASE15.md:phase15/wheel.json
+Broken local link: docs/evidence/PHASE15.md:phase15/checks.json
+Broken local link: docs/evidence/PHASE15.md:phase15/install.txt
+Broken local link: docs/evidence/PHASE15.md:phase15/environment.json
+
+EXIT 1
+$ uv run --frozen python scripts/check_docs.py
+Broken local link: docs/ENVIRONMENT.md:evidence/phase15/wheel.json
+Broken local link: docs/evidence/PHASE15.md:phase15/wheel.json
+Broken local link: docs/evidence/PHASE15.md:phase15/checks.json
+Broken local link: docs/evidence/PHASE15.md:phase15/install.txt
+Broken local link: docs/evidence/PHASE15.md:phase15/environment.json
+
+EXIT 1
+$ uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+
+EXIT 0
+$ uv run --frozen python scripts/check_learning.py
+PASS: 96 offline articles; 56 UI bindings; all capability links
+
+EXIT 0
+$ uv run --frozen ruff check src tests scripts
+All checks passed!
+
+EXIT 0
+$ uv run --frozen ruff format --check src tests scripts
+144 files already formatted
+
+EXIT 0
+$ uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... FAIL
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+======================================================================
+FAIL: test_current_documents (test_document_contracts.DocumentContracts.test_current_documents)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/s-oktay/Belgeler/Veri_Ufku/tests/test_document_contracts.py", line 45, in test_current_documents
+    self.assertEqual(CHECKER.check(self.root), [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['Broken local link: docs/ENVIRONMENT.md:e[295 chars]son'] != []
+
+First list contains 5 additional elements.
+First extra element 0:
+'Broken local link: docs/ENVIRONMENT.md:evidence/phase15/wheel.json'
+
++ []
+- ['Broken local link: docs/ENVIRONMENT.md:evidence/phase15/wheel.json',
+-  'Broken local link: docs/evidence/PHASE15.md:phase15/wheel.json',
+-  'Broken local link: docs/evidence/PHASE15.md:phase15/checks.json',
+-  'Broken local link: docs/evidence/PHASE15.md:phase15/install.txt',
+-  'Broken local link: docs/evidence/PHASE15.md:phase15/environment.json']
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.720s
+
+FAILED (failures=1)
+
+EXIT 1
+$ uv run --frozen veri-ufku --smoke-test
+GUI_SMOKE PASS
+
+EXIT 0

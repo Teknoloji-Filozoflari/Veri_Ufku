@@ -1,0 +1,279 @@
+{
+  "id": "E32-ACCEPTANCE",
+  "environment": "ENV-32",
+  "date": "2026-10-11T08:49:11.496314+00:00",
+  "methods": [
+    {
+      "id": "F32-P001",
+      "environment": "ENV-32",
+      "date": "2026-10-11T08:49:11.496314+00:00",
+      "status": "technically_verified",
+      "C": [
+        "src/veri_ufku/analytics/contracts.py",
+        "src/veri_ufku/operations/data_contracts.py",
+        "docs/adr/033-data-contracts-phase32.md"
+      ],
+      "V": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "cases": [
+          "test_schema_additive_version_ordinal_and_roundtrip"
+        ]
+      },
+      "G": {
+        "path": "src/veri_ufku/ui/qml/DataContractPanel.qml",
+        "case": "test_qml_dictionary_quality_policy_export_help_reopen",
+        "source": "docs/evidence/phase32/source-gui/walkthrough.json",
+        "wheel": "docs/evidence/phase32/wheel-gui/walkthrough.json"
+      },
+      "H": {
+        "article": "contract-level",
+        "path": "src/veri_ufku/learning/content/tr.json",
+        "f1_case": "test_qml_dictionary_quality_policy_export_help_reopen"
+      },
+      "P": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "source_case": "test_schema_additive_version_ordinal_and_roundtrip",
+        "wheel_case": "test_qml_dictionary_quality_policy_export_help_reopen",
+        "inverse": "canonical full row/source/previous/new relation + immutable parent snapshots where applicable"
+      }
+    },
+    {
+      "id": "F32-P002",
+      "environment": "ENV-32",
+      "date": "2026-10-11T08:49:11.496314+00:00",
+      "status": "technically_verified",
+      "C": [
+        "src/veri_ufku/analytics/contracts.py",
+        "src/veri_ufku/operations/data_contracts.py",
+        "docs/adr/033-data-contracts-phase32.md"
+      ],
+      "V": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "cases": [
+          "test_schema_additive_version_ordinal_and_roundtrip"
+        ]
+      },
+      "G": {
+        "path": "src/veri_ufku/ui/qml/DataContractPanel.qml",
+        "case": "test_phase07_ordinal_dictionary_extension_preserves_existing_order",
+        "source": "docs/evidence/phase32/source-gui/walkthrough.json",
+        "wheel": "docs/evidence/phase32/wheel-gui/walkthrough.json"
+      },
+      "H": {
+        "article": "contract-level",
+        "path": "src/veri_ufku/learning/content/tr.json",
+        "f1_case": "test_qml_dictionary_quality_policy_export_help_reopen"
+      },
+      "P": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "source_case": "test_schema_additive_version_ordinal_and_roundtrip",
+        "wheel_case": "test_phase07_ordinal_dictionary_extension_preserves_existing_order",
+        "inverse": "canonical full row/source/previous/new relation + immutable parent snapshots where applicable"
+      }
+    },
+    {
+      "id": "F32-P003",
+      "environment": "ENV-32",
+      "date": "2026-10-11T08:49:11.496314+00:00",
+      "status": "technically_verified",
+      "C": [
+        "src/veri_ufku/analytics/contracts.py",
+        "src/veri_ufku/operations/data_contracts.py",
+        "docs/adr/033-data-contracts-phase32.md"
+      ],
+      "V": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "cases": [
+          "test_wrong_unit_type_keys_range_policy_quarantine_and_stop"
+        ]
+      },
+      "G": {
+        "path": "src/veri_ufku/ui/qml/DataContractPanel.qml",
+        "case": "test_qml_foreign_key_unique_wrong_unit_type_actual_second_dataset",
+        "source": "docs/evidence/phase32/source-gui/walkthrough.json",
+        "wheel": "docs/evidence/phase32/wheel-gui/walkthrough.json"
+      },
+      "H": {
+        "article": "contract-schema",
+        "path": "src/veri_ufku/learning/content/tr.json",
+        "f1_case": "test_qml_dictionary_quality_policy_export_help_reopen"
+      },
+      "P": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "source_case": "test_wrong_unit_type_keys_range_policy_quarantine_and_stop",
+        "wheel_case": "test_qml_foreign_key_unique_wrong_unit_type_actual_second_dataset",
+        "inverse": "canonical full row/source/previous/new relation + immutable parent snapshots where applicable"
+      }
+    },
+    {
+      "id": "F32-P004",
+      "environment": "ENV-32",
+      "date": "2026-10-11T08:49:11.496314+00:00",
+      "status": "technically_verified",
+      "C": [
+        "src/veri_ufku/analytics/contracts.py",
+        "src/veri_ufku/operations/data_contracts.py",
+        "docs/adr/033-data-contracts-phase32.md"
+      ],
+      "V": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "cases": [
+          "test_foreign_keys_actual_second_version_no_implicit_cast"
+        ]
+      },
+      "G": {
+        "path": "src/veri_ufku/ui/qml/DataContractPanel.qml",
+        "case": "test_qml_foreign_key_unique_wrong_unit_type_actual_second_dataset",
+        "source": "docs/evidence/phase32/source-gui/walkthrough.json",
+        "wheel": "docs/evidence/phase32/wheel-gui/walkthrough.json"
+      },
+      "H": {
+        "article": "contract-reference",
+        "path": "src/veri_ufku/learning/content/tr.json",
+        "f1_case": "test_qml_dictionary_quality_policy_export_help_reopen"
+      },
+      "P": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "source_case": "test_foreign_keys_actual_second_version_no_implicit_cast",
+        "wheel_case": "test_qml_foreign_key_unique_wrong_unit_type_actual_second_dataset",
+        "inverse": "canonical full row/source/previous/new relation + immutable parent snapshots where applicable"
+      }
+    },
+    {
+      "id": "F32-P005",
+      "environment": "ENV-32",
+      "date": "2026-10-11T08:49:11.496314+00:00",
+      "status": "technically_verified",
+      "C": [
+        "src/veri_ufku/analytics/contracts.py",
+        "src/veri_ufku/operations/data_contracts.py",
+        "docs/adr/033-data-contracts-phase32.md"
+      ],
+      "V": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "cases": [
+          "test_publication_rechecks_diagnostics_and_approved_values"
+        ]
+      },
+      "G": {
+        "path": "src/veri_ufku/ui/qml/DataContractPanel.qml",
+        "case": "test_qml_dictionary_quality_policy_export_help_reopen",
+        "source": "docs/evidence/phase32/source-gui/walkthrough.json",
+        "wheel": "docs/evidence/phase32/wheel-gui/walkthrough.json"
+      },
+      "H": {
+        "article": "contract-schema",
+        "path": "src/veri_ufku/learning/content/tr.json",
+        "f1_case": "test_qml_dictionary_quality_policy_export_help_reopen"
+      },
+      "P": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "source_case": "test_publication_rechecks_diagnostics_and_approved_values",
+        "wheel_case": "test_qml_dictionary_quality_policy_export_help_reopen",
+        "inverse": "canonical full row/source/previous/new relation + immutable parent snapshots where applicable"
+      }
+    },
+    {
+      "id": "F32-P006",
+      "environment": "ENV-32",
+      "date": "2026-10-11T08:49:11.496314+00:00",
+      "status": "technically_verified",
+      "C": [
+        "src/veri_ufku/analytics/contracts.py",
+        "src/veri_ufku/operations/data_contracts.py",
+        "docs/adr/033-data-contracts-phase32.md"
+      ],
+      "V": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "cases": [
+          "test_categories_manual_mapping_and_cancel"
+        ]
+      },
+      "G": {
+        "path": "src/veri_ufku/ui/qml/DataContractPanel.qml",
+        "case": "test_qml_categories_manual_approval_and_real_worker_cancel",
+        "source": "docs/evidence/phase32/source-gui/walkthrough.json",
+        "wheel": "docs/evidence/phase32/wheel-gui/walkthrough.json"
+      },
+      "H": {
+        "article": "contract-fuzzy",
+        "path": "src/veri_ufku/learning/content/tr.json",
+        "f1_case": "test_qml_dictionary_quality_policy_export_help_reopen"
+      },
+      "P": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "source_case": "test_categories_manual_mapping_and_cancel",
+        "wheel_case": "test_qml_categories_manual_approval_and_real_worker_cancel",
+        "inverse": "canonical full row/source/previous/new relation + immutable parent snapshots where applicable"
+      }
+    },
+    {
+      "id": "F32-P007",
+      "environment": "ENV-32",
+      "date": "2026-10-11T08:49:11.496314+00:00",
+      "status": "technically_verified",
+      "C": [
+        "src/veri_ufku/analytics/contracts.py",
+        "src/veri_ufku/operations/data_contracts.py",
+        "docs/adr/033-data-contracts-phase32.md"
+      ],
+      "V": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "cases": [
+          "test_entity_no_unapproved_merge_blocks_and_undo_all_source_ids"
+        ]
+      },
+      "G": {
+        "path": "src/veri_ufku/ui/qml/DataContractPanel.qml",
+        "case": "test_qml_no_automatic_merge_human_decision_journal_undo",
+        "source": "docs/evidence/phase32/source-gui/walkthrough.json",
+        "wheel": "docs/evidence/phase32/wheel-gui/walkthrough.json"
+      },
+      "H": {
+        "article": "contract-fuzzy",
+        "path": "src/veri_ufku/learning/content/tr.json",
+        "f1_case": "test_qml_dictionary_quality_policy_export_help_reopen"
+      },
+      "P": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "source_case": "test_entity_no_unapproved_merge_blocks_and_undo_all_source_ids",
+        "wheel_case": "test_qml_no_automatic_merge_human_decision_journal_undo",
+        "inverse": "canonical full row/source/previous/new relation + immutable parent snapshots where applicable"
+      }
+    },
+    {
+      "id": "F32-P008",
+      "environment": "ENV-32",
+      "date": "2026-10-11T08:49:11.496314+00:00",
+      "status": "technically_verified",
+      "C": [
+        "src/veri_ufku/analytics/contracts.py",
+        "src/veri_ufku/operations/data_contracts.py",
+        "docs/adr/033-data-contracts-phase32.md"
+      ],
+      "V": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "cases": [
+          "test_overlapping_merge_canonical_changes_inverse_and_linked_results"
+        ]
+      },
+      "G": {
+        "path": "src/veri_ufku/ui/qml/DataContractPanel.qml",
+        "case": "test_qml_no_automatic_merge_human_decision_journal_undo",
+        "source": "docs/evidence/phase32/source-gui/walkthrough.json",
+        "wheel": "docs/evidence/phase32/wheel-gui/walkthrough.json"
+      },
+      "H": {
+        "article": "contract-merge",
+        "path": "src/veri_ufku/learning/content/tr.json",
+        "f1_case": "test_qml_dictionary_quality_policy_export_help_reopen"
+      },
+      "P": {
+        "path": "docs/evidence/phase32/targeted.xml",
+        "source_case": "test_overlapping_merge_canonical_changes_inverse_and_linked_results",
+        "wheel_case": "test_qml_no_automatic_merge_human_decision_journal_undo",
+        "inverse": "canonical full row/source/previous/new relation + immutable parent snapshots where applicable"
+      }
+    }
+  ]
+}

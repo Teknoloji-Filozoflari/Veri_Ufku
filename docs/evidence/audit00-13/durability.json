@@ -1,0 +1,27 @@
+{
+  "id": "AUDIT-BTRFS-DURABILITY",
+  "utc": "2026-10-07T21:14:35.891494+00:00",
+  "environment": "ENV-AUDIT-00-13",
+  "filesystem": "btrfs",
+  "command": [
+    "uv",
+    "--cache-dir",
+    "/tmp/veri-ufku-uv",
+    "run",
+    "--frozen",
+    "pytest",
+    "-q",
+    "--basetemp",
+    "/home/s-oktay/Belgeler/Veri_Ufku/.audit-fs-dj5nm12z/pytest",
+    "tests/test_projects.py",
+    "tests/test_operations.py",
+    "tests/test_charts.py",
+    "tests/test_exports.py",
+    "-k",
+    "sigkill or two_real or publication or fault or second_real",
+    "--junitxml=/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/audit00-13/durability.xml"
+  ],
+  "exit_code": 0,
+  "seconds": 8.531941134002409,
+  "scope": "Real SIGKILL, two processes, publication fault injection; no power loss claim"
+}

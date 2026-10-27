@@ -1,0 +1,102 @@
+2026-10-07 UTC/Europe/Istanbul ENV-09; isolated XDG, offscreen/software
+
+$ uv --cache-dir /tmp/veri-ufku-uv sync --locked --group dev
+Resolved 18 packages in 0.83ms
+Checked 17 packages in 0.16ms
+
+exit=0
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_learning.py
+PASS: 38 offline articles; 42 UI bindings; all capability links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff check src tests scripts
+All checks passed!
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff format --check src tests scripts
+80 files already formatted
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen pytest -q
+........................................................................ [ 31%]
+........................................................................ [ 63%]
+........................................................................ [ 94%]
+............                                                             [100%]
+228 passed in 34.94s
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.328s
+
+OK
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen veri-ufku --smoke-test
+GUI_SMOKE PASS
+
+exit=0
+
+$ git diff --check
+
+exit=0
+
+Final acceptance documentation after passing runtime/package checks; 2026-10-07
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.331s
+
+OK
+
+exit=0
+
+$ git diff --check
+
+exit=0

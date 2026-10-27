@@ -1,0 +1,50 @@
+{
+  "action": "diff",
+  "same_origin": true,
+  "identity_collisions": {
+    "column_ids": [],
+    "row_ids": [],
+    "column_count": 0,
+    "row_count": 0,
+    "detail_limit": 1000,
+    "row_scope": "included sample/full snapshot only; metadata-only row collisions not observable; detail first1000, full count retained"
+  },
+  "left_origin": {
+    "commit_id": "11dbfa22-5094-430d-8655-cbfca2214382",
+    "project_id": "4c7bcd47-197a-4708-8ba3-ad0456e9b57f",
+    "schema_version": 7
+  },
+  "right_origin": {
+    "commit_id": "11dbfa22-5094-430d-8655-cbfca2214382",
+    "project_id": "4c7bcd47-197a-4708-8ba3-ad0456e9b57f",
+    "schema_version": 7
+  },
+  "left_fingerprint": {
+    "sha256": "d2eecae580817832740ffd8767c4e59e626258027ec1dd6057ad31495af5bb53",
+    "size": 4757
+  },
+  "right_fingerprint": {
+    "sha256": "98f0717d98c46e4b5717d59b55321a854528251220e7143bb1696e5181b1cbb1",
+    "size": 3187
+  },
+  "categories": {
+    "schema": [],
+    "operations": [],
+    "params": [],
+    "runs_metrics": [],
+    "learning_notes": []
+  },
+  "policy": "review-only; keep-local / incoming-as-separate-fork / defer; no automatic apply or last-write-wins",
+  "limitations": [
+    "Yerel aktarım; yayınlama, sunucu, identity/permissions veya ortak yazma hizmeti değildir.",
+    "Tarama secret anahtar/desen ve email/telefon/explicit hassas terim kapsamındadır; anonimlik/eksiksiz PII tespiti garantisi yoktur.",
+    "Tam kopya yalnız mevcut committed mantıksal proje ve manifest artifact setidir; geçmiş SQLite/ACTIVE/recovery/staging/keyring ve dış dosya yolları taşınmaz.",
+    "Tam kopyada taranamayan binary/image/model/archive artifact varsa işlem kapalıdır; binary içeriği taranmış gibi sunulmaz.",
+    "Redacted örnek ilk N satırdır; bütün metin/kategori ve seçilmeyen sayısallar maskelenir. RowId/SourceRecordId/ColumnId kökenle birlikte korunur.",
+    "Metadata-only ve redacted örnek inceleme içindir; düzenlenebilir özgün proje veya tam yeniden üretim değildir.",
+    "Diff hash/kimlik değişimini gösterir; iki farklı kökendeki eşit kimlikler eşdeğer varlık sayılmaz. Otomatik merge/last-write-wins yoktur.",
+    "Tam kopya yalnız yeni yerel klasöre ayrı fork olarak açılır; mevcut proje üzerine yazılmaz. Eski yorum özgün subject/hash bağlamında kalır.",
+    "Tek yazıcı file lock korunur; unsupported concurrent edit read-only/ret ile karşılanır. Paylaşımlı ağ klasöründeki SQLite çok kullanıcılı DB değildir.",
+    "Hash bütünlük içindir; göndericiyi doğrulamaz, yeniden imzalanmış kötü niyetli pakete karşı kimlik/auth kanıtı değildir."
+  ]
+}

@@ -1,0 +1,814 @@
+{
+  "exitstatus": 0,
+  "cases": [
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_hand_weighted_mean_semantics_and_reopen_exportable_identity[frequency-6.25-3]",
+      "outcome": "passed",
+      "seconds": 1.172059331998753,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert out[\"advanced\"][\"estimate\"] == 17.5",
+        "assert out[\"advanced\"][\"variance\"] == pytest.approx(variance)",
+        "assert out[\"advanced\"][\"df\"] == df",
+        "assert (\n            ids[\"source_record_id\"].to_list()\n            == pl.read_parquet(r[\"path\"])[\"__vu_source_record_id\"].to_list()\n        )",
+        "assert reopened.state[\"results\"][-1][\"analysis\"][\"advanced\"][\n            \"variance\"\n        ] == pytest.approx(variance)"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "8a3b1e63043786a5f8bc967233e1fe9d229f78d33f6c2969d57d3be0725ab798"
+        },
+        {
+          "path": "project/commits/21ae25c9-ad41-4828-8a88-8407632b379e/manifest.json",
+          "bytes": 6396,
+          "sha256": "eea388d2deb8f745c1a1d946b20d601fce6080cbbbd156f4213b0357bfe1ba1e"
+        },
+        {
+          "path": "project/commits/4f4f1206-e6bd-461c-bccd-cb06335ae515/manifest.json",
+          "bytes": 11090,
+          "sha256": "fea615fd890f4377498262a16edf2880f470dccbd9d8a8e79ec718dfad2e9003"
+        },
+        {
+          "path": "project/commits/8f9d298c-d8f7-474e-8fa3-0a82086057ae/manifest.json",
+          "bytes": 467,
+          "sha256": "31c74a686d3d81914d9bff133116c0380d3c8de7cc552ffd595377c55a67b415"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 32768,
+          "sha256": "8014bf1565afefe9a1884293be32e99131d4dca7f78346907bc5ffdbba2b298d"
+        },
+        {
+          "path": "project/snapshots/2355ac9d-5d73-401f-a37d-ea77f2f66c17.parquet",
+          "bytes": 4258,
+          "sha256": "0392344ded1dc3be868c1450f5fac495e44da0d0ca6d42d870357ce17c7ea11e"
+        },
+        {
+          "path": "project/snapshots/8dfe430d-b3c9-43aa-8b23-032d1b8b9ba1.parquet",
+          "bytes": 1617,
+          "sha256": "7c365b8183b532438805b236d4eec8a1d4ba7c3f45f31b002bd716917d291f48"
+        },
+        {
+          "path": "project/snapshots/f237bf10-1df6-4d0a-8b41-81fc78ffb64a.parquet",
+          "bytes": 913,
+          "sha256": "94637a960882628b8b1363c4865de231d8887fe4495dbfc654de4debb87dd54c"
+        },
+        {
+          "path": "project/sources/83481fc8-9dd4-457e-af4d-1a2af8c26842.bin",
+          "bytes": 3565,
+          "sha256": "e5b1bc5391dc3e79e6170ad718daff69645bb91d44814f91de76c3620fb0773d"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 853,
+          "sha256": "8f05c5a8b54162d591def63517eac222e12fdba05a7df8e4e5dac7e2ae1dac8c"
+        },
+        {
+          "path": "work/3911a880-00f8-470d-bad9-e2bafbe80d50.dataset.parquet",
+          "bytes": 4258,
+          "sha256": "0392344ded1dc3be868c1450f5fac495e44da0d0ca6d42d870357ce17c7ea11e"
+        },
+        {
+          "path": "work/3b4ae4d3-db6c-48ee-b853-4ad4dece9796.source",
+          "bytes": 853,
+          "sha256": "8f05c5a8b54162d591def63517eac222e12fdba05a7df8e4e5dac7e2ae1dac8c"
+        },
+        {
+          "path": "work/analysis-details.parquet",
+          "bytes": 1617,
+          "sha256": "7c365b8183b532438805b236d4eec8a1d4ba7c3f45f31b002bd716917d291f48"
+        },
+        {
+          "path": "work/analysis-members.parquet",
+          "bytes": 913,
+          "sha256": "94637a960882628b8b1363c4865de231d8887fe4495dbfc654de4debb87dd54c"
+        },
+        {
+          "path": "work/analysis-result.json",
+          "bytes": 3565,
+          "sha256": "e5b1bc5391dc3e79e6170ad718daff69645bb91d44814f91de76c3620fb0773d"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_hand_weighted_mean_semantics_and_reopen_exportable_identity[analytic-18.75-1]",
+      "outcome": "passed",
+      "seconds": 0.03077466399918194,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert out[\"advanced\"][\"estimate\"] == 17.5",
+        "assert out[\"advanced\"][\"variance\"] == pytest.approx(variance)",
+        "assert out[\"advanced\"][\"df\"] == df",
+        "assert (\n            ids[\"source_record_id\"].to_list()\n            == pl.read_parquet(r[\"path\"])[\"__vu_source_record_id\"].to_list()\n        )",
+        "assert reopened.state[\"results\"][-1][\"analysis\"][\"advanced\"][\n            \"variance\"\n        ] == pytest.approx(variance)"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "3f1f38d4f51126cc852351daf77eaf29fc16bf04c09524ff5072044c3883fb7e"
+        },
+        {
+          "path": "project/commits/20323887-4b12-4a5a-91b3-5c32fffd69f5/manifest.json",
+          "bytes": 6396,
+          "sha256": "2d95b77cec72b882b92a307ec8e9190104157114f6de7b91bb27ee1adc54b522"
+        },
+        {
+          "path": "project/commits/6902f047-8de2-4bee-ac30-d4a878f70fbe/manifest.json",
+          "bytes": 467,
+          "sha256": "a9fc4611b3d37e85679de2c72e5143da51b2da4c6cdd8258d8adb5678dd25fbd"
+        },
+        {
+          "path": "project/commits/c14e7ae4-95f8-4525-8898-c2727b50c7e2/manifest.json",
+          "bytes": 11154,
+          "sha256": "5e96eaea67d7fca7b9a6dace34a49aa65f0bcf1a7d1e8849129f42b08de82750"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 32768,
+          "sha256": "e60120842430deb09ac49cd450dfc9de5f9c1df2b264b439a69f981d2cad3031"
+        },
+        {
+          "path": "project/snapshots/2e50169f-682e-43d6-9a2b-78ace6c8fb8d.parquet",
+          "bytes": 1617,
+          "sha256": "ddf49c7b90207a7e2f3be8d3e90c75f139aca9f04e33ab086227a717789a7a85"
+        },
+        {
+          "path": "project/snapshots/61a21a62-92ea-417f-b4da-adeef5f26039.parquet",
+          "bytes": 913,
+          "sha256": "c146a395e029dbd6f49bba43457e2391804138cc2aaa5842d7be0f50289cd525"
+        },
+        {
+          "path": "project/snapshots/ef018329-9d36-411a-ad46-02b9572402b4.parquet",
+          "bytes": 4258,
+          "sha256": "32d08a797ab0c8fc7f6c96c25a354dd06f05ba71e8e3d245a3264e984ddb831b"
+        },
+        {
+          "path": "project/sources/adafff2d-7467-4d21-95ea-e5fec6fe6109.bin",
+          "bytes": 3629,
+          "sha256": "7dd4044a0576d572eed46cfc2c02c30d4f8688cb4ab9e55c09e203feb979592f"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 853,
+          "sha256": "8f05c5a8b54162d591def63517eac222e12fdba05a7df8e4e5dac7e2ae1dac8c"
+        },
+        {
+          "path": "work/analysis-details.parquet",
+          "bytes": 1617,
+          "sha256": "ddf49c7b90207a7e2f3be8d3e90c75f139aca9f04e33ab086227a717789a7a85"
+        },
+        {
+          "path": "work/analysis-members.parquet",
+          "bytes": 913,
+          "sha256": "c146a395e029dbd6f49bba43457e2391804138cc2aaa5842d7be0f50289cd525"
+        },
+        {
+          "path": "work/analysis-result.json",
+          "bytes": 3629,
+          "sha256": "7dd4044a0576d572eed46cfc2c02c30d4f8688cb4ab9e55c09e203feb979592f"
+        },
+        {
+          "path": "work/b48a1633-eefd-4329-8a4b-ad503ce2f367.source",
+          "bytes": 853,
+          "sha256": "8f05c5a8b54162d591def63517eac222e12fdba05a7df8e4e5dac7e2ae1dac8c"
+        },
+        {
+          "path": "work/ced00a0e-ed89-40a3-a69b-1e45b4764191.dataset.parquet",
+          "bytes": 4258,
+          "sha256": "32d08a797ab0c8fc7f6c96c25a354dd06f05ba71e8e3d245a3264e984ddb831b"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_rubin_hand_calculation_and_barnard_rubin_not_average_se",
+      "outcome": "passed",
+      "seconds": 0.0008533529999112943,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert r[\"estimates\"] == [2.0]",
+        "assert r[\"within_covariance\"] == [[4.0]]",
+        "assert r[\"between_covariance\"] == [[1.0]]",
+        "assert r[\"total_covariance\"][0][0] == pytest.approx(16 / 3)",
+        "assert r[\"standard_errors\"][0] == pytest.approx(math.sqrt(16 / 3))",
+        "assert r[\"df\"][0] == pytest.approx(1 / (1 / 32 + 23 / 315))",
+        "assert r[\"confidence_intervals\"][0][0] < 2 < r[\"confidence_intervals\"][0][1]"
+      ],
+      "fixture_files": [],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_survey_hand_two_strata_nested_psus_and_no_lonely_adjustment",
+      "outcome": "passed",
+      "seconds": 0.01629024199974083,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert result[\"estimate\"] == 10",
+        "assert result[\"variance\"] == 5",
+        "assert result[\"df\"] == 2 and result[\"psus\"] == 4",
+        "assert result[\"confidence_interval\"] == pytest.approx(\n            [\n                10 - 4.302652729696142 * math.sqrt(5),\n                10 + 4.302652729696142 * math.sqrt(5),\n            ]\n        )",
+        "assert result[\"design_effect\"] == pytest.approx(5 / (74 / 3))"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "1a09ca19783b103a9099499e026fa3cd0dccfad6ed814d6f8756c457a580d10b"
+        },
+        {
+          "path": "project/commits/67f55c05-7d81-475c-a4d2-0ca364069344/manifest.json",
+          "bytes": 467,
+          "sha256": "4da274fd62a82daba44c885f321b24e9c6c6771198c38efa10df47c5fa2e957b"
+        },
+        {
+          "path": "project/commits/954a5c2c-73d1-4cc6-bca3-296cf30e1d56/manifest.json",
+          "bytes": 6770,
+          "sha256": "e8bc18149a6ea4b990a9955e4a241cbab009494a7a11b96940b22f79b2ff2c35"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "936a48bdcac590a3397547727feb0fe9b74864b6c702891a6df29a0b7cd12bb0"
+        },
+        {
+          "path": "project/snapshots/6f2a4e97-e912-41b6-9043-24e0c33d869a.parquet",
+          "bytes": 4880,
+          "sha256": "8138ffdff5ddd5fb5f36e53256ecc372f735c659c3416886ce0e5e347adba194"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1373,
+          "sha256": "ffddbade20317176599eb1ce9b2a590f07a6afb1d62c0926a358b583d2b451cd"
+        },
+        {
+          "path": "work/7b9fc22d-11df-4984-abab-df50a227dd90.source",
+          "bytes": 1373,
+          "sha256": "ffddbade20317176599eb1ce9b2a590f07a6afb1d62c0926a358b583d2b451cd"
+        },
+        {
+          "path": "work/9b1c710d-02eb-470c-9cda-6fd26ce2c130.dataset.parquet",
+          "bytes": 4880,
+          "sha256": "8138ffdff5ddd5fb5f36e53256ecc372f735c659c3416886ce0e5e347adba194"
+        },
+        {
+          "path": "work/analysis-details.parquet",
+          "bytes": 1704,
+          "sha256": "8acffaf27331a2488299c9e2f07ecb2e3236d20b36ad9a9ca839c3a4cc91ac23"
+        },
+        {
+          "path": "work/analysis-members.parquet",
+          "bytes": 957,
+          "sha256": "542747c2bae5ad6b40b22d5b6283812d261f76d7a0c1f06a2a346a811b465bfa"
+        },
+        {
+          "path": "work/analysis-result.json",
+          "bytes": 4244,
+          "sha256": "8ccbd700632e6eaad6084261ec7b1799238e973755d4b0028e1b438dd5d0b668"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[knn]",
+      "outcome": "passed",
+      "seconds": 0.10430076500051655,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert not report[\"blockers\"]",
+        "assert transformed.shape == (40, 4)",
+        "assert f.fit_row_ids_ == original.head(40)[\"__vu_row_id\"].to_list()",
+        "assert before == json.dumps(f.summary_, sort_keys=True)",
+        "assert calls and all(ids.isdisjoint(test) for ids in calls)",
+        "assert all(len(ids) < n for ids in calls)",
+        "assert all(ids in allowed for ids in calls)",
+        "assert all(\n            set(f[\"train\"]).isdisjoint(f[\"validation\"]) for f in membership[\"folds\"]\n        )"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "80ccce657ab4797198bd67a358ecd7941df7cdd77b87ae5c735b47845056eda9"
+        },
+        {
+          "path": "project/commits/2a1753b2-e66c-422d-9a1d-493931063c20/manifest.json",
+          "bytes": 6572,
+          "sha256": "bee550f595bde6b0a3a17bda133b3452c51e2d95da040d2027b0fe784c36fae1"
+        },
+        {
+          "path": "project/commits/97a309bc-a8a0-4578-84d1-f99023b6b0a6/manifest.json",
+          "bytes": 467,
+          "sha256": "b6c5be4bda52283b1548bf503f121cd83a2697a7f3280eaa63afbf25f890cd82"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "4fb00b9420275ad5177ae457b3de682156dc04ddb43896286b3787a3297aa13e"
+        },
+        {
+          "path": "project/snapshots/0f3e8824-d3c1-4064-8605-eeaaa09d7bd6.parquet",
+          "bytes": 9216,
+          "sha256": "0675e06ab2658895b8d1848f81b5f14df2ae88e3bea4cfe2dbea490464022ee4"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1922,
+          "sha256": "90146b3d5d01ea8ffb7b7d998cfffb9e055bed5734f6aa339630ba82c4f0e242"
+        },
+        {
+          "path": "work/087edd5b-6916-410f-b66f-7ec9ba0a8f9a.dataset.parquet",
+          "bytes": 9216,
+          "sha256": "0675e06ab2658895b8d1848f81b5f14df2ae88e3bea4cfe2dbea490464022ee4"
+        },
+        {
+          "path": "work/26b95048-6c86-4477-bc79-017fd37484d6.source",
+          "bytes": 1922,
+          "sha256": "90146b3d5d01ea8ffb7b7d998cfffb9e055bed5734f6aa339630ba82c4f0e242"
+        },
+        {
+          "path": "work/baseline-report.json",
+          "bytes": 59751,
+          "sha256": "07c33a6bd6e5a910a1f699383a0a8c7816bf7bec38bc448d4f13bf5c44996f2c"
+        },
+        {
+          "path": "work/model-1e105b1e-20db-4807-a039-5c8272372541.vumodel",
+          "bytes": 14471,
+          "sha256": "0a50c16998ee5403aa558d4db12b50e2e8318237d94af82e6c610b027be7a9a3"
+        },
+        {
+          "path": "work/preparation-report.json",
+          "bytes": 7088,
+          "sha256": "f67b579ba64b00bd876076fda6a6c21ae2b1bb2bb40587fcd5b3049c7e56d4ae"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[iterative]",
+      "outcome": "passed",
+      "seconds": 0.12725074600166408,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert not report[\"blockers\"]",
+        "assert transformed.shape == (40, 4)",
+        "assert f.fit_row_ids_ == original.head(40)[\"__vu_row_id\"].to_list()",
+        "assert before == json.dumps(f.summary_, sort_keys=True)",
+        "assert calls and all(ids.isdisjoint(test) for ids in calls)",
+        "assert all(len(ids) < n for ids in calls)",
+        "assert all(ids in allowed for ids in calls)",
+        "assert all(\n            set(f[\"train\"]).isdisjoint(f[\"validation\"]) for f in membership[\"folds\"]\n        )"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "a74b8adfbf55cf3a877c7c132604f784f5f823514f17ed31110f5468de235823"
+        },
+        {
+          "path": "project/commits/0f9a0d7f-e97e-4459-9c26-90b00ebcc6d7/manifest.json",
+          "bytes": 6572,
+          "sha256": "88c1fe801014f3367ee1b6f9cb31528e5369ff851591379349429c95d9685d01"
+        },
+        {
+          "path": "project/commits/24913389-8918-4587-9d80-7eb1546782c8/manifest.json",
+          "bytes": 467,
+          "sha256": "6f7294af6f10e25025fb1beb242882129f26bd9b8ce6ee7601184b7c0b4fed33"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "6ed5737a28e37de9062b6bd3ad07578977e5518b8d4c7a8bb996e067f7c0793d"
+        },
+        {
+          "path": "project/snapshots/4774a9d2-30e0-498e-91cb-6db7e70381ad.parquet",
+          "bytes": 9211,
+          "sha256": "5e14f885642c1ac0978530714354d7e3c7f01eac19994c29351485f3330a5618"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1922,
+          "sha256": "90146b3d5d01ea8ffb7b7d998cfffb9e055bed5734f6aa339630ba82c4f0e242"
+        },
+        {
+          "path": "work/add5339e-df22-4e7d-b61c-a1104b8bbf25.dataset.parquet",
+          "bytes": 9211,
+          "sha256": "5e14f885642c1ac0978530714354d7e3c7f01eac19994c29351485f3330a5618"
+        },
+        {
+          "path": "work/baseline-report.json",
+          "bytes": 59804,
+          "sha256": "efcd65e03d4556433ba9ded0d4e5e32a34ecdc681429f0d6a002028c805cb4af"
+        },
+        {
+          "path": "work/d4f03fe2-2eaa-43dd-84da-fe40ec01cf2e.source",
+          "bytes": 1922,
+          "sha256": "90146b3d5d01ea8ffb7b7d998cfffb9e055bed5734f6aa339630ba82c4f0e242"
+        },
+        {
+          "path": "work/model-00053998-7697-49bf-8c1b-921d5c1ea8ed.vumodel",
+          "bytes": 22332,
+          "sha256": "ed06b0326811af00d5ee1a7fe4fee5040792a7b324676d196bb9576af322548d"
+        },
+        {
+          "path": "work/preparation-report.json",
+          "bytes": 7100,
+          "sha256": "8ce32276274612f20c0d4da40917282d9a73ee7697d6e6c7f71c38a691f599b5"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_bad_weights_rejected_without_mutation[values0-frequency]",
+      "outcome": "passed",
+      "seconds": 0.009914553000271553,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert store.commit_id == before"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "1c431a414ad149d891c18f8125f34fc6e52c4666cdd54c9dab53b9113c9a2c38"
+        },
+        {
+          "path": "project/commits/7f228c2f-6113-4b3f-a675-0f5ab44a3d36/manifest.json",
+          "bytes": 467,
+          "sha256": "e8fd12551128ae9427d781a0e15ec330cd331ef33a9948e3b2088f2d8cdc5dea"
+        },
+        {
+          "path": "project/commits/b6051f8e-687f-4154-b9e5-e05cad067979/manifest.json",
+          "bytes": 7000,
+          "sha256": "5fa5daa1c9bd29cf4f4915a6417f902b6ffe0730d62cc9f0f86e81f78618ecff"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "713b6de92e7e7a4c0c9bf6ce77dcb4afcbd69122850e6b45a7a7d97cd15bea8c"
+        },
+        {
+          "path": "project/snapshots/0a797dc6-24b8-425a-bfc1-008d9d12c075.parquet",
+          "bytes": 5072,
+          "sha256": "5696708e0179c7827c87598b779c48ed5f266cc91040f02b4371e2d9afca50a8"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1671,
+          "sha256": "c836512ce9e590d234f416c428fde86cd25dc69eb1b4559cd16fc852f18549a6"
+        },
+        {
+          "path": "work/32cf87f4-71f5-4703-bc99-2d753b98abd6.source",
+          "bytes": 1671,
+          "sha256": "c836512ce9e590d234f416c428fde86cd25dc69eb1b4559cd16fc852f18549a6"
+        },
+        {
+          "path": "work/64f50802-1791-42e5-83f4-4d25b0d22f62.dataset.parquet",
+          "bytes": 5072,
+          "sha256": "5696708e0179c7827c87598b779c48ed5f266cc91040f02b4371e2d9afca50a8"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_bad_weights_rejected_without_mutation[values1-analytic]",
+      "outcome": "passed",
+      "seconds": 0.009416152999619953,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert store.commit_id == before"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "7888714a634c6c02713f1e3b1e50ab6b4e0c6c5c9a8f41dd41a018eb741bf56c"
+        },
+        {
+          "path": "project/commits/87894026-e869-4350-8359-1d26f2e6939d/manifest.json",
+          "bytes": 467,
+          "sha256": "891a67cbead02f214f033ef3af3ccc6e85ee9b983d3f6cc056bddc4898110acf"
+        },
+        {
+          "path": "project/commits/a6279cf5-fe38-45d8-a100-d2cab575b866/manifest.json",
+          "bytes": 7000,
+          "sha256": "9466a7689b3c3eba1e6827d76e96b4f66f7e489fb131eef955f9729861ed8884"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "f723e22516c8edc1712f8fc84dd693f1e30708598e531e1d2b057feaf93107c1"
+        },
+        {
+          "path": "project/snapshots/c81be26f-33f3-411d-bd8f-21fbf1c69aad.parquet",
+          "bytes": 5065,
+          "sha256": "7cf64995761516a6490e45b7ff9158e875c39975c136075867f831202a5a6fb1"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1663,
+          "sha256": "2290372e6aea58b88a28ca3feb70db662926c60857d450428c1c37b8d8596a4f"
+        },
+        {
+          "path": "work/98d18262-7b89-4357-99df-5e506e245285.source",
+          "bytes": 1663,
+          "sha256": "2290372e6aea58b88a28ca3feb70db662926c60857d450428c1c37b8d8596a4f"
+        },
+        {
+          "path": "work/fadd3345-6344-486f-ab8f-58a6267c17d6.dataset.parquet",
+          "bytes": 5065,
+          "sha256": "7cf64995761516a6490e45b7ff9158e875c39975c136075867f831202a5a6fb1"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_bad_weights_rejected_without_mutation[values2-sample_weight]",
+      "outcome": "passed",
+      "seconds": 0.00953588700031105,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert store.commit_id == before"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "ac78f8e6ac2db557e329a618112c88f3218fc4aacaf600933ae88b75db250115"
+        },
+        {
+          "path": "project/commits/228d60ef-41a8-4533-84fe-bf3e8f6c2673/manifest.json",
+          "bytes": 7000,
+          "sha256": "3a46e60f4ca8420b4ccba9a4b036ab30fff7658a45896e91e8c871ef84036d7c"
+        },
+        {
+          "path": "project/commits/de1b88eb-ef51-4d83-937c-eafbbc24004d/manifest.json",
+          "bytes": 467,
+          "sha256": "82d227a8df9e1df537414699ec52fb2338cdc7a8c2ba4bc3b85a3f2e58eeb334"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "35c3c1f6bcc26c30da73200a6cb770893e0ceb69eb4a2f52fdc86ecff42bf559"
+        },
+        {
+          "path": "project/snapshots/f8188b7e-c9f1-49d9-86d6-4534d39ffe42.parquet",
+          "bytes": 5061,
+          "sha256": "24d4272ba2874b8ef819cdb985aec47f91ebfa3538ba143b2cee2a2d9ce9c58e"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1659,
+          "sha256": "6c99f9a81c34e4e55da9f294d706d9e3d915f5c63b911f3650979807bf2131e0"
+        },
+        {
+          "path": "work/accfa319-dbcf-4ed7-b30b-1aac61526b09.dataset.parquet",
+          "bytes": 5061,
+          "sha256": "24d4272ba2874b8ef819cdb985aec47f91ebfa3538ba143b2cee2a2d9ce9c58e"
+        },
+        {
+          "path": "work/f611ec17-956a-451f-b474-ae4240d919c5.source",
+          "bytes": 1659,
+          "sha256": "6c99f9a81c34e4e55da9f294d706d9e3d915f5c63b911f3650979807bf2131e0"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_bad_weights_rejected_without_mutation[values3-frequency]",
+      "outcome": "passed",
+      "seconds": 0.009759283000676078,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert store.commit_id == before"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "4751782656ddaa519af88ff7822eba2b7bbd35804e7754dd57e388884cafe6dd"
+        },
+        {
+          "path": "project/commits/0879fa0d-ab3c-4c0e-a76f-0c019ff94bff/manifest.json",
+          "bytes": 467,
+          "sha256": "36aae7d5affc3d454193e495bd0ff0ecf08133354b48a1b8a9881cfae881187c"
+        },
+        {
+          "path": "project/commits/370b47de-90e9-4650-ba38-87285d808f19/manifest.json",
+          "bytes": 7000,
+          "sha256": "0189c8faa7652da6f5ea62b2ad7ad4d8e0180c1b88e1f2f994046bf429ab563a"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "6dcccbd302982f0a52ba8aeb7e02339d0bbda8d46c233050ae0bdc3a5da893a7"
+        },
+        {
+          "path": "project/snapshots/a7193c9f-7643-4469-965f-2c86d52b956f.parquet",
+          "bytes": 5073,
+          "sha256": "f63e70348a238b781b91162c79c3d975041892b4949f650e4c630320e2b53d07"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1671,
+          "sha256": "5ea9397e1e0c3522898d8a97cf5cf3dc08153cf8f40b1eeded84703ae2095f52"
+        },
+        {
+          "path": "work/3eed26fd-ee1a-485d-9074-b1813b9f70d9.source",
+          "bytes": 1671,
+          "sha256": "5ea9397e1e0c3522898d8a97cf5cf3dc08153cf8f40b1eeded84703ae2095f52"
+        },
+        {
+          "path": "work/848c53d7-4601-473f-a570-b25c7aa010cc.dataset.parquet",
+          "bytes": 5073,
+          "sha256": "f63e70348a238b781b91162c79c3d975041892b4949f650e4c630320e2b53d07"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_bad_weights_rejected_without_mutation[values4-survey]",
+      "outcome": "passed",
+      "seconds": 0.01002908700138505,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert store.commit_id == before"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "36e4e465bf336626b8650161694325ab87af0223473571d1bced372f606a92ba"
+        },
+        {
+          "path": "project/commits/4816fbe4-8d9b-42a9-9233-e1504c663c84/manifest.json",
+          "bytes": 467,
+          "sha256": "9494a921d9ed3287fd740de9eeaab94e3a3264c952ac230977ec519d2b8a6b8b"
+        },
+        {
+          "path": "project/commits/980e150b-8e19-406b-b343-a9a02549f0dc/manifest.json",
+          "bytes": 7000,
+          "sha256": "65b99658bbf531977777e4bacce439c188d896a0a1b4578be884960be2eff8cc"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "d64ace7ce405c085284ac66e0d75379b46f89d8c22297065986d7e0284a77225"
+        },
+        {
+          "path": "project/snapshots/56ccdd8d-e508-4bfa-9432-afd5f38346b5.parquet",
+          "bytes": 5067,
+          "sha256": "499664078cf7baa3606c9a2e7e67b0a4b9aabe7b0c11528f6ffacb0ca9cf6ffe"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1663,
+          "sha256": "26cbdc243ce5d3347d676179becb2afc08b5932567d0fc417bad64b407a2bfb2"
+        },
+        {
+          "path": "work/298236a1-4b95-40e4-aaee-beacaa2fcbff.dataset.parquet",
+          "bytes": 5067,
+          "sha256": "499664078cf7baa3606c9a2e7e67b0a4b9aabe7b0c11528f6ffacb0ca9cf6ffe"
+        },
+        {
+          "path": "work/fdd170d1-9dd1-4b98-b839-808cc3441b1b.source",
+          "bytes": 1663,
+          "sha256": "26cbdc243ce5d3347d676179becb2afc08b5932567d0fc417bad64b407a2bfb2"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_missing_sampling.py::test_bad_weights_rejected_without_mutation[values5-analytic]",
+      "outcome": "passed",
+      "seconds": 0.009993661000407883,
+      "test_file_sha256": "54652d1146aad107efe62ec86ed9bc009fe0df1911d7a7d5e35fa65cde586e34",
+      "reference_assertions": [
+        "assert store.commit_id == before"
+      ],
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "4badf7269918a3db511a8f563f9291830cf28f15d23749bc69f0f62eb0e4627c"
+        },
+        {
+          "path": "project/commits/0a4e955a-8aff-4ece-b7d8-c857188f294d/manifest.json",
+          "bytes": 7000,
+          "sha256": "5489c797d14ea7e3091956329a2246d2e931489328fc6e29aff9de449fe692d7"
+        },
+        {
+          "path": "project/commits/0cd6c1c1-72d1-4c99-866d-ae554fda7fe7/manifest.json",
+          "bytes": 467,
+          "sha256": "1a8ea57360d8911dc39d60558460f6b1c28d4e46cb7f5dbac3b7e42a7541292c"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "b2d39ecd79a67fa752e67e958f74db6a90cdad482c4dece249e6e99f0b6ed46b"
+        },
+        {
+          "path": "project/snapshots/d2fd6c5d-c384-4208-b06a-108310041b03.parquet",
+          "bytes": 5071,
+          "sha256": "d5b75121f0825a39f06d94ae15d247c3243df93f3b4255c85171deba16b2e6f4"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 1671,
+          "sha256": "3b041a717d09ff2446580237737cb0d638d07e39bb7082066eac9f6f037ba69c"
+        },
+        {
+          "path": "work/78f4a62e-bfec-4e03-bfc9-7ccfb7ef5758.source",
+          "bytes": 1671,
+          "sha256": "3b041a717d09ff2446580237737cb0d638d07e39bb7082066eac9f6f037ba69c"
+        },
+        {
+          "path": "work/95537816-fe59-46ba-b649-22bdd0a6f98e.dataset.parquet",
+          "bytes": 5071,
+          "sha256": "d5b75121f0825a39f06d94ae15d247c3243df93f3b4255c85171deba16b2e6f4"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": [],
+      "failure": null
+    }
+  ]
+}

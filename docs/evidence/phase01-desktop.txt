@@ -1,0 +1,22 @@
+2026-10-06 ENV-01 real desktop attempts; core dump disabled
+
+QT_QPA_PLATFORM=wayland veri-ufku --smoke-test
+Failed to create wl_display (Operation not permitted)
+qt.qpa.plugin: Could not load the Qt platform plugin "wayland" in "" even though it was found.
+This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+
+Available platform plugins are: xcb, wayland-brcm, wayland-egl, wayland, vnc, vkkhrdisplay, offscreen, minimalegl, minimal, linuxfb, eglfs.
+
+
+returncode=-6
+
+QT_QPA_PLATFORM=xcb veri-ufku --smoke-test
+qt.qpa.xcb: could not connect to display :0
+qt.qpa.plugin: From 6.5.0, xcb-cursor0 or libxcb-cursor0 is needed to load the Qt xcb platform plugin.
+qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "" even though it was found.
+This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+
+Available platform plugins are: xcb, wayland-brcm, wayland-egl, wayland, vnc, vkkhrdisplay, offscreen, minimalegl, minimal, linuxfb, eglfs.
+
+
+returncode=-6

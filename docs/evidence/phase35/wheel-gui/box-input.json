@@ -1,0 +1,191 @@
+{
+  "spec": {
+    "kind": "box",
+    "x": "col:8bbd24a7-7b6e-4754-a858-ef099b5aa5a1",
+    "y": "",
+    "group": "col:df024ba8-5d40-4f28-b0bb-b8e5ebac4ee6",
+    "columns": [],
+    "title": "",
+    "xlabel": "",
+    "ylabel": "",
+    "xunit": "",
+    "yunit": "",
+    "legend": true,
+    "bins": 2,
+    "top_n": 20,
+    "aggregation": "reject",
+    "correlation": "pearson",
+    "scatter_mode": "systematic",
+    "point_limit": 10000,
+    "grid_bins": 40,
+    "scope": "view",
+    "sample_rows": 10000,
+    "precision": "reject",
+    "purpose": "distribution",
+    "null_policy": "exclude_nonfinite; category_null_separate; missing_null_only",
+    "view": {
+      "filters": [],
+      "sort_column": "",
+      "descending": false,
+      "hidden": []
+    },
+    "bounds": [],
+    "width": 1000,
+    "height": 650,
+    "dpi": 120,
+    "schema_version": 1,
+    "facet": "col:6d951502-c8af-43e9-beea-c159a107609d",
+    "weight": "col:2055d3e2-fb26-4214-afc0-d81e07e972f6",
+    "weight_type": "frequency",
+    "normalization": "density",
+    "bandwidth": "scott",
+    "bandwidth_factor": 1,
+    "uncertainty": "ci",
+    "confidence": 0.95,
+    "xscale": "linear",
+    "yscale": "linear",
+    "linthresh": 1,
+    "category_order": [
+      "B",
+      "A"
+    ],
+    "palette": "accessible",
+    "font": "DejaVu Sans",
+    "font_size": 11,
+    "annotation": "Kaynak korunur · gerçek GUI"
+  },
+  "points": [
+    {
+      "point_id": 0,
+      "x": 1.0,
+      "y": 1.5,
+      "label": "A",
+      "n": 4,
+      "q1": 1.0,
+      "q3": 2.0,
+      "whislo": 1.0,
+      "whishi": 2.0,
+      "fliers": [],
+      "fliers_total": 0,
+      "facet": "F",
+      "group": "A",
+      "weight_sum": 6.0
+    },
+    {
+      "point_id": 1,
+      "x": 0.0,
+      "y": 3.5,
+      "label": "B",
+      "n": 4,
+      "q1": 3.0,
+      "q3": 4.0,
+      "whislo": 3.0,
+      "whishi": 4.0,
+      "fliers": [],
+      "fliers_total": 0,
+      "facet": "G",
+      "group": "B",
+      "weight_sum": 6.0
+    }
+  ],
+  "details": {
+    "exclusions": {
+      "col:8bbd24a7-7b6e-4754-a858-ef099b5aa5a1": {
+        "null": 0,
+        "nan": 0,
+        "positive_infinity": 0,
+        "negative_infinity": 0
+      },
+      "col:df024ba8-5d40-4f28-b0bb-b8e5ebac4ee6": {
+        "null": 0,
+        "nan": 0,
+        "positive_infinity": 0,
+        "negative_infinity": 0
+      },
+      "col:6d951502-c8af-43e9-beea-c159a107609d": {
+        "null": 0,
+        "nan": 0,
+        "positive_infinity": 0,
+        "negative_infinity": 0
+      },
+      "col:2055d3e2-fb26-4214-afc0-d81e07e972f6": {
+        "null": 0,
+        "nan": 0,
+        "positive_infinity": 0,
+        "negative_infinity": 0
+      }
+    },
+    "precision_loss_values": 0,
+    "other_categories": 0,
+    "other_rows": 0,
+    "excluded_rows": 0,
+    "distribution_version": 1,
+    "group_order": [
+      "B",
+      "A"
+    ],
+    "facets": [
+      "F",
+      "G"
+    ],
+    "normalization": "none",
+    "weight_type": "frequency",
+    "weight_column": "col:2055d3e2-fb26-4214-afc0-d81e07e972f6",
+    "zero_weight_rows": 0,
+    "included_n": 8,
+    "aggregation": "distribution",
+    "samples": [
+      {
+        "facet": "F",
+        "group": "A",
+        "key": "None",
+        "n": 4,
+        "weight_sum": 6.0,
+        "effective_n": 6.0,
+        "quantile_method": "replicated frequency linear h=(W-1)*q"
+      },
+      {
+        "facet": "G",
+        "group": "B",
+        "key": "None",
+        "n": 4,
+        "weight_sum": 6.0,
+        "effective_n": 6.0,
+        "quantile_method": "replicated frequency linear h=(W-1)*q"
+      }
+    ],
+    "bin_rule": "left closed/right open; final right closed",
+    "uncertainty": "none",
+    "display": {
+      "xscale": "linear",
+      "yscale": "linear",
+      "linthresh": 1,
+      "clipped": false,
+      "bounds": [],
+      "palette": "accessible",
+      "font": "DejaVu Sans",
+      "font_size": 11,
+      "annotation": "Kaynak korunur · gerçek GUI",
+      "export_dpi": 120
+    }
+  },
+  "used_n": 8,
+  "population_n": 8,
+  "provenance": {
+    "array_source": {},
+    "method": "charts/v1",
+    "backend": "polars/python/Matplotlib Agg",
+    "dataset_versions": [
+      "dv:9d8267af-3cce-4ef3-8496-d0ab00d7ad05"
+    ],
+    "snapshot_fingerprint": {
+      "size": 5435,
+      "sha256": "926f95a2dafc09f7891e7f4351d0a2be9c8a43a54c806c0bc591fd5a56189352"
+    },
+    "sampling_method": "none",
+    "seed": null,
+    "source_snapshot_ids": [
+      "snapshot:560e925e-37f1-4f8c-8ce8-406e48c3931e"
+    ]
+  }
+}

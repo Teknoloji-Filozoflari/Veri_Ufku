@@ -1,0 +1,622 @@
+{
+  "environment": "ENV-13",
+  "date": "2026-10-07",
+  "python": "3.13.15",
+  "platform": "Linux-7.2.9-1-cachyos-x86_64-with-glibc2.44",
+  "package": "/tmp/veri-ufku-phase13-verified-wheel/veri_ufku/__init__.py",
+  "backend": "offscreen/software",
+  "user_test": false,
+  "n": 1,
+  "max_tick_gap_ms": 145.56876700225985,
+  "peak_parent_worker_rss_bytes": 642461696,
+  "exports": {
+    "csv": {
+      "ms": 216.71944100307883,
+      "format": "csv",
+      "spreadsheet_safe": true,
+      "null_marker": "\\N",
+      "loss_accepted": true,
+      "columns": [
+        "siparis",
+        "tarih",
+        "bolge",
+        "urun",
+        "adet",
+        "tutar",
+        "not"
+      ],
+      "source_schema": {
+        "siparis": "String",
+        "tarih": "Date",
+        "bolge": "String",
+        "urun": "String",
+        "adet": "Int64",
+        "tutar": "Decimal(precision=38, scale=2)",
+        "not": "String"
+      },
+      "losses": [
+        {
+          "column": "siparis",
+          "source_type": "String",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "tarih",
+          "source_type": "Date",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "bolge",
+          "source_type": "String",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "urun",
+          "source_type": "String",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "adet",
+          "source_type": "Int64",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "tutar",
+          "source_type": "Decimal(precision=38, scale=2)",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "not",
+          "source_type": "String",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        }
+      ],
+      "null_policy": "CSV null='\\\\N'; boş metin ayrı. JSON null; XLSX eksik hücre; Parquet native null. NaN/±inf metin tokenı, null değildir.",
+      "date_policy": "Date/datetime ISO metin; ns kesilmez. IANA timezone fiziksel metadata'sı metin formatlarında kaybolur.",
+      "limits": "XLSX ürün sınırı 100000 veri satırı/256 sütun/32767 hücre karakteri ve64MiB sheet XML; Excel teorik 1048576 satır/16384 sütun. JSON 64MiB; JSONL/CSV streaming. Parquet native.",
+      "metadata_policy": "Rol/birim/geçmiş yalnız proje kaydında korunur. Gizli sütunlar da aktarılır; RowId iç alanları aktarılmaz. Görünüm sıralaması korunur, tam dataset kaynak sırasını kullanır.",
+      "safe_policy": "CSV tehlikeli metin ve başlıklara apostrof eklenir (=,+,-,@ ve kontrol karakteri başlangıçları); gerçek sayılar değişmez. XLSX bütün metinler inlineStr; formül düğümü yok. Güvenli CSV kapatılırsa spreadsheet formül yorumu riski kullanıcı tarafından seçilir.",
+      "rows": 7,
+      "dataset_version": "dv:e5b2004b-3419-4987-a754-a043a1f35af2",
+      "scope": "view",
+      "filters": [],
+      "view": {
+        "filters": [],
+        "sort_column": "",
+        "descending": false,
+        "hidden": []
+      },
+      "spreadsheet_escaped": 1,
+      "numeric_to_text": 6,
+      "nonfinite_to_text": 0,
+      "snapshot_fingerprint": {
+        "size": 6464,
+        "sha256": "4cc9dec786077f42b0995d35992302c0c0c4bf47ee84f35d414962005a87633f"
+      },
+      "output_columns": [
+        "siparis",
+        "tarih",
+        "bolge",
+        "urun",
+        "adet",
+        "tutar",
+        "not"
+      ],
+      "escaped_headers": 0,
+      "projection_sha256": "c4e4d1791ac75c1ac9d6ce1ea1fce659cb69aeb7bfec111912f4b82b04c0036c",
+      "verified_rows": 7,
+      "types_verified": true,
+      "projection_verified": true,
+      "published": {
+        "path": "/tmp/vu-phase13-86z3_45i/cleaned.csv",
+        "size": 384,
+        "sha256": "4ef332921eede7faf5085242d3f59d136ee3ed3d3d16bd25bc549e265dce6c20"
+      },
+      "worker_pid": 185
+    },
+    "json": {
+      "ms": 211.24006800164352,
+      "format": "json",
+      "spreadsheet_safe": true,
+      "null_marker": "\\N",
+      "loss_accepted": true,
+      "columns": [
+        "siparis",
+        "tarih",
+        "bolge",
+        "urun",
+        "adet",
+        "tutar",
+        "not"
+      ],
+      "source_schema": {
+        "siparis": "String",
+        "tarih": "Date",
+        "bolge": "String",
+        "urun": "String",
+        "adet": "Int64",
+        "tutar": "Decimal(precision=38, scale=2)",
+        "not": "String"
+      },
+      "losses": [
+        {
+          "column": "siparis",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "tarih",
+          "source_type": "Date",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "bolge",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "urun",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "adet",
+          "source_type": "Int64",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "tutar",
+          "source_type": "Decimal(precision=38, scale=2)",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "not",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        }
+      ],
+      "null_policy": "CSV null='\\\\N'; boş metin ayrı. JSON null; XLSX eksik hücre; Parquet native null. NaN/±inf metin tokenı, null değildir.",
+      "date_policy": "Date/datetime ISO metin; ns kesilmez. IANA timezone fiziksel metadata'sı metin formatlarında kaybolur.",
+      "limits": "XLSX ürün sınırı 100000 veri satırı/256 sütun/32767 hücre karakteri ve64MiB sheet XML; Excel teorik 1048576 satır/16384 sütun. JSON 64MiB; JSONL/CSV streaming. Parquet native.",
+      "metadata_policy": "Rol/birim/geçmiş yalnız proje kaydında korunur. Gizli sütunlar da aktarılır; RowId iç alanları aktarılmaz. Görünüm sıralaması korunur, tam dataset kaynak sırasını kullanır.",
+      "safe_policy": "CSV tehlikeli metin ve başlıklara apostrof eklenir (=,+,-,@ ve kontrol karakteri başlangıçları); gerçek sayılar değişmez. XLSX bütün metinler inlineStr; formül düğümü yok. Güvenli CSV kapatılırsa spreadsheet formül yorumu riski kullanıcı tarafından seçilir.",
+      "rows": 7,
+      "dataset_version": "dv:e5b2004b-3419-4987-a754-a043a1f35af2",
+      "scope": "view",
+      "filters": [],
+      "view": {
+        "filters": [],
+        "sort_column": "",
+        "descending": false,
+        "hidden": []
+      },
+      "spreadsheet_escaped": 0,
+      "numeric_to_text": 6,
+      "nonfinite_to_text": 0,
+      "snapshot_fingerprint": {
+        "size": 6464,
+        "sha256": "4cc9dec786077f42b0995d35992302c0c0c4bf47ee84f35d414962005a87633f"
+      },
+      "output_columns": [
+        "siparis",
+        "tarih",
+        "bolge",
+        "urun",
+        "adet",
+        "tutar",
+        "not"
+      ],
+      "escaped_headers": 0,
+      "projection_sha256": "bf546917bf2307ce990181769f8b7f40a343dc00b71008b2d56b92fb631e9858",
+      "verified_rows": 7,
+      "types_verified": true,
+      "projection_verified": true,
+      "published": {
+        "path": "/tmp/vu-phase13-86z3_45i/cleaned.json",
+        "size": 900,
+        "sha256": "9c2360930d862a8f51239421fc913a2766e014d0c177dc7802e8ec591f20e423"
+      },
+      "worker_pid": 199
+    },
+    "jsonl": {
+      "ms": 206.17303399922093,
+      "format": "jsonl",
+      "spreadsheet_safe": true,
+      "null_marker": "\\N",
+      "loss_accepted": true,
+      "columns": [
+        "siparis",
+        "tarih",
+        "bolge",
+        "urun",
+        "adet",
+        "tutar",
+        "not"
+      ],
+      "source_schema": {
+        "siparis": "String",
+        "tarih": "Date",
+        "bolge": "String",
+        "urun": "String",
+        "adet": "Int64",
+        "tutar": "Decimal(precision=38, scale=2)",
+        "not": "String"
+      },
+      "losses": [
+        {
+          "column": "siparis",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "tarih",
+          "source_type": "Date",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "bolge",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "urun",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "adet",
+          "source_type": "Int64",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "tutar",
+          "source_type": "Decimal(precision=38, scale=2)",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "not",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        }
+      ],
+      "null_policy": "CSV null='\\\\N'; boş metin ayrı. JSON null; XLSX eksik hücre; Parquet native null. NaN/±inf metin tokenı, null değildir.",
+      "date_policy": "Date/datetime ISO metin; ns kesilmez. IANA timezone fiziksel metadata'sı metin formatlarında kaybolur.",
+      "limits": "XLSX ürün sınırı 100000 veri satırı/256 sütun/32767 hücre karakteri ve64MiB sheet XML; Excel teorik 1048576 satır/16384 sütun. JSON 64MiB; JSONL/CSV streaming. Parquet native.",
+      "metadata_policy": "Rol/birim/geçmiş yalnız proje kaydında korunur. Gizli sütunlar da aktarılır; RowId iç alanları aktarılmaz. Görünüm sıralaması korunur, tam dataset kaynak sırasını kullanır.",
+      "safe_policy": "CSV tehlikeli metin ve başlıklara apostrof eklenir (=,+,-,@ ve kontrol karakteri başlangıçları); gerçek sayılar değişmez. XLSX bütün metinler inlineStr; formül düğümü yok. Güvenli CSV kapatılırsa spreadsheet formül yorumu riski kullanıcı tarafından seçilir.",
+      "rows": 7,
+      "dataset_version": "dv:e5b2004b-3419-4987-a754-a043a1f35af2",
+      "scope": "view",
+      "filters": [],
+      "view": {
+        "filters": [],
+        "sort_column": "",
+        "descending": false,
+        "hidden": []
+      },
+      "spreadsheet_escaped": 0,
+      "numeric_to_text": 6,
+      "nonfinite_to_text": 0,
+      "snapshot_fingerprint": {
+        "size": 6464,
+        "sha256": "4cc9dec786077f42b0995d35992302c0c0c4bf47ee84f35d414962005a87633f"
+      },
+      "output_columns": [
+        "siparis",
+        "tarih",
+        "bolge",
+        "urun",
+        "adet",
+        "tutar",
+        "not"
+      ],
+      "escaped_headers": 0,
+      "projection_sha256": "bf546917bf2307ce990181769f8b7f40a343dc00b71008b2d56b92fb631e9858",
+      "verified_rows": 7,
+      "types_verified": true,
+      "projection_verified": true,
+      "published": {
+        "path": "/tmp/vu-phase13-86z3_45i/cleaned.jsonl",
+        "size": 899,
+        "sha256": "6a69b4dfc5adb3f1c7f9a34aa86edb6e4fee09468979479134a91c4226de60fb"
+      },
+      "worker_pid": 213
+    },
+    "parquet": {
+      "ms": 199.35639799950877,
+      "format": "parquet",
+      "spreadsheet_safe": true,
+      "null_marker": "\\N",
+      "loss_accepted": true,
+      "columns": [
+        "siparis",
+        "tarih",
+        "bolge",
+        "urun",
+        "adet",
+        "tutar",
+        "not"
+      ],
+      "source_schema": {
+        "siparis": "String",
+        "tarih": "Date",
+        "bolge": "String",
+        "urun": "String",
+        "adet": "Int64",
+        "tutar": "Decimal(precision=38, scale=2)",
+        "not": "String"
+      },
+      "losses": [],
+      "null_policy": "CSV null='\\\\N'; boş metin ayrı. JSON null; XLSX eksik hücre; Parquet native null. NaN/±inf metin tokenı, null değildir.",
+      "date_policy": "Date/datetime ISO metin; ns kesilmez. IANA timezone fiziksel metadata'sı metin formatlarında kaybolur.",
+      "limits": "XLSX ürün sınırı 100000 veri satırı/256 sütun/32767 hücre karakteri ve64MiB sheet XML; Excel teorik 1048576 satır/16384 sütun. JSON 64MiB; JSONL/CSV streaming. Parquet native.",
+      "metadata_policy": "Rol/birim/geçmiş yalnız proje kaydında korunur. Gizli sütunlar da aktarılır; RowId iç alanları aktarılmaz. Görünüm sıralaması korunur, tam dataset kaynak sırasını kullanır.",
+      "safe_policy": "CSV tehlikeli metin ve başlıklara apostrof eklenir (=,+,-,@ ve kontrol karakteri başlangıçları); gerçek sayılar değişmez. XLSX bütün metinler inlineStr; formül düğümü yok. Güvenli CSV kapatılırsa spreadsheet formül yorumu riski kullanıcı tarafından seçilir.",
+      "rows": 7,
+      "dataset_version": "dv:e5b2004b-3419-4987-a754-a043a1f35af2",
+      "scope": "view",
+      "filters": [],
+      "view": {
+        "filters": [],
+        "sort_column": "",
+        "descending": false,
+        "hidden": []
+      },
+      "spreadsheet_escaped": 0,
+      "numeric_to_text": 0,
+      "nonfinite_to_text": 0,
+      "snapshot_fingerprint": {
+        "size": 6464,
+        "sha256": "4cc9dec786077f42b0995d35992302c0c0c4bf47ee84f35d414962005a87633f"
+      },
+      "output_columns": [
+        "siparis",
+        "tarih",
+        "bolge",
+        "urun",
+        "adet",
+        "tutar",
+        "not"
+      ],
+      "escaped_headers": 0,
+      "projection_sha256": "251f4c6a30c477f0fcc4f9948afec28ba9fd79449549431bd08c8258efacad3d",
+      "verified_rows": 7,
+      "types_verified": true,
+      "projection_verified": true,
+      "published": {
+        "path": "/tmp/vu-phase13-86z3_45i/cleaned.parquet",
+        "size": 2807,
+        "sha256": "5b981440e64f952d4298396a1b660f51d418d63294109d4eab17dec280d19e0b"
+      },
+      "worker_pid": 227
+    },
+    "xlsx": {
+      "ms": 215.1558869991277,
+      "format": "xlsx",
+      "spreadsheet_safe": true,
+      "null_marker": "\\N",
+      "loss_accepted": true,
+      "columns": [
+        "siparis",
+        "tarih",
+        "bolge",
+        "urun",
+        "adet",
+        "tutar",
+        "not"
+      ],
+      "source_schema": {
+        "siparis": "String",
+        "tarih": "Date",
+        "bolge": "String",
+        "urun": "String",
+        "adet": "Int64",
+        "tutar": "Decimal(precision=38, scale=2)",
+        "not": "String"
+      },
+      "losses": [
+        {
+          "column": "siparis",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "tarih",
+          "source_type": "Date",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "bolge",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "urun",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "adet",
+          "source_type": "Int64",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "tutar",
+          "source_type": "Decimal(precision=38, scale=2)",
+          "output_type": "text",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        },
+        {
+          "column": "not",
+          "source_type": "String",
+          "output_type": "JSON scalar / XLSX cell",
+          "reason": "Fiziksel şema/rol/birim korunmaz; date/datetime ISO metin, Decimal tam metin; büyük XLSX integer metin. XLSX Float64 hücresi gerçek numeric yazılır; Excel15-basamak okuyucusu yuvarlayabilir, kesin tür/değer için Parquet seçin. Parquet kullanarak fiziksel türleri koruyun. JSON büyük integer değerleri korur; JavaScript gibi 53-bit okuyucularda hassasiyet kaybolabilir. CSV sayıları tam yazar; spreadsheet okuyucusunun 15 basamak sınırı geçerlidir."
+        }
+      ],
+      "null_policy": "CSV null='\\\\N'; boş metin ayrı. JSON null; XLSX eksik hücre; Parquet native null. NaN/±inf metin tokenı, null değildir.",
+      "date_policy": "Date/datetime ISO metin; ns kesilmez. IANA timezone fiziksel metadata'sı metin formatlarında kaybolur.",
+      "limits": "XLSX ürün sınırı 100000 veri satırı/256 sütun/32767 hücre karakteri ve64MiB sheet XML; Excel teorik 1048576 satır/16384 sütun. JSON 64MiB; JSONL/CSV streaming. Parquet native.",
+      "metadata_policy": "Rol/birim/geçmiş yalnız proje kaydında korunur. Gizli sütunlar da aktarılır; RowId iç alanları aktarılmaz. Görünüm sıralaması korunur, tam dataset kaynak sırasını kullanır.",
+      "safe_policy": "CSV tehlikeli metin ve başlıklara apostrof eklenir (=,+,-,@ ve kontrol karakteri başlangıçları); gerçek sayılar değişmez. XLSX bütün metinler inlineStr; formül düğümü yok. Güvenli CSV kapatılırsa spreadsheet formül yorumu riski kullanıcı tarafından seçilir.",
+      "rows": 7,
+      "dataset_version": "dv:e5b2004b-3419-4987-a754-a043a1f35af2",
+      "scope": "view",
+      "filters": [],
+      "view": {
+        "filters": [],
+        "sort_column": "",
+        "descending": false,
+        "hidden": []
+      },
+      "spreadsheet_escaped": 0,
+      "numeric_to_text": 6,
+      "nonfinite_to_text": 0,
+      "snapshot_fingerprint": {
+        "size": 6464,
+        "sha256": "4cc9dec786077f42b0995d35992302c0c0c4bf47ee84f35d414962005a87633f"
+      },
+      "output_columns": [
+        "siparis",
+        "tarih",
+        "bolge",
+        "urun",
+        "adet",
+        "tutar",
+        "not"
+      ],
+      "escaped_headers": 0,
+      "projection_sha256": "bf546917bf2307ce990181769f8b7f40a343dc00b71008b2d56b92fb631e9858",
+      "verified_rows": 7,
+      "types_verified": true,
+      "projection_verified": true,
+      "published": {
+        "path": "/tmp/vu-phase13-86z3_45i/cleaned.xlsx",
+        "size": 1794,
+        "sha256": "f68c29a87acc6943622dbf195b90fc99231306020dcefc1f41794394d1706a4c"
+      },
+      "worker_pid": 241
+    },
+    "html": {
+      "ms": 197.0655990007799,
+      "dataset_version": "dv:e5b2004b-3419-4987-a754-a043a1f35af2",
+      "scope": "view",
+      "filters": [],
+      "view": {
+        "filters": [],
+        "sort_column": "",
+        "descending": false,
+        "hidden": []
+      },
+      "rows": 7,
+      "shown_rows": 7,
+      "shown_columns": 7,
+      "charts_shown": 1,
+      "title": "İıŞşÇçĞğÖöÜü — problemli sentetik veri",
+      "purpose": "Dosyamı anlamak ve seçtiğim temizliği açıklamak",
+      "limitations": "Bu ilk sürüm deneysel veri inceleme/temizlik/grafik/rapor aracıdır. İstatistiksel test, eğitim veya tahmin modeli henüz mevcut değil. Korelasyon nedensellik değildir. Tablolar sınırlı görüntü örneğidir; grafik örnekleme/gruplama ve null politikaları kendi kayıtlarında görünür. Kalite/profil bulgusunun veri sürümü farklıysa güncel kanıt sayılmaz. Genel veri bağımlı temizleme gelecekte model doğrulamasında sızıntı incelemesi gerektirir. ",
+      "published": {
+        "path": "/tmp/vu-phase13-86z3_45i/cleaned.html",
+        "size": 1057919,
+        "sha256": "d3941578227e678129d7ab386c6f89363f06a69e0aac0c302df4ad471cd516c2"
+      },
+      "format": "html",
+      "offline_resources": true,
+      "worker_pid": 255
+    },
+    "pdf": {
+      "ms": 277.60025300085545,
+      "dataset_version": "dv:e5b2004b-3419-4987-a754-a043a1f35af2",
+      "scope": "view",
+      "filters": [],
+      "view": {
+        "filters": [],
+        "sort_column": "",
+        "descending": false,
+        "hidden": []
+      },
+      "rows": 7,
+      "shown_rows": 7,
+      "shown_columns": 7,
+      "charts_shown": 1,
+      "title": "İıŞşÇçĞğÖöÜü — problemli sentetik veri",
+      "purpose": "Dosyamı anlamak ve seçtiğim temizliği açıklamak",
+      "limitations": "Bu ilk sürüm deneysel veri inceleme/temizlik/grafik/rapor aracıdır. İstatistiksel test, eğitim veya tahmin modeli henüz mevcut değil. Korelasyon nedensellik değildir. Tablolar sınırlı görüntü örneğidir; grafik örnekleme/gruplama ve null politikaları kendi kayıtlarında görünür. Kalite/profil bulgusunun veri sürümü farklıysa güncel kanıt sayılmaz. Genel veri bağımlı temizleme gelecekte model doğrulamasında sızıntı incelemesi gerektirir. ",
+      "pages": 11,
+      "published": {
+        "path": "/tmp/vu-phase13-86z3_45i/cleaned.pdf",
+        "size": 113330,
+        "sha256": "a87a344903bb54b7da1526f7d71cc45dd696f1cb965819e990f5d2d9209b1486"
+      },
+      "format": "pdf",
+      "offline_resources": true,
+      "worker_pid": 268
+    }
+  },
+  "screenshots": [
+    "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase13-wheel-1366-light-100.png",
+    "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase13-wheel-720-dark-200.png"
+  ],
+  "offline_policy": "Python TCP denied in parent/spawn; isolated fresh XDG; QML no remote resources; report resource allowlist/CSP; OS network interfaces not disabled",
+  "cache": "developer warm runtime; no minimum hardware/cold cache claim",
+  "assets": {
+    "examples/sales.csv": "ecdb43a0f1f921e0f504166b9bf0f18f2e6064b21c174ec2eccb988a8209865e",
+    "examples/sales.parquet": "e949b12ba59639f6b47d27f951d2e81cf1627526f41a09ca643d9510a04c449c",
+    "examples/LICENSE.txt": "9e9ba9c95d962f015425fb2752ace20c9062323b3227eaf4f9a262fbca27009f",
+    "examples/problem.csv": "cb80a4d0480da17a59b146c154d622350bda80c56d9bafb85c68599b240e5f0b",
+    "examples/problem.parquet": "ba3d0d5123d97e36c137a72aba0d6ece874b79eab316e760dc70478a38d01ced",
+    "fonts/DejaVuSans.ttf": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+    "fonts/LICENSE_DEJAVU": "d75938dec098f06f0ac3c00853065d94f020be1c3c62ef1dc2975ba15b4d9b0e",
+    "reports/report.css": "8e6a8b0c91ad9a416966eee3a4902b041b9e15c16475dc62b70fdfeb9ec9b9f9",
+    "reports/report.html": "ada909ce5f54e84ac394b096a786ce5913e773779b9a6b24ac815f3315f38acc"
+  },
+  "fresh_launch_ms": 283.145016997878,
+  "first_launch_packaged_font": "DejaVu Sans",
+  "history_and_receipts_reopened": true,
+  "synthetic_source_unchanged": true,
+  "pdf_pages": 11,
+  "large": {
+    "csv": {
+      "ms": 670.837315999961,
+      "rows": 100000,
+      "bytes": 1388901
+    },
+    "jsonl": {
+      "ms": 826.6375530001824,
+      "rows": 100000,
+      "bytes": 3088890
+    },
+    "parquet": {
+      "ms": 237.99529499956407,
+      "rows": 100000,
+      "bytes": 139725
+    }
+  },
+  "large_source_unchanged": true,
+  "cancel_no_output": true
+}

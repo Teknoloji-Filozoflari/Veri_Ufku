@@ -1,0 +1,113 @@
+........................................................................ [ 11%]
+........................................................................ [ 23%]
+................................FF...................................... [ 34%]
+........................................................................ [ 46%]
+........................................................................ [ 57%]
+........................................................................ [ 69%]
+........................................................................ [ 80%]
+........................................................................ [ 92%]
+................................................                         [100%]
+=================================== FAILURES ===================================
+_________ test_real_qml_buttons_responsiveness_error_cancel_and_stale __________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-58/test_real_qml_buttons_responsi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f7fcc37af50>
+
+    def test_real_qml_buttons_responsiveness_error_cancel_and_stale(tmp_path, monkeypatch):
+        for variable, folder in [
+            ("XDG_CONFIG_HOME", "config"),
+            ("XDG_STATE_HOME", "state"),
+            ("XDG_CACHE_HOME", "cache"),
+        ]:
+            monkeypatch.setenv(variable, str(tmp_path / folder))
+        app, window, bridge = create_application()
+        manager = bridge.session.manager
+        try:
+            cpu = window.findChild(QObject, "cpuButton")
+            assert cpu.property("text") == "CPU denemesini başlat"
+            ticks = []
+            timer = QTimer()
+            timer.setInterval(10)
+            timer.timeout.connect(lambda: ticks.append(time.monotonic()))
+            timer.start()
+            cpu.clicked.emit()
+            spin(app, lambda: bridge.active)
+            spin(app, lambda: len(ticks) >= 20)
+            assert manager.snapshot(bridge.job_id).state.value == "running"
+            assert window.findChild(QObject, "taskNotice").property("kind") == "loading"
+            cancel = window.findChild(QObject, "cancelButton")
+            cancel.clicked.emit()
+            spin(app, lambda: not bridge.active)
+            assert bridge.stateText == "İptal edildi"
+            assert manager.snapshot(bridge.job_id).result is None
+            assert window.findChild(QObject, "taskNotice").property("kind") == "canceled"
+            window.findChild(QObject, "failureButton").clicked.emit()
+            spin(app, lambda: not bridge.active)
+            assert "Hata kaydı:" in bridge.errorText
+            assert window.findChild(QObject, "taskNotice").property("kind") == "error"
+            assert "Sensitive sample value" not in bridge.errorText
+            assert (
+                "RuntimeError" in (tmp_path / "state/veri_ufku/application.log").read_text()
+            )
+            # Real I/O widget path plus a config change while executing.
+            window.findChild(QObject, "ioButton").clicked.emit()
+            spin(app, lambda: bridge.active)
+            window.findChild(QObject, "contextButton").clicked.emit()
+            spin(app, lambda: not bridge.active)
+            assert "eski bir yapılandırmaya" in bridge.resultText
+            assert "Deneme sonucu:" not in bridge.resultText
+            timer.stop()
+            # Close with a process running: QML rejects the first close until cleanup.
+            cpu.clicked.emit()
+            spin(app, lambda: bridge.active)
+            window.close()
+>           spin(app, lambda: manager.closed and not window.isVisible())
+
+tests/test_gui.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+app = <PySide6.QtGui.QGuiApplication(0x11a428f0) at 0x7f8010912b00>
+predicate = <function test_real_qml_buttons_responsiveness_error_cancel_and_stale.<locals>.<lambda> at 0x7f7fca96fba0>
+timeout = 8000
+
+    def spin(app, predicate, timeout=8000):
+        deadline = time.monotonic() + timeout / 1000
+        while time.monotonic() < deadline:
+            app.processEvents()
+            if predicate():
+                return
+            QTest.qWait(10)
+>       raise AssertionError("GUI condition timed out")
+E       AssertionError: GUI condition timed out
+
+tests/test_gui.py:19: AssertionError
+________________________ test_readme_entry_point_smoke _________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-58/test_readme_entry_point_smoke0')
+
+    def test_readme_entry_point_smoke(tmp_path):
+        env = dict(
+            os.environ,
+            XDG_CONFIG_HOME=str(tmp_path / "config"),
+            XDG_STATE_HOME=str(tmp_path / "state"),
+            XDG_CACHE_HOME=str(tmp_path / "cache"),
+            QT_QPA_PLATFORM="offscreen",
+        )
+        result = subprocess.run(
+            [sys.executable, "-m", "veri_ufku", "--smoke-test"],
+            env=env,
+            text=True,
+            capture_output=True,
+            timeout=15,
+        )
+>       assert result.returncode == 0, result.stdout + result.stderr
+E       AssertionError: GUI_SMOKE FAIL
+E         
+E       assert 3 == 0
+E        +  where 3 = CompletedProcess(args=['/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python', '-m', 'veri_ufku', '--smoke-test'], returncode=3, stdout='GUI_SMOKE FAIL\n', stderr='').returncode
+
+tests/test_gui.py:93: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_gui.py::test_real_qml_buttons_responsiveness_error_cancel_and_stale
+FAILED tests/test_gui.py::test_readme_entry_point_smoke - AssertionError: GUI...
+2 failed, 622 passed in 234.04s (0:03:54)

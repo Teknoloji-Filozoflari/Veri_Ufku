@@ -1,0 +1,69 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+__________________ test_html_markdown_injection_and_disk_fail __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-109/test_html_markdown_injection_a0')
+
+    def test_html_markdown_injection_and_disk_fail(tmp_path):
+        from dataclasses import replace
+    
+        from veri_ufku.domain.contracts import ComputeBudget
+    
+        store, ref, work = prepare(
+            tmp_path, pl.DataFrame({"değer": [1.0]})
+        )
+        with closing(store):
+            s = template()
+            s["title"] = "<script>alert(1)</script>"
+            s["protocol_note"] = "<img src=x onerror=alert(1)>"
+            s["blocks"].append(
+                dict(
+                    kind="table",
+                    title="Küçük tablo",
+                    version=ref["version_id"],
+                    columns=[column(ref, "değer")],
+                    rows=5,
+                    caption="Bir satır.",
+                )
+            )
+            r = storage.request_for(store, store.state, s)
+            with pytest.raises(ProjectError, match="disk"):
+                calculate(
+                    r,
+                    s,
+                    work,
+                    Control(
+>                       budget=replace(
+                            ComputeBudget(), temp_disk_bytes=1, reserve_disk_bytes=0
+                        )
+                    ),
+                )
+
+tests/test_report_builder.py:277: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/dataclasses.py:1645: in replace
+    return _replace(obj, **changes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/dataclasses.py:1679: in _replace
+    return self.__class__(**changes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+<string>:18: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = ComputeBudget(ram_bytes=2147483648, temp_disk_bytes=1, cpu_threads=2, max_wall_seconds=600, max_concurrent_cpu_jobs=1,...ytes=0, threads_per_process=1, max_processes=1, max_tasks=32, device_memory_bytes=1073741824, transfer_bytes=134217728)
+
+    def __post_init__(self):
+        for name in self.__dataclass_fields__:
+            if name == "device":
+                continue
+            value = getattr(self, name)
+            numeric = isinstance(value, (int, float)) and not isinstance(value, bool)
+            if not numeric or not math.isfinite(value) or value <= 0:
+>               raise ValueError(f"Invalid budget field: {name}")
+E               ValueError: Invalid budget field: reserve_disk_bytes
+
+src/veri_ufku/domain/contracts.py:53: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_report_builder.py::test_html_markdown_injection_and_disk_fail
+1 failed, 4 passed in 3.37s

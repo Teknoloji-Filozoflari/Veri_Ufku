@@ -1,0 +1,109 @@
+........................................................................ [ 18%]
+........................................................................ [ 37%]
+............F..........................F................................ [ 55%]
+........................................................................ [ 74%]
+........................................................................ [ 92%]
+.............................                                            [100%]
+=================================== FAILURES ===================================
+___________ test_phase02_resize_help_navigation_and_fixed_dark_theme ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-13/test_phase02_resize_help_navig0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f2ebcb28470>
+
+    def test_phase02_resize_help_navigation_and_fixed_dark_theme(tmp_path, monkeypatch):
+        from PySide6.QtCore import QPointF, Qt
+        from PySide6.QtQuick import QQuickItem
+    
+        for name in ("CONFIG", "STATE", "CACHE"):
+            monkeypatch.setenv(f"XDG_{name}_HOME", str(tmp_path / name.lower()))
+        app, window, bridge = create_application()
+        from PySide6.QtGui import QColor, QPalette
+    
+        original_palette = app.palette()
+        try:
+            spin(app, lambda: not window.grabWindow().isNull())
+            for width, height in [(720, 560), (1366, 900)]:
+                window.setWidth(width)
+                window.setHeight(height)
+                app.processEvents()
+                QTest.qWait(60)
+                workspace = window.findChild(QQuickItem, "workspace")
+                assert workspace.width() >= 320
+                assert workspace.height() >= 200
+                help_button = window.findChild(QQuickItem, "helpButton")
+                point = help_button.mapToScene(
+                    QPointF(help_button.width() / 2, help_button.height() / 2)
+                )
+                assert 0 <= point.x() <= window.width()
+                assert 0 <= point.y() <= window.height()
+                QTest.mouseClick(window, Qt.MouseButton.LeftButton, pos=point.toPoint())
+                spin(app, lambda: window.property("infoOpen"))
+                QTest.keyClick(window, Qt.Key.Key_Escape)
+                spin(app, lambda: not window.property("infoOpen"))
+                assert help_button.hasActiveFocus()
+            # OS palette changes cannot activate a light application theme.
+            assert app.styleHints().colorScheme() == Qt.ColorScheme.Unknown
+            palette = QPalette(original_palette)
+            palette.setColor(QPalette.ColorRole.Window, QColor("#111827"))
+            app.setPalette(palette)
+            spin(app, lambda: window.property("darkTheme"))
+            palette.setColor(QPalette.ColorRole.Window, QColor("#ffffff"))
+            app.setPalette(palette)
+            spin(app, lambda: window.property("darkTheme"))
+            first = visual_item(window.contentItem(), "nav0")
+            first.forceActiveFocus()
+            QTest.keyClick(window, Qt.Key.Key_Tab)
+            assert visual_item(window.contentItem(), "nav1").hasActiveFocus()
+            QTest.keyClick(window, Qt.Key.Key_Tab, Qt.KeyboardModifier.ShiftModifier)
+            assert first.hasActiveFocus()
+            QTest.keyClick(window, Qt.Key.Key_Down)
+            QTest.keyClick(window, Qt.Key.Key_Space)
+            spin(app, lambda: window.property("selectedSection") == 1)
+            notice = window.findChild(QQuickItem, "availabilityNotice")
+            assert not notice.isVisible()
+            assert window.findChild(QQuickItem, "chooseCsvButton").isVisible()
+            window.setProperty("selectedSection", 2)
+            app.processEvents()
+            assert not notice.isVisible()
+            assert window.findChild(QQuickItem, "operationPreview").isVisible()
+            window.setProperty("selectedSection", 3)
+            app.processEvents()
+            assert not notice.isVisible()
+            assert window.findChild(QQuickItem, "chartCreate").isVisible()
+            window.setProperty("selectedSection", 4)
+            app.processEvents()
+>           assert notice.isVisible()
+E           assert False
+E            +  where False = <built-in method isVisible of PySide6.QtQuick.QQuickItem object at 0x7f2ebcb37c40>()
+E            +    where <built-in method isVisible of PySide6.QtQuick.QQuickItem object at 0x7f2ebcb37c40> = <PySide6.QtQuick.QQuickItem(0x14278af0, name="availabilityNotice", parent=0x113f3a60, geometry=0,0 697x74) at 0x7f2ebcb37c40>.isVisible
+
+tests/test_gui.py:347: AssertionError
+_____ test_catalog_offline_search_turkish_categories_glossary_and_sources ______
+
+    def test_catalog_offline_search_turkish_categories_glossary_and_sources():
+        catalog = Catalog()
+        assert set(catalog.articles) >= {
+            "data",
+            "rows-columns",
+            "data-types",
+            "missing",
+            "mean-median",
+            "sample",
+            "correlation",
+            "prediction",
+            "leakage",
+        }
+        assert [a["id"] for a in catalog.search("MEDYAN", "Özetler")] == ["mean-median"]
+        assert [a["id"] for a in catalog.search("SIZINTI", "Modelleme")] == ["leakage"]
+        assert catalog.search("şu içerikte olmayan sözcükler") == []
+>       assert len(catalog.search(glossary=True)) == 26
+E       AssertionError: assert 44 == 26
+E        +  where 44 = len([{'id': 'data', 'content_version': 1, 'locale': 'tr', 'title': 'Veri nedir?', ...}, {'id': 'rows-columns', 'content_ve...le': 'Ortalama ve medyan', ...}, {'id': 'sample', 'content_version': 1, 'locale': 'tr', 'title': 'Örneklem', ...}, ...])
+E        +    where [{'id': 'data', 'content_version': 1, 'locale': 'tr', 'title': 'Veri nedir?', ...}, {'id': 'rows-columns', 'content_ve...le': 'Ortalama ve medyan', ...}, {'id': 'sample', 'content_version': 1, 'locale': 'tr', 'title': 'Örneklem', ...}, ...] = search(glossary=True)
+E        +      where search = <veri_ufku.learning.catalog.Catalog object at 0x7f2ebc35cde0>.search
+
+tests/test_learning.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_gui.py::test_phase02_resize_help_navigation_and_fixed_dark_theme
+FAILED tests/test_learning.py::test_catalog_offline_search_turkish_categories_glossary_and_sources
+2 failed, 387 passed in 115.20s (0:01:55)

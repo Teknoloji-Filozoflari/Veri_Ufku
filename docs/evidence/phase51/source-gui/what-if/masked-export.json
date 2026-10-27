@@ -1,0 +1,22 @@
+{
+  "schema": "ExplanationExport/v1",
+  "method": "what-if",
+  "created_at": "2026-10-13T19:22:26.081197+00:00",
+  "limitations": "Model açıklaması ilişki/tahmin davranışıdır; SHAP katkısı neden-sonuç değildir. Correlated features permutation önemini paylaşabilir; PDP/ICE ve SHAP background değişimleri gözlenmeyen kombinasyonlar üretir. Gözlenen aralık içinde bile extrapolation/ortak destek sorunu olabilir. Missing eğitimdeki dönüşümle işlenir; indicator ayrı etkidir, otomatik veri düzeltme yok. Background ve sample seçimi açıklamayı değiştirir; global sample bütün popülasyon değildir. Dilim keşfi çoklu arama etkisi taşır; küçük gruplar güvenilmezdir. Fairness metrikleri trade-off taşır; tek metrikle adil model rozeti veya hukuki sonuç yok. What-if ve kısıtlı aday tahmini causal counterfactual değildir; gerçekleşebilirlik/nedensel etki garantisi yok.",
+  "scope": "validation only; already used for model/threshold selection; exploratory; final test not read",
+  "n": 16,
+  "eligible_n": 16,
+  "sampled": false,
+  "background_n": 40,
+  "seed": 51,
+  "redaction": "Source record/RowIds, model card, raw rows, sensitive feature names/values/labels/contributions, sensitive group metrics, what-if/constraint values omitted; aggregate small cells suppressed n<30. Not an anonymity guarantee.",
+  "model_package_sha256": "22596b73963da0e28e702a3ab633d9262dd65375426c3dd46d30de3589a78928",
+  "data_fingerprint": {
+    "sha256": "5e455716472514aa9b2d265678e440e1d19e748bff5169f61b6d2c38a8238361",
+    "size": 9631
+  },
+  "scenario": {
+    "kind": "bounded model scenario; not causal",
+    "redacted": "Individual predictions/changes/constraints/immutable identities omitted."
+  }
+}

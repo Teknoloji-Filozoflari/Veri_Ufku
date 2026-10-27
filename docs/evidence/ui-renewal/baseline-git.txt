@@ -1,0 +1,845 @@
+ M .github/workflows/docs.yml
+ M AGENTS.md
+ M README.md
+ M Veri_Ufku_Birlestirilmis_Gelistirme_Promptlari.md
+ M docs/ACCEPTANCE_POLICY.md
+ M docs/ARCHITECTURE.md
+ M docs/CORE_CONTRACTS.md
+ M docs/DESIGN_SYSTEM.md
+ M docs/DEVELOPMENT.md
+ M docs/ENVIRONMENT.md
+ M docs/LEARNING_CONTENT.md
+ M docs/PERFORMANCE.md
+ M docs/PHASE_PLAN.md
+ M docs/PRODUCT.md
+ M docs/PROGRESS.md
+ M docs/PRO_PROGRESS.md
+ M docs/REQUIREMENTS_MATRIX.md
+ M docs/THIRD_PARTY_NOTICES.md
+ M docs/UI_DESIGN_BRIEF.md
+ M docs/UI_REFERENCES.md
+ M docs/UX.md
+ M docs/adr/004-offline-licensing-packaging.md
+ M docs/adr/008-delimited-import-phase05.md
+ M docs/evidence/PHASE00.md
+ M docs/evidence/PHASE11.md
+ M pyproject.toml
+ M scripts/check_docs.py
+ M scripts/check_learning.py
+ M scripts/measure_phase02.py
+ M scripts/measure_phase03.py
+ M scripts/measure_phase04.py
+ M scripts/measure_phase05.py
+ M scripts/measure_phase06.py
+ M scripts/measure_phase07.py
+ M scripts/measure_phase08.py
+ M scripts/measure_phase09.py
+ M scripts/measure_phase10.py
+ M scripts/measure_phase11.py
+ M scripts/smoke_import_wheel.py
+ M src/veri_ufku/analytics/contracts.py
+ M src/veri_ufku/analytics/dataset.py
+ M src/veri_ufku/analytics/worker.py
+ M src/veri_ufku/app.py
+ M src/veri_ufku/config.py
+ M src/veri_ufku/domain/capabilities.py
+ M src/veri_ufku/domain/contracts.py
+ M src/veri_ufku/importers/contracts.py
+ M src/veri_ufku/importers/delimited.py
+ M src/veri_ufku/importers/native.py
+ M src/veri_ufku/importers/ods.py
+ M src/veri_ufku/importers/registry.py
+ M src/veri_ufku/importers/worker.py
+ M src/veri_ufku/jobs/limits.py
+ M src/veri_ufku/jobs/manager.py
+ M src/veri_ufku/learning/catalog.py
+ M src/veri_ufku/learning/content/tr.json
+ M src/veri_ufku/learning/i18n/tr.qm
+ M src/veri_ufku/learning/i18n/tr.ts
+ M src/veri_ufku/logging_setup.py
+ M src/veri_ufku/operations/contracts.py
+ M src/veri_ufku/operations/engine.py
+ M src/veri_ufku/operations/worker.py
+ M src/veri_ufku/storage/project_model.py
+ M src/veri_ufku/storage/project_store.py
+ M src/veri_ufku/ui/controller.py
+ M src/veri_ufku/ui/dataset.py
+ M src/veri_ufku/ui/imports.py
+ M src/veri_ufku/ui/learning.py
+ M src/veri_ufku/ui/operations.py
+ M src/veri_ufku/ui/preferences.py
+ M src/veri_ufku/ui/projects.py
+ M src/veri_ufku/ui/qml/ArticleView.qml
+ M src/veri_ufku/ui/qml/CleaningOptions.qml
+ M src/veri_ufku/ui/qml/ColumnDetails.qml
+ M src/veri_ufku/ui/qml/DatasetPanel.qml
+ M src/veri_ufku/ui/qml/ExampleWindow.qml
+ M src/veri_ufku/ui/qml/FocusScroll.js
+ M src/veri_ufku/ui/qml/ImportPanel.qml
+ M src/veri_ufku/ui/qml/InfoPanel.qml
+ M src/veri_ufku/ui/qml/LearningCenter.qml
+ M src/veri_ufku/ui/qml/Main.qml
+ M src/veri_ufku/ui/qml/OperationTable.qml
+ M src/veri_ufku/ui/qml/OperationsPanel.qml
+ M src/veri_ufku/ui/qml/ProjectPanel.qml
+ M src/veri_ufku/ui/qml/QualityPanel.qml
+ M src/veri_ufku/ui/qml/StateNotice.qml
+ M src/veri_ufku/ui/qml/StructuredOptions.qml
+ M src/veri_ufku/ui/qml/Theme.qml
+ M src/veri_ufku/ui/qml/TransformationOptions.qml
+ M src/veri_ufku/ui/qml/UiButton.qml
+ M src/veri_ufku/ui/qml/UiCombo.qml
+ M tests/test_cleaning_gui.py
+ M tests/test_dataset.py
+ M tests/test_dataset_gui.py
+ M tests/test_delimited.py
+ M tests/test_document_contracts.py
+ M tests/test_gui.py
+ M tests/test_import_gui.py
+ M tests/test_learning.py
+ M tests/test_learning_gui.py
+ M tests/test_presentation_preferences.py
+ M tests/test_project_gui.py
+ M uv.lock
+?? .github/ISSUE_TEMPLATE/
+?? .github/workflows/release-candidate.yml
+?? CHANGELOG.md
+?? CONTRIBUTING.md
+?? LICENSE
+?? docs/GOLDEN_REFERENCES.md
+?? docs/INSTALL_EN.md
+?? docs/INSTALL_TR.md
+?? docs/KNOWN_LIMITATIONS.md
+?? docs/LICENSING.md
+?? docs/PLUGIN_API_EN.md
+?? docs/PROJECT_STATE.md
+?? docs/PRO_ARCHITECTURE.md
+?? docs/PRO_CAPABILITY_MATRIX.md
+?? docs/PRO_PRODUCT.md
+?? docs/PRO_WORK_PLAN.md
+?? docs/RELEASE_NOTES_0_1_0.md
+?? docs/RELEASE_REVIEW_PROTOCOL.md
+?? docs/RELEASE_SCOPE_0_1.md
+?? docs/ROADMAP.md
+?? docs/USER_GUIDE.md
+?? docs/USER_TEST_PLAN.md
+?? docs/adr/015-charts-phase12.md
+?? docs/adr/016-release-phase13.md
+?? docs/adr/017-statistics-phase14.md
+?? docs/adr/018-model-preparation-phase15.md
+?? docs/adr/019-validation-baseline-phase16.md
+?? docs/adr/020-regression-phase17.md
+?? docs/adr/021-classification-phase18.md
+?? docs/adr/022-unsupervised-phase19.md
+?? docs/adr/023-model-lifecycle-phase20.md
+?? docs/adr/024-time-series-phase21.md
+?? docs/adr/025-local-text-phase22.md
+?? docs/adr/026-recipes-monitoring-phase23.md
+?? docs/adr/027-performance-phase24.md
+?? docs/adr/028-usability-phase25.md
+?? docs/adr/029-reliability-phase26.md
+?? docs/adr/030-flatpak-phase27.md
+?? docs/adr/031-advanced-import-phase30.md
+?? docs/adr/032-connectors-phase31.md
+?? docs/adr/033-data-contracts-phase32.md
+?? docs/adr/034-missing-sampling-phase33.md
+?? docs/adr/035-multidimensional-phase34.md
+?? docs/adr/036-distribution-charts-phase35.md
+?? docs/adr/037-multivariate-charts-phase36.md
+?? docs/adr/038-composition-charts-phase37.md
+?? docs/adr/039-geospatial-phase38.md
+?? docs/adr/040-dashboard-figure-phase39.md
+?? docs/adr/041-statistical-models-phase40.md
+?? docs/adr/042-resampling-phase41.md
+?? docs/adr/043-experiments-phase42.md
+?? docs/adr/044-bayes-phase43.md
+?? docs/adr/045-causal-phase44.md
+?? docs/adr/046-survival-phase45.md
+?? docs/adr/047-dimensions-phase46.md
+?? docs/adr/048-exploration-phase47.md
+?? docs/adr/049-model-families-phase48.md
+?? docs/adr/050-hyperparameter-search-phase49.md
+?? docs/adr/051-uncertainty-phase50.md
+?? docs/adr/052-explanation-phase51.md
+?? docs/adr/053-experiment-registry-phase52.md
+?? docs/adr/054-temporal-phase53.md
+?? docs/adr/055-signals-phase54.md
+?? docs/adr/056-nlp-phase55.md
+?? docs/adr/057-neural-phase56.md
+?? docs/adr/058-vision-phase57.md
+?? docs/adr/059-audio-phase58.md
+?? docs/adr/060-recommendation-phase59.md
+?? docs/adr/061-patterns-phase60.md
+?? docs/adr/062-graphs-phase61.md
+?? docs/adr/063-streams-phase62.md
+?? docs/adr/064-code-bridge-phase63.md
+?? docs/adr/065-typed-workflow-phase64.md
+?? docs/adr/066-reproducibility-phase65.md
+?? docs/adr/067-compute-budgets-phase66.md
+?? docs/adr/068-model-monitoring-phase67.md
+?? docs/adr/069-simulation-optimization-phase68.md
+?? docs/adr/070-learning-laboratory-phase69.md
+?? docs/adr/071-report-builder-phase70.md
+?? docs/adr/072-local-review-sharing-phase71.md
+?? docs/adr/073-privacy-phase72.md
+?? docs/adr/074-plugin-sdk-phase73.md
+?? docs/adr/075-professional-distribution-phase74.md
+?? docs/evidence/AUDIT_00_13.md
+?? docs/evidence/PHASE12.md
+?? docs/evidence/PHASE13.md
+?? docs/evidence/PHASE13_USER_TASK.md
+?? docs/evidence/PHASE14.md
+?? docs/evidence/PHASE15.md
+?? docs/evidence/PHASE16.md
+?? docs/evidence/PHASE17.md
+?? docs/evidence/PHASE18.md
+?? docs/evidence/PHASE19.md
+?? docs/evidence/PHASE20.md
+?? docs/evidence/PHASE21.md
+?? docs/evidence/PHASE22.md
+?? docs/evidence/PHASE23.md
+?? docs/evidence/PHASE24.md
+?? docs/evidence/PHASE25.md
+?? docs/evidence/PHASE26.md
+?? docs/evidence/PHASE28.md
+?? docs/evidence/PHASE29.md
+?? docs/evidence/PHASE30.md
+?? docs/evidence/PHASE31.md
+?? docs/evidence/PHASE32.md
+?? docs/evidence/PHASE33.md
+?? docs/evidence/PHASE34.md
+?? docs/evidence/PHASE35.md
+?? docs/evidence/PHASE36.md
+?? docs/evidence/PHASE37.md
+?? docs/evidence/PHASE38.md
+?? docs/evidence/PHASE38_REVIEW.md
+?? docs/evidence/PHASE38_REVIEW2.md
+?? docs/evidence/PHASE39.md
+?? docs/evidence/PHASE40.md
+?? docs/evidence/PHASE41.md
+?? docs/evidence/PHASE42.md
+?? docs/evidence/PHASE43.md
+?? docs/evidence/PHASE44.md
+?? docs/evidence/PHASE45.md
+?? docs/evidence/PHASE46.md
+?? docs/evidence/PHASE47.md
+?? docs/evidence/PHASE48.md
+?? docs/evidence/PHASE49.md
+?? docs/evidence/PHASE50.md
+?? docs/evidence/PHASE51.md
+?? docs/evidence/PHASE52.md
+?? docs/evidence/PHASE53.md
+?? docs/evidence/PHASE54.md
+?? docs/evidence/PHASE55.md
+?? docs/evidence/PHASE56.md
+?? docs/evidence/PHASE57.md
+?? docs/evidence/PHASE58.md
+?? docs/evidence/PHASE59.md
+?? docs/evidence/PHASE60.md
+?? docs/evidence/PHASE61.md
+?? docs/evidence/PHASE62.md
+?? docs/evidence/PHASE63.md
+?? docs/evidence/PHASE64.md
+?? docs/evidence/PHASE65.md
+?? docs/evidence/PHASE66.md
+?? docs/evidence/PHASE67.md
+?? docs/evidence/PHASE68.md
+?? docs/evidence/PHASE69.md
+?? docs/evidence/PHASE70.md
+?? docs/evidence/PHASE71.md
+?? docs/evidence/PHASE72.md
+?? docs/evidence/PHASE73.md
+?? docs/evidence/PHASE74.md
+?? docs/evidence/PHASE75.md
+?? docs/evidence/UI_ACTUAL_STORAGE.md
+?? docs/evidence/UI_BRANDING.md
+?? docs/evidence/UI_COMPACT_NOTES_FULL_DATA.md
+?? docs/evidence/UI_DARK_ONLY.md
+?? docs/evidence/UI_DARK_THEME.md
+?? docs/evidence/UI_DATA_CONTENT.md
+?? docs/evidence/UI_DATA_INSPECTION.md
+?? docs/evidence/UI_DATA_REFINEMENT.md
+?? docs/evidence/UI_HEADER.md
+?? docs/evidence/UI_HOME_COMPACT.md
+?? docs/evidence/UI_HOME_REFINEMENT.md
+?? docs/evidence/UI_IMPORT_SIMPLE.md
+?? docs/evidence/UI_LEARNING_ANALYSIS.md
+?? docs/evidence/UI_LEARNING_REFINEMENT.md
+?? docs/evidence/UI_LEARNING_TREE.md
+?? docs/evidence/UI_MULTICOLOR.md
+?? docs/evidence/UI_NAVIGATION.md
+?? docs/evidence/UI_PROFILE_NOTES.md
+?? docs/evidence/UI_PROFILE_TYPES.md
+?? docs/evidence/UI_PROFILE_TYPE_COLUMNS.md
+?? docs/evidence/UI_PROFILE_TYPE_LABELS.md
+?? docs/evidence/UI_SCIENCE_ROADMAP.md
+?? docs/evidence/UI_SHARED_ROADMAP.md
+?? docs/evidence/audit00-13/
+?? docs/evidence/phase11-ci-37668560670.txt
+?? docs/evidence/phase12-1366-light-100.png
+?? docs/evidence/phase12-720-dark-200.png
+?? docs/evidence/phase12-checks.txt
+?? docs/evidence/phase12-correlation.png
+?? docs/evidence/phase12-correlation.svg
+?? docs/evidence/phase12-environment.json
+?? docs/evidence/phase12-headless.json
+?? docs/evidence/phase12-histogram.png
+?? docs/evidence/phase12-histogram.svg
+?? docs/evidence/phase12-source.sha256
+?? docs/evidence/phase12-system-unittest.txt
+?? docs/evidence/phase12-wheel.json
+?? docs/evidence/phase13-checks.txt
+?? docs/evidence/phase13-environment.json
+?? docs/evidence/phase13-headless-1366-light-100.png
+?? docs/evidence/phase13-headless-720-dark-200.png
+?? docs/evidence/phase13-headless-example.html
+?? docs/evidence/phase13-headless-example.pdf
+?? docs/evidence/phase13-headless-pdf-page1.png
+?? docs/evidence/phase13-headless.json
+?? docs/evidence/phase13-pdf-fonts.txt
+?? docs/evidence/phase13-pdf-poppler-page1.png
+?? docs/evidence/phase13-source.sha256
+?? docs/evidence/phase13-system-unittest.txt
+?? docs/evidence/phase13-wheel-1366-light-100.png
+?? docs/evidence/phase13-wheel-720-dark-200.png
+?? docs/evidence/phase13-wheel-example.html
+?? docs/evidence/phase13-wheel-example.pdf
+?? docs/evidence/phase13-wheel-pdf-page1.png
+?? docs/evidence/phase13-wheel.json
+?? docs/evidence/phase14/
+?? docs/evidence/phase15/
+?? docs/evidence/phase16/
+?? docs/evidence/phase17/
+?? docs/evidence/phase18/
+?? docs/evidence/phase19/
+?? docs/evidence/phase20/
+?? docs/evidence/phase21/
+?? docs/evidence/phase22/
+?? docs/evidence/phase23/
+?? docs/evidence/phase24/
+?? docs/evidence/phase25/
+?? docs/evidence/phase26/
+?? docs/evidence/phase27/
+?? docs/evidence/phase28/
+?? docs/evidence/phase29/
+?? docs/evidence/phase30/
+?? docs/evidence/phase31/
+?? docs/evidence/phase32/
+?? docs/evidence/phase33/
+?? docs/evidence/phase34/
+?? docs/evidence/phase35/
+?? docs/evidence/phase36/
+?? docs/evidence/phase37/
+?? docs/evidence/phase38/
+?? docs/evidence/phase39/
+?? docs/evidence/phase40/
+?? docs/evidence/phase41/
+?? docs/evidence/phase42/
+?? docs/evidence/phase43/
+?? docs/evidence/phase44/
+?? docs/evidence/phase45/
+?? docs/evidence/phase46/
+?? docs/evidence/phase47/
+?? docs/evidence/phase48/
+?? docs/evidence/phase49/
+?? docs/evidence/phase50/
+?? docs/evidence/phase51/
+?? docs/evidence/phase52/
+?? docs/evidence/phase53/
+?? docs/evidence/phase54/
+?? docs/evidence/phase55/
+?? docs/evidence/phase56/
+?? docs/evidence/phase57/
+?? docs/evidence/phase58/
+?? docs/evidence/phase59/
+?? docs/evidence/phase60/
+?? docs/evidence/phase61/
+?? docs/evidence/phase62/
+?? docs/evidence/phase63/
+?? docs/evidence/phase64/
+?? docs/evidence/phase65/
+?? docs/evidence/phase66/
+?? docs/evidence/phase67/
+?? docs/evidence/phase68/
+?? docs/evidence/phase69/
+?? docs/evidence/phase70/
+?? docs/evidence/phase71/
+?? docs/evidence/phase72/
+?? docs/evidence/phase73/
+?? docs/evidence/phase74/
+?? docs/evidence/phase75/
+?? docs/evidence/ui-actual-storage/
+?? docs/evidence/ui-branding/
+?? docs/evidence/ui-compact-notes-full-data/
+?? docs/evidence/ui-dark-only/
+?? docs/evidence/ui-dark/
+?? docs/evidence/ui-data-content/
+?? docs/evidence/ui-data-inspection-continuation/
+?? docs/evidence/ui-data-inspection/
+?? docs/evidence/ui-data-refinement/
+?? docs/evidence/ui-header/
+?? docs/evidence/ui-home-compact/
+?? docs/evidence/ui-home-refinement/
+?? docs/evidence/ui-import-simple/
+?? docs/evidence/ui-learning-analysis/
+?? docs/evidence/ui-learning-refinement/
+?? docs/evidence/ui-learning-tree/
+?? docs/evidence/ui-multicolor/
+?? docs/evidence/ui-navigation/
+?? docs/evidence/ui-profile-notes/
+?? docs/evidence/ui-profile-type-columns/
+?? docs/evidence/ui-profile-type-labels/
+?? docs/evidence/ui-profile-types/
+?? docs/evidence/ui-renewal/
+?? docs/evidence/ui-science-roadmap/
+?? docs/evidence/ui-shared-roadmap/
+?? docs/evidence/wheel-phase12-1366-light-100.png
+?? docs/evidence/wheel-phase12-720-dark-200.png
+?? docs/learning_sources/
+?? docs/third_party/
+?? examples/
+?? output/
+?? packaging/
+?? scripts/audit_phase28.py
+?? scripts/audit_phase75.py
+?? scripts/audit_phases.py
+?? scripts/audit_reliability.py
+?? scripts/benchmark75.py
+?? scripts/benchmark75_evidence.py
+?? scripts/benchmark75_plan.py
+?? scripts/build_flatpak.py
+?? scripts/check_usability.py
+?? scripts/finalize_phase75.py
+?? scripts/generate_environment_profile.py
+?? scripts/measure_branding.py
+?? scripts/measure_dark_theme.py
+?? scripts/measure_data_inspection.py
+?? scripts/measure_home_compact.py
+?? scripts/measure_import_simple.py
+?? scripts/measure_phase12.py
+?? scripts/measure_phase13.py
+?? scripts/measure_phase14.py
+?? scripts/measure_phase15.py
+?? scripts/measure_phase16.py
+?? scripts/measure_phase17.py
+?? scripts/measure_phase18.py
+?? scripts/measure_phase19.py
+?? scripts/measure_phase20.py
+?? scripts/measure_phase21.py
+?? scripts/measure_phase22.py
+?? scripts/measure_phase23.py
+?? scripts/measure_phase24.py
+?? scripts/measure_phase24_forecast.py
+?? scripts/measure_phase24_gui.py
+?? scripts/measure_phase24_projection.py
+?? scripts/measure_phase25.py
+?? scripts/measure_phase26.py
+?? scripts/measure_phase27.py
+?? scripts/measure_phase29.py
+?? scripts/measure_phase30.py
+?? scripts/measure_phase30_large.py
+?? scripts/measure_phase31.py
+?? scripts/measure_phase32.py
+?? scripts/measure_phase33.py
+?? scripts/measure_phase34.py
+?? scripts/measure_phase34_analysis.py
+?? scripts/measure_phase34_formats.py
+?? scripts/measure_phase34_large.py
+?? scripts/measure_phase35.py
+?? scripts/measure_phase36.py
+?? scripts/measure_phase37.py
+?? scripts/measure_phase38.py
+?? scripts/measure_phase39.py
+?? scripts/measure_phase40.py
+?? scripts/measure_phase41.py
+?? scripts/measure_phase42.py
+?? scripts/measure_phase43.py
+?? scripts/measure_phase44.py
+?? scripts/measure_phase45.py
+?? scripts/measure_phase46.py
+?? scripts/measure_phase47.py
+?? scripts/measure_phase48.py
+?? scripts/measure_phase49.py
+?? scripts/measure_phase50.py
+?? scripts/measure_phase51.py
+?? scripts/measure_phase52.py
+?? scripts/measure_phase53.py
+?? scripts/measure_phase54.py
+?? scripts/measure_phase55.py
+?? scripts/measure_phase56.py
+?? scripts/measure_phase57.py
+?? scripts/measure_phase58.py
+?? scripts/measure_phase59.py
+?? scripts/measure_phase60.py
+?? scripts/measure_phase61.py
+?? scripts/measure_phase62.py
+?? scripts/measure_phase62_memory.py
+?? scripts/measure_phase63.py
+?? scripts/measure_phase64.py
+?? scripts/measure_phase65.py
+?? scripts/measure_phase66.py
+?? scripts/measure_phase67.py
+?? scripts/measure_phase68.py
+?? scripts/measure_phase69.py
+?? scripts/measure_phase70.py
+?? scripts/measure_phase71.py
+?? scripts/measure_phase72.py
+?? scripts/measure_phase73.py
+?? scripts/measure_phase74.py
+?? scripts/package_smoke74.py
+?? scripts/portal_smoke74.py
+?? scripts/prepare_branding.py
+?? scripts/release_inventory.py
+?? scripts/smoke75_entry.py
+?? src/veri_ufku/analytics/cache.py
+?? src/veri_ufku/analytics/inspection.py
+?? src/veri_ufku/analytics/nlp.py
+?? src/veri_ufku/analytics/nlp_contracts.py
+?? src/veri_ufku/analytics/nlp_models.py
+?? src/veri_ufku/analytics/text.py
+?? src/veri_ufku/analytics/text_contracts.py
+?? src/veri_ufku/assets/
+?? src/veri_ufku/charts/
+?? src/veri_ufku/desktop.py
+?? src/veri_ufku/domain/json.py
+?? src/veri_ufku/exports/
+?? src/veri_ufku/geo/
+?? src/veri_ufku/importers/advanced.py
+?? src/veri_ufku/importers/advanced_readers.py
+?? src/veri_ufku/importers/arrays.py
+?? src/veri_ufku/importers/audio.py
+?? src/veri_ufku/importers/connector_contracts.py
+?? src/veri_ufku/importers/connectors.py
+?? src/veri_ufku/importers/credentials.py
+?? src/veri_ufku/importers/database_connectors.py
+?? src/veri_ufku/importers/graphs.py
+?? src/veri_ufku/importers/http_connectors.py
+?? src/veri_ufku/importers/images.py
+?? src/veri_ufku/importers/sources.py
+?? src/veri_ufku/jobs/admission.py
+?? src/veri_ufku/jobs/dask_backend.py
+?? src/veri_ufku/jobs/memory.py
+?? src/veri_ufku/jobs/resources.py
+?? src/veri_ufku/jobs/supervision.py
+?? src/veri_ufku/learning/audit.py
+?? src/veri_ufku/learning/content/lessons.tr.json
+?? src/veri_ufku/learning/curriculum.py
+?? src/veri_ufku/learning/i18n/en.qm
+?? src/veri_ufku/learning/i18n/en.ts
+?? src/veri_ufku/learning/lab_engine.py
+?? src/veri_ufku/learning/lab_worker.py
+?? src/veri_ufku/learning/taxonomy.py
+?? src/veri_ufku/modeling/
+?? src/veri_ufku/operations/data_contracts.py
+?? src/veri_ufku/operations/data_quality.py
+?? src/veri_ufku/operations/monitoring.py
+?? src/veri_ufku/operations/recipe_worker.py
+?? src/veri_ufku/operations/recipes.py
+?? src/veri_ufku/operations/workflow.py
+?? src/veri_ufku/operations/workflow_cli.py
+?? src/veri_ufku/operations/workflow_contracts.py
+?? src/veri_ufku/operations/workflow_fingerprint.py
+?? src/veri_ufku/operations/workflow_service.py
+?? src/veri_ufku/packaging/
+?? src/veri_ufku/plugins/
+?? src/veri_ufku/statistics/
+?? src/veri_ufku/storage/analysis_store.py
+?? src/veri_ufku/storage/chart_store.py
+?? src/veri_ufku/storage/experiment_store.py
+?? src/veri_ufku/storage/explanation_store.py
+?? src/veri_ufku/storage/graph_store.py
+?? src/veri_ufku/storage/learning_lab_store.py
+?? src/veri_ufku/storage/lineage.py
+?? src/veri_ufku/storage/model_store.py
+?? src/veri_ufku/storage/monitor_store.py
+?? src/veri_ufku/storage/neural_store.py
+?? src/veri_ufku/storage/plugin_store.py
+?? src/veri_ufku/storage/preparation_store.py
+?? src/veri_ufku/storage/privacy_store.py
+?? src/veri_ufku/storage/recommendation_store.py
+?? src/veri_ufku/storage/report_builder_store.py
+?? src/veri_ufku/storage/review_store.py
+?? src/veri_ufku/storage/scenario_store.py
+?? src/veri_ufku/storage/search_store.py
+?? src/veri_ufku/storage/text_store.py
+?? src/veri_ufku/storage/time_series_store.py
+?? src/veri_ufku/storage/unsupervised_store.py
+?? src/veri_ufku/storage/validation_store.py
+?? src/veri_ufku/storage/vision_store.py
+?? src/veri_ufku/storage/workflow_store.py
+?? src/veri_ufku/ui/audio.py
+?? src/veri_ufku/ui/charts.py
+?? src/veri_ufku/ui/code_bridge.py
+?? src/veri_ufku/ui/dashboard.py
+?? src/veri_ufku/ui/environment.py
+?? src/veri_ufku/ui/exports.py
+?? src/veri_ufku/ui/folders.py
+?? src/veri_ufku/ui/graphs.py
+?? src/veri_ufku/ui/guide.py
+?? src/veri_ufku/ui/launch.py
+?? src/veri_ufku/ui/learning_lab.py
+?? src/veri_ufku/ui/lifecycle.py
+?? src/veri_ufku/ui/monitoring.py
+?? src/veri_ufku/ui/neural.py
+?? src/veri_ufku/ui/patterns.py
+?? src/veri_ufku/ui/plugins.py
+?? src/veri_ufku/ui/preparation.py
+?? src/veri_ufku/ui/privacy.py
+?? src/veri_ufku/ui/qml/ArrayOptions.qml
+?? src/veri_ufku/ui/qml/AudioPanel.qml
+?? src/veri_ufku/ui/qml/BayesPanel.qml
+?? src/veri_ufku/ui/qml/BrandMark.qml
+?? src/veri_ufku/ui/qml/CausalDagEditor.qml
+?? src/veri_ufku/ui/qml/CausalPanel.qml
+?? src/veri_ufku/ui/qml/ChartPanel.qml
+?? src/veri_ufku/ui/qml/ClassificationCurve.qml
+?? src/veri_ufku/ui/qml/ClassificationPanel.qml
+?? src/veri_ufku/ui/qml/CodePanel.qml
+?? src/veri_ufku/ui/qml/ColumnNotes.qml
+?? src/veri_ufku/ui/qml/CompositionOptions.qml
+?? src/veri_ufku/ui/qml/ConfusionMatrix.qml
+?? src/veri_ufku/ui/qml/ConnectorField.qml
+?? src/veri_ufku/ui/qml/ConnectorPanel.qml
+?? src/veri_ufku/ui/qml/CoursePanel.qml
+?? src/veri_ufku/ui/qml/DashboardPanel.qml
+?? src/veri_ufku/ui/qml/DataContent.qml
+?? src/veri_ufku/ui/qml/DataContractPanel.qml
+?? src/veri_ufku/ui/qml/DatasetOverview.qml
+?? src/veri_ufku/ui/qml/DimensionsPanel.qml
+?? src/veri_ufku/ui/qml/DistributionOptions.qml
+?? src/veri_ufku/ui/qml/EnvironmentPanel.qml
+?? src/veri_ufku/ui/qml/ExperimentPanel.qml
+?? src/veri_ufku/ui/qml/ExperimentRegistryPanel.qml
+?? src/veri_ufku/ui/qml/ExplanationPanel.qml
+?? src/veri_ufku/ui/qml/FolderPicker.qml
+?? src/veri_ufku/ui/qml/GeoChartOptions.qml
+?? src/veri_ufku/ui/qml/GeoImportOptions.qml
+?? src/veri_ufku/ui/qml/GeoOperationOptions.qml
+?? src/veri_ufku/ui/qml/GraphPanel.qml
+?? src/veri_ufku/ui/qml/GuidePanel.qml
+?? src/veri_ufku/ui/qml/ICEPlot.qml
+?? src/veri_ufku/ui/qml/LabPlot.qml
+?? src/veri_ufku/ui/qml/LaboratoryWindow.qml
+?? src/veri_ufku/ui/qml/LearningTrail.qml
+?? src/veri_ufku/ui/qml/LifecyclePanel.qml
+?? src/veri_ufku/ui/qml/MissingSamplingPanel.qml
+?? src/veri_ufku/ui/qml/ModelFamiliesPanel.qml
+?? src/veri_ufku/ui/qml/ModuleDiscovery.qml
+?? src/veri_ufku/ui/qml/MonitoringPanel.qml
+?? src/veri_ufku/ui/qml/MultivariateOptions.qml
+?? src/veri_ufku/ui/qml/NLPPanel.qml
+?? src/veri_ufku/ui/qml/NeuralPanel.qml
+?? src/veri_ufku/ui/qml/PatternPanel.qml
+?? src/veri_ufku/ui/qml/PluginsPanel.qml
+?? src/veri_ufku/ui/qml/PredictionPlot.qml
+?? src/veri_ufku/ui/qml/PreparationPanel.qml
+?? src/veri_ufku/ui/qml/PrivacyPanel.qml
+?? src/veri_ufku/ui/qml/RecipePanel.qml
+?? src/veri_ufku/ui/qml/RecommendationPanel.qml
+?? src/veri_ufku/ui/qml/RegistryFolds.qml
+?? src/veri_ufku/ui/qml/RegistryPareto.qml
+?? src/veri_ufku/ui/qml/RegressionPanel.qml
+?? src/veri_ufku/ui/qml/ReliabilityDiagram.qml
+?? src/veri_ufku/ui/qml/ReportBuilderPanel.qml
+?? src/veri_ufku/ui/qml/ReportPanel.qml
+?? src/veri_ufku/ui/qml/ReproPanel.qml
+?? src/veri_ufku/ui/qml/ResamplingPanel.qml
+?? src/veri_ufku/ui/qml/ResultPanel.qml
+?? src/veri_ufku/ui/qml/RoadmapSteps.js
+?? src/veri_ufku/ui/qml/SavedColumnNotes.qml
+?? src/veri_ufku/ui/qml/ScenarioPanel.qml
+?? src/veri_ufku/ui/qml/ScienceRoadmap.qml
+?? src/veri_ufku/ui/qml/SearchCurve.qml
+?? src/veri_ufku/ui/qml/SearchPanel.qml
+?? src/veri_ufku/ui/qml/SharingPanel.qml
+?? src/veri_ufku/ui/qml/SignalPanel.qml
+?? src/veri_ufku/ui/qml/SignalSpectrogram.qml
+?? src/veri_ufku/ui/qml/StatisticalModelsPanel.qml
+?? src/veri_ufku/ui/qml/StatisticsPanel.qml
+?? src/veri_ufku/ui/qml/StreamPanel.qml
+?? src/veri_ufku/ui/qml/SurvivalPanel.qml
+?? src/veri_ufku/ui/qml/TemporalDiagnosticPlot.qml
+?? src/veri_ufku/ui/qml/TemporalPanel.qml
+?? src/veri_ufku/ui/qml/TextFrequencyPlot.qml
+?? src/veri_ufku/ui/qml/TextOptions.qml
+?? src/veri_ufku/ui/qml/TextPanel.qml
+?? src/veri_ufku/ui/qml/TimeSeriesPanel.qml
+?? src/veri_ufku/ui/qml/TimeSeriesPlot.qml
+?? src/veri_ufku/ui/qml/UiCheckBox.qml
+?? src/veri_ufku/ui/qml/UiIconButton.qml
+?? src/veri_ufku/ui/qml/UiLabel.qml
+?? src/veri_ufku/ui/qml/UiNavigationButton.qml
+?? src/veri_ufku/ui/qml/UiSpinBox.qml
+?? src/veri_ufku/ui/qml/UiSymbol.qml
+?? src/veri_ufku/ui/qml/UiTabButton.qml
+?? src/veri_ufku/ui/qml/UiTextArea.qml
+?? src/veri_ufku/ui/qml/UiTextField.qml
+?? src/veri_ufku/ui/qml/UncertaintyPanel.qml
+?? src/veri_ufku/ui/qml/UnsupervisedPanel.qml
+?? src/veri_ufku/ui/qml/ValidationPanel.qml
+?? src/veri_ufku/ui/qml/ValueInspection.qml
+?? src/veri_ufku/ui/qml/VisionPanel.qml
+?? src/veri_ufku/ui/qml/WorkflowPanel.qml
+?? src/veri_ufku/ui/recipes.py
+?? src/veri_ufku/ui/recommendation.py
+?? src/veri_ufku/ui/report_builder.py
+?? src/veri_ufku/ui/repro.py
+?? src/veri_ufku/ui/scenarios.py
+?? src/veri_ufku/ui/search.py
+?? src/veri_ufku/ui/sharing.py
+?? src/veri_ufku/ui/statistics.py
+?? src/veri_ufku/ui/streams.py
+?? src/veri_ufku/ui/text.py
+?? src/veri_ufku/ui/time_series.py
+?? src/veri_ufku/ui/unsupervised.py
+?? src/veri_ufku/ui/validation.py
+?? src/veri_ufku/ui/vision.py
+?? src/veri_ufku/ui/workflow.py
+?? src/veri_ufku/ui/workspace.py
+?? tests/fixtures/phase30/
+?? tests/fixtures/projects/schema4.json
+?? tests/fixtures/projects/schema5.json
+?? tests/fixtures/projects/schema6.json
+?? tests/phase30_fixtures.py
+?? tests/phase31_servers.py
+?? tests/phase34_fixtures.py
+?? tests/phase37_fixtures.py
+?? tests/phase38_fixtures.py
+?? tests/test_advanced_import.py
+?? tests/test_advanced_import_gui.py
+?? tests/test_arrays.py
+?? tests/test_arrays_gui.py
+?? tests/test_arrays_safety.py
+?? tests/test_audio.py
+?? tests/test_audio_gui.py
+?? tests/test_bayes.py
+?? tests/test_bayes_gui.py
+?? tests/test_branding.py
+?? tests/test_causal.py
+?? tests/test_causal_gui.py
+?? tests/test_charts.py
+?? tests/test_charts_gui.py
+?? tests/test_classification.py
+?? tests/test_classification_gui.py
+?? tests/test_code_bridge.py
+?? tests/test_code_bridge_gui.py
+?? tests/test_composition.py
+?? tests/test_composition_gui.py
+?? tests/test_compute_budget.py
+?? tests/test_compute_budget_gui.py
+?? tests/test_connector_gui.py
+?? tests/test_connector_optional_servers.py
+?? tests/test_connectors.py
+?? tests/test_dashboard.py
+?? tests/test_dashboard_gui.py
+?? tests/test_data_contracts.py
+?? tests/test_data_contracts_gui.py
+?? tests/test_data_inspection.py
+?? tests/test_data_workspace_gui.py
+?? tests/test_dimensions.py
+?? tests/test_dimensions_gui.py
+?? tests/test_distributions.py
+?? tests/test_distributions_gui.py
+?? tests/test_environment_distribution.py
+?? tests/test_environment_gui.py
+?? tests/test_experiment_registry.py
+?? tests/test_experiment_registry_gui.py
+?? tests/test_experiments.py
+?? tests/test_experiments_gui.py
+?? tests/test_explanation.py
+?? tests/test_explanation_gui.py
+?? tests/test_exploration.py
+?? tests/test_exploration_gui.py
+?? tests/test_exports.py
+?? tests/test_exports_gui.py
+?? tests/test_geo.py
+?? tests/test_geo_boundaries.py
+?? tests/test_geo_gui.py
+?? tests/test_geo_network.py
+?? tests/test_graphs.py
+?? tests/test_graphs_gui.py
+?? tests/test_home_folders_gui.py
+?? tests/test_learning_lab.py
+?? tests/test_learning_lab_gui.py
+?? tests/test_learning_tree.py
+?? tests/test_learning_tree_gui.py
+?? tests/test_lifecycle.py
+?? tests/test_lifecycle_gui.py
+?? tests/test_missing_sampling.py
+?? tests/test_missing_sampling_gui.py
+?? tests/test_model_families.py
+?? tests/test_model_families_gui.py
+?? tests/test_model_family_support.py
+?? tests/test_monitoring.py
+?? tests/test_monitoring_api.py
+?? tests/test_monitoring_gui.py
+?? tests/test_multivariate.py
+?? tests/test_multivariate_gui.py
+?? tests/test_neural.py
+?? tests/test_neural_gui.py
+?? tests/test_nlp.py
+?? tests/test_nlp_gui.py
+?? tests/test_packaging.py
+?? tests/test_patterns.py
+?? tests/test_patterns_gui.py
+?? tests/test_performance.py
+?? tests/test_plugins.py
+?? tests/test_plugins_gui.py
+?? tests/test_preparation.py
+?? tests/test_preparation_gui.py
+?? tests/test_privacy.py
+?? tests/test_privacy_gui.py
+?? tests/test_privacy_keyring.py
+?? tests/test_recipes.py
+?? tests/test_recipes_gui.py
+?? tests/test_recommendation.py
+?? tests/test_recommendation_gui.py
+?? tests/test_regression.py
+?? tests/test_regression_gui.py
+?? tests/test_release_audit.py
+?? tests/test_release_benchmark_gui.py
+?? tests/test_release_benchmarks.py
+?? tests/test_report_builder.py
+?? tests/test_report_builder_gui.py
+?? tests/test_repro.py
+?? tests/test_repro_gui.py
+?? tests/test_resampling.py
+?? tests/test_resampling_gui.py
+?? tests/test_scenarios.py
+?? tests/test_scenarios_gui.py
+?? tests/test_science_roadmap_gui.py
+?? tests/test_search.py
+?? tests/test_search_gui.py
+?? tests/test_search_store.py
+?? tests/test_security_audit.py
+?? tests/test_security_gui.py
+?? tests/test_share.py
+?? tests/test_share_gui.py
+?? tests/test_signals.py
+?? tests/test_signals_gui.py
+?? tests/test_statistical_models.py
+?? tests/test_statistical_models_gui.py
+?? tests/test_statistics.py
+?? tests/test_statistics_gui.py
+?? tests/test_streams.py
+?? tests/test_streams_gui.py
+?? tests/test_survival.py
+?? tests/test_survival_gui.py
+?? tests/test_temporal.py
+?? tests/test_temporal_gui.py
+?? tests/test_text.py
+?? tests/test_text_gui.py
+?? tests/test_time_series.py
+?? tests/test_time_series_gui.py
+?? tests/test_uncertainty.py
+?? tests/test_uncertainty_gui.py
+?? tests/test_unsupervised.py
+?? tests/test_unsupervised_gui.py
+?? tests/test_usability.py
+?? tests/test_validation.py
+?? tests/test_validation_gui.py
+?? tests/test_vision.py
+?? tests/test_vision_gui.py
+?? tests/test_workflow.py
+?? tests/test_workflow_gui.py
+?? tests/test_workspace.py

@@ -1,0 +1,698 @@
+{
+  "id": "E54-GUI",
+  "environment": "ENV-54",
+  "date": "2026-10-14T16:39:38.712199+00:00",
+  "package": "/home/s-oktay/Belgeler/Veri_Ufku/src",
+  "scope": "Actual signal QML/spawn/source-protection/spectrogram/FFT/Welch/filter/event/features/classification/safe reopen/offline help; spectrogram cancel after capture;CPU/offscreen/software",
+  "cases": [
+    {
+      "method": "schema",
+      "status": "passed",
+      "run_id": "ts:15518998-776a-496f-bb27-bcf013b349b4",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.schema",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:36:41.434091+00:00",
+        "dataset_versions": [
+          "dv:7caead2b-8f6b-4a35-941d-47dc5a963fd1"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "21f63458c34383154f5a6224322ad0ab01e0765c5c351733a6e4a1f0bb084d24",
+        "provenance_id": "provenance:a8e77a51-1f3d-4693-998e-2394e9b7525f",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:f2d5eb43-e174-4aa3-ab55-cf8c30cd0fbe"
+        ]
+      },
+      "files": [
+        {
+          "path": "schema/signal-1000.png",
+          "sha256": "809cd6777fa4e45f0fbc831dea5c2edb9cc480b7d0632c1d4bdede4525e0434c"
+        },
+        {
+          "path": "schema/signal-1366.png",
+          "sha256": "a34bebc4b03c2cc6c4abe08dbf5e0ffd2c8bcba7e0a3bae9a087cf13cc688df7"
+        },
+        {
+          "path": "schema/run.json",
+          "sha256": "ab5cc4d28387465c8ecf0ea4f139e073c4702a9d87a45c072cd6b4409cec7c4c"
+        },
+        {
+          "path": "schema/registry.json",
+          "sha256": "43d7bafdfe5d89c7d7e93cfd9ac4e68bbcf6de9a13ef00347146180c18ba4cf9"
+        }
+      ]
+    },
+    {
+      "method": "resample",
+      "status": "passed",
+      "run_id": "ts:9b0d932b-6339-4584-874a-2de5beacbbbc",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.resample",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:36:55.483581+00:00",
+        "dataset_versions": [
+          "dv:2ba1b505-8b5e-44bd-a34e-2e3bca4cd4fe"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "1a844eff50448d0c4c0954aade3b8aa950a1b24d4e0e5a90dc977c3e4acf85d9",
+        "provenance_id": "provenance:41ccae59-103f-4b4e-9bb1-3e141607043b",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:84097ecb-0a69-4aef-88ec-d3b9fbb32d9a"
+        ]
+      },
+      "files": [
+        {
+          "path": "resample/signal-1000.png",
+          "sha256": "3ec8d6de1bc79a287707e0310af2554543ee80f3514d49174bf6fa0d7383c663"
+        },
+        {
+          "path": "resample/signal-1366.png",
+          "sha256": "dfa6130999ecb0317b3cc955d1e15f7a97b3cc5e6376f1508464860a591b8485"
+        },
+        {
+          "path": "resample/run.json",
+          "sha256": "44f255acd10cb776b08205a1539054e179f1a5eb98388eebe47656a5ef1833c1"
+        },
+        {
+          "path": "resample/registry.json",
+          "sha256": "81218b91c672d972c8a35cdfbd68d1edca1dc479d61b3216397408c3dd5b8385"
+        }
+      ]
+    },
+    {
+      "method": "detrend",
+      "status": "passed",
+      "run_id": "ts:b20311fc-32a9-47c1-beba-5ec9f269db05",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.detrend",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:37:08.722700+00:00",
+        "dataset_versions": [
+          "dv:ce7bd4b1-a200-4108-a5bf-3b8d17e973b5"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "8a007149899c70c6eb37656d63c70ee31c7b3d2a89ff2c96244557764eff1d21",
+        "provenance_id": "provenance:a5ebb61d-88ff-40c2-b357-a609eab36baf",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:6b0d5995-2355-43f9-824f-0c12da7f3d63"
+        ]
+      },
+      "files": [
+        {
+          "path": "detrend/signal-1000.png",
+          "sha256": "56450c2b584d94a335607e427b6fc9502b8d8fc3a75f08e9994e3adef9d73ffc"
+        },
+        {
+          "path": "detrend/signal-1366.png",
+          "sha256": "f007a13982b9fd1cb74cd1618297ff7d8ae6e9bfc0f1e0f7a35dea3dc25111f4"
+        },
+        {
+          "path": "detrend/run.json",
+          "sha256": "7eea57047b1e3227cc7948017515af045c3cf64cd86dcb32952d8ea1d60ca6e8"
+        },
+        {
+          "path": "detrend/registry.json",
+          "sha256": "b2426f451e21b3687ef95c04aff3116c5a3adfb9e78f9a09170bafea36de37a1"
+        }
+      ]
+    },
+    {
+      "method": "window",
+      "status": "passed",
+      "run_id": "ts:d675be92-4f99-4d58-8c9c-47550fa2cdb5",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.window",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:37:22.510444+00:00",
+        "dataset_versions": [
+          "dv:1801fb6a-1405-4bbc-ad5a-61eff5661092"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "da2cf690541cc52d245236991912fcba4a4b73151f75bde7114a7ac5ca2c8278",
+        "provenance_id": "provenance:22c0deb7-2219-4741-ab11-70a58f1cdb39",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:fb3718b4-499b-4c24-bae6-fd33152b9196"
+        ]
+      },
+      "files": [
+        {
+          "path": "window/signal-1000.png",
+          "sha256": "e0ad02af0100f2524634eedda1271c2016399004ed4889eede7d0d0d1628f7f8"
+        },
+        {
+          "path": "window/signal-1366.png",
+          "sha256": "3f34141ae304159bd007515852c51c7e1e0e5bfaa35351172b9ce26a23f92a28"
+        },
+        {
+          "path": "window/run.json",
+          "sha256": "904b69b56f293fa4c003c83cabd310f7025a79b8a0057167d38541e73493026f"
+        },
+        {
+          "path": "window/registry.json",
+          "sha256": "5891077f13ccc0af53512627f7e3d26a688c562af7364f8e986bbd8a96c946bb"
+        }
+      ]
+    },
+    {
+      "method": "fft",
+      "status": "passed",
+      "run_id": "ts:4deb9c93-236d-4556-8a33-310c4efef973",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.fft",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:37:36.078110+00:00",
+        "dataset_versions": [
+          "dv:eb464bdd-84ce-4129-88f8-ca864f26009a"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "849bb67d1e6818797d18814a55153bbc5f124f631e99b4a901c6b85e455f5e0c",
+        "provenance_id": "provenance:28b35841-3314-4bdc-b531-2f2f7d9c77d5",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:8b63cbd6-cc33-4b44-97ff-42ba7632cb32"
+        ]
+      },
+      "files": [
+        {
+          "path": "fft/signal-1000.png",
+          "sha256": "26d4b175fa5c08e82bdbd35e7c00846c95b51c150d844949ab540861e06286e0"
+        },
+        {
+          "path": "fft/signal-1366.png",
+          "sha256": "d7bbb2696cc1b1fe73dad015381fd203561b0820946bb8219ec266ffa951b299"
+        },
+        {
+          "path": "fft/run.json",
+          "sha256": "6acd251749240771a677935ac2b5c2dd56e329c1d08a4b3ba83739d0f9a0f6de"
+        },
+        {
+          "path": "fft/registry.json",
+          "sha256": "2f7c9283055e18edc68b0b450bbfb087575c8653547ed5b4f0c6c9775409ee81"
+        }
+      ]
+    },
+    {
+      "method": "welch",
+      "status": "passed",
+      "run_id": "ts:bc0b3ce1-975e-43b3-9c5d-88ccba972f2d",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.welch",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:37:49.489491+00:00",
+        "dataset_versions": [
+          "dv:a5ea8c4e-70a1-4019-8ab6-1f2b6a559552"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "123784f27355080444d2d77fa5c4ed541796947aee4f66996b68c4b770ce3def",
+        "provenance_id": "provenance:df643ef0-c81f-448e-bae1-f8a8d7c2366c",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:54762791-96db-4d77-bff2-a46ea4d7fe03"
+        ]
+      },
+      "files": [
+        {
+          "path": "welch/signal-1000.png",
+          "sha256": "2c4fd845830b43b87e1866afe5f345d82ee67fbc9e4124955080ebc68d032edd"
+        },
+        {
+          "path": "welch/signal-1366.png",
+          "sha256": "d21cc733ccabf7152dee6f98dc350c09f905aaa2fab07001b8f21f1a31de380a"
+        },
+        {
+          "path": "welch/run.json",
+          "sha256": "1789f134940a31033ed91ec0570649c2e802ac02bc4dde8540e8042eb13366ea"
+        },
+        {
+          "path": "welch/registry.json",
+          "sha256": "38ed7c6c2a90bdcb2644e9e83e4dd91eb3fde60973ef7d73837649b7eb65abe6"
+        }
+      ]
+    },
+    {
+      "method": "stft",
+      "status": "passed",
+      "run_id": "ts:c6c33981-4cc1-4df4-83aa-b61a7e218b21",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.stft",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:38:02.977372+00:00",
+        "dataset_versions": [
+          "dv:e69de79a-8a89-420b-93b6-87f29cb54891"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "f75361c58a710e0ce53188f66943a87be705e9892da9c88e24e53ea70e157617",
+        "provenance_id": "provenance:a44e81de-28db-482e-a719-120fd90442c1",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:01648105-787a-4987-a5d8-e31b8dabd5df"
+        ]
+      },
+      "files": [
+        {
+          "path": "stft/signal-1000.png",
+          "sha256": "855d3994a1dd5d8497116beb7a05ea405ee86e7fd59977bf074a2ee4cdadb285"
+        },
+        {
+          "path": "stft/signal-1366.png",
+          "sha256": "961552ce9505a844395fb9c3cec63a5ccb093c56d866157fdb575a7643b7fcf2"
+        },
+        {
+          "path": "stft/run.json",
+          "sha256": "82d1a6a38060aea624b8c7407b99cb6126d73c3f48f1b0b6b8a2a3a5f8a9d9fa"
+        },
+        {
+          "path": "stft/registry.json",
+          "sha256": "a0ed638fee992844289561b4a3aa9c062730afe6fec49ab9edd55256c30dc028"
+        }
+      ]
+    },
+    {
+      "method": "spectrogram",
+      "status": "passed",
+      "run_id": "ts:6d356a8b-4a5b-468d-8627-8d3471242c5d",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.spectrogram",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:38:16.322221+00:00",
+        "dataset_versions": [
+          "dv:0635379e-8634-4d52-849e-c07f42630b83"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "bbe6bf9b058b20d8f04c1491581230497527c8d507a6021da237ee57a2c48743",
+        "provenance_id": "provenance:f5d9e4ee-a39b-46cb-95f4-a792166f50c4",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:99f81904-9783-4a2f-b5cb-64e8073c3d67"
+        ]
+      },
+      "files": [
+        {
+          "path": "spectrogram/signal-1000.png",
+          "sha256": "904f8d8e132057590a09095086c8fd09eee57d3c917f251421a785dd3fbfeba1"
+        },
+        {
+          "path": "spectrogram/signal-1366.png",
+          "sha256": "b285a5663608affbdd3b2cc66d4b3d40f27dd7a2add6b5950a2f222352a21b42"
+        },
+        {
+          "path": "spectrogram/run.json",
+          "sha256": "75d460beb4dceabbec45bb32e2f6b0acf3313a97f0cb48a91d61d7781c03ff1e"
+        },
+        {
+          "path": "spectrogram/registry.json",
+          "sha256": "7a79c6721ac1be30c765a1d2f7ed5575f645eb6dc89dca1156e47e5c07f0b092"
+        }
+      ]
+    },
+    {
+      "method": "peak",
+      "status": "passed",
+      "run_id": "ts:8412dd06-1d8c-4bd0-a16a-797aa97d7e5b",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.peak",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:38:32.827245+00:00",
+        "dataset_versions": [
+          "dv:65103f8b-5a33-4e91-b703-caf8b16786de"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "99c0f44f363e61015a5c24121df7bca20c22df89db0d7671e8000fc35c3c0e5b",
+        "provenance_id": "provenance:15181a37-5d2d-4956-852f-126675a2c36d",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:3c829ed5-1f7a-4335-a410-473b38270263"
+        ]
+      },
+      "files": [
+        {
+          "path": "peak/signal-1000.png",
+          "sha256": "814f6662d048c1d359a6b4d9b7c198f7ef5a03a1f8f7680a6d552df3c5b3494f"
+        },
+        {
+          "path": "peak/signal-1366.png",
+          "sha256": "ff2ff76cebf4e9cf1ce332c73b61f5f65177889e41ab7b7e5d4007a9f6fad95a"
+        },
+        {
+          "path": "peak/run.json",
+          "sha256": "9f99e143a45869fa1a62cf53694121105810c535dfc4346cf46aea71ff5a3dec"
+        },
+        {
+          "path": "peak/registry.json",
+          "sha256": "c89d2c01cd8cbef4975689b62b73a5a4ae89f9ca17ad74510bc907e81bc1bbeb"
+        }
+      ]
+    },
+    {
+      "method": "filter",
+      "status": "passed",
+      "run_id": "ts:aa478bf2-c16f-4d34-90ae-721b0119f52d",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.filter",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:38:46.959314+00:00",
+        "dataset_versions": [
+          "dv:8192eb56-bb08-45e1-9d66-08b145a67abc"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "82652c83d4a3f6a1d881bcb2ee2f77cb8ec7180adb4e2124804c938393c0039a",
+        "provenance_id": "provenance:cd33e8f9-aa0c-43f4-93f7-b4a083bd240f",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:516f9a07-f240-4fb8-9a1c-105af0f03c98"
+        ]
+      },
+      "files": [
+        {
+          "path": "filter/signal-1000.png",
+          "sha256": "dddd1605ec11086e9a31955a81da969ff4775316d44d114b598d66be606036de"
+        },
+        {
+          "path": "filter/signal-1366.png",
+          "sha256": "88e7cf0f2861fd993662a4268c92d375fbfaf07915b6c4cb19bf6c06bbca3dad"
+        },
+        {
+          "path": "filter/run.json",
+          "sha256": "24431bef632f2a7d93ead1c8dd5a4963034431fbb24d94953436150ceaf63d59"
+        },
+        {
+          "path": "filter/registry.json",
+          "sha256": "1a250ef22c0e27b69118ed62db734291800b3e015d6dbbfe106987c38f312a49"
+        }
+      ]
+    },
+    {
+      "method": "zero-phase",
+      "status": "passed",
+      "run_id": "ts:f91acd32-292f-4df6-b6cd-293ec7145f7a",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.zero-phase",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:39:02.207370+00:00",
+        "dataset_versions": [
+          "dv:342deac9-9d84-42de-86e9-935e8bd88aba"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "7ab3e743ef29c0040c4d09f8d1eaabc104a3ead812d5071594c36d736987377a",
+        "provenance_id": "provenance:03abb033-6e43-4497-a177-176f73b4528a",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:23d5cf58-4e14-4e40-b045-a4e90c515979"
+        ]
+      },
+      "files": [
+        {
+          "path": "zero-phase/signal-1000.png",
+          "sha256": "828823a68727f90f498b130430c5a45883afddf7098b3b9aaadce820a71e817b"
+        },
+        {
+          "path": "zero-phase/signal-1366.png",
+          "sha256": "7d168f17a0fb0b59b11ca7af2864a252f4f5eb02eb55635e77e9a368bb98ce43"
+        },
+        {
+          "path": "zero-phase/run.json",
+          "sha256": "641e3c8ae26838f6f3875fdd90a6c1a00a5d2fe96668beb3016aa0dd8401a3f6"
+        },
+        {
+          "path": "zero-phase/registry.json",
+          "sha256": "f8744f79bcc0db1c6013301f40fbb4357390fd37a3efa0fe2b9d004399c8fcaf"
+        }
+      ]
+    },
+    {
+      "method": "events",
+      "status": "passed",
+      "run_id": "ts:36ae70ca-8913-43a4-9a1d-e1f9e4b314db",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.events",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:39:17.994717+00:00",
+        "dataset_versions": [
+          "dv:202d0eee-b174-471f-aae7-ed791c28a392"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "d21988aeaa73171e0e3491c51ede9654421ffa0d7072079a5a7b13155db1f35a",
+        "provenance_id": "provenance:6a4f53fb-6fc7-4fb1-b98c-4c45b4d669fc",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:1948bc75-9132-4548-adcc-fec55e05a03a"
+        ]
+      },
+      "files": [
+        {
+          "path": "events/signal-1000.png",
+          "sha256": "6ff58f0c14a8fadbcd1a5de737bc9243f67d61ba76cc310ad8399a16fc65c591"
+        },
+        {
+          "path": "events/signal-1366.png",
+          "sha256": "a9a41b901b21da929e40484a3e32e1a0dd8f5ce9d39a190aa6acb4c96e0b0239"
+        },
+        {
+          "path": "events/run.json",
+          "sha256": "0cfca2bc3361a5fd1fc73d6ff8ccfbcac3926f03bf92e78d274ff31bf5a77501"
+        },
+        {
+          "path": "events/registry.json",
+          "sha256": "c129de762f0406b8976cf848694e4f107a797332b0f29d7f73e6a04ca57443dd"
+        }
+      ]
+    },
+    {
+      "method": "classification",
+      "status": "passed",
+      "run_id": "ts:3535fc24-0245-4504-9b64-b03292f258c5",
+      "mode": "development",
+      "recording_count": 4,
+      "provenance": {
+        "capability_id": "model.signal.classification",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-14T16:39:32.623666+00:00",
+        "dataset_versions": [
+          "dv:023e7471-d760-4024-a2d8-c8956f1eb49d"
+        ],
+        "environment": [
+          [
+            "scipy",
+            "1.18.0"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "39347d3c1f8acbb22c37bede8e2b41c717c7b0a358bd8e88c0bb50d6a49d7276",
+        "provenance_id": "provenance:2a6a8395-a2df-4419-b2ba-e28083e81919",
+        "row_lineage_ref": null,
+        "scope": "whole recording isolated transforms; split before windows; available_at endpoint; no source edits",
+        "seed": 54,
+        "seed_reason": "deterministic LBFGS initialization/spectra; seed retained in recipe, no sampling",
+        "source_snapshot_ids": [
+          "snapshot:89529a47-5016-48c6-8677-f5ff7985b4ce"
+        ]
+      },
+      "files": [
+        {
+          "path": "classification/signal-1000.png",
+          "sha256": "459ff7a0d0f2b104fe89a7aaed1c32a31316c440b45586cb45096c7376272aab"
+        },
+        {
+          "path": "classification/signal-1366.png",
+          "sha256": "7e64da22edd93c525f144e38d9de0db6db15a70b2488940d097ab9ca6462936e"
+        },
+        {
+          "path": "classification/run.json",
+          "sha256": "d086dda32b2c7f3e81a91ab10a58078160e639ef249e985890e951e40a4975d8"
+        },
+        {
+          "path": "classification/registry.json",
+          "sha256": "2fb78aaad13b7d5f43379a63f4c0aed5c0ca3a31b28663c7be452678962d0d9a"
+        }
+      ]
+    }
+  ]
+}

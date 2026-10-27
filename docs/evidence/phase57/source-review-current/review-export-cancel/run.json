@@ -1,0 +1,7151 @@
+{
+  "schema": "VisionRun/v1",
+  "run_id": "run:415c5f2d-8fa6-4f80-84ad-90829f3cb082",
+  "training_id": "run:415c5f2d-8fa6-4f80-84ad-90829f3cb082",
+  "status": "canceled",
+  "dataset_version": "dv:5c5e35eb-d4bf-4272-b184-bf13121ee72f",
+  "origin_version": "dv:5c5e35eb-d4bf-4272-b184-bf13121ee72f",
+  "source_snapshot_id": "snapshot:c5466457-5329-4580-a097-34fde14d5a63",
+  "snapshot_fingerprint": {
+    "size": 14586,
+    "sha256": "96efe0a198a7804d139ace929c9653214adaf710afb907f66007da6a0dca50fb"
+  },
+  "image_fingerprint": {
+    "size": 56387,
+    "sha256": "6ead6d722a286feebfcdd0587252e6fe5eec35ebfc1771fafdb32c152abc923a"
+  },
+  "seed": 57,
+  "spec": {},
+  "vision_spec": {
+    "task": "classification",
+    "size": 8,
+    "crop": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "flip": false,
+    "epochs": 50,
+    "seed": 57,
+    "learning_rate": 0.01,
+    "model_folder": "",
+    "score_threshold": 0.5,
+    "iou_thresholds": [
+      0.5,
+      0.75,
+      0.95
+    ]
+  },
+  "protocol": {
+    "structure": "group",
+    "method": "auto",
+    "entity_use": "new",
+    "prediction_moment": "Image available before prediction",
+    "horizon_seconds": 0,
+    "availability": {
+      "col:9ba8be46-e1f6-4659-8d13-f45d9c37ed84": {
+        "offset_seconds": 0,
+        "note": "immutable local image"
+      }
+    },
+    "test_fraction": 0.2,
+    "validation_fraction": 0.2,
+    "folds": 2,
+    "seed": 57,
+    "baseline": "auto"
+  },
+  "plan": {
+    "schema": "ValidationPlan/v1",
+    "split_id": "split:20389016c198672a543bfe0b55b7e251bdc97d3dcade95dd9cc1649ecf3c926d",
+    "protocol_id": "protocol:d7d70e1efa282296e0c60df347c2ee3a5cf20fdf4040c1c90a69260996c27ce9",
+    "method": "group",
+    "membership": {
+      "train": [
+        "row:069bf5fc-35bb-4694-8e95-a38236a37560",
+        "row:0d690a07-63da-4704-9a34-ce6ebb877cc3",
+        "row:0d9a33f4-c9c1-41ca-ac65-b7097b641625",
+        "row:17ea5fe8-3c50-469d-b49e-3ea1fafcf490",
+        "row:312a437a-13cf-46fa-948b-bfecff52d569",
+        "row:383cd4fb-4f8b-4d39-9592-1df41baec79b",
+        "row:45fc0ea4-6cb8-4066-b702-8acdf59a45c0",
+        "row:498a88f0-85a1-448d-9bf1-d445fbc6cf08",
+        "row:630213d8-d604-448a-9290-042b5005a7fa",
+        "row:830ac916-f070-4fc7-abe7-f5d4d57fc0d8",
+        "row:87cdc234-3668-42c8-b5a2-e63e4dee2a9d",
+        "row:8a90d30c-8863-4fa8-8b56-2783fc6b8e8c",
+        "row:9766c579-f9b3-4a48-ab58-5f6f87e35848",
+        "row:9ca97c09-a502-4e0a-9106-091bb86c4df9",
+        "row:9dd44b3b-a676-48b1-9a9c-8fa136931eca",
+        "row:a8379214-b55a-4640-aaa5-64e344cc7e64",
+        "row:aff380ef-a402-4626-a9d4-06c1be5e29a9",
+        "row:b21e14ef-6c29-4587-8da2-337406c57a3f",
+        "row:b2da2c0c-d924-49b8-9bcc-a8c1ec928346",
+        "row:d8edf90f-5d92-47f8-8252-09dea4ccf157",
+        "row:d9874459-9c78-4588-8d92-d1cf6841caa7",
+        "row:dc678bda-c8cf-4d85-b13c-47c8ad8215bc",
+        "row:e45e3b36-0256-417a-b5fa-db7f60d9efb6",
+        "row:fc5fa695-b3c8-4d56-9963-3b4bab0bed1d"
+      ],
+      "validation": [
+        "row:0f445916-4271-43d5-bfdb-2a66bfdf0a9e",
+        "row:2ef37d6e-3ce6-416c-b414-f25acc57cf01",
+        "row:51b8a10b-5012-4293-9c0a-df3f2ce2bb30",
+        "row:75a4ed38-be29-4ff8-bbac-21aa5a62b3be",
+        "row:8c3a264b-f134-472d-bb17-b3a45e1fbbb0",
+        "row:9e0037ed-0a2a-48e7-a0f2-c3b11b787009",
+        "row:b61e3f5f-64a4-455d-b1e7-b23d9f90327b",
+        "row:d99e6efc-5ec1-454b-bfac-53362ad3259b"
+      ],
+      "development": [
+        "row:069bf5fc-35bb-4694-8e95-a38236a37560",
+        "row:0d690a07-63da-4704-9a34-ce6ebb877cc3",
+        "row:0d9a33f4-c9c1-41ca-ac65-b7097b641625",
+        "row:0f445916-4271-43d5-bfdb-2a66bfdf0a9e",
+        "row:17ea5fe8-3c50-469d-b49e-3ea1fafcf490",
+        "row:2ef37d6e-3ce6-416c-b414-f25acc57cf01",
+        "row:312a437a-13cf-46fa-948b-bfecff52d569",
+        "row:383cd4fb-4f8b-4d39-9592-1df41baec79b",
+        "row:45fc0ea4-6cb8-4066-b702-8acdf59a45c0",
+        "row:498a88f0-85a1-448d-9bf1-d445fbc6cf08",
+        "row:51b8a10b-5012-4293-9c0a-df3f2ce2bb30",
+        "row:630213d8-d604-448a-9290-042b5005a7fa",
+        "row:75a4ed38-be29-4ff8-bbac-21aa5a62b3be",
+        "row:830ac916-f070-4fc7-abe7-f5d4d57fc0d8",
+        "row:87cdc234-3668-42c8-b5a2-e63e4dee2a9d",
+        "row:8a90d30c-8863-4fa8-8b56-2783fc6b8e8c",
+        "row:8c3a264b-f134-472d-bb17-b3a45e1fbbb0",
+        "row:9766c579-f9b3-4a48-ab58-5f6f87e35848",
+        "row:9ca97c09-a502-4e0a-9106-091bb86c4df9",
+        "row:9dd44b3b-a676-48b1-9a9c-8fa136931eca",
+        "row:9e0037ed-0a2a-48e7-a0f2-c3b11b787009",
+        "row:a8379214-b55a-4640-aaa5-64e344cc7e64",
+        "row:aff380ef-a402-4626-a9d4-06c1be5e29a9",
+        "row:b21e14ef-6c29-4587-8da2-337406c57a3f",
+        "row:b2da2c0c-d924-49b8-9bcc-a8c1ec928346",
+        "row:b61e3f5f-64a4-455d-b1e7-b23d9f90327b",
+        "row:d8edf90f-5d92-47f8-8252-09dea4ccf157",
+        "row:d9874459-9c78-4588-8d92-d1cf6841caa7",
+        "row:d99e6efc-5ec1-454b-bfac-53362ad3259b",
+        "row:dc678bda-c8cf-4d85-b13c-47c8ad8215bc",
+        "row:e45e3b36-0256-417a-b5fa-db7f60d9efb6",
+        "row:fc5fa695-b3c8-4d56-9963-3b4bab0bed1d"
+      ],
+      "test": [
+        "row:2b6a59e5-0d27-4b2a-90f8-4dc2f42cb6cd",
+        "row:44e4eb84-b56c-4566-bb82-159ece6d28f8",
+        "row:72502d4a-1ab5-4f6d-9cb6-6e924a7e0e46",
+        "row:7ccba0be-4ee7-4883-9d6f-16f21917ccba",
+        "row:88d0eab6-3c32-4f6f-baa6-db8c368d01d6",
+        "row:982c85f9-2ae4-4207-b15d-25509c5b14bb",
+        "row:d1089c55-a2ba-47fa-8fbb-903cab37423d",
+        "row:fff3e84a-296c-4299-9bfe-4ef7f39c3580"
+      ],
+      "folds": [
+        {
+          "train": [
+            "row:069bf5fc-35bb-4694-8e95-a38236a37560",
+            "row:0d9a33f4-c9c1-41ca-ac65-b7097b641625",
+            "row:17ea5fe8-3c50-469d-b49e-3ea1fafcf490",
+            "row:312a437a-13cf-46fa-948b-bfecff52d569",
+            "row:45fc0ea4-6cb8-4066-b702-8acdf59a45c0",
+            "row:498a88f0-85a1-448d-9bf1-d445fbc6cf08",
+            "row:87cdc234-3668-42c8-b5a2-e63e4dee2a9d",
+            "row:8a90d30c-8863-4fa8-8b56-2783fc6b8e8c",
+            "row:9dd44b3b-a676-48b1-9a9c-8fa136931eca",
+            "row:a8379214-b55a-4640-aaa5-64e344cc7e64",
+            "row:b21e14ef-6c29-4587-8da2-337406c57a3f",
+            "row:b2da2c0c-d924-49b8-9bcc-a8c1ec928346",
+            "row:d8edf90f-5d92-47f8-8252-09dea4ccf157",
+            "row:d9874459-9c78-4588-8d92-d1cf6841caa7",
+            "row:dc678bda-c8cf-4d85-b13c-47c8ad8215bc",
+            "row:fc5fa695-b3c8-4d56-9963-3b4bab0bed1d"
+          ],
+          "validation": [
+            "row:0d690a07-63da-4704-9a34-ce6ebb877cc3",
+            "row:0f445916-4271-43d5-bfdb-2a66bfdf0a9e",
+            "row:2ef37d6e-3ce6-416c-b414-f25acc57cf01",
+            "row:383cd4fb-4f8b-4d39-9592-1df41baec79b",
+            "row:51b8a10b-5012-4293-9c0a-df3f2ce2bb30",
+            "row:630213d8-d604-448a-9290-042b5005a7fa",
+            "row:75a4ed38-be29-4ff8-bbac-21aa5a62b3be",
+            "row:830ac916-f070-4fc7-abe7-f5d4d57fc0d8",
+            "row:8c3a264b-f134-472d-bb17-b3a45e1fbbb0",
+            "row:9766c579-f9b3-4a48-ab58-5f6f87e35848",
+            "row:9ca97c09-a502-4e0a-9106-091bb86c4df9",
+            "row:9e0037ed-0a2a-48e7-a0f2-c3b11b787009",
+            "row:aff380ef-a402-4626-a9d4-06c1be5e29a9",
+            "row:b61e3f5f-64a4-455d-b1e7-b23d9f90327b",
+            "row:d99e6efc-5ec1-454b-bfac-53362ad3259b",
+            "row:e45e3b36-0256-417a-b5fa-db7f60d9efb6"
+          ],
+          "status": "valid"
+        },
+        {
+          "train": [
+            "row:0d690a07-63da-4704-9a34-ce6ebb877cc3",
+            "row:0f445916-4271-43d5-bfdb-2a66bfdf0a9e",
+            "row:2ef37d6e-3ce6-416c-b414-f25acc57cf01",
+            "row:383cd4fb-4f8b-4d39-9592-1df41baec79b",
+            "row:51b8a10b-5012-4293-9c0a-df3f2ce2bb30",
+            "row:630213d8-d604-448a-9290-042b5005a7fa",
+            "row:75a4ed38-be29-4ff8-bbac-21aa5a62b3be",
+            "row:830ac916-f070-4fc7-abe7-f5d4d57fc0d8",
+            "row:8c3a264b-f134-472d-bb17-b3a45e1fbbb0",
+            "row:9766c579-f9b3-4a48-ab58-5f6f87e35848",
+            "row:9ca97c09-a502-4e0a-9106-091bb86c4df9",
+            "row:9e0037ed-0a2a-48e7-a0f2-c3b11b787009",
+            "row:aff380ef-a402-4626-a9d4-06c1be5e29a9",
+            "row:b61e3f5f-64a4-455d-b1e7-b23d9f90327b",
+            "row:d99e6efc-5ec1-454b-bfac-53362ad3259b",
+            "row:e45e3b36-0256-417a-b5fa-db7f60d9efb6"
+          ],
+          "validation": [
+            "row:069bf5fc-35bb-4694-8e95-a38236a37560",
+            "row:0d9a33f4-c9c1-41ca-ac65-b7097b641625",
+            "row:17ea5fe8-3c50-469d-b49e-3ea1fafcf490",
+            "row:312a437a-13cf-46fa-948b-bfecff52d569",
+            "row:45fc0ea4-6cb8-4066-b702-8acdf59a45c0",
+            "row:498a88f0-85a1-448d-9bf1-d445fbc6cf08",
+            "row:87cdc234-3668-42c8-b5a2-e63e4dee2a9d",
+            "row:8a90d30c-8863-4fa8-8b56-2783fc6b8e8c",
+            "row:9dd44b3b-a676-48b1-9a9c-8fa136931eca",
+            "row:a8379214-b55a-4640-aaa5-64e344cc7e64",
+            "row:b21e14ef-6c29-4587-8da2-337406c57a3f",
+            "row:b2da2c0c-d924-49b8-9bcc-a8c1ec928346",
+            "row:d8edf90f-5d92-47f8-8252-09dea4ccf157",
+            "row:d9874459-9c78-4588-8d92-d1cf6841caa7",
+            "row:dc678bda-c8cf-4d85-b13c-47c8ad8215bc",
+            "row:fc5fa695-b3c8-4d56-9963-3b4bab0bed1d"
+          ],
+          "status": "valid"
+        }
+      ],
+      "purged": []
+    },
+    "invalid_folds": []
+  },
+  "epoch": 2,
+  "curves": [
+    {
+      "epoch": 1,
+      "training_loss": 0.6499432921409607,
+      "validation_loss": 0.6542647480964661,
+      "train_n": 24,
+      "validation_n": 8
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.6109166741371155,
+      "validation_loss": 0.6178421378135681,
+      "train_n": 24,
+      "validation_n": 8
+    }
+  ],
+  "elapsed_seconds": 9.535409449001236,
+  "created_at": "2026-10-14T20:09:52.217779+00:00",
+  "data_access_at": "2026-10-14T20:09:52.217779+00:00",
+  "prior_test_use_ids": [],
+  "images": [
+    {
+      "image_id": "bankA0",
+      "member": "image-0.png",
+      "sha256": "634b6636ceadadabe6908ef0d57607bcfda5dd98381bd12fb2bae271e343e2aa",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "b4801b211f76530309d0b3886ef8ff25e4efa17906b66e3675eb1eb4d75d72c2",
+      "signature": {
+        "dhash": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          55.22265625,
+          35.37890625,
+          32.02734375
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [],
+        "mask": "",
+        "status": "human",
+        "reviewer": "Sensitive Reviewer",
+        "reviewed_at": "2026-10-14T20:09:47.026178+00:00"
+      },
+      "group": "",
+      "subject": "bankA-subject-0",
+      "video_source": "bankA-video-0",
+      "sequence": "sequence0",
+      "frame_index": 0,
+      "time_seconds": 0.0,
+      "leakage_component": "image-group:0",
+      "row_id": "row:d9874459-9c78-4588-8d92-d1cf6841caa7",
+      "source_record_id": "sr:9d8560ac-435b-4331-a66f-c491c9b47096"
+    },
+    {
+      "image_id": "bankA1",
+      "member": "image-1.png",
+      "sha256": "b0f508c80bb410680ebb7d1709e66918d82453cf1e7883f65409919b437ca731",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "3b404815b9153a26fd014b359c5c88f488a730db133814cee493042872595506",
+      "signature": {
+        "dhash": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          32.21484375,
+          30.23828125,
+          63.03125
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b1",
+            "label": "object",
+            "xyxy": [
+              3,
+              5,
+              9,
+              11
+            ]
+          }
+        ],
+        "mask": "mask-1.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-0",
+      "video_source": "bankA-video-0",
+      "sequence": "sequence0",
+      "frame_index": 1,
+      "time_seconds": 0.1,
+      "leakage_component": "image-group:0",
+      "row_id": "row:a8379214-b55a-4640-aaa5-64e344cc7e64",
+      "source_record_id": "sr:718555e8-7d76-4ebc-a3a0-063ded3204c7"
+    },
+    {
+      "image_id": "bankA2",
+      "member": "image-2.png",
+      "sha256": "611b3c89250f6c256ace734df519cb03eb2bd27d3a70d444f4b32f07c40ec619",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "f9c2ca741d8fcf8d8e2bac62c4583faab514b2e0e023b5b5a0094fd6406989b3",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        "color": [
+          47.90625,
+          34.30859375,
+          34.11328125
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b2",
+            "label": "object",
+            "xyxy": [
+              3,
+              2,
+              7,
+              6
+            ]
+          }
+        ],
+        "mask": "mask-2.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-0",
+      "video_source": "bankA-video-0",
+      "sequence": "sequence0",
+      "frame_index": 2,
+      "time_seconds": 0.2,
+      "leakage_component": "image-group:0",
+      "row_id": "row:9dd44b3b-a676-48b1-9a9c-8fa136931eca",
+      "source_record_id": "sr:f2e5b0ef-d6c2-4d9d-aa78-7e705f5694be"
+    },
+    {
+      "image_id": "bankA3",
+      "member": "image-3.png",
+      "sha256": "2ff21aaa48af7ff6b93d53cfb57c344a4b642356adb8815b8f37a1aa3f2d0bca",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "d3cfe6192571a9ba6ea9e55e27842da98b4404970b9309b843dbd04ceb993674",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "color": [
+          29.16796875,
+          32.35546875,
+          74.4140625
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b3",
+            "label": "object",
+            "xyxy": [
+              5,
+              2,
+              12,
+              9
+            ]
+          }
+        ],
+        "mask": "mask-3.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-0",
+      "video_source": "bankA-video-0",
+      "sequence": "sequence0",
+      "frame_index": 3,
+      "time_seconds": 0.3,
+      "leakage_component": "image-group:0",
+      "row_id": "row:498a88f0-85a1-448d-9bf1-d445fbc6cf08",
+      "source_record_id": "sr:de893f23-95e6-47ae-9959-1b6e1c07fd1d"
+    },
+    {
+      "image_id": "bankA4",
+      "member": "image-4.png",
+      "sha256": "cbffec0fdac22f66327d477d3763e23a1230f7586f42403a6b5eaa17a1884a9a",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "1c5aa2e72912d176b5d59535ff8262548526230ff3c0f4d1be1dc8e39abb1b7a",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "color": [
+          45.546875,
+          33.78515625,
+          32.43359375
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b4",
+            "label": "object",
+            "xyxy": [
+              6,
+              5,
+              10,
+              9
+            ]
+          }
+        ],
+        "mask": "mask-4.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-1",
+      "video_source": "bankA-video-1",
+      "sequence": "sequence0",
+      "frame_index": 4,
+      "time_seconds": 0.4,
+      "leakage_component": "image-group:4",
+      "row_id": "row:982c85f9-2ae4-4207-b15d-25509c5b14bb",
+      "source_record_id": "sr:8a60fadf-597d-4e9d-acfd-8e241f9012f6"
+    },
+    {
+      "image_id": "bankA5",
+      "member": "image-5.png",
+      "sha256": "b9cd455ed334de4e6e881d94a9571be6504339602749ecf8b3b3547ac771d849",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "19cf22c02aba2bdc7deb69f9102a1629d3cf9afe30aa6fac94f4a0daf537a0a6",
+      "signature": {
+        "dhash": [
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "color": [
+          33.36328125,
+          33.02734375,
+          62.19140625
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b5",
+            "label": "object",
+            "xyxy": [
+              1,
+              1,
+              7,
+              7
+            ]
+          }
+        ],
+        "mask": "mask-5.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-1",
+      "video_source": "bankA-video-1",
+      "sequence": "sequence0",
+      "frame_index": 5,
+      "time_seconds": 0.5,
+      "leakage_component": "image-group:4",
+      "row_id": "row:7ccba0be-4ee7-4883-9d6f-16f21917ccba",
+      "source_record_id": "sr:495d0c96-bed5-420d-bf58-f6335339a75d"
+    },
+    {
+      "image_id": "bankA6",
+      "member": "image-6.png",
+      "sha256": "f5ff64c9ea00f8b4a9da9e364abc4022af54e717e41891079140d8531ac0a482",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "d73a78571cb281e3f550307a24b86e0ad5d4ec1ae0a15349edc29860877e2cf2",
+      "signature": {
+        "dhash": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "color": [
+          45.83984375,
+          35.44921875,
+          33.60546875
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b6",
+            "label": "object",
+            "xyxy": [
+              3,
+              3,
+              7,
+              7
+            ]
+          }
+        ],
+        "mask": "mask-6.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-1",
+      "video_source": "bankA-video-1",
+      "sequence": "sequence0",
+      "frame_index": 6,
+      "time_seconds": 0.6,
+      "leakage_component": "image-group:4",
+      "row_id": "row:44e4eb84-b56c-4566-bb82-159ece6d28f8",
+      "source_record_id": "sr:92f09016-ec2f-4291-8d33-ad94be4880be"
+    },
+    {
+      "image_id": "bankA7",
+      "member": "image-7.png",
+      "sha256": "61497f7b605ff05c7793bac2313e75a3d962feac30692025f30239d36f23a1f4",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "65ebfd0e2f99dce517e6de8b67f6d5ef3148fc06a48679a2acda3e2db38946cd",
+      "signature": {
+        "dhash": [
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "color": [
+          32.30078125,
+          32.55078125,
+          73.20703125
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b7",
+            "label": "object",
+            "xyxy": [
+              5,
+              6,
+              12,
+              13
+            ]
+          }
+        ],
+        "mask": "mask-7.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-1",
+      "video_source": "bankA-video-1",
+      "sequence": "sequence0",
+      "frame_index": 7,
+      "time_seconds": 0.7,
+      "leakage_component": "image-group:4",
+      "row_id": "row:d1089c55-a2ba-47fa-8fbb-903cab37423d",
+      "source_record_id": "sr:c60c9cf9-6bfb-4699-be97-bd77d7061838"
+    },
+    {
+      "image_id": "bankA8",
+      "member": "image-8.png",
+      "sha256": "585c30bfb5c2cfe99ad533b62405345a8d8c0fd9230553c6979df8b958860ad8",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "9e236a47e2ff94a3422eaf7ba381561b5d6100aa58f6343c91c5ff14f60acb52",
+      "signature": {
+        "dhash": [
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "color": [
+          62.71484375,
+          32.046875,
+          32.70703125
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b8",
+            "label": "object",
+            "xyxy": [
+              3,
+              3,
+              9,
+              9
+            ]
+          }
+        ],
+        "mask": "mask-8.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-2",
+      "video_source": "bankA-video-2",
+      "sequence": "sequence0",
+      "frame_index": 8,
+      "time_seconds": 0.8,
+      "leakage_component": "image-group:8",
+      "row_id": "row:830ac916-f070-4fc7-abe7-f5d4d57fc0d8",
+      "source_record_id": "sr:1da66034-a129-45e9-8a62-19d286e7559e"
+    },
+    {
+      "image_id": "bankA9",
+      "member": "image-9.png",
+      "sha256": "d9f242434983c49c90b0e0f3479c0cd612cc8e2a43f6572f40252359f037d20c",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "6ba1f4e894a485cd3d46d8dd61e684055a45327a9208d87935e59bfee3213fd2",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "color": [
+          32.91015625,
+          33.03125,
+          54.640625
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b9",
+            "label": "object",
+            "xyxy": [
+              1,
+              5,
+              6,
+              10
+            ]
+          }
+        ],
+        "mask": "mask-9.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-2",
+      "video_source": "bankA-video-2",
+      "sequence": "sequence0",
+      "frame_index": 9,
+      "time_seconds": 0.9,
+      "leakage_component": "image-group:8",
+      "row_id": "row:383cd4fb-4f8b-4d39-9592-1df41baec79b",
+      "source_record_id": "sr:5a668620-2221-4567-9b99-e97f12972b15"
+    },
+    {
+      "image_id": "bankA10",
+      "member": "image-10.png",
+      "sha256": "2ce817e69756725d052daba6c7856c9e46cd462b92e79b7847f6eea3b6916bcc",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "a71abae063e71d9cd75106dd99281f5f8f9e621da18b84f69676fd0c6166a71f",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        "color": [
+          70.5625,
+          32.76171875,
+          33.3984375
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b10",
+            "label": "object",
+            "xyxy": [
+              2,
+              6,
+              9,
+              13
+            ]
+          }
+        ],
+        "mask": "mask-10.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-2",
+      "video_source": "bankA-video-2",
+      "sequence": "sequence0",
+      "frame_index": 10,
+      "time_seconds": 1.0,
+      "leakage_component": "image-group:8",
+      "row_id": "row:e45e3b36-0256-417a-b5fa-db7f60d9efb6",
+      "source_record_id": "sr:3f2b0700-c4ce-4678-8d32-48ab2246c52a"
+    },
+    {
+      "image_id": "bankA11",
+      "member": "image-11.png",
+      "sha256": "4eb2ebbdb7451f5f40cd847601f6a509e23dbdc31387be2e8d719f3503abaa52",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "ed0ca9bf667ee30e94141645dc26d9a8a3589ef3083defd6a19d231f3f43bd8b",
+      "signature": {
+        "dhash": [
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        "color": [
+          34.0234375,
+          32.0625,
+          45.796875
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b11",
+            "label": "object",
+            "xyxy": [
+              2,
+              2,
+              6,
+              6
+            ]
+          }
+        ],
+        "mask": "mask-11.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-2",
+      "video_source": "bankA-video-2",
+      "sequence": "sequence0",
+      "frame_index": 11,
+      "time_seconds": 1.1,
+      "leakage_component": "image-group:8",
+      "row_id": "row:aff380ef-a402-4626-a9d4-06c1be5e29a9",
+      "source_record_id": "sr:db22af1e-d048-4256-9442-4241039ff4d6"
+    },
+    {
+      "image_id": "bankA12",
+      "member": "image-12.png",
+      "sha256": "c3c28d65106a72905d6b9db85db7633655b74ac33dcead72db972cc720e55bf4",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "7b186551df369f0627f6df17ff1a55f63cd342307584c92b102b28b31fe100e9",
+      "signature": {
+        "dhash": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "color": [
+          62.57421875,
+          32.07421875,
+          32.1328125
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b12",
+            "label": "object",
+            "xyxy": [
+              5,
+              3,
+              11,
+              9
+            ]
+          }
+        ],
+        "mask": "mask-12.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-3",
+      "video_source": "bankA-video-3",
+      "sequence": "sequence0",
+      "frame_index": 12,
+      "time_seconds": 1.2,
+      "leakage_component": "image-group:12",
+      "row_id": "row:0f445916-4271-43d5-bfdb-2a66bfdf0a9e",
+      "source_record_id": "sr:db8e49af-129b-4706-a7ed-10f25b7aee4b"
+    },
+    {
+      "image_id": "bankA13",
+      "member": "image-13.png",
+      "sha256": "787b10a827feff8dd9c86283d78120f08f423be9cee71a1bf4b1a10162cf8a92",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "5bef8007fba35fda0fab525025912797f632462eb6d31a3706afaa71b9ea6a1b",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        "color": [
+          33.05859375,
+          32.3125,
+          59.89453125
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b13",
+            "label": "object",
+            "xyxy": [
+              3,
+              2,
+              9,
+              8
+            ]
+          }
+        ],
+        "mask": "mask-13.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-3",
+      "video_source": "bankA-video-3",
+      "sequence": "sequence0",
+      "frame_index": 13,
+      "time_seconds": 1.3,
+      "leakage_component": "image-group:12",
+      "row_id": "row:8c3a264b-f134-472d-bb17-b3a45e1fbbb0",
+      "source_record_id": "sr:85f23486-5be1-4c11-8ec9-17ab29674dec"
+    },
+    {
+      "image_id": "bankA14",
+      "member": "image-14.png",
+      "sha256": "86c5ad8fc5f483e55c55c0d00a29f5b12adfc0000a0648edb7b97490726058ce",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "1c84f1b14c3dabd0661adc822662a78f9726f3de0c44295f7bb2f06ab43afa6f",
+      "signature": {
+        "dhash": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "color": [
+          53.75390625,
+          33.765625,
+          33.98828125
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b14",
+            "label": "object",
+            "xyxy": [
+              5,
+              6,
+              10,
+              11
+            ]
+          }
+        ],
+        "mask": "mask-14.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-3",
+      "video_source": "bankA-video-3",
+      "sequence": "sequence0",
+      "frame_index": 14,
+      "time_seconds": 1.4,
+      "leakage_component": "image-group:12",
+      "row_id": "row:9e0037ed-0a2a-48e7-a0f2-c3b11b787009",
+      "source_record_id": "sr:515ad13a-fca2-44af-8672-2bcc51e85ad1"
+    },
+    {
+      "image_id": "bankA15",
+      "member": "image-15.png",
+      "sha256": "58fbca19dcd05a7d6d90a92ad400247520d10a574390ddcd7749f6aecedaa29a",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "b50eab9232a406236ce32e8d30526a2ae2089f9b80cbff5cb0e35155d9e092fc",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "color": [
+          33.5859375,
+          32.04296875,
+          53.76953125
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b15",
+            "label": "object",
+            "xyxy": [
+              4,
+              4,
+              9,
+              9
+            ]
+          }
+        ],
+        "mask": "mask-15.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-3",
+      "video_source": "bankA-video-3",
+      "sequence": "sequence0",
+      "frame_index": 15,
+      "time_seconds": 1.5,
+      "leakage_component": "image-group:12",
+      "row_id": "row:b61e3f5f-64a4-455d-b1e7-b23d9f90327b",
+      "source_record_id": "sr:06bdd515-2590-4c7e-aa51-a542304ee165"
+    },
+    {
+      "image_id": "bankA16",
+      "member": "image-16.png",
+      "sha256": "b34e55ddbb5bd23099a5aca9a7fd39127bb795359c527d2623d478618e622607",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "ebac69c5066e4508215633a1ecd145fdb74f3c16edb5d660759dffdc4beff8b2",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "color": [
+          63.67578125,
+          30.79296875,
+          33.7890625
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b16",
+            "label": "object",
+            "xyxy": [
+              6,
+              4,
+              12,
+              10
+            ]
+          }
+        ],
+        "mask": "mask-16.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-4",
+      "video_source": "bankA-video-4",
+      "sequence": "sequence0",
+      "frame_index": 16,
+      "time_seconds": 1.6,
+      "leakage_component": "image-group:16",
+      "row_id": "row:45fc0ea4-6cb8-4066-b702-8acdf59a45c0",
+      "source_record_id": "sr:378e9679-de5a-4c39-a050-996abfe22751"
+    },
+    {
+      "image_id": "bankA17",
+      "member": "image-17.png",
+      "sha256": "120285ae8b34fb9b622b5ef59d60f7d9aaf333d2447e0d0ad39385f9764a7465",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "dadafc2507e50f2b0e3c32bbe0a676d77e599794900001bfc69dd930c223458c",
+      "signature": {
+        "dhash": [
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          31.04296875,
+          32.36328125,
+          73.55078125
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b17",
+            "label": "object",
+            "xyxy": [
+              1,
+              5,
+              8,
+              12
+            ]
+          }
+        ],
+        "mask": "mask-17.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-4",
+      "video_source": "bankA-video-4",
+      "sequence": "sequence0",
+      "frame_index": 17,
+      "time_seconds": 1.7,
+      "leakage_component": "image-group:16",
+      "row_id": "row:17ea5fe8-3c50-469d-b49e-3ea1fafcf490",
+      "source_record_id": "sr:dcf7f9f5-2182-403f-98b6-b9d5c991d016"
+    },
+    {
+      "image_id": "bankA18",
+      "member": "image-18.png",
+      "sha256": "7b37e519c400bf17065fcce73921f21fc6f56ea9bb0fd05204c7cb08204c11b3",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "5406a428c1669cfaa24f502046627aabf04afac6da66c74d7387441cc7f8bfff",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        "color": [
+          54.7578125,
+          32.53125,
+          31.62109375
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b18",
+            "label": "object",
+            "xyxy": [
+              6,
+              6,
+              11,
+              11
+            ]
+          }
+        ],
+        "mask": "mask-18.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-4",
+      "video_source": "bankA-video-4",
+      "sequence": "sequence0",
+      "frame_index": 18,
+      "time_seconds": 1.8,
+      "leakage_component": "image-group:16",
+      "row_id": "row:b2da2c0c-d924-49b8-9bcc-a8c1ec928346",
+      "source_record_id": "sr:7e3a18be-7208-424e-b33c-0e7759acbf8e"
+    },
+    {
+      "image_id": "bankA19",
+      "member": "image-19.png",
+      "sha256": "5ee232bff8377a049e38ea5c788466beae33feb9bbf5dfd28fd2958f91653cc0",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "40faae2207e6993a372f7143361705de44ffebf6152a3939268eca89215ff2f0",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "color": [
+          33.51171875,
+          34.82421875,
+          45.859375
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b19",
+            "label": "object",
+            "xyxy": [
+              3,
+              3,
+              7,
+              7
+            ]
+          }
+        ],
+        "mask": "mask-19.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-4",
+      "video_source": "bankA-video-4",
+      "sequence": "sequence0",
+      "frame_index": 19,
+      "time_seconds": 1.9,
+      "leakage_component": "image-group:16",
+      "row_id": "row:b21e14ef-6c29-4587-8da2-337406c57a3f",
+      "source_record_id": "sr:a8f2e1ce-4469-4eb2-b72a-c752d3c842e2"
+    },
+    {
+      "image_id": "bankA20",
+      "member": "image-20.png",
+      "sha256": "210adcbaee37cb02908cbfb6e7e80ede09bde99eff5078de684660d3876f6eab",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "3467b16055e817fb595cc3a4a14567a641637680fc78323d28440f454ae7cd43",
+      "signature": {
+        "dhash": [
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        "color": [
+          61.70703125,
+          32.4765625,
+          31.59765625
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b20",
+            "label": "object",
+            "xyxy": [
+              5,
+              6,
+              11,
+              12
+            ]
+          }
+        ],
+        "mask": "mask-20.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-5",
+      "video_source": "bankA-video-5",
+      "sequence": "sequence0",
+      "frame_index": 20,
+      "time_seconds": 2.0,
+      "leakage_component": "image-group:20",
+      "row_id": "row:2b6a59e5-0d27-4b2a-90f8-4dc2f42cb6cd",
+      "source_record_id": "sr:eed57292-f8c4-4ac6-b129-3c0a6c59e954"
+    },
+    {
+      "image_id": "bankA21",
+      "member": "image-21.png",
+      "sha256": "42e6a08547cbc1d62f8070011d68c698df66317cccabf511c8814b3f61a729d6",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "c359d7d68c28095eeb6eed0d75149864309d1d607f6b83e3b2de917f16e0f2ae",
+      "signature": {
+        "dhash": [
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "color": [
+          33.55078125,
+          33.67578125,
+          45.515625
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b21",
+            "label": "object",
+            "xyxy": [
+              4,
+              6,
+              8,
+              10
+            ]
+          }
+        ],
+        "mask": "mask-21.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-5",
+      "video_source": "bankA-video-5",
+      "sequence": "sequence0",
+      "frame_index": 21,
+      "time_seconds": 2.1,
+      "leakage_component": "image-group:20",
+      "row_id": "row:fff3e84a-296c-4299-9bfe-4ef7f39c3580",
+      "source_record_id": "sr:11e09951-1b1d-4b59-bca9-733ecd011b4c"
+    },
+    {
+      "image_id": "bankA22",
+      "member": "image-22.png",
+      "sha256": "f4589196d99609191b3dbd00643b77754f363f62fcc1ee84f2d8d656cfbfd9a8",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "79cd097f3acc2b400d601bd15b0c7ec4b99585f1ac81acc658dad9c835cc91fa",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "color": [
+          60.99609375,
+          33.6875,
+          33.0
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b22",
+            "label": "object",
+            "xyxy": [
+              1,
+              5,
+              7,
+              11
+            ]
+          }
+        ],
+        "mask": "mask-22.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-5",
+      "video_source": "bankA-video-5",
+      "sequence": "sequence0",
+      "frame_index": 22,
+      "time_seconds": 2.2,
+      "leakage_component": "image-group:20",
+      "row_id": "row:72502d4a-1ab5-4f6d-9cb6-6e924a7e0e46",
+      "source_record_id": "sr:12e84d92-57bb-45ca-889a-bbf198bcb2f9"
+    },
+    {
+      "image_id": "bankA23",
+      "member": "image-23.png",
+      "sha256": "b36c5ddf3d60c526f5cf1bce624318bc8cbb8096b80d138d948cd6cc0650e000",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "0010505ffe3a4363f1b0a68f11e9c362e34ed093e9b2c0cd8e92d6ce5a0e4c5e",
+      "signature": {
+        "dhash": [
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        "color": [
+          32.4921875,
+          31.90625,
+          72.734375
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b23",
+            "label": "object",
+            "xyxy": [
+              6,
+              2,
+              13,
+              9
+            ]
+          }
+        ],
+        "mask": "mask-23.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-5",
+      "video_source": "bankA-video-5",
+      "sequence": "sequence0",
+      "frame_index": 23,
+      "time_seconds": 2.3,
+      "leakage_component": "image-group:20",
+      "row_id": "row:88d0eab6-3c32-4f6f-baa6-db8c368d01d6",
+      "source_record_id": "sr:8b6b14a1-a56f-4646-b6f5-d82e7db37967"
+    },
+    {
+      "image_id": "bankA24",
+      "member": "image-24.png",
+      "sha256": "09c1acf646ec66ec805fb01178d2eb281a6f0166601281c5787ee23ecc51e5c4",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "e4c839de523d7e5615840c86d3d1022a0908565743d5ffff1af9ad30f295afcb",
+      "signature": {
+        "dhash": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        "color": [
+          45.94140625,
+          33.04296875,
+          34.47265625
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b24",
+            "label": "object",
+            "xyxy": [
+              6,
+              1,
+              10,
+              5
+            ]
+          }
+        ],
+        "mask": "mask-24.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-6",
+      "video_source": "bankA-video-6",
+      "sequence": "sequence0",
+      "frame_index": 24,
+      "time_seconds": 2.4,
+      "leakage_component": "image-group:24",
+      "row_id": "row:51b8a10b-5012-4293-9c0a-df3f2ce2bb30",
+      "source_record_id": "sr:828bee51-8885-4f87-832a-ded2234c6837"
+    },
+    {
+      "image_id": "bankA25",
+      "member": "image-25.png",
+      "sha256": "67147d4bf5a406707cc31101416dd47fa68afa0b9c6249922a17e5dd8ced206c",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "a075383904b39877960fdefb3c4dfefcd560ea2246011d47b24ad15e0790dbbb",
+      "signature": {
+        "dhash": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "color": [
+          33.1796875,
+          35.1875,
+          54.04296875
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b25",
+            "label": "object",
+            "xyxy": [
+              5,
+              5,
+              10,
+              10
+            ]
+          }
+        ],
+        "mask": "mask-25.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-6",
+      "video_source": "bankA-video-6",
+      "sequence": "sequence0",
+      "frame_index": 25,
+      "time_seconds": 2.5,
+      "leakage_component": "image-group:24",
+      "row_id": "row:2ef37d6e-3ce6-416c-b414-f25acc57cf01",
+      "source_record_id": "sr:26dfb4ef-f3fb-4713-89d1-9d1997740682"
+    },
+    {
+      "image_id": "bankA26",
+      "member": "image-26.png",
+      "sha256": "eacf3d1156ee205e60bc9e8f43c96a2a3b789411fa0599873aeb76be87428098",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "74c31f0fb90936d429ba2f840a9af85628765a9bd6fa77b0ea74114677f3c613",
+      "signature": {
+        "dhash": [
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "color": [
+          60.03125,
+          33.82421875,
+          30.44921875
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b26",
+            "label": "object",
+            "xyxy": [
+              1,
+              4,
+              7,
+              10
+            ]
+          }
+        ],
+        "mask": "mask-26.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-6",
+      "video_source": "bankA-video-6",
+      "sequence": "sequence0",
+      "frame_index": 26,
+      "time_seconds": 2.6,
+      "leakage_component": "image-group:24",
+      "row_id": "row:75a4ed38-be29-4ff8-bbac-21aa5a62b3be",
+      "source_record_id": "sr:1d19d447-758c-4614-b5a8-17f4b97c25f5"
+    },
+    {
+      "image_id": "bankA27",
+      "member": "image-27.png",
+      "sha256": "9446abfdb017084b753a9b5bde881665781b1c7843acc99f4906fa77ce7ce45f",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "a523bfa216e4b239e0c336ae9e5923f619e1a912d8d753e5e51e61ffbdf6be1f",
+      "signature": {
+        "dhash": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "color": [
+          29.75390625,
+          31.61328125,
+          62.8046875
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b27",
+            "label": "object",
+            "xyxy": [
+              5,
+              1,
+              11,
+              7
+            ]
+          }
+        ],
+        "mask": "mask-27.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-6",
+      "video_source": "bankA-video-6",
+      "sequence": "sequence0",
+      "frame_index": 27,
+      "time_seconds": 2.7,
+      "leakage_component": "image-group:24",
+      "row_id": "row:d99e6efc-5ec1-454b-bfac-53362ad3259b",
+      "source_record_id": "sr:ee664940-a880-4add-8225-1758de1472fd"
+    },
+    {
+      "image_id": "bankA28",
+      "member": "image-28.png",
+      "sha256": "88dcb24ee1ff05b6b5ec1ecdc5e2fb35f2f8d28a6bdae6e271d06ad2738508f0",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "4a915ee1ed39b407b0d7e52b6cdf7adfaefff1744be39bbdc9c3993b8427030b",
+      "signature": {
+        "dhash": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "color": [
+          53.82421875,
+          32.3046875,
+          36.80859375
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b28",
+            "label": "object",
+            "xyxy": [
+              4,
+              5,
+              9,
+              10
+            ]
+          }
+        ],
+        "mask": "mask-28.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-7",
+      "video_source": "bankA-video-7",
+      "sequence": "sequence0",
+      "frame_index": 28,
+      "time_seconds": 2.8,
+      "leakage_component": "image-group:28",
+      "row_id": "row:fc5fa695-b3c8-4d56-9963-3b4bab0bed1d",
+      "source_record_id": "sr:84621c9a-7bcd-4391-9973-7abee250955c"
+    },
+    {
+      "image_id": "bankA29",
+      "member": "image-29.png",
+      "sha256": "c59eab031855f987299f28e719a52b7dd277d61f31b4842a89bec256a15e9b57",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "43b7633c95f20bf145c8247ff63f422598480d8f1642aadd02affa7fd835fee4",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "color": [
+          32.984375,
+          30.62109375,
+          61.92578125
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b29",
+            "label": "object",
+            "xyxy": [
+              6,
+              5,
+              12,
+              11
+            ]
+          }
+        ],
+        "mask": "mask-29.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-7",
+      "video_source": "bankA-video-7",
+      "sequence": "sequence0",
+      "frame_index": 29,
+      "time_seconds": 2.9,
+      "leakage_component": "image-group:28",
+      "row_id": "row:d8edf90f-5d92-47f8-8252-09dea4ccf157",
+      "source_record_id": "sr:640f8db6-ca25-4591-aab9-1a9e2a9762ff"
+    },
+    {
+      "image_id": "bankA30",
+      "member": "image-30.png",
+      "sha256": "cabc7b1e47a2874890a5e2e4fd4d4b69ad8d258b5bc57d09396cab3fbaaf49b9",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "07284137393263fcdfaf9dc4bf8fde35f7a4cda6fc9e6f73372bb91d1564f030",
+      "signature": {
+        "dhash": [
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        "color": [
+          72.37890625,
+          31.71484375,
+          32.1171875
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b30",
+            "label": "object",
+            "xyxy": [
+              3,
+              3,
+              10,
+              10
+            ]
+          }
+        ],
+        "mask": "mask-30.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-7",
+      "video_source": "bankA-video-7",
+      "sequence": "sequence0",
+      "frame_index": 30,
+      "time_seconds": 3.0,
+      "leakage_component": "image-group:28",
+      "row_id": "row:312a437a-13cf-46fa-948b-bfecff52d569",
+      "source_record_id": "sr:c02fabed-3360-4023-9a69-6e461a2440ac"
+    },
+    {
+      "image_id": "bankA31",
+      "member": "image-31.png",
+      "sha256": "6b7bf9156d62e12b528d18f753e689e990660ea104f9dcb3e3781ca0d43d905e",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "763aa14cf4ad8578a3eaa192c1aaaed62bf0bc485507c0fba4ca45ba5c7ffd7a",
+      "signature": {
+        "dhash": [
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "color": [
+          31.9453125,
+          33.51171875,
+          62.234375
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b31",
+            "label": "object",
+            "xyxy": [
+              4,
+              5,
+              10,
+              11
+            ]
+          }
+        ],
+        "mask": "mask-31.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-7",
+      "video_source": "bankA-video-7",
+      "sequence": "sequence0",
+      "frame_index": 31,
+      "time_seconds": 3.1,
+      "leakage_component": "image-group:28",
+      "row_id": "row:dc678bda-c8cf-4d85-b13c-47c8ad8215bc",
+      "source_record_id": "sr:de7b4d45-902f-4b2c-81de-d0f80b1cf234"
+    },
+    {
+      "image_id": "bankA32",
+      "member": "image-32.png",
+      "sha256": "83ec90b03c9de9f296325168cc85b503f2f2d32ca32031d55db1148ceae0706e",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "94a6a481fa62cad2443b1089fd99ed80e5d95afaf7788bac1d935e0d9ce520f3",
+      "signature": {
+        "dhash": [
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0
+        ],
+        "color": [
+          52.50390625,
+          33.2734375,
+          32.40234375
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b32",
+            "label": "object",
+            "xyxy": [
+              3,
+              1,
+              8,
+              6
+            ]
+          }
+        ],
+        "mask": "mask-32.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-8",
+      "video_source": "bankA-video-8",
+      "sequence": "sequence0",
+      "frame_index": 32,
+      "time_seconds": 3.2,
+      "leakage_component": "image-group:32",
+      "row_id": "row:9ca97c09-a502-4e0a-9106-091bb86c4df9",
+      "source_record_id": "sr:46fde9c1-9684-4013-85c6-360816549973"
+    },
+    {
+      "image_id": "bankA33",
+      "member": "image-33.png",
+      "sha256": "bd305f186b2dadfe8c92eba1b34afe36991fdb02b74bf936c61117be4db67272",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "15924c6e9e9d4efdd17bf5e46baabf3677b24c84530c18e730bee0de31755d6c",
+      "signature": {
+        "dhash": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "color": [
+          34.03515625,
+          33.28515625,
+          53.94921875
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b33",
+            "label": "object",
+            "xyxy": [
+              6,
+              1,
+              11,
+              6
+            ]
+          }
+        ],
+        "mask": "mask-33.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-8",
+      "video_source": "bankA-video-8",
+      "sequence": "sequence0",
+      "frame_index": 33,
+      "time_seconds": 3.3,
+      "leakage_component": "image-group:32",
+      "row_id": "row:0d690a07-63da-4704-9a34-ce6ebb877cc3",
+      "source_record_id": "sr:b9fd0f3d-4636-484c-bc47-748a4cac24de"
+    },
+    {
+      "image_id": "bankA34",
+      "member": "image-34.png",
+      "sha256": "23ef818a112dfa4e92f9c5813d2a4b45fa770893df556b213e68298a6ba98090",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "f1a7d2a9d4a1c84fca168e8f2e950e4ce62a2819addb0981e3e1c91ea177e785",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        "color": [
+          46.1796875,
+          35.25390625,
+          33.63671875
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b34",
+            "label": "object",
+            "xyxy": [
+              4,
+              3,
+              8,
+              7
+            ]
+          }
+        ],
+        "mask": "mask-34.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-8",
+      "video_source": "bankA-video-8",
+      "sequence": "sequence0",
+      "frame_index": 34,
+      "time_seconds": 3.4,
+      "leakage_component": "image-group:32",
+      "row_id": "row:630213d8-d604-448a-9290-042b5005a7fa",
+      "source_record_id": "sr:3609174e-13c7-46f3-a87c-dd5b6afb6124"
+    },
+    {
+      "image_id": "bankA35",
+      "member": "image-35.png",
+      "sha256": "ea3868c5c745f53154ea84ed7f15b77257e6e3e2fb060d7c5fd88c748a4cadd2",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "a1a1b663b90c00c8297ea13a209898859d1b6392f641d77a1ee4de1428245f83",
+      "signature": {
+        "dhash": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        "color": [
+          33.01171875,
+          31.55859375,
+          53.48828125
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b35",
+            "label": "object",
+            "xyxy": [
+              2,
+              5,
+              7,
+              10
+            ]
+          }
+        ],
+        "mask": "mask-35.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-8",
+      "video_source": "bankA-video-8",
+      "sequence": "sequence0",
+      "frame_index": 35,
+      "time_seconds": 3.5,
+      "leakage_component": "image-group:32",
+      "row_id": "row:9766c579-f9b3-4a48-ab58-5f6f87e35848",
+      "source_record_id": "sr:d24510e6-7a2f-45ef-a127-01ec059263cd"
+    },
+    {
+      "image_id": "bankA36",
+      "member": "image-36.png",
+      "sha256": "5488e120507e078425f2c6c60083df0e891e5bef36569f56b01d473ff7d6dcef",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "22dae28d78518b5e868c486cf479ebfb830e80e1b8fe7cf5d8456289f07a4bff",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "color": [
+          62.1484375,
+          31.50390625,
+          34.32421875
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b36",
+            "label": "object",
+            "xyxy": [
+              4,
+              2,
+              10,
+              8
+            ]
+          }
+        ],
+        "mask": "mask-36.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-9",
+      "video_source": "bankA-video-9",
+      "sequence": "sequence0",
+      "frame_index": 36,
+      "time_seconds": 3.6,
+      "leakage_component": "image-group:36",
+      "row_id": "row:8a90d30c-8863-4fa8-8b56-2783fc6b8e8c",
+      "source_record_id": "sr:6720b416-77f1-4a8c-ab3b-304e305658c3"
+    },
+    {
+      "image_id": "bankA37",
+      "member": "image-37.png",
+      "sha256": "be5f9b5fce023c80f54673294bbb0cff1231554d90c41d772aaaa780c604348e",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "579925c987ac042a977d079c571b2e9c2f1f13f6bfcd07997057ca991260ebd4",
+      "signature": {
+        "dhash": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        "color": [
+          34.25,
+          35.43359375,
+          55.0390625
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b37",
+            "label": "object",
+            "xyxy": [
+              5,
+              6,
+              10,
+              11
+            ]
+          }
+        ],
+        "mask": "mask-37.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-9",
+      "video_source": "bankA-video-9",
+      "sequence": "sequence0",
+      "frame_index": 37,
+      "time_seconds": 3.7,
+      "leakage_component": "image-group:36",
+      "row_id": "row:87cdc234-3668-42c8-b5a2-e63e4dee2a9d",
+      "source_record_id": "sr:a92bbf59-2a5c-4aa5-9148-5f19a9f72814"
+    },
+    {
+      "image_id": "bankA38",
+      "member": "image-38.png",
+      "sha256": "23841d7c71c35c4427ce3c29d44aa12f4c5e1152d7165b1c4a73497db39287cc",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "697c626278d87e6bb80505da53c7baf7aec6d87bdfa604dd3f74081954c2211a",
+      "signature": {
+        "dhash": [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        "color": [
+          43.6953125,
+          34.34375,
+          34.18359375
+        ]
+      },
+      "annotation": {
+        "label": "red",
+        "boxes": [
+          {
+            "id": "b38",
+            "label": "object",
+            "xyxy": [
+              3,
+              1,
+              7,
+              5
+            ]
+          }
+        ],
+        "mask": "mask-38.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-9",
+      "video_source": "bankA-video-9",
+      "sequence": "sequence0",
+      "frame_index": 38,
+      "time_seconds": 3.8,
+      "leakage_component": "image-group:36",
+      "row_id": "row:0d9a33f4-c9c1-41ca-ac65-b7097b641625",
+      "source_record_id": "sr:a7e94b7c-8805-4b34-b4c2-bb7b22a9fa47"
+    },
+    {
+      "image_id": "bankA39",
+      "member": "image-39.png",
+      "sha256": "74f6e570ba331a58649af3d468b06144c23666f54b7fc8401ec16d2d143c62e1",
+      "original_size": [
+        16,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "channels": 3,
+      "mode": "RGB",
+      "orientation": 1,
+      "decoded_sha256": "f9774d10e64b9b053bb08f8ec6249f32ba634ea5300ffba5118d283507bead5e",
+      "signature": {
+        "dhash": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "color": [
+          32.4296875,
+          30.6875,
+          59.87109375
+        ]
+      },
+      "annotation": {
+        "label": "blue",
+        "boxes": [
+          {
+            "id": "b39",
+            "label": "object",
+            "xyxy": [
+              4,
+              1,
+              10,
+              7
+            ]
+          }
+        ],
+        "mask": "mask-39.png",
+        "status": "human",
+        "reviewer": "Fixture human",
+        "reviewed_at": "2026-10-14"
+      },
+      "group": "",
+      "subject": "bankA-subject-9",
+      "video_source": "bankA-video-9",
+      "sequence": "sequence0",
+      "frame_index": 39,
+      "time_seconds": 3.9,
+      "leakage_component": "image-group:36",
+      "row_id": "row:069bf5fc-35bb-4694-8e95-a38236a37560",
+      "source_record_id": "sr:eec78ab8-9d0a-48f2-b398-50fe57164e03"
+    }
+  ],
+  "annotations": {
+    "row:d9874459-9c78-4588-8d92-d1cf6841caa7": {
+      "label": "red",
+      "boxes": [],
+      "mask": "",
+      "status": "human",
+      "reviewer": "Sensitive Reviewer",
+      "reviewed_at": "2026-10-14T20:09:47.026178+00:00"
+    },
+    "row:a8379214-b55a-4640-aaa5-64e344cc7e64": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b1",
+          "label": "object",
+          "xyxy": [
+            3,
+            5,
+            9,
+            11
+          ]
+        }
+      ],
+      "mask": "mask-1.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:9dd44b3b-a676-48b1-9a9c-8fa136931eca": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b2",
+          "label": "object",
+          "xyxy": [
+            3,
+            2,
+            7,
+            6
+          ]
+        }
+      ],
+      "mask": "mask-2.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:498a88f0-85a1-448d-9bf1-d445fbc6cf08": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b3",
+          "label": "object",
+          "xyxy": [
+            5,
+            2,
+            12,
+            9
+          ]
+        }
+      ],
+      "mask": "mask-3.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:982c85f9-2ae4-4207-b15d-25509c5b14bb": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b4",
+          "label": "object",
+          "xyxy": [
+            6,
+            5,
+            10,
+            9
+          ]
+        }
+      ],
+      "mask": "mask-4.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:7ccba0be-4ee7-4883-9d6f-16f21917ccba": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b5",
+          "label": "object",
+          "xyxy": [
+            1,
+            1,
+            7,
+            7
+          ]
+        }
+      ],
+      "mask": "mask-5.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:44e4eb84-b56c-4566-bb82-159ece6d28f8": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b6",
+          "label": "object",
+          "xyxy": [
+            3,
+            3,
+            7,
+            7
+          ]
+        }
+      ],
+      "mask": "mask-6.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:d1089c55-a2ba-47fa-8fbb-903cab37423d": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b7",
+          "label": "object",
+          "xyxy": [
+            5,
+            6,
+            12,
+            13
+          ]
+        }
+      ],
+      "mask": "mask-7.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:830ac916-f070-4fc7-abe7-f5d4d57fc0d8": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b8",
+          "label": "object",
+          "xyxy": [
+            3,
+            3,
+            9,
+            9
+          ]
+        }
+      ],
+      "mask": "mask-8.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:383cd4fb-4f8b-4d39-9592-1df41baec79b": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b9",
+          "label": "object",
+          "xyxy": [
+            1,
+            5,
+            6,
+            10
+          ]
+        }
+      ],
+      "mask": "mask-9.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:e45e3b36-0256-417a-b5fa-db7f60d9efb6": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b10",
+          "label": "object",
+          "xyxy": [
+            2,
+            6,
+            9,
+            13
+          ]
+        }
+      ],
+      "mask": "mask-10.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:aff380ef-a402-4626-a9d4-06c1be5e29a9": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b11",
+          "label": "object",
+          "xyxy": [
+            2,
+            2,
+            6,
+            6
+          ]
+        }
+      ],
+      "mask": "mask-11.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:0f445916-4271-43d5-bfdb-2a66bfdf0a9e": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b12",
+          "label": "object",
+          "xyxy": [
+            5,
+            3,
+            11,
+            9
+          ]
+        }
+      ],
+      "mask": "mask-12.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:8c3a264b-f134-472d-bb17-b3a45e1fbbb0": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b13",
+          "label": "object",
+          "xyxy": [
+            3,
+            2,
+            9,
+            8
+          ]
+        }
+      ],
+      "mask": "mask-13.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:9e0037ed-0a2a-48e7-a0f2-c3b11b787009": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b14",
+          "label": "object",
+          "xyxy": [
+            5,
+            6,
+            10,
+            11
+          ]
+        }
+      ],
+      "mask": "mask-14.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:b61e3f5f-64a4-455d-b1e7-b23d9f90327b": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b15",
+          "label": "object",
+          "xyxy": [
+            4,
+            4,
+            9,
+            9
+          ]
+        }
+      ],
+      "mask": "mask-15.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:45fc0ea4-6cb8-4066-b702-8acdf59a45c0": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b16",
+          "label": "object",
+          "xyxy": [
+            6,
+            4,
+            12,
+            10
+          ]
+        }
+      ],
+      "mask": "mask-16.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:17ea5fe8-3c50-469d-b49e-3ea1fafcf490": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b17",
+          "label": "object",
+          "xyxy": [
+            1,
+            5,
+            8,
+            12
+          ]
+        }
+      ],
+      "mask": "mask-17.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:b2da2c0c-d924-49b8-9bcc-a8c1ec928346": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b18",
+          "label": "object",
+          "xyxy": [
+            6,
+            6,
+            11,
+            11
+          ]
+        }
+      ],
+      "mask": "mask-18.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:b21e14ef-6c29-4587-8da2-337406c57a3f": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b19",
+          "label": "object",
+          "xyxy": [
+            3,
+            3,
+            7,
+            7
+          ]
+        }
+      ],
+      "mask": "mask-19.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:2b6a59e5-0d27-4b2a-90f8-4dc2f42cb6cd": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b20",
+          "label": "object",
+          "xyxy": [
+            5,
+            6,
+            11,
+            12
+          ]
+        }
+      ],
+      "mask": "mask-20.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:fff3e84a-296c-4299-9bfe-4ef7f39c3580": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b21",
+          "label": "object",
+          "xyxy": [
+            4,
+            6,
+            8,
+            10
+          ]
+        }
+      ],
+      "mask": "mask-21.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:72502d4a-1ab5-4f6d-9cb6-6e924a7e0e46": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b22",
+          "label": "object",
+          "xyxy": [
+            1,
+            5,
+            7,
+            11
+          ]
+        }
+      ],
+      "mask": "mask-22.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:88d0eab6-3c32-4f6f-baa6-db8c368d01d6": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b23",
+          "label": "object",
+          "xyxy": [
+            6,
+            2,
+            13,
+            9
+          ]
+        }
+      ],
+      "mask": "mask-23.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:51b8a10b-5012-4293-9c0a-df3f2ce2bb30": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b24",
+          "label": "object",
+          "xyxy": [
+            6,
+            1,
+            10,
+            5
+          ]
+        }
+      ],
+      "mask": "mask-24.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:2ef37d6e-3ce6-416c-b414-f25acc57cf01": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b25",
+          "label": "object",
+          "xyxy": [
+            5,
+            5,
+            10,
+            10
+          ]
+        }
+      ],
+      "mask": "mask-25.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:75a4ed38-be29-4ff8-bbac-21aa5a62b3be": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b26",
+          "label": "object",
+          "xyxy": [
+            1,
+            4,
+            7,
+            10
+          ]
+        }
+      ],
+      "mask": "mask-26.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:d99e6efc-5ec1-454b-bfac-53362ad3259b": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b27",
+          "label": "object",
+          "xyxy": [
+            5,
+            1,
+            11,
+            7
+          ]
+        }
+      ],
+      "mask": "mask-27.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:fc5fa695-b3c8-4d56-9963-3b4bab0bed1d": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b28",
+          "label": "object",
+          "xyxy": [
+            4,
+            5,
+            9,
+            10
+          ]
+        }
+      ],
+      "mask": "mask-28.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:d8edf90f-5d92-47f8-8252-09dea4ccf157": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b29",
+          "label": "object",
+          "xyxy": [
+            6,
+            5,
+            12,
+            11
+          ]
+        }
+      ],
+      "mask": "mask-29.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:312a437a-13cf-46fa-948b-bfecff52d569": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b30",
+          "label": "object",
+          "xyxy": [
+            3,
+            3,
+            10,
+            10
+          ]
+        }
+      ],
+      "mask": "mask-30.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:dc678bda-c8cf-4d85-b13c-47c8ad8215bc": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b31",
+          "label": "object",
+          "xyxy": [
+            4,
+            5,
+            10,
+            11
+          ]
+        }
+      ],
+      "mask": "mask-31.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:9ca97c09-a502-4e0a-9106-091bb86c4df9": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b32",
+          "label": "object",
+          "xyxy": [
+            3,
+            1,
+            8,
+            6
+          ]
+        }
+      ],
+      "mask": "mask-32.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:0d690a07-63da-4704-9a34-ce6ebb877cc3": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b33",
+          "label": "object",
+          "xyxy": [
+            6,
+            1,
+            11,
+            6
+          ]
+        }
+      ],
+      "mask": "mask-33.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:630213d8-d604-448a-9290-042b5005a7fa": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b34",
+          "label": "object",
+          "xyxy": [
+            4,
+            3,
+            8,
+            7
+          ]
+        }
+      ],
+      "mask": "mask-34.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:9766c579-f9b3-4a48-ab58-5f6f87e35848": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b35",
+          "label": "object",
+          "xyxy": [
+            2,
+            5,
+            7,
+            10
+          ]
+        }
+      ],
+      "mask": "mask-35.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:8a90d30c-8863-4fa8-8b56-2783fc6b8e8c": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b36",
+          "label": "object",
+          "xyxy": [
+            4,
+            2,
+            10,
+            8
+          ]
+        }
+      ],
+      "mask": "mask-36.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:87cdc234-3668-42c8-b5a2-e63e4dee2a9d": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b37",
+          "label": "object",
+          "xyxy": [
+            5,
+            6,
+            10,
+            11
+          ]
+        }
+      ],
+      "mask": "mask-37.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:0d9a33f4-c9c1-41ca-ac65-b7097b641625": {
+      "label": "red",
+      "boxes": [
+        {
+          "id": "b38",
+          "label": "object",
+          "xyxy": [
+            3,
+            1,
+            7,
+            5
+          ]
+        }
+      ],
+      "mask": "mask-38.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    },
+    "row:069bf5fc-35bb-4694-8e95-a38236a37560": {
+      "label": "blue",
+      "boxes": [
+        {
+          "id": "b39",
+          "label": "object",
+          "xyxy": [
+            4,
+            1,
+            10,
+            7
+          ]
+        }
+      ],
+      "mask": "mask-39.png",
+      "status": "human",
+      "reviewer": "Fixture human",
+      "reviewed_at": "2026-10-14"
+    }
+  },
+  "classes": [
+    "red",
+    "blue"
+  ],
+  "mask_labels": [
+    "background",
+    "object"
+  ],
+  "metrics": {},
+  "predictions": [],
+  "tensor_schema": {
+    "fit_row_ids": [
+      "row:d9874459-9c78-4588-8d92-d1cf6841caa7",
+      "row:a8379214-b55a-4640-aaa5-64e344cc7e64",
+      "row:9dd44b3b-a676-48b1-9a9c-8fa136931eca",
+      "row:498a88f0-85a1-448d-9bf1-d445fbc6cf08",
+      "row:830ac916-f070-4fc7-abe7-f5d4d57fc0d8",
+      "row:383cd4fb-4f8b-4d39-9592-1df41baec79b",
+      "row:e45e3b36-0256-417a-b5fa-db7f60d9efb6",
+      "row:aff380ef-a402-4626-a9d4-06c1be5e29a9",
+      "row:45fc0ea4-6cb8-4066-b702-8acdf59a45c0",
+      "row:17ea5fe8-3c50-469d-b49e-3ea1fafcf490",
+      "row:b2da2c0c-d924-49b8-9bcc-a8c1ec928346",
+      "row:b21e14ef-6c29-4587-8da2-337406c57a3f",
+      "row:fc5fa695-b3c8-4d56-9963-3b4bab0bed1d",
+      "row:d8edf90f-5d92-47f8-8252-09dea4ccf157",
+      "row:312a437a-13cf-46fa-948b-bfecff52d569",
+      "row:dc678bda-c8cf-4d85-b13c-47c8ad8215bc",
+      "row:9ca97c09-a502-4e0a-9106-091bb86c4df9",
+      "row:0d690a07-63da-4704-9a34-ce6ebb877cc3",
+      "row:630213d8-d604-448a-9290-042b5005a7fa",
+      "row:9766c579-f9b3-4a48-ab58-5f6f87e35848",
+      "row:8a90d30c-8863-4fa8-8b56-2783fc6b8e8c",
+      "row:87cdc234-3668-42c8-b5a2-e63e4dee2a9d",
+      "row:0d9a33f4-c9c1-41ca-ac65-b7097b641625",
+      "row:069bf5fc-35bb-4694-8e95-a38236a37560"
+    ],
+    "validation_row_ids": [
+      "row:0f445916-4271-43d5-bfdb-2a66bfdf0a9e",
+      "row:8c3a264b-f134-472d-bb17-b3a45e1fbbb0",
+      "row:9e0037ed-0a2a-48e7-a0f2-c3b11b787009",
+      "row:b61e3f5f-64a4-455d-b1e7-b23d9f90327b",
+      "row:51b8a10b-5012-4293-9c0a-df3f2ce2bb30",
+      "row:2ef37d6e-3ce6-416c-b414-f25acc57cf01",
+      "row:75a4ed38-be29-4ff8-bbac-21aa5a62b3be",
+      "row:d99e6efc-5ec1-454b-bfac-53362ad3259b"
+    ],
+    "shape": [
+      3,
+      8,
+      8
+    ],
+    "layout": "real RGB NCHW"
+  },
+  "mode": "vision_development_holdout",
+  "warnings": [
+    "Validation holdout only; final test unused; no independent general quality claim.",
+    "Near-duplicate heuristic is not exhaustive.",
+    "Pre-extracted video frames only; saliency not provided as causal explanation.",
+    "Model bbox/mask output is resized/cropped pixel coordinates; human annotation uses original EXIF-oriented pixels, never silently promoted."
+  ],
+  "transform": {
+    "resize": [
+      8,
+      8
+    ],
+    "crop": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "normalization": "RGB/255 then fixed mean0.5/std0.5 for CNN; pixel model RGB/255",
+    "orientation": "EXIF-oriented source; bbox/mask already oriented",
+    "augmentation": "none",
+    "excluded_boxes": [],
+    "preview": [
+      {
+        "row_id": "row:d9874459-9c78-4588-8d92-d1cf6841caa7",
+        "original_size": [
+          16,
+          16
+        ],
+        "transformed": [
+          [
+            [
+              41,
+              35,
+              24
+            ],
+            [
+              47,
+              28,
+              33
+            ],
+            [
+              43,
+              40,
+              23
+            ],
+            [
+              28,
+              31,
+              27
+            ],
+            [
+              25,
+              29,
+              31
+            ],
+            [
+              35,
+              51,
+              41
+            ],
+            [
+              32,
+              44,
+              43
+            ],
+            [
+              43,
+              42,
+              35
+            ]
+          ],
+          [
+            [
+              44,
+              33,
+              42
+            ],
+            [
+              41,
+              19,
+              37
+            ],
+            [
+              55,
+              27,
+              31
+            ],
+            [
+              61,
+              32,
+              28
+            ],
+            [
+              40,
+              43,
+              33
+            ],
+            [
+              36,
+              51,
+              43
+            ],
+            [
+              33,
+              41,
+              36
+            ],
+            [
+              40,
+              45,
+              42
+            ]
+          ],
+          [
+            [
+              33,
+              43,
+              40
+            ],
+            [
+              59,
+              34,
+              28
+            ],
+            [
+              185,
+              21,
+              23
+            ],
+            [
+              208,
+              22,
+              22
+            ],
+            [
+              118,
+              30,
+              24
+            ],
+            [
+              30,
+              36,
+              35
+            ],
+            [
+              23,
+              24,
+              33
+            ],
+            [
+              43,
+              32,
+              42
+            ]
+          ],
+          [
+            [
+              36,
+              46,
+              19
+            ],
+            [
+              59,
+              23,
+              30
+            ],
+            [
+              205,
+              20,
+              22
+            ],
+            [
+              230,
+              20,
+              20
+            ],
+            [
+              131,
+              20,
+              26
+            ],
+            [
+              33,
+              25,
+              33
+            ],
+            [
+              33,
+              24,
+              24
+            ],
+            [
+              32,
+              38,
+              33
+            ]
+          ],
+          [
+            [
+              37,
+              48,
+              24
+            ],
+            [
+              57,
+              40,
+              28
+            ],
+            [
+              126,
+              29,
+              33
+            ],
+            [
+              140,
+              25,
+              31
+            ],
+            [
+              85,
+              29,
+              34
+            ],
+            [
+              35,
+              43,
+              41
+            ],
+            [
+              46,
+              46,
+              23
+            ],
+            [
+              45,
+              45,
+              35
+            ]
+          ],
+          [
+            [
+              44,
+              49,
+              41
+            ],
+            [
+              36,
+              51,
+              35
+            ],
+            [
+              33,
+              36,
+              32
+            ],
+            [
+              34,
+              32,
+              36
+            ],
+            [
+              26,
+              38,
+              30
+            ],
+            [
+              27,
+              42,
+              42
+            ],
+            [
+              41,
+              40,
+              41
+            ],
+            [
+              47,
+              40,
+              32
+            ]
+          ],
+          [
+            [
+              33,
+              40,
+              28
+            ],
+            [
+              39,
+              37,
+              34
+            ],
+            [
+              39,
+              34,
+              21
+            ],
+            [
+              33,
+              32,
+              33
+            ],
+            [
+              33,
+              35,
+              38
+            ],
+            [
+              32,
+              42,
+              38
+            ],
+            [
+              34,
+              44,
+              37
+            ],
+            [
+              42,
+              48,
+              34
+            ]
+          ],
+          [
+            [
+              44,
+              42,
+              34
+            ],
+            [
+              41,
+              43,
+              37
+            ],
+            [
+              31,
+              37,
+              35
+            ],
+            [
+              36,
+              27,
+              32
+            ],
+            [
+              38,
+              21,
+              30
+            ],
+            [
+              39,
+              35,
+              35
+            ],
+            [
+              33,
+              35,
+              26
+            ],
+            [
+              41,
+              32,
+              24
+            ]
+          ]
+        ],
+        "annotation_status": "human",
+        "boxes": [],
+        "mask": null,
+        "partition": "train",
+        "train_augmentation_preview": null
+      },
+      {
+        "row_id": "row:0f445916-4271-43d5-bfdb-2a66bfdf0a9e",
+        "original_size": [
+          16,
+          16
+        ],
+        "transformed": [
+          [
+            [
+              30,
+              34,
+              39
+            ],
+            [
+              39,
+              33,
+              41
+            ],
+            [
+              32,
+              31,
+              41
+            ],
+            [
+              43,
+              37,
+              24
+            ],
+            [
+              45,
+              34,
+              32
+            ],
+            [
+              33,
+              36,
+              39
+            ],
+            [
+              43,
+              26,
+              39
+            ],
+            [
+              36,
+              23,
+              34
+            ]
+          ],
+          [
+            [
+              30,
+              42,
+              45
+            ],
+            [
+              24,
+              36,
+              37
+            ],
+            [
+              70,
+              31,
+              34
+            ],
+            [
+              137,
+              30,
+              26
+            ],
+            [
+              134,
+              29,
+              22
+            ],
+            [
+              81,
+              32,
+              36
+            ],
+            [
+              39,
+              35,
+              50
+            ],
+            [
+              34,
+              44,
+              29
+            ]
+          ],
+          [
+            [
+              42,
+              28,
+              34
+            ],
+            [
+              35,
+              33,
+              38
+            ],
+            [
+              128,
+              23,
+              29
+            ],
+            [
+              230,
+              20,
+              20
+            ],
+            [
+              230,
+              20,
+              20
+            ],
+            [
+              131,
+              27,
+              31
+            ],
+            [
+              39,
+              31,
+              41
+            ],
+            [
+              40,
+              32,
+              41
+            ]
+          ],
+          [
+            [
+              40,
+              23,
+              36
+            ],
+            [
+              41,
+              25,
+              42
+            ],
+            [
+              140,
+              25,
+              26
+            ],
+            [
+              230,
+              20,
+              20
+            ],
+            [
+              230,
+              20,
+              20
+            ],
+            [
+              130,
+              28,
+              34
+            ],
+            [
+              35,
+              38,
+              36
+            ],
+            [
+              38,
+              30,
+              35
+            ]
+          ],
+          [
+            [
+              37,
+              28,
+              28
+            ],
+            [
+              34,
+              31,
+              44
+            ],
+            [
+              87,
+              32,
+              30
+            ],
+            [
+              135,
+              26,
+              25
+            ],
+            [
+              137,
+              32,
+              20
+            ],
+            [
+              75,
+              39,
+              36
+            ],
+            [
+              29,
+              41,
+              35
+            ],
+            [
+              37,
+              39,
+              36
+            ]
+          ],
+          [
+            [
+              30,
+              39,
+              32
+            ],
+            [
+              27,
+              40,
+              40
+            ],
+            [
+              44,
+              34,
+              25
+            ],
+            [
+              46,
+              41,
+              26
+            ],
+            [
+              41,
+              36,
+              28
+            ],
+            [
+              27,
+              28,
+              27
+            ],
+            [
+              31,
+              24,
+              30
+            ],
+            [
+              45,
+              28,
+              33
+            ]
+          ],
+          [
+            [
+              25,
+              39,
+              33
+            ],
+            [
+              16,
+              36,
+              38
+            ],
+            [
+              35,
+              27,
+              20
+            ],
+            [
+              43,
+              40,
+              24
+            ],
+            [
+              45,
+              42,
+              35
+            ],
+            [
+              36,
+              33,
+              31
+            ],
+            [
+              34,
+              21,
+              27
+            ],
+            [
+              40,
+              38,
+              24
+            ]
+          ],
+          [
+            [
+              28,
+              40,
+              48
+            ],
+            [
+              32,
+              33,
+              43
+            ],
+            [
+              36,
+              34,
+              22
+            ],
+            [
+              35,
+              40,
+              20
+            ],
+            [
+              39,
+              43,
+              31
+            ],
+            [
+              34,
+              26,
+              29
+            ],
+            [
+              34,
+              28,
+              29
+            ],
+            [
+              34,
+              32,
+              43
+            ]
+          ]
+        ],
+        "annotation_status": "human",
+        "boxes": [
+          {
+            "id": "b12",
+            "label": "object",
+            "xyxy": [
+              2.5,
+              1.5,
+              5.5,
+              4.5
+            ]
+          }
+        ],
+        "mask": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "partition": "validation",
+        "train_augmentation_preview": null
+      },
+      {
+        "row_id": "row:a8379214-b55a-4640-aaa5-64e344cc7e64",
+        "original_size": [
+          16,
+          16
+        ],
+        "transformed": [
+          [
+            [
+              27,
+              39,
+              29
+            ],
+            [
+              37,
+              37,
+              46
+            ],
+            [
+              40,
+              25,
+              42
+            ],
+            [
+              38,
+              18,
+              35
+            ],
+            [
+              32,
+              31,
+              43
+            ],
+            [
+              36,
+              27,
+              36
+            ],
+            [
+              30,
+              24,
+              22
+            ],
+            [
+              33,
+              46,
+              28
+            ]
+          ],
+          [
+            [
+              37,
+              44,
+              34
+            ],
+            [
+              43,
+              37,
+              47
+            ],
+            [
+              38,
+              37,
+              42
+            ],
+            [
+              36,
+              23,
+              28
+            ],
+            [
+              28,
+              28,
+              28
+            ],
+            [
+              34,
+              35,
+              42
+            ],
+            [
+              31,
+              37,
+              31
+            ],
+            [
+              38,
+              39,
+              27
+            ]
+          ],
+          [
+            [
+              26,
+              30,
+              50
+            ],
+            [
+              40,
+              23,
+              84
+            ],
+            [
+              29,
+              30,
+              127
+            ],
+            [
+              26,
+              28,
+              134
+            ],
+            [
+              29,
+              27,
+              79
+            ],
+            [
+              33,
+              34,
+              35
+            ],
+            [
+              41,
+              30,
+              46
+            ],
+            [
+              40,
+              25,
+              39
+            ]
+          ],
+          [
+            [
+              31,
+              39,
+              33
+            ],
+            [
+              24,
+              27,
+              129
+            ],
+            [
+              20,
+              20,
+              230
+            ],
+            [
+              20,
+              20,
+              230
+            ],
+            [
+              25,
+              23,
+              127
+            ],
+            [
+              35,
+              40,
+              27
+            ],
+            [
+              33,
+              45,
+              34
+            ],
+            [
+              22,
+              35,
+              39
+            ]
+          ],
+          [
+            [
+              37,
+              42,
+              32
+            ],
+            [
+              30,
+              30,
+              135
+            ],
+            [
+              20,
+              20,
+              230
+            ],
+            [
+              20,
+              20,
+              230
+            ],
+            [
+              23,
+              19,
+              132
+            ],
+            [
+              26,
+              28,
+              33
+            ],
+            [
+              30,
+              42,
+              35
+            ],
+            [
+              35,
+              40,
+              31
+            ]
+          ],
+          [
+            [
+              35,
+              37,
+              35
+            ],
+            [
+              19,
+              32,
+              87
+            ],
+            [
+              25,
+              23,
+              130
+            ],
+            [
+              21,
+              19,
+              133
+            ],
+            [
+              25,
+              22,
+              83
+            ],
+            [
+              33,
+              31,
+              34
+            ],
+            [
+              26,
+              33,
+              34
+            ],
+            [
+              32,
+              36,
+              31
+            ]
+          ],
+          [
+            [
+              43,
+              21,
+              48
+            ],
+            [
+              32,
+              30,
+              42
+            ],
+            [
+              29,
+              32,
+              41
+            ],
+            [
+              37,
+              23,
+              45
+            ],
+            [
+              34,
+              21,
+              35
+            ],
+            [
+              38,
+              23,
+              34
+            ],
+            [
+              31,
+              28,
+              37
+            ],
+            [
+              24,
+              41,
+              28
+            ]
+          ],
+          [
+            [
+              48,
+              19,
+              41
+            ],
+            [
+              37,
+              35,
+              44
+            ],
+            [
+              34,
+              36,
+              33
+            ],
+            [
+              41,
+              32,
+              38
+            ],
+            [
+              49,
+              33,
+              42
+            ],
+            [
+              44,
+              22,
+              48
+            ],
+            [
+              51,
+              21,
+              32
+            ],
+            [
+              29,
+              34,
+              37
+            ]
+          ]
+        ],
+        "annotation_status": "human",
+        "boxes": [
+          {
+            "id": "b1",
+            "label": "object",
+            "xyxy": [
+              1.5,
+              2.5,
+              4.5,
+              5.5
+            ]
+          }
+        ],
+        "mask": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "partition": "train",
+        "train_augmentation_preview": null
+      }
+    ]
+  },
+  "experiment_capture": {
+    "schema": "RunCapture/v1",
+    "captured_at": "2026-10-14T20:09:50.042830+00:00",
+    "code_hash": "3132be17be48da1aab847fb289de391f0fc63fa4e0c8430b28e190d4f04f37e2",
+    "environment_hash": "a968f3834713fe5c140f15dca79af105e865b3503a3b984e42b567eaa0504e92",
+    "config_hash": "94ac30c21ec77a0bd9a9811a8db3540c78383b73875a7706d0e44e2c714e3581",
+    "config_scope": "validation/model options + immutable PipelineId preprocessing reference",
+    "environment": {
+      "python": "3.13.15",
+      "machine": "x86_64",
+      "system": "Linux",
+      "numpy": "2.5.3",
+      "scipy": "1.18.0",
+      "scikit-learn": "1.9.1",
+      "polars": "2.0.0",
+      "skops": "0.16.0",
+      "veri-ufku": "0.1.0"
+    },
+    "code_files": {
+      "analytics/__init__.py": "9a40480d4948c6569039dcba9b5eb8500217898bd1082cbf7dc116ea9eb697d1",
+      "analytics/cache.py": "d9bc4a880fbdee9cfec9bcdb2be956bd892472776a162db5f44de7ea800cb810",
+      "analytics/contracts.py": "b48013d36e9aaa985421706a519052cd92877fc3f3f39a0a5cf121127b6a8254",
+      "analytics/dataset.py": "577491b35241d4564f0aa99b801b4676bd3eb7f31e0ff81534178e4f2603ec28",
+      "analytics/inspection.py": "7d32d36f9f4ca19dceb4ed92d70e58724bdb92394ac62f7b2b7195665ad83e46",
+      "analytics/nlp.py": "f44349a7bda3954ddee023a207d0a15c7810e89e653c9052eea6ca787fb31805",
+      "analytics/nlp_contracts.py": "ecd8ebb0fa86054f7717318d553c3125b7fe56bccd4c1252d5eacc07286595ea",
+      "analytics/nlp_models.py": "3bde557209340c1e4c3b03084a09c2a89673de6aedd594d990a3a79c0b45968c",
+      "analytics/quality.py": "26614e90d24781175ee63e890ea820abdc3ba71a338c0a8eac68973ab4f91002",
+      "analytics/text.py": "79162336f36367f36bfb03d403dd1ed2fd13d525544c52065408aefd8aaf3b4d",
+      "analytics/text_contracts.py": "eaa4d0d7e9c82c9eed47276dd770fa6894955496b8c4ffa211ca990b8dbe817c",
+      "analytics/worker.py": "31c63ee72335dade3e877599e1354ac043e3618f550867dc25927460aa026a59",
+      "domain/__init__.py": "2dbb12e6e6559fc7cfeaa0bd919e0daed1a2b0087606b6a80365376ce3600b26",
+      "domain/capabilities.py": "63f6b52d74b5518b0447aa1a5bf204af9f121f47829f8fe3408eec12f2358207",
+      "domain/contracts.py": "f876547de14f69c2c21d69a18e4af28ff1d2bb1e86a91d3b517ae7715025503b",
+      "domain/json.py": "460d139d25b367c54bc7535a099ff4de6d8d71af90a4f90914f864e71a18236f",
+      "jobs/__init__.py": "3e422efd1e5f67820bedb952921837211d5a5c953360bd7d6d1f7e69789cbf7d",
+      "jobs/limits.py": "4bbb51c061c186506137e3d46668d6ba16db56ad65f92b34a16f2ec5c4c007e2",
+      "jobs/manager.py": "3e17e08325e636527b665c1d1ee4756e524f813cc71b907ef31e9208f4624a38",
+      "jobs/supervision.py": "0cae684cbb07a6f3c8c63b2b8a66c2e3a0f778e5eeb903bc3e851bb6abab7f00",
+      "jobs/workers.py": "2c9c7a58f328ca607b257046b9c07de0c2bd095b7ea282e1b8725d9c81423505",
+      "modeling/__init__.py": "13027d8be106084ca581b11ced17bc5f8f0ddaeb927c7b27f55b2de67d62bb83",
+      "modeling/baseline.py": "d6a047e1a621524897fc5b2aa7f867a68da3d56aa33957072d4d6f3b47e95625",
+      "modeling/classification.py": "8325bd7adab2baf3925a2028acf69850cbe71677120848972f3cea9e3b3c3ca8",
+      "modeling/contracts.py": "0a013b594dc6710b72001268fe0923fb979fac36ad0602b7c9a640b9248a3f79",
+      "modeling/explanation.py": "a8fd47fed21b142479c966060600aa00595b768e58e1195000b59aa27494dfb7",
+      "modeling/exploration.py": "987bf5fc7419cc0562b8df7cd2e47cd6152d5e6521a2f6e1e6c5c67212820200",
+      "modeling/families.py": "ed4cb3d88c87d673dacc3496d0943995c7ea942401bf8225566e19b3e0268986",
+      "modeling/family_contracts.py": "93528657acdaf3e89ba974923402cfed2e72a1bf610b790d25ee6a3bc4406475",
+      "modeling/history.py": "89092e5f34ae94b1cb72a21b9b1a6a6f558a57c6f38ed1026146f228cf77db64",
+      "modeling/lifecycle.py": "1c00836f8d9de2ef61b98b600d02b908459234dd3dbb4a31cde226fe81c07f54",
+      "modeling/lifecycle_worker.py": "58cc961b8f4cbc8f651e695ebea6b52c3dbc6b49394700d847627ee22e9b6f84",
+      "modeling/neural.py": "eb7b8fc39fd85fcf73799b3f645bc334a7820ae1a5ca3eb2993a0ff545f5fbc1",
+      "modeling/neural_contracts.py": "72295b0bdb3610743bf6800f391468d0c26dec3b64080fd40ec262044d27921e",
+      "modeling/optional_families.py": "bde8df0efe706a77c3e78c2f6ab44cf35a01ff2ed74b7f80bfdad585009281bd",
+      "modeling/plan.py": "d8a1f6043c9a96da399b74da095f3cc47c6972477984f9b3e085e48376fc6114",
+      "modeling/preparation.py": "bbb6d86e399f61d2d86c85a5b9205680ee4dbc780bfc1854ef4783ee4a82eee1",
+      "modeling/regression.py": "6fd65943f87ec2fee438e20f16d400a1eafe6cf6ef24e64a5e54eac132da51e8",
+      "modeling/search.py": "d8b90bb06060477bd8f4d2df0d6c6ece0825c72d9c243ee65cfd5af2e1009fef",
+      "modeling/search_contracts.py": "a82b856b338ed33e25a8d8f9fe340a60008cdd88cfca893fe04c4aaefe27d10e",
+      "modeling/signal_contracts.py": "1edcc6cbdfd13b8af74bfbebaa4c321fc1f4e1eb1ccafc109662e6d3460c66f7",
+      "modeling/signals.py": "04da330a1bd55d8c83fb8c3ca947d27f9b2c4ee5485a4ca40d884bd7f752ce37",
+      "modeling/temporal.py": "a7f74140fa4a201e559cf3de6ae2a3c66c37c89f70e5373e9433c9289ec8415d",
+      "modeling/temporal_contracts.py": "a7f949827438b4136a0576acc0455feed01400ace0639379f8068d70fc1c6291",
+      "modeling/time_series.py": "3ce5d126a56d8ea5fa5cc277e34a9c9b9246b88dc5472fa030699ff511d1d14c",
+      "modeling/time_series_contracts.py": "7acf1fc8415fab05a533a16691d044fdf4edc539b6a4e047fd5a8bcb7d6449ab",
+      "modeling/uncertainty.py": "18459743f79438daf7236e14e696dd6f9cc7a71388251464f8b1159c38944292",
+      "modeling/unsupervised.py": "f622291e9b889aa7dba7928e22dd716436042edc58349010bfeffe4d9f3fa693",
+      "modeling/unsupervised_contracts.py": "8f695e61dfb7d2e9f04cf075e049fc2ca6b0d85f8f681d13c8c26483fd6c55ea",
+      "modeling/validation.py": "926d32f935b8bafa2154ca6522c2a78462fcec7d12f47c489349542a8d2e8245",
+      "modeling/vision.py": "82317f98026c9b86cd473a870eeaaf902670460c5332d638fa278f913949bcc0",
+      "modeling/vision_contracts.py": "09d103e2a0302b461b52109569bf6f5c57e0484806488f9fec7e92d19ce965b1",
+      "modeling/vision_metrics.py": "a9435b6d44d89659a644e15a307e195d3e86ca8e1916349f4cac3b8f4e771bc4",
+      "modeling/worker.py": "c58fac6bf349cffc3a4299cb199cee82b505d6b5d6158620a81a1d4acfc18f26",
+      "operations/__init__.py": "3057dbc6d9b812bf9b2aad778db59346f32918c18d3855963ded8c84538a2d89",
+      "operations/cleaning.py": "952547f346de6778896e29f7033ed71c977168a11fe99880a6ba0767f6765b17",
+      "operations/cleaning_contracts.py": "2a6e1a9234fe3b62e28af1ff518eb7cb385d34af47eec8b5d9601c7581eb0dc8",
+      "operations/contracts.py": "67b8cd99bcb930a22422f51e85ae33822bb141a4df0f9c6c510d68cb450be7fc",
+      "operations/data_contracts.py": "abd9a1c68cb13ac27f9c9edc0e91e4d47df018760f6b5ad2c769b9cfb3ddce23",
+      "operations/data_quality.py": "d5475654431190c5a2b0f63490a5c77d017e4fdc6650b3ee8443c42fa0cb8d11",
+      "operations/engine.py": "d11a56c787773556c91ee5856f254cc9c20700d69b924c3a4464f2b558e0162e",
+      "operations/formula.py": "73aa71d20562e78d06055e194a41480d86211a5f33a8c915c661af7b7dfb4e5a",
+      "operations/monitoring.py": "0f92c902fb431475d850c331e44dfcc8fe97f3b0c44a51c2e6917cdf68514bf4",
+      "operations/recipe_worker.py": "3d496a1724c200816ca4a183c4a9513d800eedc393cc88d35742d7c3d8b20e53",
+      "operations/recipes.py": "f890531237267f41521ddeea299b5f4b03e023025105b7d39cc74086616a4dd8",
+      "operations/relational.py": "d1c10afd56fbfbea134435b73f589e39a10173680b8e12985f7605436fc52135",
+      "operations/relational_contracts.py": "eb0cef0160b7a0c92c601a407fceec423699032bc8d7fe4b3bba9196c29473da",
+      "operations/types.py": "0fe52eaad36ed00788508b4e28ed0c9a34df55b7ee41e6503127dd4d87bccd87",
+      "operations/worker.py": "f6fef54a9a1374728902e546eac733e33b243eee6ce115c29e0a99062b402435",
+      "storage/validation_store.py": "15e4a941263a9018507689559829a009140966815888aa38a7271cb84646aa45",
+      "storage/experiment_store.py": "753f643653e37b6425412607bfce35095cc229d2b9375737583b942c97f2528b"
+    },
+    "data_access_time": "captured before scheduling; run.data_access_at records first immutable snapshot read boundary"
+  },
+  "environment": {
+    "backend": "Pillow12.3.0/scikit-learn1.9.1 CPU",
+    "device": "cpu"
+  },
+  "compat_id": "3c050b3a85862075c38f43c2b9b01aa0024c90bdbf3a049614b572dd71bef66b",
+  "provenance": {
+    "provenance_id": "provenance:3c050b3a85862075c38f43c2b9b01aa0024c90bdbf3a049614b572dd71bef66b",
+    "dataset_versions": [
+      "dv:5c5e35eb-d4bf-4272-b184-bf13121ee72f"
+    ],
+    "config_revision": 2,
+    "capability_id": "model.vision.classification",
+    "parameters_hash": "7e90fdbc31a814915cee578d6aa98d37f2b9eaaaa7096b567e92acd7f205ef32",
+    "environment": [
+      [
+        "device",
+        "cpu"
+      ]
+    ],
+    "created_at": "2026-10-14T20:09:52.217779+00:00",
+    "method_version": 1,
+    "scope": "immutable images; whole-component train/validation/test; only validation evaluated",
+    "seed": 57,
+    "seed_reason": "deterministic fixture; no sampling",
+    "source_snapshot_ids": [
+      "snapshot:c5466457-5329-4580-a097-34fde14d5a63"
+    ],
+    "row_lineage_ref": "split:20389016c198672a543bfe0b55b7e251bdc97d3dcade95dd9cc1649ecf3c926d",
+    "column_lineage_ref": null,
+    "filters": [],
+    "exclusions": [],
+    "learning_content_version": null
+  },
+  "worker_pid": 156
+}

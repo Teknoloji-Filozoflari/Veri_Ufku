@@ -1,0 +1,125 @@
+{
+  "columns": [
+    "col:52e7486d-662f-44ac-8f6a-8fd08e520914"
+  ],
+  "dataset_version": "dv:1ec883cd-a44f-4c81-a960-cd39a8136a19",
+  "decision": {
+    "enforcement": "declaration only; NOT OS sandbox",
+    "network_confirmed": false,
+    "permissions": [
+      "dataset.read",
+      "result.emit",
+      "python.same-user"
+    ],
+    "trusted": true
+  },
+  "environment": {
+    "dependencies": {},
+    "executable": "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+    "isolation": "same locked application environment; no automatic dependency install; fresh process, NOT OS sandbox",
+    "python": "3.13.15"
+  },
+  "inspection_hash": "1fc43aee64d9bbf9ddf41ab129c7f821317c65f15b168ead1300cd51eb73489d",
+  "manifest": {
+    "api_version": 1,
+    "capability": {
+      "id": "mean",
+      "input_schema": "PluginInput/v1",
+      "kind": "stat",
+      "method_version": 1,
+      "output_schema": "PluginOutput/v1",
+      "parameters": {},
+      "title": "Örnek aritmetik ortalama"
+    },
+    "code_sha256": "ae54d85877bfc81e88f34407377c97a6681c87d022fb23c303a647f891d27b02",
+    "dependencies": {},
+    "entry": "plugin.py:run",
+    "id": "example-mean",
+    "learning": {
+      "id": "example-mean-help",
+      "limitations": "Ağırlıksız, finite numeric, en fazla10000satır; güven aralığı/hipotez testi değildir. Kod trusted same-user Python, OS sandbox yok.",
+      "summary": "Seçili sayısal kolonun toplamı gözlem sayısına bölünür; null dışlanır.",
+      "title": "Örnek ortalama eklentisi",
+      "version": 1
+    },
+    "permissions": [
+      "dataset.read",
+      "result.emit",
+      "python.same-user"
+    ],
+    "python": "3.13",
+    "schema": "Veri_UfkuPlugin/v1",
+    "version": "1.0.0"
+  },
+  "output": {
+    "data": {
+      "metrics": {
+        "mean": 2.0,
+        "n": 3
+      }
+    },
+    "kind": "stat",
+    "schema": "PluginOutput/v1",
+    "summary": "Seçili sayısal kolonun aritmetik ortalaması",
+    "used_row_ids": [
+      "row:006f41e8-cf63-49de-b631-e45979ddb91a",
+      "row:9238cedb-046e-41cc-878f-85ec527b6bce",
+      "row:cee25a97-7f9d-4e87-88df-3a790e349540"
+    ],
+    "warnings": [
+      "Null satırlar dışlandı; ağırlıksız aritmetik ortalama, nedensel veya inferential sonuç değildir."
+    ]
+  },
+  "package_hash": "15c52b4c4c33c4d5119b5eb44a8c2cfb5a5f3d5e41b4e7c5b6cbb7ee92da2ae0",
+  "params": {},
+  "provenance": {
+    "capability_id": "plugin.example-mean.mean",
+    "column_lineage_ref": null,
+    "config_revision": 0,
+    "created_at": "2026-10-16T18:27:23.997969+00:00",
+    "dataset_versions": [
+      "dv:1ec883cd-a44f-4c81-a960-cd39a8136a19"
+    ],
+    "environment": [
+      [
+        "plugin",
+        "example-mean@1.0.0"
+      ],
+      [
+        "code_sha256",
+        "ae54d85877bfc81e88f34407377c97a6681c87d022fb23c303a647f891d27b02"
+      ],
+      [
+        "python",
+        "3.13.15"
+      ]
+    ],
+    "exclusions": [],
+    "filters": [],
+    "learning_content_version": "1",
+    "method_version": 1,
+    "parameters_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "provenance_id": "provenance:b839909f-098a-4cbe-9eca-1c539a1fc018",
+    "row_lineage_ref": "output.used_row_ids; selected source only",
+    "scope": "explicit trusted plugin; bounded selected dataset; recorded JSON result only",
+    "seed": 0,
+    "seed_reason": "deterministic fixture; no sampling",
+    "source_snapshot_ids": [
+      "snapshot:e9acbb32-8aa8-4538-ab30-7ef6b28e5d76"
+    ]
+  },
+  "result_hash": "53fe66444740112d0243aae5fefaa471b3047e6ce0fdd5bbf8374455a7aafdd0",
+  "run_id": "pluginrun:4690e080-60f6-4aed-a279-3861a20557da",
+  "schema": "PluginRun/v1",
+  "seed": 0,
+  "source_fingerprint": {
+    "sha256": "22fd690e20424284487ca551bacd757aa1bad0a6cf1928b1476fb5cf72fbf0af",
+    "size": 4073
+  },
+  "source_snapshot_id": "snapshot:e9acbb32-8aa8-4538-ab30-7ef6b28e5d76",
+  "status": "completed",
+  "warnings": [
+    "Trusted Python, not sandboxed; permissions not OS enforced. Output is a plugin claim, not host scientific validation.",
+    "Importer/transform outputs are archived table previews; active dataset mutation/apply unavailable. Model predict/reload unavailable."
+  ]
+}

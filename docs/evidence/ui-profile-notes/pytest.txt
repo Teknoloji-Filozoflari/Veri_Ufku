@@ -1,0 +1,177 @@
+........................................................................ [ 10%]
+..............F......................................................... [ 20%]
+................F....................................................... [ 30%]
+........................................................................ [ 40%]
+........................................................................ [ 50%]
+........................................................................ [ 60%]
+........................................................................ [ 70%]
+........................................................................ [ 80%]
+........................................................................ [ 90%]
+..................................................................       [100%]
+=================================== FAILURES ===================================
+________________ test_numeric_identifier_summary_is_suppressed _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-22/test_numeric_identifier_summar0')
+
+    def test_numeric_identifier_summary_is_suppressed(tmp_path):
+        store, request, work = prepare(tmp_path, pl.DataFrame({"record_id": [1, 2, 3, 4]}))
+        with closing(store):
+            request["semantic_metadata"] = {
+                column(request, "record_id"): {"role": "identifier"}
+            }
+>           result = inspect(request, {"sample": False, "describe": True}, work)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_data_inspection.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/veri_ufku/analytics/inspection.py:75: in inspect
+    result = profile(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = {'path': '/proc/self/fd/28/ed80afa2-5dd7-46ef-b82c-a27af01e7fe1.parquet', 'fingerprint': {'sha256': '191ab10bdfe73dcd6...fb4-46a5-9784-15e566bdedc2', 'name': 'record_id', 'original_name': 'record_id', 'type': 'Int64'}], 'row_count': 4, ...}
+spec = ProfileSpec(column_id='col:e5a09d18-8fb4-46a5-9784-15e566bdedc2', sample=False, target='dataset', ddof=1, view=ViewSpec(filters=(), sort_column='', descending=False, hidden=()))
+workspace = PosixPath('/tmp/pytest-of-s-oktay/pytest-22/test_numeric_identifier_summar0/work')
+control = <veri_ufku.importers.delimited.Control object at 0x7f5c94b6c2d0>
+unique_offset = 0, unique_query = ''
+
+    def profile(request, spec, workspace, control=None, unique_offset=0, unique_query=""):
+        if (
+            type(unique_offset) is not int
+            or unique_offset < 0
+            or not isinstance(unique_query, str)
+            or len(unique_query) > 200
+        ):
+            raise ProjectError("Benzersiz değer sayfası veya araması geçersiz.")
+        control = control or Control()
+        checked(request, control)
+        spec.validate(request["columns"])
+        view = spec.view if spec.target == "view" else ViewSpec()
+        query, schema, names = filtered(request, view)
+        name = names[spec.column_id]
+        dtype = schema[name]
+        population = query.select(pl.len()).collect(engine="streaming").item()
+        source = query.head(control.budget.sample_limit_rows) if spec.sample else query
+        limit = (
+            min(population, control.budget.sample_limit_rows) if spec.sample else population
+        )
+        role_data = request.get("semantic_metadata", {}).get(spec.column_id)
+        nested = isinstance(dtype, (pl.List, pl.Struct))
+        temporal = dtype.is_temporal()
+        expression = pl.col(name).cast(pl.String) if temporal else pl.col(name)
+        stream = source.select(expression.alias("value"))
+        stats = dict(
+            null=0, nan=0, positive_infinity=0, negative_infinity=0, valid=0, empty_string=0
+        )
+        original_values = []
+        examples = []
+        used = 0
+        numeric = dtype.is_numeric()
+        n = 0
+        mean = Decimal(0)
+        m2 = Decimal(0)
+        minimum = maximum = None
+        path = Path(workspace) / ("profile-" + uid() + ".sqlite")
+        db = sqlite3.connect(path)
+        db.execute("PRAGMA temp_store=FILE")
+        db.execute("PRAGMA cache_size=-8192")
+        db.create_collation(
+            "exact_number",
+            lambda a, b: (Decimal(a) > Decimal(b)) - (Decimal(a) < Decimal(b)),
+        )
+        db.execute(
+            "CREATE TABLE frequencies (key TEXT PRIMARY KEY, value TEXT, number TEXT, count INTEGER NOT NULL, first_seen INTEGER NOT NULL)"
+        )
+        try:
+            with localcontext() as ctx:
+                ctx.prec = 80
+                for batch in stream.collect_batches(
+                    chunk_size=4096, maintain_order=True, engine="streaming"
+                ):
+                    control.check()
+                    records = []
+                    for i in range(batch.height):
+                        used += 1
+                        if used % 512 == 0:
+                            control.check()
+                        value = batch["value"][i]
+                        if nested:
+                            if value is None:
+                                stats["null"] += 1
+                            else:
+                                stats["valid"] += 1
+                                if len(examples) < 5:
+                                    examples.append(
+                                        display(str(batch["value"].slice(i, 1)))
+                                    )
+                            continue
+                        if value is None:
+                            stats["null"] += 1
+                            continue
+                        special = False
+                        if isinstance(value, float) and not math.isfinite(value):
+                            stats[
+                                "nan"
+                                if math.isnan(value)
+                                else "positive_infinity"
+                                if value > 0
+                                else "negative_infinity"
+                            ] += 1
+                            special = True
+                        else:
+                            stats["valid"] += 1
+                        if value == "":
+                            stats["empty_string"] += 1
+                        if used <= 200:
+                            original_values.append(value)
+                        if len(examples) < 5 and display(value) not in examples:
+                            examples.append(display(value))
+                        number = None
+                        if numeric and not special:
+                            exact = (
+                                Decimal.from_float(value)
+                                if isinstance(value, float)
+                                else Decimal(value)
+                            )
+                            number = str(exact)
+                            n += 1
+                            delta = exact - mean
+                            mean += delta / n
+                            m2 += delta * (exact - mean)
+                            minimum = exact if minimum is None else min(minimum, exact)
+                            maximum = exact if maximum is None else max(maximum, exact)
+                        records.append((value_key(value), display(value), number, used))
+                    db.executemany(
+                        "INSERT INTO frequencies VALUES (?,?,?,1,?) ON CONFLICT(key) DO UPDATE SET count=count+1",
+                        records,
+                    )
+                    db.commit()
+                    control.disk(workspace)
+                    control.progress("Sütun profilini tarama", used, limit)
+                proposal, reason = suggest_role(name, dtype, original_values)
+                role = (
+>                   role_data["role"] if role_data and role_data["confirmed"] else proposal
+                                                       ^^^^^^^^^^^^^^^^^^^^^^
+                )
+E               KeyError: 'confirmed'
+
+src/veri_ufku/analytics/dataset.py:414: KeyError
+___________________ DocumentContracts.test_current_documents ___________________
+
+self = <test_document_contracts.DocumentContracts testMethod=test_current_documents>
+
+    def test_current_documents(self):
+>       self.assertEqual(CHECKER.check(self.root), [])
+E       AssertionError: Lists differ: ['Original source changed; update traceability explicitly'] != []
+E       
+E       First list contains 1 additional elements.
+E       First extra element 0:
+E       'Original source changed; update traceability explicitly'
+E       
+E       - ['Original source changed; update traceability explicitly']
+E       + []
+
+tests/test_document_contracts.py:45: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_data_inspection.py::test_numeric_identifier_summary_is_suppressed
+FAILED tests/test_document_contracts.py::DocumentContracts::test_current_documents
+2 failed, 712 passed in 235.70s (0:03:55)

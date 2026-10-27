@@ -1,0 +1,37 @@
+# Veri_Ufku — güncel oturum hafızası
+
+2026-10-14 Europe/Istanbul; DEC54-01 Faz54 bounded teknik teslim; resmî sürüyor/deneysel/zorunlu. Faz55 yetkisi yok.
+[Önceki Faz53 hafızası](evidence/phase54/prior-project_state.txt) ve açık kapıları korunur.
+13 native kayıt: regular numeric s/ms/us/ns/fs/channel-unit schema, polyphase anti-alias
+resample, detrend/periodic window, FFT peak amplitude/PSD, Welch density/spectrum,
+STFT/no-padding one-sided PSD/spectrogram, peak, Butterworth SOS causal/zero-phase,
+source event segmentation ve identity-before-overlap-window features/classification.
+
+Mevcut TimeSeriesSpec/Run/worker/controller/ProjectStore/tek Capability/ComputeBudget/
+Provenance/Faz52 registry extended; second depot yok. Source RowId/origin/time and
+snapshot/ColumnIds korunur. Numeric integer timestamps subtract origin before Float64.
+Irregular/duplicate/unordered/sample_rate mismatch rejected, no interpolation/sort.
+32768rows/16recordings/8channels/8192samples perrecord;131072STFTcells/2000windows.
+Downsample anti-alias FIR and declared band-loss explicit; analog no-alias proof yok.
+Offline zero-phase/polyphase/full-record detrend future uses; online mode causal-only
+checks, not streaming/model deploy. SOS order/cutoff/response/group-delay/transient
+saved; no silent delay shift. STFT center descriptive, available_at window endpoint.
+
+Classification: recordings split before transform/windows; EACH selected person/device/
+session identity column disjoint; same recording overlaps only within same partition.
+Train-only StandardScaler/fixed LogisticRegression, class mapping/feature ColumnIds and
+actual predictions. Window n not independent-person n. Full source/feature/spectrum/
+numeric model validation without optimizer refit/import. Incomplete window tail preserved
+in source; derived resample IDs are not original rows, full recording dependency explicit.
+Validation not final test; signal final reveal/tuning/new-file fitted prediction closed.
+Existing Faz16 journal untouched; safe finite JSON artifacts and immutable capture hashes;
+Phase52 native signal comparison not inferred, generic run view/source hashes available.
+
+408source/408noneditable wheel core;35new core;42source GUI/regression;13şar actual
+source/wheel GUI;303 byte-equal package files/fresh4XDG smoke. Spectrogram readable and
+cancel preserves old run/source. Docs/artifacts/367offline articles/usability/Ruff/14docunit
+[gates](evidence/phase54/gates.json),[kanıt](evidence/PHASE54.md).
+User/untracked korunur; stage/commit/push yok. Physical/human/AT/minHW/cleanoffline
+installer/remoteCI/fullrepo aggregate ve önceki F13/F24/F25/F27/F28/F30SAS/F31cache/
+F43RAM/optionalUMAP/XGB/LGB/CatBoost/Optuna/SHAP/F52tracking/genericcapture/QtResourceWarning
+açık kalır; eski kabuller yeniden koşulmuş sayılmaz.

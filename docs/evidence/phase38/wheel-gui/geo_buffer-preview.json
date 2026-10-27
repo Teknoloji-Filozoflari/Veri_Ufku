@@ -1,0 +1,365 @@
+{
+  "spec": {
+    "id": "op:c1af68d9-3173-4626-827f-a49fa20bfdc3",
+    "kind": "geo_buffer",
+    "input_version_id": "dv:80bd0e67-e2c9-453b-9b76-fc6e55c66c06",
+    "column_ids": [
+      "col:d0d9f8b0-a6af-42f2-b704-eee1059656af"
+    ],
+    "parameters": {
+      "crs": "EPSG:32635",
+      "distance": 10
+    },
+    "output_schema": [
+      {
+        "id": "col:0ffd4fd1-6c94-4b3c-9cbd-11530b598b03",
+        "name": "source_id",
+        "original_name": "source_id",
+        "type": "String"
+      },
+      {
+        "id": "col:cf45ea2f-3639-439a-b97c-33f1e0d12230",
+        "name": "count",
+        "original_name": "count",
+        "type": "Float64"
+      },
+      {
+        "id": "col:5fd81936-a1ac-4798-99e1-f8fb3e5bed35",
+        "name": "population",
+        "original_name": "population",
+        "type": "Float64"
+      },
+      {
+        "id": "col:d0d9f8b0-a6af-42f2-b704-eee1059656af",
+        "name": "geometry",
+        "original_name": "geometry",
+        "type": "String"
+      }
+    ],
+    "schema_version": 1,
+    "method_version": 1,
+    "learned_scope": "none",
+    "destination": "chain",
+    "input_version_ids": []
+  },
+  "diagnostics": {
+    "warnings": [
+      "CRS atama dönüşüm değildir. Geographic derecede metre hesabı yok; kaynak korunur."
+    ],
+    "modified_rows": 3,
+    "changed_columns": 1,
+    "buffer": {
+      "distance_m": 10,
+      "quad_segs": 16,
+      "method": "planar projected; approximate arcs"
+    },
+    "geospatial": {
+      "crs": "PROJCRS[\"WGS 84 / UTM zone 35N\",BASEGEOGCRS[\"WGS 84\",ENSEMBLE[\"World Geodetic System 1984 ensemble\",MEMBER[\"World Geodetic System 1984 (Transit)\"],MEMBER[\"World Geodetic System 1984 (G730)\"],MEMBER[\"World Geodetic System 1984 (G873)\"],MEMBER[\"World Geodetic System 1984 (G1150)\"],MEMBER[\"World Geodetic System 1984 (G1674)\"],MEMBER[\"World Geodetic System 1984 (G1762)\"],MEMBER[\"World Geodetic System 1984 (G2139)\"],MEMBER[\"World Geodetic System 1984 (G2296)\"],ELLIPSOID[\"WGS 84\",6378137,298.257223563,LENGTHUNIT[\"metre\",1]],ENSEMBLEACCURACY[2.0]],PRIMEM[\"Greenwich\",0,ANGLEUNIT[\"degree\",0.0174532925199433]],ID[\"EPSG\",4326]],CONVERSION[\"UTM zone 35N\",METHOD[\"Transverse Mercator\",ID[\"EPSG\",9807]],PARAMETER[\"Latitude of natural origin\",0,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8801]],PARAMETER[\"Longitude of natural origin\",27,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8802]],PARAMETER[\"Scale factor at natural origin\",0.9996,SCALEUNIT[\"unity\",1],ID[\"EPSG\",8805]],PARAMETER[\"False easting\",500000,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8806]],PARAMETER[\"False northing\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8807]]],CS[Cartesian,2],AXIS[\"(E)\",east,ORDER[1],LENGTHUNIT[\"metre\",1]],AXIS[\"(N)\",north,ORDER[2],LENGTHUNIT[\"metre\",1]],USAGE[SCOPE[\"Navigation and medium accuracy spatial referencing.\"],AREA[\"Between 24°E and 30°E, northern hemisphere between equator and 84°N, onshore and offshore. Belarus. Bulgaria. Central African Republic. Democratic Republic of the Congo (Zaire). Egypt. Estonia. Finland. Greece. Latvia. Lesotho. Libya. Lithuania. Moldova. Norway. Poland. Romania. Russian Federation. Sudan. Svalbard. Türkiye (Turkey). Uganda. Ukraine.\"],BBOX[0,24,84,30]],ID[\"EPSG\",32635]]",
+      "authority": "EPSG:32635",
+      "axis_order": "x,y; longitude,latitude / easting,northing",
+      "geometry_types": {
+        "Polygon": 3
+      },
+      "extent": [
+        499990.0,
+        4499990.0,
+        500030.0,
+        4500020.0
+      ],
+      "invalid": [],
+      "invalid_count": 0,
+      "empty_count": 0,
+      "antimeridian": "Crossing geometries rejected for planar operations; split explicitly in suitable CRS.",
+      "nodata": null,
+      "geometry_encoding": "WKT; source bytes retained",
+      "geometry_column": "geometry"
+    }
+  },
+  "lineage_path": null,
+  "lineage_fingerprint": null,
+  "path": "/tmp/veri-ufku-phase38-b_fwe7e8/geo_buffer/cache/veri_ufku/operations/operation-cf4zfpnr/966bb18c-4333-4f3c-9786-e55f2f82a731.geo.parquet",
+  "fingerprint": {
+    "sha256": "cb6d698d191865be206c9e0cfed4ae10c88e7ab6acdc1f2d1efe3def596f5861",
+    "size": 7266
+  },
+  "output_schema": {
+    "source_id": "String",
+    "count": "Float64",
+    "population": "Float64",
+    "geometry": "String",
+    "__vu_row_id": "String",
+    "__vu_source_record_id": "String",
+    "__vu_start_line": "Int64",
+    "__vu_end_line": "Int64",
+    "__vu_source_locator": "String",
+    "__vu_missing_fields": "List(String)",
+    "__vu_expansion_index": "String"
+  },
+  "version_id": "dv:16a19a48-bfe0-43f9-99a4-2dc04690a58c",
+  "applicability": {
+    "applicable": true,
+    "reason": "Giriş sürümü, ColumnId ve tipli parametreler doğrulandı."
+  },
+  "validation": {
+    "valid": true,
+    "identity_unique": true,
+    "snapshot_verified": true
+  },
+  "status": "previewed",
+  "impact": {
+    "scope": "full",
+    "population_n": 3,
+    "used_n": 3,
+    "before_rows": 3,
+    "after_rows": 3,
+    "removed_rows": 0,
+    "changed_rows": 3,
+    "added_rows": 0,
+    "before_columns": 4,
+    "after_columns": 4,
+    "changed_columns": 1,
+    "removed_columns": 0,
+    "added_columns": 0,
+    "changed_cells": 0,
+    "new_nulls": 0,
+    "parse_errors": 0,
+    "outlier_candidates": 0,
+    "input_populations": [
+      {
+        "version_id": "dv:80bd0e67-e2c9-453b-9b76-fc6e55c66c06",
+        "rows": 3,
+        "side": "primary"
+      }
+    ],
+    "total_input_occurrences": 3,
+    "table_scope": "first200_display_only"
+  },
+  "before": {
+    "rows": [
+      [
+        "a",
+        "20.0",
+        "100.0",
+        "POINT (500000 4500000)"
+      ],
+      [
+        "b",
+        "40.0",
+        "400.0",
+        "POINT (500003 4500004)"
+      ],
+      [
+        "c",
+        "10.0",
+        "100.0",
+        "POINT (500020 4500010)"
+      ]
+    ],
+    "columns": [
+      {
+        "id": "col:0ffd4fd1-6c94-4b3c-9cbd-11530b598b03",
+        "name": "source_id",
+        "original_name": "source_id",
+        "type": "String"
+      },
+      {
+        "id": "col:cf45ea2f-3639-439a-b97c-33f1e0d12230",
+        "name": "count",
+        "original_name": "count",
+        "type": "Float64"
+      },
+      {
+        "id": "col:5fd81936-a1ac-4798-99e1-f8fb3e5bed35",
+        "name": "population",
+        "original_name": "population",
+        "type": "Float64"
+      },
+      {
+        "id": "col:d0d9f8b0-a6af-42f2-b704-eee1059656af",
+        "name": "geometry",
+        "original_name": "geometry",
+        "type": "String"
+      }
+    ],
+    "row_ids": [
+      "row:5ddb8862-9153-4bfc-9eec-bd25d7a4419b",
+      "row:63f69d87-fb19-4b4c-abb7-8310b1853fe6",
+      "row:1f1a0f18-da6c-4132-8968-4f8c7c53b22f"
+    ],
+    "source_record_ids": [
+      "sr:8dcfc549-59f6-4b68-a13e-af1a9c65121b",
+      "sr:5271cbd1-4ea1-428b-b36e-b58a8a74687e",
+      "sr:2ecb81a0-36e0-476e-95da-3d3b1052c2e4"
+    ],
+    "offset": 0,
+    "total": 3,
+    "dataset_rows": 3,
+    "dataset_version": "dv:80bd0e67-e2c9-453b-9b76-fc6e55c66c06",
+    "view": {
+      "filters": [],
+      "sort_column": "",
+      "descending": false,
+      "hidden": []
+    },
+    "suggestions": {
+      "col:0ffd4fd1-6c94-4b3c-9cbd-11530b598b03": {
+        "role": "identifier",
+        "reason": "Alan adı kayıt kimliği/kodu izlenimi veriyor; kullanıcı onayı gerekir.",
+        "physical_type": "String"
+      },
+      "col:cf45ea2f-3639-439a-b97c-33f1e0d12230": {
+        "role": "measurement",
+        "reason": "Sayısal fiziksel tür; kimlik veya kategori ise rolü düzeltin.",
+        "physical_type": "Float64"
+      },
+      "col:5fd81936-a1ac-4798-99e1-f8fb3e5bed35": {
+        "role": "measurement",
+        "reason": "Sayısal fiziksel tür; kimlik veya kategori ise rolü düzeltin.",
+        "physical_type": "Float64"
+      },
+      "col:d0d9f8b0-a6af-42f2-b704-eee1059656af": {
+        "role": "category",
+        "reason": "Örnekte tekrar eden/kısa etiketler olabilir; tam kardinalite henüz ölçülmedi.",
+        "physical_type": "String"
+      }
+    },
+    "page_rows": 200,
+    "cell_chars": 256,
+    "payload_bytes": 96,
+    "page_bytes_limit": 4194304,
+    "display_truncation": "Hücre metni en fazla256 karakter; toplam sayfa4MiB. Kırpılmış görünüm fiziksel veriyi değiştirmez."
+  },
+  "after": {
+    "rows": [
+      [
+        "a",
+        "20.0",
+        "100.0",
+        "POLYGON ((500010 4500000, 500009.9518472667 4499999.019828597, 500009.807852804 4499998.04909678, 500009.56940335734 4499997.097153228, 500009.2387953251 4499996.173165676, 500008.8192126435 4499995.286032632, 500008.314696123 4499994.444297669, 500007.730"
+      ],
+      [
+        "b",
+        "40.0",
+        "400.0",
+        "POLYGON ((500013 4500004, 500012.9518472667 4500003.019828597, 500012.807852804 4500002.04909678, 500012.56940335734 4500001.097153228, 500012.2387953251 4500000.173165676, 500011.8192126435 4499999.286032632, 500011.314696123 4499998.444297669, 500010.730"
+      ],
+      [
+        "c",
+        "10.0",
+        "100.0",
+        "POLYGON ((500030 4500010, 500029.9518472667 4500009.019828597, 500029.807852804 4500008.04909678, 500029.56940335734 4500007.097153228, 500029.2387953251 4500006.173165676, 500028.8192126435 4500005.286032632, 500028.314696123 4500004.444297669, 500027.730"
+      ]
+    ],
+    "columns": [
+      {
+        "id": "col:0ffd4fd1-6c94-4b3c-9cbd-11530b598b03",
+        "name": "source_id",
+        "original_name": "source_id",
+        "type": "String"
+      },
+      {
+        "id": "col:cf45ea2f-3639-439a-b97c-33f1e0d12230",
+        "name": "count",
+        "original_name": "count",
+        "type": "Float64"
+      },
+      {
+        "id": "col:5fd81936-a1ac-4798-99e1-f8fb3e5bed35",
+        "name": "population",
+        "original_name": "population",
+        "type": "Float64"
+      },
+      {
+        "id": "col:d0d9f8b0-a6af-42f2-b704-eee1059656af",
+        "name": "geometry",
+        "original_name": "geometry",
+        "type": "String"
+      }
+    ],
+    "row_ids": [
+      "row:5ddb8862-9153-4bfc-9eec-bd25d7a4419b",
+      "row:63f69d87-fb19-4b4c-abb7-8310b1853fe6",
+      "row:1f1a0f18-da6c-4132-8968-4f8c7c53b22f"
+    ],
+    "source_record_ids": [
+      "sr:8dcfc549-59f6-4b68-a13e-af1a9c65121b",
+      "sr:5271cbd1-4ea1-428b-b36e-b58a8a74687e",
+      "sr:2ecb81a0-36e0-476e-95da-3d3b1052c2e4"
+    ],
+    "offset": 0,
+    "total": 3,
+    "dataset_rows": 3,
+    "dataset_version": "dv:16a19a48-bfe0-43f9-99a4-2dc04690a58c",
+    "view": {
+      "filters": [],
+      "sort_column": "",
+      "descending": false,
+      "hidden": []
+    },
+    "suggestions": {
+      "col:0ffd4fd1-6c94-4b3c-9cbd-11530b598b03": {
+        "role": "identifier",
+        "reason": "Alan adı kayıt kimliği/kodu izlenimi veriyor; kullanıcı onayı gerekir.",
+        "physical_type": "String"
+      },
+      "col:cf45ea2f-3639-439a-b97c-33f1e0d12230": {
+        "role": "measurement",
+        "reason": "Sayısal fiziksel tür; kimlik veya kategori ise rolü düzeltin.",
+        "physical_type": "Float64"
+      },
+      "col:5fd81936-a1ac-4798-99e1-f8fb3e5bed35": {
+        "role": "measurement",
+        "reason": "Sayısal fiziksel tür; kimlik veya kategori ise rolü düzeltin.",
+        "physical_type": "Float64"
+      },
+      "col:d0d9f8b0-a6af-42f2-b704-eee1059656af": {
+        "role": "text",
+        "reason": "Örnekte uzun veya çok farklı metinler var; örnek temsili garanti değil.",
+        "physical_type": "String"
+      }
+    },
+    "page_rows": 200,
+    "cell_chars": 256,
+    "payload_bytes": 798,
+    "page_bytes_limit": 4194304,
+    "display_truncation": "Hücre metni en fazla256 karakter; toplam sayfa4MiB. Kırpılmış görünüm fiziksel veriyi değiştirmez."
+  },
+  "lineage": {
+    "row_contract": null,
+    "policy": "preserve identities",
+    "input_version": "dv:80bd0e67-e2c9-453b-9b76-fc6e55c66c06",
+    "membership": "output RowId projection",
+    "input_versions": [
+      "dv:80bd0e67-e2c9-453b-9b76-fc6e55c66c06"
+    ]
+  },
+  "provenance": {
+    "capability_id": "operation.geo-buffer",
+    "column_lineage_ref": "op:c1af68d9-3173-4626-827f-a49fa20bfdc3",
+    "config_revision": 3,
+    "created_at": "2026-10-11T14:51:39.611595+00:00",
+    "dataset_versions": [
+      "dv:80bd0e67-e2c9-453b-9b76-fc6e55c66c06",
+      "dv:16a19a48-bfe0-43f9-99a4-2dc04690a58c"
+    ],
+    "environment": [
+      [
+        "polars",
+        "2.0.0"
+      ]
+    ],
+    "exclusions": [],
+    "filters": [],
+    "learning_content_version": "10",
+    "method_version": 1,
+    "parameters_hash": "92ef0d0a8a90f01f775ed5175ffd68dc8dd8a4f33f71912c9bafbe90bc463d8b",
+    "provenance_id": "prov:a5358e3e-f9ce-44a2-97ea-a5ba5ce5f03b",
+    "row_lineage_ref": "identity_projection:dv:80bd0e67-e2c9-453b-9b76-fc6e55c66c06",
+    "scope": "full",
+    "seed": null,
+    "seed_reason": "Deterministik işlem; örneklem hesabı yok",
+    "source_snapshot_ids": [
+      "snapshot:611ebdba-8ecd-4928-ac1e-1f9598db2db5"
+    ]
+  }
+}

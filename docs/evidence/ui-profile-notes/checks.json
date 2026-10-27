@@ -1,0 +1,200 @@
+[
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_docs.py"
+    ],
+    "start": "2026-10-10T11:16:30.336487+00:00",
+    "end": "2026-10-10T11:16:30.427933+00:00",
+    "exit": 1,
+    "log": "docs.txt",
+    "environment": "locked .venv"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_artifacts.py"
+    ],
+    "start": "2026-10-10T11:16:30.427961+00:00",
+    "end": "2026-10-10T11:16:30.540941+00:00",
+    "exit": 0,
+    "log": "artifacts.txt",
+    "environment": "locked .venv"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_learning.py"
+    ],
+    "start": "2026-10-10T11:16:30.540967+00:00",
+    "end": "2026-10-10T11:16:30.590312+00:00",
+    "exit": 0,
+    "log": "learning.txt",
+    "environment": "locked .venv"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_usability.py"
+    ],
+    "start": "2026-10-10T11:16:30.590338+00:00",
+    "end": "2026-10-10T11:16:30.663284+00:00",
+    "exit": 0,
+    "log": "usability.txt",
+    "environment": "locked .venv"
+  },
+  {
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "start": "2026-10-10T11:16:30.663312+00:00",
+    "end": "2026-10-10T11:16:30.670785+00:00",
+    "exit": 0,
+    "log": "ruff.txt",
+    "environment": "locked .venv"
+  },
+  {
+    "command": [
+      ".venv/bin/ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "start": "2026-10-10T11:16:30.670810+00:00",
+    "end": "2026-10-10T11:16:30.678257+00:00",
+    "exit": 0,
+    "log": "format.txt",
+    "environment": "locked .venv"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "start": "2026-10-10T11:16:30.678273+00:00",
+    "end": "2026-10-10T11:16:36.123887+00:00",
+    "exit": 1,
+    "log": "unittest.txt",
+    "environment": "locked .venv"
+  },
+  {
+    "command": [
+      ".venv/bin/veri-ufku",
+      "--smoke-test"
+    ],
+    "start": "2026-10-10T11:16:36.124292+00:00",
+    "end": "2026-10-10T11:16:36.908119+00:00",
+    "exit": 0,
+    "log": "smoke.txt",
+    "environment": "isolated XDG,offscreen/software"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_learning.py"
+    ],
+    "start": "2026-10-10T11:19:56.885086+00:00",
+    "end": "2026-10-10T11:19:56.936939+00:00",
+    "exit": 0,
+    "log": "post-learning.txt",
+    "environment": "locked .venv"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_usability.py"
+    ],
+    "start": "2026-10-10T11:19:56.936953+00:00",
+    "end": "2026-10-10T11:19:57.014897+00:00",
+    "exit": 0,
+    "log": "post-usability.txt",
+    "environment": "locked .venv"
+  },
+  {
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "start": "2026-10-10T11:19:57.014913+00:00",
+    "end": "2026-10-10T11:19:57.025579+00:00",
+    "exit": 0,
+    "log": "post-ruff.txt",
+    "environment": "locked .venv"
+  },
+  {
+    "command": [
+      ".venv/bin/ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "start": "2026-10-10T11:19:57.025593+00:00",
+    "end": "2026-10-10T11:19:57.033672+00:00",
+    "exit": 0,
+    "log": "post-format.txt",
+    "environment": "locked .venv"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/test_data_inspection.py",
+      "tests/test_dataset.py",
+      "tests/test_data_workspace_gui.py",
+      "-q"
+    ],
+    "exit": 0,
+    "passed": 26,
+    "duration_seconds": 9.26,
+    "log": "roles-final.txt",
+    "environment": "locked .venv,Qt offscreen/software"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/test_data_workspace_gui.py::test_simple_column_notes_under_profile_persist_and_preserve_semantics",
+      "-q"
+    ],
+    "exit": 0,
+    "passed": 1,
+    "duration_seconds": 1.47,
+    "log": "final-note.txt",
+    "environment": "locked .venv,Qt offscreen/software"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "--junitxml=docs/evidence/ui-profile-notes/pytest.xml"
+    ],
+    "exit": 1,
+    "start": "2026-10-10T14:16:14.353915+03:00",
+    "duration_seconds": "235.692",
+    "tests": "714",
+    "failures": "2",
+    "log": "pytest.txt",
+    "environment": "locked .venv,Qt offscreen/software",
+    "note": "Full suite collected before confirmed flag fallback fix; targeted affected tests passed after fix."
+  }
+]

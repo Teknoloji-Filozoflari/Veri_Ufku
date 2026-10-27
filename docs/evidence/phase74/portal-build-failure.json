@@ -1,0 +1,31 @@
+{
+  "granted_path": "/run/user/1000/doc/CTHHGs380f2ivSEMenvW4g/portal-source.csv",
+  "source_sha256": "2a2b86e74ffd5e6a9b75e52a105cf9d02920837179f8e8961aa15411d380f7a3",
+  "command": [
+    "flatpak",
+    "build",
+    "--runtime",
+    "--readonly",
+    "--unshare=network",
+    "--socket=session-bus",
+    "--nofilesystem=home",
+    "--nofilesystem=xdg-documents",
+    "--nofilesystem=xdg-download",
+    "--env=QT_QPA_PLATFORM=offscreen",
+    "--env=QT_QUICK_BACKEND=software",
+    "--filesystem=/tmp/veri-ufku-f74-portal-proof",
+    "/tmp/veri-ufku-f74-core-authorized/builddir",
+    "/app/bin/veri-ufku",
+    "--environment-smoke",
+    "--portal-file",
+    "/run/user/1000/doc/CTHHGs380f2ivSEMenvW4g/portal-source.csv",
+    "--portal-sha256",
+    "2a2b86e74ffd5e6a9b75e52a105cf9d02920837179f8e8961aa15411d380f7a3",
+    "--output",
+    "/tmp/veri-ufku-f74-portal-proof/portal-package.json"
+  ],
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/app/share/veri-ufku/checks/package_smoke74.py\", line 291, in <module>\n    main()\n    ~~~~^^\n  File \"/app/share/veri-ufku/checks/package_smoke74.py\", line 113, in main\n    raw = args.portal_file.read_bytes()\n  File \"/usr/lib/python3.13/pathlib/_abc.py\", line 625, in read_bytes\n    with self.open(mode='rb') as f:\n         ~~~~~~~~~^^^^^^^^^^^\n  File \"/usr/lib/python3.13/pathlib/_local.py\", line 537, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/run/user/1000/doc/CTHHGs380f2ivSEMenvW4g/portal-source.csv'\n",
+  "scope": "Actual transient Documents portal grant and packaged GUI/worker; not human FileChooser interaction"
+}

@@ -1,0 +1,1364 @@
+{
+  "card": {
+    "baseline": {
+      "comparison": [
+        {
+          "metrics": [
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "minimize",
+              "metric": "mae",
+              "n": 16,
+              "scope": "validation",
+              "status": "valid",
+              "value": 46.783854166666664
+            },
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "minimize",
+              "metric": "rmse",
+              "n": 16,
+              "scope": "validation",
+              "status": "valid",
+              "value": 51.78690226811967
+            },
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "maximize",
+              "metric": "r2",
+              "n": 16,
+              "scope": "validation",
+              "status": "valid",
+              "value": -0.002258506910229885
+            }
+          ],
+          "scope": "validation"
+        },
+        {
+          "metrics": [
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "minimize",
+              "metric": "mae",
+              "n": 22,
+              "scope": "cv:1",
+              "status": "valid",
+              "value": 42.42207792207792
+            },
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "minimize",
+              "metric": "rmse",
+              "n": 22,
+              "scope": "cv:1",
+              "status": "valid",
+              "value": 48.59632192499983
+            },
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "maximize",
+              "metric": "r2",
+              "n": 22,
+              "scope": "cv:1",
+              "status": "valid",
+              "value": -0.0030104048797567895
+            }
+          ],
+          "scope": "cv:1"
+        },
+        {
+          "metrics": [
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "minimize",
+              "metric": "mae",
+              "n": 21,
+              "scope": "cv:2",
+              "status": "valid",
+              "value": 44.159468438538205
+            },
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "minimize",
+              "metric": "rmse",
+              "n": 21,
+              "scope": "cv:2",
+              "status": "valid",
+              "value": 48.347342782165036
+            },
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "maximize",
+              "metric": "r2",
+              "n": 21,
+              "scope": "cv:2",
+              "status": "valid",
+              "value": -0.02008489574380956
+            }
+          ],
+          "scope": "cv:2"
+        },
+        {
+          "metrics": [
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "minimize",
+              "metric": "mae",
+              "n": 21,
+              "scope": "cv:3",
+              "status": "valid",
+              "value": 34.64008859357697
+            },
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "minimize",
+              "metric": "rmse",
+              "n": 21,
+              "scope": "cv:3",
+              "status": "valid",
+              "value": 42.405786031131136
+            },
+            {
+              "averaging": "per_record",
+              "coverage": "all eligible records in this evaluation partition",
+              "direction": "maximize",
+              "metric": "r2",
+              "n": 21,
+              "scope": "cv:3",
+              "status": "valid",
+              "value": -0.00925034846883488
+            }
+          ],
+          "scope": "cv:3"
+        }
+      ],
+      "limitation": "Final koşuda yeniden baseline seçimi yapılmaz; geliştirme koşusu kartına bakın.",
+      "strategy": "mean"
+    },
+    "candidate_selection": {
+      "parameters": {
+        "alpha": 1.0,
+        "candidates": [
+          "baseline",
+          "linear",
+          "ridge"
+        ],
+        "depth": 8,
+        "trees": 50,
+        "unit": "hedef birimi"
+      },
+      "rule": "minimum development CV mean MAE; ties follow candidate order",
+      "selected": "linear"
+    },
+    "columns": [
+      {
+        "id": "col:a111dc9d-8458-4936-a289-ea6a927f4458",
+        "name": "x",
+        "original_name": "x",
+        "type": "Float64"
+      },
+      {
+        "id": "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c",
+        "name": "cat",
+        "original_name": "cat",
+        "type": "String"
+      },
+      {
+        "id": "col:54e125ff-5d45-4bd2-b4e4-85fa161831a9",
+        "name": "y",
+        "original_name": "y",
+        "type": "Float64"
+      },
+      {
+        "id": "col:431caff1-43a9-4049-bb5b-778629585a60",
+        "name": "group",
+        "original_name": "group",
+        "type": "String"
+      },
+      {
+        "id": "col:854e1971-6a2c-4c29-82c4-3572e4358e01",
+        "name": "when",
+        "original_name": "when",
+        "type": "Date"
+      }
+    ],
+    "dataset_version": "dv:38ebe7ac-bea9-4c6e-9e15-472dc0a6e428",
+    "decision": null,
+    "estimator": "LinearRegression",
+    "features": [
+      {
+        "id": "col:a111dc9d-8458-4936-a289-ea6a927f4458",
+        "name": "x",
+        "type": "Float64",
+        "unit": ""
+      },
+      {
+        "id": "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c",
+        "name": "cat",
+        "type": "String",
+        "unit": ""
+      }
+    ],
+    "fit_row_ids": [
+      "row:7af25e56-e88e-4309-83d4-355b5ea88bfa",
+      "row:9c2a4112-9371-4a84-8acc-f6f147a1adc1",
+      "row:ec93de72-0d11-4ff0-b5a0-274e5a6fdd31",
+      "row:87f917a2-47cd-4156-a0fb-be5081dc1a67",
+      "row:5d7eb1db-0b02-4f0a-bf40-2d39120d292b",
+      "row:b32d321a-5c84-4399-8113-b4c1a902dc7b",
+      "row:39b992cb-f44c-481a-9434-741c9772729b",
+      "row:368468f3-b066-48d0-98a4-ce31b228435c",
+      "row:54a81bbf-d042-49c4-8ea8-ff58d199aaa4",
+      "row:24dc5f06-1f92-46f3-934b-6f7e5f1870a9",
+      "row:8de4ab5d-c5fa-4fb2-b814-3b48eb515032",
+      "row:0880b595-cfcd-4d11-8041-a2c9ab5d8c9d",
+      "row:a1fa3282-4f53-405a-9ebb-b7af034c73ea",
+      "row:09d12aa2-8e68-4f1e-b4b1-ed86cd3bc488",
+      "row:19e597b0-05b4-444e-bf80-0cd1564a7280",
+      "row:ac94dafb-57b9-449e-b3c5-46b92f324b0d",
+      "row:7c8a6a24-dc00-4225-b0db-203b9de2c273",
+      "row:a439ce6a-30d3-44a5-83e6-30de08c00003",
+      "row:1ddc7bc8-37b0-42c1-b763-c6e123f5cd81",
+      "row:6cbacf3a-25c3-47ea-b5bc-7238af5ffc26",
+      "row:01b5767f-554d-4835-ae66-42ec2281fdaf",
+      "row:98eaebd1-7bed-4e4a-aea6-0541b0204804",
+      "row:0fd4dc6d-da5c-40e6-a9bb-b4034f3db83b",
+      "row:960259fe-4a14-4d77-9a40-d582b584a7d6",
+      "row:def3ea5c-b2c4-4f6b-afe0-e5c9254434a4",
+      "row:203a9b9b-b3a8-4913-bc17-48f19d16e96c",
+      "row:f53e23f1-2190-4a48-986b-bf51b2c7c56f",
+      "row:8b8e5dd0-24d4-4b7f-8b9f-16fc0ebd1bc2",
+      "row:155527da-fdc2-427f-9bf1-f35bd8696754",
+      "row:4900f6e1-eef5-41a3-a932-cf2002935784",
+      "row:15e5db11-4cac-4d62-8a87-0bf4c965b4dc",
+      "row:3af84867-11a6-4a4b-a47f-833e7446f091",
+      "row:5620400a-96a3-4e9d-9a37-478479ae3a09",
+      "row:44138ccd-39f1-4299-abe5-5b8f855d588a",
+      "row:acd46a26-92ee-4750-b73b-5a7b28d06619",
+      "row:6a196d98-a0a1-4268-8301-47bef47917c6",
+      "row:63d420db-a3f9-47bc-b5ad-6706c43b7eda",
+      "row:be18136a-6b54-455c-bc3e-737fe5f52459",
+      "row:12e1cbaf-0077-417f-b881-a0e3fffcacf3",
+      "row:86cc1e54-a60b-411e-9b22-fd95e4a31929",
+      "row:c26b1eb3-78cc-4e6e-8f3f-990a4602945a",
+      "row:c1dc29aa-3a2d-45e6-9ade-4504bba75d19",
+      "row:0767799a-7ec4-44b9-87ae-79cc577864f1",
+      "row:8b133b06-c1e2-417e-8519-22d6a14cbe03",
+      "row:b8288ce6-4520-442c-85ec-34fdb7dd95ea",
+      "row:d662cac8-3e5e-4548-9d46-90bac8fd001d",
+      "row:a35f256a-67a6-4187-8e5b-147d5a3018ba",
+      "row:f538e37e-341b-4588-817c-08e7fac7c521"
+    ],
+    "fit_scope": "development_train; validation previously used for selection",
+    "fitted_preprocessing": {
+      "1": {
+        "kind": "impute_numeric",
+        "statistics": [
+          41.5
+        ]
+      },
+      "3": {
+        "kind": "impute_category",
+        "statistics": [
+          "B"
+        ]
+      },
+      "4": {
+        "categories": [
+          [
+            "A",
+            "B"
+          ]
+        ],
+        "kind": "encode_onehot"
+      }
+    },
+    "importance": {
+      "limitation": "İlişkili değişkenler önemi paylaşır/gizler; negatif önem mümkün. Nedensellik değildir; final test kullanılmadı.",
+      "metric": "negative_MAE",
+      "repeats": 3,
+      "row_ids": [
+        "row:a1c90caf-d91a-4150-8505-e3f383f2a12d",
+        "row:74c86a4e-27f6-42fc-afe6-a20c3d698d48",
+        "row:f03289a1-9226-48ce-8981-aff0467f7c41",
+        "row:4f6fcc0b-800d-49ba-b03b-29b4321e182e",
+        "row:0fea2517-5fa2-4718-8dbb-2962cdd817f7",
+        "row:f40fde70-afdb-4cc1-b7df-88e6c126dace",
+        "row:f51dacfd-9183-420d-bae1-7b1856b984d8",
+        "row:912ec206-b858-46c8-a62d-9e2a70ae100d",
+        "row:d1bc0ceb-47df-4e08-81dd-c178ee9e99b0",
+        "row:7bd02927-089e-43ed-aa17-dd8ac3b17863",
+        "row:865053c6-4008-4afe-a05a-73aee8786966",
+        "row:55c4df64-38b7-4e16-bd70-d4468b206aae",
+        "row:9e4b1ca8-865e-4a5d-930f-cb8d8a7f0893",
+        "row:e804b130-f566-4a8c-a869-af89ba6b06ee",
+        "row:d7cd9894-28ab-4b99-8104-8fcefe6e4d25",
+        "row:3e6f4fe4-9e0f-4fc7-b945-849479bd8e68"
+      ],
+      "scope": "validation; exploratory; already used for model/threshold selection",
+      "seed": 42,
+      "status": "available",
+      "values": [
+        {
+          "column_id": "col:a111dc9d-8458-4936-a289-ea6a927f4458",
+          "mean": 57.916666666666664,
+          "name": "x",
+          "std": 3.0709209621147084
+        },
+        {
+          "column_id": "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c",
+          "mean": 1.2499999999999962,
+          "name": "cat",
+          "std": 0.17677669529663614
+        }
+      ]
+    },
+    "label_order": [],
+    "limitations": "Katsayı ve önemler nedensel etki değildir. İlişkili özellikler önemi paylaşabilir veya gizleyebilir. Yeni veri dağılımı değişebilir; olasılık kesinlik veya kalibrasyon garantisi değildir. Küme ve anomali adayları gerçek sınıf/veri hatası değildir; otomatik silme yok.",
+    "method": null,
+    "metrics": [
+      {
+        "evaluation_n": 16,
+        "metrics": [
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "mae",
+            "n": 16,
+            "scope": "validation",
+            "status": "valid",
+            "value": 1.432187701766452e-14
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "rmse",
+            "n": 16,
+            "scope": "validation",
+            "status": "valid",
+            "value": 2.0777490954930018e-14
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "maximize",
+            "metric": "r2",
+            "n": 16,
+            "scope": "validation",
+            "status": "valid",
+            "value": 1.0
+          }
+        ],
+        "scope": "validation",
+        "status": "valid",
+        "train_n": 48
+      },
+      {
+        "evaluation_n": 22,
+        "metrics": [
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "mae",
+            "n": 22,
+            "scope": "cv:1",
+            "status": "valid",
+            "value": 7.347657835701037e-15
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "rmse",
+            "n": 22,
+            "scope": "cv:1",
+            "status": "valid",
+            "value": 9.751594556430533e-15
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "maximize",
+            "metric": "r2",
+            "n": 22,
+            "scope": "cv:1",
+            "status": "valid",
+            "value": 1.0
+          }
+        ],
+        "scope": "cv:1",
+        "status": "valid",
+        "train_n": 42
+      },
+      {
+        "evaluation_n": 21,
+        "metrics": [
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "mae",
+            "n": 21,
+            "scope": "cv:2",
+            "status": "valid",
+            "value": 1.2434497875801753e-14
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "rmse",
+            "n": 21,
+            "scope": "cv:2",
+            "status": "valid",
+            "value": 1.615550262954153e-14
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "maximize",
+            "metric": "r2",
+            "n": 21,
+            "scope": "cv:2",
+            "status": "valid",
+            "value": 1.0
+          }
+        ],
+        "scope": "cv:2",
+        "status": "valid",
+        "train_n": 43
+      },
+      {
+        "evaluation_n": 21,
+        "metrics": [
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "mae",
+            "n": 21,
+            "scope": "cv:3",
+            "status": "valid",
+            "value": 5.857748148974635e-15
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "rmse",
+            "n": 21,
+            "scope": "cv:3",
+            "status": "valid",
+            "value": 8.707190575179277e-15
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "maximize",
+            "metric": "r2",
+            "n": 21,
+            "scope": "cv:3",
+            "status": "valid",
+            "value": 1.0
+          }
+        ],
+        "scope": "cv:3",
+        "status": "valid",
+        "train_n": 43
+      }
+    ],
+    "preparation_spec": {
+      "allow_identifiers": false,
+      "categorical_imputation": "most_frequent",
+      "date_features": true,
+      "encoding": "onehot",
+      "family": "tree",
+      "features": [
+        "col:a111dc9d-8458-4936-a289-ea6a927f4458",
+        "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c"
+      ],
+      "group": "",
+      "history_action": "review",
+      "history_note": "",
+      "invalid_numeric": "reject",
+      "numeric_imputation": "median",
+      "precision": "reject",
+      "prediction_context": "Cihaz çalıştırılmadan önce",
+      "purpose": "regression",
+      "scaling": "auto",
+      "selection": "none",
+      "source_version": "dv:38ebe7ac-bea9-4c6e-9e15-472dc0a6e428",
+      "target": "col:54e125ff-5d45-4bd2-b4e4-85fa161831a9",
+      "time": ""
+    },
+    "preprocessing": {
+      "category_vocabulary": null,
+      "column_lineage": [
+        {
+          "category_map": [],
+          "input_column_id": "col:a111dc9d-8458-4936-a289-ea6a927f4458",
+          "names_status": "structurally_known",
+          "output_names": [
+            "f_a111dc9d84584936a289ea6a927f4458__numeric"
+          ],
+          "selected_after_fit": "all_planned",
+          "source_dtype": "Float64",
+          "source_name": "x"
+        },
+        {
+          "category_map": null,
+          "input_column_id": "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c",
+          "names_status": "template_training_bound",
+          "output_names": [
+            "f_87c7b84d989b4cb5a81cad6db690b55c__category_{training_index}"
+          ],
+          "selected_after_fit": "all_planned",
+          "source_dtype": "String",
+          "source_name": "cat"
+        }
+      ],
+      "estimator_family": "tree",
+      "feature_selection_mask": null,
+      "fit_state": "not_fitted",
+      "fitted_parameters": {},
+      "schema": "PreparationPlan/v1",
+      "steps": [
+        {
+          "input_column_ids": [
+            "col:a111dc9d-8458-4936-a289-ea6a927f4458"
+          ],
+          "kind": "numeric",
+          "learned_scope": "row_local",
+          "output_names": [
+            "f_a111dc9d84584936a289ea6a927f4458__numeric"
+          ],
+          "parameters": {
+            "nonfinite": "reject",
+            "precision": "reject"
+          },
+          "reason": "Kimlik ölçüm değildir; Float64 kaybı gelecekte açık politika ile denetlenir.",
+          "state": "planned"
+        },
+        {
+          "input_column_ids": [
+            "col:a111dc9d-8458-4936-a289-ea6a927f4458"
+          ],
+          "kind": "impute_numeric",
+          "learned_scope": "training_fold",
+          "output_names": [
+            "f_a111dc9d84584936a289ea6a927f4458__numeric"
+          ],
+          "parameters": {
+            "all_missing": "error",
+            "strategy": "median"
+          },
+          "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz.",
+          "state": "planned"
+        },
+        {
+          "input_column_ids": [
+            "col:a111dc9d-8458-4936-a289-ea6a927f4458"
+          ],
+          "kind": "no_scaling",
+          "learned_scope": "row_local",
+          "output_names": [
+            "f_a111dc9d84584936a289ea6a927f4458__numeric"
+          ],
+          "parameters": {
+            "explicit_override": false
+          },
+          "reason": "Ağaç ailesine scaling otomatik önerilmez; açık none seçiminde diğer ailelerde ölçek duyarlılığını inceleyin.",
+          "state": "planned"
+        },
+        {
+          "input_column_ids": [
+            "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c"
+          ],
+          "kind": "impute_category",
+          "learned_scope": "training_fold",
+          "output_names": [],
+          "parameters": {
+            "all_missing": "error",
+            "strategy": "most_frequent"
+          },
+          "reason": "Kategori modunu yalnız eğitim katı öğrenir; eksik hedef doldurulmaz.",
+          "state": "planned"
+        },
+        {
+          "input_column_ids": [
+            "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c"
+          ],
+          "kind": "encode_onehot",
+          "learned_scope": "training_fold",
+          "output_names": [
+            "f_87c7b84d989b4cb5a81cad6db690b55c__category_{training_index}"
+          ],
+          "parameters": {
+            "categories": "training_only",
+            "name_binding": "training category index -> original ColumnId and category; deferred until fit",
+            "sparse": true,
+            "unknown": "ignore_with_warning"
+          },
+          "reason": "Nominal kategorilere sıralama yüklenmez; kategori sözlüğü yalnız eğitim katında öğrenilir.",
+          "state": "planned"
+        }
+      ],
+      "training_dependency": "Requires a validated split/fold protocol in Phase16; no training performed",
+      "version_id": "ml-pipeline:8e3c3ed2-4c39-4fce-9fd1-6616cb527b88"
+    },
+    "probability_supported": false,
+    "purpose": "regression",
+    "run_id": "run:c6ea9d62-b1fd-4094-85d1-3faecf9ae944",
+    "schema": "ModelCard/v1",
+    "seed": 42,
+    "snapshot_fingerprint": {
+      "sha256": "2ecc8a04b13c7e275422f4e4773df39c92a941907a3104e8373d04fea10fbb44",
+      "size": 9636
+    },
+    "split": {
+      "invalid_folds": [],
+      "membership": {
+        "development": [
+          "row:01b5767f-554d-4835-ae66-42ec2281fdaf",
+          "row:0767799a-7ec4-44b9-87ae-79cc577864f1",
+          "row:0880b595-cfcd-4d11-8041-a2c9ab5d8c9d",
+          "row:09d12aa2-8e68-4f1e-b4b1-ed86cd3bc488",
+          "row:0fd4dc6d-da5c-40e6-a9bb-b4034f3db83b",
+          "row:0fea2517-5fa2-4718-8dbb-2962cdd817f7",
+          "row:12e1cbaf-0077-417f-b881-a0e3fffcacf3",
+          "row:155527da-fdc2-427f-9bf1-f35bd8696754",
+          "row:15e5db11-4cac-4d62-8a87-0bf4c965b4dc",
+          "row:19e597b0-05b4-444e-bf80-0cd1564a7280",
+          "row:1ddc7bc8-37b0-42c1-b763-c6e123f5cd81",
+          "row:203a9b9b-b3a8-4913-bc17-48f19d16e96c",
+          "row:24dc5f06-1f92-46f3-934b-6f7e5f1870a9",
+          "row:368468f3-b066-48d0-98a4-ce31b228435c",
+          "row:39b992cb-f44c-481a-9434-741c9772729b",
+          "row:3af84867-11a6-4a4b-a47f-833e7446f091",
+          "row:3e6f4fe4-9e0f-4fc7-b945-849479bd8e68",
+          "row:44138ccd-39f1-4299-abe5-5b8f855d588a",
+          "row:4900f6e1-eef5-41a3-a932-cf2002935784",
+          "row:4f6fcc0b-800d-49ba-b03b-29b4321e182e",
+          "row:54a81bbf-d042-49c4-8ea8-ff58d199aaa4",
+          "row:55c4df64-38b7-4e16-bd70-d4468b206aae",
+          "row:5620400a-96a3-4e9d-9a37-478479ae3a09",
+          "row:5d7eb1db-0b02-4f0a-bf40-2d39120d292b",
+          "row:63d420db-a3f9-47bc-b5ad-6706c43b7eda",
+          "row:6a196d98-a0a1-4268-8301-47bef47917c6",
+          "row:6cbacf3a-25c3-47ea-b5bc-7238af5ffc26",
+          "row:74c86a4e-27f6-42fc-afe6-a20c3d698d48",
+          "row:7af25e56-e88e-4309-83d4-355b5ea88bfa",
+          "row:7bd02927-089e-43ed-aa17-dd8ac3b17863",
+          "row:7c8a6a24-dc00-4225-b0db-203b9de2c273",
+          "row:865053c6-4008-4afe-a05a-73aee8786966",
+          "row:86cc1e54-a60b-411e-9b22-fd95e4a31929",
+          "row:87f917a2-47cd-4156-a0fb-be5081dc1a67",
+          "row:8b133b06-c1e2-417e-8519-22d6a14cbe03",
+          "row:8b8e5dd0-24d4-4b7f-8b9f-16fc0ebd1bc2",
+          "row:8de4ab5d-c5fa-4fb2-b814-3b48eb515032",
+          "row:912ec206-b858-46c8-a62d-9e2a70ae100d",
+          "row:960259fe-4a14-4d77-9a40-d582b584a7d6",
+          "row:98eaebd1-7bed-4e4a-aea6-0541b0204804",
+          "row:9c2a4112-9371-4a84-8acc-f6f147a1adc1",
+          "row:9e4b1ca8-865e-4a5d-930f-cb8d8a7f0893",
+          "row:a1c90caf-d91a-4150-8505-e3f383f2a12d",
+          "row:a1fa3282-4f53-405a-9ebb-b7af034c73ea",
+          "row:a35f256a-67a6-4187-8e5b-147d5a3018ba",
+          "row:a439ce6a-30d3-44a5-83e6-30de08c00003",
+          "row:ac94dafb-57b9-449e-b3c5-46b92f324b0d",
+          "row:acd46a26-92ee-4750-b73b-5a7b28d06619",
+          "row:b32d321a-5c84-4399-8113-b4c1a902dc7b",
+          "row:b8288ce6-4520-442c-85ec-34fdb7dd95ea",
+          "row:be18136a-6b54-455c-bc3e-737fe5f52459",
+          "row:c1dc29aa-3a2d-45e6-9ade-4504bba75d19",
+          "row:c26b1eb3-78cc-4e6e-8f3f-990a4602945a",
+          "row:d1bc0ceb-47df-4e08-81dd-c178ee9e99b0",
+          "row:d662cac8-3e5e-4548-9d46-90bac8fd001d",
+          "row:d7cd9894-28ab-4b99-8104-8fcefe6e4d25",
+          "row:def3ea5c-b2c4-4f6b-afe0-e5c9254434a4",
+          "row:e804b130-f566-4a8c-a869-af89ba6b06ee",
+          "row:ec93de72-0d11-4ff0-b5a0-274e5a6fdd31",
+          "row:f03289a1-9226-48ce-8981-aff0467f7c41",
+          "row:f40fde70-afdb-4cc1-b7df-88e6c126dace",
+          "row:f51dacfd-9183-420d-bae1-7b1856b984d8",
+          "row:f538e37e-341b-4588-817c-08e7fac7c521",
+          "row:f53e23f1-2190-4a48-986b-bf51b2c7c56f"
+        ],
+        "folds": [
+          {
+            "status": "valid",
+            "train": [
+              "row:01b5767f-554d-4835-ae66-42ec2281fdaf",
+              "row:0767799a-7ec4-44b9-87ae-79cc577864f1",
+              "row:0880b595-cfcd-4d11-8041-a2c9ab5d8c9d",
+              "row:09d12aa2-8e68-4f1e-b4b1-ed86cd3bc488",
+              "row:0fd4dc6d-da5c-40e6-a9bb-b4034f3db83b",
+              "row:12e1cbaf-0077-417f-b881-a0e3fffcacf3",
+              "row:155527da-fdc2-427f-9bf1-f35bd8696754",
+              "row:15e5db11-4cac-4d62-8a87-0bf4c965b4dc",
+              "row:19e597b0-05b4-444e-bf80-0cd1564a7280",
+              "row:1ddc7bc8-37b0-42c1-b763-c6e123f5cd81",
+              "row:203a9b9b-b3a8-4913-bc17-48f19d16e96c",
+              "row:24dc5f06-1f92-46f3-934b-6f7e5f1870a9",
+              "row:368468f3-b066-48d0-98a4-ce31b228435c",
+              "row:39b992cb-f44c-481a-9434-741c9772729b",
+              "row:3af84867-11a6-4a4b-a47f-833e7446f091",
+              "row:44138ccd-39f1-4299-abe5-5b8f855d588a",
+              "row:4900f6e1-eef5-41a3-a932-cf2002935784",
+              "row:54a81bbf-d042-49c4-8ea8-ff58d199aaa4",
+              "row:5620400a-96a3-4e9d-9a37-478479ae3a09",
+              "row:63d420db-a3f9-47bc-b5ad-6706c43b7eda",
+              "row:6a196d98-a0a1-4268-8301-47bef47917c6",
+              "row:6cbacf3a-25c3-47ea-b5bc-7238af5ffc26",
+              "row:7c8a6a24-dc00-4225-b0db-203b9de2c273",
+              "row:86cc1e54-a60b-411e-9b22-fd95e4a31929",
+              "row:8b133b06-c1e2-417e-8519-22d6a14cbe03",
+              "row:8b8e5dd0-24d4-4b7f-8b9f-16fc0ebd1bc2",
+              "row:8de4ab5d-c5fa-4fb2-b814-3b48eb515032",
+              "row:960259fe-4a14-4d77-9a40-d582b584a7d6",
+              "row:98eaebd1-7bed-4e4a-aea6-0541b0204804",
+              "row:a1fa3282-4f53-405a-9ebb-b7af034c73ea",
+              "row:a35f256a-67a6-4187-8e5b-147d5a3018ba",
+              "row:a439ce6a-30d3-44a5-83e6-30de08c00003",
+              "row:ac94dafb-57b9-449e-b3c5-46b92f324b0d",
+              "row:acd46a26-92ee-4750-b73b-5a7b28d06619",
+              "row:b8288ce6-4520-442c-85ec-34fdb7dd95ea",
+              "row:be18136a-6b54-455c-bc3e-737fe5f52459",
+              "row:c1dc29aa-3a2d-45e6-9ade-4504bba75d19",
+              "row:c26b1eb3-78cc-4e6e-8f3f-990a4602945a",
+              "row:d662cac8-3e5e-4548-9d46-90bac8fd001d",
+              "row:def3ea5c-b2c4-4f6b-afe0-e5c9254434a4",
+              "row:f538e37e-341b-4588-817c-08e7fac7c521",
+              "row:f53e23f1-2190-4a48-986b-bf51b2c7c56f"
+            ],
+            "validation": [
+              "row:0fea2517-5fa2-4718-8dbb-2962cdd817f7",
+              "row:3e6f4fe4-9e0f-4fc7-b945-849479bd8e68",
+              "row:4f6fcc0b-800d-49ba-b03b-29b4321e182e",
+              "row:55c4df64-38b7-4e16-bd70-d4468b206aae",
+              "row:5d7eb1db-0b02-4f0a-bf40-2d39120d292b",
+              "row:74c86a4e-27f6-42fc-afe6-a20c3d698d48",
+              "row:7af25e56-e88e-4309-83d4-355b5ea88bfa",
+              "row:7bd02927-089e-43ed-aa17-dd8ac3b17863",
+              "row:865053c6-4008-4afe-a05a-73aee8786966",
+              "row:87f917a2-47cd-4156-a0fb-be5081dc1a67",
+              "row:912ec206-b858-46c8-a62d-9e2a70ae100d",
+              "row:9c2a4112-9371-4a84-8acc-f6f147a1adc1",
+              "row:9e4b1ca8-865e-4a5d-930f-cb8d8a7f0893",
+              "row:a1c90caf-d91a-4150-8505-e3f383f2a12d",
+              "row:b32d321a-5c84-4399-8113-b4c1a902dc7b",
+              "row:d1bc0ceb-47df-4e08-81dd-c178ee9e99b0",
+              "row:d7cd9894-28ab-4b99-8104-8fcefe6e4d25",
+              "row:e804b130-f566-4a8c-a869-af89ba6b06ee",
+              "row:ec93de72-0d11-4ff0-b5a0-274e5a6fdd31",
+              "row:f03289a1-9226-48ce-8981-aff0467f7c41",
+              "row:f40fde70-afdb-4cc1-b7df-88e6c126dace",
+              "row:f51dacfd-9183-420d-bae1-7b1856b984d8"
+            ]
+          },
+          {
+            "status": "valid",
+            "train": [
+              "row:0767799a-7ec4-44b9-87ae-79cc577864f1",
+              "row:0fea2517-5fa2-4718-8dbb-2962cdd817f7",
+              "row:12e1cbaf-0077-417f-b881-a0e3fffcacf3",
+              "row:155527da-fdc2-427f-9bf1-f35bd8696754",
+              "row:15e5db11-4cac-4d62-8a87-0bf4c965b4dc",
+              "row:3af84867-11a6-4a4b-a47f-833e7446f091",
+              "row:3e6f4fe4-9e0f-4fc7-b945-849479bd8e68",
+              "row:44138ccd-39f1-4299-abe5-5b8f855d588a",
+              "row:4900f6e1-eef5-41a3-a932-cf2002935784",
+              "row:4f6fcc0b-800d-49ba-b03b-29b4321e182e",
+              "row:55c4df64-38b7-4e16-bd70-d4468b206aae",
+              "row:5620400a-96a3-4e9d-9a37-478479ae3a09",
+              "row:5d7eb1db-0b02-4f0a-bf40-2d39120d292b",
+              "row:63d420db-a3f9-47bc-b5ad-6706c43b7eda",
+              "row:6a196d98-a0a1-4268-8301-47bef47917c6",
+              "row:74c86a4e-27f6-42fc-afe6-a20c3d698d48",
+              "row:7af25e56-e88e-4309-83d4-355b5ea88bfa",
+              "row:7bd02927-089e-43ed-aa17-dd8ac3b17863",
+              "row:865053c6-4008-4afe-a05a-73aee8786966",
+              "row:86cc1e54-a60b-411e-9b22-fd95e4a31929",
+              "row:87f917a2-47cd-4156-a0fb-be5081dc1a67",
+              "row:8b133b06-c1e2-417e-8519-22d6a14cbe03",
+              "row:8b8e5dd0-24d4-4b7f-8b9f-16fc0ebd1bc2",
+              "row:912ec206-b858-46c8-a62d-9e2a70ae100d",
+              "row:9c2a4112-9371-4a84-8acc-f6f147a1adc1",
+              "row:9e4b1ca8-865e-4a5d-930f-cb8d8a7f0893",
+              "row:a1c90caf-d91a-4150-8505-e3f383f2a12d",
+              "row:a35f256a-67a6-4187-8e5b-147d5a3018ba",
+              "row:acd46a26-92ee-4750-b73b-5a7b28d06619",
+              "row:b32d321a-5c84-4399-8113-b4c1a902dc7b",
+              "row:b8288ce6-4520-442c-85ec-34fdb7dd95ea",
+              "row:be18136a-6b54-455c-bc3e-737fe5f52459",
+              "row:c1dc29aa-3a2d-45e6-9ade-4504bba75d19",
+              "row:c26b1eb3-78cc-4e6e-8f3f-990a4602945a",
+              "row:d1bc0ceb-47df-4e08-81dd-c178ee9e99b0",
+              "row:d662cac8-3e5e-4548-9d46-90bac8fd001d",
+              "row:d7cd9894-28ab-4b99-8104-8fcefe6e4d25",
+              "row:e804b130-f566-4a8c-a869-af89ba6b06ee",
+              "row:ec93de72-0d11-4ff0-b5a0-274e5a6fdd31",
+              "row:f03289a1-9226-48ce-8981-aff0467f7c41",
+              "row:f40fde70-afdb-4cc1-b7df-88e6c126dace",
+              "row:f51dacfd-9183-420d-bae1-7b1856b984d8",
+              "row:f538e37e-341b-4588-817c-08e7fac7c521"
+            ],
+            "validation": [
+              "row:01b5767f-554d-4835-ae66-42ec2281fdaf",
+              "row:0880b595-cfcd-4d11-8041-a2c9ab5d8c9d",
+              "row:09d12aa2-8e68-4f1e-b4b1-ed86cd3bc488",
+              "row:0fd4dc6d-da5c-40e6-a9bb-b4034f3db83b",
+              "row:19e597b0-05b4-444e-bf80-0cd1564a7280",
+              "row:1ddc7bc8-37b0-42c1-b763-c6e123f5cd81",
+              "row:203a9b9b-b3a8-4913-bc17-48f19d16e96c",
+              "row:24dc5f06-1f92-46f3-934b-6f7e5f1870a9",
+              "row:368468f3-b066-48d0-98a4-ce31b228435c",
+              "row:39b992cb-f44c-481a-9434-741c9772729b",
+              "row:54a81bbf-d042-49c4-8ea8-ff58d199aaa4",
+              "row:6cbacf3a-25c3-47ea-b5bc-7238af5ffc26",
+              "row:7c8a6a24-dc00-4225-b0db-203b9de2c273",
+              "row:8de4ab5d-c5fa-4fb2-b814-3b48eb515032",
+              "row:960259fe-4a14-4d77-9a40-d582b584a7d6",
+              "row:98eaebd1-7bed-4e4a-aea6-0541b0204804",
+              "row:a1fa3282-4f53-405a-9ebb-b7af034c73ea",
+              "row:a439ce6a-30d3-44a5-83e6-30de08c00003",
+              "row:ac94dafb-57b9-449e-b3c5-46b92f324b0d",
+              "row:def3ea5c-b2c4-4f6b-afe0-e5c9254434a4",
+              "row:f53e23f1-2190-4a48-986b-bf51b2c7c56f"
+            ]
+          },
+          {
+            "status": "valid",
+            "train": [
+              "row:01b5767f-554d-4835-ae66-42ec2281fdaf",
+              "row:0880b595-cfcd-4d11-8041-a2c9ab5d8c9d",
+              "row:09d12aa2-8e68-4f1e-b4b1-ed86cd3bc488",
+              "row:0fd4dc6d-da5c-40e6-a9bb-b4034f3db83b",
+              "row:0fea2517-5fa2-4718-8dbb-2962cdd817f7",
+              "row:19e597b0-05b4-444e-bf80-0cd1564a7280",
+              "row:1ddc7bc8-37b0-42c1-b763-c6e123f5cd81",
+              "row:203a9b9b-b3a8-4913-bc17-48f19d16e96c",
+              "row:24dc5f06-1f92-46f3-934b-6f7e5f1870a9",
+              "row:368468f3-b066-48d0-98a4-ce31b228435c",
+              "row:39b992cb-f44c-481a-9434-741c9772729b",
+              "row:3e6f4fe4-9e0f-4fc7-b945-849479bd8e68",
+              "row:4f6fcc0b-800d-49ba-b03b-29b4321e182e",
+              "row:54a81bbf-d042-49c4-8ea8-ff58d199aaa4",
+              "row:55c4df64-38b7-4e16-bd70-d4468b206aae",
+              "row:5d7eb1db-0b02-4f0a-bf40-2d39120d292b",
+              "row:6cbacf3a-25c3-47ea-b5bc-7238af5ffc26",
+              "row:74c86a4e-27f6-42fc-afe6-a20c3d698d48",
+              "row:7af25e56-e88e-4309-83d4-355b5ea88bfa",
+              "row:7bd02927-089e-43ed-aa17-dd8ac3b17863",
+              "row:7c8a6a24-dc00-4225-b0db-203b9de2c273",
+              "row:865053c6-4008-4afe-a05a-73aee8786966",
+              "row:87f917a2-47cd-4156-a0fb-be5081dc1a67",
+              "row:8de4ab5d-c5fa-4fb2-b814-3b48eb515032",
+              "row:912ec206-b858-46c8-a62d-9e2a70ae100d",
+              "row:960259fe-4a14-4d77-9a40-d582b584a7d6",
+              "row:98eaebd1-7bed-4e4a-aea6-0541b0204804",
+              "row:9c2a4112-9371-4a84-8acc-f6f147a1adc1",
+              "row:9e4b1ca8-865e-4a5d-930f-cb8d8a7f0893",
+              "row:a1c90caf-d91a-4150-8505-e3f383f2a12d",
+              "row:a1fa3282-4f53-405a-9ebb-b7af034c73ea",
+              "row:a439ce6a-30d3-44a5-83e6-30de08c00003",
+              "row:ac94dafb-57b9-449e-b3c5-46b92f324b0d",
+              "row:b32d321a-5c84-4399-8113-b4c1a902dc7b",
+              "row:d1bc0ceb-47df-4e08-81dd-c178ee9e99b0",
+              "row:d7cd9894-28ab-4b99-8104-8fcefe6e4d25",
+              "row:def3ea5c-b2c4-4f6b-afe0-e5c9254434a4",
+              "row:e804b130-f566-4a8c-a869-af89ba6b06ee",
+              "row:ec93de72-0d11-4ff0-b5a0-274e5a6fdd31",
+              "row:f03289a1-9226-48ce-8981-aff0467f7c41",
+              "row:f40fde70-afdb-4cc1-b7df-88e6c126dace",
+              "row:f51dacfd-9183-420d-bae1-7b1856b984d8",
+              "row:f53e23f1-2190-4a48-986b-bf51b2c7c56f"
+            ],
+            "validation": [
+              "row:0767799a-7ec4-44b9-87ae-79cc577864f1",
+              "row:12e1cbaf-0077-417f-b881-a0e3fffcacf3",
+              "row:155527da-fdc2-427f-9bf1-f35bd8696754",
+              "row:15e5db11-4cac-4d62-8a87-0bf4c965b4dc",
+              "row:3af84867-11a6-4a4b-a47f-833e7446f091",
+              "row:44138ccd-39f1-4299-abe5-5b8f855d588a",
+              "row:4900f6e1-eef5-41a3-a932-cf2002935784",
+              "row:5620400a-96a3-4e9d-9a37-478479ae3a09",
+              "row:63d420db-a3f9-47bc-b5ad-6706c43b7eda",
+              "row:6a196d98-a0a1-4268-8301-47bef47917c6",
+              "row:86cc1e54-a60b-411e-9b22-fd95e4a31929",
+              "row:8b133b06-c1e2-417e-8519-22d6a14cbe03",
+              "row:8b8e5dd0-24d4-4b7f-8b9f-16fc0ebd1bc2",
+              "row:a35f256a-67a6-4187-8e5b-147d5a3018ba",
+              "row:acd46a26-92ee-4750-b73b-5a7b28d06619",
+              "row:b8288ce6-4520-442c-85ec-34fdb7dd95ea",
+              "row:be18136a-6b54-455c-bc3e-737fe5f52459",
+              "row:c1dc29aa-3a2d-45e6-9ade-4504bba75d19",
+              "row:c26b1eb3-78cc-4e6e-8f3f-990a4602945a",
+              "row:d662cac8-3e5e-4548-9d46-90bac8fd001d",
+              "row:f538e37e-341b-4588-817c-08e7fac7c521"
+            ]
+          }
+        ],
+        "purged": [],
+        "test": [
+          "row:223c40b5-763e-468a-9534-cf63eed3c4a1",
+          "row:2b9c720d-b721-4e13-a808-b0cbd5c5ce58",
+          "row:4e46646c-38d8-4db1-a704-41016dfa8206",
+          "row:56b2be27-5526-416d-9d68-83944216421f",
+          "row:59ea7a90-bcea-43c5-94cb-a9c29dcdadca",
+          "row:6323fa23-d26e-47f8-a4e5-7581f726264a",
+          "row:6a75634d-5fbc-4ee7-bbd6-9f390879d7eb",
+          "row:6fe4ef91-0155-4ceb-af7e-a6687a27148a",
+          "row:af33748d-f978-4bf0-8d9e-fb1aff6101e6",
+          "row:b1a26d46-55e9-490f-ae99-47160eb27114",
+          "row:bff3e5af-4bc2-41fb-87b6-37288dfc50ed",
+          "row:c1b915e6-1815-44d5-9a22-c55c0f808c5b",
+          "row:c74e48ff-690c-48dc-b201-dd03b861bd27",
+          "row:d5368b22-38c1-4160-b217-93a77b96a013",
+          "row:eff05c58-c9a7-42a2-89e4-5f3ad2a3fb9c",
+          "row:f62fbb33-0d91-43d5-a25f-2f3842a7122a"
+        ],
+        "train": [
+          "row:01b5767f-554d-4835-ae66-42ec2281fdaf",
+          "row:0767799a-7ec4-44b9-87ae-79cc577864f1",
+          "row:0880b595-cfcd-4d11-8041-a2c9ab5d8c9d",
+          "row:09d12aa2-8e68-4f1e-b4b1-ed86cd3bc488",
+          "row:0fd4dc6d-da5c-40e6-a9bb-b4034f3db83b",
+          "row:12e1cbaf-0077-417f-b881-a0e3fffcacf3",
+          "row:155527da-fdc2-427f-9bf1-f35bd8696754",
+          "row:15e5db11-4cac-4d62-8a87-0bf4c965b4dc",
+          "row:19e597b0-05b4-444e-bf80-0cd1564a7280",
+          "row:1ddc7bc8-37b0-42c1-b763-c6e123f5cd81",
+          "row:203a9b9b-b3a8-4913-bc17-48f19d16e96c",
+          "row:24dc5f06-1f92-46f3-934b-6f7e5f1870a9",
+          "row:368468f3-b066-48d0-98a4-ce31b228435c",
+          "row:39b992cb-f44c-481a-9434-741c9772729b",
+          "row:3af84867-11a6-4a4b-a47f-833e7446f091",
+          "row:44138ccd-39f1-4299-abe5-5b8f855d588a",
+          "row:4900f6e1-eef5-41a3-a932-cf2002935784",
+          "row:54a81bbf-d042-49c4-8ea8-ff58d199aaa4",
+          "row:5620400a-96a3-4e9d-9a37-478479ae3a09",
+          "row:5d7eb1db-0b02-4f0a-bf40-2d39120d292b",
+          "row:63d420db-a3f9-47bc-b5ad-6706c43b7eda",
+          "row:6a196d98-a0a1-4268-8301-47bef47917c6",
+          "row:6cbacf3a-25c3-47ea-b5bc-7238af5ffc26",
+          "row:7af25e56-e88e-4309-83d4-355b5ea88bfa",
+          "row:7c8a6a24-dc00-4225-b0db-203b9de2c273",
+          "row:86cc1e54-a60b-411e-9b22-fd95e4a31929",
+          "row:87f917a2-47cd-4156-a0fb-be5081dc1a67",
+          "row:8b133b06-c1e2-417e-8519-22d6a14cbe03",
+          "row:8b8e5dd0-24d4-4b7f-8b9f-16fc0ebd1bc2",
+          "row:8de4ab5d-c5fa-4fb2-b814-3b48eb515032",
+          "row:960259fe-4a14-4d77-9a40-d582b584a7d6",
+          "row:98eaebd1-7bed-4e4a-aea6-0541b0204804",
+          "row:9c2a4112-9371-4a84-8acc-f6f147a1adc1",
+          "row:a1fa3282-4f53-405a-9ebb-b7af034c73ea",
+          "row:a35f256a-67a6-4187-8e5b-147d5a3018ba",
+          "row:a439ce6a-30d3-44a5-83e6-30de08c00003",
+          "row:ac94dafb-57b9-449e-b3c5-46b92f324b0d",
+          "row:acd46a26-92ee-4750-b73b-5a7b28d06619",
+          "row:b32d321a-5c84-4399-8113-b4c1a902dc7b",
+          "row:b8288ce6-4520-442c-85ec-34fdb7dd95ea",
+          "row:be18136a-6b54-455c-bc3e-737fe5f52459",
+          "row:c1dc29aa-3a2d-45e6-9ade-4504bba75d19",
+          "row:c26b1eb3-78cc-4e6e-8f3f-990a4602945a",
+          "row:d662cac8-3e5e-4548-9d46-90bac8fd001d",
+          "row:def3ea5c-b2c4-4f6b-afe0-e5c9254434a4",
+          "row:ec93de72-0d11-4ff0-b5a0-274e5a6fdd31",
+          "row:f538e37e-341b-4588-817c-08e7fac7c521",
+          "row:f53e23f1-2190-4a48-986b-bf51b2c7c56f"
+        ],
+        "validation": [
+          "row:0fea2517-5fa2-4718-8dbb-2962cdd817f7",
+          "row:3e6f4fe4-9e0f-4fc7-b945-849479bd8e68",
+          "row:4f6fcc0b-800d-49ba-b03b-29b4321e182e",
+          "row:55c4df64-38b7-4e16-bd70-d4468b206aae",
+          "row:74c86a4e-27f6-42fc-afe6-a20c3d698d48",
+          "row:7bd02927-089e-43ed-aa17-dd8ac3b17863",
+          "row:865053c6-4008-4afe-a05a-73aee8786966",
+          "row:912ec206-b858-46c8-a62d-9e2a70ae100d",
+          "row:9e4b1ca8-865e-4a5d-930f-cb8d8a7f0893",
+          "row:a1c90caf-d91a-4150-8505-e3f383f2a12d",
+          "row:d1bc0ceb-47df-4e08-81dd-c178ee9e99b0",
+          "row:d7cd9894-28ab-4b99-8104-8fcefe6e4d25",
+          "row:e804b130-f566-4a8c-a869-af89ba6b06ee",
+          "row:f03289a1-9226-48ce-8981-aff0467f7c41",
+          "row:f40fde70-afdb-4cc1-b7df-88e6c126dace",
+          "row:f51dacfd-9183-420d-bae1-7b1856b984d8"
+        ]
+      },
+      "method": "random",
+      "protocol_id": "protocol:d5f4ab3148358c65aed2dbf09791a524593af2a1422a46abf11169dd529b7748",
+      "schema": "ValidationPlan/v1",
+      "split_id": "split:29c86312b03cc7bd1c1474e98e8f032e5a8b3431638b052fe9f1ed0ea469368b"
+    },
+    "target": {
+      "id": "col:54e125ff-5d45-4bd2-b4e4-85fa161831a9",
+      "name": "y",
+      "original_name": "y",
+      "type": "Float64",
+      "unit": "hedef birimi"
+    },
+    "threshold": null,
+    "versions": {
+      "numpy": "2.5.3",
+      "polars": "2.0.0",
+      "python": "3.13.15",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.0",
+      "skops": "0.16.0",
+      "veri-ufku": "0.1.0"
+    }
+  },
+  "created_at": "2026-10-13T19:20:31.948801+00:00",
+  "diagnostics": {
+    "correlated_pairs": [],
+    "features": [
+      {
+        "background_max": 79.0,
+        "background_min": 1.0,
+        "column_id": "col:a111dc9d-8458-4936-a289-ea6a927f4458",
+        "missing_n": 0,
+        "outside_background_n": 0,
+        "unknown_category_n": 0
+      },
+      {
+        "column_id": "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c",
+        "missing_n": 0,
+        "outside_background_n": 0,
+        "unknown_category_n": 0
+      }
+    ],
+    "joint_support": "not established; observed marginal range is not evidence of feasible combinations"
+  },
+  "feature_mapping": [
+    {
+      "column_id": "col:a111dc9d-8458-4936-a289-ea6a927f4458",
+      "component": 0,
+      "dependencies": [
+        "col:a111dc9d-8458-4936-a289-ea6a927f4458"
+      ],
+      "index": 0,
+      "name": "x",
+      "transformed_name": "col:a111dc9d-8458-4936-a289-ea6a927f4458__numeric"
+    },
+    {
+      "column_id": "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c",
+      "component": 0,
+      "dependencies": [
+        "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c"
+      ],
+      "index": 1,
+      "name": "cat",
+      "transformed_name": "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c__category_0"
+    },
+    {
+      "column_id": "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c",
+      "component": 0,
+      "dependencies": [
+        "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c"
+      ],
+      "index": 2,
+      "name": "cat",
+      "transformed_name": "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c__category_1"
+    }
+  ],
+  "identity": "explanation:6b145538c8bfd8acb4c3208967cf9844e7ce25a3b6f247246a8da56798714169",
+  "limitations": "Model açıklaması ilişki/tahmin davranışıdır; SHAP katkısı neden-sonuç değildir. Correlated features permutation önemini paylaşabilir; PDP/ICE ve SHAP background değişimleri gözlenmeyen kombinasyonlar üretir. Gözlenen aralık içinde bile extrapolation/ortak destek sorunu olabilir. Missing eğitimdeki dönüşümle işlenir; indicator ayrı etkidir, otomatik veri düzeltme yok. Background ve sample seçimi açıklamayı değiştirir; global sample bütün popülasyon değildir. Dilim keşfi çoklu arama etkisi taşır; küçük gruplar güvenilmezdir. Fairness metrikleri trade-off taşır; tek metrikle adil model rozeti veya hukuki sonuç yok. What-if ve kısıtlı aday tahmini causal counterfactual değildir; gerçekleşebilirlik/nedensel etki garantisi yok.",
+  "permutation": {
+    "baseline": -1.432187701766452e-14,
+    "metric": "negative_mae",
+    "repeats": 3,
+    "uncertainty": "shuffle repeat std ddof1; not population confidence interval",
+    "values": [
+      {
+        "column_id": "col:a111dc9d-8458-4936-a289-ea6a927f4458",
+        "mean": 54.33333333333332,
+        "name": "x",
+        "repeat_values": [
+          48.999999999999986,
+          55.49999999999999,
+          58.49999999999999
+        ],
+        "std": 4.856267428111159
+      },
+      {
+        "column_id": "col:87c7b84d-989b-4cb5-a81c-ad6db690b55c",
+        "mean": 1.624999999999993,
+        "name": "cat",
+        "repeat_values": [
+          1.8749999999999925,
+          1.8749999999999893,
+          1.1249999999999964
+        ],
+        "std": 0.43301270189221613
+      }
+    ]
+  },
+  "prediction_records": [
+    {
+      "actual": 7.0,
+      "prediction": 6.999999999999957,
+      "row_id": "row:865053c6-4008-4afe-a05a-73aee8786966"
+    },
+    {
+      "actual": 6.0,
+      "prediction": 5.999999999999961,
+      "row_id": "row:d1bc0ceb-47df-4e08-81dd-c178ee9e99b0"
+    },
+    {
+      "actual": 14.0,
+      "prediction": 13.999999999999966,
+      "row_id": "row:f51dacfd-9183-420d-bae1-7b1856b984d8"
+    },
+    {
+      "actual": 30.0,
+      "prediction": 29.99999999999997,
+      "row_id": "row:f40fde70-afdb-4cc1-b7df-88e6c126dace"
+    },
+    {
+      "actual": 35.0,
+      "prediction": 34.99999999999997,
+      "row_id": "row:912ec206-b858-46c8-a62d-9e2a70ae100d"
+    },
+    {
+      "actual": 58.0,
+      "prediction": 57.999999999999986,
+      "row_id": "row:a1c90caf-d91a-4150-8505-e3f383f2a12d"
+    },
+    {
+      "actual": 78.0,
+      "prediction": 77.99999999999999,
+      "row_id": "row:e804b130-f566-4a8c-a869-af89ba6b06ee"
+    },
+    {
+      "actual": 95.0,
+      "prediction": 95.0,
+      "row_id": "row:d7cd9894-28ab-4b99-8104-8fcefe6e4d25"
+    },
+    {
+      "actual": 99.0,
+      "prediction": 99.0,
+      "row_id": "row:9e4b1ca8-865e-4a5d-930f-cb8d8a7f0893"
+    },
+    {
+      "actual": 114.0,
+      "prediction": 114.00000000000001,
+      "row_id": "row:4f6fcc0b-800d-49ba-b03b-29b4321e182e"
+    },
+    {
+      "actual": 127.0,
+      "prediction": 127.00000000000001,
+      "row_id": "row:55c4df64-38b7-4e16-bd70-d4468b206aae"
+    },
+    {
+      "actual": 131.0,
+      "prediction": 131.0,
+      "row_id": "row:0fea2517-5fa2-4718-8dbb-2962cdd817f7"
+    },
+    {
+      "actual": 138.0,
+      "prediction": 138.0,
+      "row_id": "row:3e6f4fe4-9e0f-4fc7-b945-849479bd8e68"
+    },
+    {
+      "actual": 142.0,
+      "prediction": 142.0,
+      "row_id": "row:7bd02927-089e-43ed-aa17-dd8ac3b17863"
+    },
+    {
+      "actual": 146.0,
+      "prediction": 146.0,
+      "row_id": "row:f03289a1-9226-48ce-8981-aff0467f7c41"
+    },
+    {
+      "actual": 151.0,
+      "prediction": 151.0,
+      "row_id": "row:74c86a4e-27f6-42fc-afe6-a20c3d698d48"
+    }
+  ],
+  "provenance": {
+    "background_dataset_version": "dv:38ebe7ac-bea9-4c6e-9e15-472dc0a6e428",
+    "background_eligible_n": 48,
+    "background_n": 40,
+    "background_row_ids": [
+      "row:63d420db-a3f9-47bc-b5ad-6706c43b7eda",
+      "row:5d7eb1db-0b02-4f0a-bf40-2d39120d292b",
+      "row:09d12aa2-8e68-4f1e-b4b1-ed86cd3bc488",
+      "row:d662cac8-3e5e-4548-9d46-90bac8fd001d",
+      "row:39b992cb-f44c-481a-9434-741c9772729b",
+      "row:def3ea5c-b2c4-4f6b-afe0-e5c9254434a4",
+      "row:6a196d98-a0a1-4268-8301-47bef47917c6",
+      "row:5620400a-96a3-4e9d-9a37-478479ae3a09",
+      "row:1ddc7bc8-37b0-42c1-b763-c6e123f5cd81",
+      "row:54a81bbf-d042-49c4-8ea8-ff58d199aaa4",
+      "row:0880b595-cfcd-4d11-8041-a2c9ab5d8c9d",
+      "row:960259fe-4a14-4d77-9a40-d582b584a7d6",
+      "row:15e5db11-4cac-4d62-8a87-0bf4c965b4dc",
+      "row:44138ccd-39f1-4299-abe5-5b8f855d588a",
+      "row:203a9b9b-b3a8-4913-bc17-48f19d16e96c",
+      "row:01b5767f-554d-4835-ae66-42ec2281fdaf",
+      "row:87f917a2-47cd-4156-a0fb-be5081dc1a67",
+      "row:a1fa3282-4f53-405a-9ebb-b7af034c73ea",
+      "row:a35f256a-67a6-4187-8e5b-147d5a3018ba",
+      "row:a439ce6a-30d3-44a5-83e6-30de08c00003",
+      "row:7af25e56-e88e-4309-83d4-355b5ea88bfa",
+      "row:f538e37e-341b-4588-817c-08e7fac7c521",
+      "row:be18136a-6b54-455c-bc3e-737fe5f52459",
+      "row:8b133b06-c1e2-417e-8519-22d6a14cbe03",
+      "row:12e1cbaf-0077-417f-b881-a0e3fffcacf3",
+      "row:0767799a-7ec4-44b9-87ae-79cc577864f1",
+      "row:c26b1eb3-78cc-4e6e-8f3f-990a4602945a",
+      "row:86cc1e54-a60b-411e-9b22-fd95e4a31929",
+      "row:98eaebd1-7bed-4e4a-aea6-0541b0204804",
+      "row:3af84867-11a6-4a4b-a47f-833e7446f091",
+      "row:b8288ce6-4520-442c-85ec-34fdb7dd95ea",
+      "row:b32d321a-5c84-4399-8113-b4c1a902dc7b",
+      "row:155527da-fdc2-427f-9bf1-f35bd8696754",
+      "row:ac94dafb-57b9-449e-b3c5-46b92f324b0d",
+      "row:4900f6e1-eef5-41a3-a932-cf2002935784",
+      "row:ec93de72-0d11-4ff0-b5a0-274e5a6fdd31",
+      "row:f53e23f1-2190-4a48-986b-bf51b2c7c56f",
+      "row:0fd4dc6d-da5c-40e6-a9bb-b4034f3db83b",
+      "row:8b8e5dd0-24d4-4b7f-8b9f-16fc0ebd1bc2",
+      "row:7c8a6a24-dc00-4225-b0db-203b9de2c273"
+    ],
+    "background_sampled": true,
+    "background_snapshot_fingerprint": {
+      "sha256": "2ecc8a04b13c7e275422f4e4773df39c92a941907a3104e8373d04fea10fbb44",
+      "size": 9636
+    },
+    "common": {
+      "capability_id": "model.explain.permutation",
+      "column_lineage_ref": null,
+      "config_revision": 0,
+      "created_at": "2026-10-13T19:20:31.948753+00:00",
+      "dataset_versions": [
+        "dv:38ebe7ac-bea9-4c6e-9e15-472dc0a6e428"
+      ],
+      "environment": [
+        [
+          "scikit-learn",
+          "1.9.1"
+        ],
+        [
+          "numpy",
+          "2.5.3"
+        ],
+        [
+          "polars",
+          "2.0.0"
+        ]
+      ],
+      "exclusions": [],
+      "filters": [],
+      "learning_content_version": null,
+      "method_version": 1,
+      "parameters_hash": "667736e630248f838ef10d9930baa5526aeaec0c889129859f870ed5bf69aeac",
+      "provenance_id": "provenance:b5f9637d-6043-4159-9523-177a8ccda301",
+      "row_lineage_ref": null,
+      "scope": "validation only; already used for model/threshold selection; exploratory; final test not read",
+      "seed": 51,
+      "seed_reason": "explicit deterministic evaluation/background sample and permutations",
+      "source_snapshot_ids": [
+        "snapshot:adbea377-f26c-49e8-92bd-7d56f97567a3"
+      ]
+    },
+    "compute_budget": {
+      "cancel_grace_ms": 2000,
+      "cpu_threads": 2,
+      "device": "cpu",
+      "max_concurrent_cpu_jobs": 1,
+      "max_concurrent_io_jobs": 2,
+      "max_wall_seconds": 600,
+      "ram_bytes": 2147483648,
+      "reserve_disk_bytes": 1073741824,
+      "sample_limit_rows": 10000,
+      "temp_disk_bytes": 4294967296
+    },
+    "dataset_version": "dv:38ebe7ac-bea9-4c6e-9e15-472dc0a6e428",
+    "eligible_n": 16,
+    "evaluation_row_ids": [
+      "row:865053c6-4008-4afe-a05a-73aee8786966",
+      "row:d1bc0ceb-47df-4e08-81dd-c178ee9e99b0",
+      "row:f51dacfd-9183-420d-bae1-7b1856b984d8",
+      "row:f40fde70-afdb-4cc1-b7df-88e6c126dace",
+      "row:912ec206-b858-46c8-a62d-9e2a70ae100d",
+      "row:a1c90caf-d91a-4150-8505-e3f383f2a12d",
+      "row:e804b130-f566-4a8c-a869-af89ba6b06ee",
+      "row:d7cd9894-28ab-4b99-8104-8fcefe6e4d25",
+      "row:9e4b1ca8-865e-4a5d-930f-cb8d8a7f0893",
+      "row:4f6fcc0b-800d-49ba-b03b-29b4321e182e",
+      "row:55c4df64-38b7-4e16-bd70-d4468b206aae",
+      "row:0fea2517-5fa2-4718-8dbb-2962cdd817f7",
+      "row:3e6f4fe4-9e0f-4fc7-b945-849479bd8e68",
+      "row:7bd02927-089e-43ed-aa17-dd8ac3b17863",
+      "row:f03289a1-9226-48ce-8981-aff0467f7c41",
+      "row:74c86a4e-27f6-42fc-afe6-a20c3d698d48"
+    ],
+    "fit_calls": 0,
+    "model_package_fingerprint": {
+      "sha256": "4d5dff5c0494f5be1eb0bfe6c8213245ae97700feb735076eb89c377622755e0",
+      "size": 16047
+    },
+    "model_run_id": "run:c6ea9d62-b1fd-4094-85d1-3faecf9ae944",
+    "n": 16,
+    "packages": {
+      "numpy": "2.5.3",
+      "polars": "2.0.0",
+      "scikit-learn": "1.9.1"
+    },
+    "prediction_calls": 7,
+    "prediction_row_pass_budget": 300000,
+    "prediction_row_passes": 112,
+    "prior_test_use_ids": [],
+    "sampled": false,
+    "scope": "validation only; already used for model/threshold selection; exploratory; final test not read",
+    "seed": 51,
+    "sensitive_columns": [],
+    "snapshot_fingerprint": {
+      "sha256": "2ecc8a04b13c7e275422f4e4773df39c92a941907a3104e8373d04fea10fbb44",
+      "size": 9636
+    },
+    "source_snapshot_id": "snapshot:adbea377-f26c-49e8-92bd-7d56f97567a3"
+  },
+  "run_id": "explanation:48d6dc31-8d26-4085-9bb5-fdf5af28bc3c",
+  "schema": "ExplanationRun/v1",
+  "spec": {
+    "background_rows": 40,
+    "bootstrap_draws": 100,
+    "changes": {},
+    "class_label": "",
+    "constraints": {},
+    "desired_class": "",
+    "desired_max": null,
+    "desired_min": null,
+    "features": [],
+    "grid": [],
+    "grid_points": 8,
+    "immutable_features": [],
+    "local_row_id": "row:0fea2517-5fa2-4718-8dbb-2962cdd817f7",
+    "method": "permutation",
+    "positive_class": "",
+    "repeats": 3,
+    "sample_rows": 100,
+    "seed": 51,
+    "sensitive_columns": [],
+    "slices": []
+  },
+  "status": "completed"
+}

@@ -1,0 +1,109 @@
+[
+  {
+    "name": "sync",
+    "command": [
+      "uv",
+      "sync",
+      "--locked",
+      "--group",
+      "dev",
+      "--offline"
+    ],
+    "started_at": "2026-10-10T12:36:52.010908+00:00",
+    "duration_seconds": 0.01,
+    "exit_code": 0
+  },
+  {
+    "name": "docs",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_docs.py"
+    ],
+    "started_at": "2026-10-10T12:36:52.020821+00:00",
+    "duration_seconds": 0.104,
+    "exit_code": 0
+  },
+  {
+    "name": "artifacts",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_artifacts.py"
+    ],
+    "started_at": "2026-10-10T12:36:52.124748+00:00",
+    "duration_seconds": 0.11,
+    "exit_code": 0
+  },
+  {
+    "name": "learning",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_learning.py"
+    ],
+    "started_at": "2026-10-10T12:36:52.234909+00:00",
+    "duration_seconds": 0.057,
+    "exit_code": 0
+  },
+  {
+    "name": "usability",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_usability.py"
+    ],
+    "started_at": "2026-10-10T12:36:52.292063+00:00",
+    "duration_seconds": 0.081,
+    "exit_code": 0
+  },
+  {
+    "name": "ruff",
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "started_at": "2026-10-10T12:36:52.373608+00:00",
+    "duration_seconds": 0.009,
+    "exit_code": 0
+  },
+  {
+    "name": "format",
+    "command": [
+      ".venv/bin/ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "started_at": "2026-10-10T12:36:52.382768+00:00",
+    "duration_seconds": 0.008,
+    "exit_code": 0
+  },
+  {
+    "name": "unittest",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "started_at": "2026-10-10T12:36:52.390550+00:00",
+    "duration_seconds": 7.119,
+    "exit_code": 0
+  },
+  {
+    "name": "pytest",
+    "command": [
+      ".venv/bin/pytest",
+      "-q",
+      "--junitxml=docs/evidence/phase29/pytest.xml"
+    ],
+    "started_at": "2026-10-10T12:36:59.509514+00:00",
+    "duration_seconds": 307.966,
+    "exit_code": 1
+  }
+]

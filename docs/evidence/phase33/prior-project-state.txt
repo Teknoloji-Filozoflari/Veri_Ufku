@@ -1,0 +1,86 @@
+# Veri_Ufku — güncel oturum hafızası
+
+2026-10-11, Europe/Istanbul. Yalnız AGENTS.md, bu belge ve ROADMAP.md ile başla;
+geçmiş fazları tekrar tarama. Son teknik teslim **Faz32**; Faz33 başlamadı,
+açık uygulama yetkisi yok. Kullanıcının açık Faz32 talimatı DEC-32-01'dir.
+
+## Teknik teslim ve resmî durum
+
+Faz07 ColumnId metadata'sı anlam/birim/ölçüm düzeyiyle additive genişledi;
+legacy ordinal rol/sıra/onay korunur. Sürümlü declarative Contract/v1;
+range/null/unique/type/unit/table-count/FK kuralları; dört seviye, hata/uyarı ve
+kimlikli örnekler. Stop/quarantine/continue açık, kaynakta sessiz düzeltme yok.
+Kayıtlı girdi raporu reopen'da yereldir; girdi/çıktı sürümleri ayrı görünür.
+
+Fuzzy kategori adayları ve exact blocking/SequenceMatcher entity adayları;
+insan reviewer/gerekçe/zaman onayı ardından ayrı Uygula. Canonical atama satır
+silmez, RowId/SourceRecordId korunur; tam önceki/yeni inverse Parquet, eski
+snapshot ve bağlı sonuç sürümleri tutulur. Undo/redo gerçek eski/yeni ilişkiyi
+getirir. Aynı registry/bütçe/worker/ProjectStore ACTIVE protokolü genişledi;
+parent yayımdan önce kapalı tarifi/girdi/çıktı/diagnostics/inverse hash'lerini
+yeniden doğrular. Kaynak combined prompt SHA256 değişmedi.
+
+Ana matriste **F32-S001..005/P001..008 teknik doğrulandı**. Faz32 resmî durum
+**sürüyor / deneysel / zorunlu**: önceki insan/AT/donanım/dağıtım kapıları açık;
+bu faz tam resmî kabul edilmiş değildir. Faz33 uygulanmaz.
+
+## Gerçek kanıt ve kontroller
+
+ENV-32: kilitli CPython3.13.15 / Qt6.11.2 / Polars2.0.0, Linux x86_64;
+izole XDG, offscreen/software. [Faz32](evidence/PHASE32.md),
+[ADR-033](adr/033-data-contracts-phase32.md),
+[13 maddenin C/V/G/H/P tanıkları](evidence/phase32/acceptance.json).
+
+- Tam816 pytest geçti;0 failure/error/skip: [JUnit](evidence/phase32/pytest.xml).
+- Son22 Faz32 testi geçti: [JUnit](evidence/phase32/targeted.xml). Son legacy
+  QML koruması ve ek vaka bu koşuda ve source/wheel walkthrough'da doğrulandı;
+  tam817 çalıştırılmış gibi raporlanmaz.
+-64 dataset/operations/projects/workspace regresyonu geçti:
+  [JUnit](evidence/phase32/affected.xml).
+-14 kilitli unittest geçti. Sistem Python unittest bu fazda yeniden koşulmadı.
+- Kaynak/kurulu noneditable wheel her birinde6 gerçek QML/spawn/F1/approve/
+  publish/reopen/undo/cancel case ve6 render; toplam12 ekran.221 paket dosyası
+  source/wheel/installed byte eşit; kurulu gerçek console entry GUI_SMOKE PASS.
+- Locked sync70 resolved/67 checked; docs/artifacts/learning/usability ve
+  Ruff src/tests/scripts kapıları geçti.167 makale/110 UI bağı/313 named field.
+
+Konsol/ortam/komut detayları [checks](evidence/phase32/checks.json); güncel
+kaynak hashleri [source.sha256](evidence/phase32/source.sha256). Başarısız ilk
+registry koşusu, boş-import fixture ve kapanış callback denemeleri nihai
+başarıdan ayrı tutuldu. `ruff .` yanlışlıkla upstream license örneklerine
+uygulandı ve başarısız oldu; bunlar değiştirilmedi; doğru src/tests/scripts geçti.
+
+## Sınırlar ve açık kabuller
+
+String ordinal/fuzzy, scalar range; tek aktif referans sürümü/kontrol;100 kural;
+entity20k kayıt/20k karşılaştırma/200 aday, kategori200 benzersiz değer.
+Skor olasılık değildir. Reviewer self-reported; onay doğruluk/kimlik sertifikası
+sayılmaz. Form seçili kolonun kurallarını form değerleriyle yeniden tanımlar;
+karma severity/aynı-kind çoklu kurallarda JSON tarifi kullanılır. Başka dataset'e
+JSON tarifi taşırken ColumnId/FK sürümleri açıkça yeniden bağlanır.
+Composite FK, serbest kod/SQL veya otomatik birim dönüşümü eklenmedi.
+
+F13 kullanıcı kabulü, F25 insan/Orca/AT, F24 minimum donanım/cold/fiziksel input-
+frame ve kullanıcı tarafından durdurulan F27 temiz dağıtım kabulü açık.
+Faz30 büyük SAS ölçümü açık. Faz31 temiz offline uv kurulumu PySide6-Addons
+cache eksikliğiyle başarısızdı; bu, core'un kayıtlı ağsız runtime smoke'undan
+ayrı. Fiziksel desktop/AT/minimum donanım/clean offline install/remote CI bu
+fazda koşulmadı. Önceki [Faz31](evidence/PHASE31.md) kanıtları yerinde; önceki
+hafızanın tam kopyası [prior state](evidence/phase32/prior-project-state.txt).
+
+## Sonraki oturumun hedefli dosyaları
+
+Aktif sorun belirtilirse yalnız ilgili kaynak/testi aç:
+`analytics/contracts.py`, `analytics/dataset.py`, `operations/data_contracts.py`,
+`operations/data_quality.py`, `operations/contracts.py`, `operations/engine.py`,
+`storage/project_model.py`, `storage/project_store.py`, `ui/operations.py`,
+`ui/qml/DataContractPanel.qml`; testler `test_data_contracts.py`,
+`test_data_contracts_gui.py`; ölçüm `scripts/measure_phase32.py`.
+Önceki faz dosyaları yalnız gerçek bağımlılık ihtiyacında okunur.
+
+Stage/commit/push yapılmadı; önceki tracked/untracked kullanıcı değişiklikleri
+korundu. Untracked kaynak/kanıtlar teslimin parçasıdır; hesap değişimi bunları
+başka makineye kendiliğinden taşımaz. /tmp test server/wheel dizinlerinin sonraki
+oturumda bulunduğu varsayılmaz. Yeni faz için açık kullanıcı talimatı beklenir.
+
+Son Git kontrolü: 100 tracked değişiklik /340 untracked giriş /0 staged. Sayılar önceki fazları da içerir; bütün diff Faz32 değildir.

@@ -1,0 +1,95 @@
+......................................................F
+=================================== FAILURES ===================================
+_ test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[iterative] _
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-24/test_fold_joint_fit_validation1')
+strategy = 'iterative'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4d9b3075f0>
+
+    @pytest.mark.parametrize("strategy", ["knn", "iterative"])
+    def test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected(
+        tmp_path, strategy, monkeypatch
+    ):
+        n = 80
+        frame = pl.DataFrame(
+            dict(
+                x=[None if i % 7 == 0 else float(i) for i in range(n)],
+                z=[float(i) + np.sin(i) for i in range(n)],
+                y=[float(i % 11) for i in range(n)],
+            )
+        )
+        store, _, w = prepare(tmp_path, frame)
+        with closing(store):
+            r = request(store)
+            p = replace(
+                specification(r, numeric_imputation=strategy, scaling="none"),
+                features=(column(r, "x"), column(r, "z")),
+                missing_indicator=True,
+                imputation_iterations=3,
+            )
+            report = prep(r, p, w)
+            assert not report["blockers"]
+            original = pl.read_parquet(r["path"])
+            f = FoldPreparation(report["plan"], p, r["columns"]).fit(original.head(40))
+            before = json.dumps(f.summary_, sort_keys=True)
+            validation = original.tail(40).with_columns(pl.lit(1e8).alias("z"))
+            transformed = f.transform(validation)
+            assert transformed.shape == (40, 4)
+            assert f.fit_row_ids_ == original.head(40)["__vu_row_id"].to_list()
+            assert before == json.dumps(f.summary_, sort_keys=True)
+            # Transform-only validation changes cannot alter fitted training transform.
+            after = f.transform(original.head(40))
+            np.testing.assert_allclose(
+                after[:, 1], original.head(40)["x"].is_null().to_numpy()
+            )
+            with pytest.raises(ProjectError, match="tamamen eksik"):
+                FoldPreparation(report["plan"], p, r["columns"]).fit(
+                    original.head(40).with_columns(
+                        pl.lit(None, dtype=pl.Float64).alias("x")
+                    )
+                )
+            calls = []
+            fit = FoldPreparation.fit
+    
+            def spy(self, X, y=None):
+                calls.append(set(X["__vu_row_id"]))
+                return fit(self, X, y)
+    
+            monkeypatch.setattr(FoldPreparation, "fit", spy)
+            v = ValidationSpec(
+                prediction_moment="Ölçüm öncesi",
+                availability={
+                    i: dict(offset_seconds=0, note="Önceden bilinir") for i in p.features
+                },
+            )
+>           result = train(dict(r, preparation=report), v.data(), w)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_missing_sampling.py:354: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/veri_ufku/modeling/baseline.py:764: in calculate
+    save_package(package_path, model, card)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-s-oktay/pytest-24/test_fold_joint_fit_validation1/work/model-4a6efb0c-63d0-40e3-93e1-20193cc60d2d.vumodel')
+model = Pipeline(steps=[('prepare',
+                 FoldPreparation(columns=[{'id': 'col:13b4eb1d-8bed-4753-b0c4-b807ce648c30...                                                imputation_seed=42))),
+                ('baseline', DummyRegressor())])
+card = {'baseline': {'comparison': [], 'limitation': 'Final koşuda yeniden baseline seçimi yapılmaz; geliştirme koşusu kartın...me': 'y', 'original_name': 'y', 'type': 'Float64'}], 'dataset_version': 'dv:1f7d6988-4f5c-44fb-83b2-1d5f9cf2d8e3', ...}
+
+    def save_package(path, model, card):
+        validate_card(card)
+        validate_pipeline(model, card)
+        payload = sio.dumps(model)
+        if set(sio.get_untrusted_types(data=payload)) - set(TRUSTED):
+>           raise ProjectError(
+                "Güvenli destek matrisi dışındaki estimator/tip kaydedilemez."
+            )
+E           veri_ufku.storage.project_model.ProjectError: Güvenli destek matrisi dışındaki estimator/tip kaydedilemez.
+
+src/veri_ufku/modeling/lifecycle.py:306: ProjectError
+=========================== short test summary info ============================
+FAILED tests/test_missing_sampling.py::test_fold_joint_fit_validation_values_never_learned_and_all_missing_rejected[iterative]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 54 passed in 36.37s
+gc:0: ResourceWarning: gc: 179 uncollectable objects at shutdown; use gc.set_debug(gc.DEBUG_UNCOLLECTABLE) to list them

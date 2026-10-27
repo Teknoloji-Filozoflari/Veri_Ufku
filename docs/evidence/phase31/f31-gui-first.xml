@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="9.609" timestamp="2026-10-11T09:37:18.631803+03:00" hostname="s-oktay"><testcase classname="tests.test_connector_gui" name="test_real_qml_connector_capture_import_help_reopen[postgresql]" time="1.945"><failure message="AttributeError: 'NoneType' object has no attribute 'clicked'">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-7/test_real_qml_connector_captur0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f494bb228b0&gt;
+pg = {'endpoint': 'localhost', 'port': 49623, 'database': 'postgres', 'user': 'vu_reader', ...}
+kind = 'postgresql'
+
+    @pytest.mark.parametrize("kind", ["postgresql", "http", "duckdb"])
+    def test_real_qml_connector_capture_import_help_reopen(tmp_path, monkeypatch, pg, kind):
+        server_root = tmp_path / "server"
+        server_root.mkdir()
+        with api_server(server_root) as api:
+            source = tmp_path / "source.duckdb"
+            db = duckdb.connect(str(source))
+            db.execute("CREATE TABLE records(id BIGINT, amount DECIMAL(20,6))")
+            db.execute("INSERT INTO records VALUES (1,1.234567),(2,NULL)")
+            db.close()
+            app, window, _, projects, imports = setup(tmp_path, monkeypatch)
+            try:
+                values = (
+                    dict(connectorEndpoint=api["endpoint"], connectorCA=api["ca_file"])
+                    if kind == "http" else
+                    dict(connectorEndpoint=source, connectorSchema="main", connectorTable="records")
+                    if kind == "duckdb" else
+                    dict(connectorEndpoint=pg["endpoint"], connectorDatabase=pg["database"], connectorUser=pg["user"], connectorCA=pg["ca_file"], connectorTable="records")
+                )
+                if kind == "postgresql":
+                    # Port is kept separately from host, never a DSN with credentials.
+                    values["connectorPort"] = pg["port"]
+                fill(window, kind, {k: v for k, v in values.items() if k != "connectorPort"})
+                if kind == "postgresql":
+                    window.findChild(QObject, "connectorPort").setProperty("value", pg["port"])
+                calls = len(api["calls"])
+                app.processEvents()
+                assert not imports.busy and len(api["calls"]) == calls
+                if kind != "http":
+                    window.findChild(QObject, "connectorListTables").clicked.emit()
+                    spin(app, lambda: not imports.busy)
+                    assert imports.connectorTables, imports.errorText
+&gt;               window.findChild(QObject, "connectorRead").clicked.emit()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               AttributeError: 'NoneType' object has no attribute 'clicked'
+
+tests/test_connector_gui.py:63: AttributeError</failure></testcase><testcase classname="tests.test_connector_gui" name="test_real_qml_connector_capture_import_help_reopen[http]" time="1.932"><failure message="AttributeError: 'NoneType' object has no attribute 'forceActiveFocus'">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-7/test_real_qml_connector_captur1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f494bb22780&gt;
+pg = {'endpoint': 'localhost', 'port': 49623, 'database': 'postgres', 'user': 'vu_reader', ...}
+kind = 'http'
+
+    @pytest.mark.parametrize("kind", ["postgresql", "http", "duckdb"])
+    def test_real_qml_connector_capture_import_help_reopen(tmp_path, monkeypatch, pg, kind):
+        server_root = tmp_path / "server"
+        server_root.mkdir()
+        with api_server(server_root) as api:
+            source = tmp_path / "source.duckdb"
+            db = duckdb.connect(str(source))
+            db.execute("CREATE TABLE records(id BIGINT, amount DECIMAL(20,6))")
+            db.execute("INSERT INTO records VALUES (1,1.234567),(2,NULL)")
+            db.close()
+            app, window, _, projects, imports = setup(tmp_path, monkeypatch)
+            try:
+                values = (
+                    dict(connectorEndpoint=api["endpoint"], connectorCA=api["ca_file"])
+                    if kind == "http" else
+                    dict(connectorEndpoint=source, connectorSchema="main", connectorTable="records")
+                    if kind == "duckdb" else
+                    dict(connectorEndpoint=pg["endpoint"], connectorDatabase=pg["database"], connectorUser=pg["user"], connectorCA=pg["ca_file"], connectorTable="records")
+                )
+                if kind == "postgresql":
+                    # Port is kept separately from host, never a DSN with credentials.
+                    values["connectorPort"] = pg["port"]
+                fill(window, kind, {k: v for k, v in values.items() if k != "connectorPort"})
+                if kind == "postgresql":
+                    window.findChild(QObject, "connectorPort").setProperty("value", pg["port"])
+                calls = len(api["calls"])
+                app.processEvents()
+                assert not imports.busy and len(api["calls"]) == calls
+                if kind != "http":
+                    window.findChild(QObject, "connectorListTables").clicked.emit()
+                    spin(app, lambda: not imports.busy)
+                    assert imports.connectorTables, imports.errorText
+                window.findChild(QObject, "connectorRead").clicked.emit()
+                spin(app, lambda: not imports.busy)
+                assert imports.ready, imports.errorText
+                assert imports.model.rowCount() == (3 if kind == "http" else 2)
+                assert imports.formatId == kind
+                before = json.loads(json.dumps(imports.result))
+                focus = window.findChild(QObject, "connectorEndpoint")
+&gt;               focus.forceActiveFocus()
+                ^^^^^^^^^^^^^^^^^^^^^^
+E               AttributeError: 'NoneType' object has no attribute 'forceActiveFocus'
+
+tests/test_connector_gui.py:70: AttributeError</failure></testcase><testcase classname="tests.test_connector_gui" name="test_real_qml_connector_capture_import_help_reopen[duckdb]" time="1.537"><failure message="AttributeError: 'NoneType' object has no attribute 'clicked'">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-7/test_real_qml_connector_captur2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f492b86a0f0&gt;
+pg = {'endpoint': 'localhost', 'port': 49623, 'database': 'postgres', 'user': 'vu_reader', ...}
+kind = 'duckdb'
+
+    @pytest.mark.parametrize("kind", ["postgresql", "http", "duckdb"])
+    def test_real_qml_connector_capture_import_help_reopen(tmp_path, monkeypatch, pg, kind):
+        server_root = tmp_path / "server"
+        server_root.mkdir()
+        with api_server(server_root) as api:
+            source = tmp_path / "source.duckdb"
+            db = duckdb.connect(str(source))
+            db.execute("CREATE TABLE records(id BIGINT, amount DECIMAL(20,6))")
+            db.execute("INSERT INTO records VALUES (1,1.234567),(2,NULL)")
+            db.close()
+            app, window, _, projects, imports = setup(tmp_path, monkeypatch)
+            try:
+                values = (
+                    dict(connectorEndpoint=api["endpoint"], connectorCA=api["ca_file"])
+                    if kind == "http" else
+                    dict(connectorEndpoint=source, connectorSchema="main", connectorTable="records")
+                    if kind == "duckdb" else
+                    dict(connectorEndpoint=pg["endpoint"], connectorDatabase=pg["database"], connectorUser=pg["user"], connectorCA=pg["ca_file"], connectorTable="records")
+                )
+                if kind == "postgresql":
+                    # Port is kept separately from host, never a DSN with credentials.
+                    values["connectorPort"] = pg["port"]
+                fill(window, kind, {k: v for k, v in values.items() if k != "connectorPort"})
+                if kind == "postgresql":
+                    window.findChild(QObject, "connectorPort").setProperty("value", pg["port"])
+                calls = len(api["calls"])
+                app.processEvents()
+                assert not imports.busy and len(api["calls"]) == calls
+                if kind != "http":
+                    window.findChild(QObject, "connectorListTables").clicked.emit()
+                    spin(app, lambda: not imports.busy)
+                    assert imports.connectorTables, imports.errorText
+&gt;               window.findChild(QObject, "connectorRead").clicked.emit()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               AttributeError: 'NoneType' object has no attribute 'clicked'
+
+tests/test_connector_gui.py:63: AttributeError</failure></testcase><testcase classname="tests.test_connector_gui" name="test_real_qml_network_cancel_and_failed_source_preserve_active" time="3.746"><failure message="AttributeError: 'NoneType' object has no attribute 'clicked'">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-7/test_real_qml_network_cancel_a0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f492b4e0c00&gt;
+
+    with api_server(tmp_path) as api:
+        app, window, _, projects, imports = setup(tmp_path, monkeypatch)
+        try:
+            fill(window, "http", dict(connectorEndpoint=api["endpoint"], connectorCA=api["ca_file"]))
+            before = projects.store.commit_id
+            api["state"]["mode"] = "slow"
+            window.findChild(QObject, "connectorRead").clicked.emit()
+            spin(app, lambda: imports.busy)
+            QTest.qWait(500)
+            started = time.monotonic()
+            window.findChild(QObject, "cancelImportButton").clicked.emit()
+            spin(app, lambda: not imports.busy)
+            assert time.monotonic() - started &lt; 4
+            assert projects.store.commit_id == before and not projects.draft["datasets"]
+            api["state"]["mode"] = "duplicate"
+            window.findChild(QObject, "connectorRead").clicked.emit()
+&gt;           spin(app, lambda: not imports.busy)
+E           AttributeError: 'NoneType' object has no attribute 'clicked'
+
+tests/test_connector_gui.py:110: AttributeError</failure></testcase></testsuite></testsuites>

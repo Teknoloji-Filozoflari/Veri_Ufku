@@ -1,0 +1,43 @@
+2026-10-06 ENV-01 CPython3.13.15/PySide6 6.11.2 offscreen/software; local CI-equivalent checks
+
+$ .venv/bin/python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+exit=0
+
+$ .venv/bin/python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+exit=0
+
+$ .venv/bin/ruff check src tests scripts
+All checks passed!
+exit=0
+
+$ .venv/bin/ruff format --check src tests scripts
+29 files already formatted
+exit=0
+
+$ .venv/bin/pytest -q
+................................                                         [100%]
+32 passed in 6.02s
+exit=0
+
+$ .venv/bin/veri-ufku --smoke-test
+GUI_SMOKE PASS
+exit=0
+
+$ uv sync --offline --locked --group dev
+Resolved 16 packages in 0.85ms
+Checked 15 packages in 0.15ms
+exit=0
+
+$ uv build --offline --wheel --out-dir /tmp/veri-ufku-build
+Building wheel...
+Successfully built /tmp/veri-ufku-build/veri_ufku-0.1.0-py3-none-any.whl
+exit=0
+
+Final built wheel noneditable install: /tmp/veri-ufku-build/veri_ufku-0.1.0-py3-none-any.whl into /tmp/veri-ufku-fresh
+uv pip install --offline --no-deps --reinstall: exit=0
+/tmp/veri-ufku-fresh/bin/veri-ufku --smoke-test (offscreen/software isolated XDG): GUI_SMOKE PASS exit=0
+
+Final-source measurement run: scripts/measure_phase01.py exit=0
+warm first frame p95=117.537ms; offscreen/software input/render p95=0.523ms; cancel/cleanup=18.077ms n=1

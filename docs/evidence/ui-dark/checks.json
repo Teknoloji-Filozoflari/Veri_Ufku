@@ -1,0 +1,183 @@
+[
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "sync",
+      "--offline",
+      "--locked",
+      "--group",
+      "dev"
+    ],
+    "date_utc": "2026-10-07T21:51:51.267266+00:00",
+    "exit_code": 0,
+    "seconds": 0.01,
+    "log": "docs/evidence/ui-dark/check-01.log",
+    "environment": "offscreen/software; isolated temporary XDG"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check_docs.py"
+    ],
+    "date_utc": "2026-10-07T21:51:51.277377+00:00",
+    "exit_code": 0,
+    "seconds": 0.042,
+    "log": "docs/evidence/ui-dark/check-02.log",
+    "environment": "offscreen/software; isolated temporary XDG"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_docs.py"
+    ],
+    "date_utc": "2026-10-07T21:51:51.319925+00:00",
+    "exit_code": 0,
+    "seconds": 0.051,
+    "log": "docs/evidence/ui-dark/check-03.log",
+    "environment": "offscreen/software; isolated temporary XDG"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_artifacts.py"
+    ],
+    "date_utc": "2026-10-07T21:51:51.371347+00:00",
+    "exit_code": 0,
+    "seconds": 0.119,
+    "log": "docs/evidence/ui-dark/check-04.log",
+    "environment": "offscreen/software; isolated temporary XDG"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_learning.py"
+    ],
+    "date_utc": "2026-10-07T21:51:51.490200+00:00",
+    "exit_code": 0,
+    "seconds": 0.044,
+    "log": "docs/evidence/ui-dark/check-05.log",
+    "environment": "offscreen/software; isolated temporary XDG"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "date_utc": "2026-10-07T21:51:51.533935+00:00",
+    "exit_code": 0,
+    "seconds": 0.016,
+    "log": "docs/evidence/ui-dark/check-06.log",
+    "environment": "offscreen/software; isolated temporary XDG"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "date_utc": "2026-10-07T21:51:51.550013+00:00",
+    "exit_code": 0,
+    "seconds": 0.016,
+    "log": "docs/evidence/ui-dark/check-07.log",
+    "environment": "offscreen/software; isolated temporary XDG"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "pytest",
+      "-q",
+      "--junitxml=docs/evidence/ui-dark/pytest.xml"
+    ],
+    "date_utc": "2026-10-07T21:51:51.565875+00:00",
+    "exit_code": 0,
+    "seconds": 82.648,
+    "log": "docs/evidence/ui-dark/check-08.log",
+    "environment": "offscreen/software; isolated temporary XDG"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "date_utc": "2026-10-07T21:53:14.214103+00:00",
+    "exit_code": 0,
+    "seconds": 1.173,
+    "log": "docs/evidence/ui-dark/check-09.log",
+    "environment": "offscreen/software; isolated temporary XDG"
+  },
+  {
+    "command": [
+      "uv",
+      "--cache-dir",
+      "/tmp/veri-ufku-uv",
+      "run",
+      "--frozen",
+      "veri-ufku",
+      "--smoke-test"
+    ],
+    "date_utc": "2026-10-07T21:53:15.387411+00:00",
+    "exit_code": 0,
+    "seconds": 0.568,
+    "log": "docs/evidence/ui-dark/check-10.log",
+    "environment": "offscreen/software; isolated temporary XDG"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "date_utc": "2026-10-07T21:53:15.955321+00:00",
+    "exit_code": 0,
+    "seconds": 0.008,
+    "log": "docs/evidence/ui-dark/check-11.log",
+    "environment": "offscreen/software; isolated temporary XDG"
+  }
+]

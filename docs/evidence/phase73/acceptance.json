@@ -1,0 +1,138 @@
+{
+  "phase": 73,
+  "decision": "DEC73-01",
+  "recorded_at": "2026-10-16T18:30:33.489969+00:00",
+  "formal_status": "sürüyor",
+  "maturity": "deneysel",
+  "scope": "isteğe bağlı",
+  "records": [
+    {
+      "id": "E73-API",
+      "label": "Versioned API1 six-kind input/output and author interfaces",
+      "status": "verified-bounded",
+      "paths": [
+        "src/veri_ufku/plugins/sdk.py"
+      ],
+      "evidence": "docs/evidence/phase73/source-native-delivery.xml",
+      "environment": "ENV-73",
+      "date": "2026-10-16",
+      "limits": "Data contracts/archive only; full native adapter acceptance remains open"
+    },
+    {
+      "id": "E73-DISCOVERY",
+      "label": "Manifest-only explicit inspection, no startup plugin execution",
+      "status": "verified-bounded",
+      "paths": [
+        "src/veri_ufku/plugins/discovery.py",
+        "tests/test_plugins_gui.py"
+      ],
+      "evidence": "docs/evidence/phase73/source-gui-delivery/gui.xml",
+      "environment": "ENV-73",
+      "date": "2026-10-16",
+      "limits": "No signature/authentic publisher guarantee"
+    },
+    {
+      "id": "E73-TRUST",
+      "label": "Trust/hash/dependency environment/network disclosure gates",
+      "status": "verified-bounded",
+      "paths": [
+        "src/veri_ufku/storage/plugin_store.py",
+        "src/veri_ufku/plugins/runtime.py"
+      ],
+      "evidence": "docs/evidence/phase73/source-native-delivery.xml",
+      "environment": "ENV-73",
+      "date": "2026-10-16",
+      "limits": "Same-user Python has filesystem/network/keyring rights; NOT OS sandbox; no separate dependency env"
+    },
+    {
+      "id": "E73-PROVENANCE",
+      "label": "Safe artifact and method/source/learning/decision lineage",
+      "status": "verified-bounded",
+      "paths": [
+        "src/veri_ufku/storage/plugin_store.py",
+        "src/veri_ufku/storage/lineage.py"
+      ],
+      "evidence": "docs/evidence/phase73/wheel-native-delivery.xml",
+      "environment": "ENV-73",
+      "date": "2026-10-16",
+      "limits": "Only recorded selected source RowId; no fabricated multi-source traversal"
+    },
+    {
+      "id": "E73-MISSING",
+      "label": "Missing plugin and read-only project artifact remains readable",
+      "status": "verified-bounded",
+      "paths": [
+        "src/veri_ufku/ui/plugins.py",
+        "src/veri_ufku/storage/plugin_store.py"
+      ],
+      "evidence": "docs/evidence/phase73/wheel-gui-delivery/gui.xml",
+      "environment": "ENV-73",
+      "date": "2026-10-16",
+      "limits": "Recompute requires same manifest/hash/env plus explicit trust; no auto import"
+    },
+    {
+      "id": "E73-FAILURE",
+      "label": "Crash/invalid output/cancel/time/quota preserves previous host state",
+      "status": "verified-bounded",
+      "paths": [
+        "tests/test_plugins.py",
+        "tests/test_plugins_gui.py"
+      ],
+      "evidence": "docs/evidence/phase73/source-native-delivery.xml",
+      "environment": "ENV-73",
+      "date": "2026-10-16",
+      "limits": "Accidental/trusted code failures, not hostile same-user containment"
+    },
+    {
+      "id": "E73-EXAMPLE",
+      "label": "Independent mean plugin reference and explicit author contract CLI",
+      "status": "verified-bounded",
+      "paths": [
+        "examples/plugins/mean/plugin.py",
+        "examples/plugins/mean/manifest.json",
+        "src/veri_ufku/plugins/contract_test.py"
+      ],
+      "evidence": "docs/evidence/phase73/wheel-example-contract-delivery.log",
+      "environment": "ENV-73",
+      "date": "2026-10-16",
+      "limits": "Protocol conformance is not scientific/security certification"
+    },
+    {
+      "id": "E73-GUI",
+      "label": "Actual stat UI/result/help/save/missing plugin flow",
+      "status": "verified-bounded",
+      "paths": [
+        "tests/test_plugins_gui.py",
+        "scripts/measure_phase73.py"
+      ],
+      "evidence": "docs/evidence/phase73/wheel-gui-delivery/gui.xml",
+      "environment": "ENV-73",
+      "date": "2026-10-16",
+      "limits": "CPU offscreen/software default2GiB; not physical/human/AT/minHW"
+    },
+    {
+      "id": "E73-NATIVE-INTEGRATION",
+      "label": "Full native importer/transform/model/chart/lesson adapters",
+      "status": "not-implemented",
+      "paths": [
+        "docs/adr/074-plugin-sdk-phase73.md"
+      ],
+      "evidence": "docs/evidence/phase73/../PHASE73.md",
+      "environment": "ENV-73",
+      "date": "2026-10-16",
+      "limits": "No active dataset apply/undo, model predict/load, native renderer/editor or lesson catalogue install"
+    },
+    {
+      "id": "E73-SANDBOX",
+      "label": "OS enforced permission isolation",
+      "status": "unavailable",
+      "paths": [
+        "docs/adr/074-plugin-sdk-phase73.md"
+      ],
+      "evidence": "docs/evidence/phase73/../PHASE73.md",
+      "environment": "ENV-73",
+      "date": "2026-10-16",
+      "limits": "No seccomp/container/OS sandbox; permissions disclosures only"
+    }
+  ]
+}

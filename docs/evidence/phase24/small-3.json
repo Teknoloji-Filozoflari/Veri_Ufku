@@ -1,0 +1,109 @@
+{
+  "rows": 10000,
+  "seed": 42,
+  "fixture": {
+    "sha256": "33b06471337dadaf1db54de02a90f86ebb21b8e9f6777ba4240fd2679a19267d",
+    "size": 74278
+  },
+  "records": [
+    {
+      "stage": "import_capture_parse_publish",
+      "seconds": 0.09571704100017087,
+      "scope": "full",
+      "population_n": 10000,
+      "used_n": 10000,
+      "error": null,
+      "rss_bytes": 183910400,
+      "temp_bytes": 65536,
+      "threads": 15
+    },
+    {
+      "stage": "page_200",
+      "seconds": 0.010114844999407069,
+      "scope": "bounded_page",
+      "population_n": 10000,
+      "used_n": 200,
+      "error": null,
+      "rss_bytes": 196292608,
+      "temp_bytes": 610069,
+      "threads": 16
+    },
+    {
+      "stage": "profile_exact",
+      "seconds": 0.07980464499996742,
+      "scope": "full",
+      "population_n": 10000,
+      "used_n": 10000,
+      "error": null,
+      "rss_bytes": 203988992,
+      "temp_bytes": 610069,
+      "threads": 17
+    },
+    {
+      "stage": "filter_write_verify",
+      "seconds": 0.020185707999189617,
+      "scope": "full",
+      "population_n": 10000,
+      "used_n": 10000,
+      "error": null,
+      "rss_bytes": 204279808,
+      "temp_bytes": 610069,
+      "threads": 17
+    },
+    {
+      "stage": "join_lazy_lineage",
+      "seconds": 0.11268085899973812,
+      "scope": "full",
+      "population_n": 10000,
+      "used_n": 10000,
+      "error": null,
+      "rss_bytes": 233058304,
+      "temp_bytes": 940848,
+      "threads": 18
+    },
+    {
+      "stage": "chart_compute_render",
+      "seconds": 0.21013652799956617,
+      "scope": "explicit_first_N_sample",
+      "population_n": 10000,
+      "used_n": 10000,
+      "error": null,
+      "rss_bytes": 236982272,
+      "temp_bytes": 1915289,
+      "threads": 18
+    },
+    {
+      "stage": "report_html_publish",
+      "seconds": 0.018958598000608617,
+      "scope": "full_counts_table_first_100",
+      "population_n": 10000,
+      "used_n": 100,
+      "error": null,
+      "rss_bytes": 235175936,
+      "temp_bytes": 2199236,
+      "threads": 18
+    },
+    {
+      "stage": "model_preflight_full",
+      "seconds": 0.007567418999315123,
+      "scope": "full",
+      "population_n": 10000,
+      "used_n": 10000,
+      "error": null,
+      "rss_bytes": 235622400,
+      "temp_bytes": 3258458,
+      "threads": 18
+    },
+    {
+      "stage": "model_fit_cv",
+      "seconds": 1.2080917839994072,
+      "scope": "full",
+      "population_n": 10000,
+      "used_n": 10000,
+      "error": null,
+      "rss_bytes": 509353984,
+      "temp_bytes": 9569168,
+      "threads": 18
+    }
+  ]
+}

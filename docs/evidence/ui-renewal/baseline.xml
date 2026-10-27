@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="12" time="50.831" timestamp="2026-10-17T13:46:19.945261+03:00" hostname="s-oktay"><testcase classname="tests.test_presentation_preferences" name="test_preferences_reload_without_changing_runtime_settings" time="0.003" /><testcase classname="tests.test_presentation_preferences" name="test_invalid_preferences_are_preserved_and_not_overwritten" time="0.000" /><testcase classname="tests.test_presentation_preferences" name="test_failed_atomic_commit_retains_file_and_selected_preferences" time="0.002" /><testcase classname="tests.test_presentation_preferences" name="test_legacy_theme_and_size_removed_on_explicit_level_change" time="0.002" /><testcase classname="tests.test_gui" name="test_real_qml_buttons_responsiveness_error_cancel_and_stale" time="15.766"><failure message="AssertionError: assert 'succeeded' == 'running'&#10;  &#10;  - running&#10;  + succeeded">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-0/test_real_qml_buttons_responsi0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f32fee16650&gt;
+
+    def test_real_qml_buttons_responsiveness_error_cancel_and_stale(tmp_path, monkeypatch):
+        for variable, folder in [
+            ("XDG_CONFIG_HOME", "config"),
+            ("XDG_STATE_HOME", "state"),
+            ("XDG_CACHE_HOME", "cache"),
+        ]:
+            monkeypatch.setenv(variable, str(tmp_path / folder))
+        app, window, bridge = create_application()
+        manager = bridge.session.manager
+        # Assert responsiveness/cancel while a real CPU job is still running;
+        # startup/rendering can outlast the short default demonstration.
+        from veri_ufku.domain.contracts import DemoParameters, JobSpec
+    
+        def start_fixture(capability_id):
+            parameters = (
+                DemoParameters(units=80, pause_seconds=0.1)
+                if capability_id == "demo.cpu"
+                else DemoParameters()
+            )
+            return manager.submit(
+                JobSpec(
+                    capability_id, bridge.session.binding, parameters, bridge.session.budget
+                )
+            )
+    
+        monkeypatch.setattr(bridge.session, "start", start_fixture)
+        try:
+            # Complete the initial window/layout frame before measuring concurrent
+            # worker responsiveness; startup rendering is a separate acceptance gate.
+            spin(app, lambda: not window.grabWindow().isNull())
+            cpu = window.findChild(QObject, "cpuButton")
+            assert cpu.property("text") == "CPU denemesini başlat"
+            ticks = []
+            timer = QTimer()
+            timer.setInterval(10)
+            timer.timeout.connect(lambda: ticks.append(time.monotonic()))
+            timer.start()
+            cpu.clicked.emit()
+            spin(app, lambda: bridge.active)
+            spin(app, lambda: len(ticks) &gt;= 20)
+&gt;           assert manager.snapshot(bridge.job_id).state.value == "running"
+E           AssertionError: assert 'succeeded' == 'running'
+E             
+E             - running
+E             + succeeded
+
+tests/test_gui.py:62: AssertionError</failure></testcase><testcase classname="tests.test_gui" name="test_readme_entry_point_smoke" time="7.179" /><testcase classname="tests.test_gui" name="test_user_status_text_is_literal_qml_text" time="3.593" /><testcase classname="tests.test_gui" name="test_primary_button_text_is_readable_in_fixed_dark_theme" time="3.440" /><testcase classname="tests.test_gui" name="test_english_startup_uses_same_qml_with_local_configuration" time="3.809" /><testcase classname="tests.test_gui" name="test_bad_configuration_is_visible_and_never_logged_verbatim" time="3.818" /><testcase classname="tests.test_gui" name="test_phase02_keyboard_preferences_and_view_preserve_session" time="11.358" /><testcase classname="tests.test_gui" name="test_phase02_resize_help_navigation_and_fixed_dark_theme" time="1.736" /></testsuite></testsuites>

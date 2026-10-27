@@ -1,0 +1,1152 @@
+{
+  "environment": "ENV-15",
+  "date": "2026-10-08",
+  "python": "3.13.15",
+  "platform": "Linux-7.2.9-1-cachyos-x86_64-with-glibc2.44",
+  "package": "/tmp/veri-ufku-phase15-checked-installed/veri_ufku/__init__.py",
+  "polars": "2.0.0",
+  "backend": "offscreen/software",
+  "user_test": false,
+  "purposes": {
+    "regression": {
+      "family": "linear",
+      "calculate_ms": 209.82381499925395,
+      "worker_pid": 113,
+      "dataset_n": 6,
+      "eligible_n": 5,
+      "target": {
+        "column_id": "col:c8b0096c-8868-4db9-9949-9da67ef334bd",
+        "name": "y",
+        "dtype": "Int64",
+        "role": "",
+        "null_count": 1,
+        "nonfinite_count": 0,
+        "valid_count": 5,
+        "unique_count": 2,
+        "selected": false,
+        "identifier_candidate": false
+      },
+      "plan": {
+        "schema": "PreparationPlan/v1",
+        "fit_state": "not_fitted",
+        "fitted_parameters": {},
+        "estimator_family": "linear",
+        "steps": [
+          {
+            "kind": "numeric",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "precision": "reject",
+              "nonfinite": "reject"
+            },
+            "reason": "Kimlik ölçüm değildir; Float64 kaybı gelecekte açık politika ile denetlenir."
+          },
+          {
+            "kind": "impute_numeric",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "median",
+              "all_missing": "error"
+            },
+            "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz."
+          },
+          {
+            "kind": "standard_scale",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "explicit_override": false
+            },
+            "reason": "Uzaklıklar ve düzenlileştirilmiş doğrusal modeller ölçüm ölçeğine duyarlıdır; eğitim katında standardizasyon planlandı."
+          },
+          {
+            "kind": "impute_category",
+            "input_column_ids": [
+              "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896"
+            ],
+            "output_names": [],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "most_frequent",
+              "all_missing": "error"
+            },
+            "reason": "Kategori modunu yalnız eğitim katı öğrenir; eksik hedef doldurulmaz."
+          },
+          {
+            "kind": "encode_onehot",
+            "input_column_ids": [
+              "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896"
+            ],
+            "output_names": [
+              "f_7e6e63f6c1154a32b9e1fc25775ea896__category_{training_index}"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "categories": "training_only",
+              "unknown": "ignore_with_warning",
+              "sparse": true,
+              "name_binding": "training category index -> original ColumnId and category; deferred until fit"
+            },
+            "reason": "Nominal kategorilere sıralama yüklenmez; kategori sözlüğü yalnız eğitim katında öğrenilir."
+          },
+          {
+            "kind": "calendar",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "timezone": "source_timezone; naive remains naive",
+              "components": [
+                "year",
+                "month",
+                "weekday"
+              ]
+            },
+            "reason": "Takvim bileşenleri satırdan üretilir; gelecek/hedef ufku kullanılmaz. Zaman ayırma yine gereklidir."
+          },
+          {
+            "kind": "impute_numeric",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "median",
+              "all_missing": "error"
+            },
+            "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz."
+          },
+          {
+            "kind": "standard_scale",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "explicit_override": false
+            },
+            "reason": "Uzaklıklar ve düzenlileştirilmiş doğrusal modeller ölçüm ölçeğine duyarlıdır; eğitim katında standardizasyon planlandı."
+          }
+        ],
+        "column_lineage": [
+          {
+            "input_column_id": "col:90a9985e-897a-458d-8a27-be5287c40e71",
+            "source_name": "x",
+            "source_dtype": "Float64",
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "names_status": "structurally_known",
+            "category_map": [],
+            "selected_after_fit": "all_planned"
+          },
+          {
+            "input_column_id": "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896",
+            "source_name": "cat",
+            "source_dtype": "String",
+            "output_names": [
+              "f_7e6e63f6c1154a32b9e1fc25775ea896__category_{training_index}"
+            ],
+            "names_status": "template_training_bound",
+            "category_map": null,
+            "selected_after_fit": "all_planned"
+          },
+          {
+            "input_column_id": "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9",
+            "source_name": "when",
+            "source_dtype": "Date",
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "names_status": "structurally_known",
+            "category_map": [],
+            "selected_after_fit": "all_planned"
+          }
+        ],
+        "training_dependency": "Requires a validated split/fold protocol in Phase16; no training performed",
+        "category_vocabulary": null,
+        "feature_selection_mask": null,
+        "version_id": "ml-pipeline:dc21c729-db5e-465e-965f-0eb06bdacd49"
+      }
+    },
+    "classification": {
+      "family": "tree",
+      "calculate_ms": 197.2253570002067,
+      "worker_pid": 127,
+      "dataset_n": 6,
+      "eligible_n": 5,
+      "target": {
+        "column_id": "col:c8b0096c-8868-4db9-9949-9da67ef334bd",
+        "name": "y",
+        "dtype": "Int64",
+        "role": "",
+        "null_count": 1,
+        "nonfinite_count": 0,
+        "valid_count": 5,
+        "unique_count": 2,
+        "selected": false,
+        "identifier_candidate": false,
+        "class_distribution": [
+          {
+            "label": "1",
+            "count": 3
+          },
+          {
+            "label": "0",
+            "count": 2
+          }
+        ],
+        "distribution_limit": 20,
+        "distribution_truncated": false,
+        "min_class_count": 2
+      },
+      "plan": {
+        "schema": "PreparationPlan/v1",
+        "fit_state": "not_fitted",
+        "fitted_parameters": {},
+        "estimator_family": "tree",
+        "steps": [
+          {
+            "kind": "numeric",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "precision": "reject",
+              "nonfinite": "reject"
+            },
+            "reason": "Kimlik ölçüm değildir; Float64 kaybı gelecekte açık politika ile denetlenir."
+          },
+          {
+            "kind": "impute_numeric",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "median",
+              "all_missing": "error"
+            },
+            "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz."
+          },
+          {
+            "kind": "no_scaling",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "explicit_override": false
+            },
+            "reason": "Ağaç ailesine scaling otomatik önerilmez; açık none seçiminde diğer ailelerde ölçek duyarlılığını inceleyin."
+          },
+          {
+            "kind": "impute_category",
+            "input_column_ids": [
+              "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896"
+            ],
+            "output_names": [],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "most_frequent",
+              "all_missing": "error"
+            },
+            "reason": "Kategori modunu yalnız eğitim katı öğrenir; eksik hedef doldurulmaz."
+          },
+          {
+            "kind": "encode_onehot",
+            "input_column_ids": [
+              "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896"
+            ],
+            "output_names": [
+              "f_7e6e63f6c1154a32b9e1fc25775ea896__category_{training_index}"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "categories": "training_only",
+              "unknown": "ignore_with_warning",
+              "sparse": true,
+              "name_binding": "training category index -> original ColumnId and category; deferred until fit"
+            },
+            "reason": "Nominal kategorilere sıralama yüklenmez; kategori sözlüğü yalnız eğitim katında öğrenilir."
+          },
+          {
+            "kind": "calendar",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "timezone": "source_timezone; naive remains naive",
+              "components": [
+                "year",
+                "month",
+                "weekday"
+              ]
+            },
+            "reason": "Takvim bileşenleri satırdan üretilir; gelecek/hedef ufku kullanılmaz. Zaman ayırma yine gereklidir."
+          },
+          {
+            "kind": "impute_numeric",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "median",
+              "all_missing": "error"
+            },
+            "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz."
+          },
+          {
+            "kind": "no_scaling",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "explicit_override": false
+            },
+            "reason": "Ağaç ailesine scaling otomatik önerilmez; açık none seçiminde diğer ailelerde ölçek duyarlılığını inceleyin."
+          }
+        ],
+        "column_lineage": [
+          {
+            "input_column_id": "col:90a9985e-897a-458d-8a27-be5287c40e71",
+            "source_name": "x",
+            "source_dtype": "Float64",
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "names_status": "structurally_known",
+            "category_map": [],
+            "selected_after_fit": "all_planned"
+          },
+          {
+            "input_column_id": "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896",
+            "source_name": "cat",
+            "source_dtype": "String",
+            "output_names": [
+              "f_7e6e63f6c1154a32b9e1fc25775ea896__category_{training_index}"
+            ],
+            "names_status": "template_training_bound",
+            "category_map": null,
+            "selected_after_fit": "all_planned"
+          },
+          {
+            "input_column_id": "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9",
+            "source_name": "when",
+            "source_dtype": "Date",
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "names_status": "structurally_known",
+            "category_map": [],
+            "selected_after_fit": "all_planned"
+          }
+        ],
+        "training_dependency": "Requires a validated split/fold protocol in Phase16; no training performed",
+        "category_vocabulary": null,
+        "feature_selection_mask": null,
+        "version_id": "ml-pipeline:28d5f41b-d9c7-46a4-8b0e-63d724c57e0a"
+      }
+    },
+    "clustering": {
+      "family": "distance",
+      "calculate_ms": 186.69659000079264,
+      "worker_pid": 141,
+      "dataset_n": 6,
+      "eligible_n": 6,
+      "target": null,
+      "plan": {
+        "schema": "PreparationPlan/v1",
+        "fit_state": "not_fitted",
+        "fitted_parameters": {},
+        "estimator_family": "distance",
+        "steps": [
+          {
+            "kind": "numeric",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "precision": "reject",
+              "nonfinite": "reject"
+            },
+            "reason": "Kimlik ölçüm değildir; Float64 kaybı gelecekte açık politika ile denetlenir."
+          },
+          {
+            "kind": "impute_numeric",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "median",
+              "all_missing": "error"
+            },
+            "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz."
+          },
+          {
+            "kind": "standard_scale",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "explicit_override": false
+            },
+            "reason": "Uzaklıklar ve düzenlileştirilmiş doğrusal modeller ölçüm ölçeğine duyarlıdır; eğitim katında standardizasyon planlandı."
+          },
+          {
+            "kind": "impute_category",
+            "input_column_ids": [
+              "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896"
+            ],
+            "output_names": [],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "most_frequent",
+              "all_missing": "error"
+            },
+            "reason": "Kategori modunu yalnız eğitim katı öğrenir; eksik hedef doldurulmaz."
+          },
+          {
+            "kind": "encode_onehot",
+            "input_column_ids": [
+              "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896"
+            ],
+            "output_names": [
+              "f_7e6e63f6c1154a32b9e1fc25775ea896__category_{training_index}"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "categories": "training_only",
+              "unknown": "ignore_with_warning",
+              "sparse": true,
+              "name_binding": "training category index -> original ColumnId and category; deferred until fit"
+            },
+            "reason": "Nominal kategorilere sıralama yüklenmez; kategori sözlüğü yalnız eğitim katında öğrenilir."
+          },
+          {
+            "kind": "calendar",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "timezone": "source_timezone; naive remains naive",
+              "components": [
+                "year",
+                "month",
+                "weekday"
+              ]
+            },
+            "reason": "Takvim bileşenleri satırdan üretilir; gelecek/hedef ufku kullanılmaz. Zaman ayırma yine gereklidir."
+          },
+          {
+            "kind": "impute_numeric",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "median",
+              "all_missing": "error"
+            },
+            "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz."
+          },
+          {
+            "kind": "standard_scale",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "explicit_override": false
+            },
+            "reason": "Uzaklıklar ve düzenlileştirilmiş doğrusal modeller ölçüm ölçeğine duyarlıdır; eğitim katında standardizasyon planlandı."
+          }
+        ],
+        "column_lineage": [
+          {
+            "input_column_id": "col:90a9985e-897a-458d-8a27-be5287c40e71",
+            "source_name": "x",
+            "source_dtype": "Float64",
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "names_status": "structurally_known",
+            "category_map": [],
+            "selected_after_fit": "all_planned"
+          },
+          {
+            "input_column_id": "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896",
+            "source_name": "cat",
+            "source_dtype": "String",
+            "output_names": [
+              "f_7e6e63f6c1154a32b9e1fc25775ea896__category_{training_index}"
+            ],
+            "names_status": "template_training_bound",
+            "category_map": null,
+            "selected_after_fit": "all_planned"
+          },
+          {
+            "input_column_id": "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9",
+            "source_name": "when",
+            "source_dtype": "Date",
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "names_status": "structurally_known",
+            "category_map": [],
+            "selected_after_fit": "all_planned"
+          }
+        ],
+        "training_dependency": "Requires a validated split/fold protocol in Phase16; no training performed",
+        "category_vocabulary": null,
+        "feature_selection_mask": null,
+        "version_id": "ml-pipeline:0a0794aa-b344-4849-b8a7-ecf510a4fb0e"
+      }
+    },
+    "anomaly": {
+      "family": "tree",
+      "calculate_ms": 192.78196499908518,
+      "worker_pid": 155,
+      "dataset_n": 6,
+      "eligible_n": 6,
+      "target": null,
+      "plan": {
+        "schema": "PreparationPlan/v1",
+        "fit_state": "not_fitted",
+        "fitted_parameters": {},
+        "estimator_family": "tree",
+        "steps": [
+          {
+            "kind": "numeric",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "precision": "reject",
+              "nonfinite": "reject"
+            },
+            "reason": "Kimlik ölçüm değildir; Float64 kaybı gelecekte açık politika ile denetlenir."
+          },
+          {
+            "kind": "impute_numeric",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "median",
+              "all_missing": "error"
+            },
+            "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz."
+          },
+          {
+            "kind": "no_scaling",
+            "input_column_ids": [
+              "col:90a9985e-897a-458d-8a27-be5287c40e71"
+            ],
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "explicit_override": false
+            },
+            "reason": "Ağaç ailesine scaling otomatik önerilmez; açık none seçiminde diğer ailelerde ölçek duyarlılığını inceleyin."
+          },
+          {
+            "kind": "impute_category",
+            "input_column_ids": [
+              "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896"
+            ],
+            "output_names": [],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "most_frequent",
+              "all_missing": "error"
+            },
+            "reason": "Kategori modunu yalnız eğitim katı öğrenir; eksik hedef doldurulmaz."
+          },
+          {
+            "kind": "encode_onehot",
+            "input_column_ids": [
+              "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896"
+            ],
+            "output_names": [
+              "f_7e6e63f6c1154a32b9e1fc25775ea896__category_{training_index}"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "categories": "training_only",
+              "unknown": "ignore_with_warning",
+              "sparse": true,
+              "name_binding": "training category index -> original ColumnId and category; deferred until fit"
+            },
+            "reason": "Nominal kategorilere sıralama yüklenmez; kategori sözlüğü yalnız eğitim katında öğrenilir."
+          },
+          {
+            "kind": "calendar",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "timezone": "source_timezone; naive remains naive",
+              "components": [
+                "year",
+                "month",
+                "weekday"
+              ]
+            },
+            "reason": "Takvim bileşenleri satırdan üretilir; gelecek/hedef ufku kullanılmaz. Zaman ayırma yine gereklidir."
+          },
+          {
+            "kind": "impute_numeric",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "training_fold",
+            "state": "planned",
+            "parameters": {
+              "strategy": "median",
+              "all_missing": "error"
+            },
+            "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz."
+          },
+          {
+            "kind": "no_scaling",
+            "input_column_ids": [
+              "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9"
+            ],
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "learned_scope": "row_local",
+            "state": "planned",
+            "parameters": {
+              "explicit_override": false
+            },
+            "reason": "Ağaç ailesine scaling otomatik önerilmez; açık none seçiminde diğer ailelerde ölçek duyarlılığını inceleyin."
+          }
+        ],
+        "column_lineage": [
+          {
+            "input_column_id": "col:90a9985e-897a-458d-8a27-be5287c40e71",
+            "source_name": "x",
+            "source_dtype": "Float64",
+            "output_names": [
+              "f_90a9985e897a458d8a27be5287c40e71__numeric"
+            ],
+            "names_status": "structurally_known",
+            "category_map": [],
+            "selected_after_fit": "all_planned"
+          },
+          {
+            "input_column_id": "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896",
+            "source_name": "cat",
+            "source_dtype": "String",
+            "output_names": [
+              "f_7e6e63f6c1154a32b9e1fc25775ea896__category_{training_index}"
+            ],
+            "names_status": "template_training_bound",
+            "category_map": null,
+            "selected_after_fit": "all_planned"
+          },
+          {
+            "input_column_id": "col:3673e0c8-db47-49a7-8acf-6faa6fb8d9d9",
+            "source_name": "when",
+            "source_dtype": "Date",
+            "output_names": [
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__year",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__month",
+              "f_3673e0c8db4749a78acf6faa6fb8d9d9__weekday"
+            ],
+            "names_status": "structurally_known",
+            "category_map": [],
+            "selected_after_fit": "all_planned"
+          }
+        ],
+        "training_dependency": "Requires a validated split/fold protocol in Phase16; no training performed",
+        "category_vocabulary": null,
+        "feature_selection_mask": null,
+        "version_id": "ml-pipeline:918f05f2-8ed0-474d-a21a-a3e88864694a"
+      }
+    }
+  },
+  "screenshots": [
+    "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase15/wheel-form-720.png",
+    "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase15/wheel-result-1366.png",
+    "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase15/wheel-result-720.png",
+    "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase15/wheel-history-1366.png"
+  ],
+  "source_sha256": {
+    "fixture": "81e2b0e22d6115b5ce1e3fe9d670b2327c60de4670e352d702b6d1133c09894a",
+    "large": "48f87c3c3082ccb417aa35d970eb74eaec760d125b041798ec0a57cb816671c4"
+  },
+  "max_tick_gap_ms": 87.81801500117581,
+  "peak_parent_worker_rss_bytes": 655523840,
+  "offline_policy": "Python TCP denied in parent/spawn; OS interfaces not disabled; fresh XDG",
+  "cache": "warm developer runtime; no minimum hardware claim",
+  "saved_reopened": 4,
+  "f1_context": "model-preparation",
+  "history_review": {
+    "origin_version": "dv:10f98083-133d-45ff-b68b-deddcbfec5d6",
+    "source_version": "dv:10f98083-133d-45ff-b68b-deddcbfec5d6",
+    "action": "review",
+    "findings": [
+      {
+        "operation_id": "op:9d7175cc-e93c-4bd4-9261-129df159d663",
+        "dataset_version": "dv:10f98083-133d-45ff-b68b-deddcbfec5d6",
+        "kind": "fill",
+        "method": "mean",
+        "policy_parameters": {
+          "method": "mean",
+          "missing": "null",
+          "value": "",
+          "tie_policy": "reject"
+        },
+        "column_ids": [
+          "col:90a9985e-897a-458d-8a27-be5287c40e71"
+        ],
+        "input_version": "dv:49b3ad64-ce85-4ae8-b95c-7b77e0c8f71f",
+        "learned_scope": "dataset",
+        "risk": "dataset_learned",
+        "reason": "İşlem tüm giriş verisinden öğrenildi; gelecekteki validation/test bilgisi karara katılmış olabilir.",
+        "removed_from_source": false,
+        "relocatable": true,
+        "resolution": "unresolved"
+      }
+    ],
+    "unresolved_source_operations": [
+      "op:9d7175cc-e93c-4bd4-9261-129df159d663"
+    ],
+    "relocation_unavailable": [],
+    "external_history": "Proje dışındaki geçmiş ve kullanıcı seçimlerinin bütününü tespit edemeyiz; yeni plan tek başına eski riski gidermez.",
+    "leakage_certified": false
+  },
+  "history_relocation": {
+    "origin_version": "dv:10f98083-133d-45ff-b68b-deddcbfec5d6",
+    "source_version": "dv:49b3ad64-ce85-4ae8-b95c-7b77e0c8f71f",
+    "action": "relocate",
+    "findings": [
+      {
+        "operation_id": "op:9d7175cc-e93c-4bd4-9261-129df159d663",
+        "dataset_version": "dv:10f98083-133d-45ff-b68b-deddcbfec5d6",
+        "kind": "fill",
+        "method": "mean",
+        "policy_parameters": {
+          "method": "mean",
+          "missing": "null",
+          "value": "",
+          "tie_policy": "reject"
+        },
+        "column_ids": [
+          "col:90a9985e-897a-458d-8a27-be5287c40e71"
+        ],
+        "input_version": "dv:49b3ad64-ce85-4ae8-b95c-7b77e0c8f71f",
+        "learned_scope": "dataset",
+        "risk": "dataset_learned",
+        "reason": "İşlem tüm giriş verisinden öğrenildi; gelecekteki validation/test bilgisi karara katılmış olabilir.",
+        "removed_from_source": true,
+        "relocatable": true,
+        "resolution": "pending_fold_step"
+      }
+    ],
+    "unresolved_source_operations": [],
+    "relocation_unavailable": [],
+    "external_history": "Proje dışındaki geçmiş ve kullanıcı seçimlerinin bütününü tespit edemeyiz; yeni plan tek başına eski riski gidermez.",
+    "leakage_certified": false
+  },
+  "relocation_plan": {
+    "schema": "PreparationPlan/v1",
+    "fit_state": "not_fitted",
+    "fitted_parameters": {},
+    "estimator_family": "tree",
+    "steps": [
+      {
+        "kind": "numeric",
+        "input_column_ids": [
+          "col:90a9985e-897a-458d-8a27-be5287c40e71"
+        ],
+        "output_names": [
+          "f_90a9985e897a458d8a27be5287c40e71__numeric"
+        ],
+        "learned_scope": "row_local",
+        "state": "planned",
+        "parameters": {
+          "precision": "reject",
+          "nonfinite": "reject"
+        },
+        "reason": "Kimlik ölçüm değildir; Float64 kaybı gelecekte açık politika ile denetlenir."
+      },
+      {
+        "kind": "impute_numeric",
+        "input_column_ids": [
+          "col:90a9985e-897a-458d-8a27-be5287c40e71"
+        ],
+        "output_names": [
+          "f_90a9985e897a458d8a27be5287c40e71__numeric"
+        ],
+        "learned_scope": "training_fold",
+        "state": "planned",
+        "parameters": {
+          "strategy": "mean",
+          "all_missing": "error",
+          "relocated_from_operation_id": "op:9d7175cc-e93c-4bd4-9261-129df159d663"
+        },
+        "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz."
+      },
+      {
+        "kind": "no_scaling",
+        "input_column_ids": [
+          "col:90a9985e-897a-458d-8a27-be5287c40e71"
+        ],
+        "output_names": [
+          "f_90a9985e897a458d8a27be5287c40e71__numeric"
+        ],
+        "learned_scope": "row_local",
+        "state": "planned",
+        "parameters": {
+          "explicit_override": false
+        },
+        "reason": "Ağaç ailesine scaling otomatik önerilmez; açık none seçiminde diğer ailelerde ölçek duyarlılığını inceleyin."
+      },
+      {
+        "kind": "impute_category",
+        "input_column_ids": [
+          "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896"
+        ],
+        "output_names": [],
+        "learned_scope": "training_fold",
+        "state": "planned",
+        "parameters": {
+          "strategy": "most_frequent",
+          "all_missing": "error"
+        },
+        "reason": "Kategori modunu yalnız eğitim katı öğrenir; eksik hedef doldurulmaz."
+      },
+      {
+        "kind": "encode_onehot",
+        "input_column_ids": [
+          "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896"
+        ],
+        "output_names": [
+          "f_7e6e63f6c1154a32b9e1fc25775ea896__category_{training_index}"
+        ],
+        "learned_scope": "training_fold",
+        "state": "planned",
+        "parameters": {
+          "categories": "training_only",
+          "unknown": "ignore_with_warning",
+          "sparse": true,
+          "name_binding": "training category index -> original ColumnId and category; deferred until fit"
+        },
+        "reason": "Nominal kategorilere sıralama yüklenmez; kategori sözlüğü yalnız eğitim katında öğrenilir."
+      }
+    ],
+    "column_lineage": [
+      {
+        "input_column_id": "col:90a9985e-897a-458d-8a27-be5287c40e71",
+        "source_name": "x",
+        "source_dtype": "Float64",
+        "output_names": [
+          "f_90a9985e897a458d8a27be5287c40e71__numeric"
+        ],
+        "names_status": "structurally_known",
+        "category_map": [],
+        "selected_after_fit": "all_planned"
+      },
+      {
+        "input_column_id": "col:7e6e63f6-c115-4a32-b9e1-fc25775ea896",
+        "source_name": "cat",
+        "source_dtype": "String",
+        "output_names": [
+          "f_7e6e63f6c1154a32b9e1fc25775ea896__category_{training_index}"
+        ],
+        "names_status": "template_training_bound",
+        "category_map": null,
+        "selected_after_fit": "all_planned"
+      }
+    ],
+    "training_dependency": "Requires a validated split/fold protocol in Phase16; no training performed",
+    "category_vocabulary": null,
+    "feature_selection_mask": null,
+    "version_id": "ml-pipeline:b656a366-d731-40ff-9dfa-f895d9bdabd9"
+  },
+  "large": {
+    "rows": 100000,
+    "calculate_ms": 234.71040500044182,
+    "class_distribution": [
+      {
+        "label": "0",
+        "count": 50000
+      },
+      {
+        "label": "1",
+        "count": 50000
+      }
+    ],
+    "plan": {
+      "schema": "PreparationPlan/v1",
+      "fit_state": "not_fitted",
+      "fitted_parameters": {},
+      "estimator_family": "tree",
+      "steps": [
+        {
+          "kind": "numeric",
+          "input_column_ids": [
+            "col:58aec422-6b60-499f-b5fe-761894281e9f"
+          ],
+          "output_names": [
+            "f_58aec4226b60499fb5fe761894281e9f__numeric"
+          ],
+          "learned_scope": "row_local",
+          "state": "planned",
+          "parameters": {
+            "precision": "reject",
+            "nonfinite": "reject"
+          },
+          "reason": "Kimlik ölçüm değildir; Float64 kaybı gelecekte açık politika ile denetlenir."
+        },
+        {
+          "kind": "impute_numeric",
+          "input_column_ids": [
+            "col:58aec422-6b60-499f-b5fe-761894281e9f"
+          ],
+          "output_names": [
+            "f_58aec4226b60499fb5fe761894281e9f__numeric"
+          ],
+          "learned_scope": "training_fold",
+          "state": "planned",
+          "parameters": {
+            "strategy": "median",
+            "all_missing": "error"
+          },
+          "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz."
+        },
+        {
+          "kind": "no_scaling",
+          "input_column_ids": [
+            "col:58aec422-6b60-499f-b5fe-761894281e9f"
+          ],
+          "output_names": [
+            "f_58aec4226b60499fb5fe761894281e9f__numeric"
+          ],
+          "learned_scope": "row_local",
+          "state": "planned",
+          "parameters": {
+            "explicit_override": false
+          },
+          "reason": "Ağaç ailesine scaling otomatik önerilmez; açık none seçiminde diğer ailelerde ölçek duyarlılığını inceleyin."
+        },
+        {
+          "kind": "impute_category",
+          "input_column_ids": [
+            "col:137a6741-4df6-423f-bc0b-3bec5a57c99a"
+          ],
+          "output_names": [],
+          "learned_scope": "training_fold",
+          "state": "planned",
+          "parameters": {
+            "strategy": "most_frequent",
+            "all_missing": "error"
+          },
+          "reason": "Kategori modunu yalnız eğitim katı öğrenir; eksik hedef doldurulmaz."
+        },
+        {
+          "kind": "encode_onehot",
+          "input_column_ids": [
+            "col:137a6741-4df6-423f-bc0b-3bec5a57c99a"
+          ],
+          "output_names": [
+            "f_137a67414df6423fbc0b3bec5a57c99a__category_{training_index}"
+          ],
+          "learned_scope": "training_fold",
+          "state": "planned",
+          "parameters": {
+            "categories": "training_only",
+            "unknown": "ignore_with_warning",
+            "sparse": true,
+            "name_binding": "training category index -> original ColumnId and category; deferred until fit"
+          },
+          "reason": "Nominal kategorilere sıralama yüklenmez; kategori sözlüğü yalnız eğitim katında öğrenilir."
+        }
+      ],
+      "column_lineage": [
+        {
+          "input_column_id": "col:58aec422-6b60-499f-b5fe-761894281e9f",
+          "source_name": "x",
+          "source_dtype": "Int64",
+          "output_names": [
+            "f_58aec4226b60499fb5fe761894281e9f__numeric"
+          ],
+          "names_status": "structurally_known",
+          "category_map": [],
+          "selected_after_fit": "all_planned"
+        },
+        {
+          "input_column_id": "col:137a6741-4df6-423f-bc0b-3bec5a57c99a",
+          "source_name": "cat",
+          "source_dtype": "String",
+          "output_names": [
+            "f_137a67414df6423fbc0b3bec5a57c99a__category_{training_index}"
+          ],
+          "names_status": "template_training_bound",
+          "category_map": null,
+          "selected_after_fit": "all_planned"
+        }
+      ],
+      "training_dependency": "Requires a validated split/fold protocol in Phase16; no training performed",
+      "category_vocabulary": null,
+      "feature_selection_mask": null,
+      "version_id": "ml-pipeline:888b28fa-b88c-43a8-9c07-de2a239fcca5"
+    }
+  },
+  "cancel_ms": 238.3687989986356,
+  "cancel_previous_plan_preserved": true,
+  "stale_result_discarded": true,
+  "all_sources_unchanged": true
+}

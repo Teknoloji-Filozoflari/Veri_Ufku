@@ -1,0 +1,92 @@
+$ uv --cache-dir /tmp/veri-ufku-uv sync --offline --locked --group dev
+Resolved 18 packages in 0.85ms
+Checked 17 packages in 0.17ms
+EXIT=0
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+EXIT=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+EXIT=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+EXIT=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_learning.py
+PASS: 51 offline articles; 42 UI bindings; all capability links
+EXIT=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff check src tests scripts
+All checks passed!
+EXIT=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff format --check src tests scripts
+85 files already formatted
+EXIT=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen pytest -q
+........................................................................ [ 27%]
+........................................................................ [ 55%]
+........................................................................ [ 82%]
+.............................................                            [100%]
+261 passed in 41.29s
+EXIT=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.368s
+
+OK
+EXIT=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen veri-ufku --smoke-test
+GUI_SMOKE PASS
+EXIT=0
+
+$ git diff --check
+EXIT=0
+
+
+$ final GUI after effect-label/help assertions
+...                                                                      [100%]
+3 passed in 7.28s
+EXIT=0
+
+$ uv build --offline --no-build-isolation; uv pip install --offline --no-deps --reinstall --target /tmp/veri-ufku-phase10-installed
+Building source distribution...
+Building wheel from source distribution...
+Successfully built /tmp/veri-ufku-phase10-dist/veri_ufku-0.1.0.tar.gz
+Successfully built /tmp/veri-ufku-phase10-dist/veri_ufku-0.1.0-py3-none-any.whl
+Using CPython 3.13.15 interpreter at: .venv/bin/python
+Resolved 1 package in 1ms
+Prepared 1 package in 3ms
+Uninstalled 1 package in 0.69ms
+Installed 1 package in 1ms
+ ~ veri-ufku==0.1.0 (from file:///tmp/veri-ufku-phase10-dist/veri_ufku-0.1.0-py3-none-any.whl)
+EXIT=0
+
+Final evidence/document checks (after package record):
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+EXIT=0
+$ .venv/bin/python scripts/check_learning.py
+PASS: 51 offline articles; 42 UI bindings; all capability links
+EXIT=0
+$ .venv/bin/python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+EXIT=0
+$ git diff --check
+EXIT=0

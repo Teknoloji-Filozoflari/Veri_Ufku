@@ -1,0 +1,637 @@
+{
+  "baseline": {
+    "comparison": [
+      {
+        "metrics": [
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "mae",
+            "n": 18,
+            "scope": "validation",
+            "status": "valid",
+            "value": 1.4571165433500823
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "rmse",
+            "n": 18,
+            "scope": "validation",
+            "status": "valid",
+            "value": 1.709429436577681
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "maximize",
+            "metric": "r2",
+            "n": 18,
+            "scope": "validation",
+            "status": "valid",
+            "value": -0.022234031558845846
+          }
+        ],
+        "scope": "validation"
+      },
+      {
+        "metrics": [
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "mae",
+            "n": 36,
+            "scope": "cv:1",
+            "status": "valid",
+            "value": 1.5031244518227727
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "rmse",
+            "n": 36,
+            "scope": "cv:1",
+            "status": "valid",
+            "value": 1.729437529371405
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "maximize",
+            "metric": "r2",
+            "n": 36,
+            "scope": "cv:1",
+            "status": "valid",
+            "value": -0.018109037841277376
+          }
+        ],
+        "scope": "cv:1"
+      },
+      {
+        "metrics": [
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "mae",
+            "n": 36,
+            "scope": "cv:2",
+            "status": "valid",
+            "value": 1.2252304827538394
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "minimize",
+            "metric": "rmse",
+            "n": 36,
+            "scope": "cv:2",
+            "status": "valid",
+            "value": 1.5033061328630315
+          },
+          {
+            "averaging": "per_record",
+            "coverage": "all eligible records in this evaluation partition",
+            "direction": "maximize",
+            "metric": "r2",
+            "n": 36,
+            "scope": "cv:2",
+            "status": "valid",
+            "value": -0.024108031788956374
+          }
+        ],
+        "scope": "cv:2"
+      }
+    ],
+    "limitation": "Final koşuda yeniden baseline seçimi yapılmaz; geliştirme koşusu kartına bakın.",
+    "strategy": "mean"
+  },
+  "candidate_selection": {
+    "parameters": {
+      "alpha": 1.0,
+      "candidates": [
+        "baseline",
+        "gradient_boosting"
+      ],
+      "depth": 8,
+      "explicit_model": "gradient_boosting",
+      "family_options": {
+        "C": 1,
+        "alpha": 0.1,
+        "class_balance": "none",
+        "depth": 3,
+        "device": "cpu",
+        "gamma": "scale",
+        "inner_folds": 3,
+        "kernel": "rbf",
+        "l1_ratio": 0.5,
+        "learning_rate": 0.1,
+        "matrix": "dense",
+        "max_iter": 5000,
+        "neighbors": 5,
+        "objective": "supervised",
+        "scaling": "auto",
+        "trees": 10,
+        "weight_column": "",
+        "weight_kind": "sample_weight"
+      },
+      "trees": 50,
+      "unit": "hedef birimi"
+    },
+    "rule": "explicit user family selection fixed before CV; baseline same split/folds; no universal best algorithm",
+    "selected": "gradient_boosting"
+  },
+  "columns": [
+    {
+      "id": "col:a000d0c9-1bbd-49c5-89fb-73f2375e6ea6",
+      "name": "x",
+      "original_name": "x",
+      "type": "Float64"
+    },
+    {
+      "id": "col:4a9d1c9f-528c-47ab-84ca-a4911ff04a06",
+      "name": "y",
+      "original_name": "y",
+      "type": "Float64"
+    },
+    {
+      "id": "col:acc7b823-ef56-44f4-b4fa-baf8a53f4cf6",
+      "name": "category",
+      "original_name": "category",
+      "type": "String"
+    },
+    {
+      "id": "col:4b15a7e5-a6e5-49ce-a4ab-b0a7d2b3eb4e",
+      "name": "note",
+      "original_name": "note",
+      "type": "String"
+    }
+  ],
+  "dataset_version": "dv:ef626303-97dd-4347-8c16-174e2459e63b",
+  "decision": null,
+  "estimator": "FamilyRegressor",
+  "features": [
+    {
+      "id": "col:a000d0c9-1bbd-49c5-89fb-73f2375e6ea6",
+      "name": "x",
+      "type": "Float64",
+      "unit": ""
+    },
+    {
+      "id": "col:acc7b823-ef56-44f4-b4fa-baf8a53f4cf6",
+      "name": "category",
+      "type": "String",
+      "unit": ""
+    }
+  ],
+  "fit_scope": "development_train; validation previously used for selection",
+  "fitted_preprocessing": {
+    "backend_notices": [],
+    "categorical_mask": [
+      false,
+      false,
+      false
+    ],
+    "class_mapping": [],
+    "convergence": "passed; native warnings guarded",
+    "feature_names": [
+      "f_a000d0c91bbd49c589fb73f2375e6ea6",
+      "f_acc7b823ef5644f4b4fabaf8a53f4cf6__0",
+      "f_acc7b823ef5644f4b4fabaf8a53f4cf6__1"
+    ],
+    "fit_row_ids": [
+      "row:46400490-2e01-4206-8020-2e406d6b70f0",
+      "row:ffab2ea5-d10a-4c05-9004-bf9abcf654e5",
+      "row:3269b351-dd90-4f43-b53f-210966209b13",
+      "row:a3e8c075-5914-43f7-86fc-d4a6568496e4",
+      "row:623cb806-cd36-491d-aa62-0d2a209a25ae",
+      "row:c0f9fe0a-b02f-4f48-9953-6587fee5715e",
+      "row:f99bccea-2ca8-43ca-974b-958e22d47e4f",
+      "row:a83b3937-b2ff-40c8-a9a4-e8797ecaf917",
+      "row:4bb93674-9cec-48bf-9d1b-4eda31c9d720",
+      "row:dc9d0c8c-2ee0-4e8d-94f7-3a505b91bf62",
+      "row:ad0e2a30-6cb4-42de-9906-a6b3a498016d",
+      "row:3633e7e2-9d92-4f67-96ac-336b2c13bda2",
+      "row:e18cb20a-6ca6-453b-99b4-b99bd95acd8c",
+      "row:92746e89-5ae4-4ef2-b201-eff4dcd4862c",
+      "row:17a6cb31-e147-4885-b68f-29db52ea665f",
+      "row:c73e5504-489d-4af9-8671-c46568ef58df",
+      "row:313d91b1-43ba-4982-9a2e-76d72cd8b351",
+      "row:084a3b0f-7fb7-40a9-8bf2-8283a5305c46",
+      "row:0238d39f-4fbf-4ca5-9fee-0cdfa8a3fd1d",
+      "row:aacc281c-68ab-4c8f-a03f-d6d7dde43eaa",
+      "row:c20b8661-f2c6-4bca-8d77-6909ad36a33c",
+      "row:0ba520ff-f119-49c5-aa40-65c25748bfe3",
+      "row:969b9c7b-dfe6-4d11-85dd-011499906b06",
+      "row:453b9857-8348-4289-88d0-27d08f7c4ae4",
+      "row:ad906135-fef6-4730-a2c7-f50c7bdd727a",
+      "row:ec95310e-6c48-4ba5-8620-772d46f65035",
+      "row:900328d2-6c08-44fe-bfec-40d76551cb4d",
+      "row:96e86d3a-f44d-4de8-9063-8ecc6b527fcb",
+      "row:8b540397-1e93-4482-b9fb-49d6b2199e8d",
+      "row:b8396772-79cd-4356-9961-39cd08f6c275",
+      "row:8450b1b6-3898-4520-b5d0-13d99aa1495b",
+      "row:5660a630-afeb-4c42-a306-21e8d4c88484",
+      "row:c8797b1a-058f-4feb-bab8-ac0d9a32154e",
+      "row:638b882a-7a34-42f4-8a7f-e797be8175c4",
+      "row:a5e8ddb6-8fb5-48e3-aee7-0b346996c647",
+      "row:40542e5a-8780-451e-9189-a3471739be5f",
+      "row:dd1eb0ce-a292-47c7-b18c-a7f8507218bb",
+      "row:e6c666b1-1ae4-45c4-b59d-36258b895f96",
+      "row:9c06e213-0de5-4a62-aa62-8b6cc857eea7",
+      "row:28302118-903e-49d0-be29-b7d3af43d2c8",
+      "row:bc2ca1ba-bf30-4aa0-b90b-d87a24a11a48",
+      "row:bc6f40c3-f26f-43e0-a44c-9d809de7d648",
+      "row:cead3369-1f57-4e38-8d94-4c661c57a9ab",
+      "row:35adeb92-4462-4cb0-ab13-1d238e794841",
+      "row:e3cfef49-11c2-47aa-80ca-76e8d9b039de",
+      "row:664ed79e-d9e5-44c7-85b4-39860ff50dfa",
+      "row:9da527c3-3eaf-4992-a7ee-539f5eadaee4",
+      "row:0eabfe54-8e24-4366-b761-3a7212a9ff62",
+      "row:3f24e9f0-2852-4790-81ac-a1161e25f049",
+      "row:34969f89-3172-4b95-a5b2-3101b89f8407",
+      "row:35955012-1143-4add-8029-06e3eac61765",
+      "row:c3c5c4b0-e372-4970-ac10-9bd1e61802de",
+      "row:75e672aa-24cf-4572-8147-d2edb9da56e9",
+      "row:0c46666d-5ca0-4116-b62e-39c0d1cbc886"
+    ],
+    "iterations": [],
+    "matrix": "dense",
+    "method": "gradient_boosting",
+    "native_parameters": {
+      "alpha": 0.9,
+      "ccp_alpha": 0.0,
+      "criterion": "deprecated",
+      "init": null,
+      "learning_rate": 0.1,
+      "loss": "squared_error",
+      "max_depth": 3,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 1,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "n_estimators": 10,
+      "n_iter_no_change": null,
+      "random_state": 42,
+      "subsample": 1.0,
+      "tol": 0.0001,
+      "validation_fraction": 0.1,
+      "verbose": 0,
+      "warm_start": false
+    },
+    "preprocessing": {
+      "col:a000d0c9-1bbd-49c5-89fb-73f2375e6ea6": {
+        "center": false,
+        "fit_n": 54,
+        "fit_scope": "training_only",
+        "imputation": [
+          0.9816335087050351
+        ],
+        "kind": "numeric",
+        "mean": null,
+        "scale": null
+      },
+      "col:acc7b823-ef56-44f4-b4fa-baf8a53f4cf6": {
+        "categories": [
+          "[\"str\", \"A\"]",
+          "[\"str\", \"B\"]"
+        ],
+        "fill": "[\"str\", \"A\"]",
+        "fit_n": 54,
+        "fit_scope": "training_only",
+        "kind": "onehot",
+        "unknown": "all-zero"
+      }
+    },
+    "support": {
+      "backend_available": true,
+      "backend_reason": "",
+      "categorical": "training-only one-hot; ordinal only declared order",
+      "dense": true,
+      "gpu": "unsupported CPU-only adapter",
+      "imbalance": "training-only balanced sample weights",
+      "method": "gradient_boosting",
+      "multioutput": "application schema single target; native multioutput not exposed",
+      "nan": "train-only declared imputation or reject",
+      "predict_proba": false,
+      "purpose": "regression",
+      "ranking": "separate RankingSpec/v1, no ordinary class target",
+      "row_limit": 5000,
+      "safe_persistence": "closed reviewed skops package; no pickle/joblib",
+      "scaling": "none recommended",
+      "sparse": true,
+      "weights": "fit sample_weight only; preprocessing and evaluation unweighted"
+    },
+    "weights": "none"
+  },
+  "importance": {
+    "reason": "Bağımsız değerlendirme bölümü yok; nedensellik çıkarılamaz.",
+    "status": "unavailable"
+  },
+  "label_order": [],
+  "limitations": "Katsayı ve önemler nedensel etki değildir. İlişkili özellikler önemi paylaşabilir veya gizleyebilir. Yeni veri dağılımı değişebilir; olasılık kesinlik veya kalibrasyon garantisi değildir. Küme ve anomali adayları gerçek sınıf/veri hatası değildir; otomatik silme yok.",
+  "method": null,
+  "metrics": [
+    {
+      "evaluation_n": 18,
+      "metrics": [
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "mae",
+          "n": 18,
+          "scope": "validation",
+          "status": "valid",
+          "value": 0.5131027767772096
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "rmse",
+          "n": 18,
+          "scope": "validation",
+          "status": "valid",
+          "value": 0.6093945316576049
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "maximize",
+          "metric": "r2",
+          "n": 18,
+          "scope": "validation",
+          "status": "valid",
+          "value": 0.870089251765659
+        }
+      ],
+      "scope": "validation",
+      "status": "valid",
+      "train_n": 54
+    },
+    {
+      "evaluation_n": 36,
+      "metrics": [
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "mae",
+          "n": 36,
+          "scope": "cv:1",
+          "status": "valid",
+          "value": 0.5494459730595045
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "rmse",
+          "n": 36,
+          "scope": "cv:1",
+          "status": "valid",
+          "value": 0.639682548925185
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "maximize",
+          "metric": "r2",
+          "n": 36,
+          "scope": "cv:1",
+          "status": "valid",
+          "value": 0.8607120519589728
+        }
+      ],
+      "scope": "cv:1",
+      "status": "valid",
+      "train_n": 36
+    },
+    {
+      "evaluation_n": 36,
+      "metrics": [
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "mae",
+          "n": 36,
+          "scope": "cv:2",
+          "status": "valid",
+          "value": 0.443753668768133
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "minimize",
+          "metric": "rmse",
+          "n": 36,
+          "scope": "cv:2",
+          "status": "valid",
+          "value": 0.5431321551987593
+        },
+        {
+          "averaging": "per_record",
+          "coverage": "all eligible records in this evaluation partition",
+          "direction": "maximize",
+          "metric": "r2",
+          "n": 36,
+          "scope": "cv:2",
+          "status": "valid",
+          "value": 0.8663213828838847
+        }
+      ],
+      "scope": "cv:2",
+      "status": "valid",
+      "train_n": 36
+    }
+  ],
+  "preparation_spec": {
+    "allow_identifiers": false,
+    "categorical_imputation": "most_frequent",
+    "date_features": true,
+    "encoding": "onehot",
+    "family": "tree",
+    "features": [
+      "col:a000d0c9-1bbd-49c5-89fb-73f2375e6ea6",
+      "col:acc7b823-ef56-44f4-b4fa-baf8a53f4cf6"
+    ],
+    "group": "",
+    "history_action": "review",
+    "history_note": "",
+    "invalid_numeric": "reject",
+    "numeric_imputation": "median",
+    "precision": "reject",
+    "prediction_context": "Before outcome",
+    "purpose": "regression",
+    "scaling": "auto",
+    "selection": "none",
+    "source_version": "dv:ef626303-97dd-4347-8c16-174e2459e63b",
+    "target": "col:4a9d1c9f-528c-47ab-84ca-a4911ff04a06",
+    "time": ""
+  },
+  "preprocessing": {
+    "category_vocabulary": null,
+    "column_lineage": [
+      {
+        "category_map": [],
+        "input_column_id": "col:a000d0c9-1bbd-49c5-89fb-73f2375e6ea6",
+        "names_status": "structurally_known",
+        "output_names": [
+          "f_a000d0c91bbd49c589fb73f2375e6ea6__numeric"
+        ],
+        "selected_after_fit": "all_planned",
+        "source_dtype": "Float64",
+        "source_name": "x"
+      },
+      {
+        "category_map": null,
+        "input_column_id": "col:acc7b823-ef56-44f4-b4fa-baf8a53f4cf6",
+        "names_status": "template_training_bound",
+        "output_names": [
+          "f_acc7b823ef5644f4b4fabaf8a53f4cf6__category_{training_index}"
+        ],
+        "selected_after_fit": "all_planned",
+        "source_dtype": "String",
+        "source_name": "category"
+      }
+    ],
+    "estimator_family": "tree",
+    "feature_selection_mask": null,
+    "fit_state": "not_fitted",
+    "fitted_parameters": {},
+    "schema": "PreparationPlan/v1",
+    "steps": [
+      {
+        "input_column_ids": [
+          "col:a000d0c9-1bbd-49c5-89fb-73f2375e6ea6"
+        ],
+        "kind": "numeric",
+        "learned_scope": "row_local",
+        "output_names": [
+          "f_a000d0c91bbd49c589fb73f2375e6ea6__numeric"
+        ],
+        "parameters": {
+          "nonfinite": "reject",
+          "precision": "reject"
+        },
+        "reason": "Kimlik ölçüm değildir; Float64 kaybı gelecekte açık politika ile denetlenir.",
+        "state": "planned"
+      },
+      {
+        "input_column_ids": [
+          "col:a000d0c9-1bbd-49c5-89fb-73f2375e6ea6"
+        ],
+        "kind": "impute_numeric",
+        "learned_scope": "training_fold",
+        "output_names": [
+          "f_a000d0c91bbd49c589fb73f2375e6ea6__numeric"
+        ],
+        "parameters": {
+          "all_missing": "error",
+          "strategy": "median"
+        },
+        "reason": "Seçilen doldurma değeri yalnız eğitim katında öğrenilir; test/validation ortalaması kullanılmaz.",
+        "state": "planned"
+      },
+      {
+        "input_column_ids": [
+          "col:a000d0c9-1bbd-49c5-89fb-73f2375e6ea6"
+        ],
+        "kind": "no_scaling",
+        "learned_scope": "row_local",
+        "output_names": [
+          "f_a000d0c91bbd49c589fb73f2375e6ea6__numeric"
+        ],
+        "parameters": {
+          "explicit_override": false
+        },
+        "reason": "Ağaç ailesine scaling otomatik önerilmez; açık none seçiminde diğer ailelerde ölçek duyarlılığını inceleyin.",
+        "state": "planned"
+      },
+      {
+        "input_column_ids": [
+          "col:acc7b823-ef56-44f4-b4fa-baf8a53f4cf6"
+        ],
+        "kind": "impute_category",
+        "learned_scope": "training_fold",
+        "output_names": [],
+        "parameters": {
+          "all_missing": "error",
+          "strategy": "most_frequent"
+        },
+        "reason": "Kategori modunu yalnız eğitim katı öğrenir; eksik hedef doldurulmaz.",
+        "state": "planned"
+      },
+      {
+        "input_column_ids": [
+          "col:acc7b823-ef56-44f4-b4fa-baf8a53f4cf6"
+        ],
+        "kind": "encode_onehot",
+        "learned_scope": "training_fold",
+        "output_names": [
+          "f_acc7b823ef5644f4b4fabaf8a53f4cf6__category_{training_index}"
+        ],
+        "parameters": {
+          "categories": "training_only",
+          "name_binding": "training category index -> original ColumnId and category; deferred until fit",
+          "sparse": true,
+          "unknown": "ignore_with_warning"
+        },
+        "reason": "Nominal kategorilere sıralama yüklenmez; kategori sözlüğü yalnız eğitim katında öğrenilir.",
+        "state": "planned"
+      }
+    ],
+    "training_dependency": "Requires a validated split/fold protocol in Phase16; no training performed",
+    "version_id": "ml-pipeline:19587500-69e8-4807-a159-6abc8d4e1672"
+  },
+  "probability_supported": false,
+  "purpose": "regression",
+  "run_id": "run:09849817-383a-44b4-b18d-7495e9fbb175",
+  "schema": "ModelCard/v1",
+  "seed": 42,
+  "snapshot_fingerprint": {
+    "sha256": "ad0d4d37ce61bf9cfe1c971c50dc3cbe0f1a713825828b928d702252f60207fa",
+    "size": 10738
+  },
+  "target": {
+    "id": "col:4a9d1c9f-528c-47ab-84ca-a4911ff04a06",
+    "name": "y",
+    "original_name": "y",
+    "type": "Float64",
+    "unit": "hedef birimi"
+  },
+  "threshold": null,
+  "versions": {
+    "numpy": "2.5.3",
+    "polars": "2.0.0",
+    "python": "3.13.15",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.0",
+    "skops": "0.16.0",
+    "veri-ufku": "0.1.0"
+  },
+  "fit_row_count": 54,
+  "split": {
+    "invalid_folds": [],
+    "method": "random",
+    "protocol_id": "protocol:aae8658abdcf97a2216c1b99483e27eb57098f5bda6b92d08dcfecaa896aa45c",
+    "schema": "ValidationPlan/v1",
+    "split_id": "split:b2a3d254315f746ef0e381aa2688839b4e76986f2adef9fe748c5a41c457037c",
+    "membership_counts": {
+      "development": 72,
+      "folds": 2,
+      "purged": 0,
+      "test": 18,
+      "train": 54,
+      "validation": 18
+    }
+  }
+}

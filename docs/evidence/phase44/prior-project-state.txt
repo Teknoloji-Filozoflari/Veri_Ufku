@@ -1,0 +1,96 @@
+# Veri_Ufku — güncel oturum hafızası
+
+2026-10-12 Europe/Istanbul. İlk okuma AGENTS/PROJECT_STATE/ROADMAP +git status.
+Son teknik teslim Faz43 sınırlı optional Bayes şablonları; DEC43-01 açık kullanıcı
+talimatı. Faz44 yetkisi yok. Önceki [Faz42 hafızası](evidence/phase43/prior-project-state.txt)
+korunur; paired/cluster/factorial/sequential kapalı alt işlerdir.
+
+## Faz43 kapsam ve sözleşme
+
+Optional bayes extra PyMC5.28.5/ArviZ0.23.4/Numba0.68.0/PyTensor2.38.2;
+backend temel startup/registry/reopen'da import edilmez. CPU sequential NUTS
+cores1/PyTensor interpreter; serbest probabilistic script/user model/pickle yok.
+Karşılaştır →43 Bayes: Bernoulli0/1 beta-binomial, known-observation-SD Normal
+mean, raw numeric Gaussian linear, noncentered group random-intercept regression.
+Normal prior merkez/SD; Betaalpha/beta; HalfNormal noise/group SD. Outcome ve
+her predictor birimi açık, automatic standardization/dönüştürme yok.
+
+4–1000 complete rows/5predictors;3–30group/2observation minimum;2–4chains,
+100–2000draw/warmup;2M likelihood cells/8Mtwo-prior work;RAM/disk/wall/cancel.
+200seeded prior predictive preview; kullanıcı onayı; posterior mean/SD,
+equal-tailed credible interval/P(>0). Rank R-hat<=1.01/bulk-tailESS>=100chains,
+divergence0/treehit0/BFMI>=.3. Diagnostic fail açık; hiçbir güvenilir rozeti yok.
+Tanı geçmesi model doğruluğu/causal kanıtı değildir. Posterior olasılığı p değil.
+PPC mean/SD/max/tail/misfit betimsel eğitim-verisi kontrolü; held-out başarı yok.
+Sensitivity ikinci tam NUTS: Beta concentration veya Normal/group SD çarpanı.
+LOO/WAIC finite pointwise likelihood ve diagnostic koşulları; Pareto-k/good_k/
+WAICwarning saklanır, ranking kapatır. Aynı sürüm/outcome/birim/likelihood/
+orderedRowId ve hash doğrulanmış kayıtlarla paired elpd fark/SE.
+
+Mevcut tek Capability/AnalysisSpec/StatisticsController/spawn/ComputeBudget ve
+ProjectStore atomic preview-result-save. Worker Qt/ACTIVE almaz. Source/RowId/
+ColumnId korunumuyla JSON/Parquet observations-members; safe numeric h5netcdf
+posterior/sample_stats/log_likelihood/PPC/sensitivity;gzip4/draw chunk<=128;
+tracePNG. Parent source/hash/member/chain-summary doğrular. Reopen model/kod
+import etmez. Export yeni klasör; stale dataset/config/source save/export ret.
+
+## Gerçek kanıt
+
+14 teknik madde doğrulandı; resmî sürüyor/deneysel/zorunlu ve önceki kapılar açık.
+[Matris](REQUIREMENTS_MATRIX.md),[ADR044](adr/044-bayes-phase43.md),
+[kanıt](evidence/PHASE43.md),[14 C/V/G/H/P](evidence/phase43/acceptance.json).
+76source hedefli/170.16s:29Bayes+47öncekiFaz42; sonF1GUI5passed/77.43s.
+Installed wheel29passed/86.94s; son65Bayes+serializationpassed/104.19s; source/wheel4'er gerçek QML/spawn/priorpreview/
+help-F1-Escape/export/save/fresh-result-reopen yolunda64images/48artifact.
+263source/wheel/install dosyası byte eşitliği; fresh XDG GUI_SMOKE PASS.
+Full regression beş fresh pytest sürecinde1324:1305passed/19skip/0failure-error /suite süreleri toplamı1920.04s;29Faz43passed/0skip.
+416source/test/script/lock koşuda değişmedi.19skip eski optional DB/S3/Secret
+Service fixture/ortamı yok; tested sayılmaz.14belge unittest/docs/artifacts/
+learning/usability/Ruffcheck-format. Katalog59/273;147UIbinding/557field/189English.
+CPython3.13.15 .venv; offline gerçek normal sampler socket.create_connection
+ret ile conjugate/tanılar/LOO; short sampler diagnosticfail; actual draw-callback
+cancel+GUIcancel. Beta(9,3)/Normal mean-var referansı; Pareto/WAICwarning;
+chunk/compression, source/RowId/undo olmayan analysis, forged-chain rejection.
+
+## Bulunan/düzeltilenler ve sınırlar
+
+Numba0.63.0b1 NumPy uyumsuz; pin0.68.0 ile gerçek hesap. İzole gruplama
+IterativeImputer/skops import-order trust bug yakaladı; mevcut reviewed
+TRANSFORMS sınıfı literalTRUSTED içine eklendi, wildcard/user-types yok.
+İzole iterative+35lifecycle36passed; sonraki full gruplar son kaynakta. Directory olayında
+başka controller dataset publish sürerken pending source refresh işlenmiyordu;
+ProjectsController._poll idle olunca read-only recheck yapar, değişmemiş diye
+varsaymaz. GUI save sırasında event zorlar. Numeric chain verifier yanlış
+experiments dalındaydı; mutation testi yakaladı, Bayes dalına taşındı. Son76/FULL
+Bayes ve öncekiFaz42 yayını birlikte doğrular. Monolithic full687passed/19skip sonrası eski lifecycleGUI aggregate2GiB
+budget reddi verdi; başarılı sayılmaz. Optional PyMC core testinin backend
+ana süreçte tutması üretim worker sınırından farklı; backend import RSS ölçümü
+kanıtta. Uzun application koşusu da889passed/19skip sonra eski regressionGUI
+aggregate2GiB reddi verdi; uzun tek-süreç kararlılığı kabulü değildir.
+Bütçe gevşetilmedi: tüm24core ve1300application dört fresh süreç grubunda birlikte
+collected1324 ile birebir doğrulandı. İlk interrupted full/ilkinstalled
+recursive runner hataları kanıtta saklı; kabul değildir. Guarded runner düzeltildi.
+İlk console smoke XDG_STATE_HOME eksikti; bütün freshXDG ile sonPASS.
+
+Unknown-variance mean/random slope/GLM/nested-multi-group/weights/time-spatial
+bağımlılık bu şablonlarda yok; açık ret. İki prior tüm sensitivity evreni değil.
+Draws önce bellekte; unlimited streaming sampler değil. Variable trace panelinde
+grup/coefficient components aynı panel; bütün numeric chains retained. Özel model
+ileri kod alanının ayrı kapsamı, uygulamadı. Temel uygulama Bayes olmadan çalışır;
+locked ortamda offline CPU, temiz offline kurulum değildir.
+
+## Açık resmî kapılar ve çalışma ağacı
+
+F13 insan;F25 insan/Orca/AT;F24minHW/cold/physicalframe;F27kullanıcının durdurduğu
+dağıtım;F28giriş;F30büyükSAS;F31cleanofflinecache korunur. PhysicalGUI/insan/AT/
+minimum hardware/cleanofflineinstall/remoteCI bu fazda koşulmadı. Kullanıcı
+çalışma ağacı/untracked korunur; stage/commit/push yok. /tmp wheel yeni oturumda
+varsayılmaz. Hesap değişimi başka makineye otomatik taşımaz.
+
+## Hedefli bakım
+
+statistics/bayes.py,bayes_contracts.py,contracts/engine/worker; ui/statistics.py,
+projects.py/workspace.py; BayesPanel/Main/StatisticsPanel.qml;domain/capabilities;
+storage/analysis_store;learning/content/tr.json,taxonomy;tests/test_bayes.py/
+_gui.py;measure_phase43.py. İlgili değişiklik gerekirse ADR044/PHASE43 ayrıntısı;
+geçmiş tüm fazları veya kanıtları yeniden tarama, Faz44 başlatma.

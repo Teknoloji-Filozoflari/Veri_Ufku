@@ -1,0 +1,142 @@
+F....F.F...................                                              [100%]
+=================================== FAILURES ===================================
+_________ test_real_qml_buttons_responsiveness_error_cancel_and_stale __________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-2/test_real_qml_buttons_responsi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3a3d8bce90>
+
+    def test_real_qml_buttons_responsiveness_error_cancel_and_stale(tmp_path, monkeypatch):
+        for variable, folder in [
+            ("XDG_CONFIG_HOME", "config"),
+            ("XDG_STATE_HOME", "state"),
+            ("XDG_CACHE_HOME", "cache"),
+        ]:
+            monkeypatch.setenv(variable, str(tmp_path / folder))
+        app, window, bridge = create_application()
+        manager = bridge.session.manager
+        # Assert responsiveness/cancel while a real CPU job is still running;
+        # startup/rendering can outlast the short default demonstration.
+        from veri_ufku.domain.contracts import DemoParameters, JobSpec
+    
+        def start_fixture(capability_id):
+            parameters = (
+                DemoParameters(units=80, pause_seconds=0.1)
+                if capability_id == "demo.cpu"
+                else DemoParameters()
+            )
+            return manager.submit(
+                JobSpec(
+                    capability_id, bridge.session.binding, parameters, bridge.session.budget
+                )
+            )
+    
+        monkeypatch.setattr(bridge.session, "start", start_fixture)
+        try:
+            # Complete the initial window/layout frame before measuring concurrent
+            # worker responsiveness; startup rendering is a separate acceptance gate.
+            spin(app, lambda: not window.grabWindow().isNull())
+            cpu = window.findChild(QObject, "cpuButton")
+            assert cpu.property("text") == "CPU denemesini başlat"
+            ticks = []
+            timer = QTimer()
+            timer.setInterval(10)
+            timer.timeout.connect(lambda: ticks.append(time.monotonic()))
+            timer.start()
+            cpu.clicked.emit()
+            spin(app, lambda: bridge.active)
+            spin(app, lambda: len(ticks) >= 20)
+>           assert manager.snapshot(bridge.job_id).state.value == "running"
+E           AssertionError: assert 'succeeded' == 'running'
+E             
+E             - running
+E             + succeeded
+
+tests/test_gui.py:62: AssertionError
+_________ test_bad_configuration_is_visible_and_never_logged_verbatim __________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-2/test_bad_configuration_is_visi0')
+
+    def test_bad_configuration_is_visible_and_never_logged_verbatim(tmp_path):
+        config = tmp_path / "config/veri_ufku"
+        config.mkdir(parents=True)
+        (config / "settings.json").write_text('{"credential": "private-fixture-value"}')
+        env = dict(
+            os.environ,
+            XDG_CONFIG_HOME=str(tmp_path / "config"),
+            XDG_STATE_HOME=str(tmp_path / "state"),
+            XDG_CACHE_HOME=str(tmp_path / "cache"),
+        )
+        source = (
+            "from veri_ufku.app import create_application; "
+            "from PySide6.QtCore import QObject; "
+            "app, window, bridge = create_application(); "
+            "assert bridge is None; "
+            'assert not window.findChild(QObject,"workspace").property("enabled"); '
+            'assert not window.findChild(QObject,"newProjectButton").property("enabled"); '
+            'assert not window.findChild(QObject,"chartCreate").property("enabled"); '
+            'assert not window.findChild(QObject,"exportData").property("enabled"); '
+            'assert window.findChild(QObject,"startupWarning").property("visible"); '
+            'assert not window.findChild(QObject,"openProjectShortcut").property("enabled"); '
+            'assert not window.findChild(QObject,"saveProjectShortcut").property("enabled"); '
+            'print(window.findChild(QObject,"errorLabel").property("text")); '
+            'window.setProperty("selectedSection",7); '
+            'assert window.findChild(QObject,"workspace").property("enabled"); '
+            "app._veri_ufku_resources[-1]()"
+        )
+        completed = subprocess.run(
+            [sys.executable, "-c", source],
+            env=env,
+            text=True,
+            capture_output=True,
+            timeout=15,
+        )
+>       assert completed.returncode == 0, completed.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 1, in <module>
+E             from veri_ufku.app import create_application; from PySide6.QtCore import QObject; app, window, bridge = create_application(); assert bridge is None; assert not window.findChild(QObject,"workspace").property("enabled"); assert not window.findChild(QObject,"newProjectButton").property("enabled"); assert not window.findChild(QObject,"chartCreate").property("enabled"); assert not window.findChild(QObject,"exportData").property("enabled"); assert window.findChild(QObject,"startupWarning").property("visible"); assert not window.findChild(QObject,"openProjectShortcut").property("enabled"); assert not window.findChild(QObject,"saveProjectShortcut").property("enabled"); print(window.findChild(QObject,"errorLabel").property("text")); window.setProperty("selectedSection",7); assert window.findChild(QObject,"workspace").property("enabled"); app._veri_ufku_resources[-1]()
+E                                                                                                                                                                                                                                                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E         AttributeError: 'NoneType' object has no attribute 'property'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python', '-c', 'from veri_ufku.app import create_ap...^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: \'NoneType\' object has no attribute \'property\'\n').returncode
+
+tests/test_gui.py:228: AssertionError
+___________ test_phase02_resize_help_navigation_and_fixed_dark_theme ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-2/test_phase02_resize_help_navig0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f39e7de7ce0>
+
+    def test_phase02_resize_help_navigation_and_fixed_dark_theme(tmp_path, monkeypatch):
+        from PySide6.QtCore import QPointF, Qt
+        from PySide6.QtQuick import QQuickItem
+    
+        for name in ("CONFIG", "STATE", "CACHE"):
+            monkeypatch.setenv(f"XDG_{name}_HOME", str(tmp_path / name.lower()))
+        app, window, bridge = create_application()
+        from PySide6.QtGui import QColor, QPalette
+    
+        original_palette = app.palette()
+        try:
+            spin(app, lambda: not window.grabWindow().isNull())
+            for width, height in [(720, 560), (1366, 900)]:
+                window.setWidth(width)
+                window.setHeight(height)
+                app.processEvents()
+                QTest.qWait(60)
+                workspace = window.findChild(QQuickItem, "workspace")
+                assert workspace.width() >= 320
+                assert workspace.height() >= 200
+                window.setProperty("selectedSection", 7)
+                app.processEvents()
+                help_button = window.findChild(QQuickItem, "helpButton")
+>               assert not help_button.isVisible()
+E               assert not True
+E                +  where True = <built-in method isVisible of PySide6.QtQuick.QQuickItem object at 0x7f39e42b5580>()
+E                +    where <built-in method isVisible of PySide6.QtQuick.QQuickItem object at 0x7f39e42b5580> = <PySide6.QtQuick.QQuickItem(0x452608c0, id="helpButton", name="helpButton", parent=0x4513b030, geometry=446,0 158x40) at 0x7f39e42b5580>.isVisible
+
+tests/test_gui.py:328: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_gui.py::test_real_qml_buttons_responsiveness_error_cancel_and_stale
+FAILED tests/test_gui.py::test_bad_configuration_is_visible_and_never_logged_verbatim
+FAILED tests/test_gui.py::test_phase02_resize_help_navigation_and_fixed_dark_theme
+3 failed, 24 passed in 37.54s

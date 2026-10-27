@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="36" time="560.494" timestamp="2026-10-14T23:43:16.247069+03:00" hostname="s-oktay"><testcase classname="tests.test_audio_gui" name="test_real_audio_gui_reopen_new_data_prediction[features]" time="56.057" /><testcase classname="tests.test_audio_gui" name="test_real_audio_gui_reopen_new_data_prediction[classification]" time="63.163"><failure message="AssertionError: Geçerli önizleme ve yazılabilir proje gerekli.&#10;assert not 'Geçerli önizleme ve yazılabilir proje gerekli.'&#10; +  where 'Geçerli önizleme ve yazılabilir proje gerekli.' = &lt;veri_ufku.ui.imports.ImportController(0x465ebda0) at 0x7f4125ead800&gt;.errorText">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-89/test_real_audio_gui_reopen_new1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f41a2ce4b00&gt;
+task = 'classification'
+
+    @pytest.mark.parametrize("task", ["features", "classification"])
+    def test_real_audio_gui_reopen_new_data_prediction(tmp_path, monkeypatch, task):
+        app, window, projects, imports, audio, folder = imported(
+            tmp_path, monkeypatch, task
+        )
+        before = {p.name: p.read_bytes() for p in folder.iterdir()}
+        try:
+            window.findChild(QObject, "audioHelp").clicked.emit()
+            spin(app, lambda: window.property("infoOpen"))
+            assert (
+                app._veri_ufku_resources[0]._learning_resources.article["id"]
+                == "audio-features"
+            )
+            window.setProperty("infoOpen", False)
+            button = window.findChild(QObject, "audioRun")
+            assert button.property("enabled")
+            button.clicked.emit()
+            spin(app, lambda: not audio.busy, timeout=90000)
+            assert not audio.errorText, audio.errorText
+            assert (
+                audio.active["status"] == "completed"
+                and audio.active["worker_pid"] != os.getpid()
+            )
+            assert len(audio.active["features"]) == 32
+            saved = audio.savedRuns[-1]["id"]
+            root = str(projects.store.root)
+            assert projects.closeProject(True) and projects.open(root)
+            audio.openRun(saved)
+            assert not audio.errorText, audio.errorText
+            if task == "classification":
+                new = tmp_path / "new-audio"
+                recordings(new, seed=63, n=4, human=False, prefix="bankB")
+                spin(app, lambda: not projects.busy and not audio.data.busy)
+                imports.choose(str(new))
+                spin(app, lambda: not imports.busy)
+                assert imports.ready, (
+                    imports.errorText,
+                    imports.message,
+                    projects.busy,
+                    projects.readOnly,
+                )
+                imports.importData()
+                spin(app, lambda: not imports.busy)
+&gt;               assert not imports.errorText, imports.errorText
+E               AssertionError: Geçerli önizleme ve yazılabilir proje gerekli.
+E               assert not 'Geçerli önizleme ve yazılabilir proje gerekli.'
+E                +  where 'Geçerli önizleme ve yazılabilir proje gerekli.' = &lt;veri_ufku.ui.imports.ImportController(0x465ebda0) at 0x7f4125ead800&gt;.errorText
+
+tests/test_audio_gui.py:79: AssertionError</failure></testcase><testcase classname="tests.test_audio_gui" name="test_real_audio_gui_missing_speech_model_and_cancel" time="17.689" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[schema]" time="20.622" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[resample]" time="20.666" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[detrend]" time="21.320" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[window]" time="20.756" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[fft]" time="19.960" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[welch]" time="20.439" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[stft]" time="20.726" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[spectrogram]" time="23.647" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[peak]" time="21.017" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[filter]" time="20.540" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[zero-phase]" time="20.450" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[events]" time="20.014" /><testcase classname="tests.test_signals_gui" name="test_real_signal_gui[classification]" time="20.450" /><testcase classname="tests.test_import_gui" name="test_qml_preview_setting_types_immutable_source_import_and_reopen" time="13.256" /><testcase classname="tests.test_import_gui" name="test_actual_qt_drop_routes_one_local_tsv_and_rejects_multiple" time="5.141" /><testcase classname="tests.test_import_gui" name="test_real_worker_cancel_ui_ticks_source_active_unchanged" time="9.555" /><testcase classname="tests.test_import_gui" name="test_readonly_cannot_import_and_invalid_option_invalidates_preview" time="4.897" /><testcase classname="tests.test_import_gui" name="test_initial_bad_csv_can_switch_to_quarantine_and_repreview" time="10.596" /><testcase classname="tests.test_import_gui" name="test_qml_file_dialog_accepted_local_path_reaches_importer" time="4.904" /><testcase classname="tests.test_import_gui" name="test_phase06_four_formats_real_worker_qml_controls_and_reopen" time="36.187"><failure message="AssertionError: Uygulama ve işlerin toplam bellek bütçesi aşıldı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu.&#10;assert not 'Uygulama ve işlerin toplam bellek bütçesi aşıldı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu.'&#10; +  where 'Uygulama ve işlerin toplam bellek bütçesi aşıldı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu.' = &lt;veri_ufku.ui.imports.ImportController(0x4e602eb0) at 0x7f412372b9c0&gt;.errorText">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-89/test_phase06_four_formats_real0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f4124082580&gt;
+
+    def test_phase06_four_formats_real_worker_qml_controls_and_reopen(
+        tmp_path, monkeypatch
+    ):
+        from decimal import Decimal
+        from pathlib import Path
+    
+        from PySide6.QtCore import QObject
+    
+        app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+        fixtures = Path(__file__).parent / "fixtures/structured"
+        parquet = tmp_path / "native.parquet"
+        pl.DataFrame(
+            {"id": ["001", "001"], "n": pl.Series([1, None], dtype=pl.Int16)}
+        ).write_parquet(parquet)
+        try:
+            window.setProperty("selectedSection", 1)
+            imports.choose(str(fixtures / "nested.json"))
+            spin(app, lambda: not imports.busy)
+            assert imports.formatId == "json" and not imports.ready
+            assert "/payload/records" in imports.choices["record_paths"]
+            window.findChild(QObject, "importAdvancedButton").clicked.emit()
+            path = window.findChild(QObject, "jsonRecordPath")
+            assert path.isVisible()
+            path.setProperty("text", "/payload/records")
+            path.editingFinished.emit()
+            expand = window.findChild(QObject, "jsonExpandLists")
+            expand.setProperty("text", "/items|/tags")
+            expand.editingFinished.emit()
+            window.findChild(QObject, "jsonFlatten").setProperty("checked", True)
+            window.findChild(QObject, "jsonFlatten").clicked.emit()
+            imports.refreshPreview()
+            spin(app, lambda: not imports.busy)
+            assert imports.ready and imports.model.rowCount() == 7, imports.errorText
+            assert "kartesyen" in imports.message
+            imports.importData(True)
+            spin(app, lambda: not imports.busy)
+            assert not imports.errorText, imports.errorText
+            assert projects.draft["datasets"][-1]["import_metadata"]["row_count"] == 7
+            for filename, adapter, expected in (
+                (fixtures / "records.ndjson", "jsonl", 3),
+                (fixtures / "workbook.xlsx", "xlsx", 1),
+                (parquet, "parquet", 2),
+            ):
+                imports.choose(str(filename))
+                spin(app, lambda: not imports.busy)
+                assert imports.formatId == adapter
+                if adapter == "jsonl":
+                    imports.setOption("bad_rows", "quarantine")
+                elif adapter == "xlsx":
+                    sheet = window.findChild(QObject, "excelSheet")
+                    assert sheet.isVisible()
+                    sheet.setProperty("currentIndex", 1)
+                    sheet.activated.emit(1)
+                    assert imports.settings["sheet"] == "Diğer"
+                imports.refreshPreview()
+                spin(app, lambda: not imports.busy)
+                assert imports.ready, imports.errorText
+                imports.importData()
+                spin(app, lambda: not imports.busy)
+&gt;               assert not imports.errorText, imports.errorText
+E               AssertionError: Uygulama ve işlerin toplam bellek bütçesi aşıldı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu.
+E               assert not 'Uygulama ve işlerin toplam bellek bütçesi aşıldı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu.'
+E                +  where 'Uygulama ve işlerin toplam bellek bütçesi aşıldı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu.' = &lt;veri_ufku.ui.imports.ImportController(0x4e602eb0) at 0x7f412372b9c0&gt;.errorText
+
+tests/test_import_gui.py:297: AssertionError</failure></testcase><testcase classname="tests.test_import_gui" name="test_jsonl_worker_cancel_keeps_previous_project_and_original" time="7.407" /><testcase classname="tests.test_import_gui" name="test_basic_import_project_route_advanced_settings_and_success" time="15.488" /><testcase classname="tests.test_import_gui" name="test_beginner_preview_shows_twenty_and_automatically_imports_real_types" time="8.147" /><testcase classname="tests.test_import_gui" name="test_selecting_csv_format_keeps_automatic_integer_inference" time="7.741" /><testcase classname="tests.test_import_gui" name="test_import_advanced_starts_closed_even_with_advanced_preferences" time="2.648" /><testcase classname="tests.test_usability" name="test_structural_audit_and_missing_help_rejection" time="0.186" /><testcase classname="tests.test_usability" name="test_future_common_component_missing_accessible_name_fails" time="0.061" /><testcase classname="tests.test_usability" name="test_ui_preferences_are_atomic_and_do_not_touch_parsing" time="0.001" /><testcase classname="tests.test_usability" name="test_qt_names_display_keyboard_locale_and_import_boundary" time="3.005" /><testcase classname="tests.test_usability" name="test_empty_tables_do_not_trap_keyboard_focus" time="2.349" /><testcase classname="tests.test_usability" name="test_closed_shell_releases_engine_before_reopening" time="4.149" /><testcase classname="tests.test_usability" name="test_both_theme_contrast_shared_states" time="2.516" /><testcase classname="tests.test_usability" name="test_textarea_tab_exits_and_picker_survives_type_update" time="13.592" /></testsuite></testsuites>

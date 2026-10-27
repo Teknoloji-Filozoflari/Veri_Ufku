@@ -1,0 +1,77 @@
+{
+  "environment": "ENV-26-WHEEL",
+  "results": [
+    {
+      "name": "offline-source",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase26.py",
+        "--output",
+        "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase26/offline.json"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "exit_code": 0,
+      "date": "2026-10-09T22:01:34.784023+00:00",
+      "seconds": 26.293566323998675
+    },
+    {
+      "name": "wheel-build",
+      "command": [
+        "uv",
+        "build",
+        "--wheel",
+        "--no-build-isolation",
+        "--out-dir",
+        "/tmp/veri-ufku-phase26-dist"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "exit_code": 0,
+      "date": "2026-10-09T22:01:34.925385+00:00",
+      "seconds": 0.14116979699974763
+    },
+    {
+      "name": "wheel-install",
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--no-deps",
+        "--reinstall",
+        "--target",
+        "/tmp/veri-ufku-phase26-installed",
+        "/tmp/veri-ufku-phase26-dist/veri_ufku-0.1.0-py3-none-any.whl"
+      ],
+      "cwd": "/home/s-oktay/Belgeler/Veri_Ufku",
+      "exit_code": 0,
+      "date": "2026-10-09T22:01:34.968595+00:00",
+      "seconds": 0.0430654260017036
+    },
+    {
+      "name": "offline-wheel",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase26.py",
+        "--package-root",
+        "/tmp/veri-ufku-phase26-installed",
+        "--output",
+        "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase26/wheel.json"
+      ],
+      "cwd": "/tmp",
+      "exit_code": 0,
+      "date": "2026-10-09T22:02:00.987939+00:00",
+      "seconds": 26.019115428000077
+    },
+    {
+      "name": "wheel-entry",
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "/tmp/veri-ufku-phase26-installed/veri_ufku/__main__.py",
+        "--smoke-test"
+      ],
+      "cwd": "/tmp",
+      "exit_code": 0,
+      "date": "2026-10-09T22:02:01.815318+00:00",
+      "seconds": 0.8271332500007702
+    }
+  ]
+}

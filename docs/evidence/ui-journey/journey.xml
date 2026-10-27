@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="4.223" timestamp="2026-10-17T18:06:28.561112+03:00" hostname="s-oktay"><testcase classname="tests.test_journey_gui" name="test_beginner_journey_project_last_shared_learning_and_modes" time="1.719"><failure message="AttributeError: 'NoneType' object has no attribute 'clicked'">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-20/test_beginner_journey_project_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f7effdb8d60&gt;
+
+    def test_beginner_journey_project_last_shared_learning_and_modes(tmp_path, monkeypatch):
+        app, window, _, projects, _ = setup(tmp_path, monkeypatch)
+        engine = app._veri_ufku_resources[0]
+        preferences = engine.rootContext().contextProperty("preferences")
+        before = copy.deepcopy(projects.draft)
+    
+        def item(name):
+            return window.findChild(QObject, name)
+    
+        try:
+            assert preferences.view == "beginner"
+            assert not window.property("advanced")
+            road, project = item("scienceRoadmap"), item("projectPanel")
+            app.processEvents()
+            assert project.property("y") &gt;= road.property("y") + road.property("height")
+            screenshot(window, "beginner-home")
+&gt;           item("roadmapOpen_0").clicked.emit()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'NoneType' object has no attribute 'clicked'
+
+tests/test_journey_gui.py:27: AttributeError</failure></testcase><testcase classname="tests.test_science_roadmap_gui" name="test_science_roadmap_expand_keyboard_navigation_planned_and_resize" time="2.048" /></testsuite></testsuites>

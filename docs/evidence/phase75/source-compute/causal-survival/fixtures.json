@@ -1,0 +1,980 @@
+{
+  "exitstatus": 0,
+  "cases": [
+    {
+      "nodeid": "tests/test_causal.py::test_first_stage_known_effect_and_atomic_roundtrip[causal_randomized]",
+      "outcome": "passed",
+      "seconds": 0.9442879289999837,
+      "test_file_sha256": "05d2df1661de87464e71bc49cb0f711b8cf259c80825063468cb54a4b07a7497",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "e0a0db10546192e5345aab9c9029f00208166a95a1b38a5b877e4639c47a2fbd"
+        },
+        {
+          "path": "project/commits/2197f137-3ff1-4412-80dc-a391965a7075/manifest.json",
+          "bytes": 7383,
+          "sha256": "8290525bb3765796ca3e1122931818ab22454c8afe7e0c3a1c9073d7c581a57d"
+        },
+        {
+          "path": "project/commits/75012dc6-0ebe-4c80-862c-d590be0513c1/manifest.json",
+          "bytes": 18512,
+          "sha256": "8a7c38ae3f56f5c85a99e9fafba38e1da4f73d565c04eeaa099cd1bbee48aefb"
+        },
+        {
+          "path": "project/commits/90547e6e-bc14-4015-b070-9a15d5fcac73/manifest.json",
+          "bytes": 467,
+          "sha256": "36543b9128db7b696f413ef2743cd0a2ac90d9b6cd1e480df95ce47d88c2d98c"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 40960,
+          "sha256": "d70f138907b3a8b69e97d8a1a58c56d831262b793cdcb0909e56d7130c3f12d9"
+        },
+        {
+          "path": "project/snapshots/3256bbec-9d65-42d3-8f41-83c7a1c5a217.parquet",
+          "bytes": 36239,
+          "sha256": "5608996b70f6eacb72c3fd092ade915c6057073eab04f9483cd1e2c2a9b173b7"
+        },
+        {
+          "path": "project/snapshots/9dc25f9b-edf7-4648-93cc-470503b064db.parquet",
+          "bytes": 12906,
+          "sha256": "bd4f2143f78e0a920a0015f85bcca0228f8e0e890503b1a1afa90c87864f085b"
+        },
+        {
+          "path": "project/snapshots/d29ef34b-1655-46c1-8b86-37f530c42c6e.parquet",
+          "bytes": 44766,
+          "sha256": "dc91302a4ee80d0eaf4d48f4376e9c17541fb76aa100cd6ac9443408cc7b5f5a"
+        },
+        {
+          "path": "project/sources/d25ec10f-b03e-4ffb-a922-0e9d7eb63308.bin",
+          "bytes": 9701,
+          "sha256": "d161cc267e6bd391edc2148c7578588f7b45fe2615ce1c6649cfea80c7786d2a"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 13446,
+          "sha256": "b0c6817021e985f06684b51274abc44f2fb2e7723b8e90386c5b80e781d94eb0"
+        },
+        {
+          "path": "work/c7bdaa44-e16b-4062-8ae2-f0861baf4195.dataset.parquet",
+          "bytes": 44766,
+          "sha256": "dc91302a4ee80d0eaf4d48f4376e9c17541fb76aa100cd6ac9443408cc7b5f5a"
+        },
+        {
+          "path": "work/causal-details.parquet",
+          "bytes": 36239,
+          "sha256": "5608996b70f6eacb72c3fd092ade915c6057073eab04f9483cd1e2c2a9b173b7"
+        },
+        {
+          "path": "work/causal-members.parquet",
+          "bytes": 12906,
+          "sha256": "bd4f2143f78e0a920a0015f85bcca0228f8e0e890503b1a1afa90c87864f085b"
+        },
+        {
+          "path": "work/causal-result.json",
+          "bytes": 9701,
+          "sha256": "d161cc267e6bd391edc2148c7578588f7b45fe2615ce1c6649cfea80c7786d2a"
+        },
+        {
+          "path": "work/d472489b-be89-4cfe-8a84-f7fcc3eec8bc.source",
+          "bytes": 13446,
+          "sha256": "b0c6817021e985f06684b51274abc44f2fb2e7723b8e90386c5b80e781d94eb0"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    },
+    {
+      "nodeid": "tests/test_causal.py::test_first_stage_known_effect_and_atomic_roundtrip[causal_adjustment]",
+      "outcome": "passed",
+      "seconds": 0.06333823000022676,
+      "test_file_sha256": "05d2df1661de87464e71bc49cb0f711b8cf259c80825063468cb54a4b07a7497",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "ad6c27412c51597c6a0d0e448e77b14874508a449adb69666dcd1b899a671fb2"
+        },
+        {
+          "path": "project/commits/707e50cd-66c7-4eb6-b12f-ca716827ff62/manifest.json",
+          "bytes": 467,
+          "sha256": "8eefd1803432f6d625a63d3a1b281b834ba6dff1236f5688517facfb6d1f0de7"
+        },
+        {
+          "path": "project/commits/8b62abab-e957-4d88-9d9d-b2dbf87620e2/manifest.json",
+          "bytes": 7383,
+          "sha256": "f86bda4ed17f98b15b32c755a1e824f8717090bbe23b99bcf9bf7f1002be603a"
+        },
+        {
+          "path": "project/commits/b3676c1d-faaa-45b8-ae3a-36e1ebe9cf4c/manifest.json",
+          "bytes": 275651,
+          "sha256": "db71caa3639a8042d8fa9c0579e1ba526746e1999f3e2791627a0c8e25648d8e"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 299008,
+          "sha256": "ac5c4959e357efa4c63c4059d065f00d1c56f066ab35aebac782f7614ce03069"
+        },
+        {
+          "path": "project/snapshots/31b0e215-bd99-4f60-a8f4-4d898f4aa17d.parquet",
+          "bytes": 12899,
+          "sha256": "0e24fa6bbf63c6576ea2c54664a807c6c71ffdd288e51e2058cdf711feaf0c1a"
+        },
+        {
+          "path": "project/snapshots/78078e99-e120-4211-85b8-896786a9dde0.parquet",
+          "bytes": 44754,
+          "sha256": "57033d3bc77a00dc06ba53fb0e70d942c1307fe5b695ace966c133fc4d4ef32a"
+        },
+        {
+          "path": "project/snapshots/d10dc2e1-29f8-494e-9afe-ee415f95b2d6.parquet",
+          "bytes": 41342,
+          "sha256": "7990699ddd0df211679ddfcac5d00a0b3a68e8541ae3c0f20872d98c94d4b55a"
+        },
+        {
+          "path": "project/sources/7e70d7d5-dfdb-4a58-b05a-83212bcbb686.bin",
+          "bytes": 266783,
+          "sha256": "f877329227858cbc545cde2ab3256c34fc04777f6167fae4b5c09e15084e36d9"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 13450,
+          "sha256": "743bfd507879b40e7dcbd9e2ad0b2466ea5851e47bf45304fe9cf01ab0f1ef13"
+        },
+        {
+          "path": "work/156b5f8f-6d37-4a60-b811-132ab381479e.source",
+          "bytes": 13450,
+          "sha256": "743bfd507879b40e7dcbd9e2ad0b2466ea5851e47bf45304fe9cf01ab0f1ef13"
+        },
+        {
+          "path": "work/2d946bc2-94ad-4a38-974d-b8de612c131e.dataset.parquet",
+          "bytes": 44754,
+          "sha256": "57033d3bc77a00dc06ba53fb0e70d942c1307fe5b695ace966c133fc4d4ef32a"
+        },
+        {
+          "path": "work/causal-details.parquet",
+          "bytes": 41342,
+          "sha256": "7990699ddd0df211679ddfcac5d00a0b3a68e8541ae3c0f20872d98c94d4b55a"
+        },
+        {
+          "path": "work/causal-members.parquet",
+          "bytes": 12899,
+          "sha256": "0e24fa6bbf63c6576ea2c54664a807c6c71ffdd288e51e2058cdf711feaf0c1a"
+        },
+        {
+          "path": "work/causal-result.json",
+          "bytes": 266783,
+          "sha256": "f877329227858cbc545cde2ab3256c34fc04777f6167fae4b5c09e15084e36d9"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    },
+    {
+      "nodeid": "tests/test_causal.py::test_first_stage_known_effect_and_atomic_roundtrip[causal_ipw]",
+      "outcome": "passed",
+      "seconds": 0.06064545099980023,
+      "test_file_sha256": "05d2df1661de87464e71bc49cb0f711b8cf259c80825063468cb54a4b07a7497",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "349a686f93f10db2996999e9c5e6cc8d49ea52f00231b6dc76fb384093270bd8"
+        },
+        {
+          "path": "project/commits/15efc176-8cf3-4434-9d11-baacafde4326/manifest.json",
+          "bytes": 7383,
+          "sha256": "21331550a7ee0f3eafbecb0e93010879306d1f06428841f0df73332f5f22ddef"
+        },
+        {
+          "path": "project/commits/99fb91b4-20a3-41fc-8c25-104edc8b0a97/manifest.json",
+          "bytes": 467,
+          "sha256": "864399a06b15dbe4732c0fbb2ee4ad63a61757779b02e6d11fe05a717622e539"
+        },
+        {
+          "path": "project/commits/b40cae99-af22-4bab-8c86-a4c917c2fbff/manifest.json",
+          "bytes": 275765,
+          "sha256": "daad767dee4134d5a2724725ddbae8b975628627df70107a3636abd0d01ab261"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 299008,
+          "sha256": "0662729a3038f741a0f6c2b084f3ab14046681a99046bce400e7765450a6801b"
+        },
+        {
+          "path": "project/snapshots/4af703d8-9502-4d1e-9288-9f74a0a5b963.parquet",
+          "bytes": 41355,
+          "sha256": "cd0d10100a041c3e6c37385017cdcc206c8b63ddb5f36453c2b013f2108500d2"
+        },
+        {
+          "path": "project/snapshots/7632af5c-0ea2-408c-a677-e5f218dd9fc4.parquet",
+          "bytes": 12914,
+          "sha256": "91712527c309617534526cd2cc4da7cdeb737927c44e5f69f631baefb63431d2"
+        },
+        {
+          "path": "project/snapshots/a134d92d-a1be-4d72-9126-689f3e353dab.parquet",
+          "bytes": 44792,
+          "sha256": "ec905bcd0d76b90deec0df82764f35180c46aefe7447aebd196abd7501f5b56f"
+        },
+        {
+          "path": "project/sources/69ef819a-97fd-4158-86b3-f96f183a1595.bin",
+          "bytes": 266904,
+          "sha256": "89a03d0d5475142de2dc6569b2ea2b553491676525afac24cff283874aa930fc"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 13450,
+          "sha256": "743bfd507879b40e7dcbd9e2ad0b2466ea5851e47bf45304fe9cf01ab0f1ef13"
+        },
+        {
+          "path": "work/6a26e474-036b-4ac6-a4cf-9e3057198419.dataset.parquet",
+          "bytes": 44792,
+          "sha256": "ec905bcd0d76b90deec0df82764f35180c46aefe7447aebd196abd7501f5b56f"
+        },
+        {
+          "path": "work/causal-details.parquet",
+          "bytes": 41355,
+          "sha256": "cd0d10100a041c3e6c37385017cdcc206c8b63ddb5f36453c2b013f2108500d2"
+        },
+        {
+          "path": "work/causal-members.parquet",
+          "bytes": 12914,
+          "sha256": "91712527c309617534526cd2cc4da7cdeb737927c44e5f69f631baefb63431d2"
+        },
+        {
+          "path": "work/causal-result.json",
+          "bytes": 266904,
+          "sha256": "89a03d0d5475142de2dc6569b2ea2b553491676525afac24cff283874aa930fc"
+        },
+        {
+          "path": "work/da32aaa4-9ca1-4515-9405-63e758212637.source",
+          "bytes": 13450,
+          "sha256": "743bfd507879b40e7dcbd9e2ad0b2466ea5851e47bf45304fe9cf01ab0f1ef13"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    },
+    {
+      "nodeid": "tests/test_causal.py::test_first_stage_known_effect_and_atomic_roundtrip[causal_aipw]",
+      "outcome": "passed",
+      "seconds": 0.059114781999596744,
+      "test_file_sha256": "05d2df1661de87464e71bc49cb0f711b8cf259c80825063468cb54a4b07a7497",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "41a92fb6c666630b56215cddd10ea5495ea804c13f6767c8a226b011016e2f00"
+        },
+        {
+          "path": "project/commits/19669506-bd34-47b1-ae6b-4dbc9d530ea8/manifest.json",
+          "bytes": 7383,
+          "sha256": "f5e4d5c0ac25bb162e2e4c946dd3017a1ce5cf0ccffa8aa9566027d348b19b90"
+        },
+        {
+          "path": "project/commits/d0fedb38-46e6-41fb-9b13-a8199307e921/manifest.json",
+          "bytes": 467,
+          "sha256": "f3f6b02bd157b525f690a1612ca8ec6ace671091a48d8ff249f800af61bb96c5"
+        },
+        {
+          "path": "project/commits/d76bc772-048a-4cc3-8f63-c4fa86cd1ba5/manifest.json",
+          "bytes": 275818,
+          "sha256": "ea2e8ff539ae2a4d7a604a57456a5a35b4651a305163f5a53ea09deb1cd48bcf"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 299008,
+          "sha256": "439fb0a62c53734a72ac215df3af3ba4489d106f1b013828a4198160ee8432be"
+        },
+        {
+          "path": "project/snapshots/1bb54b29-1913-4144-b3fa-a2b74e208c2d.parquet",
+          "bytes": 41357,
+          "sha256": "1a9d4394bdd85462aa15acc1a868ade3f638778480709d8dbfe58d60a8d688ef"
+        },
+        {
+          "path": "project/snapshots/38f105ce-5f1f-46cd-977d-6a326a1af9dc.parquet",
+          "bytes": 12925,
+          "sha256": "99c921540ea1491d558daad9795bad203eb0da06e86b01aaa7d5385895d7c64d"
+        },
+        {
+          "path": "project/snapshots/415d22c3-d74d-4886-9ca5-649950f15496.parquet",
+          "bytes": 44763,
+          "sha256": "5bfc0c4917f830a305586bcca5aef612f53d564a910e5d6d3dd8ff779588a0bb"
+        },
+        {
+          "path": "project/sources/14bb710e-bce1-4ddc-8ace-0fb8bf4594ea.bin",
+          "bytes": 266956,
+          "sha256": "185629b314e9c8c72f8d70de364a536bca4e0530ad015b37bfd9c6fd48c542bb"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 13450,
+          "sha256": "743bfd507879b40e7dcbd9e2ad0b2466ea5851e47bf45304fe9cf01ab0f1ef13"
+        },
+        {
+          "path": "work/6839d77f-3d45-48f4-b0f3-cefc2c12fe4f.source",
+          "bytes": 13450,
+          "sha256": "743bfd507879b40e7dcbd9e2ad0b2466ea5851e47bf45304fe9cf01ab0f1ef13"
+        },
+        {
+          "path": "work/997d820b-6533-4f9a-b8a1-ec7e3f78d2d8.dataset.parquet",
+          "bytes": 44763,
+          "sha256": "5bfc0c4917f830a305586bcca5aef612f53d564a910e5d6d3dd8ff779588a0bb"
+        },
+        {
+          "path": "work/causal-details.parquet",
+          "bytes": 41357,
+          "sha256": "1a9d4394bdd85462aa15acc1a868ade3f638778480709d8dbfe58d60a8d688ef"
+        },
+        {
+          "path": "work/causal-members.parquet",
+          "bytes": 12925,
+          "sha256": "99c921540ea1491d558daad9795bad203eb0da06e86b01aaa7d5385895d7c64d"
+        },
+        {
+          "path": "work/causal-result.json",
+          "bytes": 266956,
+          "sha256": "185629b314e9c8c72f8d70de364a536bca4e0530ad015b37bfd9c6fd48c542bb"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    },
+    {
+      "nodeid": "tests/test_causal.py::test_positivity_separation_visible",
+      "outcome": "passed",
+      "seconds": 0.029969029999847407,
+      "test_file_sha256": "05d2df1661de87464e71bc49cb0f711b8cf259c80825063468cb54a4b07a7497",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "562cbcf0394f4cc5944bbd5c5632162e4ba63c1506c86a3a513959956f9f7685"
+        },
+        {
+          "path": "project/commits/52942b61-7777-47d9-b84e-21d96ac7bfdd/manifest.json",
+          "bytes": 467,
+          "sha256": "5ae82c0a3e09c0a14fe8b2576bda09bc0e462d6d1bf92d1a3e260253617fd275"
+        },
+        {
+          "path": "project/commits/86bd2870-5755-45a5-a74d-17392eee2714/manifest.json",
+          "bytes": 7383,
+          "sha256": "ededfdb170adc30a336c1706ffdb16e7ffd670d711eb13f2463c255f564a0974"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "79fbaabf3c5132dcf0569c26a0067e6be4e2c3fb3b1635f09d58dfb48b5a32b7"
+        },
+        {
+          "path": "project/snapshots/c48175ab-0e6f-42bd-bd91-e93dcc265d07.parquet",
+          "bytes": 44755,
+          "sha256": "94902f0b0d8995b727a111a7814077e8079ceb81e1356cc26e9ce1bfefb968e6"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 13450,
+          "sha256": "378bd1a5bc9674609addbab4fec39d8e1e5878d81fad460f82f04adcb52d6ca4"
+        },
+        {
+          "path": "work/382e38a5-14c6-485d-9a54-64b3bd3d30df.dataset.parquet",
+          "bytes": 44755,
+          "sha256": "94902f0b0d8995b727a111a7814077e8079ceb81e1356cc26e9ce1bfefb968e6"
+        },
+        {
+          "path": "work/9eadac8a-9ec1-451f-94a4-996077cde360.source",
+          "bytes": 13450,
+          "sha256": "378bd1a5bc9674609addbab4fec39d8e1e5878d81fad460f82f04adcb52d6ca4"
+        },
+        {
+          "path": "work/causal-details.parquet",
+          "bytes": 41330,
+          "sha256": "aa0977246a6f04725481a337b34a9d4dbcf19b34d48e63da975232092f7f3697"
+        },
+        {
+          "path": "work/causal-members.parquet",
+          "bytes": 12909,
+          "sha256": "a8238805b3e479b3d7d6eb68fde3d2610970c4eb5b951322fbc2079c313a53f5"
+        },
+        {
+          "path": "work/causal-result.json",
+          "bytes": 9807,
+          "sha256": "5747ad8cf6b2e7f84ab85389677b3a15369468d00c5dad2b88ddd5b6170b44cd"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    },
+    {
+      "nodeid": "tests/test_causal.py::test_iv_against_independent_2sls_reference",
+      "outcome": "passed",
+      "seconds": 0.022334441999191768,
+      "test_file_sha256": "05d2df1661de87464e71bc49cb0f711b8cf259c80825063468cb54a4b07a7497",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "38000ff2746d237e163822760fe9528430e5b1b37e419b34a07869649a8577d6"
+        },
+        {
+          "path": "project/commits/1bf6c056-5b3e-472c-90b0-643ab1db15dc/manifest.json",
+          "bytes": 7383,
+          "sha256": "a3a8040ef050e78c36d33bb77a0315044e0db9c9a295c468659084a22982f6ab"
+        },
+        {
+          "path": "project/commits/225d4eb6-d3d8-41e2-8b28-7f4081a1ce11/manifest.json",
+          "bytes": 467,
+          "sha256": "01dbb35bd007a91737606f89da9fb462bd6d7ff44f5fd0f1bb0facf790b7a83a"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "1613a536d61af4346314c011a1fecd53b6dbec427f2605f581272d42c5c00fe6"
+        },
+        {
+          "path": "project/snapshots/56617353-ba8a-4c50-8949-972dc19bdf97.parquet",
+          "bytes": 44767,
+          "sha256": "272ebb10ec379631c38f47cf6f13187cb605f1fd8144052e7e31540c6c5f629c"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 13451,
+          "sha256": "63afd96bb768ece1c1487317dc91eaa4fde8d54636594f05447609d0aeb0c63d"
+        },
+        {
+          "path": "work/73b1ef30-6800-4946-82c0-3b62d9860853.source",
+          "bytes": 13451,
+          "sha256": "63afd96bb768ece1c1487317dc91eaa4fde8d54636594f05447609d0aeb0c63d"
+        },
+        {
+          "path": "work/b8e93db8-45e0-4761-9cf6-16fa5a62125c.dataset.parquet",
+          "bytes": 44767,
+          "sha256": "272ebb10ec379631c38f47cf6f13187cb605f1fd8144052e7e31540c6c5f629c"
+        },
+        {
+          "path": "work/causal-details.parquet",
+          "bytes": 36877,
+          "sha256": "f079e163860a2ce7553dc44542a18faa26df935769274313d2d5f7ef2a28e268"
+        },
+        {
+          "path": "work/causal-members.parquet",
+          "bytes": 12922,
+          "sha256": "0946f574e05b95c88df8745980e79795dd95625f096411100cdc4368b37e387b"
+        },
+        {
+          "path": "work/causal-result.json",
+          "bytes": 11156,
+          "sha256": "b167f7cdc7349d0677046e69e377e45d618c88e37c6db78dc136d7cc59645526"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    },
+    {
+      "nodeid": "tests/test_survival.py::test_hand_km_risk_counts_and_safe_roundtrip",
+      "outcome": "passed",
+      "seconds": 0.606205031999707,
+      "test_file_sha256": "5cb682d45475941ddc9d4743f2cacb9628df4db971cbd841a5ee4967bb4c7a73",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "fb19d6b80fdd6d87c0605f3421d5186394a49317c2bbf3d9b1e79b0b362e2fb5"
+        },
+        {
+          "path": "project/commits/08d1831b-f68f-4ae1-826b-f562d8192432/manifest.json",
+          "bytes": 7339,
+          "sha256": "5c13d69eeb30a56ba2b1b5736833bc52c1d8a577f12577192c01ba4d9ca0043a"
+        },
+        {
+          "path": "project/commits/334bc7c1-62fb-4e48-95e6-35fed97e8991/manifest.json",
+          "bytes": 16497,
+          "sha256": "5ee85336e72da9a027f617e0aaf8876d1bf32f4f72b90b6dd887623bf2bf4a77"
+        },
+        {
+          "path": "project/commits/d7b9ce30-bfd5-4814-a309-884b03b54c1e/manifest.json",
+          "bytes": 467,
+          "sha256": "c07943abba6e73e5922975975dbe2b19045e74e7b5fabb3f41d3bc6239e153bd"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 40960,
+          "sha256": "a0545ba8bf7d5e682ed45a8be365065ff84a0f0cb9c5ba66bc4c29ff0106b3d0"
+        },
+        {
+          "path": "project/snapshots/40b01624-387f-4fd1-a6df-13db7e274997.parquet",
+          "bytes": 6103,
+          "sha256": "ade32345ac635ec47b5700eb2ff6578d1c0092be9365bf4db56b21bec46ee814"
+        },
+        {
+          "path": "project/snapshots/73a6ff13-cce5-450b-a8b8-76c2d732f620.parquet",
+          "bytes": 1095,
+          "sha256": "bf920d92aac89ec687e59b9b1c3c45ddca22f2262e57e6e8d1ebe409e592872b"
+        },
+        {
+          "path": "project/snapshots/e84b0e01-a784-4a50-9142-3b7c738727d9.parquet",
+          "bytes": 4369,
+          "sha256": "9212456176cacf7d24dc0ae815e68fe521ee0d30f473b02aa1da5a2e3e4ba520"
+        },
+        {
+          "path": "project/sources/503fd0a1-57b0-427f-97ea-2d531836244a.bin",
+          "bytes": 7530,
+          "sha256": "b56fb1341083e4f480cea3a717b5388de84a832ce44d1007b28399aefa0452ab"
+        },
+        {
+          "path": "project/sources/ee3e84ea-53d7-4902-891d-7f8a41f4c148.bin",
+          "bytes": 72081,
+          "sha256": "decdf287264a9b9a76f1cf542201b084fc4d9909849c3ad4671d3e85ec51681e"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 2266,
+          "sha256": "3a248e03b59018a48207033d39f542aec6ef87d8f094726b12e4b4e093be426e"
+        },
+        {
+          "path": "work/86dbc070-6d34-4aa2-be05-e280fc06a693.source",
+          "bytes": 2266,
+          "sha256": "3a248e03b59018a48207033d39f542aec6ef87d8f094726b12e4b4e093be426e"
+        },
+        {
+          "path": "work/a79ca029-21eb-4ddb-8656-d611c58096e6.dataset.parquet",
+          "bytes": 6103,
+          "sha256": "ade32345ac635ec47b5700eb2ff6578d1c0092be9365bf4db56b21bec46ee814"
+        },
+        {
+          "path": "work/survival-details.parquet",
+          "bytes": 4369,
+          "sha256": "9212456176cacf7d24dc0ae815e68fe521ee0d30f473b02aa1da5a2e3e4ba520"
+        },
+        {
+          "path": "work/survival-members.parquet",
+          "bytes": 1095,
+          "sha256": "bf920d92aac89ec687e59b9b1c3c45ddca22f2262e57e6e8d1ebe409e592872b"
+        },
+        {
+          "path": "work/survival-result.json",
+          "bytes": 7530,
+          "sha256": "b56fb1341083e4f480cea3a717b5388de84a832ce44d1007b28399aefa0452ab"
+        },
+        {
+          "path": "work/survival.png",
+          "bytes": 72081,
+          "sha256": "decdf287264a9b9a76f1cf542201b084fc4d9909849c3ad4671d3e85ec51681e"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    },
+    {
+      "nodeid": "tests/test_survival.py::test_cox_against_independent_partial_likelihood_and_baseline[False-breslow]",
+      "outcome": "passed",
+      "seconds": 0.3606721470005141,
+      "test_file_sha256": "5cb682d45475941ddc9d4743f2cacb9628df4db971cbd841a5ee4967bb4c7a73",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "eec00cdb7836712ecc4c88ebf88a93613ad83845d1d826802ebae2d01c6c42f8"
+        },
+        {
+          "path": "project/commits/66e574e2-5b4b-4813-bf0b-5844a1e356c7/manifest.json",
+          "bytes": 7344,
+          "sha256": "8e54d06e0a21088c3f006c13c9d72bd577bbaa9c824241c94f1f66f4768cfaa9"
+        },
+        {
+          "path": "project/commits/d166ceea-a13d-478c-8473-25d72cc023ee/manifest.json",
+          "bytes": 467,
+          "sha256": "2381e3af8366dfe6e4fa031c090305deea3fbb109954b98d14ea54e385f994f5"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "768af007bbd3d58880b34afa752158678de33a777793bbd071de08d90fb97aaf"
+        },
+        {
+          "path": "project/snapshots/8fa0e080-3579-482d-8363-de5c1c4cbee4.parquet",
+          "bytes": 17489,
+          "sha256": "171250b0150388b8579ff938543a28b0092161b1d679f69a9775bba55e5e8891"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 4719,
+          "sha256": "364c7fc18a400c728d4ed88c88a16a3786663187d81c670e5e8c5a1cedbdabb2"
+        },
+        {
+          "path": "work/35252a56-01b5-48fb-9d78-02dbc368a617.source",
+          "bytes": 4719,
+          "sha256": "364c7fc18a400c728d4ed88c88a16a3786663187d81c670e5e8c5a1cedbdabb2"
+        },
+        {
+          "path": "work/ec70efcc-004b-4a36-8cd9-6f7f9c6a982c.dataset.parquet",
+          "bytes": 17489,
+          "sha256": "171250b0150388b8579ff938543a28b0092161b1d679f69a9775bba55e5e8891"
+        },
+        {
+          "path": "work/survival-details.parquet",
+          "bytes": 15538,
+          "sha256": "4f7acfd522069a6430edbcc1324d16bda8e6ef4da15db73fb5e284acf99810f5"
+        },
+        {
+          "path": "work/survival-members.parquet",
+          "bytes": 5007,
+          "sha256": "dfc05f2c5502e56ddd2a22e53dd83f912b3c4aa804303a437c07812c715486ad"
+        },
+        {
+          "path": "work/survival-result.json",
+          "bytes": 37189,
+          "sha256": "73436df1c5f2ff8bc2b0d514cfd8121fee5d8e92275c8da9368ea1474baf294a"
+        },
+        {
+          "path": "work/survival.png",
+          "bytes": 108573,
+          "sha256": "afdc00ac5ca7e202f749de72a3ce2ede58a2954d77f78b5d3db5d250953615ec"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    },
+    {
+      "nodeid": "tests/test_survival.py::test_cox_against_independent_partial_likelihood_and_baseline[False-efron]",
+      "outcome": "passed",
+      "seconds": 0.22636576700097066,
+      "test_file_sha256": "5cb682d45475941ddc9d4743f2cacb9628df4db971cbd841a5ee4967bb4c7a73",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "467d7e05db2916b0920210f0c2c915a2a63a636fb93980a0b2a0ebbf53eae533"
+        },
+        {
+          "path": "project/commits/151627e4-1208-4790-99f8-1a8cb22fd9bf/manifest.json",
+          "bytes": 7344,
+          "sha256": "4a7c0817e72253ac2566833a5da7d578b05589b419bbdac0e9fa05dd011e7085"
+        },
+        {
+          "path": "project/commits/1d1e271b-9756-4ea6-814a-d41718b6c5f1/manifest.json",
+          "bytes": 467,
+          "sha256": "d7fb3f351da7c97900ff1bc896636e479d5a284c5c5dd6551455bce3d23c111c"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "0127ff85313b0d8f4431e77348b2444202964591791e63d4bdcfbe27ab760662"
+        },
+        {
+          "path": "project/snapshots/889ab782-d1b7-4913-92eb-2781855a464c.parquet",
+          "bytes": 17527,
+          "sha256": "d6c612b4ce9593c80723219196e64a395aa7f4503700d5679bb059498fb18893"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 4719,
+          "sha256": "364c7fc18a400c728d4ed88c88a16a3786663187d81c670e5e8c5a1cedbdabb2"
+        },
+        {
+          "path": "work/833e2578-f22f-4d72-be80-4abbad5326d4.source",
+          "bytes": 4719,
+          "sha256": "364c7fc18a400c728d4ed88c88a16a3786663187d81c670e5e8c5a1cedbdabb2"
+        },
+        {
+          "path": "work/8909a389-f77d-4797-bdfe-ad3f7c330d60.dataset.parquet",
+          "bytes": 17527,
+          "sha256": "d6c612b4ce9593c80723219196e64a395aa7f4503700d5679bb059498fb18893"
+        },
+        {
+          "path": "work/survival-details.parquet",
+          "bytes": 15530,
+          "sha256": "ba14505a2de59b8c2158a1298788817381c64c745393a5c0b1cc25df9aef43f6"
+        },
+        {
+          "path": "work/survival-members.parquet",
+          "bytes": 4993,
+          "sha256": "5ca159d4c03c50bdb39330c7b86e57b57785c00767b238aea2de677de907c98e"
+        },
+        {
+          "path": "work/survival-result.json",
+          "bytes": 37185,
+          "sha256": "e3e98e87940b377344347c81ec4555f79319bdbefc1fc889ac76d3637135fd1a"
+        },
+        {
+          "path": "work/survival.png",
+          "bytes": 108744,
+          "sha256": "8345714135fdc0e301fe19bf748041c68278241295ea7e3e915d24860a1bd94e"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    },
+    {
+      "nodeid": "tests/test_survival.py::test_cox_against_independent_partial_likelihood_and_baseline[True-breslow]",
+      "outcome": "passed",
+      "seconds": 0.3439808830007678,
+      "test_file_sha256": "5cb682d45475941ddc9d4743f2cacb9628df4db971cbd841a5ee4967bb4c7a73",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "7fd1ec24c59e113211fac2fd7259ad0fe6175f186dc8bdc93563ff994cef1d5e"
+        },
+        {
+          "path": "project/commits/a04855f6-8a1f-4092-bc29-b992d5412e68/manifest.json",
+          "bytes": 7344,
+          "sha256": "50fee883f091401a7df72298963e82e301554a36d73ca0ceb535600a80a55d61"
+        },
+        {
+          "path": "project/commits/ad587d90-6220-4ab5-9dff-74f59c47716b/manifest.json",
+          "bytes": 467,
+          "sha256": "88faf3921d446d28c400f283f595ccc545c9dabe03b0e86358ad1649d1942c62"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "b1ceac57334c17a619f40a3dac9ca4e9fac881934c6f07f93620f29dc8fccf73"
+        },
+        {
+          "path": "project/snapshots/9d100d45-c51b-4e05-a3e3-6d905572fb95.parquet",
+          "bytes": 17916,
+          "sha256": "8f3b0dfa81d39144af524da197038084b8bedba95a76d1f8738cd688b1ac41ec"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 5110,
+          "sha256": "8758db6eb7577e04735148031c9459c34d22850f7c9c19de9ddd837efb2eb037"
+        },
+        {
+          "path": "work/a6c74ac6-f1c2-4c81-bb63-afbd44babdc4.source",
+          "bytes": 5110,
+          "sha256": "8758db6eb7577e04735148031c9459c34d22850f7c9c19de9ddd837efb2eb037"
+        },
+        {
+          "path": "work/d4e3e25d-3ea4-466e-ab39-5d364cfb41a7.dataset.parquet",
+          "bytes": 17916,
+          "sha256": "8f3b0dfa81d39144af524da197038084b8bedba95a76d1f8738cd688b1ac41ec"
+        },
+        {
+          "path": "work/survival-details.parquet",
+          "bytes": 16394,
+          "sha256": "0542d53638d0dba887d41423f21785927937dc3dd43620d5168fe6fe184782fb"
+        },
+        {
+          "path": "work/survival-members.parquet",
+          "bytes": 5001,
+          "sha256": "daa4dc75fea59c05b8e257858db0fea6cadfd1feb63006bf9136a05ae89b129d"
+        },
+        {
+          "path": "work/survival-result.json",
+          "bytes": 36830,
+          "sha256": "4f5f612498f67a243de072f4d7dffa803ff8744c34755233962a17b6dc082a1a"
+        },
+        {
+          "path": "work/survival.png",
+          "bytes": 102615,
+          "sha256": "4d5eb5967d8063925e9214493c3d457ff76ad6213174f1df91e73f376743ef4c"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    },
+    {
+      "nodeid": "tests/test_survival.py::test_cox_against_independent_partial_likelihood_and_baseline[True-efron]",
+      "outcome": "passed",
+      "seconds": 0.2154773619986372,
+      "test_file_sha256": "5cb682d45475941ddc9d4743f2cacb9628df4db971cbd841a5ee4967bb4c7a73",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "a6ee22cf7a9340222c0fdeb4c12dfe2accc6450292814992adfa22e42d12b7ae"
+        },
+        {
+          "path": "project/commits/303015c7-5f9a-4a7e-b113-09abccac69bc/manifest.json",
+          "bytes": 467,
+          "sha256": "36dedb418418e0243fbc7aa2c6e29fb59cc60aa146c762a1fe74256939ba10c1"
+        },
+        {
+          "path": "project/commits/554f00d0-13bb-4036-a01e-69aa657a5d36/manifest.json",
+          "bytes": 7344,
+          "sha256": "3f92e776b979c76a722929db413619553944316befaadea15e3acaa94a0bc1fd"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "35be7be4433d91a613537d062c15841d23fa866aa2b54ebf513307f8a65f515b"
+        },
+        {
+          "path": "project/snapshots/f386f6f2-66a8-439f-8075-b593f503653a.parquet",
+          "bytes": 17903,
+          "sha256": "e6728de0c11a827ac25e21e1bd985827a6c629eebc21345bce0e062e5663591a"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 5110,
+          "sha256": "8758db6eb7577e04735148031c9459c34d22850f7c9c19de9ddd837efb2eb037"
+        },
+        {
+          "path": "work/285dfa73-1520-45a7-8ca6-44e2b9166397.source",
+          "bytes": 5110,
+          "sha256": "8758db6eb7577e04735148031c9459c34d22850f7c9c19de9ddd837efb2eb037"
+        },
+        {
+          "path": "work/56b49a8a-314a-4575-ab42-30f1bd0810d4.dataset.parquet",
+          "bytes": 17903,
+          "sha256": "e6728de0c11a827ac25e21e1bd985827a6c629eebc21345bce0e062e5663591a"
+        },
+        {
+          "path": "work/survival-details.parquet",
+          "bytes": 16425,
+          "sha256": "cec9ed17c639da5d1dfd4080a353d94c818c4bab8a1f6959239ac2ba0e7fb580"
+        },
+        {
+          "path": "work/survival-members.parquet",
+          "bytes": 5004,
+          "sha256": "408f16c12622e06c38765ce8ec4c21e9273fc8c8b271fe00a5d8ceab0218a89a"
+        },
+        {
+          "path": "work/survival-result.json",
+          "bytes": 36824,
+          "sha256": "508ab05d2d05a56621d68ba9f108bb4e4962a38128f33906ea6e66565da23be5"
+        },
+        {
+          "path": "work/survival.png",
+          "bytes": 102751,
+          "sha256": "c30975e373b408ba405f5c14b40742a2e42c160e590cb4fcfa067fdb5f312865"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    },
+    {
+      "nodeid": "tests/test_survival.py::test_model_predict_after_numeric_roundtrip_reject_extrapolation_and_code",
+      "outcome": "passed",
+      "seconds": 0.1631370920003974,
+      "test_file_sha256": "5cb682d45475941ddc9d4743f2cacb9628df4db971cbd841a5ee4967bb4c7a73",
+      "fixture_files": [
+        {
+          "path": "project/.writer.lock",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "project/ACTIVE",
+          "bytes": 161,
+          "sha256": "fb4668321fec54948650740e8eccc5d38a7e11bb6731badaa73da50f389d2a68"
+        },
+        {
+          "path": "project/commits/29c8db0d-7a11-4081-b697-4b331ef7ebf4/manifest.json",
+          "bytes": 7344,
+          "sha256": "af3cc0f2bb974d641f190ddcbfd665d61457df99f9acd7cd4bcbef34424b2bbd"
+        },
+        {
+          "path": "project/commits/32ce2057-45f3-429c-a9c8-9ece8c743110/manifest.json",
+          "bytes": 467,
+          "sha256": "52195f38165179868c8539af6b19c00122ba153fa95d66d6bf768b53482a4037"
+        },
+        {
+          "path": "project/metadata.sqlite",
+          "bytes": 16384,
+          "sha256": "6324d2e6411e333aedf28836e1ac14171755e4c7c86883408e5a3ca94cfb4b16"
+        },
+        {
+          "path": "project/snapshots/b30f15ed-d49f-46d1-94e2-83a9d066a5ed.parquet",
+          "bytes": 18669,
+          "sha256": "a67a8e94607ba2f05be95eb5b20e035b006ca7d3d006af7f0118fdcc6d64e126"
+        },
+        {
+          "path": "source.parquet",
+          "bytes": 5879,
+          "sha256": "49fcca8e373eda4537165f97dfba7450f190e65cdc8f8f39b4977183986e82a5"
+        },
+        {
+          "path": "work/70dd30ce-3c05-49ca-a1ca-0331fd35ddba.dataset.parquet",
+          "bytes": 18669,
+          "sha256": "a67a8e94607ba2f05be95eb5b20e035b006ca7d3d006af7f0118fdcc6d64e126"
+        },
+        {
+          "path": "work/7ad32352-7b83-4664-b747-23b5d3c13ee0.source",
+          "bytes": 5879,
+          "sha256": "49fcca8e373eda4537165f97dfba7450f190e65cdc8f8f39b4977183986e82a5"
+        },
+        {
+          "path": "work/survival-details.parquet",
+          "bytes": 16700,
+          "sha256": "671d7a352588d21747ec4c7480b5acfaf54e539d5fa7237b766c46e15b60de89"
+        },
+        {
+          "path": "work/survival-members.parquet",
+          "bytes": 4996,
+          "sha256": "5c5f3602b5ec5c621e7fcb17a03cdd37e41360255ab010733054a4066f61ec2c"
+        },
+        {
+          "path": "work/survival-result.json",
+          "bytes": 8399,
+          "sha256": "5eb28fa5d100f0a355b20619c201c3705caf7ec5845572abbf0fb374f617db0c"
+        },
+        {
+          "path": "work/survival.png",
+          "bytes": 97999,
+          "sha256": "d1d8defb8b5f71f473bed806ed0f163d7fe1bd540389cfc005f8285239281ff8"
+        }
+      ],
+      "fixture_scope": "post-call synthetic fixture/artifact bytes, before teardown; max1024files/32MiB each; absent ephemeral files not invented",
+      "properties": []
+    }
+  ]
+}

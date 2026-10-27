@@ -1,0 +1,984 @@
+{
+  "id": "E47-ACCEPTANCE",
+  "environment": "ENV-47",
+  "date": "2026-10-12",
+  "records": [
+    {
+      "id": "F47-P001",
+      "method": "Agglomerative dendrogram",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P001.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P001.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P001.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/agglomerative-outlier/result.json",
+          "docs/evidence/phase47/wheel/agglomerative-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P001.H",
+        "status": "verified",
+        "article": "exploration",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P001.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/agglomerative-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/agglomerative-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P002",
+      "method": "Gaussian mixture",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P002.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P002.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P002.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/gmm-outlier/result.json",
+          "docs/evidence/phase47/wheel/gmm-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P002.H",
+        "status": "verified",
+        "article": "exploration-soft",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P002.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/gmm-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/gmm-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P003",
+      "method": "OPTICS",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P003.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P003.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P003.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/optics-outlier/result.json",
+          "docs/evidence/phase47/wheel/optics-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P003.H",
+        "status": "verified",
+        "article": "exploration-density",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P003.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/optics-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/optics-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P004",
+      "method": "HDBSCAN",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "isteğe bağlı",
+      "C": {
+        "id": "F47-P004.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P004.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P004.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/hdbscan-outlier/result.json",
+          "docs/evidence/phase47/wheel/hdbscan-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P004.H",
+        "status": "verified",
+        "article": "exploration-density",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P004.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/hdbscan-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/hdbscan-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P005",
+      "method": "DBSCAN",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P005.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P005.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P005.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/dbscan-outlier/result.json",
+          "docs/evidence/phase47/wheel/dbscan-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P005.H",
+        "status": "verified",
+        "article": "exploration-density",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P005.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/dbscan-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/dbscan-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P006",
+      "method": "KMeans",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P006.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P006.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P006.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/kmeans-outlier/result.json",
+          "docs/evidence/phase47/wheel/kmeans-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P006.H",
+        "status": "verified",
+        "article": "exploration",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P006.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/kmeans-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/kmeans-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P007",
+      "method": "Silhouette",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P007.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P007.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P007.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/kmeans-outlier/result.json",
+          "docs/evidence/phase47/wheel/kmeans-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P007.H",
+        "status": "verified",
+        "article": "exploration-density",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P007.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/kmeans-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/kmeans-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P008",
+      "method": "Davies Bouldin",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P008.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P008.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P008.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/kmeans-outlier/result.json",
+          "docs/evidence/phase47/wheel/kmeans-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P008.H",
+        "status": "verified",
+        "article": "exploration-density",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P008.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/kmeans-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/kmeans-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P009",
+      "method": "Calinski Harabasz",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P009.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P009.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P009.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/kmeans-outlier/result.json",
+          "docs/evidence/phase47/wheel/kmeans-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P009.H",
+        "status": "verified",
+        "article": "exploration-density",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P009.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/kmeans-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/kmeans-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P010",
+      "method": "GMM AIC BIC",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P010.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P010.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P010.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/gmm-outlier/result.json",
+          "docs/evidence/phase47/wheel/gmm-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P010.H",
+        "status": "verified",
+        "article": "exploration-soft",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P010.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/gmm-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/gmm-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P011",
+      "method": "Resampling stability",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P011.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P011.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P011.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/kmeans-outlier/result.json",
+          "docs/evidence/phase47/wheel/kmeans-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P011.H",
+        "status": "verified",
+        "article": "exploration-stability",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P011.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/kmeans-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/kmeans-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P012",
+      "method": "LOF outlier",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P012.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P012.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P012.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/lof-outlier/result.json",
+          "docs/evidence/phase47/wheel/lof-outlier/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P012.H",
+        "status": "verified",
+        "article": "exploration-novelty",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P012.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/lof-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel/lof-outlier/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P013",
+      "method": "LOF novelty",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P013.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P013.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P013.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/lof-novelty/result.json",
+          "docs/evidence/phase47/wheel/lof-novelty/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P013.H",
+        "status": "verified",
+        "article": "exploration-novelty",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P013.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/lof-novelty/assignments.parquet",
+          "docs/evidence/phase47/wheel/lof-novelty/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P014",
+      "method": "OneClassSVM",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P014.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P014.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P014.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/one_class_svm-novelty/result.json",
+          "docs/evidence/phase47/wheel/one_class_svm-novelty/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P014.H",
+        "status": "verified",
+        "article": "exploration-novelty",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P014.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/one_class_svm-novelty/assignments.parquet",
+          "docs/evidence/phase47/wheel/one_class_svm-novelty/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P015",
+      "method": "Robust covariance",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P015.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P015.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P015.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/robust_covariance-novelty/result.json",
+          "docs/evidence/phase47/wheel/robust_covariance-novelty/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P015.H",
+        "status": "verified",
+        "article": "exploration-novelty",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P015.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/robust_covariance-novelty/assignments.parquet",
+          "docs/evidence/phase47/wheel/robust_covariance-novelty/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    },
+    {
+      "id": "F47-P016",
+      "method": "Etiketli anomaly PR maliyet",
+      "status": "verified",
+      "environment": "ENV-47",
+      "date": "2026-10-12",
+      "scope": "zorunlu",
+      "C": {
+        "id": "F47-P016.C",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/modeling/exploration.py",
+          "src/veri_ufku/modeling/unsupervised_contracts.py",
+          "src/veri_ufku/domain/capabilities.py"
+        ]
+      },
+      "V": {
+        "id": "F47-P016.V",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration.py",
+          "docs/evidence/phase47/source-final.xml",
+          "docs/evidence/phase47/wheel-final.xml"
+        ],
+        "checks": "per-model real fit/metric or score reference; shared noise/single edges; GMM penalty reference; PR cost hand reference; train-only LOF reference; tamper rejection; n²/cancel/timeout"
+      },
+      "G": {
+        "id": "F47-P016.G",
+        "status": "verified",
+        "paths": [
+          "tests/test_exploration_gui.py",
+          "docs/evidence/phase47/source/lof-novelty/result.json",
+          "docs/evidence/phase47/wheel/lof-novelty/result.json",
+          "docs/evidence/phase47/source/walkthrough.json",
+          "docs/evidence/phase47/wheel/walkthrough.json"
+        ],
+        "checks": "actual QML registry selection, explicit parameters/preflight, worker, help/Escape, persisted reopen; advanced cluster count retained"
+      },
+      "H": {
+        "id": "F47-P016.H",
+        "status": "verified",
+        "article": "exploration-novelty",
+        "paths": [
+          "src/veri_ufku/learning/content/tr.json",
+          "src/veri_ufku/learning/taxonomy.py"
+        ]
+      },
+      "P": {
+        "id": "F47-P016.P",
+        "status": "verified",
+        "paths": [
+          "src/veri_ufku/storage/unsupervised_store.py",
+          "docs/evidence/phase47/source/lof-novelty/assignments.parquet",
+          "docs/evidence/phase47/wheel/lof-novelty/assignments.parquet",
+          "docs/evidence/phase47/wheel.json",
+          "docs/evidence/phase47/smoke.json"
+        ],
+        "checks": "source-bound RowId assignments, parent recomputation, atomic result/save/reopen; lossless explicit marked dataset tested in backend"
+      },
+      "limits": "Numeric bounded templates only; mixed/sparse/weights unsupported; Phase47 new-file model prediction/persistence closed; result persistence supported. HDBSCAN native sklearn only; contrib not tested. Formal prior human/AT/hardware/distribution/offlineinstall/remoteCI gates open."
+    }
+  ],
+  "formal_status": "sürüyor / deneysel / zorunlu; prior gates open"
+}

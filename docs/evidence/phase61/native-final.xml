@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="37" time="2.299" timestamp="2026-10-15T20:22:30.503476+03:00" hostname="s-oktay"><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[degree-graphml]" time="1.047" /><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[degree-gexf]" time="0.019" /><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[centrality-graphml]" time="0.019" /><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[centrality-gexf]" time="0.019" /><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[components-graphml]" time="0.020" /><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[components-gexf]" time="0.019" /><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[shortest-graphml]" time="0.020" /><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[shortest-gexf]" time="0.018" /><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[community-graphml]" time="0.020" /><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[community-gexf]" time="0.021" /><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[layout-graphml]" time="0.018" /><testcase classname="tests.test_graphs" name="test_real_algorithms_safe_reopen_export[layout-gexf]" time="0.019" /><testcase classname="tests.test_graphs" name="test_shortest_reference_weight_and_unreachable" time="0.012" /><testcase classname="tests.test_graphs" name="test_hand_centrality_components_degree" time="0.002" /><testcase classname="tests.test_graphs" name="test_multiedge_community_projection_and_identity" time="0.017" /><testcase classname="tests.test_graphs" name="test_view_budget_filter_and_explicit_sample" time="0.016" /><testcase classname="tests.test_graphs" name="test_invalid_and_unsupported_specs[bad0]" time="0.000" /><testcase classname="tests.test_graphs" name="test_invalid_and_unsupported_specs[bad1]" time="0.000" /><testcase classname="tests.test_graphs" name="test_invalid_and_unsupported_specs[bad2]" time="0.000" /><testcase classname="tests.test_graphs" name="test_invalid_and_unsupported_specs[bad3]" time="0.000" /><testcase classname="tests.test_graphs" name="test_invalid_and_unsupported_specs[bad4]" time="0.001" /><testcase classname="tests.test_graphs" name="test_invalid_and_unsupported_specs[bad5]" time="0.001" /><testcase classname="tests.test_graphs" name="test_invalid_and_unsupported_specs[bad6]" time="0.000" /><testcase classname="tests.test_graphs" name="test_invalid_and_unsupported_specs[bad7]" time="0.000" /><testcase classname="tests.test_graphs" name="test_strict_xml_rejects_entities_dynamic_and_bad_ids[graphml]" time="0.001" /><testcase classname="tests.test_graphs" name="test_strict_xml_rejects_entities_dynamic_and_bad_ids[gexf]" time="0.001" /><testcase classname="tests.test_graphs" name="test_cooperative_cancel_at_publication" time="0.012" /><testcase classname="tests.test_graphs" name="test_separate_node_table_and_typed_ids" time="0.021" /><testcase classname="tests.test_graphs" name="test_directed_multigraph_xml_identity_and_loops" time="0.002" /><testcase classname="tests.test_graphs" name="test_directed_unreachable_and_strength_reject" time="0.012" /><testcase classname="tests.test_graphs" name="test_invalid_distance_weights[0]" time="0.010" /><testcase classname="tests.test_graphs" name="test_invalid_distance_weights[-1]" time="0.009" /><testcase classname="tests.test_graphs" name="test_invalid_distance_weights[inf]" time="0.010" /><testcase classname="tests.test_graphs" name="test_invalid_distance_weights[None]" time="0.010" /><testcase classname="tests.test_graphs" name="test_cooperative_cancel_in_pagerank_and_spring" time="0.003" /><testcase classname="tests.test_graphs" name="test_xml_nested_invalid_scope_and_empty_ids_rejected" time="0.001" /><testcase classname="tests.test_graphs" name="test_multiple_source_node_table_published_and_journal" time="0.028"><failure message="NameError: name 'copy' is not defined. Did you forget to import 'copy'?">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-40/test_multiple_source_node_tabl0')
+
+    def test_multiple_source_node_table_published_and_journal(tmp_path):
+    
+        store, r, w, s = fixture(tmp_path, "degree")
+        with closing(store):
+            source = tmp_path / "nodes.parquet"
+            pl.DataFrame(dict(node=["a", "b", "c", "isolated"])).write_parquet(source)
+            snapshot = capture(source, w, any_format=True)
+            imported = get_adapter("parquet").import_data(
+                snapshot, StructuredSettings(adapter_id="parquet"), w, Control()
+            )
+            store.publish_import(imported)
+            d = store.state["datasets"][-1]
+            nr = dict(
+                path=str(store.path(d["snapshot_uri"])),
+                fingerprint=hash_artifact(store.path(d["snapshot_uri"]), Control()),
+                columns=d["import_metadata"]["columns"],
+                version_id=d["version_id"],
+                source_snapshot_id=d["import_metadata"]["source_snapshot_id"],
+                snapshot_uri=d["snapshot_uri"],
+                row_count=4,
+            )
+            source = tmp_path / "edges.parquet"
+            pl.read_parquet(r["path"]).filter(pl.col("record_type") == "edge").select(
+                "source", "target", "edge_id", "weight", "attributes"
+            ).write_parquet(source)
+            snap = capture(source, w, any_format=True)
+            imp = get_adapter("parquet").import_data(
+                snap, StructuredSettings(adapter_id="parquet"), w, Control()
+            )
+            store.publish_import(imp)
+            ed = store.state["datasets"][-1]
+            r.update(
+                path=str(store.path(ed["snapshot_uri"])),
+                fingerprint=hash_artifact(store.path(ed["snapshot_uri"]), Control()),
+                columns=ed["import_metadata"]["columns"],
+                row_count=3,
+                version_id=ed["version_id"],
+                source_snapshot_id=ed["import_metadata"]["source_snapshot_id"],
+                node_request=nr,
+                origin_version=nr["version_id"],
+                graph_metadata=None,
+            )
+            s = GraphSpec(
+                source=column(r, "source"),
+                target=column(r, "target"),
+                edge_id=column(r, "edge_id"),
+                node_column=column(nr, "node"),
+            )
+            out = calculate(r, s.data(), w)
+            assert (
+                len(out["provenance"]["dataset_versions"]) == 2
+                and len(out["provenance"]["source_snapshot_ids"]) == 2
+            )
+            assert all(
+                any(v["dataset_version"] == nr["version_id"] for v in n["source_records"])
+                for n in out["nodes"]
+            )
+            state = publish(store, store.state, out)
+            record = state["results"][-1]
+            assert set(record["dataset_version_ids"]) == {r["version_id"], nr["version_id"]}
+            assert load(store, record)["node_source"]["version_id"] == nr["version_id"]
+            from veri_ufku.storage.experiment_store import rows
+            from veri_ufku.storage.neural_store import validate_journal
+    
+            assert rows(store)[-1]["params"]["graph_spec"]
+&gt;           fake = copy.deepcopy(state)
+                   ^^^^
+E           NameError: name 'copy' is not defined. Did you forget to import 'copy'?
+
+tests/test_graphs.py:485: NameError</failure></testcase></testsuite></testsuites>

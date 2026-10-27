@@ -1,0 +1,501 @@
+{
+  "date": "2026-10-15T19:05:02.921155+00:00",
+  "phase": 64,
+  "decision": "DEC64-01",
+  "formal_status": "sürüyor",
+  "maturity": "deneysel",
+  "scope": "isteğe bağlı",
+  "records": [
+    {
+      "id": "E64-01",
+      "capability": "source-transform",
+      "status": "verified_bounded",
+      "scope": "Yerel snapshot, mevcut zincir köprüsü, rename/drop/filter OperationSpec ve native kimlikler",
+      "tests": "test_transform_row_identity_and_artifact_corruption; test_gui_existing_chain_to_dag",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64 CPython3.13.15 Linux CPU, default2GiB; GUI offscreen/software",
+      "paths": [
+        "source-publication-final.xml",
+        "wheel-publication-final.xml",
+        "source-gui-release/gui.xml",
+        "wheel-gui-release/gui.xml"
+      ],
+      "formal_acceptance": "open; previous gates retained"
+    },
+    {
+      "id": "E64-02",
+      "capability": "quality-branch",
+      "status": "verified_bounded",
+      "scope": "Numeric required-null; fail veya raporla-devam; bağımlı blocked, bağımsız summary korunur",
+      "tests": "test_compute_cache_and_branch_failure",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64 CPython3.13.15 Linux CPU, default2GiB; GUI offscreen/software",
+      "paths": [
+        "source-publication-final.xml",
+        "wheel-publication-final.xml",
+        "source-gui-release/gui.xml",
+        "wheel-gui-release/gui.xml"
+      ],
+      "formal_acceptance": "open; previous gates retained"
+    },
+    {
+      "id": "E64-03",
+      "capability": "analysis",
+      "status": "verified_bounded",
+      "scope": "Tam numeric profile/ddof; aynı GUI/CLI sonucu",
+      "tests": "test_gui_typed_editor_dry_run_and_cli_equivalence",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64 CPython3.13.15 Linux CPU, default2GiB; GUI offscreen/software",
+      "paths": [
+        "source-publication-final.xml",
+        "wheel-publication-final.xml",
+        "source-gui-release/gui.xml",
+        "wheel-gui-release/gui.xml"
+      ],
+      "formal_acceptance": "open; previous gates retained"
+    },
+    {
+      "id": "E64-04",
+      "capability": "train-predict",
+      "status": "verified_bounded",
+      "scope": "Onaylı tek feature OLS; güvenli coefficient predict, evaluation başarısı iddiası yok",
+      "tests": "test_full_native_train_predict_export_and_idempotency; test_gui_full_dag_export_cache_and_invalid_edit",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64 CPython3.13.15 Linux CPU, default2GiB; GUI offscreen/software",
+      "paths": [
+        "source-publication-final.xml",
+        "wheel-publication-final.xml",
+        "source-gui-release/gui.xml",
+        "wheel-gui-release/gui.xml"
+      ],
+      "formal_acceptance": "open; previous gates retained"
+    },
+    {
+      "id": "E64-05",
+      "capability": "typed-dag",
+      "status": "verified_bounded",
+      "scope": "Typed ports, cycle/after, branch ve stale edit/history",
+      "tests": "test_ports_cycles_dry_run; test_gui_typed_editor_dry_run_and_cli_equivalence",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64 CPython3.13.15 Linux CPU, default2GiB; GUI offscreen/software",
+      "paths": [
+        "source-publication-final.xml",
+        "wheel-publication-final.xml",
+        "source-gui-release/gui.xml",
+        "wheel-gui-release/gui.xml"
+      ],
+      "formal_acceptance": "open; previous gates retained"
+    },
+    {
+      "id": "E64-06",
+      "capability": "cache",
+      "status": "verified_bounded",
+      "scope": "Kaynak/config/method/code/env/metadata ve artifact doğrulama, bozulmada ret veya yeniden compute",
+      "tests": "test_source_mutation_rejects_cached_descendants; test_corrupt_cache_recomputed_and_owned_temp_cleanup; test_environment_and_schema_metadata_invalidate_cache",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64 CPython3.13.15 Linux CPU, default2GiB; GUI offscreen/software",
+      "paths": [
+        "source-publication-final.xml",
+        "wheel-publication-final.xml",
+        "source-gui-release/gui.xml",
+        "wheel-gui-release/gui.xml"
+      ],
+      "formal_acceptance": "open; previous gates retained"
+    },
+    {
+      "id": "E64-07",
+      "capability": "retry-budget-cancel",
+      "status": "verified_bounded",
+      "scope": "Sınırlı saf I/O retry; bounded ComputeBudget, cancel/timeout ve sahipli temp cleanup",
+      "tests": "test_retry_pure_io_and_cancel_never_publishes_export; test_budget_cancel_and_closed_methods; test_gui_cancel_timeout_keeps_previous_result",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64 CPython3.13.15 Linux CPU, default2GiB; GUI offscreen/software",
+      "paths": [
+        "source-publication-final.xml",
+        "wheel-publication-final.xml",
+        "source-gui-release/gui.xml",
+        "wheel-gui-release/gui.xml"
+      ],
+      "formal_acceptance": "open; previous gates retained"
+    },
+    {
+      "id": "E64-08",
+      "capability": "batch-sweep",
+      "status": "verified_bounded",
+      "scope": "Dataset/ColumnId mapping,4case ddof sweep ve çakışmasız export",
+      "tests": "test_batch_dataset_mapping_sweep_and_native_ids; test_batch_exports_unique_and_foreign_collision",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64 CPython3.13.15 Linux CPU, default2GiB; GUI offscreen/software",
+      "paths": [
+        "source-publication-final.xml",
+        "wheel-publication-final.xml",
+        "source-gui-release/gui.xml",
+        "wheel-gui-release/gui.xml"
+      ],
+      "formal_acceptance": "open; previous gates retained"
+    },
+    {
+      "id": "E64-09",
+      "capability": "publication",
+      "status": "verified_bounded",
+      "scope": "Mevcut ProjectStore/experiment journal, immutable hash ve test geçmişi bariyeri; exclusive idempotent export",
+      "tests": "test_ledger_publication_barrier_precedes_external_effect; test_full_native_train_predict_export_and_idempotency",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64 CPython3.13.15 Linux CPU, default2GiB; GUI offscreen/software",
+      "paths": [
+        "source-publication-final.xml",
+        "wheel-publication-final.xml",
+        "source-gui-release/gui.xml",
+        "wheel-gui-release/gui.xml"
+      ],
+      "formal_acceptance": "open; previous gates retained"
+    },
+    {
+      "id": "E64-10",
+      "capability": "help",
+      "status": "verified_bounded",
+      "scope": "Üç offline konu/400catalog, gerçek GUI yardım yolu",
+      "tests": "check_learning.py; test_gui_typed_editor_dry_run_and_cli_equivalence",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64 CPython3.13.15 Linux CPU, default2GiB; GUI offscreen/software",
+      "paths": [
+        "source-publication-final.xml",
+        "wheel-publication-final.xml",
+        "source-gui-release/gui.xml",
+        "wheel-gui-release/gui.xml"
+      ],
+      "formal_acceptance": "open; previous gates retained"
+    }
+  ],
+  "subtasks": [
+    {
+      "id": "F64-P001.C",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P001.V",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P001.G",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P001.H",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P001.P",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P002.C",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P002.V",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P002.G",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P002.H",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P002.P",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P003.C",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P003.V",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P003.G",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P003.H",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P003.P",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P004.C",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P004.V",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P004.G",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P004.H",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P004.P",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P005.C",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P005.V",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P005.G",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P005.H",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P005.P",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P006.C",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P006.V",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P006.G",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P006.H",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P006.P",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P007.C",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P007.V",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P007.G",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P007.H",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P007.P",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P008.C",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P008.V",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P008.G",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P008.H",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    },
+    {
+      "id": "F64-P008.P",
+      "status": "verified_bounded",
+      "date": "2026-10-15T19:05:02.921155+00:00",
+      "environment": "ENV-64",
+      "evidence": "docs/evidence/PHASE64.md#e64-validation",
+      "scope": "ADR065 bounded templates; method-specific native tests, actual GUI, offline help and safe project artifact"
+    }
+  ],
+  "unavailable": [
+    {
+      "id": "F64-P009",
+      "capability": "workflow.schedule",
+      "status": "not_implemented_not_runtime_verified",
+      "reason": "Optional scheduler/daemon yok; app kapalıyken otomatik iş yok; yalnız explicit CLI",
+      "evidence": "docs/evidence/PHASE64.md#e64-schedule"
+    }
+  ]
+}

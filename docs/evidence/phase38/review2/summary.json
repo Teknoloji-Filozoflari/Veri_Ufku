@@ -1,0 +1,134 @@
+{
+  "id": "REV-38-02",
+  "date": "2026-10-11T20:46:32.681731+03:00",
+  "python": "3.13.15",
+  "source_root": "/home/s-oktay/Belgeler/Veri_Ufku",
+  "installed_root": "/tmp/veri-ufku-phase38-review2-installed",
+  "files": [
+    {
+      "path": "src/veri_ufku/geo/core.py",
+      "sha256": "b52ea5bc91eda140a6430f18184893fa47e4f5ee12b1b7800c4eeab175d38979",
+      "installed_equal": true
+    },
+    {
+      "path": "src/veri_ufku/geo/readers.py",
+      "sha256": "d686bacd8793f81f5d9a2cbfb0cbaf1285c45af7b230d277fb286db8c6ce3abd",
+      "installed_equal": true
+    },
+    {
+      "path": "src/veri_ufku/geo/operations.py",
+      "sha256": "5202bb889bd53ce6bd3b3d8a4d321146687dbb88b2869051704ddbf752457ebc",
+      "installed_equal": true
+    },
+    {
+      "path": "src/veri_ufku/geo/charts.py",
+      "sha256": "b873eab16b049abee8eaf0fa1b7cd8f0d853e5b86d5f2509c90900bd7bb1dd4a",
+      "installed_equal": true
+    },
+    {
+      "path": "tests/test_geo_boundaries.py",
+      "sha256": "abd86573d8d585e80e7f200913e42a9aef2389c0d695d15b689cd20cd4edc899"
+    }
+  ],
+  "junit": [
+    {
+      "path": "before.xml",
+      "accepted": false,
+      "name": "pytest",
+      "errors": "0",
+      "failures": "6",
+      "skipped": "0",
+      "tests": "14",
+      "time": "0.924",
+      "timestamp": "2026-10-11T20:39:31.298346+03:00",
+      "hostname": "s-oktay"
+    },
+    {
+      "path": "numeric-before.xml",
+      "accepted": false,
+      "name": "pytest",
+      "errors": "0",
+      "failures": "2",
+      "skipped": "0",
+      "tests": "2",
+      "time": "0.775",
+      "timestamp": "2026-10-11T20:41:19.863828+03:00",
+      "hostname": "s-oktay"
+    },
+    {
+      "path": "source.xml",
+      "accepted": true,
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "179",
+      "time": "92.269",
+      "timestamp": "2026-10-11T20:41:21.328774+03:00",
+      "hostname": "s-oktay"
+    },
+    {
+      "path": "network.xml",
+      "accepted": true,
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "9",
+      "time": "12.940",
+      "timestamp": "2026-10-11T20:43:58.399375+03:00",
+      "hostname": "s-oktay"
+    },
+    {
+      "path": "wheel.xml",
+      "accepted": true,
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "75",
+      "time": "91.485",
+      "timestamp": "2026-10-11T20:45:05.042533+03:00",
+      "hostname": "s-oktay"
+    }
+  ],
+  "wheel_sha256": "6f26affbe8bad0aec2d3fd79063acd1e58d66d9e41aa6e1d00baab87974fa7f1",
+  "source_passed": 188,
+  "full_regression_rerun": false,
+  "commands": [
+    "QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software .venv/bin/python -m pytest -q tests/test_geo.py tests/test_geo_boundaries.py tests/test_charts.py tests/test_composition.py tests/test_projects.py tests/test_geo_gui.py --tb=short --junitxml=/tmp/phase38-review2-source.xml",
+    "QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software .venv/bin/python -m pytest -q tests/test_geo_network.py --tb=short --junitxml=/tmp/phase38-review2-network.xml",
+    ".venv/bin/python -m hatchling build -t wheel -d /tmp/veri-ufku-phase38-review2-dist",
+    "uv pip install --no-deps --no-index --target /tmp/veri-ufku-phase38-review2-installed /tmp/veri-ufku-phase38-review2-dist/veri_ufku-0.1.0-py3-none-any.whl",
+    "PYTHONPATH=/tmp/veri-ufku-phase38-review2-installed:/home/s-oktay/Belgeler/Veri_Ufku/tests QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software /home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python -m pytest -q /home/s-oktay/Belgeler/Veri_Ufku/tests/test_geo.py /home/s-oktay/Belgeler/Veri_Ufku/tests/test_geo_boundaries.py /home/s-oktay/Belgeler/Veri_Ufku/tests/test_geo_gui.py /home/s-oktay/Belgeler/Veri_Ufku/tests/test_geo_network.py --tb=short --junitxml=/tmp/phase38-review2-wheel.xml (cwd=/tmp)",
+    ".venv/bin/python -m unittest discover -s tests -p test_document_contracts.py"
+  ],
+  "wheel_passed": 75,
+  "document_unittest_passed": 14,
+  "checks": {
+    "docs": {
+      "passed": true,
+      "command": ".venv/bin/python scripts/check_docs.py"
+    },
+    "artifacts": {
+      "passed": true,
+      "command": ".venv/bin/python scripts/check_artifacts.py"
+    },
+    "learning": {
+      "passed": true,
+      "command": ".venv/bin/python scripts/check_learning.py"
+    },
+    "usability": {
+      "passed": true,
+      "command": ".venv/bin/python scripts/check_usability.py"
+    },
+    "ruff": {
+      "passed": true,
+      "command": ".venv/bin/ruff check src/veri_ufku/geo tests/test_geo_boundaries.py"
+    },
+    "ruff_format": {
+      "passed": true,
+      "command": ".venv/bin/ruff format --check src/veri_ufku/geo tests/test_geo_boundaries.py"
+    }
+  }
+}

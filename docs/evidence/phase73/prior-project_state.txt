@@ -1,0 +1,65 @@
+# Veri_Ufku — aktif görev hafızası
+
+2026-10-16 DEC72-01 açık Faz72 talimatı: bounded privacy teknik teslim.
+Resmî sürüyor/deneysel/isteğe bağlı; [E72](evidence/PHASE72.md),
+[ADR073](adr/073-privacy-phase72.md). Önceki durum ve tüm kabuller
+[korunur](evidence/phase72/prior-project_state.txt). Faz73 başlatılmaz.
+
+Rapor → PII/redaction/retention; privacy.scan/review/export/retention tek registry.
+32MiB snapshot/10000row/64scan column; email/phone/secret/name-hint adayları,
+count+ilk5RowId, ham değer yok. İnsan1..16ColumnId için pii/not-pii/uncertain ve
+mask/drop/pseudonym/keep, reviewer/gerekçe kaydeder. Keep yalnız not-pii; secret
+kolon/desen engeli override edilemez. Nested/binary keep kapalı. Kaynak/hash ve
+DatasetVersion/ColumnId/RowId/SourceRecordId yerelde korunur, kaynak değişmez.
+
+PrivacyEvent/v1 mevcut append-only results journal, ortak Provenance/ProjectStore
+atomik yayın, tek lock. Source/policy/review/preview hash bağı; output alias CSV/
+Parquet/manifest ZIP; internal RowId/SourceRecordId dışa çıkmaz. Null korunur,
+CSV formula escape; manifest ColumnId/hash/ref linkage riski açık. Mask/HMAC/hash
+anonimlik değil; eksiksiz PII/legal compliance garantisi yok.
+
+Stdlib HMAC-SHA256 proje/ColumnId domain separation; optional cryptography50.0.2
+Fernet bounded authenticated export. Keys Secret Service only, purpose namespace,
+no overwrite/file/env/plaintext fallback. Explicit worker key yükler, Qt parent'a
+key dönmez; key/log/manifest yok. Key kaybı decryption/aynı pseudonymi engeller;
+escrow/backdoor yok. Key create iptalden önce servis tarafında tamamlanmış olabilir.
+Canlı proje/SQLite/cache/source/backup şifreli DEĞİL; RAM/swap/açık oturum koruması
+yok. GUI sealed manifest inspect; extract/code/model import yok. Decrypt primitive
+aynı key ile ZIP byte recovery sağlar, key kaybı recovery yok.
+
+Retention1..3650gün policy, otomatik silme yok. Cleanup preview/hash/explicit onay/
+yeniden doğrulama; sadece owned idle eski flat privacy scratch,128dir/toplam32MiB.
+Marker/payload.zip/sealed.vupseal allowlist; symlink/hardlink/live PID/unknown file
+korunur. Current/historical artifact/model/rapor/source/ACTIVE/SQLite ve dış export
+silinmez; general artifact purge/secure erase/machine unlearning yok. Silme sonrası
+history publish başarısızsa geri alma iddiası yok. Aynı kullanıcı hostile FS yarışına
+karşı OS security boundary değil. Yerel history immutable audit/nonrepudiation değil.
+
+Mevcut lineage graph privacy_event/provenance ile genişledi. Dataset-level recorded
+edge closure olası PII model/report/result ilişkileri; ColumnId/learned param tracing
+ve geçmiş eksik provenance uydurulmaz. Import/code/plugin/network hedefli audit ADR073:
+static adapter, bounded parsers, explicit code process (OS sandbox DEĞİL), GET/TLS/
+redirect/content/retry sınırları. DP yok; mechanism/sensitivity/cumulative accountant
+olmadan noise/hash DP sayılmaz. Yeni plugin/remote server/SaaS yok.
+
+222source/222wheel focused PASS (15native privacy dahil);1source/1wheel actual GUI
+PASS scan→consent/review→preview→masked ZIP→retention→real orphan cleanup+history→
+source preserved→unavailable inspect→help/Escape→cancel→reopen. Default2GiB CPU;
+source peak2.026GB/wheel2.033GB örneklenmiş, bütçeye yakın; minHW/perf garantisi yok.
+11HTTP authorized real local TLS PASS; ilk sandbox socket11error korunur, başarı
+değil. DB/S3 bu fazda yeniden test edilmedi.15native crypto standard references,
+HMAC/Fernet gerçek kernel; keyring stub yalnız contract. Live Secret Service daemon
+missing:1integration skip, live keyring/pseudonym/sealed GUI UNVALIDATED.
+
+416byte-eşit noneditable package; locked optional privacy extra. Optional absent
+GUI probe ve izole wheel GUI_SMOKE PASS. İlk nonisolated smoke exit2/çıktısız ve
+ilk test-helper teardown/help property failures korunur; önceki process/longheap
+kök neden kapanmış sayılmaz.412article/content88,412capability coverage10interactive/
+402article-linked; own privacyChanged/base bridge; yeni try_action yok.1000px gerçek
+source GUI ajan inceledi, insan/AT değil. Test/gate/evidence detay E72 içindedir.
+Tam depo/physical/human/AT/minHW/offlineinstaller/remoteCI ve önceki resmî açıklar
+korunur. Stage/commit/push yok. Faz73 için açık kullanıcı talimatı gerekli.
+
+Son statik kapılar docs/artifacts/learning/usability/Ruff/format PASS;14document
+unittest17.438s PASS. Son15source/15wheel privacy PASS +birer live-keyring skip,
+222focused koşuyla toplanmaz. Kimlikli acceptance.json E72 içinde. Faz73 başlamadı.

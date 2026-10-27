@@ -1,0 +1,99 @@
+..................................................F..................... [ 12%]
+........................................................................ [ 25%]
+..F................................................................F.... [ 38%]
+........................................................................ [ 50%]
+........................................................................ [ 63%]
+........................................................................ [ 76%]
+........................................................................ [ 89%]
+.............................................................            [100%]
+=================================== FAILURES ===================================
+____________ test_category_invalid_and_canceled_choices_not_success ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-3/test_category_invalid_and_canc0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb6cc7b8f30>
+
+    def test_category_invalid_and_canceled_choices_not_success(tmp_path, monkeypatch):
+        app, window, projects, p, c, source = imported(tmp_path, monkeypatch)
+        try:
+            panel = window.findChild(QObject, "validationPanel")
+            c.createClassification(
+                json.dumps(
+                    dict(
+                        prediction_moment="Ölçüm öncesi",
+                        availability=panel.property("availability"),
+                    )
+                ),
+                json.dumps(dict(positive_class="missing")),
+            )
+            spin(app, lambda: not c.busy)
+            assert c.errorText and not c.result
+            positive = window.findChild(QObject, "classificationPositive")
+            positive.setProperty("currentIndex", 0)
+            button = window.findChild(QObject, "classificationRun")
+            button.clicked.emit()
+            spin(app, lambda: not c.busy)
+            assert not c.errorText, c.errorText
+            old = c.result
+            button.clicked.emit()
+            c.cancel()
+            spin(app, lambda: not c.busy)
+            assert c.result is old and not c.current
+            assert sum("baseline" in r for r in projects.draft["results"]) == 1
+            assert c.choiceHistory[-1]["status"] == "canceled"
+            c.openRun(next(r["id"] for r in projects.draft["results"] if "baseline" in r))
+            c.evaluateTest()
+            c.cancel()
+            spin(app, lambda: not c.busy)
+>           assert c.testHistory[-1]["status"] == "canceled"
+                   ^^^^^^^^^^^^^^^^^
+E           IndexError: list index out of range
+
+tests/test_classification_gui.py:170: IndexError
+___________________ DocumentContracts.test_current_documents ___________________
+
+self = <test_document_contracts.DocumentContracts testMethod=test_current_documents>
+
+    def test_current_documents(self):
+>       self.assertEqual(CHECKER.check(self.root), [])
+E       AssertionError: Lists differ: ['Broken local link: README.md:docs/eviden[130 chars].md'] != []
+E       
+E       First list contains 3 additional elements.
+E       First extra element 0:
+E       'Broken local link: README.md:docs/evidence/PHASE20.md'
+E       
+E       + []
+E       - ['Broken local link: README.md:docs/evidence/PHASE20.md',
+E       -  'Broken local link: docs/DEVELOPMENT.md:evidence/PHASE20.md',
+E       -  'Broken local link: docs/PRODUCT.md:evidence/PHASE20.md']
+
+tests/test_document_contracts.py:45: AssertionError
+_____ test_catalog_offline_search_turkish_categories_glossary_and_sources ______
+
+    def test_catalog_offline_search_turkish_categories_glossary_and_sources():
+        catalog = Catalog()
+        assert set(catalog.articles) >= {
+            "data",
+            "rows-columns",
+            "data-types",
+            "missing",
+            "mean-median",
+            "sample",
+            "correlation",
+            "prediction",
+            "leakage",
+        }
+        assert [a["id"] for a in catalog.search("MEDYAN", "Özetler")] == ["mean-median"]
+        assert [a["id"] for a in catalog.search("SIZINTI", "Modelleme")] == ["leakage"]
+        assert catalog.search("şu içerikte olmayan sözcükler") == []
+>       assert len(catalog.search(glossary=True)) == 86
+E       AssertionError: assert 91 == 86
+E        +  where 91 = len([{'id': 'data', 'content_version': 2, 'locale': 'tr', 'title': 'Veri nedir?', ...}, {'id': 'rows-columns', 'content_ve...le': 'Ortalama ve medyan', ...}, {'id': 'sample', 'content_version': 1, 'locale': 'tr', 'title': 'Örneklem', ...}, ...])
+E        +    where [{'id': 'data', 'content_version': 2, 'locale': 'tr', 'title': 'Veri nedir?', ...}, {'id': 'rows-columns', 'content_ve...le': 'Ortalama ve medyan', ...}, {'id': 'sample', 'content_version': 1, 'locale': 'tr', 'title': 'Örneklem', ...}, ...] = search(glossary=True)
+E        +      where search = <veri_ufku.learning.catalog.Catalog object at 0x7fb6c90c2bd0>.search
+
+tests/test_learning.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_classification_gui.py::test_category_invalid_and_canceled_choices_not_success
+FAILED tests/test_document_contracts.py::DocumentContracts::test_current_documents
+FAILED tests/test_learning.py::test_catalog_offline_search_turkish_categories_glossary_and_sources
+3 failed, 562 passed in 203.34s (0:03:23)

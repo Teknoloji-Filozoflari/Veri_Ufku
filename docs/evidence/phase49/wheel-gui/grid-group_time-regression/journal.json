@@ -1,0 +1,145 @@
+[
+  {
+    "id": "result:8e450536-ab82-44df-85dd-8235fcc1e85d",
+    "dataset_version_ids": [
+      "dv:1d3e44d8-1e02-462e-85eb-351e778150e2"
+    ],
+    "seed": 42,
+    "capability_id": "model.regression",
+    "model_choice": {
+      "schema": "ModelChoice/v1",
+      "status": "completed",
+      "invalid_folds": [],
+      "run_id": "run:6608dbcb-af67-43c8-ab09-1077859641ad",
+      "pipeline_id": "ml-pipeline:72e49d63-aa1b-4aa9-800c-4f9521d6445c",
+      "spec": {
+        "structure": "group_time",
+        "method": "auto",
+        "entity_use": "new",
+        "prediction_moment": "Cihaz çalıştırılmadan önce",
+        "horizon_seconds": 0,
+        "availability": {
+          "col:a7cbbb86-6015-4359-b558-71506fa6edc6": {
+            "note": "Çalıştırmadan önce mevcut",
+            "offset_seconds": 0
+          },
+          "col:d4043157-9fff-4eab-b471-c91431663556": {
+            "note": "Çalıştırmadan önce mevcut",
+            "offset_seconds": 0
+          }
+        },
+        "test_fraction": 0.2,
+        "validation_fraction": 0.2,
+        "folds": 3,
+        "seed": 42,
+        "baseline": "auto"
+      },
+      "regression": {
+        "candidates": [
+          "baseline",
+          "decision_tree"
+        ],
+        "explicit_model": "decision_tree",
+        "family_options": {
+          "matrix": "dense",
+          "scaling": "auto",
+          "alpha": 0.1,
+          "l1_ratio": 0.5,
+          "C": 1.0,
+          "trees": 25,
+          "depth": 2,
+          "learning_rate": 0.1,
+          "neighbors": 5,
+          "max_iter": 5000,
+          "kernel": "rbf",
+          "gamma": "scale",
+          "class_balance": "none",
+          "weight_column": "",
+          "weight_kind": "sample_weight",
+          "inner_folds": 3,
+          "objective": "supervised",
+          "device": "cpu"
+        }
+      },
+      "classification": null,
+      "chosen_at": "2026-10-13T17:33:28.163509+00:00",
+      "prior_test_use_ids": [],
+      "interpretation": "Henüz bu projede final test kullanımı kaydedilmedi; proje dışı kullanım bilinmez.",
+      "search_id": "search:ef3a8e98-0ce9-44e0-973a-a4a7918f4cf0",
+      "finished_at": "2026-10-13T17:34:22.778831+00:00"
+    }
+  },
+  {
+    "id": "result:5dcb9887-429c-4c11-a576-02c3876c9642",
+    "dataset_version_ids": [
+      "dv:1d3e44d8-1e02-462e-85eb-351e778150e2"
+    ],
+    "seed": 42,
+    "capability_id": "model.regression",
+    "model_choice": {
+      "schema": "ModelChoice/v1",
+      "status": "completed",
+      "invalid_folds": [],
+      "run_id": "run:a1f75c14-3205-467d-84db-24a5b7c9da4f",
+      "pipeline_id": "ml-pipeline:72e49d63-aa1b-4aa9-800c-4f9521d6445c",
+      "spec": {
+        "structure": "group_time",
+        "method": "auto",
+        "entity_use": "new",
+        "prediction_moment": "Cihaz çalıştırılmadan önce",
+        "horizon_seconds": 0,
+        "availability": {
+          "col:a7cbbb86-6015-4359-b558-71506fa6edc6": {
+            "note": "Çalıştırmadan önce mevcut",
+            "offset_seconds": 0
+          },
+          "col:d4043157-9fff-4eab-b471-c91431663556": {
+            "note": "Çalıştırmadan önce mevcut",
+            "offset_seconds": 0
+          }
+        },
+        "test_fraction": 0.2,
+        "validation_fraction": 0.2,
+        "folds": 3,
+        "seed": 42,
+        "baseline": "auto"
+      },
+      "regression": {
+        "candidates": [
+          "baseline",
+          "decision_tree"
+        ],
+        "alpha": 1.0,
+        "trees": 50,
+        "depth": 8,
+        "unit": "hedef birimi",
+        "family_options": {
+          "matrix": "dense",
+          "scaling": "auto",
+          "alpha": 0.1,
+          "l1_ratio": 0.5,
+          "C": 1.0,
+          "trees": 25,
+          "depth": 4,
+          "learning_rate": 0.1,
+          "neighbors": 5,
+          "max_iter": 5000,
+          "kernel": "rbf",
+          "gamma": "scale",
+          "class_balance": "none",
+          "weight_column": "",
+          "weight_kind": "sample_weight",
+          "inner_folds": 3,
+          "objective": "supervised",
+          "device": "cpu"
+        },
+        "explicit_model": "decision_tree"
+      },
+      "classification": null,
+      "chosen_at": "2026-10-13T17:34:25.683787+00:00",
+      "prior_test_use_ids": [],
+      "interpretation": "Henüz bu projede final test kullanımı kaydedilmedi; proje dışı kullanım bilinmez.",
+      "finished_at": "2026-10-13T17:34:27.617927+00:00"
+    }
+  }
+]

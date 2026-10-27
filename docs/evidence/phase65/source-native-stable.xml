@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="16" time="8.253" timestamp="2026-10-16T00:01:37.376390+03:00" hostname="s-oktay"><testcase classname="tests.test_repro" name="test_lineage_recorded_report_operation_source_and_legacy_gap" time="0.034" /><testcase classname="tests.test_repro" name="test_profile_reference_bundle_exact_and_reopen_hash" time="0.333" /><testcase classname="tests.test_repro" name="test_opt_in_snapshot_reopens_without_original_project" time="0.173" /><testcase classname="tests.test_repro" name="test_corruption_schema_and_environment_fail_closed" time="0.172" /><testcase classname="tests.test_repro" name="test_secret_redaction_and_data_rejection" time="0.229" /><testcase classname="tests.test_repro" name="test_workflow_safe_model_artifact_and_numeric_policy" time="1.641" /><testcase classname="tests.test_repro" name="test_changed_data_does_not_pass_numeric_tolerance" time="0.166" /><testcase classname="tests.test_repro" name="test_multisource_graph_preserves_recorded_relation_uri" time="0.151" /><testcase classname="tests.test_repro" name="test_malicious_bundle_paths_methods_duplicates_and_budget" time="0.221" /><testcase classname="tests.test_repro" name="test_preview_redaction_disables_changed_config_and_legacy_no_replay" time="0.043" /><testcase classname="tests.test_repro" name="test_profile_tolerance_never_loosens_decimal_or_integer" time="0.001" /><testcase classname="tests.test_repro" name="test_data_pattern_and_external_path_redaction" time="0.119" /><testcase classname="tests.test_repro" name="test_workflow_graph_traces_model_and_report_nodes" time="0.341" /><testcase classname="tests.test_repro" name="test_canceled_bundle_never_publishes_and_environment_captures_no_env" time="0.164" /><testcase classname="tests.test_repro" name="test_metadata_worker_and_budget_probe_do_not_load_model_runtime" time="0.176" /><testcase classname="tests.test_repro" name="test_workflow_preview_hash_stable_across_hash_seeds" time="2.548"><failure message="AssertionError: assert 'bbc1518a755f...1deafa4ee1631' == '551247e438c1...338a32ffd1ba9'&#10;  &#10;  - 551247e438c12492cc89669187ee75046e67b8c1e18018c8e5a338a32ffd1ba9&#10;  + bbc1518a755f8b20c1063cb9ecce9c10b845c4f99bde68138f71deafa4ee1631">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-162/test_workflow_preview_hash_sta0')
+
+    def test_workflow_preview_hash_stable_across_hash_seeds(tmp_path):
+        import os
+        import subprocess
+        import sys
+    
+        store, r, _ = prepare(
+            tmp_path, pl.DataFrame({"x": [1.0, 2.0, 3.0, 4.0], "y": [2.0, 4.1, 5.9, 8.0]})
+        )
+        export = tmp_path / "export"
+        export.mkdir()
+        with closing(store):
+            state = publish(
+                store,
+                store.state,
+                run(
+                    store,
+                    recipe(r, True),
+                    tmp_path,
+                    allow_export=True,
+                    output_dir=str(export),
+                ),
+            )
+            ident = state["results"][-1]["id"]
+            expected = preview(store, ident)["preview_hash"]
+            code = 'from contextlib import closing; from veri_ufku.storage.project_store import ProjectStore; from veri_ufku.exports.repro import preview; import sys; s=ProjectStore.open(sys.argv[1],writable=False); print(preview(s,sys.argv[2])["preview_hash"]); s.close()'
+            for seed in ("1", "2", "3"):
+                result = subprocess.run(
+                    [sys.executable, "-c", code, str(store.root), ident],
+                    env={**os.environ, "PYTHONHASHSEED": seed},
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                )
+                assert result.returncode == 0, result.stderr
+&gt;               assert result.stdout.strip() == expected
+E               AssertionError: assert 'bbc1518a755f...1deafa4ee1631' == '551247e438c1...338a32ffd1ba9'
+E                 
+E                 - 551247e438c12492cc89669187ee75046e67b8c1e18018c8e5a338a32ffd1ba9
+E                 + bbc1518a755f8b20c1063cb9ecce9c10b845c4f99bde68138f71deafa4ee1631
+
+tests/test_repro.py:581: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,77 @@
+{
+  "id": "E40-CHECKS-FINAL",
+  "date": "2026-10-11T19:42:41.619682+00:00",
+  "records": [
+    {
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_docs.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: 76 phases, source requirements, evidence, progress and local links\n",
+      "seconds": 0.1251912129991979
+    },
+    {
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_artifacts.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee\n",
+      "seconds": 0.12180575899947144
+    },
+    {
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_learning.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: 244 offline articles; 142 UI bindings; all capability links\n",
+      "seconds": 0.08555889899980684
+    },
+    {
+      "command": [
+        "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+        "scripts/check_usability.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: 244 articles; 460 named fields; 189 finished core English messages\n",
+      "seconds": 0.11736859400116373
+    },
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "output": "All checks passed!\n",
+      "seconds": 0.008538374000636395
+    },
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "output": "308 files already formatted\n",
+      "seconds": 0.00754513100037002
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": "",
+      "seconds": 0.01800165399981779
+    }
+  ]
+}

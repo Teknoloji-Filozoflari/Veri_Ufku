@@ -1,0 +1,77 @@
+{
+  "id": "E41-CHECKS",
+  "date": "2026-10-11T20:19:31.807218+00:00",
+  "records": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/check_docs.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: 76 phases, source requirements, evidence, progress and local links\n",
+      "seconds": 0.12413566400027776
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/check_artifacts.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee\n",
+      "seconds": 0.1196970130004047
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/check_learning.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: 254 offline articles; 144 UI bindings; all capability links\n",
+      "seconds": 0.08487616300044465
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/check_usability.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: 254 articles; 499 named fields; 189 finished core English messages\n",
+      "seconds": 0.12212407200058806
+    },
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "output": "All checks passed!\n",
+      "seconds": 0.0076800369988632156
+    },
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "output": "313 files already formatted\n",
+      "seconds": 0.008087628000794211
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": "",
+      "seconds": 0.01666889700027241
+    }
+  ]
+}

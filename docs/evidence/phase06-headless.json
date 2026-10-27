@@ -1,0 +1,70 @@
+{
+  "environment": "ENV-06",
+  "date": "2026-10-06",
+  "python": "3.13.15",
+  "os": "Linux-7.2.9-1-cachyos-x86_64-with-glibc2.44",
+  "qt": "6.11.2",
+  "polars": "2.0.0",
+  "backend": "offscreen/software",
+  "lock_sha256": "a5628bd92d7676520d13e4a244021ea6b22cd5aad3944eb718c2af624cded9a4",
+  "cpu": "AMD Ryzen 7 8845HS w/ Radeon 780M Graphics",
+  "ram_bytes": 32913379328,
+  "n": 1,
+  "cache": "warm; no cold-cache or minimum-hardware claim",
+  "max_tick_gap_ms": 44.55869500088738,
+  "sampled_peak_rss_bytes": 502722560,
+  "sampled_peak_worker_disk_bytes": 15774,
+  "screenshots": [
+    "phase06-json-1366-light.png",
+    "phase06-json-720-dark.png",
+    "phase06-jsonl-1366-light.png",
+    "phase06-jsonl-720-dark.png",
+    "phase06-xlsx-1366-light.png",
+    "phase06-xlsx-720-dark.png",
+    "phase06-parquet-1366-light.png",
+    "phase06-parquet-720-dark.png"
+  ],
+  "cases": [
+    {
+      "adapter": "json",
+      "fixture_sha256": "a384c6daea5eaf992a7883a890583482f13593478d1e3ac2f289985a4bf6979b",
+      "bytes": 229,
+      "capture_preview_ms": 198.07855900216964,
+      "repreview_ms": 204.48705300077563,
+      "full_import_publish_ms": 368.3273200003896,
+      "rows": 7,
+      "bad": 0
+    },
+    {
+      "adapter": "jsonl",
+      "fixture_sha256": "89c5d95a77205d7c3472a986b31561a7e6d4fee3d27c97bc48e075f60a6576eb",
+      "bytes": 78,
+      "capture_preview_ms": 199.3636119987059,
+      "repreview_ms": 193.9585639993311,
+      "full_import_publish_ms": 412.4302810014342,
+      "rows": 3,
+      "bad": 1
+    },
+    {
+      "adapter": "xlsx",
+      "fixture_sha256": "115037e2553b62c0aededa54e2151ddbca4be6fb72208ea2a2d01fcbc9e66873",
+      "bytes": 2679,
+      "capture_preview_ms": 199.09158299924457,
+      "repreview_ms": 193.4822820003319,
+      "full_import_publish_ms": 343.2931400020607,
+      "rows": 1,
+      "bad": 0
+    },
+    {
+      "adapter": "parquet",
+      "fixture_sha256": "aff0fc4c85cb7f33371b08be0d7741bb264dfcb8fdf02a5bf868aae5eba9f277",
+      "bytes": 830,
+      "capture_preview_ms": 192.43870099671767,
+      "repreview_ms": 183.6127239985217,
+      "full_import_publish_ms": 367.522332999215,
+      "rows": 2,
+      "bad": 0
+    }
+  ],
+  "filesystem": "btrfs"
+}

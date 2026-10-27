@@ -1,0 +1,60 @@
+........................................................................ [  7%]
+........................................................................ [ 15%]
+........................................................................ [ 23%]
+........................................................................ [ 31%]
+........................................................................ [ 39%]
+........................................................................ [ 47%]
+........................................................................ [ 54%]
+........................................................................ [ 62%]
+........................................................................ [ 70%]
+........................................................................ [ 78%]
+........................................................................ [ 86%]
+........................................................................ [ 94%]
+.................................................F...                    [100%]
+=================================== FAILURES ===================================
+_________ test_one_registry_honest_operations_and_missing_dependencies _________
+
+    def test_one_registry_honest_operations_and_missing_dependencies():
+        c = CAPABILITIES["statistics.pearson"]
+        assert c.contract_version == 2
+        assert [r.name for r in c.inputs.roles] == ["x", "y"]
+        assert dict((o.name, o.status) for o in c.operations) == dict(
+            fit="unsupported",
+            predict="unsupported",
+            proba="unsupported",
+            transform="unsupported",
+            interval="unsupported",
+            persist="supported",
+        )
+        assert {p.name for p in c.parameters} >= {"confidence", "alternative", "precision"}
+        for capability in CAPABILITIES.values():
+            assert capability.inputs and capability.parameters and capability.assumptions
+            assert {s.name for s in capability.support_details} >= {
+                "missing",
+                "weights",
+                "group",
+                "time",
+                "sparse",
+            }
+>           assert {s.name for s in capability.operations} == {
+                "fit",
+                "predict",
+                "proba",
+                "transform",
+                "interval",
+                "persist",
+            }
+E           AssertionError: assert {'persist'} == {'fit', 'inte..., 'transform'}
+E             
+E             Extra items in the right set:
+E             'interval'
+E             'predict'
+E             'fit'
+E             'proba'
+E             'transform'
+E             Use -v to get more diff
+
+tests/test_workspace.py:45: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_workspace.py::test_one_registry_honest_operations_and_missing_dependencies
+1 failed, 916 passed in 764.48s (0:12:44)

@@ -1,0 +1,264 @@
+[
+  {
+    "name": "docs",
+    "command": [
+      "python3",
+      "scripts/check_docs.py"
+    ],
+    "started_at": "2026-10-10T13:44:46.301491+00:00",
+    "duration_seconds": 0.107,
+    "exit_code": 0,
+    "environment": "ENV-30-HEADLESS isolated XDG"
+  },
+  {
+    "name": "artifacts",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_artifacts.py"
+    ],
+    "started_at": "2026-10-10T13:44:46.408879+00:00",
+    "duration_seconds": 0.114,
+    "exit_code": 0,
+    "environment": "ENV-30-HEADLESS isolated XDG"
+  },
+  {
+    "name": "learning",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_learning.py"
+    ],
+    "started_at": "2026-10-10T13:44:46.523179+00:00",
+    "duration_seconds": 0.063,
+    "exit_code": 0,
+    "environment": "ENV-30-HEADLESS isolated XDG"
+  },
+  {
+    "name": "usability",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_usability.py"
+    ],
+    "started_at": "2026-10-10T13:44:46.586683+00:00",
+    "duration_seconds": 0.085,
+    "exit_code": 0,
+    "environment": "ENV-30-HEADLESS isolated XDG"
+  },
+  {
+    "name": "ruff",
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "started_at": "2026-10-10T13:44:46.672350+00:00",
+    "duration_seconds": 0.01,
+    "exit_code": 0,
+    "environment": "ENV-30-HEADLESS isolated XDG"
+  },
+  {
+    "name": "format",
+    "command": [
+      ".venv/bin/ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts"
+    ],
+    "started_at": "2026-10-10T13:44:46.682579+00:00",
+    "duration_seconds": 0.008,
+    "exit_code": 0,
+    "environment": "ENV-30-HEADLESS isolated XDG"
+  },
+  {
+    "name": "unittest",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "started_at": "2026-10-10T13:44:46.690649+00:00",
+    "duration_seconds": 7.833,
+    "exit_code": 0,
+    "environment": "ENV-30-HEADLESS isolated XDG"
+  },
+  {
+    "name": "system-unittest",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "started_at": "2026-10-10T13:44:54.523549+00:00",
+    "duration_seconds": 6.038,
+    "exit_code": 1,
+    "environment": "ENV-30-HEADLESS isolated XDG"
+  },
+  {
+    "name": "entry-smoke",
+    "command": [
+      ".venv/bin/veri-ufku",
+      "--smoke-test"
+    ],
+    "started_at": "2026-10-10T13:45:00.562095+00:00",
+    "duration_seconds": 1.446,
+    "exit_code": 0,
+    "environment": "ENV-30-HEADLESS isolated XDG"
+  },
+  {
+    "name": "wheel-gui",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase30.py",
+      "--output",
+      "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase30/wheel-gui",
+      "--package-root",
+      "/tmp/veri-ufku-phase30-installed"
+    ],
+    "started_at": "2026-10-10T13:47:53.725864+00:00",
+    "duration_seconds": 19.14,
+    "exit_code": 0,
+    "cwd": "isolated temporary directory",
+    "package_root": "/tmp/veri-ufku-phase30-installed"
+  },
+  {
+    "name": "wheel-large",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase30_large.py",
+      "--output",
+      "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase30/wheel-large.json",
+      "--package-root",
+      "/tmp/veri-ufku-phase30-installed"
+    ],
+    "started_at": "2026-10-10T13:48:12.866306+00:00",
+    "duration_seconds": 0.498,
+    "exit_code": 0,
+    "cwd": "isolated temporary directory",
+    "package_root": "/tmp/veri-ufku-phase30-installed"
+  },
+  {
+    "name": "wheel-import",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "/home/s-oktay/Belgeler/Veri_Ufku/scripts/smoke_import_wheel.py",
+      "--package-root",
+      "/tmp/veri-ufku-phase30-installed"
+    ],
+    "started_at": "2026-10-10T13:48:13.364341+00:00",
+    "duration_seconds": 3.083,
+    "exit_code": 0,
+    "cwd": "isolated temporary directory",
+    "package_root": "/tmp/veri-ufku-phase30-installed"
+  },
+  {
+    "name": "wheel-entry",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "-m",
+      "veri_ufku.app",
+      "--smoke-test"
+    ],
+    "started_at": "2026-10-10T13:48:16.447660+00:00",
+    "duration_seconds": 1.426,
+    "exit_code": 0,
+    "cwd": "isolated temporary directory",
+    "package_root": "/tmp/veri-ufku-phase30-installed"
+  },
+  {
+    "name": "wheel-gui-final",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase30.py",
+      "--output",
+      "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase30/wheel-gui-final",
+      "--package-root",
+      "/tmp/veri-ufku-phase30-final-installed"
+    ],
+    "started_at": "2026-10-10T13:50:34.317096+00:00",
+    "duration_seconds": 18.836,
+    "exit_code": 0,
+    "package_root": "/tmp/veri-ufku-phase30-final-installed"
+  },
+  {
+    "name": "wheel-large-final",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase30_large.py",
+      "--output",
+      "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase30/wheel-large-final.json",
+      "--package-root",
+      "/tmp/veri-ufku-phase30-final-installed"
+    ],
+    "started_at": "2026-10-10T13:50:53.153288+00:00",
+    "duration_seconds": 0.553,
+    "exit_code": 0,
+    "package_root": "/tmp/veri-ufku-phase30-final-installed"
+  },
+  {
+    "name": "wheel-entry-final",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "-m",
+      "veri_ufku.app",
+      "--smoke-test"
+    ],
+    "started_at": "2026-10-10T13:50:53.707013+00:00",
+    "duration_seconds": 1.52,
+    "exit_code": 0,
+    "package_root": "/tmp/veri-ufku-phase30-final-installed"
+  },
+  {
+    "name": "wheel-gui-verified",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase30.py",
+      "--output",
+      "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase30/wheel-gui-verified",
+      "--package-root",
+      "/tmp/veri-ufku-phase30-release-verified"
+    ],
+    "started_at": "2026-10-10T13:54:00.599814+00:00",
+    "duration_seconds": 18.093,
+    "exit_code": 0,
+    "package_root": "/tmp/veri-ufku-phase30-release-verified"
+  },
+  {
+    "name": "wheel-large-verified",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase30_large.py",
+      "--output",
+      "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase30/wheel-large-verified.json",
+      "--package-root",
+      "/tmp/veri-ufku-phase30-release-verified"
+    ],
+    "started_at": "2026-10-10T13:54:18.693591+00:00",
+    "duration_seconds": 0.508,
+    "exit_code": 0,
+    "package_root": "/tmp/veri-ufku-phase30-release-verified"
+  },
+  {
+    "name": "wheel-entry-verified",
+    "command": [
+      "/home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python",
+      "-m",
+      "veri_ufku.app",
+      "--smoke-test"
+    ],
+    "started_at": "2026-10-10T13:54:19.202193+00:00",
+    "duration_seconds": 1.475,
+    "exit_code": 0,
+    "package_root": "/tmp/veri-ufku-phase30-release-verified"
+  }
+]

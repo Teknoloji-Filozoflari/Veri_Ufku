@@ -1,0 +1,1452 @@
+{
+  "artifact_uris": {
+    "sources/55762220-f449-46b7-bb22-b9025176d014.parquet": {
+      "sha256": "89f7db7643f8515bb22818596d7b23f9302779ce2f88ca845926b41f3ee0d02b",
+      "size": 4499
+    },
+    "sources/a79e6d36-da91-410f-91ba-5c9343e33206.parquet": {
+      "sha256": "44ffbe9da9582ebc381bb67ca6ef2194c02cb568e41ed30ae665b1a26f024cc3",
+      "size": 1256
+    },
+    "sources/f177494a-f416-4a22-b8c8-8606c39b828b.parquet": {
+      "sha256": "b5c8710638af6603cf505d6f98b5e7354d0a6c24ea0d61b6c9b9b5836df7591d",
+      "size": 4867
+    }
+  },
+  "compat_id": "519ee4648ba044a08fb2921b6e90120d1dd074ae27f8a631408a7217852f58d6",
+  "created_at": "2026-10-15T18:59:48.223476+00:00",
+  "curves": [],
+  "data_access_at": "2026-10-15T18:59:48.223476+00:00",
+  "dataset_version": "dv:c19f6191-9734-482d-9354-c90048efd7fb",
+  "dry_run": false,
+  "elapsed_seconds": 0.1795546960001957,
+  "environment": {
+    "code": "683f9fc596a8ada80198559758aee73978792e6e184db0afc228a1b355c65fb7",
+    "environment": {
+      "machine": "x86_64",
+      "numpy": "2.5.3",
+      "polars": "2.0.0",
+      "python": "3.13.15",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.0",
+      "statsmodels": "0.15.0"
+    }
+  },
+  "epoch": 0,
+  "estimated_work": 42,
+  "experiment_capture": {
+    "captured_at": "2026-10-15T18:59:46.399637+00:00",
+    "code_files": {
+      "analytics/__init__.py": "9a40480d4948c6569039dcba9b5eb8500217898bd1082cbf7dc116ea9eb697d1",
+      "analytics/cache.py": "d9bc4a880fbdee9cfec9bcdb2be956bd892472776a162db5f44de7ea800cb810",
+      "analytics/contracts.py": "b48013d36e9aaa985421706a519052cd92877fc3f3f39a0a5cf121127b6a8254",
+      "analytics/dataset.py": "577491b35241d4564f0aa99b801b4676bd3eb7f31e0ff81534178e4f2603ec28",
+      "analytics/inspection.py": "7d32d36f9f4ca19dceb4ed92d70e58724bdb92394ac62f7b2b7195665ad83e46",
+      "analytics/nlp.py": "f44349a7bda3954ddee023a207d0a15c7810e89e653c9052eea6ca787fb31805",
+      "analytics/nlp_contracts.py": "ecd8ebb0fa86054f7717318d553c3125b7fe56bccd4c1252d5eacc07286595ea",
+      "analytics/nlp_models.py": "3bde557209340c1e4c3b03084a09c2a89673de6aedd594d990a3a79c0b45968c",
+      "analytics/quality.py": "26614e90d24781175ee63e890ea820abdc3ba71a338c0a8eac68973ab4f91002",
+      "analytics/text.py": "79162336f36367f36bfb03d403dd1ed2fd13d525544c52065408aefd8aaf3b4d",
+      "analytics/text_contracts.py": "eaa4d0d7e9c82c9eed47276dd770fa6894955496b8c4ffa211ca990b8dbe817c",
+      "analytics/worker.py": "31c63ee72335dade3e877599e1354ac043e3618f550867dc25927460aa026a59",
+      "domain/__init__.py": "2dbb12e6e6559fc7cfeaa0bd919e0daed1a2b0087606b6a80365376ce3600b26",
+      "domain/capabilities.py": "410d0eef7f424f2c9d43140328be4fd574760bfea3ce40e2adaa361338447378",
+      "domain/contracts.py": "f876547de14f69c2c21d69a18e4af28ff1d2bb1e86a91d3b517ae7715025503b",
+      "domain/json.py": "460d139d25b367c54bc7535a099ff4de6d8d71af90a4f90914f864e71a18236f",
+      "jobs/__init__.py": "3e422efd1e5f67820bedb952921837211d5a5c953360bd7d6d1f7e69789cbf7d",
+      "jobs/limits.py": "4bbb51c061c186506137e3d46668d6ba16db56ad65f92b34a16f2ec5c4c007e2",
+      "jobs/manager.py": "3e17e08325e636527b665c1d1ee4756e524f813cc71b907ef31e9208f4624a38",
+      "jobs/supervision.py": "0cae684cbb07a6f3c8c63b2b8a66c2e3a0f778e5eeb903bc3e851bb6abab7f00",
+      "jobs/workers.py": "2c9c7a58f328ca607b257046b9c07de0c2bd095b7ea282e1b8725d9c81423505",
+      "modeling/__init__.py": "13027d8be106084ca581b11ced17bc5f8f0ddaeb927c7b27f55b2de67d62bb83",
+      "modeling/audio.py": "d125e1d93b972b78ee10ff65803183954168fc740ef10d85d02ff73afe482157",
+      "modeling/audio_contracts.py": "1b89af3b1552ee7e662140129bf8c826f3ffe3995417c84a703cb4269cf220c1",
+      "modeling/audio_features.py": "5a8a49770d396a6a1f1e2963dbbb3c908d04c5b1cdb4f78e313991e129987765",
+      "modeling/audio_speech.py": "d4099523006300c4d8fbab532fa0b9b3a567cb8e8269ab927cebb81a30acdf76",
+      "modeling/baseline.py": "d6a047e1a621524897fc5b2aa7f867a68da3d56aa33957072d4d6f3b47e95625",
+      "modeling/classification.py": "8325bd7adab2baf3925a2028acf69850cbe71677120848972f3cea9e3b3c3ca8",
+      "modeling/code_kernel.py": "1e3f99618d10bb91da46491b9ee77662321cdaceed6555a8dbe20962e39291b0",
+      "modeling/code_workspace.py": "ea2f11789e0d1c80d88550bbb99c26e39682d20552fc58a9b91cae5007c31151",
+      "modeling/contracts.py": "0a013b594dc6710b72001268fe0923fb979fac36ad0602b7c9a640b9248a3f79",
+      "modeling/explanation.py": "a8fd47fed21b142479c966060600aa00595b768e58e1195000b59aa27494dfb7",
+      "modeling/exploration.py": "987bf5fc7419cc0562b8df7cd2e47cd6152d5e6521a2f6e1e6c5c67212820200",
+      "modeling/families.py": "ed4cb3d88c87d673dacc3496d0943995c7ea942401bf8225566e19b3e0268986",
+      "modeling/family_contracts.py": "93528657acdaf3e89ba974923402cfed2e72a1bf610b790d25ee6a3bc4406475",
+      "modeling/graph_contracts.py": "8e3abcfb3eda7ef23b706e72b96450cc84269bd6e9778af4aad19892c536613c",
+      "modeling/graphs.py": "41f6e5de8e39e46bcc1c2af008e32c238b1ba9c025b49b5a6fb9a33c132ddcb4",
+      "modeling/history.py": "89092e5f34ae94b1cb72a21b9b1a6a6f558a57c6f38ed1026146f228cf77db64",
+      "modeling/lifecycle.py": "1c00836f8d9de2ef61b98b600d02b908459234dd3dbb4a31cde226fe81c07f54",
+      "modeling/lifecycle_worker.py": "58cc961b8f4cbc8f651e695ebea6b52c3dbc6b49394700d847627ee22e9b6f84",
+      "modeling/neural.py": "eb7b8fc39fd85fcf73799b3f645bc334a7820ae1a5ca3eb2993a0ff545f5fbc1",
+      "modeling/neural_contracts.py": "72295b0bdb3610743bf6800f391468d0c26dec3b64080fd40ec262044d27921e",
+      "modeling/optional_families.py": "bde8df0efe706a77c3e78c2f6ab44cf35a01ff2ed74b7f80bfdad585009281bd",
+      "modeling/pattern_basket.py": "d6aa38ccd500d04483bbc98445ec503ce65e6c2060ee3ecec9c45611175fa4f7",
+      "modeling/pattern_contracts.py": "b8da3a28b57991b33fa69feee8183700263e9cbe9978bdf5ef432671cd2c0fae",
+      "modeling/pattern_events.py": "d1221869a904132b6756b990ff2367a58d454a325969c4b3c251a73fcc5ea7ea",
+      "modeling/patterns.py": "54232c5beb344f02e067f8f335acfaa1f8a1d4eacb141f3479ac3e2331bbfc97",
+      "modeling/plan.py": "d8a1f6043c9a96da399b74da095f3cc47c6972477984f9b3e085e48376fc6114",
+      "modeling/preparation.py": "bbb6d86e399f61d2d86c85a5b9205680ee4dbc780bfc1854ef4783ee4a82eee1",
+      "modeling/recommendation.py": "bac4167977a62565f2411fe6ec0a6fb08c979cc184e31046db5e1bb8da0e5b85",
+      "modeling/recommendation_contracts.py": "9afadb2ec2ab17a228eeb72d376ead3f28514d87162531974ecc9b9dfb86c6ea",
+      "modeling/recommendation_math.py": "ec585143ec19ec8933b99e74d098cacb51febc3e85265d6e0cfc750862c11a21",
+      "modeling/regression.py": "6fd65943f87ec2fee438e20f16d400a1eafe6cf6ef24e64a5e54eac132da51e8",
+      "modeling/search.py": "d8b90bb06060477bd8f4d2df0d6c6ece0825c72d9c243ee65cfd5af2e1009fef",
+      "modeling/search_contracts.py": "a82b856b338ed33e25a8d8f9fe340a60008cdd88cfca893fe04c4aaefe27d10e",
+      "modeling/signal_contracts.py": "1edcc6cbdfd13b8af74bfbebaa4c321fc1f4e1eb1ccafc109662e6d3460c66f7",
+      "modeling/signals.py": "04da330a1bd55d8c83fb8c3ca947d27f9b2c4ee5485a4ca40d884bd7f752ce37",
+      "modeling/special_runs.py": "c1b5360c73fc65179c105b8749330746a4acb896293d6726e64e318251503a83",
+      "modeling/special_targets.py": "b0abfbfa39c94f5743537fb2bdaad158b75d015f2bb7c02b4d0f0a013099dd97",
+      "modeling/stream_contracts.py": "41432c3fc518e16a19c55235a5639bc6de61d88d662868e7ee83aa0687870a3d",
+      "modeling/streams.py": "e6a196e8e79025e8beb0dc49162b846579880ef2695689ceed2c48b9fcdb0702",
+      "modeling/temporal.py": "a7f74140fa4a201e559cf3de6ae2a3c66c37c89f70e5373e9433c9289ec8415d",
+      "modeling/temporal_contracts.py": "a7f949827438b4136a0576acc0455feed01400ace0639379f8068d70fc1c6291",
+      "modeling/time_series.py": "3ce5d126a56d8ea5fa5cc277e34a9c9b9246b88dc5472fa030699ff511d1d14c",
+      "modeling/time_series_contracts.py": "7acf1fc8415fab05a533a16691d044fdf4edc539b6a4e047fd5a8bcb7d6449ab",
+      "modeling/uncertainty.py": "18459743f79438daf7236e14e696dd6f9cc7a71388251464f8b1159c38944292",
+      "modeling/unsupervised.py": "f622291e9b889aa7dba7928e22dd716436042edc58349010bfeffe4d9f3fa693",
+      "modeling/unsupervised_contracts.py": "8f695e61dfb7d2e9f04cf075e049fc2ca6b0d85f8f681d13c8c26483fd6c55ea",
+      "modeling/validation.py": "926d32f935b8bafa2154ca6522c2a78462fcec7d12f47c489349542a8d2e8245",
+      "modeling/vision.py": "5fa20f0eb90dab4c85de7e34a49bfb3a9c8369c59c22786645e50010d21f2cf1",
+      "modeling/vision_contracts.py": "09d103e2a0302b461b52109569bf6f5c57e0484806488f9fec7e92d19ce965b1",
+      "modeling/vision_metrics.py": "a9435b6d44d89659a644e15a307e195d3e86ca8e1916349f4cac3b8f4e771bc4",
+      "modeling/worker.py": "7668c26547396f289ea9addcdea95903395f6c0693c76040dbd6c5fad1d7e0f1",
+      "operations/__init__.py": "3057dbc6d9b812bf9b2aad778db59346f32918c18d3855963ded8c84538a2d89",
+      "operations/cleaning.py": "952547f346de6778896e29f7033ed71c977168a11fe99880a6ba0767f6765b17",
+      "operations/cleaning_contracts.py": "2a6e1a9234fe3b62e28af1ff518eb7cb385d34af47eec8b5d9601c7581eb0dc8",
+      "operations/contracts.py": "9147685763df3e70a23a7ac202cbb61301ee2a86a655315977948896ce504851",
+      "operations/data_contracts.py": "abd9a1c68cb13ac27f9c9edc0e91e4d47df018760f6b5ad2c769b9cfb3ddce23",
+      "operations/data_quality.py": "d5475654431190c5a2b0f63490a5c77d017e4fdc6650b3ee8443c42fa0cb8d11",
+      "operations/engine.py": "adedd572483e085070267b48c3a36414d438276429f90ed9de48c482c3bbc233",
+      "operations/formula.py": "73aa71d20562e78d06055e194a41480d86211a5f33a8c915c661af7b7dfb4e5a",
+      "operations/monitoring.py": "0f92c902fb431475d850c331e44dfcc8fe97f3b0c44a51c2e6917cdf68514bf4",
+      "operations/recipe_worker.py": "3d496a1724c200816ca4a183c4a9513d800eedc393cc88d35742d7c3d8b20e53",
+      "operations/recipes.py": "f890531237267f41521ddeea299b5f4b03e023025105b7d39cc74086616a4dd8",
+      "operations/relational.py": "d1c10afd56fbfbea134435b73f589e39a10173680b8e12985f7605436fc52135",
+      "operations/relational_contracts.py": "eb0cef0160b7a0c92c601a407fceec423699032bc8d7fe4b3bba9196c29473da",
+      "operations/types.py": "0fe52eaad36ed00788508b4e28ed0c9a34df55b7ee41e6503127dd4d87bccd87",
+      "operations/worker.py": "f6fef54a9a1374728902e546eac733e33b243eee6ce115c29e0a99062b402435",
+      "operations/workflow.py": "9bf82f5533e4690806f8518032303f80018121c455656bfcf090e06048a9c61c",
+      "operations/workflow_cli.py": "47ad3ee0dcee4cc5adf984d00a6393eb4896e3b88e97d64aa226dddba01c2e7d",
+      "operations/workflow_contracts.py": "9b39ba4b6aed914ee689e3df42588a2cf5613bc463c3f869629eaf61858db642",
+      "operations/workflow_service.py": "f64433af7adf3cc4e6aebac623b1c516e3577763f116c60a1cd9dee9fd55a012",
+      "storage/experiment_store.py": "f09beaea61171aa8c15e582676ff1e400e36e8d436487bbd8b9d65a22eede9a7",
+      "storage/validation_store.py": "15e4a941263a9018507689559829a009140966815888aa38a7271cb84646aa45"
+    },
+    "code_hash": "54b0b732e38900173e738cc68c499ebadf3ac70a28de25f203e0790541f7d9d8",
+    "config_hash": "afb19947a9de14b4e3cfe3d8c0d4096198d2925ea00d7104125373ce628a8092",
+    "config_scope": "validation/model options + immutable PipelineId preprocessing reference",
+    "data_access_time": "captured before scheduling; run.data_access_at records first immutable snapshot read boundary",
+    "environment": {
+      "machine": "x86_64",
+      "numpy": "2.5.3",
+      "polars": "2.0.0",
+      "python": "3.13.15",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.0",
+      "skops": "0.16.0",
+      "system": "Linux",
+      "veri-ufku": "0.1.0"
+    },
+    "environment_hash": "a968f3834713fe5c140f15dca79af105e865b3503a3b984e42b567eaa0504e92",
+    "schema": "RunCapture/v1"
+  },
+  "export_receipts": [
+    {
+      "cache_key": "42f6ecd39078e24d8447edf0895d7bb2f3b4f21858ac3569111cc8459993725c",
+      "case": "default",
+      "fingerprint": {
+        "sha256": "44ffbe9da9582ebc381bb67ca6ef2194c02cb568e41ed30ae665b1a26f024cc3",
+        "size": 1256
+      },
+      "node": "export",
+      "owner_token": "c19cc41f-df5b-4536-876e-455d08c314f6",
+      "path": "/tmp/pytest-of-s-oktay/pytest-120/test_gui_full_dag_export_cache0/exports/c19cc41f-df5b-4536-876e-455d08c314f6-default-export.parquet",
+      "status": "already_published"
+    }
+  ],
+  "metrics": {},
+  "mode": "workflow",
+  "model_weights": null,
+  "nodes": [
+    {
+      "attempts": 0,
+      "cache_invalidated": false,
+      "cache_key": "b9d970e7bb39516fb76550a978e11d06f69f2698bae11e779162673fe3c71b80",
+      "case": "default",
+      "kind": "source",
+      "node": "source",
+      "operation_spec": {
+        "column_ids": [],
+        "destination": "copy",
+        "id": "op:f5e50e27-db56-4ab7-81fa-116afe41e926",
+        "input_version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb",
+        "input_version_ids": [],
+        "kind": "workflow_source",
+        "learned_scope": "none",
+        "method_version": 1,
+        "output_schema": [
+          {
+            "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+            "name": "x",
+            "original_name": "x",
+            "type": "Float64"
+          },
+          {
+            "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+            "name": "y",
+            "original_name": "y",
+            "type": "Float64"
+          }
+        ],
+        "parameters": {
+          "version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+        },
+        "schema_version": 1
+      },
+      "provenance": {
+        "capability_id": "workflow.source",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-15T18:59:48.228661+00:00",
+        "dataset_versions": [
+          "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+        ],
+        "environment": [
+          [
+            "workflow_signature",
+            "bffe57660a21af18a11c83047f104c99fe38ac62720b8e560c963b6f94311b34"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "56f3a35b85a33821c6c8223628a3247f4239b689edbfeb913b39935f4ada19c1",
+        "provenance_id": "provenance:b9d970e7bb39516fb76550a978e11d06f69f2698bae11e779162673fe3c71b80",
+        "row_lineage_ref": "OperationSpec:op:f5e50e27-db56-4ab7-81fa-116afe41e926",
+        "scope": "run scoped node output; verified cache",
+        "seed": 64,
+        "seed_reason": "deterministic fixture; no sampling",
+        "source_snapshot_ids": [
+          "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951"
+        ]
+      },
+      "root_versions": [
+        "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+      ],
+      "status": "cached",
+      "value": {
+        "operation_spec": {
+          "column_ids": [],
+          "destination": "copy",
+          "id": "op:f5e50e27-db56-4ab7-81fa-116afe41e926",
+          "input_version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb",
+          "input_version_ids": [],
+          "kind": "workflow_source",
+          "learned_scope": "none",
+          "method_version": 1,
+          "output_schema": [
+            {
+              "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+              "name": "x",
+              "original_name": "x",
+              "type": "Float64"
+            },
+            {
+              "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+              "name": "y",
+              "original_name": "y",
+              "type": "Float64"
+            }
+          ],
+          "parameters": {
+            "version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+          },
+          "schema_version": 1
+        },
+        "report": {
+          "row_count": 6
+        },
+        "request": {
+          "columns": [
+            {
+              "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+              "name": "x",
+              "original_name": "x",
+              "type": "Float64"
+            },
+            {
+              "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+              "name": "y",
+              "original_name": "y",
+              "type": "Float64"
+            }
+          ],
+          "config_revision": 0,
+          "fingerprint": {
+            "sha256": "0897d00cef8d0531f1018300c20ebe512d7de06742672a7fc41c3ddab16a73ff",
+            "size": 4473
+          },
+          "path": "snapshots/21231870-9018-42a5-b35e-b2d1469dfbeb.parquet",
+          "row_count": 6,
+          "semantic_metadata": {},
+          "snapshot_uri": "snapshots/21231870-9018-42a5-b35e-b2d1469dfbeb.parquet",
+          "source_snapshot_id": "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951",
+          "version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+        }
+      },
+      "verified_at": "2026-10-15T18:59:48.228661+00:00"
+    },
+    {
+      "attempts": 0,
+      "cache_invalidated": false,
+      "cache_key": "9134e80a3f37f13291cca231366dc8e092748f77a9a3bc16cd3b7b4dbc857fd2",
+      "case": "default",
+      "kind": "transform",
+      "node": "rename",
+      "operation_spec": {
+        "column_ids": [
+          "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92"
+        ],
+        "destination": "copy",
+        "id": "op:7bb3820b-3b45-4de1-81f4-f0967bb59e80",
+        "input_version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb",
+        "input_version_ids": [],
+        "kind": "rename",
+        "learned_scope": "none",
+        "method_version": 1,
+        "output_schema": [
+          {
+            "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+            "name": "renamed",
+            "original_name": "x",
+            "type": "Float64"
+          },
+          {
+            "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+            "name": "y",
+            "original_name": "y",
+            "type": "Float64"
+          }
+        ],
+        "parameters": {
+          "name": "renamed"
+        },
+        "schema_version": 1
+      },
+      "provenance": {
+        "capability_id": "workflow.transform",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-15T18:59:48.229142+00:00",
+        "dataset_versions": [
+          "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+        ],
+        "environment": [
+          [
+            "workflow_signature",
+            "bffe57660a21af18a11c83047f104c99fe38ac62720b8e560c963b6f94311b34"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "cfbde987d4464a115ee6b25d56d692bb544fab50bb67a2907b9750193ca051e6",
+        "provenance_id": "provenance:9134e80a3f37f13291cca231366dc8e092748f77a9a3bc16cd3b7b4dbc857fd2",
+        "row_lineage_ref": "OperationSpec:op:7bb3820b-3b45-4de1-81f4-f0967bb59e80",
+        "scope": "run scoped node output; verified cache",
+        "seed": 64,
+        "seed_reason": "deterministic fixture; no sampling",
+        "source_snapshot_ids": [
+          "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951"
+        ]
+      },
+      "root_versions": [
+        "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+      ],
+      "status": "cached",
+      "value": {
+        "operation_spec": {
+          "column_ids": [
+            "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92"
+          ],
+          "destination": "copy",
+          "id": "op:7bb3820b-3b45-4de1-81f4-f0967bb59e80",
+          "input_version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb",
+          "input_version_ids": [],
+          "kind": "rename",
+          "learned_scope": "none",
+          "method_version": 1,
+          "output_schema": [
+            {
+              "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+              "name": "renamed",
+              "original_name": "x",
+              "type": "Float64"
+            },
+            {
+              "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+              "name": "y",
+              "original_name": "y",
+              "type": "Float64"
+            }
+          ],
+          "parameters": {
+            "name": "renamed"
+          },
+          "schema_version": 1
+        },
+        "report": {
+          "impact": {
+            "added_columns": 0,
+            "added_rows": 0,
+            "after_columns": 2,
+            "after_rows": 6,
+            "before_columns": 2,
+            "before_rows": 6,
+            "changed_cells": 0,
+            "changed_columns": 1,
+            "changed_rows": 0,
+            "input_populations": [
+              {
+                "rows": 6,
+                "side": "primary",
+                "version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+              }
+            ],
+            "new_nulls": 0,
+            "outlier_candidates": 0,
+            "parse_errors": 0,
+            "population_n": 6,
+            "removed_columns": 0,
+            "removed_rows": 0,
+            "scope": "full",
+            "table_scope": "first200_display_only",
+            "total_input_occurrences": 6,
+            "used_n": 6
+          },
+          "lineage": {
+            "input_version": "dv:c19f6191-9734-482d-9354-c90048efd7fb",
+            "input_versions": [
+              "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+            ],
+            "membership": "output RowId projection",
+            "policy": "preserve RowId/SourceRecordId/ColumnId; change display name",
+            "row_contract": null
+          },
+          "provenance": {
+            "capability_id": "operation.rename",
+            "column_lineage_ref": "op:7bb3820b-3b45-4de1-81f4-f0967bb59e80",
+            "config_revision": 0,
+            "created_at": "2026-10-15T18:59:39.742837+00:00",
+            "dataset_versions": [
+              "dv:c19f6191-9734-482d-9354-c90048efd7fb",
+              "dv:c8a107e2-7e39-46bb-8411-ac193e144175"
+            ],
+            "environment": [
+              [
+                "polars",
+                "2.0.0"
+              ]
+            ],
+            "exclusions": [],
+            "filters": [],
+            "learning_content_version": "10",
+            "method_version": 1,
+            "parameters_hash": "cfbde987d4464a115ee6b25d56d692bb544fab50bb67a2907b9750193ca051e6",
+            "provenance_id": "prov:b5efef34-803c-4873-aca8-acfd439acca3",
+            "row_lineage_ref": "identity_projection:dv:c19f6191-9734-482d-9354-c90048efd7fb",
+            "scope": "full",
+            "seed": null,
+            "seed_reason": "Deterministik işlem; örneklem hesabı yok",
+            "source_snapshot_ids": [
+              "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951"
+            ]
+          }
+        },
+        "request": {
+          "columns": [
+            {
+              "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+              "name": "renamed",
+              "original_name": "x",
+              "type": "Float64"
+            },
+            {
+              "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+              "name": "y",
+              "original_name": "y",
+              "type": "Float64"
+            }
+          ],
+          "config_revision": 0,
+          "fingerprint": {
+            "sha256": "89f7db7643f8515bb22818596d7b23f9302779ce2f88ca845926b41f3ee0d02b",
+            "size": 4499
+          },
+          "path": "sources/55762220-f449-46b7-bb22-b9025176d014.parquet",
+          "row_count": 6,
+          "semantic_metadata": {},
+          "snapshot_uri": "snapshots/21231870-9018-42a5-b35e-b2d1469dfbeb.parquet",
+          "source_snapshot_id": "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951",
+          "version_id": "dv:c8a107e2-7e39-46bb-8411-ac193e144175"
+        }
+      },
+      "verified_at": "2026-10-15T18:59:48.229142+00:00"
+    },
+    {
+      "attempts": 0,
+      "cache_invalidated": false,
+      "cache_key": "f5c5adff8e6edcc1d9f675ef8b632eeaeae20d497563d7af1af4e0573766f4b9",
+      "case": "default",
+      "kind": "analysis",
+      "node": "summary",
+      "operation_spec": {
+        "column_ids": [],
+        "destination": "copy",
+        "id": "op:467d4ed2-c664-46ca-9ea9-fdf4ac2a3b25",
+        "input_version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb",
+        "input_version_ids": [],
+        "kind": "workflow_analysis",
+        "learned_scope": "none",
+        "method_version": 1,
+        "output_schema": [],
+        "parameters": {
+          "column": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+          "ddof": 1
+        },
+        "schema_version": 1
+      },
+      "provenance": {
+        "capability_id": "workflow.analysis",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-15T18:59:48.229498+00:00",
+        "dataset_versions": [
+          "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+        ],
+        "environment": [
+          [
+            "workflow_signature",
+            "bffe57660a21af18a11c83047f104c99fe38ac62720b8e560c963b6f94311b34"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "234d96e01c80249cbfc345847ce772a715aa42d95eaad211f2aeafd08c95d462",
+        "provenance_id": "provenance:f5c5adff8e6edcc1d9f675ef8b632eeaeae20d497563d7af1af4e0573766f4b9",
+        "row_lineage_ref": "OperationSpec:op:467d4ed2-c664-46ca-9ea9-fdf4ac2a3b25",
+        "scope": "run scoped node output; verified cache",
+        "seed": 64,
+        "seed_reason": "deterministic fixture; no sampling",
+        "source_snapshot_ids": [
+          "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951"
+        ]
+      },
+      "root_versions": [
+        "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+      ],
+      "status": "cached",
+      "value": {
+        "operation_spec": {
+          "column_ids": [],
+          "destination": "copy",
+          "id": "op:467d4ed2-c664-46ca-9ea9-fdf4ac2a3b25",
+          "input_version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb",
+          "input_version_ids": [],
+          "kind": "workflow_analysis",
+          "learned_scope": "none",
+          "method_version": 1,
+          "output_schema": [],
+          "parameters": {
+            "column": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+            "ddof": 1
+          },
+          "schema_version": 1
+        },
+        "report": {
+          "counts": {
+            "empty_string": 0,
+            "nan": 0,
+            "negative_infinity": 0,
+            "null": 0,
+            "positive_infinity": 0,
+            "valid": 6
+          },
+          "numeric": {
+            "arithmetic": "Decimal precision80; sqrt rounded half-even",
+            "ddof": 1,
+            "exclusions": "null, NaN, +infinity, -infinity",
+            "finite_n": 6,
+            "maximum": "6",
+            "mean": "3.5",
+            "median": "3.5",
+            "minimum": "1",
+            "quantile_method": "linear h=(n-1)*q",
+            "quantiles": {
+              "0.05": "1.25",
+              "0.25": "2.25",
+              "0.5": "3.5",
+              "0.75": "4.75",
+              "0.95": "5.75"
+            },
+            "std": "1.8708286933869706927918743661582746508780099038893634731518727336600175781534695",
+            "suppressed": false
+          },
+          "scope": "full",
+          "used_n": 6
+        }
+      },
+      "verified_at": "2026-10-15T18:59:48.229498+00:00"
+    },
+    {
+      "attempts": 0,
+      "cache_invalidated": false,
+      "cache_key": "97fc2624ed41cac7ffd28336a198bcf988a70981aecc944ad6c4a7f474533831",
+      "case": "default",
+      "kind": "quality",
+      "node": "quality",
+      "operation_spec": {
+        "column_ids": [],
+        "destination": "copy",
+        "id": "op:c364bddf-76d0-4cf5-9845-6da333c36eec",
+        "input_version_id": "dv:c8a107e2-7e39-46bb-8411-ac193e144175",
+        "input_version_ids": [],
+        "kind": "workflow_quality",
+        "learned_scope": "none",
+        "method_version": 1,
+        "output_schema": [
+          {
+            "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+            "name": "renamed",
+            "original_name": "x",
+            "type": "Float64"
+          },
+          {
+            "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+            "name": "y",
+            "original_name": "y",
+            "type": "Float64"
+          }
+        ],
+        "parameters": {
+          "column": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+          "fail_on_null": true
+        },
+        "schema_version": 1
+      },
+      "provenance": {
+        "capability_id": "workflow.quality",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-15T18:59:48.229840+00:00",
+        "dataset_versions": [
+          "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+        ],
+        "environment": [
+          [
+            "workflow_signature",
+            "bffe57660a21af18a11c83047f104c99fe38ac62720b8e560c963b6f94311b34"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "8e153b4ab26667fdeb7a2b7f8021dd454037d9e38a77f34bb4b2ea53db9775a7",
+        "provenance_id": "provenance:97fc2624ed41cac7ffd28336a198bcf988a70981aecc944ad6c4a7f474533831",
+        "row_lineage_ref": "OperationSpec:op:c364bddf-76d0-4cf5-9845-6da333c36eec",
+        "scope": "run scoped node output; verified cache",
+        "seed": 64,
+        "seed_reason": "deterministic fixture; no sampling",
+        "source_snapshot_ids": [
+          "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951"
+        ]
+      },
+      "root_versions": [
+        "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+      ],
+      "status": "cached",
+      "value": {
+        "operation_spec": {
+          "column_ids": [],
+          "destination": "copy",
+          "id": "op:c364bddf-76d0-4cf5-9845-6da333c36eec",
+          "input_version_id": "dv:c8a107e2-7e39-46bb-8411-ac193e144175",
+          "input_version_ids": [],
+          "kind": "workflow_quality",
+          "learned_scope": "none",
+          "method_version": 1,
+          "output_schema": [
+            {
+              "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+              "name": "renamed",
+              "original_name": "x",
+              "type": "Float64"
+            },
+            {
+              "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+              "name": "y",
+              "original_name": "y",
+              "type": "Float64"
+            }
+          ],
+          "parameters": {
+            "column": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+            "fail_on_null": true
+          },
+          "schema_version": 1
+        },
+        "report": {
+          "findings": [],
+          "null_count": 0,
+          "warnings": []
+        },
+        "request": {
+          "columns": [
+            {
+              "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+              "name": "renamed",
+              "original_name": "x",
+              "type": "Float64"
+            },
+            {
+              "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+              "name": "y",
+              "original_name": "y",
+              "type": "Float64"
+            }
+          ],
+          "config_revision": 0,
+          "fingerprint": {
+            "sha256": "89f7db7643f8515bb22818596d7b23f9302779ce2f88ca845926b41f3ee0d02b",
+            "size": 4499
+          },
+          "path": "sources/55762220-f449-46b7-bb22-b9025176d014.parquet",
+          "row_count": 6,
+          "semantic_metadata": {},
+          "snapshot_uri": "snapshots/21231870-9018-42a5-b35e-b2d1469dfbeb.parquet",
+          "source_snapshot_id": "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951",
+          "version_id": "dv:c8a107e2-7e39-46bb-8411-ac193e144175"
+        }
+      },
+      "verified_at": "2026-10-15T18:59:48.229840+00:00"
+    },
+    {
+      "attempts": 0,
+      "cache_invalidated": false,
+      "cache_key": "24204b12351c0d39c4c87db75de100e13a41e1038358e49a6f4978fbd918aa2d",
+      "case": "default",
+      "kind": "train",
+      "node": "fit",
+      "operation_spec": {
+        "column_ids": [],
+        "destination": "copy",
+        "id": "op:6ed057ec-7046-47d5-aef3-59ff41473b95",
+        "input_version_id": "dv:c8a107e2-7e39-46bb-8411-ac193e144175",
+        "input_version_ids": [],
+        "kind": "workflow_train",
+        "learned_scope": "none",
+        "method_version": 1,
+        "output_schema": [],
+        "parameters": {
+          "confirmed": true,
+          "feature": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+          "target": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755"
+        },
+        "schema_version": 1
+      },
+      "provenance": {
+        "capability_id": "workflow.train",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-15T18:59:48.230278+00:00",
+        "dataset_versions": [
+          "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+        ],
+        "environment": [
+          [
+            "workflow_signature",
+            "bffe57660a21af18a11c83047f104c99fe38ac62720b8e560c963b6f94311b34"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "8c9136aff0251160dc99568eb4a0024c7252f2c16e3f871d5c15562d17e66c98",
+        "provenance_id": "provenance:24204b12351c0d39c4c87db75de100e13a41e1038358e49a6f4978fbd918aa2d",
+        "row_lineage_ref": "OperationSpec:op:6ed057ec-7046-47d5-aef3-59ff41473b95",
+        "scope": "run scoped node output; verified cache",
+        "seed": 64,
+        "seed_reason": "deterministic fixture; no sampling",
+        "source_snapshot_ids": [
+          "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951"
+        ]
+      },
+      "root_versions": [
+        "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+      ],
+      "status": "cached",
+      "value": {
+        "model": {
+          "coefficients": [
+            {
+              "confidence": 0.95,
+              "effect": 0.03999999999999737,
+              "effect_high": 0.2909794051165224,
+              "effect_label": "coefficient",
+              "effect_low": -0.21097940511652769,
+              "estimate": 0.03999999999999737,
+              "high": 0.2909794051165224,
+              "low": -0.21097940511652769,
+              "p": 0.6810035411783886,
+              "se": 0.09039595439746514,
+              "term": "Intercept"
+            },
+            {
+              "confidence": 0.95,
+              "effect": 1.9885714285714298,
+              "effect_high": 2.053016990465688,
+              "effect_label": "coefficient",
+              "effect_low": 1.9241258666771714,
+              "estimate": 1.9885714285714298,
+              "high": 2.053016990465688,
+              "low": 1.9241258666771714,
+              "p": 1.1127761064070055e-07,
+              "se": 0.023211538298959923,
+              "term": "renamed"
+            }
+          ],
+          "dataset_version": "dv:c8a107e2-7e39-46bb-8411-ac193e144175",
+          "diagnostics": {
+            "heteroskedasticity": {
+              "lm": 0.5442126087119712,
+              "method": "Koenker BP on whitened residual, original variance predictors",
+              "p": 0.46069210926870385
+            },
+            "influence": {
+              "cutoff": 0.6666666666666666,
+              "influential_count": 0,
+              "method": "backend Cook/leverage",
+              "points": [
+                {
+                  "cook": 0.6250000000000888,
+                  "leverage": 0.5238095238095241,
+                  "row_id": "row:3bb4398b-f8f8-4eb3-b6b6-7d019f63bbc8"
+                },
+                {
+                  "cook": 0.43255694269205364,
+                  "leverage": 0.2952380952380954,
+                  "row_id": "row:fb5aa34b-85d1-44a2-b6d1-f20bc8301c5a"
+                },
+                {
+                  "cook": 0.21640713194767172,
+                  "leverage": 0.2952380952380954,
+                  "row_id": "row:1cb21b0c-c365-4b18-90c4-1e94380abeff"
+                },
+                {
+                  "cook": 0.15985913761738832,
+                  "leverage": 0.18095238095238103,
+                  "row_id": "row:4f353700-e591-4f83-8497-c11fb9263521"
+                },
+                {
+                  "cook": 0.09999999999999006,
+                  "leverage": 0.5238095238095242,
+                  "row_id": "row:8324af17-34d4-434d-966f-d35c82986659"
+                },
+                {
+                  "cook": 0.000467082944097194,
+                  "leverage": 0.18095238095238098,
+                  "row_id": "row:c064487f-16f5-4b3b-9e6a-6d2c7529078e"
+                }
+              ]
+            }
+          },
+          "fit": {
+            "adjusted_r_squared": 0.9993191384005942,
+            "aic": -9.389592366259052,
+            "bic": -9.806073427802943,
+            "information_criteria_status": "ML likelihood; compare only equal context",
+            "log_likelihood": 6.694796183129526,
+            "r_squared": 0.9994553107204753
+          },
+          "model_support": {
+            "model_save": true,
+            "prediction": true,
+            "prediction_interval": false,
+            "prediction_kind": "mean response",
+            "reason": "safe JSON coefficients/design; no executable pickle; repeated ANOVA is inference only; no held-out score",
+            "result_save": true
+          },
+          "prediction_schema": {
+            "baselines": {},
+            "coefficients": [
+              0.03999999999999737,
+              1.9885714285714298
+            ],
+            "columns": {
+              "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92": "renamed"
+            },
+            "design": [
+              {
+                "factors": [],
+                "label": "Intercept"
+              },
+              {
+                "factors": [
+                  {
+                    "column": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92"
+                  }
+                ],
+                "label": "renamed"
+              }
+            ],
+            "exposure": "",
+            "features": [
+              "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92"
+            ],
+            "link": "identity",
+            "offset": ""
+          },
+          "spec": {
+            "after": "sonra",
+            "alternative": "two-sided",
+            "assumptions_confirmed": true,
+            "bayes_feature_units": {},
+            "bayes_plan": {},
+            "before": "önce",
+            "block_length": 5,
+            "causal_plan": {},
+            "cluster": "",
+            "confidence": 0.95,
+            "correction": "holm",
+            "covariance": "nonrobust",
+            "deltas": [
+              -1.0,
+              0.0,
+              1.0
+            ],
+            "dependence": "independent",
+            "dimension_plan": {},
+            "exchangeability_confirmed": false,
+            "experiment_plan": {},
+            "exposure": "",
+            "family_dependence": "arbitrary",
+            "family_ids": [],
+            "family_name": "",
+            "features": [
+              "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92"
+            ],
+            "group": "",
+            "hypothesis": "coefficient0",
+            "imputations": 5,
+            "independent": true,
+            "interactions": [],
+            "iterations": 10,
+            "key": "",
+            "max_iterations": 1000,
+            "measurement_confirmed": true,
+            "method": "ols",
+            "missing_assumption": "MAR",
+            "missing_policy": "reject",
+            "nb_alpha": 1.0,
+            "null_value": 0.0,
+            "observation_unit": "independent rows; user confirmed",
+            "offset": "",
+            "outlier_policy": "keep",
+            "pair_policy": "reject",
+            "path": "models",
+            "posthoc": "none",
+            "precision": "reject",
+            "psu": "",
+            "quantile": 0.5,
+            "question": "DAG explicit OLS fit",
+            "random_slopes": [],
+            "references": {},
+            "reml": true,
+            "resamples": 1000,
+            "resampling_unit": "observation",
+            "sample_size": 10,
+            "scenarios": [],
+            "scope": "dataset",
+            "seed": 42,
+            "statistic": "mean",
+            "strata": "",
+            "survival_plan": {},
+            "symmetry_confirmed": false,
+            "time_column": "",
+            "trim_fraction": 0.2,
+            "unit": "source unit",
+            "view": {},
+            "weight": "",
+            "weight_type": "none",
+            "within": [],
+            "x": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+            "y": ""
+          }
+        },
+        "operation_spec": {
+          "column_ids": [],
+          "destination": "copy",
+          "id": "op:6ed057ec-7046-47d5-aef3-59ff41473b95",
+          "input_version_id": "dv:c8a107e2-7e39-46bb-8411-ac193e144175",
+          "input_version_ids": [],
+          "kind": "workflow_train",
+          "learned_scope": "none",
+          "method_version": 1,
+          "output_schema": [],
+          "parameters": {
+            "confirmed": true,
+            "feature": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+            "target": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755"
+          },
+          "schema_version": 1
+        },
+        "report": {
+          "fit_row_ids": [
+            "row:8324af17-34d4-434d-966f-d35c82986659",
+            "row:1cb21b0c-c365-4b18-90c4-1e94380abeff",
+            "row:4f353700-e591-4f83-8497-c11fb9263521",
+            "row:c064487f-16f5-4b3b-9e6a-6d2c7529078e",
+            "row:fb5aa34b-85d1-44a2-b6d1-f20bc8301c5a",
+            "row:3bb4398b-f8f8-4eb3-b6b6-7d019f63bbc8"
+          ],
+          "fit_scope": "all upstream rows; no held-out score; no final-test access",
+          "method": "OLS"
+        }
+      },
+      "verified_at": "2026-10-15T18:59:48.230278+00:00"
+    },
+    {
+      "attempts": 0,
+      "cache_invalidated": false,
+      "cache_key": "0862b49da17f4604d723cd853cca449186d0a149cc638a9a82f73ee20bcb4e36",
+      "case": "default",
+      "kind": "predict",
+      "node": "predict",
+      "operation_spec": {
+        "column_ids": [],
+        "destination": "copy",
+        "id": "op:e30ea414-acd8-49a5-b841-79962fa8e3e9",
+        "input_version_id": "dv:c8a107e2-7e39-46bb-8411-ac193e144175",
+        "input_version_ids": [],
+        "kind": "workflow_predict",
+        "learned_scope": "none",
+        "method_version": 1,
+        "output_schema": [
+          {
+            "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+            "name": "renamed",
+            "original_name": "x",
+            "type": "Float64"
+          },
+          {
+            "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+            "name": "y",
+            "original_name": "y",
+            "type": "Float64"
+          },
+          {
+            "id": "col:4696cb32-b29a-44e1-b6a4-930d40fb9741",
+            "name": "prediction",
+            "original_name": "prediction",
+            "type": "Float64"
+          }
+        ],
+        "parameters": {
+          "prediction_column": "col:4696cb32-b29a-44e1-b6a4-930d40fb9741"
+        },
+        "schema_version": 1
+      },
+      "provenance": {
+        "capability_id": "workflow.predict",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-15T18:59:48.230652+00:00",
+        "dataset_versions": [
+          "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+        ],
+        "environment": [
+          [
+            "workflow_signature",
+            "bffe57660a21af18a11c83047f104c99fe38ac62720b8e560c963b6f94311b34"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "6c49a2515cda4d701f8aa67050044f3e4e3edc33edf18fc0c12602fe182bc144",
+        "provenance_id": "provenance:0862b49da17f4604d723cd853cca449186d0a149cc638a9a82f73ee20bcb4e36",
+        "row_lineage_ref": "OperationSpec:op:e30ea414-acd8-49a5-b841-79962fa8e3e9",
+        "scope": "run scoped node output; verified cache",
+        "seed": 64,
+        "seed_reason": "deterministic fixture; no sampling",
+        "source_snapshot_ids": [
+          "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951"
+        ]
+      },
+      "root_versions": [
+        "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+      ],
+      "status": "cached",
+      "value": {
+        "operation_spec": {
+          "column_ids": [],
+          "destination": "copy",
+          "id": "op:e30ea414-acd8-49a5-b841-79962fa8e3e9",
+          "input_version_id": "dv:c8a107e2-7e39-46bb-8411-ac193e144175",
+          "input_version_ids": [],
+          "kind": "workflow_predict",
+          "learned_scope": "none",
+          "method_version": 1,
+          "output_schema": [
+            {
+              "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+              "name": "renamed",
+              "original_name": "x",
+              "type": "Float64"
+            },
+            {
+              "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+              "name": "y",
+              "original_name": "y",
+              "type": "Float64"
+            },
+            {
+              "id": "col:4696cb32-b29a-44e1-b6a4-930d40fb9741",
+              "name": "prediction",
+              "original_name": "prediction",
+              "type": "Float64"
+            }
+          ],
+          "parameters": {
+            "prediction_column": "col:4696cb32-b29a-44e1-b6a4-930d40fb9741"
+          },
+          "schema_version": 1
+        },
+        "report": {
+          "predicted_n": 6,
+          "row_policy": "preserve RowId/SourceRecordId; add explicit ColumnId, no overwrite"
+        },
+        "request": {
+          "columns": [
+            {
+              "id": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+              "name": "renamed",
+              "original_name": "x",
+              "type": "Float64"
+            },
+            {
+              "id": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+              "name": "y",
+              "original_name": "y",
+              "type": "Float64"
+            },
+            {
+              "id": "col:4696cb32-b29a-44e1-b6a4-930d40fb9741",
+              "name": "prediction",
+              "original_name": "prediction",
+              "type": "Float64"
+            }
+          ],
+          "config_revision": 0,
+          "fingerprint": {
+            "sha256": "b5c8710638af6603cf505d6f98b5e7354d0a6c24ea0d61b6c9b9b5836df7591d",
+            "size": 4867
+          },
+          "path": "sources/f177494a-f416-4a22-b8c8-8606c39b828b.parquet",
+          "row_count": 6,
+          "semantic_metadata": {},
+          "snapshot_uri": "snapshots/21231870-9018-42a5-b35e-b2d1469dfbeb.parquet",
+          "source_snapshot_id": "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951",
+          "version_id": "dv:d90f6efc-017e-4825-aafe-3acb976e7855"
+        }
+      },
+      "verified_at": "2026-10-15T18:59:48.230652+00:00"
+    },
+    {
+      "attempts": 0,
+      "cache_invalidated": false,
+      "cache_key": "42f6ecd39078e24d8447edf0895d7bb2f3b4f21858ac3569111cc8459993725c",
+      "case": "default",
+      "destination": "/tmp/pytest-of-s-oktay/pytest-120/test_gui_full_dag_export_cache0/exports/c19cc41f-df5b-4536-876e-455d08c314f6-default-export.parquet",
+      "kind": "export",
+      "node": "export",
+      "operation_spec": {
+        "column_ids": [],
+        "destination": "copy",
+        "id": "op:32908ec8-c729-4cd2-94c9-642e5ef79859",
+        "input_version_id": "dv:d90f6efc-017e-4825-aafe-3acb976e7855",
+        "input_version_ids": [],
+        "kind": "workflow_export",
+        "learned_scope": "none",
+        "method_version": 1,
+        "output_schema": [],
+        "parameters": {
+          "format": "parquet"
+        },
+        "schema_version": 1
+      },
+      "provenance": {
+        "capability_id": "workflow.export",
+        "column_lineage_ref": null,
+        "config_revision": 0,
+        "created_at": "2026-10-15T18:59:48.230989+00:00",
+        "dataset_versions": [
+          "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+        ],
+        "environment": [
+          [
+            "workflow_signature",
+            "bffe57660a21af18a11c83047f104c99fe38ac62720b8e560c963b6f94311b34"
+          ]
+        ],
+        "exclusions": [],
+        "filters": [],
+        "learning_content_version": null,
+        "method_version": 1,
+        "parameters_hash": "a2a5649d0e4eab1b3ad381337b6432ac79b3129a066529fcebdaef0a06650576",
+        "provenance_id": "provenance:42f6ecd39078e24d8447edf0895d7bb2f3b4f21858ac3569111cc8459993725c",
+        "row_lineage_ref": "OperationSpec:op:32908ec8-c729-4cd2-94c9-642e5ef79859",
+        "scope": "run scoped node output; verified cache",
+        "seed": 64,
+        "seed_reason": "deterministic fixture; no sampling",
+        "source_snapshot_ids": [
+          "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951"
+        ]
+      },
+      "root_versions": [
+        "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+      ],
+      "status": "already_published",
+      "value": {
+        "export_artifact": "sources/a79e6d36-da91-410f-91ba-5c9343e33206.parquet",
+        "operation_spec": {
+          "column_ids": [],
+          "destination": "copy",
+          "id": "op:32908ec8-c729-4cd2-94c9-642e5ef79859",
+          "input_version_id": "dv:d90f6efc-017e-4825-aafe-3acb976e7855",
+          "input_version_ids": [],
+          "kind": "workflow_export",
+          "learned_scope": "none",
+          "method_version": 1,
+          "output_schema": [],
+          "parameters": {
+            "format": "parquet"
+          },
+          "schema_version": 1
+        },
+        "report": {
+          "projection_verified": true,
+          "rows": 6,
+          "types_verified": true,
+          "verified_rows": 6
+        }
+      },
+      "verified_at": "2026-10-15T18:59:48.230989+00:00"
+    }
+  ],
+  "origin_version": "dv:c19f6191-9734-482d-9354-c90048efd7fb",
+  "plan": {
+    "membership": {
+      "test": [],
+      "train": [],
+      "validation": []
+    },
+    "scope": "bounded DAG run artifacts; no automatic dataset head activation, no evaluation score",
+    "split_id": "dag:519ee4648ba044a08fb2921b6e90120d1dd074ae27f8a631408a7217852f58d6"
+  },
+  "prior_test_use_ids": [],
+  "provenance": {
+    "capability_id": "workflow.source",
+    "column_lineage_ref": null,
+    "config_revision": 0,
+    "created_at": "2026-10-15T18:59:48.223476+00:00",
+    "dataset_versions": [
+      "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+    ],
+    "environment": [
+      [
+        "workflow_signature",
+        "bffe57660a21af18a11c83047f104c99fe38ac62720b8e560c963b6f94311b34"
+      ]
+    ],
+    "exclusions": [],
+    "filters": [],
+    "learning_content_version": null,
+    "method_version": 1,
+    "parameters_hash": "0330fbd3f2e02609c22c8e857c997258264646d471bcb87432e853e9e0f5405b",
+    "provenance_id": "provenance:519ee4648ba044a08fb2921b6e90120d1dd074ae27f8a631408a7217852f58d6",
+    "row_lineage_ref": "workflow-node-artifact-membership:519ee4648ba044a08fb2921b6e90120d1dd074ae27f8a631408a7217852f58d6",
+    "scope": "bounded DAG run artifacts; no automatic dataset head activation, no evaluation score",
+    "seed": 64,
+    "seed_reason": "deterministic fixture; no sampling",
+    "source_snapshot_ids": [
+      "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951"
+    ]
+  },
+  "run_id": "run:9508e2c4-6e92-4794-8cd0-051f06186d80",
+  "runtime": null,
+  "schema": "WorkflowRun/v1",
+  "seed": 64,
+  "snapshot_fingerprint": {
+    "sha256": "0897d00cef8d0531f1018300c20ebe512d7de06742672a7fc41c3ddab16a73ff",
+    "size": 4473
+  },
+  "source_references": [
+    {
+      "fingerprint": {
+        "sha256": "0897d00cef8d0531f1018300c20ebe512d7de06742672a7fc41c3ddab16a73ff",
+        "size": 4473
+      },
+      "snapshot_uri": "snapshots/21231870-9018-42a5-b35e-b2d1469dfbeb.parquet",
+      "source_snapshot_id": "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951",
+      "version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+    }
+  ],
+  "source_snapshot_id": "snapshot:fd3dcd68-6ade-4eed-83af-6caae194e951",
+  "spec": {},
+  "status": "completed",
+  "tensor_schema": {},
+  "training_id": "run:9508e2c4-6e92-4794-8cd0-051f06186d80",
+  "warnings": [
+    "OLS fit on explicit upstream data is not held-out evaluation; predict on train rows is not a generalization score.",
+    "Schedule unavailable: application closed means no automatic work. Explicit CLI invocation is required.",
+    "Derived DatasetVersions are run-scoped artifacts; original project dataset heads and source snapshots are never overwritten."
+  ],
+  "workflow_runtime": {
+    "allow_export": true,
+    "cache": "/tmp/pytest-of-s-oktay/pytest-120/test_gui_full_dag_export_cache0/cache/veri_ufku/workflow",
+    "dry_run": false,
+    "export_token": "c19cc41f-df5b-4536-876e-455d08c314f6",
+    "output_dir": "/tmp/pytest-of-s-oktay/pytest-120/test_gui_full_dag_export_cache0/exports"
+  },
+  "workflow_spec": {
+    "cases": [],
+    "nodes": [
+      {
+        "after": [],
+        "id": "source",
+        "inputs": {},
+        "kind": "source",
+        "method_version": 1,
+        "params": {
+          "version_id": "dv:c19f6191-9734-482d-9354-c90048efd7fb"
+        }
+      },
+      {
+        "after": [],
+        "id": "rename",
+        "inputs": {
+          "data": {
+            "node": "source",
+            "port": "data"
+          }
+        },
+        "kind": "transform",
+        "method_version": 1,
+        "params": {
+          "columns": [
+            "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92"
+          ],
+          "kind": "rename",
+          "parameters": {
+            "name": "renamed"
+          }
+        }
+      },
+      {
+        "after": [],
+        "id": "summary",
+        "inputs": {
+          "data": {
+            "node": "source",
+            "port": "data"
+          }
+        },
+        "kind": "analysis",
+        "method_version": 1,
+        "params": {
+          "column": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+          "ddof": 1
+        }
+      },
+      {
+        "after": [],
+        "id": "quality",
+        "inputs": {
+          "data": {
+            "node": "rename",
+            "port": "data"
+          }
+        },
+        "kind": "quality",
+        "method_version": 1,
+        "params": {
+          "column": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755",
+          "fail_on_null": true
+        }
+      },
+      {
+        "after": [],
+        "id": "fit",
+        "inputs": {
+          "data": {
+            "node": "quality",
+            "port": "data"
+          }
+        },
+        "kind": "train",
+        "method_version": 1,
+        "params": {
+          "confirmed": true,
+          "feature": "col:0f2d2b45-a15b-4e35-af22-306b8adb3c92",
+          "target": "col:266c9d6b-aee1-4bb0-a7bf-baf7ef294755"
+        }
+      },
+      {
+        "after": [],
+        "id": "predict",
+        "inputs": {
+          "data": {
+            "node": "rename",
+            "port": "data"
+          },
+          "model": {
+            "node": "fit",
+            "port": "model"
+          }
+        },
+        "kind": "predict",
+        "method_version": 1,
+        "params": {
+          "prediction_column": "col:4696cb32-b29a-44e1-b6a4-930d40fb9741"
+        }
+      },
+      {
+        "after": [],
+        "id": "export",
+        "inputs": {
+          "data": {
+            "node": "predict",
+            "port": "data"
+          }
+        },
+        "kind": "export",
+        "method_version": 1,
+        "params": {
+          "format": "parquet"
+        }
+      }
+    ],
+    "retries": 0,
+    "schema": "TypedDAG/v1",
+    "seed": 64,
+    "sweep": []
+  }
+}

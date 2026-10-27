@@ -1,0 +1,60 @@
+# Veri_Ufku — aktif görev hafızası
+
+2026-10-16 UTC DEC66-01; açık Faz66 talimatıyla bounded CPU ComputeBudget teslimi.
+Resmî sürüyor/deneysel/isteğe bağlı; [E66](evidence/PHASE66.md),
+[ADR067](adr/067-compute-budgets-phase66.md). Faz67 başlatılmaz.
+Önceki Faz65 ve tüm resmî açıklar [korunan hafızada](evidence/phase66/prior-project_state.txt).
+
+Mevcut frozen ComputeBudget: RAM2GiB/disk4GiB/time600s/sample10000 ve CPUjob1/IOjob2
+korunur. max_processes1/max_tasks32/threads_per_process1/device_memory_bytes1GiB/
+transfer_bytes128MiB eklendi. cpu_threads toplam2, worker_threads=min(total,perprocess).
+Tek parent-only admission lock24 GUI worker/JobManager/code kernel Popen için
+start öncesi CPUjob/process/native thread toplamını denetler. Aynı zamanda başka
+manager/controller işinin worker thread rezervasyonu hesaba katılır. Polars/BLAS env
+spawn öncesi, threadpoolctl/affinity worker içinde; Torch/DuckDB iş başına sınır,
+sklearn n_jobs1. Bu CPU dağılımı önceki performansla aynı/süratli garanti edilmez.
+
+Ana sayfa → Hesaplama bütçesi ve ölçümler. Profil/join/tuning/explanation/tensor
+controller'ları aynı supervision içinde.100ms process tree/RSS,250ms disk; son64
+bitmiş ölçüm ephemeral, ikinci registry/run defteri değil. Başarı/iptal/hata gerçek
+job sonucunda; örneklenmemiş RSS peak yok diye gösterilir. Kısa peak kaçabilir,
+shared pages double count olabilir; GPU/remote ölçümü yok. Yakalanmış descendants
+cancel/grace/shutdown pidfd/başlangıç kimliğiyle temizlenir. OS sandbox/hard cgroup
+iddiası yok. Worker Qt/ProjectStore/ACTIVE almaz, mevcut atomic publish sürer.
+
+Capability.execution_memory/device_support tek registry genişlemesi. Yöntem arama
+ilk50 gerçek kayıt/limits/sparse destek; bilinmeyen lazy/out-of-core fit doğrulanmadı.
+Profil4096 batch/SQLite spill; diğerleri method contract ile sınırlı. Sparse explicit
+dense allocation önkontrolü; mevcut native categorical sparse reddi korunur. İşe özel
+spill context quota/cancel/failure cleanup; mevcut disk quota/reserve gözetimi devam.
+GPU budget kabulü yürütme desteği değildir; CPU worker cuda reddeder, fallback yok.
+
+Optional Dask2026.8.0 /tmp kurulumu, core venv/uv.lock değişmedi. Yerel CPU numeric
+Parquet iter_batches≤4096,pending≤min(max_tasks,8), hash önce/sonra, finite n/excluded/
+sum, bounded waves/control/time/cancel. Python API, GUI Dask başlatıcısı yok.
+Float64 chunk sıra rounding farkı açık. Tensor/model distributed fit yok.
+RemotePlan yalnız TLS endpoint/konum/keyring referansı/transfer preview available=false;
+network/credential load yok. Remote executor/auth/cluster quota/GPU runtime unavailable,
+not validated. Retry/resume exactly-once yok; source write/export retry yok.
+
+Kaynak255pass/1absent-Dask skip ve kurulu wheel255pass/1skip selected core;
+son parent-env-lock/RSS consolidation sonrası60şar complete focused+1er skip;
+source/wheel1şer son actual GUI/profile panel default2GiB;373byte-eşit package.
+Eski tekrarlı GUI env yazımları kaldırıldı; yalnız start lock ayarlar. GUI/manager
+RSS aynı canlı root reservation kümesini kullanır, UI sinyali1s/monitor100ms.
+Ek tensor4pass explicit4GiB, basic9pass/1deselected consolidation öncesi; default2GiB
+fresh tuning RAM quota fail. İlk explicit4GiB tuning90s test wait timeout; sonra120s gerçek budget_exhausted
+(7completed/1canceled,19fit) ve2GiB RAM fail korunur; başarı değildir.
+DuplicateZIP test warning ve261uncollectable shutdown ResourceWarning korunur;
+longheap kapanmadı. Source/wheel1er küçük tuning pass explicit4GiB/tek-aday/curves-off,3outer fold/test untouched;
+son cache/repro30şar ayrı pass; pidfd/Dask finalwheel10pass/source9pass1skip;
+76.236s/490795008byte worker sample, büyük120s fail örneği ayrı.
+Dask9pass isolated backend ve100000row/25chunk gerçek hardware
+benchmark; remote/GPU kanıtı değil. Ek GUI grubunun sonucu verification.json içindedir,
+final core veya1şer walkthrough ile tek aggregate değildir.406offline makale/content82,
+compute-resources panel/capability yardımı. Kapı sonuçları E66 içinde.
+
+Faz65 bounded lineage/repro ve önceki sonuçlar korunur; default2GiB model GUI kabulü,
+physical/human/AT/minHW/longheap/clean offline installer/remoteCI açık. Vosk model yok;
+OS sandbox/managedJupyter/scheduler yok. Stage/commit/push yapılmadı; tüm mevcut
+kullanıcı dirty/untracked teslim korunur. Yeni faz yalnız açık talimatla.

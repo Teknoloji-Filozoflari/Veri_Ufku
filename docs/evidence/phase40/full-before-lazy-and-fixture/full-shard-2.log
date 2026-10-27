@@ -1,0 +1,80 @@
+.......................................F................................ [ 25%]
+........................................................................ [ 51%]
+........................................................................ [ 76%]
+.................................................................        [100%]
+=================================== FAILURES ===================================
+_________ test_real_qml_buttons_responsiveness_error_cancel_and_stale __________
+
+tmp_path = PosixPath('/tmp/phase40-tests-2/test_real_qml_buttons_responsi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbf53070360>
+
+    def test_real_qml_buttons_responsiveness_error_cancel_and_stale(tmp_path, monkeypatch):
+        for variable, folder in [
+            ("XDG_CONFIG_HOME", "config"),
+            ("XDG_STATE_HOME", "state"),
+            ("XDG_CACHE_HOME", "cache"),
+        ]:
+            monkeypatch.setenv(variable, str(tmp_path / folder))
+        app, window, bridge = create_application()
+        manager = bridge.session.manager
+        try:
+            cpu = window.findChild(QObject, "cpuButton")
+            assert cpu.property("text") == "CPU denemesini başlat"
+            ticks = []
+            timer = QTimer()
+            timer.setInterval(10)
+            timer.timeout.connect(lambda: ticks.append(time.monotonic()))
+            timer.start()
+            cpu.clicked.emit()
+            spin(app, lambda: bridge.active)
+            spin(app, lambda: len(ticks) >= 20)
+>           assert manager.snapshot(bridge.job_id).state.value == "running"
+E           AssertionError: assert 'succeeded' == 'running'
+E             
+E             - running
+E             + succeeded
+
+tests/test_gui.py:42: AssertionError
+=============================== warnings summary ===============================
+tests/test_geo_network.py::test_real_tls_capture_preview_publish_reopen_without_network[tile]
+tests/test_geo_network.py::test_real_tls_capture_preview_publish_reopen_without_network[geocoding]
+tests/test_geo_network.py::test_tile_redirect_cache_and_timeout_control[redirect-HTTP 302]
+tests/test_geo_network.py::test_tile_redirect_cache_and_timeout_control[no-store-no-store]
+tests/test_geo_network.py::test_tile_redirect_cache_and_timeout_control[slow-timeout]
+tests/test_geo_network.py::test_tile_retry_one_result_and_explicit_cancel
+tests/test_geo_network.py::test_geo_online_qml_explicit_read_reopen[tile]
+tests/test_geo_network.py::test_geo_online_qml_explicit_read_reopen[geocoding]
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/io.py:143: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+    rd = writer(
+
+tests/test_geo_network.py::test_real_tls_capture_preview_publish_reopen_without_network[tile]
+tests/test_geo_network.py::test_tile_retry_one_result_and_explicit_cancel
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/io.py:140: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+    rd = DatasetReader(mempath, driver=driver, sharing=sharing, thread_safe=thread_safe, **kwargs)
+
+tests/test_geo_network.py::test_real_tls_capture_preview_publish_reopen_without_network[tile]
+tests/test_geo_network.py::test_tile_retry_one_result_and_explicit_cancel
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/transform.py:189: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    return Affine.translation(west, north) * Affine.scale(
+
+tests/test_geo_network.py: 4 warnings
+tests/test_geo_boundaries.py: 6 warnings
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/windows.py:387: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    left, bottom = transform * (col_min, row_max)
+
+tests/test_geo_network.py: 4 warnings
+tests/test_geo_boundaries.py: 6 warnings
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/windows.py:388: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    right, top = transform * (col_max, row_min)
+
+tests/test_geo_boundaries.py::test_complex_raster_never_discards_imaginary_values[complex64]
+tests/test_geo_boundaries.py::test_complex_raster_never_discards_imaginary_values[complex128]
+tests/test_geo_boundaries.py::test_raster_map_rejects_other_columns_as_captured_pixels[mapping0]
+tests/test_geo_boundaries.py::test_raster_map_rejects_other_columns_as_captured_pixels[mapping1]
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/transform.py:178: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    return Affine.translation(west, north) * Affine.scale(xsize, -ysize)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_gui.py::test_real_qml_buttons_responsiveness_error_cancel_and_stale
+1 failed, 280 passed, 36 warnings in 437.51s (0:07:17)

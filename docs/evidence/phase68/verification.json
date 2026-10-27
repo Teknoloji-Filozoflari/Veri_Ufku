@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-16",
+  "environment": "ENV-68",
+  "source_core": {
+    "passed": 90,
+    "xml": "source-core.xml"
+  },
+  "wheel_core": {
+    "passed": 90,
+    "xml": "wheel-core.xml",
+    "note": "same final Python engine; before QML-only undefined/None presentation fix"
+  },
+  "source_gui": {
+    "passed": 6,
+    "path": "source-walkthrough/gui.xml",
+    "captures": 9,
+    "budgets": "basic/status2GiB; model4GiB"
+  },
+  "wheel_gui": {
+    "passed": 6,
+    "path": "wheel-walkthrough/gui.xml",
+    "captures": 9,
+    "budgets": "basic/status2GiB; model4GiB",
+    "note": "before QML-only undefined/None presentation fix"
+  },
+  "source_final_model": {
+    "passed": 1,
+    "deselected": 5,
+    "path": "source-final-model/gui.xml",
+    "captures": 2,
+    "budget": "explicit4GiB",
+    "note": "final QML unavailable fields readable"
+  },
+  "wheel_final_model": {
+    "passed": 1,
+    "deselected": 5,
+    "path": "wheel-final-model/gui.xml",
+    "captures": 2,
+    "budget": "explicit4GiB"
+  },
+  "monitor_gui_regression_source": {
+    "passed": 1,
+    "deselected": 1,
+    "path": "source-monitor-regression/gui.xml",
+    "budget": "default2GiB"
+  },
+  "monitor_gui_regression_wheel": {
+    "passed": 1,
+    "deselected": 1,
+    "path": "wheel-monitor-regression/gui.xml",
+    "budget": "default2GiB"
+  },
+  "warnings": [
+    "Intentional duplicate ZIP config.json tamper fixture warning"
+  ],
+  "formal_open": [
+    "physical desktop",
+    "human/AT",
+    "minimum hardware",
+    "long retained heap",
+    "clean offline installer",
+    "remote CI",
+    "previous phases open gates"
+  ],
+  "package_files": 387
+}

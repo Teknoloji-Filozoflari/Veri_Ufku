@@ -1,0 +1,203 @@
+...F..............................                                       [100%]
+=================================== FAILURES ===================================
+___________ test_postgresql_never_uses_environment_or_password_file ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-17/test_postgresql_never_uses_env0')
+pg = {'endpoint': 'localhost', 'port': 37927, 'database': 'postgres', 'user': 'vu_reader', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7feab2150180>
+
+    def test_postgresql_never_uses_environment_or_password_file(tmp_path, pg, monkeypatch):
+        sentinel = "fixture-ambient-password-must-not-be-used"
+        password_file = tmp_path / "pgpass"
+        password_file.write_text("*:*:*:*:" + sentinel + "\n")
+        password_file.chmod(0o600)
+        monkeypatch.setenv("PGPASSWORD", sentinel)
+        monkeypatch.setenv("PGPASSFILE", str(password_file))
+        with session(spec_for_pg(pg), None, Control()) as (db, _, _):
+            assert db.info.password in (None, "")
+>           assert db.info.dsn_parameters["passfile"] == "/dev/null"
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'ConnectionInfo' object has no attribute 'dsn_parameters'. Did you mean: 'get_parameters'?
+
+tests/test_connectors.py:156: AttributeError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-17/test_postgresql_never_uses_env0')
+pg = {'endpoint': 'localhost', 'port': 37927, 'database': 'postgres', 'user': 'vu_reader', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7feab2150180>
+
+    def test_postgresql_never_uses_environment_or_password_file(tmp_path, pg, monkeypatch):
+        sentinel = "fixture-ambient-password-must-not-be-used"
+        password_file = tmp_path / "pgpass"
+        password_file.write_text("*:*:*:*:" + sentinel + "\n")
+        password_file.chmod(0o600)
+        monkeypatch.setenv("PGPASSWORD", sentinel)
+        monkeypatch.setenv("PGPASSFILE", str(password_file))
+>       with session(spec_for_pg(pg), None, Control()) as (db, _, _):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_connectors.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+spec = ConnectorSpec(kind='postgresql', endpoint='localhost', database='postgres', user='vu_reader', port=37927, credential_r...shot_header='', field_mapping={}, bucket='', object_key='', version_id='', object_format='parquet', region='us-east-1')
+secret = None
+control = <veri_ufku.importers.delimited.Control object at 0x7feab25ed9a0>
+
+    @contextmanager
+    def session(spec, secret, control):
+        db = None
+        try:
+            if spec.kind == "postgresql":
+                import psycopg
+    
+                db = psycopg.connect(
+                    host=spec.endpoint,
+                    port=spec.port or 5432,
+                    dbname=spec.database,
+                    user=spec.user,
+                    password=secret or "",
+                    passfile="/dev/null",
+                    require_auth="password,md5,scram-sha-256,none",
+                    gssencmode="disable",
+                    sslcertmode="disable",
+                    sslmode="verify-full",
+                    sslrootcert=spec.ca_file or "system",
+                    connect_timeout=spec.timeout,
+                    autocommit=True,
+                )
+                role = db.execute(
+                    "SELECT rolsuper,rolcreatedb,rolcreaterole,rolreplication,rolbypassrls FROM pg_roles WHERE rolname=current_user"
+                ).fetchone()
+                if not role or any(role):
+                    raise ProjectError(
+                        "PostgreSQL için yetkisiz salt okunur rol gerekli; yönetici hesabı reddedildi."
+                    )
+                db.execute("BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY")
+                db.execute(
+                    "SELECT set_config('statement_timeout', %s, true)",
+                    (str(spec.timeout * 1000),),
+                )
+                db.execute("SELECT set_config('TimeZone', 'UTC', true)")
+                token = str(db.execute("SELECT pg_current_snapshot()").fetchone()[0])
+                tables = db.execute(
+                    "SELECT table_schema,table_name FROM information_schema.tables WHERE table_type='BASE TABLE' AND table_schema NOT IN ('pg_catalog','information_schema') ORDER BY 1,2"
+                ).fetchall()
+                metadata = dict(
+                    isolation="REPEATABLE READ READ ONLY",
+                    snapshot_token=token,
+                    consistency="single_transaction_snapshot",
+                    tls="verify-full",
+                    server=str(db.info.server_version),
+                )
+            elif spec.kind in ("mysql", "mariadb"):
+                import pymysql
+    
+                db = pymysql.connect(
+                    host=spec.endpoint,
+                    port=spec.port or 3306,
+                    user=spec.user,
+                    password=secret,
+                    database=spec.database,
+                    connect_timeout=spec.timeout,
+                    read_timeout=spec.timeout,
+                    write_timeout=spec.timeout,
+                    ssl_ca=spec.ca_file or None,
+                    ssl_verify_cert=True,
+                    ssl_verify_identity=True,
+                    ssl_disabled=False,
+                    autocommit=True,
+                    charset="utf8mb4",
+                )
+                with db.cursor() as cursor:
+                    cursor.execute("SHOW GRANTS FOR CURRENT_USER()")
+                    for (grant,) in cursor.fetchall():
+                        if (
+                            not grant.startswith("GRANT ")
+                            or " TO " not in grant
+                            or any(
+                                priv.strip() not in ("SELECT", "USAGE")
+                                for priv in grant.split(" ON ", 1)[0][6:].split(",")
+                            )
+                        ):
+                            raise ProjectError(
+                                "MySQL/MariaDB yalnız SELECT/USAGE grant'li hesap gerekli."
+                            )
+                    cursor.execute("SELECT VERSION()")
+                    server = cursor.fetchone()[0]
+                    if ("mariadb" in server.lower()) != (spec.kind == "mariadb"):
+                        raise ProjectError("Sunucu MySQL/MariaDB seçimiyle uyuşmuyor.")
+                    cursor.execute(
+                        "SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ"
+                    )
+                    cursor.execute(
+                        "SET SESSION max_statement_time=%s"
+                        if spec.kind == "mariadb"
+                        else "SET SESSION max_execution_time=%s",
+                        (spec.timeout if spec.kind == "mariadb" else spec.timeout * 1000,),
+                    )
+                    cursor.execute("START TRANSACTION WITH CONSISTENT SNAPSHOT, READ ONLY")
+                    cursor.execute("SHOW STATUS LIKE 'Ssl_cipher'")
+                    if not cursor.fetchone()[1]:
+                        raise ProjectError("Veritabanı TLS doğrulaması gerekli.")
+                    cursor.execute(
+                        "SELECT TABLE_SCHEMA,TABLE_NAME FROM information_schema.TABLES WHERE TABLE_TYPE='BASE TABLE' AND ENGINE='InnoDB' AND TABLE_SCHEMA NOT IN ('mysql','sys','performance_schema','information_schema') ORDER BY 1,2"
+                    )
+                    tables = cursor.fetchall()
+                metadata = dict(
+                    isolation="REPEATABLE READ; WITH CONSISTENT SNAPSHOT; READ ONLY; InnoDB",
+                    consistency="single_transaction_snapshot",
+                    tls="certificate+hostname",
+                    server=server,
+                )
+            else:
+                import duckdb
+    
+                path = Path(spec.endpoint).resolve(strict=True)
+                if not path.is_file() or path.is_symlink():
+                    raise ProjectError("Yerel DuckDB dosyası gerekli.")
+                db = duckdb.connect(
+                    str(path),
+                    read_only=True,
+                    config={
+                        "enable_external_access": False,
+                        "autoinstall_known_extensions": False,
+                        "autoload_known_extensions": False,
+                        "threads": control.budget.cpu_threads,
+                        "memory_limit": str(control.budget.ram_bytes // 2) + "B",
+                    },
+                )
+                db.execute("BEGIN TRANSACTION")
+                tables = db.execute(
+                    "SELECT table_schema,table_name FROM information_schema.tables WHERE table_type='BASE TABLE' ORDER BY 1,2"
+                ).fetchall()
+                metadata = dict(
+                    isolation="file READ_ONLY; transaction",
+                    consistency="single_transaction_snapshot",
+                    external_access=False,
+                    server=duckdb.__version__,
+                )
+            yield db, [dict(schema=s, table=t) for s, t in tables], metadata
+        except ImportError as error:
+            raise ProjectError(
+                "İsteğe bağlı connectors modülü kurulu değil; yerel temel uygulama kullanılabilir."
+            ) from error
+        except Exception as error:
+            control.check()
+            if isinstance(error, ProjectError):
+                raise
+>           raise ProjectError(
+                "Veritabanı bağlantısı/sorgusu tamamlanamadı; TLS, yetki veya timeout ayarını denetleyin. Secret ve sunucu hata metni gösterilmez."
+            ) from error
+E           veri_ufku.storage.project_model.ProjectError: Veritabanı bağlantısı/sorgusu tamamlanamadı; TLS, yetki veya timeout ayarını denetleyin. Secret ve sunucu hata metni gösterilmez.
+
+src/veri_ufku/importers/database_connectors.py:256: ProjectError
+----------------------------- Captured stderr call -----------------------------
+WARNING: password file "/dev/null" is not a plain file
+WARNING: password file "/dev/null" is not a plain file
+=========================== short test summary info ============================
+FAILED tests/test_connectors.py::test_postgresql_never_uses_environment_or_password_file
+1 failed, 33 passed in 50.32s

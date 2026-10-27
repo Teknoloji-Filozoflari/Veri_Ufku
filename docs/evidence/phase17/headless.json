@@ -1,0 +1,815 @@
+{
+  "environment": "ENV-17",
+  "evaluated_at": "2026-10-08T20:02:55.003554+00:00",
+  "python": "3.13.15",
+  "platform": "Linux-7.2.9-1-cachyos-x86_64-with-glibc2.44",
+  "package": "/home/s-oktay/Belgeler/Veri_Ufku/src/veri_ufku/__init__.py",
+  "backend": "offscreen/software",
+  "user_test": false,
+  "runs": [
+    {
+      "structure": "independent",
+      "purpose": "regression",
+      "n": 240,
+      "split_id": "split:efb7272ffe1a3f6baa3b775f61260b351ab1089a5beade4359f5696e2e1e5bb5",
+      "protocol_id": "protocol:5fc718232fed5a563bf1614eed7a01d6d490d25e40b33f068d37585ee9eafe0e",
+      "cost": {
+        "train_n": 144,
+        "validation_n": 48,
+        "development_n": 192,
+        "test_n": 48,
+        "fold_train_n": [
+          128,
+          128,
+          128
+        ],
+        "fit_count": 16,
+        "estimated_fit_row_passes": 2112,
+        "dense_cell_limit": 4000000,
+        "note": "İş yükü tahmini; saniye veya yeterli örnek garantisi değildir. Train miktarı sınıf/grup/zaman kapsamı ve öğrenme eğrisiyle incelenmeli."
+      },
+      "elapsed_seconds": 1.304795580001155,
+      "metrics": [
+        [
+          {
+            "metric": "mae",
+            "value": 3.611925573447176e-14,
+            "direction": "minimize",
+            "scope": "validation",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 5.699125635068926e-14,
+            "direction": "minimize",
+            "scope": "validation",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "validation",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 2.1005419625907962e-13,
+            "direction": "minimize",
+            "scope": "cv:1",
+            "n": 64,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 2.4322470475741997e-13,
+            "direction": "minimize",
+            "scope": "cv:1",
+            "n": 64,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:1",
+            "n": 64,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 1.603162047558726e-13,
+            "direction": "minimize",
+            "scope": "cv:2",
+            "n": 64,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 1.86068609411528e-13,
+            "direction": "minimize",
+            "scope": "cv:2",
+            "n": 64,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:2",
+            "n": 64,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 1.0835776720341528e-13,
+            "direction": "minimize",
+            "scope": "cv:3",
+            "n": 64,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 1.3101760682293512e-13,
+            "direction": "minimize",
+            "scope": "cv:3",
+            "n": 64,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:3",
+            "n": 64,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ]
+      ],
+      "packages": {
+        "scikit-learn": "1.9.1",
+        "numpy": "2.5.3",
+        "scipy": "1.18.0",
+        "polars": "2.0.0",
+        "veri-ufku": "0.1.0"
+      },
+      "selected_model": "linear",
+      "comparison": [
+        {
+          "model": "baseline",
+          "cv_mae": 176.70914713541666
+        },
+        {
+          "model": "linear",
+          "cv_mae": 1.5957605607278916e-13
+        },
+        {
+          "model": "ridge",
+          "cv_mae": 1.4437914045855635
+        },
+        {
+          "model": "forest",
+          "cv_mae": 5.841531952711644
+        }
+      ],
+      "source_sha256": "8f0e5e27ea1ce474e7e6b747fb5f094dace334251d58b7efe1e7aa65bfbdbb42",
+      "details_artifact": true
+    },
+    {
+      "structure": "group_time",
+      "purpose": "regression",
+      "n": 240,
+      "split_id": "split:f676bafc063df36e29b4a9454cf8cd368d86ab64e97569d32b8ebc33ae4d39f7",
+      "protocol_id": "protocol:76c4dfcc0cc5a6b54a3c06833223183013ebe6c16f23456783a2fa965473a80f",
+      "cost": {
+        "train_n": 144,
+        "validation_n": 48,
+        "development_n": 192,
+        "test_n": 48,
+        "fold_train_n": [
+          48,
+          96,
+          144
+        ],
+        "fit_count": 16,
+        "estimated_fit_row_passes": 1728,
+        "dense_cell_limit": 4000000,
+        "note": "İş yükü tahmini; saniye veya yeterli örnek garantisi değildir. Train miktarı sınıf/grup/zaman kapsamı ve öğrenme eğrisiyle incelenmeli."
+      },
+      "elapsed_seconds": 1.2352950509994116,
+      "metrics": [
+        [
+          {
+            "metric": "mae",
+            "value": 0.0,
+            "direction": "minimize",
+            "scope": "validation",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 0.0,
+            "direction": "minimize",
+            "scope": "validation",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "validation",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 7.638334409421077e-14,
+            "direction": "minimize",
+            "scope": "cv:1",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 8.153200533939045e-14,
+            "direction": "minimize",
+            "scope": "cv:1",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:1",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 1.2197650297215054e-13,
+            "direction": "minimize",
+            "scope": "cv:2",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 1.2361537785162955e-13,
+            "direction": "minimize",
+            "scope": "cv:2",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:2",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 0.0,
+            "direction": "minimize",
+            "scope": "cv:3",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 0.0,
+            "direction": "minimize",
+            "scope": "cv:3",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:3",
+            "n": 48,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ]
+      ],
+      "packages": {
+        "scikit-learn": "1.9.1",
+        "numpy": "2.5.3",
+        "scipy": "1.18.0",
+        "polars": "2.0.0",
+        "veri-ufku": "0.1.0"
+      },
+      "selected_model": "linear",
+      "comparison": [
+        {
+          "model": "baseline",
+          "cv_mae": 216.0
+        },
+        {
+          "model": "linear",
+          "cv_mae": 6.611994902212043e-14
+        },
+        {
+          "model": "ridge",
+          "cv_mae": 2.367500398064854
+        },
+        {
+          "model": "forest",
+          "cv_mae": 77.1889047619048
+        }
+      ],
+      "source_sha256": "8f0e5e27ea1ce474e7e6b747fb5f094dace334251d58b7efe1e7aa65bfbdbb42",
+      "details_artifact": true
+    },
+    {
+      "structure": "independent",
+      "purpose": "regression",
+      "n": 20000,
+      "split_id": "split:67b43d3029a66a197dd6aaef8285f2d4cec4cb1f0045e4500fb9af0a36ec2779",
+      "protocol_id": "protocol:bbab5b8a6f173f3b2b2cb5ddb8885480ffdff7cf4e7c9235c56a41fd25f1af96",
+      "cost": {
+        "train_n": 12000,
+        "validation_n": 4000,
+        "development_n": 16000,
+        "test_n": 4000,
+        "fold_train_n": [
+          10666,
+          10667,
+          10667
+        ],
+        "fit_count": 16,
+        "estimated_fit_row_passes": 176000,
+        "dense_cell_limit": 4000000,
+        "note": "İş yükü tahmini; saniye veya yeterli örnek garantisi değildir. Train miktarı sınıf/grup/zaman kapsamı ve öğrenme eğrisiyle incelenmeli."
+      },
+      "elapsed_seconds": 3.6379191590003757,
+      "metrics": [
+        [
+          {
+            "metric": "mae",
+            "value": 8.101778803393244e-12,
+            "direction": "minimize",
+            "scope": "validation",
+            "n": 4000,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 9.840547746459941e-12,
+            "direction": "minimize",
+            "scope": "validation",
+            "n": 4000,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "validation",
+            "n": 4000,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 9.327521215932934e-12,
+            "direction": "minimize",
+            "scope": "cv:1",
+            "n": 5334,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 1.0925297770587575e-11,
+            "direction": "minimize",
+            "scope": "cv:1",
+            "n": 5334,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:1",
+            "n": 5334,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 1.0909843439305787e-11,
+            "direction": "minimize",
+            "scope": "cv:2",
+            "n": 5333,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 1.2842550260075252e-11,
+            "direction": "minimize",
+            "scope": "cv:2",
+            "n": 5333,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:2",
+            "n": 5333,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 3.2297038556489247e-12,
+            "direction": "minimize",
+            "scope": "cv:3",
+            "n": 5333,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 4.3822358876179085e-12,
+            "direction": "minimize",
+            "scope": "cv:3",
+            "n": 5333,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:3",
+            "n": 5333,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ]
+      ],
+      "packages": {
+        "scikit-learn": "1.9.1",
+        "numpy": "2.5.3",
+        "scipy": "1.18.0",
+        "polars": "2.0.0",
+        "veri-ufku": "0.1.0"
+      },
+      "selected_model": "linear",
+      "comparison": [
+        {
+          "model": "baseline",
+          "cv_mae": 15047.808312735207
+        },
+        {
+          "model": "linear",
+          "cv_mae": 7.822356170295881e-12
+        },
+        {
+          "model": "ridge",
+          "cv_mae": 1.4114827715529028
+        },
+        {
+          "model": "forest",
+          "cv_mae": 13.765303991889084
+        }
+      ],
+      "source_sha256": "bd9a93cef7f8787039ecae5d96e41a9a7d6968bdd58bdd30cff858b784cf1f43",
+      "details_artifact": true
+    },
+    {
+      "structure": "independent",
+      "purpose": "regression",
+      "n": 100000,
+      "split_id": "split:b21064c9e0bdefc4c8710a2d3863fdca2389b368084e02d0f7d1ef03b698411c",
+      "protocol_id": "protocol:a4cc5696113e663e74c52c23a29e112e9a1d355d2e02e29a24ee882338010c73",
+      "cost": {
+        "train_n": 60000,
+        "validation_n": 20000,
+        "development_n": 80000,
+        "test_n": 20000,
+        "fold_train_n": [
+          53333,
+          53333,
+          53334
+        ],
+        "fit_count": 12,
+        "estimated_fit_row_passes": 660000,
+        "dense_cell_limit": 4000000,
+        "note": "İş yükü tahmini; saniye veya yeterli örnek garantisi değildir. Train miktarı sınıf/grup/zaman kapsamı ve öğrenme eğrisiyle incelenmeli."
+      },
+      "elapsed_seconds": 5.789624899000046,
+      "metrics": [
+        [
+          {
+            "metric": "mae",
+            "value": 5.982001312077046e-11,
+            "direction": "minimize",
+            "scope": "validation",
+            "n": 20000,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 7.026902741871116e-11,
+            "direction": "minimize",
+            "scope": "validation",
+            "n": 20000,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "validation",
+            "n": 20000,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 4.012458569549685e-12,
+            "direction": "minimize",
+            "scope": "cv:1",
+            "n": 26667,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 9.055661164240197e-12,
+            "direction": "minimize",
+            "scope": "cv:1",
+            "n": 26667,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:1",
+            "n": 26667,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 3.7223697655822417e-11,
+            "direction": "minimize",
+            "scope": "cv:2",
+            "n": 26667,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 4.739853300168678e-11,
+            "direction": "minimize",
+            "scope": "cv:2",
+            "n": 26667,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:2",
+            "n": 26667,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ],
+        [
+          {
+            "metric": "mae",
+            "value": 2.104314119556942e-11,
+            "direction": "minimize",
+            "scope": "cv:3",
+            "n": 26666,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "rmse",
+            "value": 2.422448888242059e-11,
+            "direction": "minimize",
+            "scope": "cv:3",
+            "n": 26666,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          },
+          {
+            "metric": "r2",
+            "value": 1.0,
+            "direction": "maximize",
+            "scope": "cv:3",
+            "n": 26666,
+            "status": "valid",
+            "coverage": "all eligible records in this evaluation partition",
+            "averaging": "per_record"
+          }
+        ]
+      ],
+      "packages": {
+        "scikit-learn": "1.9.1",
+        "numpy": "2.5.3",
+        "scipy": "1.18.0",
+        "polars": "2.0.0",
+        "veri-ufku": "0.1.0"
+      },
+      "selected_model": "linear",
+      "comparison": [
+        {
+          "model": "baseline",
+          "cv_mae": 75005.88525242044
+        },
+        {
+          "model": "linear",
+          "cv_mae": 2.0759765806980505e-11
+        },
+        {
+          "model": "ridge",
+          "cv_mae": 1.4063396460706639
+        }
+      ],
+      "source_sha256": "f218bfe9ee678938d4c0455578ee07bffa92190c7362f888313981e833e8217f",
+      "details_artifact": true
+    }
+  ],
+  "screenshots": [
+    "docs/evidence/phase17/headless-result-720.png",
+    "docs/evidence/phase17/headless-result-1366.png"
+  ],
+  "max_tick_gap_ms": 770.5435509997187,
+  "peak_parent_worker_rss_bytes": 1528647680,
+  "limit_note": "Geliştirici makinesi, sıcak runtime; minimum donanım/insan masaüstü kabulü değildir.",
+  "test_history": [
+    {
+      "schema": "FinalTestUse/v1",
+      "dataset_version": "dv:c7bbaede-c87e-48d0-9054-926b9cdb7d55",
+      "source_snapshot_id": "snapshot:8e684572-a371-45b3-a00c-4b89951ac99e",
+      "snapshot_fingerprint": {
+        "sha256": "999f08102a1b3d595eb7475fdcaf8499c9818aa21ce114c1e6b441fdf58fe53d",
+        "size": 18225
+      },
+      "split_id": "split:f676bafc063df36e29b4a9454cf8cd368d86ab64e97569d32b8ebc33ae4d39f7",
+      "protocol_id": "protocol:76c4dfcc0cc5a6b54a3c06833223183013ebe6c16f23456783a2fa965473a80f",
+      "pipeline_id": "ml-pipeline:b5da751b-f681-4af8-9745-9f561419314e",
+      "run_id": "run:53492c01-7b87-4ca7-a430-0b9d7cee71f1",
+      "development_run_id": "run:fb3eadab-a992-4cf8-9197-a6a26bd03c0a",
+      "selected_model": "linear",
+      "regression": {
+        "alpha": 1,
+        "candidates": [
+          "baseline",
+          "linear",
+          "ridge",
+          "forest"
+        ],
+        "depth": 8,
+        "trees": 50,
+        "unit": "TL"
+      },
+      "requested_at": "2026-10-08T20:03:00.860996+00:00",
+      "evaluated_at": "2026-10-08T20:03:01.644543+00:00",
+      "status": "completed",
+      "prior_test_use_ids": [],
+      "note": "Değerlendirme başlamadan kayıt açıldı. Pending kayıt kesilmiş veya sonucu kaydedilememiş kullanımı da görünür tutar; proje dışı kullanım bilinmez.",
+      "finished_at": "2026-10-08T20:03:01.772421+00:00",
+      "invalid_folds": [],
+      "id": "result:9c91fe29-d24b-465d-a823-33bc067e140a",
+      "subsequent_choices": []
+    },
+    {
+      "schema": "FinalTestUse/v1",
+      "dataset_version": "dv:c7bbaede-c87e-48d0-9054-926b9cdb7d55",
+      "source_snapshot_id": "snapshot:8e684572-a371-45b3-a00c-4b89951ac99e",
+      "snapshot_fingerprint": {
+        "sha256": "999f08102a1b3d595eb7475fdcaf8499c9818aa21ce114c1e6b441fdf58fe53d",
+        "size": 18225
+      },
+      "split_id": "split:f676bafc063df36e29b4a9454cf8cd368d86ab64e97569d32b8ebc33ae4d39f7",
+      "protocol_id": "protocol:76c4dfcc0cc5a6b54a3c06833223183013ebe6c16f23456783a2fa965473a80f",
+      "pipeline_id": "ml-pipeline:b5da751b-f681-4af8-9745-9f561419314e",
+      "run_id": "run:bc977173-eb91-4265-ae8d-1cfb39949748",
+      "development_run_id": "run:fb3eadab-a992-4cf8-9197-a6a26bd03c0a",
+      "selected_model": "linear",
+      "regression": {
+        "alpha": 1,
+        "candidates": [
+          "baseline",
+          "linear",
+          "ridge",
+          "forest"
+        ],
+        "depth": 8,
+        "trees": 50,
+        "unit": "TL"
+      },
+      "requested_at": "2026-10-08T20:03:02.043508+00:00",
+      "evaluated_at": "2026-10-08T20:03:02.834960+00:00",
+      "status": "completed",
+      "prior_test_use_ids": [
+        "result:9c91fe29-d24b-465d-a823-33bc067e140a"
+      ],
+      "note": "Değerlendirme başlamadan kayıt açıldı. Pending kayıt kesilmiş veya sonucu kaydedilememiş kullanımı da görünür tutar; proje dışı kullanım bilinmez.",
+      "finished_at": "2026-10-08T20:03:02.964538+00:00",
+      "invalid_folds": [],
+      "id": "result:e11e81b6-8895-488d-bfcd-a57bbe69a0d1",
+      "subsequent_choices": []
+    }
+  ],
+  "reopened_journal": true
+}

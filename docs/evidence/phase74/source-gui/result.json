@@ -1,0 +1,21 @@
+{
+  "schema": "UpdatePlan/v1",
+  "artifact_sha256": "c2eb8fa6746cce75752545373ca5fd0a31038e38b971f643ed13a5e6bf73386a",
+  "size": 32,
+  "current_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "artifact_authenticity": "SHA256 integrity only; expected digest must come from independently trusted publisher. Local unsigned candidate is not authenticated release.",
+  "apply": "External host Flatpak action only; GUI does not install/restart or silently change runtime",
+  "rollback": {
+    "application": "Host flatpak update --user --commit=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa org.veriufku.Veri_Ufku; previous commit must still exist locally or in trusted repo",
+    "project": "Application rollback does NOT undo schema migration. Back up the entire closed project first; old app may refuse newer schema; restore separate known-good backup without overwriting newer work."
+  },
+  "offline": "App bundle alone excludes runtime/driver/OS prerequisites; offline installer capability unavailable",
+  "requires": [
+    "Close app/workers and back up projects separately",
+    "Verify publisher provenance/signature outside this candidate planner",
+    "Confirm target ref/arch/runtime/extras and available disk",
+    "User explicitly selects host Flatpak install/update; then run packaged smoke before opening project",
+    "Keep old app commit and project backup separately; do not assume downgrading app downgrades data"
+  ],
+  "plan_hash": "4653b05f45cec26380eb659e234154344872c76f28f6e600a3afc458f35595e5"
+}

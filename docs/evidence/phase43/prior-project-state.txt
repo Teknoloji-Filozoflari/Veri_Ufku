@@ -1,0 +1,110 @@
+# Veri_Ufku — güncel oturum hafızası
+
+2026-10-11 Europe/Istanbul. Başlangıç yalnız AGENTS/PROJECT_STATE/ROADMAP ve
+git status; projeyi baştan sona tarama. Son teknik teslim Faz42 ilk bağımsız iki-grup kapsamı; tam regresyon doğrulandı.
+Önceki Faz41 teslimi; [önceki hafıza](evidence/phase42/prior-project-state.txt).
+Faz43 başlamadı. Teknik kapsam ve resmî faz kabulü ayrı; önceki kapılar açık.
+
+## Faz42 ilk kapsam ve kararlar
+
+Karşılaştır → Ölçüm planı, güç ve randomize deney: power_mean/power_proportion,
+random_assignment,experiment_mean/experiment_proportion. Plan soru/H0,
+birincil metrik/birim,eligibility,ölçüm penceresi,stopping,randomizasyon/analiz
+birimi,MDE,baseline/SD,alpha/power,allocation/attrition ve design effect'i saklar.
+
+A priori TTestIndPower common-SD Cohen d / NormalIndPower arcsine Cohen h;
+integer analyzable/recruitment sayıları ve yuvarlanan tasarım gücü. Proportion
+power normal yaklaşım, exact Fisher gücü değil; observed power yok.
+Attrition recruitment artışı kayıp yanlılığını düzeltmez. Design effect yalnız1.
+
+Benzersiz birim +lexicographic sıra/PCG64seed Bernoulli yerel taslak liste;
+gerçek kişiye tedavi atama veya mesaj yok. Allocation beklenen P(B), tam50/50
+garanti değil. Analiz tam assigned roster, bir satır bir bağımsız birim;
+randomizasyon/analiz birimi ayrı alan, bu yolda aynı birim. Kaynak değişmez.
+
+Analiz gerçek randomizasyon plan/kanıt kimliği ve kullanıcı onayı ister;
+uygulama kanıtı doğrulamaz, gözlemsel iki grup otomatik randomize etiketlenmez.
+ITT assigned bütün birimler; PP açık0/1protocol seçimi, association ve nedensel
+ITT etkisi değil. Assigned/population/observed/missing/event/PP-excluded ayrı.
+Null outcome event0 değildir; eksik ölçüm tam ITT/PP çıkarımını kapatır.
+Binary missing worst-case tanımlama sınırı CI değil. Attrition kol oran/farkı.
+
+Exact binomial SRM tam roster/Bernoulli P(B); p<0.001 diagnostic primary
+çıkarımını kapatır. Fixed-count/block allocation desteklenmez.
+Mean Welch fark0 p +mutlak t CI; relative point baseline0 iken tanımsız,
+mean ratio CI sunulmaz. Proportion Fisher exact p ve Bonferroni eşzamanlı
+Clopper–Pearson'dan konservatif absolute/relative CI. Fisher p ile CI tersine
+eşdeğer değildir; control alt sınır0 ise relative CI sınırsız/sunulmaz.
+Constant mean variance unavailable. Pretreatment baseline SMD ve guardrail
+mean/0-1rate/zarar sınırı betimsel;5baseline/5guardrail, adjusted çıkarım veya
+otomatik deney başarısı yok.
+
+Fixed-horizon/ölçüm penceresi kullanıcı onayı +planned_total kontrolü;
+eksik ufukta çıkarım yok. Dış peeking otomatik saptanmaz; sabit ufuk sequential
+değildir. Sequential alpha-spending/e-value kapalı. F42-P002paired/P003cluster/
+P004factorial ayrı **uygulanmamış** alt işlerdir; independent yöntemle taklit
+yok. Bu teslim ilk basit yolu bitirir; varyant/sequential geliştirmesi ayrı iş.
+[ADR043](adr/043-experiments-phase42.md).
+
+100000 full roster/RAM/CPU/disk/cancel bütçesi. Filtreli roster ret; ağırlık,
+decimal/nested/time yok; binary Bool destekli;NaN/inf/çok büyük ölçüm ret.
+Safe JSON plan/result +RowId/details parquet; atomic publish source/seed/original
+outcome bağını tekrar doğrular. Dataset/source/config stale save/export ret.
+Mevcut tek Capability/StatisticsController/spawn/ComputeBudget/ProjectStore;
+worker Qt/ACTIVE almaz, statsmodels native mappings limit öncesi primed.
+
+## Değişen dosyalar ve doğrulama
+
+Yeni statistics/experiment_contracts.py,experiments.py;
+ui/qml/ExperimentPanel.qml;tests/test_experiments.py,test_experiments_gui.py;
+scripts/measure_phase42.py. Mevcut statistics/contracts.py,engine.py,worker.py;
+ui/statistics.py,workspace.py;domain/capabilities.py;storage/analysis_store.py;
+qml/Main.qml,StatisticsPanel.qml;learning/content/tr.json,taxonomy.py ve
+article-count bekleyen test_usability.py. Matris/progress/roadmap/README/
+development/learning/ADR/kanıt/hafıza eşlendi. Eski demo fixture bu fazda değişmedi.
+
+37 core passed/1.24s; son47 Faz42 source passed/95.52s (37core+10 gerçekGUI).
+Ayrı source81 ilgili regression passed/382.91s; source47 sonrası güçlü fresh
+reopen testi final koşuya eklendi. Noncentral-t/normal analitik örneklem root,
+exact SRM,Fisher/CP/Welch,denominator/missing/ITT-PP,seed+row-reorder identity,
+source tamper atomic rollback ve observational/sequential ret doğrulandı.
+
+Source/wheel9'ar gerçek QML/spawn/help/Escape/export/save/fresh-reopen akışı;
+54 screenshot/72 artifact,9 numeric result birebir eşit.260 source/wheel/install
+paket dosyası byte eşit; installed importer/QML smoke PASS.
+264 offline article/145 UI bağı/534 named field/189 core English;14 belge unittest
+passed/8.847s. Docs/artifacts/learning/usability/Ruff check-format geçti.
+
+İlk QML UiTextField/accessible-purpose düzeltildi. Görsel log yanlış kayıt açma
+slotunu yakaladı; openSaved fix ve testte bellek result temizliği sayesinde
+fresh reopen doğrulandı. İlk kurulu ilgili66 koşu65passed/1eski responsiveness
+fixture failure;8s gerçek demo işi timer20tick ölçülmeden bitmişti; ilk izole
+tekrarda8s timer timeout. Bu sonuçlar saklandı, başarı gibi raporlanmaz.
+Son kurulu wheel55 hedefli vaka passed/97.09s;47 Faz42+eski GUI.
+Tam1295 vaka: 1276 passed/19 skipped/0 failure-error /572.29s.47 Faz42 passed/0skip.
+410 source/test/script/lock koşu boyunca değişmedi; collected/JUnit birebir.
+19skip isteğe bağlı MariaDB/MySQL/PostgreSQL/S3/Secret Service fixture eksikliğidir.
+Bilinen Faz42 ürün hatası son hedefli testte yok; destek sınırları yukarıda.
+[8 kabul](evidence/phase42/acceptance.json),[gerçek kayıt](evidence/PHASE42.md).
+
+## Resmî kapılar / çalışma ağacı / yeni oturum
+
+F13 insan;F25 insan/Orca/AT;F24minHW/cold/physical frame; kullanıcının durdurduğu
+F27 dağıtım;F28 giriş;F30 büyük SAS;F31clean offline cache açık. PhysicalGUI/
+insan/AT/minHW/clean offline install/remote CI koşulmadı. Resmî Faz42 sürüyor/
+deneysel/zorunlu; variants/sequential ayrı mevcut değil/doğrulanmadı.
+Başlangıç519 status girdisi korundu; stage/commit/push yok; untracked dosyalar da
+teslimin parçası, hesap değişimi başka makineye otomatik taşımaz.
+
+Başlangıç AGENTS/PROJECT_STATE/ROADMAP ve git status. Faz42 bakımında yalnız
+yukarıdaki kaynak/test ve gerektiğinde ADR043/PHASE42; geçmiş tüm fazları veya
+kanıt dizinlerini yeniden tarama. Faz42 varyantlarını otomatik başlamış sayma.
+Sonraki Faz43 yol haritası Bayesian modeller; başlamadı, ayrı açık kullanıcı
+talimatı gerekir. İlk iş F43-S001..004 ve mevcut statistics contracts/worker/
+controller/budget/save kaynaklarını hedefli incelemek; yönteme göre backend/
+prior/convergence/predictive checks ve kabul kriterlerini matristen doğrulamak.
+
+Yeni hesap ilk promptu: “AGENTS.md, docs/PROJECT_STATE.md ve docs/ROADMAP.md oku;
+git status kontrol et. Faz42 ilk bağımsız iki-grup teslimi ve test kanıtını esas al;
+projeyi topluca tarama, kullanıcı değişikliklerini koru. Aktif işte yalnız gerekli
+kaynak/test dosyalarını aç; kapalı alt işleri uygulanmış sayma.”

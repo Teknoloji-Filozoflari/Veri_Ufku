@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="201.128" timestamp="2026-10-16T23:43:31.117894+03:00" hostname="s-oktay"><testcase classname="tests.test_uncertainty_gui" name="test_actual_uncertainty_gui_safe_model_final_and_reopen[sigmoid-classification]" file="tests/test_uncertainty_gui.py" line="21" time="80.982"><failure message="assert (False)&#10; +  where False = &lt;veri_ufku.ui.validation.ValidationController(0x3d255310) at 0x7fcf7c022080&gt;.canTest">tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-56/test_actual_uncertainty_gui_sa0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7fcffcdc3230&gt;
+method = 'sigmoid', purpose = 'classification', base_index = 0
+
+    @pytest.mark.parametrize("method,purpose", CASES)
+    def test_actual_uncertainty_gui_safe_model_final_and_reopen(
+        tmp_path, monkeypatch, method, purpose, base_index=0
+    ):
+        app, window, projects, prep, c, source = imported(
+            tmp_path, monkeypatch, purpose=purpose
+        )
+        engine = app._veri_ufku_resources[0]
+        before = source.read_bytes()
+        try:
+            engine._workspace_resources.activate("model.uncertainty." + method)
+            assert window.findChild(QObject, "uncertaintyExpanded").property("checked")
+            assert (
+                window.findChild(QObject, "uncertaintyMethod").property("currentValue")
+                == method
+            )
+            window.findChild(QObject, "uncertaintyBase").setProperty(
+                "currentIndex", base_index
+            )
+            if purpose == "classification":
+                window.findChild(QObject, "uncertaintyThreshold").setProperty(
+                    "currentIndex", 0
+                )
+            window.findChild(QObject, "uncertaintyHelp").clicked.emit()
+            spin(app, lambda: window.property("infoOpen"))
+            assert engine._learning_resources.article["id"] == "model-uncertainty"
+            QTest.keyClick(window, Qt.Key.Key_Escape)
+            spin(app, lambda: not window.property("infoOpen"))
+            button = window.findChild(QObject, "uncertaintyRun")
+            assert button.property("enabled")
+            button.clicked.emit()
+            spin(app, lambda: not c.busy, timeout=90000)
+            assert not c.errorText, c.errorText
+            assert c.result and c.result["uncertainty"]["schema"] == "UncertaintyModel/v1"
+            assert c.result["worker_pid"] != os.getpid()
+            assert any(
+                r.get("baseline", {}).get("model_package_uri")
+                for r in projects.draft["results"]
+            )
+            dev = c.result
+            assert "empirical coverage" in window.findChild(
+                QObject, "uncertaintyCoverage"
+            ).property("text")
+            if CAPTURE:
+                CAPTURE(
+                    app,
+                    window,
+                    projects,
+                    c,
+                    "forest-" + method if base_index else method,
+                    purpose,
+                    "development",
+                )
+            c.invalidate()
+            assert not c.canTest
+            saved = next(
+                r["id"]
+                for r in projects.draft["results"]
+                if r.get("baseline", {}).get("run_id") == dev["run_id"]
+            )
+            lifecycle = engine._lifecycle_resources
+            lifecycle.selectModel(saved)
+            spin(app, lambda: not lifecycle.busy, timeout=90000)
+            assert not lifecycle.errorText, lifecycle.errorText
+            import polars as pl
+            from PySide6.QtCore import QUrl
+    
+            package = tmp_path / (method + ".vumodel")
+            lifecycle.savePackage(QUrl.fromLocalFile(str(package)).toString())
+            spin(app, lambda: not lifecycle.busy, timeout=90000)
+            assert not lifecycle.errorText and package.is_file()
+            lifecycle.openPackage(QUrl.fromLocalFile(str(package)).toString())
+            spin(app, lambda: not lifecycle.busy, timeout=90000)
+            assert not lifecycle.errorText
+            lifecycle.previewData("reject", 17)
+            spin(app, lambda: not lifecycle.busy, timeout=90000)
+            assert not lifecycle.errorText and not lifecycle.previewReport["blockers"]
+            destination = tmp_path / (method + "-prediction.parquet")
+            lifecycle.predictData(
+                QUrl.fromLocalFile(str(destination)).toString(), "reject", 17
+            )
+            spin(app, lambda: not lifecycle.busy, timeout=90000)
+            assert not lifecycle.errorText, lifecycle.errorText
+            output = pl.read_parquet(destination)
+            assert (
+                "vu_prediction_set" in output.columns
+                if purpose == "classification"
+                else "vu_predictive_lower" in output.columns
+            )
+            assert len(output) == 80 and output["__vu_row_id"].n_unique() == 80
+            assert lifecycle.outputReport["details"]["fit_calls"] == 0
+            c.openRun(saved)
+            spin(app, lambda: not c.busy)
+&gt;           assert c.canTest and not c.errorText
+E           assert (False)
+E            +  where False = &lt;veri_ufku.ui.validation.ValidationController(0x3d255310) at 0x7fcf7c022080&gt;.canTest
+
+/home/s-oktay/Belgeler/Veri_Ufku/tests/test_uncertainty_gui.py:115: AssertionError</failure></testcase><testcase classname="tests.test_uncertainty_gui" name="test_actual_uncertainty_gui_safe_model_final_and_reopen[interval-regression]" file="tests/test_uncertainty_gui.py" line="21" time="90.594" /><testcase classname="tests.test_uncertainty_gui" name="test_group_time_calibration_gui_and_coverage_scope" file="tests/test_uncertainty_gui.py" line="241" time="28.223" /></testsuite></testsuites>

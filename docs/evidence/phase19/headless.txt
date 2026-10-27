@@ -1,0 +1,12 @@
+PASS kmeans rows=240 0.941s
+PASS dbscan rows=240 0.910s
+PASS isolation_forest rows=240 1.046s
+PASS iqr rows=240 0.960s
+Traceback (most recent call last):
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase19.py", line 214, in <module>
+    run(parser.parse_args())
+    ~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase19.py", line 142, in run
+    assert c.report["rows"] == n and c.report["spec"]["method"] == method
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

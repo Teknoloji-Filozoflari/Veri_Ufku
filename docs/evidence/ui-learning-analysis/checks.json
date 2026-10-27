@@ -1,0 +1,115 @@
+[
+  {
+    "command": [
+      "uv",
+      "sync",
+      "--frozen",
+      "--group",
+      "dev"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/ui-learning-analysis/check-01.txt",
+    "evaluated_at": "2026-10-08T21:41:31.857987+00:00"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check_docs.py"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/ui-learning-analysis/check-02.txt",
+    "evaluated_at": "2026-10-08T21:41:31.908448+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/ui-learning-analysis/check-03.txt",
+    "evaluated_at": "2026-10-08T21:41:34.517995+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_docs.py"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/ui-learning-analysis/check-04.txt",
+    "evaluated_at": "2026-10-08T21:41:34.574836+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_artifacts.py"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/ui-learning-analysis/check-05.txt",
+    "evaluated_at": "2026-10-08T21:41:34.695492+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "python",
+      "scripts/check_learning.py"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/ui-learning-analysis/check-06.txt",
+    "evaluated_at": "2026-10-08T21:41:34.750746+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "."
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/ui-learning-analysis/check-07.txt",
+    "evaluated_at": "2026-10-08T21:41:34.770659+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "--check",
+      "."
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/ui-learning-analysis/check-08.txt",
+    "evaluated_at": "2026-10-08T21:41:34.788386+00:00"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "veri-ufku",
+      "--smoke-test"
+    ],
+    "exit_code": 0,
+    "output": "docs/evidence/ui-learning-analysis/check-09.txt",
+    "evaluated_at": "2026-10-08T21:41:36.130729+00:00"
+  }
+]

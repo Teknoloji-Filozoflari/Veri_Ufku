@@ -1,0 +1,118 @@
+........................................................................ [  5%]
+........................................................................ [ 11%]
+....................................................................sss. [ 16%]
+ssssssssssssssss........................................................ [ 22%]
+........................................................................ [ 27%]
+........................................................................ [ 33%]
+........................................................................ [ 38%]
+........................................................................ [ 44%]
+........................................................................ [ 49%]
+........................................................................ [ 55%]
+........................................................................ [ 60%]
+........................................................................ [ 66%]
+............................................F
+=================================== FAILURES ===================================
+___________ test_qml_regression_comparison_plots_final_and_retuning ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-s-oktay/pytest-20/test_qml_regression_comparison0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f84f2c97ee0>
+
+    def test_qml_regression_comparison_plots_final_and_retuning(tmp_path, monkeypatch):
+        app, window, projects, p, c, source = imported(tmp_path, monkeypatch)
+        before = source.read_bytes()
+        try:
+            unit = window.findChild(QObject, "regressionUnit")
+            run = window.findChild(QObject, "regressionRun")
+            assert not run.property("enabled")
+            unit.setProperty("text", "TL")
+            assert run.property("enabled")
+            run.clicked.emit()
+            spin(app, lambda: not c.busy)
+            assert not c.errorText, c.errorText
+            assert len(c.result["comparison"]) == 4
+            assert c.result["worker_pid"] != os.getpid()
+            assert c.result["mode"] == "development" and not c.testHistory
+    
+            def visual_find(item, name):
+                if item.objectName() == name:
+                    return item
+                for child in item.childItems():
+                    found = visual_find(child, name)
+                    if found is not None:
+                        return found
+                return None
+    
+            spin(
+                app,
+                lambda: (
+                    visual_find(window.contentItem(), "regressionActualPlot") is not None
+                ),
+            )
+            assert visual_find(window.contentItem(), "regressionActualPlot")
+            assert visual_find(window.contentItem(), "regressionResidualPlot")
+            scope = window.findChild(QObject, "regressionScope")
+            assert "GELİŞTİRME" in scope.property("text")
+            record = next(r for r in projects.draft["results"] if "baseline" in r)
+            consent = window.findChild(QObject, "validationTestConsent")
+            consent.setProperty("checked", True)
+            window.findChild(QObject, "validationTest").clicked.emit()
+            spin(app, lambda: not c.busy)
+            assert not c.errorText, c.errorText
+            assert c.result["mode"] == "final" and not c.result["comparison"]
+            assert "FINAL TEST" in scope.property("text")
+            assert c.testHistory[-1]["status"] == "completed"
+            assert c.testHistory[-1]["selected_model"] == c.result["selected_model"]
+            window.findChild(QObject, "regressionAlpha").setProperty("currentIndex", 2)
+            run.clicked.emit()
+            spin(app, lambda: not c.busy)
+>           assert not c.errorText, c.errorText
+E           AssertionError: Uygulama ve işlerin toplam bellek bütçesi aşıldı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu.
+E           assert not 'Uygulama ve işlerin toplam bellek bütçesi aşıldı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu.'
+E            +  where 'Uygulama ve işlerin toplam bellek bütçesi aşıldı. Özellikleri azaltın veya açıkça daha küçük veri sürümü seçin; önceki proje korundu.' = <veri_ufku.ui.validation.ValidationController(0x187d5240) at 0x7f84da3a7ac0>.errorText
+
+tests/test_regression_gui.py:58: AssertionError
+=============================== warnings summary ===============================
+tests/test_geo.py: 4 warnings
+tests/test_geo_boundaries.py: 4 warnings
+tests/test_geo_gui.py: 2 warnings
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/transform.py:178: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    return Affine.translation(west, north) * Affine.scale(xsize, -ysize)
+
+tests/test_geo.py: 13 warnings
+tests/test_geo_boundaries.py: 6 warnings
+tests/test_geo_network.py: 4 warnings
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/windows.py:387: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    left, bottom = transform * (col_min, row_max)
+
+tests/test_geo.py: 13 warnings
+tests/test_geo_boundaries.py: 6 warnings
+tests/test_geo_network.py: 4 warnings
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/windows.py:388: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    right, top = transform * (col_max, row_min)
+
+tests/test_geo_network.py::test_real_tls_capture_preview_publish_reopen_without_network[tile]
+tests/test_geo_network.py::test_real_tls_capture_preview_publish_reopen_without_network[geocoding]
+tests/test_geo_network.py::test_tile_redirect_cache_and_timeout_control[redirect-HTTP 302]
+tests/test_geo_network.py::test_tile_redirect_cache_and_timeout_control[no-store-no-store]
+tests/test_geo_network.py::test_tile_redirect_cache_and_timeout_control[slow-timeout]
+tests/test_geo_network.py::test_tile_retry_one_result_and_explicit_cancel
+tests/test_geo_network.py::test_geo_online_qml_explicit_read_reopen[tile]
+tests/test_geo_network.py::test_geo_online_qml_explicit_read_reopen[geocoding]
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/io.py:143: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+    rd = writer(
+
+tests/test_geo_network.py::test_real_tls_capture_preview_publish_reopen_without_network[tile]
+tests/test_geo_network.py::test_tile_retry_one_result_and_explicit_cancel
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/io.py:140: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+    rd = DatasetReader(mempath, driver=driver, sharing=sharing, thread_safe=thread_safe, **kwargs)
+
+tests/test_geo_network.py::test_real_tls_capture_preview_publish_reopen_without_network[tile]
+tests/test_geo_network.py::test_tile_retry_one_result_and_explicit_cancel
+  /home/s-oktay/Belgeler/Veri_Ufku/.venv/lib/python3.13/site-packages/rasterio/transform.py:189: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    return Affine.translation(west, north) * Affine.scale(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_regression_gui.py::test_qml_regression_comparison_plots_final_and_retuning
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 889 passed, 19 skipped, 68 warnings in 1162.03s (0:19:22)

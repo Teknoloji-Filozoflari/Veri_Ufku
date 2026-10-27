@@ -1,0 +1,73 @@
+{
+  "id": "E55-VERIFY",
+  "environment": "ENV-55",
+  "date": "2026-10-14T17:34:27.937014+00:00",
+  "tests": {
+    "source-core": {
+      "tests": 437,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    "wheel-core": {
+      "tests": 437,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    "source-ui": {
+      "tests": 23,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    "source-https": {
+      "tests": 1,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    "source-token-guard": {
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "wheel-token-guard": {
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "new_tests": {
+    "core_without_network": 20,
+    "https_source": 1,
+    "gui": 12
+  },
+  "commands": [
+    ".venv/bin/pytest -q tests/test_nlp.py tests/test_text.py tests/test_signals.py tests/test_temporal.py tests/test_time_series.py tests/test_experiment_registry.py tests/test_explanation.py tests/test_uncertainty.py tests/test_search.py tests/test_search_store.py tests/test_model_families.py tests/test_model_family_support.py tests/test_regression.py tests/test_classification.py tests/test_lifecycle.py tests/test_validation.py tests/test_learning_tree.py -k \"not real_https\" --junitxml=docs/evidence/phase55/source-core.xml",
+    ".venv/bin/python /tmp/f55_wheel_tests.py",
+    "QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software .venv/bin/pytest -q tests/test_nlp_gui.py tests/test_text_gui.py tests/test_experiment_registry_gui.py tests/test_usability.py --junitxml=docs/evidence/phase55/source-ui.xml",
+    ".venv/bin/python scripts/measure_phase55.py --output docs/evidence/phase55/source-gui-delivery",
+    ".venv/bin/python scripts/measure_phase55.py --package-root /tmp/veri-ufku-f55-installed --output docs/evidence/phase55/wheel-gui-delivery",
+    ".venv/bin/pytest -q tests/test_nlp.py -k real_https --junitxml=docs/evidence/phase55/source-https.xml (approved outside sandbox: localhost socket)",
+    " .venv/bin/python /tmp/f55_smoke.py",
+    ".venv/bin/pytest -q tests/test_nlp.py -k \"training_pool or atomic\" --junitxml=docs/evidence/phase55/source-token-guard.xml",
+    ".venv/bin/python /tmp/f55_tokens.py"
+  ],
+  "exit_code": 0,
+  "network_scope": "Actual source HTTPS loopback with temporary test CA/SAN localhost, exact size/hash/cache/cancel; socket required explicit sandbox approval. Network case deselected in broad source/wheel suites, never reported as skipped/passed there. Download helper unchanged after TLS check; neural/authenticated/external service model download not validated.",
+  "not_run": [
+    "physical desktop",
+    "human/AT",
+    "minimum hardware",
+    "clean offline install",
+    "remote CI",
+    "full repository aggregate regression",
+    "wheel HTTPS network test",
+    "neural backend production model benchmark"
+  ],
+  "limits": "500rows/500000chars/5000chars perdoc/8topics/16MiB model. NMF TF-IDF/LDA counts, native static mean word embeddings/literal case-sensitive gazetteer/linear score bundle; transformer/spaCy/ONNX unavailable/unsupported, not a neural NLP quality benchmark. Fixed train-only TF-IDF+LogisticRegression, human labels, explicit frozen holdout. No nested tuning/final test/new-file fitted model serving. Full non-test corpus judgments including zero-vector docs for retrieval. Model/dataset licenses and language/training claims author-supplied; no quality guarantee. Download public HTTPS only/auth unsupported; source loopback TLS execution verified, wheel network not executed.",
+  "final_assertion_revision": "Strengthened held-test tokenizer assertions (testlabel/gizli/geleceği) after broad437 checks; scientific code unchanged, affected13 source+13 installed-wheel checks passed."
+}

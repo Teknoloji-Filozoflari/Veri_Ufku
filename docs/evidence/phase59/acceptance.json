@@ -1,0 +1,291 @@
+{
+  "date": "2026-10-15T16:09:35.802629+00:00",
+  "environment": "ENV-59",
+  "records": [
+    {
+      "id": "E59-P001",
+      "requirement": "F59-P001",
+      "label": "User/item/interaction/time",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_typed_ids",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-feedback",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    },
+    {
+      "id": "E59-P002",
+      "requirement": "F59-P002",
+      "label": "Popularity baseline",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage[popularity]",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-feedback",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    },
+    {
+      "id": "E59-P003",
+      "requirement": "F59-P003",
+      "label": "Content cosine",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_local_only_source_missing_and_known_content_reference",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-feedback",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    },
+    {
+      "id": "E59-P004",
+      "requirement": "F59-P004",
+      "label": "Explicit/implicit ALS",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_hand_als_explicit_implicit",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-feedback",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    },
+    {
+      "id": "E59-P005",
+      "requirement": "F59-P005",
+      "label": "Separate query/group LTR",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_ltr_new_query_needs_features_and_respects_query_order",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-feedback",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    },
+    {
+      "id": "E59-P006",
+      "requirement": "F59-P006",
+      "label": "Temporal/leave-last-out",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_global_protected_future_and_timestamp_ties",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-evaluation",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    },
+    {
+      "id": "E59-P007",
+      "requirement": "F59-P007",
+      "label": "Negative sampling / candidate universe",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_sample_universe_seed_and_seen_denominators",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-evaluation",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    },
+    {
+      "id": "E59-P008",
+      "requirement": "F59-P008",
+      "label": "Precision/Recall@K",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_hand_metrics_and_empty",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-evaluation",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    },
+    {
+      "id": "E59-P009",
+      "requirement": "F59-P009",
+      "label": "NDCG@K binary relevance",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_hand_metrics_and_empty",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-evaluation",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    },
+    {
+      "id": "E59-P010",
+      "requirement": "F59-P010",
+      "label": "MAP@K macro query AP",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_hand_metrics_and_empty",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-evaluation",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    },
+    {
+      "id": "E59-P011",
+      "requirement": "F59-P011",
+      "label": "Coverage/diversity/cold start",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage[content]",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-cold-start",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    },
+    {
+      "id": "E59-P012",
+      "requirement": "F59-P012",
+      "label": "Unknown IDs / local export",
+      "environment": "ENV-59",
+      "date": "2026-10-15T16:09:35.802629+00:00",
+      "maturity": "experimental",
+      "scope": "bounded native offline CPU; formal acceptance separate",
+      "evidence": {
+        "C": "src/veri_ufku/modeling/recommendation.py",
+        "V": "tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage",
+        "G": "src/veri_ufku/ui/qml/RecommendationPanel.qml; tests/test_recommendation_gui.py",
+        "H": "recommendation-cold-start",
+        "P": "src/veri_ufku/storage/neural_store.py; tests/test_recommendation.py::test_methods_persist_new_ids_source_lineage"
+      },
+      "actual_commands": [
+        "source-core-final.xml",
+        "wheel-core.xml",
+        "source-gui/gui.xml",
+        "source-final-ranker/gui.xml",
+        "wheel-gui/gui.xml"
+      ]
+    }
+  ],
+  "not_claimed": [
+    "physical desktop/human/AT",
+    "minimum hardware",
+    "clean offline installation",
+    "remote CI",
+    "unbounded catalog",
+    "optional third-party ranking adapters",
+    "long repeated-session retained-heap gate"
+  ]
+}

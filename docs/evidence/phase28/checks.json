@@ -1,0 +1,139 @@
+{
+  "environment": "ENV-28",
+  "commands": [
+    {
+      "command": [
+        "uv",
+        "sync",
+        "--offline",
+        "--locked",
+        "--group",
+        "dev"
+      ],
+      "utc": "2026-10-10T12:04:22.660904+00:00",
+      "exit_code": 0,
+      "seconds": 0.009941738999259542,
+      "log": "docs/evidence/phase28/sync.log"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/check_docs.py"
+      ],
+      "utc": "2026-10-10T12:04:22.670996+00:00",
+      "exit_code": 0,
+      "seconds": 0.10382482400018489,
+      "log": "docs/evidence/phase28/docs.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/check_artifacts.py"
+      ],
+      "utc": "2026-10-10T12:04:22.775074+00:00",
+      "exit_code": 0,
+      "seconds": 0.11306005599908531,
+      "log": "docs/evidence/phase28/artifacts.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/check_learning.py"
+      ],
+      "utc": "2026-10-10T12:04:22.888403+00:00",
+      "exit_code": 0,
+      "seconds": 0.05461394700068922,
+      "log": "docs/evidence/phase28/learning.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/check_usability.py"
+      ],
+      "utc": "2026-10-10T12:04:22.943339+00:00",
+      "exit_code": 0,
+      "seconds": 0.07507075399917085,
+      "log": "docs/evidence/phase28/usability.log"
+    },
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "utc": "2026-10-10T12:04:23.018679+00:00",
+      "exit_code": 0,
+      "seconds": 0.008749325999815483,
+      "log": "docs/evidence/phase28/ruff.log"
+    },
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "utc": "2026-10-10T12:04:23.027582+00:00",
+      "exit_code": 0,
+      "seconds": 0.007353975999649265,
+      "log": "docs/evidence/phase28/format.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_document_contracts.py",
+        "-q"
+      ],
+      "utc": "2026-10-10T12:04:23.035115+00:00",
+      "exit_code": 0,
+      "seconds": 5.214311091000127,
+      "log": "docs/evidence/phase28/contracts.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "utc": "2026-10-10T12:04:28.249710+00:00",
+      "exit_code": 0,
+      "seconds": 7.364209221999772,
+      "log": "docs/evidence/phase28/unittest.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "utc": "2026-10-10T12:04:35.614204+00:00",
+      "exit_code": 1,
+      "seconds": 5.709732815001189,
+      "log": "docs/evidence/phase28/system-unittest.log"
+    },
+    {
+      "command": [
+        ".venv/bin/veri-ufku",
+        "--smoke-test"
+      ],
+      "utc": "2026-10-10T12:04:41.324242+00:00",
+      "exit_code": 0,
+      "seconds": 0.8219713719990978,
+      "log": "docs/evidence/phase28/entry.log"
+    }
+  ]
+}

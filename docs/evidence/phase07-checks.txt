@@ -1,0 +1,164 @@
+Faz07 gerçek son kapılar — 2026-10-06 ENV-07
+
+$ uv --cache-dir /tmp/veri-ufku-uv sync --locked --group dev
+Resolved 18 packages in 0.85ms
+Checked 17 packages in 0.16ms
+
+exit=0
+
+$ python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_artifacts.py
+PASS: development wheel and lock integrity 0335d119b10d2e59db4e5467dedaa2489279005f2e3d0d1156f701086845c0ee
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_learning.py
+PASS: 31 offline articles; 36 UI bindings; all capability links
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff check src tests scripts
+All checks passed!
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff format --check src tests scripts
+68 files already formatted
+
+exit=0
+
+$ cwd=/home/s-oktay/Belgeler/Veri_Ufku env={} uv --cache-dir /tmp/veri-ufku-uv build --offline --no-build-isolation --out-dir /tmp/veri-ufku-phase07-final-dist
+Building source distribution...
+Building wheel from source distribution...
+Successfully built /tmp/veri-ufku-phase07-final-dist/veri_ufku-0.1.0.tar.gz
+Successfully built /tmp/veri-ufku-phase07-final-dist/veri_ufku-0.1.0-py3-none-any.whl
+
+exit=0
+
+$ cwd=/home/s-oktay/Belgeler/Veri_Ufku env={} uv --cache-dir /tmp/veri-ufku-uv pip install --offline --no-deps --target /tmp/veri-ufku-phase07-final-installed /tmp/veri-ufku-phase07-final-dist/veri_ufku-0.1.0-py3-none-any.whl
+Using CPython 3.13.15 interpreter at: .venv/bin/python
+Resolved 1 package in 1ms
+Prepared 1 package in 4ms
+Installed 1 package in 1ms
+ + veri-ufku==0.1.0 (from file:///tmp/veri-ufku-phase07-final-dist/veri_ufku-0.1.0-py3-none-any.whl)
+
+exit=0
+
+$ cwd=/tmp env={'PYTHONPATH': '/tmp/veri-ufku-phase07-final-installed'} /home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python /home/s-oktay/Belgeler/Veri_Ufku/scripts/measure_phase07.py --package-root /tmp/veri-ufku-phase07-final-installed --output /home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-wheel.json
+{"environment": "ENV-07", "date": "2026-10-06", "python": "3.13.15", "polars": "2.0.0", "platform": "Linux-7.2.9-1-cachyos-x86_64-with-glibc2.44", "backend": "offscreen/software", "rows": 100000, "n": 1, "cache": "warm developer host; no minimum hardware or cold cache claim", "peak_parent_worker_rss_bytes": 506970112, "max_tick_gap_ms": 45.22036100024707, "page_parent_rss_bytes": [355598336, 350478336, 350588928, 350629888, 348839936, 348839936, 348839936, 348844032, 348647424, 348577792, 348577792, 348581888, 348585984, 348585984, 348647424, 348692480], "page_ms": [194.70974499927252, 181.43250699722557, 182.19738699917798, 193.06076200155076, 214.49084499909077, 183.0522349991952, 172.90591299752123, 186.96951099991566, 185.6017129975953, 184.93517699971562, 184.22752400147147, 181.36074200083385, 179.892406998988, 184.85163100194768, 189.9613559980935, 184.47855199701735], "screenshots": ["/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-1366-light-table.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-1366-light-column.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-1366-light-profile.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-720-dark-table.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-720-dark-column.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-720-dark-profile.png"], "full_profile_ms": 857.1868299986818, "source_sha256_unchanged": "d2e8f060d9c56dabce33023774b0d76d88be23b0838e1080a7c16c0cefba0d8b", "max_page_model_rows": 200, "steady_parent_rss_range_bytes": 2052096, "wheel_package": "/tmp/veri-ufku-phase07-final-installed/veri_ufku/__init__.py"}
+
+exit=0
+
+$ cwd=/tmp env={'PYTHONPATH': '/tmp/veri-ufku-phase07-final-installed'} /home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python /home/s-oktay/Belgeler/Veri_Ufku/scripts/smoke_structured_wheel.py --package-root /tmp/veri-ufku-phase07-final-installed --fixtures /home/s-oktay/Belgeler/Veri_Ufku/tests/fixtures/structured
+INSTALLED_WHEEL_JSON_WORKER_IMPORT PASS
+INSTALLED_WHEEL_JSONL_WORKER_IMPORT PASS
+INSTALLED_WHEEL_XLSX_WORKER_IMPORT PASS
+INSTALLED_WHEEL_PARQUET_WORKER_IMPORT PASS
+PHASE06_INSTALLED_WHEEL_REOPEN PASS /tmp/veri-ufku-phase07-final-installed/veri_ufku/__init__.py
+
+exit=0
+
+$ cwd=/tmp env={'PYTHONPATH': '/tmp/veri-ufku-phase07-final-installed'} /home/s-oktay/Belgeler/Veri_Ufku/.venv/bin/python /home/s-oktay/Belgeler/Veri_Ufku/scripts/smoke_import_wheel.py --package-root /tmp/veri-ufku-phase07-final-installed
+PHASE05_INSTALLED_WHEEL_IMPORT PASS /tmp/veri-ufku-phase07-final-installed/veri_ufku/__init__.py
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen pytest -q
+........................................................................ [ 34%]
+........................................................................ [ 69%]
+..............................................................           [100%]
+206 passed in 30.69s
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.310s
+
+OK
+
+exit=0
+
+$ uv --cache-dir /tmp/veri-ufku-uv run --frozen veri-ufku --smoke-test
+
+exit=2
+
+$ cwd=/home/s-oktay/Belgeler/Veri_Ufku env={} uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/measure_phase07.py
+{"environment": "ENV-07", "date": "2026-10-06", "python": "3.13.15", "polars": "2.0.0", "platform": "Linux-7.2.9-1-cachyos-x86_64-with-glibc2.44", "backend": "offscreen/software", "rows": 100000, "n": 1, "cache": "warm developer host; no minimum hardware or cold cache claim", "peak_parent_worker_rss_bytes": 506183680, "max_tick_gap_ms": 45.108201000402914, "page_parent_rss_bytes": [356724736, 349892608, 349995008, 350052352, 348258304, 348262400, 348270592, 348282880, 348086272, 348016640, 348016640, 348016640, 348020736, 348020736, 348082176, 348131328], "page_ms": [187.13733500044327, 186.97653399794945, 189.44559100054903, 188.3889349992387, 178.37036099808756, 178.68992799776606, 181.501085000491, 185.8852930017747, 178.01716000030865, 180.63653799981694, 177.3705310006335, 181.6365679987939, 183.80632600019453, 180.09929400068359, 178.61839399847668, 187.6887260004878], "screenshots": ["/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-1366-light-table.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-1366-light-column.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-1366-light-profile.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-720-dark-table.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-720-dark-column.png", "/home/s-oktay/Belgeler/Veri_Ufku/docs/evidence/phase07-720-dark-profile.png"], "full_profile_ms": 872.7173209990724, "source_sha256_unchanged": "d2e8f060d9c56dabce33023774b0d76d88be23b0838e1080a7c16c0cefba0d8b", "max_page_model_rows": 200, "steady_parent_rss_range_bytes": 2035712, "wheel_package": null}
+
+exit=0
+
+$ isolated temporary XDG config/state/cache; uv --cache-dir /tmp/veri-ufku-uv run --frozen veri-ufku --smoke-test
+GUI_SMOKE PASS
+
+exit=0
+
+$ isolated temporary XDG config/state/cache; git diff --check
+
+exit=0
+
+$ final evidence/matrix update; python3 scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ final evidence/matrix update; uv --cache-dir /tmp/veri-ufku-uv run --frozen python scripts/check_docs.py
+PASS: 76 phases, source requirements, evidence, progress and local links
+
+exit=0
+
+$ final evidence/matrix update; uv --cache-dir /tmp/veri-ufku-uv run --frozen python -m unittest discover -s tests -v
+test_broken_link_is_rejected (test_document_contracts.DocumentContracts.test_broken_link_is_rejected) ... ok
+test_current_documents (test_document_contracts.DocumentContracts.test_current_documents) ... ok
+test_dependency_cycle_is_rejected (test_document_contracts.DocumentContracts.test_dependency_cycle_is_rejected) ... ok
+test_duplicate_id_is_rejected (test_document_contracts.DocumentContracts.test_duplicate_id_is_rejected) ... ok
+test_false_completion_is_rejected (test_document_contracts.DocumentContracts.test_false_completion_is_rejected) ... ok
+test_missing_evidence_is_rejected (test_document_contracts.DocumentContracts.test_missing_evidence_is_rejected) ... ok
+test_progress_conflict_is_rejected (test_document_contracts.DocumentContracts.test_progress_conflict_is_rejected) ... ok
+test_source_scope_loss_is_rejected (test_document_contracts.DocumentContracts.test_source_scope_loss_is_rejected) ... ok
+test_unverified_dependency_is_rejected (test_document_contracts.DocumentContracts.test_unverified_dependency_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.301s
+
+OK
+
+exit=0
+
+$ final evidence/matrix update; uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff check src tests scripts
+All checks passed!
+
+exit=0
+
+$ final evidence/matrix update; uv --cache-dir /tmp/veri-ufku-uv run --frozen ruff format --check src tests scripts
+68 files already formatted
+
+exit=0
+
+$ final evidence/matrix update; git diff --check
+
+exit=0
+
+$ final evidence/matrix update; sha256sum Veri_Ufku_Birlestirilmis_Gelistirme_Promptlari.md
+efae07bc3a6fc6b9c48a00c2f3e09c530f5c894d228090c9e09c596f1e79d214  Veri_Ufku_Birlestirilmis_Gelistirme_Promptlari.md
+
+exit=0

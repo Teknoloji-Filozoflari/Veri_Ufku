@@ -1,0 +1,926 @@
+2026-10-09 ENV-18 installed primary API inspection; web attempt failed401 token_revoked
+3.13.15 (main, Sep 29 2026, 15:01:28) [Clang 22.1.3 ]
+sklearn 1.9.1 PySide6 6.11.2
+sklearn.linear_model._logistic LogisticRegression (penalty='deprecated', *, C=1.0, l1_ratio=0.0, dual=False, tol=0.0001, fit_intercept=True, intercept_scaling=1, class_weight=None, random_state=None, solver='lbfgs', max_iter=100, verbose=0, warm_start=False, n_jobs=None)
+Logistic Regression (aka logit, MaxEnt) classifier.
+
+This class implements regularized logistic regression using a set of available
+solvers. **Note that regularization is applied by default**. It can handle both
+dense and sparse input `X`. Use C-ordered arrays or CSR matrices containing 64-bit
+floats for optimal performance; any other input format will be converted (and
+copied).
+
+The solvers 'lbfgs', 'newton-cg', 'newton-cholesky' and 'sag' support only L2
+regularization with primal formulation, or no regularization. The 'liblinear'
+solver supports both L1 and L2 regularization (but not both, i.e. elastic-net),
+with a dual formulation only for the L2 penalty. The Elastic-Net (combination of L1
+and L2) regularization is only supported by the 'saga' solver.
+
+For :term:`multiclass` problems (whenever `n_classes >= 3`), all solvers except
+'liblinear' optimize the (penalized) multinomial loss. 'liblinear' only handles
+binary classification but can be extended to handle multiclass by using
+:class:`~sklearn.multiclass.OneVsRestClassifier`.
+
+Read more in the :ref:`User Guide <logistic_regression>`.
+
+Parameters
+----------
+penalty : {'l1', 'l2', 'elasticnet', None}, default='l2'
+    Specify the norm of the penalty:
+
+    - `None`: no penalty is added;
+    - `'l2'`: add an L2 penalty term and it is the default choice;
+    - `'l1'`: add an L1 penalty term;
+    - `'elasticnet'`: both L1 and L2 penalty terms are added.
+
+    .. warning::
+       Some penalties may not work with some solvers. See the parameter
+       `solver` below, to know the compatibility between the penalty and
+       solver.
+
+    .. versionadded:: 0.19
+       l1 penalty with SAGA solver (allowing 'multinomial' + L1)
+
+    .. deprecated:: 1.8
+       `penalty` was deprecated in version 1.8 and will be removed in 1.10.
+       Use `l1_ratio` and `C` instead. `l1_ratio=0` for `penalty='l2'`,
+       `l1_ratio=1` for `penalty='l1'`, `l1_ratio` set to any float between 0 and 1
+       for `penalty='elasticnet'`, and `C=np.inf` for `penalty=None`.
+
+C : float, default=1.0
+    Inverse of regularization strength; must be a positive float.
+    Like in support vector machines, smaller values specify stronger
+    regularization. `C=np.inf` results in unpenalized logistic regression.
+    For a visual example on the effect of tuning the `C` parameter
+    with an L1 penalty, see:
+    :ref:`sphx_glr_auto_examples_linear_model_plot_logistic_path.py`.
+
+l1_ratio : float, default=0.0
+    The Elastic-Net mixing parameter, with `0 <= l1_ratio <= 1`. Setting
+    `l1_ratio=1` gives a pure L1-penalty, setting `l1_ratio=0` a pure L2-penalty.
+    Any value between 0 and 1 gives an Elastic-Net penalty of the form
+    `l1_ratio * L1 + (1 - l1_ratio) * L2`.
+
+    .. warning::
+       Certain values of `l1_ratio`, i.e. some penalties, may not work with some
+       solvers. See the parameter `solver` below, to know the compatibility between
+       the penalty and solver.
+
+    .. versionchanged:: 1.8
+        Default value changed from None to 0.0.
+
+    .. deprecated:: 1.8
+        `None` is deprecated and will be removed in version 1.10. Always use
+        `l1_ratio` to specify the penalty type.
+
+dual : bool, default=False
+    Dual (constrained) or primal (regularized, see also
+    :ref:`this equation <regularized-logistic-loss>`) formulation. Dual formulation
+    is only implemented for l2 penalty with liblinear solver. Prefer `dual=False`
+    when n_samples > n_features.
+
+tol : float, default=1e-4
+    Tolerance for stopping criteria.
+
+fit_intercept : bool, default=True
+    Specifies if a constant (a.k.a. bias or intercept) should be
+    added to the decision function.
+
+intercept_scaling : float, default=1
+    Useful only when the solver `liblinear` is used
+    and `self.fit_intercept` is set to `True`. In this case, `x` becomes
+    `[x, self.intercept_scaling]`,
+    i.e. a "synthetic" feature with constant value equal to
+    `intercept_scaling` is appended to the instance vector.
+    The intercept becomes
+    ``intercept_scaling * synthetic_feature_weight``.
+
+    .. note::
+        The synthetic feature weight is subject to L1 or L2
+        regularization as all other features.
+        To lessen the effect of regularization on synthetic feature weight
+        (and therefore on the intercept) `intercept_scaling` has to be increased.
+
+class_weight : dict or 'balanced', default=None
+    Weights associated with classes in the form ``{class_label: weight}``.
+    If not given, all classes are supposed to have weight one.
+
+    The "balanced" mode uses the values of y to automatically adjust
+    weights inversely proportional to class frequencies in the input data
+    as ``n_samples / (n_classes * np.bincount(y))``.
+
+    Note that these weights will be multiplied with sample_weight (passed
+    through the fit method) if sample_weight is specified.
+
+    .. versionadded:: 0.17
+       *class_weight='balanced'*
+
+random_state : int, RandomState instance, default=None
+    Only used for `solver` == 'sag', 'saga' or 'liblinear' to shuffle the
+    data. It has no effect on the other solvers.
+    See :term:`Glossary <random_state>` for details.
+
+solver : {'lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga'},             default='lbfgs'
+
+    Algorithm to use in the optimization problem. Default is 'lbfgs'.
+    To choose a solver, you might want to consider the following aspects:
+
+    - 'lbfgs' is a good default solver because it works reasonably well for a wide
+      class of problems.
+    - For :term:`multiclass` problems (`n_classes >= 3`), all solvers except
+      'liblinear' minimize the full multinomial loss, 'liblinear' will raise an
+      error.
+    - 'newton-cholesky' is a good choice for
+      `n_samples` >> `n_features * n_classes`, especially with one-hot encoded
+      categorical features with rare categories. Be aware that the memory usage
+      of this solver has a quadratic dependency on `n_features * n_classes`
+      because it explicitly computes the full Hessian matrix.
+    - For small datasets, 'liblinear' is a good choice, whereas 'sag'
+      and 'saga' are faster for large ones;
+    - 'liblinear' can only handle binary classification by default. To apply a
+      one-versus-rest scheme for the multiclass setting one can wrap it with the
+      :class:`~sklearn.multiclass.OneVsRestClassifier`.
+
+    .. warning::
+       The choice of the algorithm depends on the penalty chosen (`l1_ratio=0`
+       for L2-penalty, `l1_ratio=1` for L1-penalty and `0 < l1_ratio < 1` for
+       Elastic-Net) and on (multinomial) multiclass support:
+
+       ================= ======================== ======================
+       solver            l1_ratio                 multinomial multiclass
+       ================= ======================== ======================
+       'lbfgs'           l1_ratio=0               yes
+       'liblinear'       l1_ratio=1 or l1_ratio=0 no
+       'newton-cg'       l1_ratio=0               yes
+       'newton-cholesky' l1_ratio=0               yes
+       'sag'             l1_ratio=0               yes
+       'saga'            0<=l1_ratio<=1           yes
+       ================= ======================== ======================
+
+    .. note::
+       'sag' and 'saga' fast convergence is only guaranteed on features
+       with approximately the same scale. You can preprocess the data with
+       a scaler from :mod:`sklearn.preprocessing`.
+
+    .. seealso::
+       Refer to the :ref:`User Guide <Logistic_regression>` for more
+       information regarding :class:`LogisticRegression` and more specifically the
+       :ref:`Table <logistic_regression_solvers>`
+       summarizing solver/penalty supports.
+
+    .. versionadded:: 0.17
+       Stochastic Average Gradient (SAG) descent solver. Multinomial support in
+       version 0.18.
+    .. versionadded:: 0.19
+       SAGA solver.
+    .. versionchanged:: 0.22
+       The default solver changed from 'liblinear' to 'lbfgs' in 0.22.
+    .. versionadded:: 1.2
+       newton-cholesky solver. Multinomial support in version 1.6.
+
+max_iter : int, default=100
+    Maximum number of iterations taken for the solvers to converge.
+
+verbose : int, default=0
+    For the liblinear and lbfgs solvers set verbose to any positive
+    number for verbosity.
+
+warm_start : bool, default=False
+    When set to True, reuse the solution of the previous call to fit as
+    initialization, otherwise, just erase the previous solution.
+    Useless for liblinear solver. See :term:`the Glossary <warm_start>`.
+
+    .. versionadded:: 0.17
+       *warm_start* to support *lbfgs*, *newton-cg*, *sag*, *saga* solvers.
+
+n_jobs : int, default=None
+    Does not have any effect.
+
+    .. deprecated:: 1.8
+       `n_jobs` is deprecated in version 1.8 and will be removed in 1.10.
+
+Attributes
+----------
+
+classes_ : ndarray of shape (n_classes, )
+    A list of class labels known to the classifier.
+
+coef_ : ndarray or CSR matrix of shape (1, n_features) or (n_classes, n_features)
+    Coefficients of the features in the decision function.
+
+    `coef_` is of shape (1, n_features) when the given problem is binary.
+
+    By default, it will be created as a dense array, but can be turned to
+    sparse (CSR format) through :meth:`sparsify` (which can be beneficial
+    under L1 regularization when many coefficients are zero), and back to
+    dense through :meth:`densify`.
+
+intercept_ : ndarray of shape (1,) or (n_classes,)
+    Intercept (a.k.a. bias) added to the decision function.
+
+    If `fit_intercept` is set to False, the intercept is set to zero.
+    `intercept_` is of shape (1,) when the given problem is binary.
+
+n_features_in_ : int
+    Number of features seen during :term:`fit`.
+
+    .. versionadded:: 0.24
+
+feature_names_in_ : ndarray of shape (`n_features_in_`,)
+    Names of features seen during :term:`fit`. Defined only when `X`
+    has feature names that are all strings.
+
+    .. versionadded:: 1.0
+
+n_iter_ : ndarray of shape (1, )
+    Actual number of iterations for all classes.
+
+    .. versionchanged:: 0.20
+
+        In SciPy <= 1.0.0 the number of lbfgs iterations may exceed
+        ``max_iter``. ``n_iter_`` will now report at most ``max_iter``.
+
+See Also
+--------
+SGDClassifier : Incrementally trained logistic regression (when given
+    the parameter ``loss="log_loss"``).
+LogisticRegressionCV : Logistic regression with built-in cross validation.
+
+Notes
+-----
+For several reasons (floating point arithmetic, random number generators, etc.)
+the coefficients of a fitted model might differ slightly (among machines,
+scikit-learn versions, etc.) for the same input data. If that happens and you
+want to avoid it, you can try with a smaller `tol` parameter.
+
+Predict output may not match that of standalone liblinear in certain
+cases. See :ref:`differences from liblinear <liblinear_differences>`
+in the narrative documentation.
+
+Examples
+--------
+>>> from sklearn.datasets import load_iris
+>>> from sklearn.linear_model import LogisticRegression
+>>> X, y = load_iris(return_X_y=True)
+>>> clf = LogisticRegression(random_state=0).fit(X, y)
+>>> clf.predict(X[:2, :])
+array([0, 0])
+>>> clf.predict_proba(X[:2, :])
+array([[9.82e-01, 1.82e-02, 1.44e-08],
+       [9.72e-01, 2.82e-02, 3.02e-08]])
+>>> clf.score(X, y)
+0.97
+
+For a comparison of the LogisticRegression with other classifiers see:
+:ref:`sphx_glr_auto_examples_classification_plot_classification_probability.py`.
+sklearn.ensemble._forest RandomForestClassifier (n_estimators=100, *, criterion='gini', max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features='sqrt', max_leaf_nodes=None, min_impurity_decrease=0.0, bootstrap=True, oob_score=False, n_jobs=None, random_state=None, verbose=0, warm_start=False, class_weight=None, ccp_alpha=0.0, max_samples=None, monotonic_cst=None)
+A random forest classifier.
+
+A random forest is a meta estimator that fits a number of decision tree
+classifiers on various sub-samples of the dataset and uses averaging to
+improve the predictive accuracy and control over-fitting.
+Trees in the forest use the best split strategy, i.e. equivalent to passing
+`splitter="best"` to the underlying :class:`~sklearn.tree.DecisionTreeClassifier`.
+The sub-sample size is controlled with the `max_samples` parameter if
+`bootstrap=True` (default), otherwise the whole dataset is used to build
+each tree.
+
+For a comparison between tree-based ensemble models see the example
+:ref:`sphx_glr_auto_examples_ensemble_plot_forest_hist_grad_boosting_comparison.py`.
+
+This estimator has native support for missing values (NaNs). During training,
+the tree grower learns at each split point whether samples with missing values
+should go to the left or right child, based on the potential gain. When predicting,
+samples with missing values are assigned to the left or right child consequently.
+If no missing values were encountered for a given feature during training, then
+samples with missing values are mapped to whichever child has the most samples.
+
+Read more in the :ref:`User Guide <forest>`.
+
+Parameters
+----------
+n_estimators : int, default=100
+    The number of trees in the forest.
+
+    .. versionchanged:: 0.22
+       The default value of ``n_estimators`` changed from 10 to 100
+       in 0.22.
+
+criterion : {"gini", "entropy", "log_loss"}, default="gini"
+    The function to measure the quality of a split. Supported criteria are
+    "gini" for the Gini impurity and "log_loss" and "entropy" both for the
+    Shannon information gain, see :ref:`tree_mathematical_formulation`.
+    Note: This parameter is tree-specific.
+
+max_depth : int, default=None
+    The maximum depth of the tree. If None, then nodes are expanded until
+    all leaves are pure or until all leaves contain less than
+    min_samples_split samples.
+
+min_samples_split : int or float, default=2
+    The minimum number of samples required to split an internal node:
+
+    - If int, then consider `min_samples_split` as the minimum number.
+    - If float, then `min_samples_split` is a fraction and
+      `ceil(min_samples_split * n_samples)` are the minimum
+      number of samples for each split.
+
+    .. versionchanged:: 0.18
+       Added float values for fractions.
+
+min_samples_leaf : int or float, default=1
+    The minimum number of samples required to be at a leaf node.
+    A split point at any depth will only be considered if it leaves at
+    least ``min_samples_leaf`` training samples in each of the left and
+    right branches.  This may have the effect of smoothing the model,
+    especially in regression.
+
+    - If int, then consider `min_samples_leaf` as the minimum number.
+    - If float, then `min_samples_leaf` is a fraction and
+      `ceil(min_samples_leaf * n_samples)` are the minimum
+      number of samples for each node.
+
+    .. versionchanged:: 0.18
+       Added float values for fractions.
+
+min_weight_fraction_leaf : float, default=0.0
+    The minimum weighted fraction of the sum total of weights (of all
+    the input samples) required to be at a leaf node. Samples have
+    equal weight when sample_weight is not provided.
+
+max_features : {"sqrt", "log2", None}, int or float, default="sqrt"
+    The number of features to consider when looking for the best split:
+
+    - If int, then consider `max_features` features at each split.
+    - If float, then `max_features` is a fraction and
+      `max(1, int(max_features * n_features_in_))` features are considered at each
+      split.
+    - If "sqrt", then `max_features=sqrt(n_features)`.
+    - If "log2", then `max_features=log2(n_features)`.
+    - If None, then `max_features=n_features`.
+
+    .. versionchanged:: 1.1
+        The default of `max_features` changed from `"auto"` to `"sqrt"`.
+
+    Note: the search for a split does not stop until at least one
+    valid partition of the node samples is found, even if it requires to
+    effectively inspect more than ``max_features`` features.
+
+max_leaf_nodes : int, default=None
+    Grow trees with ``max_leaf_nodes`` in best-first fashion.
+    Best nodes are defined as relative reduction in impurity.
+    If None then unlimited number of leaf nodes.
+
+min_impurity_decrease : float, default=0.0
+    A node will be split if this split induces a decrease of the impurity
+    greater than or equal to this value.
+
+    The weighted impurity decrease equation is the following::
+
+        N_t / N * (impurity - N_t_R / N_t * right_impurity
+                            - N_t_L / N_t * left_impurity)
+
+    where ``N`` is the total number of samples, ``N_t`` is the number of
+    samples at the current node, ``N_t_L`` is the number of samples in the
+    left child, and ``N_t_R`` is the number of samples in the right child.
+
+    ``N``, ``N_t``, ``N_t_R`` and ``N_t_L`` all refer to the weighted sum,
+    if ``sample_weight`` is passed.
+
+    .. versionadded:: 0.19
+
+bootstrap : bool, default=True
+    Whether bootstrap samples are used when building trees. If False, the
+    whole dataset is used to build each tree.
+
+oob_score : bool or callable, default=False
+    Whether to use out-of-bag samples to estimate the generalization score.
+    By default, :func:`~sklearn.metrics.accuracy_score` is used.
+    Provide a callable with signature `metric(y_true, y_pred)` to use a
+    custom metric. Only available if `bootstrap=True`.
+
+    For an illustration of out-of-bag (OOB) error estimation, see the example
+    :ref:`sphx_glr_auto_examples_ensemble_plot_ensemble_oob.py`.
+
+n_jobs : int, default=None
+    The number of jobs to run in parallel. :meth:`fit`, :meth:`predict`,
+    :meth:`decision_path` and :meth:`apply` are all parallelized over the
+    trees. ``None`` means 1 unless in a :obj:`joblib.parallel_backend`
+    context. ``-1`` means using all processors. See :term:`Glossary
+    <n_jobs>` for more details.
+
+random_state : int, RandomState instance or None, default=None
+    Controls both the randomness of the bootstrapping of the samples used
+    when building trees (if ``bootstrap=True``) and the sampling of the
+    features to consider when looking for the best split at each node
+    (if ``max_features < n_features``).
+    See :term:`Glossary <random_state>` for details.
+
+verbose : int, default=0
+    Controls the verbosity when fitting and predicting.
+
+warm_start : bool, default=False
+    When set to ``True``, reuse the solution of the previous call to fit
+    and add more estimators to the ensemble, otherwise, just fit a whole
+    new forest. See :term:`Glossary <warm_start>` and
+    :ref:`tree_ensemble_warm_start` for details.
+
+class_weight : {"balanced", "balanced_subsample"}, dict or list of dicts,             default=None
+    Weights associated with classes in the form ``{class_label: weight}``.
+    If not given, all classes are supposed to have weight one. For
+    multi-output problems, a list of dicts can be provided in the same
+    order as the columns of y.
+
+    Note that for multioutput (including multilabel) weights should be
+    defined for each class of every column in its own dict. For example,
+    for four-class multilabel classification weights should be
+    [{0: 1, 1: 1}, {0: 1, 1: 5}, {0: 1, 1: 1}, {0: 1, 1: 1}] instead of
+    [{1:1}, {2:5}, {3:1}, {4:1}].
+
+    The "balanced" mode uses the values of y to automatically adjust
+    weights inversely proportional to class frequencies in the input data
+    as ``n_samples / (n_classes * np.bincount(y))``
+
+    The "balanced_subsample" mode is the same as "balanced" except that
+    weights are computed based on the bootstrap sample for every tree
+    grown.
+
+    For multi-output, the weights of each column of y will be multiplied.
+
+    Note that these weights will be multiplied with sample_weight (passed
+    through the fit method) if sample_weight is specified.
+
+ccp_alpha : non-negative float, default=0.0
+    Complexity parameter used for Minimal Cost-Complexity Pruning. The
+    subtree with the largest cost complexity that is smaller than
+    ``ccp_alpha`` will be chosen. By default, no pruning is performed. See
+    :ref:`minimal_cost_complexity_pruning` for details. See
+    :ref:`sphx_glr_auto_examples_tree_plot_cost_complexity_pruning.py`
+    for an example of such pruning.
+
+    .. versionadded:: 0.22
+
+max_samples : int or float, default=None
+    If bootstrap is True, the number of samples to draw from X
+    to train each base estimator.
+
+    - If None (default), then draw `X.shape[0]` samples irrespective of
+      `sample_weight`.
+    - If int, then draw `max_samples` samples.
+    - If float, then draw `max_samples * X.shape[0]` unweighted samples
+      or `max_samples * sample_weight.sum()` weighted samples.
+
+    .. versionadded:: 0.22
+
+    .. versionchanged:: 1.9
+        Float `max_samples` is relative to `sample_weight.sum()` instead of
+        `X.shape[0]` for weighted samples.
+
+monotonic_cst : array-like of int of shape (n_features,), default=None
+    Indicates the monotonicity constraint to enforce on each feature.
+      - 1: monotonically increasing
+      - 0: no constraint
+      - -1: monotonically decreasing
+
+    If monotonic_cst is None, no constraints are applied.
+
+    Monotonicity constraints are not supported for:
+      - multiclass classifications (i.e. when `n_classes > 2`),
+      - multioutput classifications (i.e. when `n_outputs_ > 1`).
+
+    The constraints hold over the probability of the positive class.
+
+    Read more in the :ref:`User Guide <monotonic_cst_gbdt>`.
+
+    .. versionadded:: 1.4
+
+Attributes
+----------
+estimator_ : :class:`~sklearn.tree.DecisionTreeClassifier`
+    The child estimator template used to create the collection of fitted
+    sub-estimators.
+
+    .. versionadded:: 1.2
+       `base_estimator_` was renamed to `estimator_`.
+
+estimators_ : list of DecisionTreeClassifier
+    The collection of fitted sub-estimators.
+
+classes_ : ndarray of shape (n_classes,) or a list of such arrays
+    The classes labels (single output problem), or a list of arrays of
+    class labels (multi-output problem).
+
+n_classes_ : int or list
+    The number of classes (single output problem), or a list containing the
+    number of classes for each output (multi-output problem).
+
+n_features_in_ : int
+    Number of features seen during :term:`fit`.
+
+    .. versionadded:: 0.24
+
+feature_names_in_ : ndarray of shape (`n_features_in_`,)
+    Names of features seen during :term:`fit`. Defined only when `X`
+    has feature names that are all strings.
+
+    .. versionadded:: 1.0
+
+n_outputs_ : int
+    The number of outputs when ``fit`` is performed.
+
+feature_importances_ : ndarray of shape (n_features,)
+    The impurity-based feature importances.
+    The higher, the more important the feature.
+    The importance of a feature is computed as the (normalized)
+    total reduction of the criterion brought by that feature.  It is also
+    known as the Gini importance.
+
+    Warning: impurity-based feature importances can be misleading for
+    high cardinality features (many unique values). See
+    :func:`sklearn.inspection.permutation_importance` as an alternative.
+
+oob_score_ : float
+    Score of the training dataset obtained using an out-of-bag estimate.
+    This attribute exists only when ``oob_score`` is True.
+
+oob_decision_function_ : ndarray of shape (n_samples, n_classes) or             (n_samples, n_classes, n_outputs)
+    Decision function computed with out-of-bag estimate on the training
+    set. If n_estimators is small it might be possible that a data point
+    was never left out during the bootstrap. In this case,
+    `oob_decision_function_` might contain NaN. This attribute exists
+    only when ``oob_score`` is True.
+
+estimators_samples_ : list of arrays
+    The subset of drawn samples (i.e., the in-bag samples) for each base
+    estimator. Each subset is defined by an array of the indices selected.
+
+    .. versionadded:: 1.4
+
+See Also
+--------
+sklearn.tree.DecisionTreeClassifier : A decision tree classifier.
+sklearn.ensemble.ExtraTreesClassifier : Ensemble of extremely randomized
+    tree classifiers.
+sklearn.ensemble.HistGradientBoostingClassifier : A Histogram-based Gradient
+    Boosting Classification Tree, very fast for big datasets (n_samples >=
+    10_000).
+
+Notes
+-----
+The default values for the parameters controlling the size of the trees
+(e.g. ``max_depth``, ``min_samples_leaf``, etc.) lead to fully grown and
+unpruned trees which can potentially be very large on some data sets. To
+reduce memory consumption, the complexity and size of the trees should be
+controlled by setting those parameter values.
+
+The features are always randomly permuted at each split. Therefore,
+the best found split may vary, even with the same training data,
+``max_features=n_features`` and ``bootstrap=False``, if the improvement
+of the criterion is identical for several splits enumerated during the
+search of the best split. To obtain a deterministic behaviour during
+fitting, ``random_state`` has to be fixed.
+
+References
+----------
+.. [1] :doi:`L. Breiman, "Random Forests", Machine Learning, 45(1), 5-32, 2001.
+       <10.1023/A:1010933404324>`
+
+Examples
+--------
+>>> from sklearn.ensemble import RandomForestClassifier
+>>> from sklearn.datasets import make_classification
+>>> X, y = make_classification(n_samples=1000, n_features=4,
+...                            n_informative=2, n_redundant=0,
+...                            random_state=0, shuffle=False)
+>>> clf = RandomForestClassifier(max_depth=2, random_state=0)
+>>> clf.fit(X, y)
+RandomForestClassifier(...)
+>>> print(clf.predict([[0, 0, 0, 0]]))
+[1]
+sklearn.metrics._ranking roc_curve (y_true, y_score, *, pos_label=None, sample_weight=None, drop_intermediate=True)
+Compute Receiver operating characteristic (ROC).
+
+Note: Support beyond :term:`binary` classification tasks, via one-vs-rest or
+one-vs-one, is not implemented.
+
+Read more in the :ref:`User Guide <roc_metrics>`.
+
+Parameters
+----------
+y_true : array-like of shape (n_samples,)
+    True binary labels. If labels are not either {-1, 1} or {0, 1}, then
+    pos_label should be explicitly given.
+
+y_score : array-like of shape (n_samples,)
+    Target scores, can either be probability estimates of the positive
+    class or non-thresholded decision values (as returned by
+    :term:`decision_function` on some classifiers).
+    For :term:`decision_function` scores, values greater than or equal to
+    zero should indicate the positive class.
+
+pos_label : int, float, bool or str, default=None
+    The label of the positive class.
+    When ``pos_label=None``, if `y_true` is in {-1, 1} or {0, 1},
+    ``pos_label`` is set to 1, otherwise an error will be raised.
+
+sample_weight : array-like of shape (n_samples,), default=None
+    Sample weights.
+
+drop_intermediate : bool, default=True
+    Whether to drop thresholds where the resulting point is collinear with
+    its neighbors in ROC space. This has no effect on the ROC AUC or visual
+    shape of the curve, but reduces the number of plotted points.
+
+    .. versionadded:: 0.17
+       parameter *drop_intermediate*.
+
+Returns
+-------
+fpr : ndarray of shape (>2,)
+    Increasing false positive rates such that element `i` is the false
+    positive rate of predictions with score >= `thresholds[i]`.
+
+tpr : ndarray of shape (>2,)
+    Increasing true positive rates such that element `i` is the true
+    positive rate of predictions with score >= `thresholds[i]`.
+
+thresholds : ndarray of shape (n_thresholds,)
+    Decreasing thresholds on the decision function used to compute
+    fpr and tpr. The first threshold is set to `np.inf`.
+
+    .. versionchanged:: 1.3
+       An arbitrary threshold at infinity (stored in `thresholds[0]`) is
+       added to represent a classifier that always predicts the negative
+       class, i.e. `fpr=0` and `tpr=0`.
+
+See Also
+--------
+RocCurveDisplay.from_estimator : Plot Receiver Operating Characteristic
+    (ROC) curve given an estimator and some data.
+RocCurveDisplay.from_predictions : Plot Receiver Operating Characteristic
+    (ROC) curve given the true and predicted values.
+RocCurveDisplay.from_cv_results : Plot multi-fold ROC curves given
+    cross-validation results.
+det_curve: Compute error rates for different probability thresholds.
+roc_auc_score : Compute the area under the ROC curve.
+confusion_matrix_at_thresholds : For binary classification, compute true negative,
+    false positive, false negative and true positive counts per threshold.
+
+Notes
+-----
+Since the thresholds are sorted from low to high values, they
+are reversed upon returning them to ensure they correspond to both ``fpr``
+and ``tpr``, which are sorted in reversed order during their calculation.
+
+References
+----------
+.. [1] `Wikipedia entry for the Receiver operating characteristic
+        <https://en.wikipedia.org/wiki/Receiver_operating_characteristic>`_
+
+.. [2] Fawcett T. An introduction to ROC analysis[J]. Pattern Recognition
+       Letters, 2006, 27(8):861-874.
+
+Examples
+--------
+>>> import numpy as np
+>>> from sklearn import metrics
+>>> y = np.array([1, 1, 2, 2])
+>>> scores = np.array([0.1, 0.4, 0.35, 0.8])
+>>> fpr, tpr, thresholds = metrics.roc_curve(y, scores, pos_label=2)
+>>> fpr
+array([0. , 0. , 0.5, 0.5, 1. ])
+>>> tpr
+array([0. , 0.5, 0.5, 1. , 1. ])
+>>> thresholds
+array([ inf, 0.8 , 0.4 , 0.35, 0.1 ])
+sklearn.metrics._ranking precision_recall_curve (y_true, y_score, *, pos_label=None, sample_weight=None, drop_intermediate=False)
+Compute precision-recall pairs for different probability thresholds.
+
+Note: Support beyond :term:`binary` classification tasks, via one-vs-rest or
+one-vs-one, is not implemented.
+
+The precision is the ratio ``tp / (tp + fp)`` where ``tp`` is the number of
+true positives and ``fp`` the number of false positives. The precision is
+intuitively the ability of the classifier not to label as positive a sample
+that is negative.
+
+The recall is the ratio ``tp / (tp + fn)`` where ``tp`` is the number of
+true positives and ``fn`` the number of false negatives. The recall is
+intuitively the ability of the classifier to find all the positive samples.
+
+The last precision and recall values are 1. and 0. respectively and do not
+have a corresponding threshold. This ensures that the graph starts on the
+y axis.
+
+The first precision and recall values are precision=class balance and recall=1.0
+which corresponds to a classifier that always predicts the positive class.
+
+Read more in the :ref:`User Guide <precision_recall_f_measure_metrics>`.
+
+Parameters
+----------
+y_true : array-like of shape (n_samples,)
+    True binary labels. If labels are not either {-1, 1} or {0, 1}, then
+    pos_label should be explicitly given.
+
+y_score : array-like of shape (n_samples,)
+    Target scores, can either be probability estimates of the positive
+    class, or non-thresholded measure of decisions (as returned by
+    `decision_function` on some classifiers).
+    For :term:`decision_function` scores, values greater than or equal to
+    zero should indicate the positive class.
+
+pos_label : int, float, bool or str, default=None
+    The label of the positive class.
+    When ``pos_label=None``, if y_true is in {-1, 1} or {0, 1},
+    ``pos_label`` is set to 1, otherwise an error will be raised.
+
+sample_weight : array-like of shape (n_samples,), default=None
+    Sample weights.
+
+drop_intermediate : bool, default=False
+    Whether to drop some suboptimal thresholds which would not appear
+    on a plotted precision-recall curve. This is useful in order to create
+    lighter precision-recall curves.
+
+    .. versionadded:: 1.3
+
+Returns
+-------
+precision : ndarray of shape (n_thresholds + 1,)
+    Precision values such that element i is the precision of
+    predictions with score >= thresholds[i] and the last element is 1.
+
+recall : ndarray of shape (n_thresholds + 1,)
+    Decreasing recall values such that element i is the recall of
+    predictions with score >= thresholds[i] and the last element is 0.
+
+thresholds : ndarray of shape (n_thresholds,)
+    Increasing thresholds on the decision function used to compute
+    precision and recall where `n_thresholds = len(np.unique(y_score))`.
+
+See Also
+--------
+PrecisionRecallDisplay.from_estimator : Plot Precision Recall Curve given
+    a binary classifier.
+PrecisionRecallDisplay.from_predictions : Plot Precision Recall Curve
+    using predictions from a binary classifier.
+average_precision_score : Compute average precision from prediction scores.
+det_curve: Compute error rates for different probability thresholds.
+roc_curve : Compute Receiver operating characteristic (ROC) curve.
+confusion_matrix_at_thresholds : For binary classification, compute true negative,
+    false positive, false negative and true positive counts per threshold.
+
+Examples
+--------
+>>> import numpy as np
+>>> from sklearn.metrics import precision_recall_curve
+>>> y_true = np.array([0, 0, 1, 1])
+>>> y_scores = np.array([0.1, 0.4, 0.35, 0.8])
+>>> precision, recall, thresholds = precision_recall_curve(
+...     y_true, y_scores)
+>>> precision
+array([0.5       , 0.66666667, 0.5       , 1.        , 1.        ])
+>>> recall
+array([1. , 1. , 0.5, 0.5, 0. ])
+>>> thresholds
+array([0.1 , 0.35, 0.4 , 0.8 ])
+sklearn.metrics._ranking auc (x, y)
+Compute Area Under the Curve (AUC) using the trapezoidal rule.
+
+This is a general function, given points on a curve.  For computing the
+area under the ROC-curve, see :func:`roc_auc_score`.  For an alternative
+way to summarize a precision-recall curve, see
+:func:`average_precision_score`.
+
+Parameters
+----------
+x : array-like of shape (n,)
+    X coordinates. These must be either monotonic increasing or monotonic
+    decreasing.
+y : array-like of shape (n,)
+    Y coordinates.
+
+Returns
+-------
+auc : float
+    Area Under the Curve.
+
+See Also
+--------
+roc_auc_score : Compute the area under the ROC curve.
+average_precision_score : Compute average precision from prediction scores.
+precision_recall_curve : Compute precision-recall pairs for different
+    probability thresholds.
+
+Examples
+--------
+>>> import numpy as np
+>>> from sklearn import metrics
+>>> y_true = np.array([1, 1, 2, 2])
+>>> y_score = np.array([0.1, 0.4, 0.35, 0.8])
+>>> fpr, tpr, thresholds = metrics.roc_curve(y_true, y_score, pos_label=2)
+>>> metrics.auc(fpr, tpr)
+0.75
+sklearn.metrics._ranking average_precision_score (y_true, y_score, *, average='macro', pos_label=1, sample_weight=None)
+Compute average precision (AP) from prediction scores.
+
+AP summarizes a precision-recall curve as the weighted mean of precisions
+achieved at each threshold, with the increase in recall from the previous
+threshold used as the weight:
+
+.. math::
+    \text{AP} = \sum_n (R_n - R_{n-1}) P_n
+
+where :math:`P_n` and :math:`R_n` are the precision and recall at the nth
+threshold [1]_. This implementation is not interpolated and is different
+from computing the area under the precision-recall curve with the
+trapezoidal rule, which uses linear interpolation and can be too
+optimistic.
+
+Read more in the :ref:`User Guide <precision_recall_f_measure_metrics>`.
+
+Parameters
+----------
+y_true : array-like of shape (n_samples,) or (n_samples, n_classes)
+    True binary labels, :term:`multi-label` indicators (as a
+    :term:`multilabel indicator matrix`) or :term:`multi-class` labels.
+
+y_score : array-like of shape (n_samples,) or (n_samples, n_classes)
+    Target scores, can either be probability estimates of the positive
+    class or non-thresholded decision values (as returned by
+    :term:`decision_function` on some classifiers).
+    For :term:`decision_function` scores, values greater than or equal to
+    zero should indicate the positive class.
+
+average : {'micro', 'samples', 'weighted', 'macro'} or None,             default='macro'
+    If ``None``, the scores for each class are returned. Otherwise,
+    this determines the type of averaging performed on the data:
+
+    ``'micro'``:
+        Calculate metrics globally by considering each element of the label
+        indicator matrix as a label.
+    ``'macro'``:
+        Calculate metrics for each label, and find their unweighted
+        mean.  This does not take label imbalance into account.
+    ``'weighted'``:
+        Calculate metrics for each label, and find their average, weighted
+        by support (the number of true instances for each label).
+    ``'samples'``:
+        Calculate metrics for each instance, and find their average.
+
+    Will be ignored when ``y_true`` is binary.
+
+pos_label : int, float, bool or str, default=1
+    The label of the positive class. Only applied to binary ``y_true``.
+    For multilabel-indicator ``y_true``, ``pos_label`` is fixed to 1.
+
+sample_weight : array-like of shape (n_samples,), default=None
+    Sample weights.
+
+Returns
+-------
+average_precision : float
+    Average precision score.
+
+See Also
+--------
+roc_auc_score : Compute the area under the ROC curve.
+precision_recall_curve : Compute precision-recall pairs for different
+    probability thresholds.
+PrecisionRecallDisplay.from_estimator : Plot the precision recall curve
+    using an estimator and data.
+PrecisionRecallDisplay.from_predictions : Plot the precision recall curve
+    using true and predicted labels.
+
+Notes
+-----
+.. versionchanged:: 0.19
+  Instead of linearly interpolating between operating points, precisions
+  are weighted by the change in recall since the last operating point.
+
+References
+----------
+.. [1] `Wikipedia entry for the Average precision
+       <https://en.wikipedia.org/w/index.php?title=Information_retrieval&
+       oldid=793358396#Average_precision>`_
+
+Examples
+--------
+>>> import numpy as np
+>>> from sklearn.metrics import average_precision_score
+>>> y_true = np.array([0, 0, 1, 1])
+>>> y_scores = np.array([0.1, 0.4, 0.35, 0.8])
+>>> average_precision_score(y_true, y_scores)
+0.83
+>>> y_true = np.array([0, 0, 1, 1, 2, 2])
+>>> y_scores = np.array([
+...     [0.7, 0.2, 0.1],
+...     [0.4, 0.3, 0.3],
+...     [0.1, 0.8, 0.1],
+...     [0.2, 0.3, 0.5],
+...     [0.4, 0.4, 0.2],
+...     [0.1, 0.2, 0.7],
+... ])
+>>> average_precision_score(y_true, y_scores)
+0.77
