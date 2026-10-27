@@ -19,7 +19,7 @@
 > [sürüm kapsamı](docs/RELEASE_SCOPE_0_1.md) ·
 > [proje durumu](docs/PROJECT_STATE.md).
 
-![Veri_Ufku başlangıç yol haritası](docs/evidence/ui-journey/final-screens/beginner-home.png)
+![Veri_Ufku — Veri aşaması, yüklü tablo ve araç rayı](docs/evidence/ux-v2/screens/02-veri-yuklu.png)
 
 ## Neden Veri_Ufku?
 
@@ -49,7 +49,7 @@ Sol rayda yedi araç. Sihirbaz değildir: istediğin adıma dönersin; seçim ve
 | **Model** | Gerekçeli adaylar; sen seçmeden fit yok; sızıntı / eğitim-katı kapıları |
 | **Raporla** | Bulgu + yöntem + kapsam + sınır; HTML/PDF ayrı hedefe |
 
-![Veriyi tanı — kaynak ve profil adımları](docs/evidence/ui-journey/final-screens/beginner-data.png)
+![İncele — tarama özeti, tablo ve bulgu çipleri](docs/evidence/ux-v2/screens/03-incele.png)
 
 ### Bu sürümde öne çıkanlar
 
@@ -63,20 +63,32 @@ Sol rayda yedi araç. Sihirbaz değildir: istediğin adıma dönersin; seçim ve
 <details>
 <summary>Diğer ekranlar</summary>
 
-**Öğren — aynı yol haritasında kavramlar**
+**Boş Veri — Dosya / Verilerim / Örnek**
 
-![Öğren haritası ve çevrimdışı konu araması](docs/evidence/ui-journey/final-screens/learn-map.png)
+![Boş Veri kahramanı](docs/evidence/ux-v2/screens/01-veri-bos.png)
 
-**Gerçek hesapla histogram**
+**Görselleştir**
 
-![Hesaplanan histogram](docs/evidence/ui-renewal/final-actual/computed-histogram.png)
+![Görselleştir çalışma alanı](docs/evidence/ux-v2/screens/04-gorsellestir.png)
 
-**Rapor düzenleyici**
+**Hazırla — önce/sonra ve katalog**
 
-![Rapor düzenleyici](docs/evidence/ui-renewal/final-actual/report-editor.png)
+![Hazırla önizleme çalışma alanı](docs/evidence/ux-v2/screens/05-hazirla.png)
 
-Bu görüntüler gerçek QML arayüzünün başsız Qt render’larıdır; tasarım maketi değildir.
-Fiziksel masaüstü ve insan kullanılabilirlik testinin yerine geçmez.
+**İstatistik**
+
+![İstatistik çalışma alanı](docs/evidence/ux-v2/screens/06-istatistik.png)
+
+**Model**
+
+![Model çalışma alanı](docs/evidence/ux-v2/screens/07-model.png)
+
+**Raporla**
+
+![Raporla çalışma alanı](docs/evidence/ux-v2/screens/08-raporla.png)
+
+Bu görüntüler gerçek QML arayüzünün başsız Qt render’larıdır (`scripts/capture_ux_v2_readme.py`);
+tasarım maketi değildir. Fiziksel masaüstü ve insan kullanılabilirlik testinin yerine geçmez.
 
 </details>
 
