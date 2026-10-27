@@ -72,6 +72,24 @@ ColumnLayout {
         markTouched(index)
         ops.applyPrepareBlock(index)
     }
+    function focusDraftBlock(index) {
+        // Taslak henüz uygulanmadı — chip pending kalsın, blok varsayılanı zorlanmasın.
+        root.selectedBlock = index
+    }
+    function acceptInspectDraft() {
+        if (!operations.hasInspectDraft)
+            return
+        let b = root.draftBlockFor(operations.inspectDraft)
+        root.focusDraftBlock(b)
+        ops.applyInspectDraft()
+    }
+    function syncDraftSelection() {
+        if (!operations.hasInspectDraft)
+            return
+        let b = root.draftBlockFor(operations.inspectDraft)
+        if (root.selectedBlock !== b)
+            root.focusDraftBlock(b)
+    }
     function isLearnedCleaning() {
         if (ops.kindIndex !== 3)
             return false
@@ -152,11 +170,7 @@ ColumnLayout {
                     text: qsTr("Taslağı aç")
                     tone: "violet"
                     primary: true
-                    onClicked: {
-                        let b = root.draftBlockFor(operations.inspectDraft)
-                        root.selectBlock(b)
-                        ops.applyInspectDraft()
-                    }
+                    onClicked: root.acceptInspectDraft()
                 }
                 UiButton {
                     objectName: "inspectDraftClear"
@@ -258,17 +272,16 @@ ColumnLayout {
     Connections {
         target: operations
         function onChanged() {
-            if (operations.hasInspectDraft && root.selectedBlock)
-                Qt.callLater(function() {
-                    // draft frame visible; user confirms via Taslağı aç
-                })
+            if (operations.hasInspectDraft)
+                Qt.callLater(root.syncDraftSelection)
         }
     }
 
     Component.onCompleted: {
         if (operations.hasInspectDraft) {
-            let b = root.draftBlockFor(operations.inspectDraft)
-            root.selectedBlock = b
+            root.focusDraftBlock(root.draftBlockFor(operations.inspectDraft))
+            // Taslak formu «Taslağı aç» ile uygulanır; blok varsayılanı (dedup vb.) yazılmaz.
+            return
         }
         ops.applyPrepareBlock(root.selectedBlock)
     }

@@ -70,12 +70,37 @@ def test_prepare_workspace_shell_preview_apply_mod2_inspect(tmp_path, monkeypatc
         spin(app, lambda: not ops.busy and not projects.busy)
         assert data.dataset()["version_id"] == version_before
 
-        # inspectDraft preselect
+        # inspectDraft: fill taslağı blok varsayılanı (dedup) yazmadan chip seçer
+        fill_col = data.dataset()["import_metadata"]["columns"][0]["id"]
+        ops.setInspectDraft(
+            {
+                "kind": "fill",
+                "column_ids": [fill_col],
+                "method": "median",
+                "parameters": {"method": "median", "missing": "null"},
+                "rationale": "test-fill",
+                "expected_impact": "eksik",
+                "origin": "İncele / Eksik veri / Eksik değer",
+                "dataset_version": version_before,
+            }
+        )
+        spin(app, lambda: ops.hasInspectDraft)
+        catalog = item("prepareCatalogPanel")
+        assert catalog is not None
+        spin(app, lambda: catalog.property("selectedBlock") == 3)
+        assert catalog.property("selectedBlock") == 3
+        cleaning = item("cleaningMethod")
+        # Taslağı açmadan form blok varsayılanına (dedup) zorlanmamalı
+        if cleaning is not None:
+            assert cleaning.property("currentIndex") != 3  # dedup index
+
+        # inspectDraft preselect + Taslağı aç
         ops.setInspectDraft(
             {
                 "kind": "outlier",
-                "column_ids": [data.dataset()["import_metadata"]["columns"][0]["id"]],
+                "column_ids": [fill_col],
                 "method": "mark",
+                "parameters": {"action": "mark", "multiplier": "1.5", "flag_name": "Aykırı_adayı"},
                 "rationale": "test",
                 "expected_impact": "aday",
                 "origin": "İncele / Kalite / Aykırı",
@@ -85,13 +110,14 @@ def test_prepare_workspace_shell_preview_apply_mod2_inspect(tmp_path, monkeypatc
         spin(app, lambda: ops.hasInspectDraft)
         frame = item("inspectDraftFrame")
         assert frame is not None and frame.property("visible")
+        spin(app, lambda: catalog.property("selectedBlock") == 2)
         accept = item("inspectDraftAccept")
         if accept is not None:
             accept.clicked.emit()
             app.processEvents()
-        catalog = item("prepareCatalogPanel")
-        assert catalog is not None
         assert catalog.property("selectedBlock") == 2
+        if cleaning is not None:
+            assert cleaning.property("currentIndex") == 8  # outlier
 
         # Mod 2 uyarı (LEARNED) — train-only motor yok
         item("prepareCatalogChip_7").clicked.emit()

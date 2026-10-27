@@ -11,10 +11,11 @@ Item {
     property bool libraryOpen: false
     property bool detailsOpen: false
     property bool importAfterCreate: false
+    property bool createRequested: false
     readonly property bool showAdvanced: detailsOpen
     onVisibleChanged: if (visible) {
         detailsOpen = false
-        importAfterCreate = false
+        // importAfterCreate burada sıfırlanmaz; create/import yarışında bayrak düşmesin.
     }
     readonly property bool previewReady: imports.sourcePath.length > 0
                                          && imports.errorText.length === 0
@@ -42,11 +43,16 @@ Item {
     function beginImport() {
         if (root.needsProjectForImport) {
             root.importAfterCreate = true
+            root.createRequested = true
             projects.createDefaultForImport(imports.sourcePath, nameField.text)
             return
         }
         if (root.canImport)
             imports.importData(false)
+    }
+    function clearImportFollowup() {
+        root.importAfterCreate = false
+        root.createRequested = false
     }
 
     FileDialog {
@@ -74,10 +80,16 @@ Item {
             if (!root.importAfterCreate)
                 return
             if (dataView.datasets && dataView.datasets.length > 0) {
-                root.importAfterCreate = false
+                root.clearImportFollowup()
                 return
             }
-            if (!projects.opened || projects.busy || imports.busy || !imports.ready)
+            if (projects.busy || imports.busy)
+                return
+            if (root.createRequested && !projects.opened) {
+                root.clearImportFollowup()
+                return
+            }
+            if (!projects.opened || !imports.ready)
                 return
             imports.importData(false)
         }

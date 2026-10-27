@@ -42,28 +42,113 @@ ColumnLayout {
         fillMethod.currentIndex = 0
         root.invalidate()
     }
+    function columnIndexFor(id) {
+        let cols = dataView.datasetColumns || []
+        for (let i = 0; i < cols.length; i++)
+            if (cols[i].id === id)
+                return i
+        return -1
+    }
     function applyInspectDraft(draft) {
         if (!draft || !draft.kind)
             return
+        let params = draft.parameters || ({})
         let idx = kinds.indexOf(draft.kind)
         if (idx < 0)
             idx = 0
         method.currentIndex = idx
         let ids = draft.column_ids || []
-        if (ids.length) {
-            multi.checked = false
-            allColumns.checked = false
-            let cols = dataView.datasetColumns || []
-            for (let i = 0; i < cols.length; i++)
-                if (cols[i].id === ids[0]) {
-                    column.currentIndex = i
-                    break
-                }
+        multi.checked = false
+        allColumns.checked = !!(params.all_columns)
+        if (ids.length && !allColumns.checked) {
+            let ci = root.columnIndexFor(ids[0])
+            if (ci >= 0)
+                column.currentIndex = ci
+            if (ids.length > 1) {
+                multi.checked = true
+                root.selected = ids.slice()
+            }
         }
         if (draft.kind === "fill") {
             let methods = ["constant", "mean", "median", "mode"]
-            let mi = methods.indexOf(draft.method || "median")
+            let fillName = draft.method || params.method || "median"
+            let mi = methods.indexOf(fillName)
             fillMethod.currentIndex = mi >= 0 ? mi : 2
+            if (params.value !== undefined && params.value !== null)
+                fillValue.text = String(params.value)
+            if (params.missing === "null_nan")
+                missingMode.currentIndex = 1
+            else if (params.missing === "null")
+                missingMode.currentIndex = 0
+            if (params.tie_policy === "choose")
+                modeTie.currentIndex = 1
+            else if (params.tie_policy === "reject")
+                modeTie.currentIndex = 0
+        } else if (draft.kind === "missing_rows" || draft.kind === "missing_columns") {
+            if (params.missing === "null_nan")
+                missingMode.currentIndex = 1
+            else if (params.missing === "null")
+                missingMode.currentIndex = 0
+            if (params.rule === "any")
+                missingRule.currentIndex = 1
+            else if (params.rule === "all")
+                missingRule.currentIndex = 0
+        } else if (draft.kind === "trim") {
+            let sides = ["both", "left", "right"]
+            let si = sides.indexOf(params.side || "both")
+            trimSide.currentIndex = si >= 0 ? si : 0
+        } else if (draft.kind === "dedup" || draft.kind === "ordered_fill") {
+            let orderIds = params.order_columns || []
+            if (orderIds.length) {
+                let oi = root.columnIndexFor(orderIds[0])
+                if (oi >= 0)
+                    orderColumn.currentIndex = oi
+            }
+            descending.checked = !!params.descending
+            if (draft.kind === "dedup") {
+                if (params.keep === "last")
+                    keep.currentIndex = 1
+                else
+                    keep.currentIndex = 0
+            } else {
+                if (params.direction === "backward")
+                    direction.currentIndex = 1
+                else
+                    direction.currentIndex = 0
+                if (params.missing === "null_nan")
+                    missingMode.currentIndex = 1
+                else if (params.missing === "null")
+                    missingMode.currentIndex = 0
+                root.groups = (params.group_columns || []).slice()
+            }
+        } else if (draft.kind === "outlier") {
+            if (params.action === "filter")
+                outlierAction.currentIndex = 1
+            else
+                outlierAction.currentIndex = 0
+            if (params.multiplier !== undefined && params.multiplier !== null)
+                multiplier.text = String(params.multiplier)
+            if (params.flag_name)
+                flagName.text = String(params.flag_name)
+        } else if (draft.kind === "map_categories") {
+            if (params.mapping && params.mapping.length)
+                root.mapping = params.mapping.slice()
+            if (params.unmapped === "reject")
+                unmapped.currentIndex = 1
+            else if (params.unmapped === "keep")
+                unmapped.currentIndex = 0
+        } else if (draft.kind === "convert") {
+            let targets = ["String", "Int64", "UInt64", "Float64", "Boolean", "Decimal", "Date", "Datetime"]
+            let target = (params.target && params.target.kind) || params.target_kind || ""
+            let ti = targets.indexOf(target)
+            if (ti >= 0)
+                targetType.currentIndex = ti
+            if (params.on_error === "null")
+                onError.currentIndex = 1
+            else if (params.on_error === "reject")
+                onError.currentIndex = 0
+            if (params.date_format)
+                dateFormat.text = String(params.date_format)
         }
         root.invalidate()
     }

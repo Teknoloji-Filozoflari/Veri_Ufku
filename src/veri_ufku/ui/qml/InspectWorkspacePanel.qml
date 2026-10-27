@@ -96,14 +96,50 @@ ColumnLayout {
     }
 
     function moveFinding(finding) {
+        let code = finding.code || ""
         let kind = "fill"
         let method = "median"
-        if (finding.code === "duplicates_full" || finding.code === "duplicates_selected")
+        let params = { missing: "null", inspect_origin: "İncele / " + panel.selectedBlock + " / " + code }
+        if (code === "duplicates_full" || code === "duplicates_selected") {
             kind = "dedup"
-        else if (finding.code === "outlier")
+            method = "first"
+            params.keep = "first"
+            params.descending = false
+            params.tie_policy = "input_order_then_rowid"
+            params.null_order = "reject"
+            params.equality = "v1:null_equal;nan_equal;zero_equal;decimal_numeric;timezone_instant;text_exact"
+        } else if (code === "outlier") {
             kind = "outlier"
-        else if (finding.code === "whitespace")
+            method = "mark"
+            params.action = "mark"
+            params.multiplier = "1.5"
+            params.flag_name = "Aykırı_adayı"
+        } else if (code === "whitespace") {
             kind = "trim"
+            method = "both"
+            params.side = "both"
+        } else if (code === "category_similarity") {
+            kind = "map_categories"
+            method = "map"
+            params.mapping = []
+            params.unmapped = "keep"
+        } else if (code === "conversion" || code === "invalid_date") {
+            kind = "convert"
+            method = code === "invalid_date" ? "Date" : "String"
+            params.target = { kind: method }
+            params.on_error = "reject"
+            params.date_format = ""
+        } else if (code === "missing" || code === "nonfinite") {
+            kind = "fill"
+            method = "median"
+            params.method = "median"
+        } else {
+            // constant / uniqueness / rule: inceleme taslağı; varsayılan fill uydurma.
+            kind = "trim"
+            method = "both"
+            params.side = "both"
+            params.review_only = true
+        }
         let columnId = ""
         let cols = dataView.datasetColumns || []
         for (let i = 0; i < cols.length; i++)
@@ -111,11 +147,24 @@ ColumnLayout {
                 columnId = cols[i].id
                 break
             }
+        let columnIds = columnId ? [columnId] : []
+        if (kind === "dedup") {
+            if (code === "duplicates_full" && cols.length)
+                columnIds = cols.map(function(c) { return c.id })
+            // Sıra sütunu zorunlu; bulgu sütunu yoksa ilk sütun.
+            let orderId = columnId || (cols.length ? cols[0].id : "")
+            if (orderId)
+                params.order_columns = [orderId]
+            if (code === "duplicates_full")
+                params.all_columns = true
+        }
+        if (kind === "fill")
+            params.method = method
         let draft = {
             kind: kind,
-            column_ids: columnId ? [columnId] : [],
+            column_ids: columnIds,
             method: method,
-            parameters: { method: method, missing: "null", inspect_origin: "İncele / " + panel.selectedBlock + " / " + finding.code },
+            parameters: params,
             rationale: (finding.recommendation && finding.recommendation.reason) ? finding.recommendation.reason : finding.reason,
             expected_impact: (finding.recommendation && finding.recommendation.impact) ? finding.recommendation.impact : (finding.count + " / " + finding.denominator),
             origin: "İncele / " + (panel.selectedBlock === 3 ? qsTr("Eksik veri") : qsTr("Kalite")) + " / " + panel.findingLabel(finding.code),

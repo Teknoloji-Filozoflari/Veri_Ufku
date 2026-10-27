@@ -31,7 +31,13 @@ ColumnLayout {
         if (index === 2) return hasData || source ? "done" : "pending"
         if (index === 3) return hasData || imports.ready ? "done" : (source ? "pending" : "untouched")
         if (index === 4) return hasData ? "done" : "untouched"
-        if (index === 5) return hasData ? (dataView.missingImpact.affected_rows ? "pending" : "done") : "untouched"
+        if (index === 5) {
+            if (!hasData)
+                return "untouched"
+            if (dataView.missingImpact.dataset_version)
+                return dataView.missingImpact.missing_n > 0 ? "pending" : "done"
+            return "pending"
+        }
         if (index === 6) return hasData ? "done" : (source ? "pending" : "untouched")
         if (index === 7) return hasData ? "done" : "untouched"
         if (index === 8) return panel.firstLookApproved ? "done" : (hasData ? "pending" : "untouched")
@@ -62,7 +68,7 @@ ColumnLayout {
         if (selectedBlock === 2 || selectedBlock === 6)
             return projects.opened && imports.ready && !imports.busy
         if (selectedBlock === 5)
-            return !!dataView.missingImpact.column_id && !dataView.busy
+            return !!(missingColumn.currentValue) && !dataView.busy
         if (selectedBlock === 8)
             return dataView.datasets.length > 0 && !dataView.busy
         if (selectedBlock === 1 || selectedBlock === 4)
@@ -395,7 +401,17 @@ ColumnLayout {
                     onClicked: dataView.previewMissingDrop(String(missingColumn.currentValue || ""), "")
                 }
                 UiLabel {
-                    text: dataView.missingImpact.summary || dataView.missingImpact.message || qsTr("Önizleme sürüm yazmaz. Uygula ayrıdır.")
+                    objectName: "dataBlockMissingImpact"
+                    text: {
+                        let m = dataView.missingImpact || ({})
+                        if (m.dataset_version)
+                            return qsTr("Bu sütundaki eksik satırlar silinirse ")
+                                  + m.missing_n + " / " + m.total_n
+                                  + qsTr(" satır (%") + ((m.lost_ratio || 0) * 100).toFixed(2)
+                                  + qsTr(") kaybolur; kalan ") + m.remaining_n + ".\n"
+                                  + (m.note || "")
+                        return m.summary || m.note || qsTr("Önizleme sürüm yazmaz. Uygula ayrıdır.")
+                    }
                     Layout.fillWidth: true
                     wrapMode: Text.Wrap
                     color: Theme.secondary
@@ -568,7 +584,7 @@ ColumnLayout {
                 else if (selectedBlock === 8) {
                     panel.firstLookApproved = true
                 } else if (selectedBlock === 5) {
-                    dataView.previewMissingDrop(dataView.missingImpact.column_id || "", "")
+                    dataView.previewMissingDrop(String(missingColumn.currentValue || ""), "")
                 }
             }
         }
