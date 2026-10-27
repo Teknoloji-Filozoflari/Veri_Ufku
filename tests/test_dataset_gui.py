@@ -35,6 +35,10 @@ def test_qml_page_worker_filter_profile_role_save_reopen(tmp_path, monkeypatch):
         tabs = window.findChild(QObject, "datasetTabs")
         tabs.setProperty("currentIndex", 0)
         window.setProperty("dataPane", "rows")
+        spin(
+            app,
+            lambda: not data.busy and not projects.busy and data.model.rowCount() > 0,
+        )
         window.findChild(QObject, "loadDatasetButton").clicked.emit()
         spin(app, lambda: not data.busy)
         assert (
@@ -126,15 +130,18 @@ def test_data_content_dictionary_persists_and_view_does_not_change_counts(
         app.processEvents()
         window.setProperty("dataPane", "rows")
         app.processEvents()
-        assert visual_item(window.contentItem(), "dataHeading_import").property(
-            "visible"
-        )
+        assert window.property("dataPane") == "rows"
+        assert window.property("showTable")
         assert window.findChild(QObject, "dataContentPanel") is None
         assert data.dataContent["rows"] == 12
         assert data.dataContent["columns"] == 3
         assert data.dataContent["source"] == "sample.csv"
         amount = data.dataset()["import_metadata"]["columns"][1]["id"]
         data.selectColumn(amount)
+        spin(
+            app,
+            lambda: window.findChild(QObject, "applyColumnRole").property("enabled"),
+        )
         window.findChild(QObject, "columnDescription").setProperty(
             "text", "Satışın Türk lirası cinsinden tutarı."
         )
@@ -170,7 +177,7 @@ def test_data_content_dictionary_persists_and_view_does_not_change_counts(
         assert source.read_bytes() == original
         visual_item(window.contentItem(), "dataHeading_import").clicked.emit()
         assert tabs.property("currentIndex") == 1
-        visual_item(window.contentItem(), "dataHeading_profile").clicked.emit()
+        visual_item(window.contentItem(), "dataHeading_rows").clicked.emit()
         assert tabs.property("currentIndex") == 0
         window.setProperty("selectedSection", 0)
         window.findChild(QObject, "projectDetailsToggle").setProperty("checked", True)

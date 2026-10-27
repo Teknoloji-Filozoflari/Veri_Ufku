@@ -73,6 +73,6 @@ ColumnLayout {
         UiButton {objectName:"reproCancel";text:"Repro işlemini iptal et";visible:reproducibility.busy;onClicked:reproducibility.cancel();Layout.fillWidth:true}
         UiLabel {objectName:"reproStatusCaption";text:reproducibility.errorText||reproducibility.message;wrapMode:Text.Wrap;Layout.fillWidth:true}
         StateNotice {heading:"Lineage / repro durumu";detail:reproducibility.errorText||reproducibility.message;kind:reproducibility.errorText?"error":reproducibility.busy?"loading":"info";Layout.fillWidth:true}
-        UiButton {objectName:"reproHelp";text:"Lineage, snapshot, ortam ve tolerance öğren";helpContext:"repro.lineage";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
+        UiButton { visible: false;objectName:"reproHelp";text:"Lineage, snapshot, ortam ve tolerance öğren";helpContext:"repro.lineage";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
     }
 }

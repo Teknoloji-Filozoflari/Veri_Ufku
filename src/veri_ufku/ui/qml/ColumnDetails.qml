@@ -60,9 +60,9 @@ ColumnLayout {
     GridLayout {
         columns: panel.width > 600 * Theme.scale ? 3 : 1
         Layout.fillWidth: true
-        UiButton { property string helpContext: "profile-unique"; text: "Unique nedir?"; onClicked: panel.helpRequested(this, "profile-unique"); Layout.fillWidth: true; multiline: true }
-        UiButton { property string helpContext: "profile-std"; text: "Standart sapma nedir?"; onClicked: panel.helpRequested(this, "profile-std"); Layout.fillWidth: true; multiline: true }
-        UiButton { property string helpContext: "profile-quantile"; text: "Yüzdelik nedir?"; onClicked: panel.helpRequested(this, "profile-quantile"); Layout.fillWidth: true; multiline: true }
+        UiButton { visible: false; property string helpContext: "profile-unique"; text: "Unique nedir?"; onClicked: panel.helpRequested(this, "profile-unique"); Layout.fillWidth: true; multiline: true }
+        UiButton { visible: false; property string helpContext: "profile-std"; text: "Standart sapma nedir?"; onClicked: panel.helpRequested(this, "profile-std"); Layout.fillWidth: true; multiline: true }
+        UiButton { visible: false; property string helpContext: "profile-quantile"; text: "Yüzdelik nedir?"; onClicked: panel.helpRequested(this, "profile-quantile"); Layout.fillWidth: true; multiline: true }
     }
     }
     UiButton { text: "Projeyi kaydet"; enabled: !projects.busy && !projects.readOnly && projects.dirty; onClicked: projects.request("save"); Layout.fillWidth: true }

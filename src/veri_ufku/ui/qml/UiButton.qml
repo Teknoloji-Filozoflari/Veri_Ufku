@@ -28,7 +28,7 @@ Button {
     contentItem: Text {
         textFormat: Text.PlainText
         text: (control.glyph ? control.glyph + "  " : "") + control.text
-        color: !control.enabled ? Theme.muted : (control.primary ? Theme.accentText : (control.tone !== "warm" ? control.toneColor : Theme.text))
+        color: !control.enabled ? Theme.muted : (control.primary ? Theme.actionText : (control.tone !== "warm" ? control.toneColor : Theme.text))
         font.pixelSize: Theme.body
         font.bold: control.primary || control.checked
         horizontalAlignment: Text.AlignHCenter
@@ -39,9 +39,9 @@ Button {
     background: Rectangle {
         radius: Theme.radius
         color: control.primary && control.enabled
-            ? (control.down ? Theme.tonePressed(control.tone) : (control.hovered ? Theme.toneHover(control.tone) : control.toneColor))
+            ? (control.down ? Theme.actionPressed : (control.hovered ? Theme.actionHover : Theme.action))
             : (control.checked ? control.toneSurface : (control.hovered ? Theme.hover : (control.quiet ? "transparent" : Theme.raised)))
-        border.color: control.activeFocus || (control.primary && control.enabled) ? control.toneColor : Theme.controlBorder
+        border.color: control.activeFocus || (control.primary && control.enabled) ? Theme.action : Theme.controlBorder
         border.width: control.activeFocus ? 2 : (control.quiet && !control.checked ? 0 : 1)
         Rectangle {
             anchors.fill: parent

@@ -2,6 +2,8 @@
 
 2026-10-17; ENV-75. Güncel nihai teknik sınıflandırma aşağıdaki **Faz75 güncel sınıflandırma** bölümündedir. Önceki tablolar Faz28 tarihsel snapshot ve sonraki faz notlarıdır; güncel tam destek iddiası değildir. Kabul/kapsam ana kaydı [REQUIREMENTS_MATRIX](REQUIREMENTS_MATRIX.md), faz durumu [PRO_PROGRESS](PRO_PROGRESS.md). Bu belge mevcut uygulamanın sınırlarını gösterir; önceki resmî giriş kapıları ayrıca açıktır. Deneysel runtime desteği tam faz kabulü veya bilimsel uzman incelemesi değildir.
 
+**UX V2 (2026-10-25, yerel `ux-v2`, teknik teslim):** StageStrip/ContextSidePanel, Verilerim (XDG indeks), eksik-etki önizlemesi, grafik notu+RowId işaret, üç yöntemli aykırı aday, gerekçeli model adayları (`modeling/candidates.py`), rapor UX bağlam notu. Yeni analiz yöntemi ailesi yok; mevcut registry/yetenekler korunur. Resmî ürün kabulü ayrı; kanıt [evidence/UX_V2.md](evidence/UX_V2.md).
+
 Kanıt: [son tam720 başarılı JUnit](evidence/phase28/pytest-final.xml), [714 başarılı / 1 belge hatalı ilk koşu](evidence/phase28/pytest.log), [yöntem tanıkları](evidence/phase28/capability-evidence.json), [kaynak+tipli registry snapshot](evidence/phase28/audit.json), [kaynak GUI](evidence/phase28/gui/walkthrough.json), [noneditable kurulu GUI](evidence/phase28/wheel-gui/walkthrough.json), [kurulu import](evidence/phase28/wheel-import.log). Son onarım kontrolleri [PHASE28](evidence/PHASE28.md). Registry beyanı tek başına hesap kanıtı sayılmaz: aşağıda gerçek test modülleri ve eski yöntem kanıtları da bağlanır. JSON tanık listesinde yönteme doğrudan eşleşen adlar ile yalnız modül akışını doğrulayan vakalar ayrı tutulur. Boş doğrudan liste yöntem başına bu koşuda yeni bilimsel kabul vermez; önceki yöntem kayıtları geçerlidir.
 
 ## Veri türü sınırları

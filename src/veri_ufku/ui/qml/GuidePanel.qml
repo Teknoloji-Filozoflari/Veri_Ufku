@@ -28,7 +28,7 @@ ColumnLayout {
             UiButton { text:qsTr("Önceki"); enabled:guide.step>0 && !projects.busy; onClicked:guide.go(guide.step-1) }
             UiButton { objectName:"guideNext"; text:qsTr("Sonraki / bu adımı atla"); enabled:guide.step<5 && !projects.busy; onClicked:guide.go(guide.step+1) }
             UiButton { text:qsTr("Rehberi kapat"); onClicked:guide.close() }
-            UiButton { tone: "mint"; text:qsTr("Bu ne işe yarar?"); helpContext:"guide"; onClicked:panel.helpRequested(this,"guide") }
+            UiButton { visible: false; tone: "mint"; text:qsTr("Bu ne işe yarar?"); helpContext:"guide"; onClicked:panel.helpRequested(this,"guide") }
         }
     }
     Flow { visible:!guide.active; Layout.fillWidth:true; spacing:Theme.sm

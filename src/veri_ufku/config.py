@@ -7,6 +7,8 @@ from pathlib import Path
 
 from veri_ufku.domain.contracts import ComputeBudget
 
+SUPPORTED_LOCALES = frozenset({"tr", "en", "az", "tk", "kk", "uz", "ru", "es"})
+
 
 @dataclass(frozen=True)
 class Settings:
@@ -51,6 +53,6 @@ def load_settings(paths):
     if not isinstance(obj, dict) or set(obj) - {"locale", "budget"}:
         raise ValueError("Unsupported configuration")
     locale = obj.get("locale", "tr")
-    if locale not in {"tr", "en"}:
+    if locale not in SUPPORTED_LOCALES:
         raise ValueError("Unsupported locale")
     return Settings(locale, ComputeBudget(**obj.get("budget", {})))

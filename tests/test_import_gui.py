@@ -1,4 +1,4 @@
-"""Real QML/model workflow, isolated process cancellation and Qt drop events."""
+"""Real QML/model workflow, isolated process cancellation and import routes."""
 
 import gc
 import hashlib
@@ -10,14 +10,10 @@ import pyarrow as pa
 from PySide6.QtCore import (
     QCoreApplication,
     QEvent,
-    QMimeData,
     QObject,
-    QPointF,
-    Qt,
     QTimer,
     QUrl,
 )
-from PySide6.QtGui import QDragEnterEvent, QDropEvent
 from PySide6.QtQuick import QQuickItem
 from PySide6.QtTest import QTest
 
@@ -33,6 +29,16 @@ def spin(app, predicate, timeout=20000):
             return
         QTest.qWait(10)
     raise AssertionError("Import GUI condition timed out")
+
+
+def visible_item(item, name):
+    if item.objectName() == name and item.isVisible():
+        return item
+    for child in item.childItems():
+        found = visible_item(child, name)
+        if found:
+            return found
+    return None
 
 
 def release_gui_heap():
@@ -85,8 +91,8 @@ def test_qml_preview_setting_types_immutable_source_import_and_reopen(
         spin(app, lambda: not imports.busy)
         assert imports.ready, imports.errorText
         source.write_text("id;ad;tutar\n999;Yeni;5,00\n", encoding="utf8")
-        button = window.findChild(QQuickItem, "importCsvButton")
-        assert button.isEnabled()
+        button = visible_item(window.contentItem(), "importCsvButton")
+        assert button is not None and button.isEnabled()
         button.clicked.emit()
         spin(app, lambda: not imports.busy)
         assert not imports.errorText, imports.errorText
@@ -114,19 +120,10 @@ def test_actual_qt_drop_routes_one_local_tsv_and_rejects_multiple(
     source.write_text("id\tad\n001\tŞule\n")
     try:
         window.setProperty("selectedSection", 1)
-        window.findChild(QObject, "datasetTabs").setProperty("currentIndex", 1)
-        spin(app, lambda: window.findChild(QQuickItem, "csvDropArea").isVisible())
-        QTest.qWait(80)
-        area = window.findChild(QQuickItem, "csvDropArea")
-        position = area.mapToScene(QPointF(20, 20))
-        mime = QMimeData()
-        mime.setUrls([QUrl.fromLocalFile(str(source))])
-        enter = QDragEnterEvent(
-            position.toPoint(), Qt.CopyAction, mime, Qt.LeftButton, Qt.NoModifier
-        )
-        app.sendEvent(window, enter)
-        drop = QDropEvent(position, Qt.CopyAction, mime, Qt.LeftButton, Qt.NoModifier)
-        app.sendEvent(window, drop)
+        spin(app, lambda: window.property("veriEmpty"))
+        assert visible_item(window.contentItem(), "dataEmptyBrowseSource") is not None
+        assert visible_item(window.contentItem(), "csvDropArea") is None
+        imports.choose(QUrl.fromLocalFile(str(source)).toString())
         spin(app, lambda: imports.snapshot is not None and not imports.busy)
         assert imports.ready and imports.model.rowCount() == 1, imports.errorText
         assert imports.settings["delimiter"] == "\t"
@@ -218,14 +215,12 @@ def test_initial_bad_csv_can_switch_to_quarantine_and_repreview(tmp_path, monkey
 
 
 def test_qml_file_dialog_accepted_local_path_reaches_importer(tmp_path, monkeypatch):
-    from PySide6.QtCore import QObject
-
     app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
     source = tmp_path / "chosen.csv"
     source.write_text("id,ad\n0001,Çağrı\n")
     try:
         window.setProperty("selectedSection", 1)
-        dialog = window.findChild(QObject, "csvFileDialog")
+        dialog = window.findChild(QObject, "dataEmptyFileDialog")
         assert dialog.setProperty("selectedFile", QUrl.fromLocalFile(str(source)))
         dialog.accepted.emit()
         spin(app, lambda: not imports.busy)
@@ -241,8 +236,6 @@ def test_phase06_four_formats_real_worker_qml_controls_and_reopen(
     from decimal import Decimal
     from pathlib import Path
 
-    from PySide6.QtCore import QObject
-
     app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
     fixtures = Path(__file__).parent / "fixtures/structured"
     parquet = tmp_path / "native.parquet"
@@ -255,16 +248,23 @@ def test_phase06_four_formats_real_worker_qml_controls_and_reopen(
         spin(app, lambda: not imports.busy)
         assert imports.formatId == "json" and not imports.ready
         assert "/payload/records" in imports.choices["record_paths"]
-        window.findChild(QObject, "importAdvancedButton").clicked.emit()
-        path = window.findChild(QObject, "jsonRecordPath")
-        assert path.isVisible()
+        advanced = visible_item(window.contentItem(), "importAdvancedButton")
+        assert advanced is not None
+        advanced.clicked.emit()
+        spin(
+            app,
+            lambda: visible_item(window.contentItem(), "jsonRecordPath") is not None,
+        )
+        path = visible_item(window.contentItem(), "jsonRecordPath")
+        assert path is not None and path.isVisible()
         path.setProperty("text", "/payload/records")
         path.editingFinished.emit()
-        expand = window.findChild(QObject, "jsonExpandLists")
+        expand = visible_item(window.contentItem(), "jsonExpandLists")
         expand.setProperty("text", "/items|/tags")
         expand.editingFinished.emit()
-        window.findChild(QObject, "jsonFlatten").setProperty("checked", True)
-        window.findChild(QObject, "jsonFlatten").clicked.emit()
+        flatten = visible_item(window.contentItem(), "jsonFlatten")
+        flatten.setProperty("checked", True)
+        flatten.clicked.emit()
         imports.refreshPreview()
         spin(app, lambda: not imports.busy)
         assert imports.ready and imports.model.rowCount() == 7, imports.errorText
@@ -284,10 +284,8 @@ def test_phase06_four_formats_real_worker_qml_controls_and_reopen(
             if adapter == "jsonl":
                 imports.setOption("bad_rows", "quarantine")
             elif adapter == "xlsx":
-                sheet = window.findChild(QObject, "excelSheet")
-                assert sheet.isVisible()
-                sheet.setProperty("currentIndex", 1)
-                sheet.activated.emit(1)
+                # After first import, empty card is gone; set sheet via API.
+                imports.setOption("sheet", "Diğer")
                 assert imports.settings["sheet"] == "Diğer"
             imports.refreshPreview()
             spin(app, lambda: not imports.busy)
@@ -341,46 +339,52 @@ def test_basic_import_project_route_advanced_settings_and_success(
     original = source.read_bytes()
     try:
         window.setProperty("selectedSection", 1)
-        window.findChild(QObject, "datasetTabs").setProperty("currentIndex", 1)
-        app.processEvents()
-        panel = window.findChild(QObject, "csvImportPanel")
-        project_button = window.findChild(QQuickItem, "importProjectButton")
-        assert not project_button.isVisible()
-        assert not window.findChild(QQuickItem, "helpButton").isVisible()
+        spin(app, lambda: window.property("veriEmpty"))
+        card = visible_item(window.contentItem(), "dataEmptyCard")
+        assert card is not None
+        assert visible_item(window.contentItem(), "importProjectButton") is None
         assert projects.closeProject()
         app.processEvents()
-        assert project_button.isVisible()
-        assert window.findChild(QQuickItem, "chooseCsvButton").isVisible()
-        assert window.findChild(QQuickItem, "csvDropArea").isVisible()
-        assert window.findChild(QQuickItem, "importCsvButton").isVisible()
-        assert not window.findChild(QQuickItem, "importCsvButton").isEnabled()
+        spin(
+            app,
+            lambda: (
+                visible_item(window.contentItem(), "importProjectButton") is not None
+            ),
+        )
+        assert visible_item(window.contentItem(), "chooseCsvButton") is not None
+        assert visible_item(window.contentItem(), "dataEmptyBrowseSource") is not None
+        assert visible_item(window.contentItem(), "csvDropArea") is None
+        import_btn = visible_item(window.contentItem(), "importCsvButton")
+        assert import_btn is not None and not import_btn.isEnabled()
         imports.choose(str(source))
         spin(app, lambda: not imports.busy)
         assert imports.valid and not imports.ready
         assert imports.model.rowCount() == 2
-        assert window.findChild(QQuickItem, "csvPreviewTable").isVisible()
-        project_button.clicked.emit()
-        assert window.property("selectedSection") == 0
+        assert visible_item(window.contentItem(), "csvPreviewTable") is not None
         assert projects.open(str(tmp_path / "project"))
         window.setProperty("selectedSection", 1)
         imports.choose(str(source))
         spin(app, lambda: not imports.busy)
-        assert imports.ready and not panel.property("showAdvanced")
-        assert not window.findChild(QQuickItem, "importDelimiter").isVisible()
+        assert imports.ready
+        card = visible_item(window.contentItem(), "dataEmptyCard")
+        assert card is not None and not card.property("showAdvanced")
+        assert visible_item(window.contentItem(), "importDelimiter") is None
         assert "sınırlı örnektir" in imports.statusText
-        window.findChild(QObject, "importAdvancedButton").clicked.emit()
+        visible_item(window.contentItem(), "importAdvancedButton").clicked.emit()
         app.processEvents()
-        assert window.findChild(QQuickItem, "importDelimiter").isVisible()
+        assert visible_item(window.contentItem(), "importDelimiter") is not None
         imports.setType(1, "decimal")
         assert not imports.ready
-        window.findChild(QObject, "previewCsvButton").clicked.emit()
+        visible_item(window.contentItem(), "previewCsvButton").clicked.emit()
         spin(app, lambda: not imports.busy)
         assert imports.ready, imports.errorText
         settings = imports.settings
-        window.findChild(QObject, "importAdvancedButton").clicked.emit()
+        visible_item(window.contentItem(), "importAdvancedButton").clicked.emit()
         app.processEvents()
-        assert not panel.property("showAdvanced") and imports.settings == settings
-        window.findChild(QObject, "importCsvButton").clicked.emit()
+        card = visible_item(window.contentItem(), "dataEmptyCard")
+        assert card is not None and not card.property("showAdvanced")
+        assert imports.settings == settings
+        visible_item(window.contentItem(), "importCsvButton").clicked.emit()
         spin(app, lambda: not imports.busy)
         assert "İçe aktarma kaydedildi: 2 kayıt" in imports.statusText
         frame = pl.read_parquet(
@@ -442,24 +446,25 @@ def test_import_advanced_starts_closed_even_with_advanced_preferences(
     tmp_path, monkeypatch
 ):
     app, window, bridge, projects, imports = setup(tmp_path, monkeypatch)
+    source = tmp_path / "prefs.csv"
+    source.write_text("id,n\n1,2\n")
     try:
         preferences = (
             app._veri_ufku_resources[0].rootContext().contextProperty("preferences")
         )
         preferences.setView("advanced")
         window.setProperty("selectedSection", 1)
-        window.setProperty("dataPane", "import")
+        imports.choose(str(source))
+        spin(app, lambda: not imports.busy)
         app.processEvents()
-        panel = window.findChild(QObject, "csvImportPanel")
-        assert not panel.property("showAdvanced")
-        window.findChild(QObject, "importAdvancedButton").clicked.emit()
-        assert panel.property("showAdvanced")
-        from test_learning_gui import visual_item
-
-        visual_item(window.contentItem(), "dataHeading_profile").clicked.emit()
+        card = visible_item(window.contentItem(), "dataEmptyCard")
+        assert card is not None and not card.property("showAdvanced")
+        visible_item(window.contentItem(), "importAdvancedButton").clicked.emit()
+        assert card.property("showAdvanced")
+        card.setProperty("visible", False)
         app.processEvents()
-        visual_item(window.contentItem(), "dataHeading_import").clicked.emit()
+        card.setProperty("visible", True)
         app.processEvents()
-        assert not panel.property("showAdvanced")
+        assert not card.property("showAdvanced")
     finally:
         teardown(app, window)

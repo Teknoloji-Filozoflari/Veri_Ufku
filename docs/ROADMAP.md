@@ -3,6 +3,27 @@
 2026-10-13 Europe/Istanbul; ana kayıt REQUIREMENTS_MATRIX.md; hafıza PROJECT_STATE.md.
 Bu belge yeni faz yetkisi vermez.
 
+## UX V2 (arayüz/akış — teknik Faz’dan bağımsız)
+
+Açık kullanıcı talimatı: Project store `veri-ufku-gelistirme-promptu.md`. Yerel dal `ux-v2`; push yok.
+
+| UX | Teknik teslim | Resmî / kapsam |
+|---|---|---|
+|0 Denetim| **Teknik tamamlandı:** [UX_V2_AUDIT.md](UX_V2_AUDIT.md), [E UX_V2](evidence/UX_V2.md); H1–H4; taban kapılar + 26 UI pytest + smoke | sürüyor; resmî kabul ayrı; bilinen AGENTS açıkları korunur |
+|1 Şartname| **Teknik tamamlandı:** [UX_WORKSPACE_V2.md](UX_WORKSPACE_V2.md); bölge/durum/eşleme; kod yok | sürüyor; kullanıcı gösterimi ayrı |
+|2 Kabuk| **Teknik tamamlandı:** StageStrip + ContextSidePanel; mevcut ekranlar; smoke | sürüyor; resmî kabul ayrı |
+|3 Tablo| **Teknik tamamlandı:** tablo merkez; başlık tür/rol; sayfa kapsamı; 23 GUI PASS | sürüyor; resmî kabul ayrı |
+|4 Veri alanı| **Teknik tamamlandı:** örnek katalog + Verilerim (XDG indeks); proje şeması aynı | sürüyor; resmî kabul ayrı |
+|5 Öğretim| **Teknik tamamlandı:** taslak aşama metinleri + tur; sözlük dosyası | sürüyor; metin onayı kullanıcıda |
+|6 Özet/eksik| **Teknik tamamlandı:** eksik silme etki önizlemesi (uygulamasız) | sürüyor; resmî kabul ayrı |
+|7 Keşif| **Teknik tamamlandı:** grafik yorumu + RowId işaret | sürüyor; resmî kabul ayrı |
+|8 Aykırı/hazırla| **Teknik tamamlandı:** üç yöntem aday listesi; Uygula yolu mevcut | sürüyor; resmî kabul ayrı |
+|9 Model| **Teknik tamamlandı:** gerekçeli aday listesi; train-fold sızıntı testi; fit kullanıcı eylemi | sürüyor; resmî kabul ayrı |
+|10 Rapor/kabul| **Teknik tamamlandı:** UX bağlam→rapor; e2e parçaları; belgeler; tam suite PASS iddiası yok | sürüyor; resmî/insan/AT ayrı |
+
+---
+
+
 | Faz | Teknik teslim | Resmî durum / kapsam |
 |---|---|---|
 |30| Yerel formatlar; büyük SAS açık | sürüyor / deneysel / zorunlu |

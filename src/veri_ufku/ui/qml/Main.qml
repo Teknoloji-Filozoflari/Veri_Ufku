@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
 import "RoadmapSteps.js" as Roadmap
+import "UxStages.js" as UxStages
 
 ApplicationWindow {
     id: window
@@ -29,7 +30,208 @@ ApplicationWindow {
     palette.mid: Theme.controlBorder
     palette.dark: Theme.secondary
     palette.placeholderText: Theme.secondary
-    property int selectedSection: 0
+    property int selectedSection: 1
+    property int prepareTool: 0
+    property int chartTool: 0
+    property int examineTool: 0
+    property int reportTool: 0
+    property bool sawProject: false
+    property bool dockDismissed: false
+    readonly property bool veriEmpty: {
+        if (selectedSection !== 1)
+            return false
+        let sets = dataView && dataView.datasets ? dataView.datasets.length : 0
+        return sets === 0
+    }
+    readonly property bool dockRequested: {
+        if (selectedSection === 0 || selectedSection === 7)
+            return true
+        if (selectedSection >= 2 && selectedSection <= 6)
+            return true
+        if (selectedSection !== 1)
+            return false
+        if (dataPane === "quality")
+            return true
+        let sets = dataView && dataView.datasets ? dataView.datasets.length : 0
+        return sets > 0
+    }
+    readonly property bool dockOpen: dockRequested && !dockDismissed
+    readonly property bool inceleOpen: {
+        if (selectedSection !== 1 || dataPane !== "quality")
+            return false
+        let sets = dataView && dataView.datasets ? dataView.datasets.length : 0
+        return sets > 0
+    }
+    readonly property bool veriWorkspaceDock: selectedSection === 1 && dataPane !== "quality" && dataView && dataView.datasets && dataView.datasets.length > 0
+    readonly property bool inspectWorkspaceDock: inceleOpen
+    readonly property bool gorsellestirOpen: {
+        if (selectedSection !== 3 || chartTool !== 0)
+            return false
+        let sets = dataView && dataView.datasets ? dataView.datasets.length : 0
+        return sets > 0
+    }
+    readonly property bool visualizeWorkspaceDock: gorsellestirOpen
+    readonly property bool hazirlaOpen: {
+        if (selectedSection !== 2 || prepareTool !== 0)
+            return false
+        let sets = dataView && dataView.datasets ? dataView.datasets.length : 0
+        return sets > 0
+    }
+    readonly property bool prepareWorkspaceDock: hazirlaOpen
+    readonly property bool istatistikOpen: {
+        if (selectedSection !== 4 || examineTool !== 0)
+            return false
+        let sets = dataView && dataView.datasets ? dataView.datasets.length : 0
+        return sets > 0
+    }
+    readonly property bool statisticsWorkspaceDock: istatistikOpen
+    readonly property bool modelInstalled: expertWorkspace.modelModule.installed === true
+    readonly property bool modelOpen: {
+        if (selectedSection !== 5 || !modelInstalled)
+            return false
+        let sets = dataView && dataView.datasets ? dataView.datasets.length : 0
+        return sets > 0
+    }
+    readonly property bool modelWorkspaceDock: modelOpen
+    readonly property bool raporlaOpen: selectedSection === 6 && reportTool === 0 && projects.opened
+    readonly property bool reportWorkspaceDock: raporlaOpen
+    readonly property bool slimToolDock: veriWorkspaceDock || inspectWorkspaceDock || visualizeWorkspaceDock || prepareWorkspaceDock || statisticsWorkspaceDock || modelWorkspaceDock || reportWorkspaceDock
+    readonly property bool quietHeader: selectedSection === 1 || gorsellestirOpen || hazirlaOpen || istatistikOpen || modelOpen || raporlaOpen
+    readonly property string moduleKey: {
+        if (selectedSection === 0)
+            return ""
+        if (selectedSection === 7)
+            return "ogren"
+        if (selectedSection === 3)
+            return "gorsellestir"
+        if (selectedSection === 2)
+            return "hazirla"
+        if (selectedSection === 4)
+            return "istatistik"
+        if (selectedSection === 5)
+            return "model"
+        if (selectedSection === 6)
+            return "raporla"
+        if (selectedSection === 1 && dataPane === "quality")
+            return "incele"
+        if (selectedSection === 1)
+            return "veri"
+        return ""
+    }
+    function openIncele(origin) {
+        let hasData = dataView && dataView.datasets && dataView.datasets.length > 0
+        if (!projects.opened || !hasData) {
+            openVeri(origin)
+            return
+        }
+        navigate(1, origin)
+        openDataPane("quality")
+    }
+    function openVeri(origin) {
+        navigate(1, origin)
+        let hasData = dataView && dataView.datasets && dataView.datasets.length > 0
+        openDataPane(hasData ? "rows" : "")
+        dockDismissed = false
+    }
+    function openModel(origin) {
+        navigate(modelInstalled ? 5 : 6, origin)
+    }
+    readonly property bool showTable: {
+        if (selectedSection !== 1 || dataPane !== "rows")
+            return false
+        let sets = dataView && dataView.datasets ? dataView.datasets.length : 0
+        return sets > 0
+    }
+    readonly property bool centerOpen: showTable || window.veriEmpty || window.inceleOpen || window.gorsellestirOpen || window.hazirlaOpen || window.istatistikOpen || window.modelOpen || window.raporlaOpen
+    readonly property string veriContextLine: {
+        if (selectedSection !== 1 && !gorsellestirOpen && !hazirlaOpen && !istatistikOpen && !modelOpen && !raporlaOpen)
+            return projects.context
+        if (!projects.opened)
+            return qsTr("Proje açık değil")
+        let content = dataView && dataView.dataContent ? dataView.dataContent : ({})
+        let ver = content.version ? (qsTr("sürüm ") + String(content.version).slice(-8)) : ""
+        let src = content.source ? (qsTr("kaynak ") + content.source) : ""
+        let parts = [projects.name]
+        if (ver)
+            parts.push(ver)
+        if (src)
+            parts.push(src)
+        return parts.join(" · ")
+    }
+    readonly property string veriScopeLine: {
+        if ((!window.showTable && !window.inceleOpen && !window.gorsellestirOpen && !window.hazirlaOpen && !window.istatistikOpen) || !dataView)
+            return ""
+        let content = dataView.dataContent || ({})
+        let total = dataView.totalRows || content.rows || 0
+        let cols = content.columns || 0
+        let start = total === 0 ? 0 : dataView.pageOffset + 1
+        let end = Math.min(total, dataView.pageOffset + dataView.pageRowCount)
+        let ver = content.version ? (qsTr("sürüm ") + String(content.version).slice(-8)) : ""
+        let line = total + qsTr(" satır · ") + cols + qsTr(" sütun")
+              + (ver ? (" · " + ver) : "")
+        // Veri tablosu: mockup sakin satır (sayfa aralığı yok). Diğer modüller sayfa penceresini korur.
+        let veriTableOnly = window.showTable && !window.inceleOpen && !window.gorsellestirOpen && !window.hazirlaOpen && !window.istatistikOpen
+        if (!veriTableOnly && total > 0)
+            line += " · " + qsTr("satır ") + start + "–" + end + " / " + total
+        if (window.inceleOpen) {
+            let q = dataView.qualityResult || ({})
+            if (q.dataset_version) {
+                let scope = ({ full: qsTr("tam veri"), filtered: qsTr("filtreli"), sample: qsTr("örneklem") })[q.scope] || q.scope
+                line += " · " + qsTr("tarama ") + scope + " " + q.used_n + "/" + q.population_n
+            } else {
+                line += " · " + qsTr("tarama yok")
+            }
+        }
+        if (window.gorsellestirOpen) {
+            let c = charts.chartResult || ({})
+            if (c.dataset_version) {
+                let scope = ({ full: qsTr("tam veri"), view: qsTr("filtreli"), sample: qsTr("örneklem") })[c.scope] || c.scope
+                if (c.scope === "sample")
+                    line += " · " + qsTr("grafik örneklem ") + c.used_n + "/" + c.population_n
+                else
+                    line += " · " + qsTr("grafik ") + scope + " " + c.used_n + "/" + c.population_n
+            } else {
+                line += " · " + qsTr("grafik yok")
+            }
+        }
+        if (window.hazirlaOpen) {
+            let impact = (operations.previewResult && operations.previewResult.impact) ? operations.previewResult.impact : null
+            if (impact && impact.before_rows !== undefined) {
+                let scope = ({ full: qsTr("tam veri"), view: qsTr("görünüm"), sample: qsTr("örneklem") })[impact.scope] || impact.scope || qsTr("tam veri")
+                line += " · " + qsTr("önizleme ") + scope + " · " + qsTr("etkilenen ") + (impact.changed_rows || 0)
+            } else {
+                line += " · " + qsTr("önizleme yok")
+            }
+        }
+        if (window.istatistikOpen) {
+            let a = statistics.analysisResult || ({})
+            if (a.primary) {
+                line += " · " + qsTr("analiz n=") + JSON.stringify(a.n) + qsTr(" · dışlanan ") + (a.excluded_rows || 0)
+            } else if (statistics.preflightCurrent) {
+                let p = statistics.preflightResult || ({})
+                line += " · " + qsTr("önkontrol ") + (p.used_rows || 0) + "/" + (p.population_n || 0)
+            } else {
+                line += " · " + qsTr("analiz yok")
+            }
+        }
+        return line
+    }
+    property int uxStage: 0
+    property bool contextPanelOpen: false
+    property string centerView: "table"
+    readonly property var uxStageInfo: UxStages.stageAt(uxStage)
+    readonly property var uxStageQuestions: [
+        qsTr("Ne öğrenmek istiyorum?"),
+        qsTr("Dosya doğru okundu mu?"),
+        qsTr("Her sütun ne demek?"),
+        qsTr("Veri genel olarak neye benziyor?"),
+        qsTr("Ne kadarı eksik, silersem ne olur?"),
+        qsTr("Dağılım ve ilişkiler nasıl?"),
+        qsTr("Sıra dışı gözlemler hangileri?"),
+        qsTr("Bu bulgulara göre ne yapmalıyım?"),
+        qsTr("Bu soruya hangi yöntem uyar?"),
+        qsTr("Ne buldum, ne kadar güvenebilirim?")
+    ]
     // -1 follows the window; an explicit user choice lasts for this session.
     property int navigationMode: -1
     readonly property bool compactNavigation: navigationMode < 0 ? width < 1000 * Theme.scale : navigationMode === 1
@@ -37,11 +239,25 @@ ApplicationWindow {
     function openDataPane(pane) {
         dataPane = pane
         dataTabs.currentIndex = pane === "import" ? 1 : pane === "quality" ? 2 : pane ? 0 : -1
+        window.syncUxStageFromSection()
         if (pane) Qt.callLater(function() {
             let name = pane === "profile" ? "inventoryTable" : pane === "describe" ? "computeDescribe" : pane === "values" ? "valuesColumn" : pane === "rows" ? "loadDatasetButton" : ""
             let control = name ? window.findVisibleItem(window.contentItem, name) : null
             if (control && control.enabled) control.forceActiveFocus()
         })
+    }
+    function syncUxStageFromSection() {
+        uxStage = UxStages.indexForSection(selectedSection, dataPane)
+    }
+    function navigateUxStage(index, origin) {
+        let stage = UxStages.stageAt(index)
+        uxStage = index
+        selectedSection = stage.section
+        if (stage.section === 1) openDataPane(stage.pane || "profile")
+        else dataPane = ""
+        if (origin) origin.forceActiveFocus()
+        if (workspace.contentItem)
+            workspace.contentItem.contentY = 0
     }
     readonly property var sectionTones: ["warm", "cyan", "violet", "cyan", "violet", "violet", "warm", "mint"]
     readonly property color sectionAccent: Theme.toneColor(sectionTones[selectedSection])
@@ -75,36 +291,30 @@ ApplicationWindow {
     ]
     function navigate(index, origin) {
         selectedSection = index
-        if (infoOpen) learning.openContext(learning.screenContexts[index])
+        window.syncUxStageFromSection()
         if (origin) origin.forceActiveFocus()
-        workspace.contentItem.contentY = 0
+        if (workspace.contentItem)
+            workspace.contentItem.contentY = 0
     }
-    onSelectedSectionChanged: workspace.contentItem.contentY = 0
-    function openReading(origin, articleId) {
-        helpOrigin = origin
-        helpOriginName = origin.objectName
-        learning.openArticle(articleId)
-        readingOpen = true
-        infoOpen = true
-        articleReader.open()
-    }
-    function openInformation(origin, articleId, context) {
-        if (readingOpen) closeInformation()
-        helpOrigin = origin || helpButton
-        helpOriginName = helpOrigin.objectName
-        if (articleId) learning.openArticle(articleId)
-        else learning.openContext(context || learning.screenContexts[selectedSection])
-        infoOpen = true
-        if (!dockInfo) infoDrawer.open()
-        else dockPanel.focusFirst()
-    }
-    function focusedHelpContext() {
-        let item = activeFocusItem
-        while (item) {
-            if (item.helpContext) return item.helpContext
-            item = item.parent
+    onSelectedSectionChanged: {
+        if (selectedSection === 5 && !modelInstalled) {
+            selectedSection = 6
+            return
         }
-        return learning.screenContexts[selectedSection]
+        dockDismissed = false
+        if (workspace.contentItem)
+            workspace.contentItem.contentY = 0
+        window.syncUxStageFromSection()
+    }
+    onDataPaneChanged: {
+        if (dataPane === "import" || dataPane === "quality")
+            dockDismissed = false
+        window.syncUxStageFromSection()
+    }
+    function openReading(origin, articleId) {}
+    function openInformation(origin, articleId, context) {}
+    function focusedHelpContext() {
+        return ""
     }
     function findVisibleItem(item, name) {
         if (!item || !item.visible) return null
@@ -116,24 +326,12 @@ ApplicationWindow {
         return null
     }
     function restoreHelpFocus() {
-        let origin = helpOriginName ? findVisibleItem(window.contentItem, helpOriginName) : helpOrigin
-        if (!origin && helpOriginName) origin = findVisibleItem(window.header, helpOriginName) || findVisibleItem(window.footer, helpOriginName)
-        if (!origin && selectedSection === 7) origin = findVisibleItem(window.contentItem, "learningSearch")
-        if (!origin || !origin.visible || !origin.enabled) origin = helpButton.visible ? helpButton : headerBeginner
-        origin.forceActiveFocus()
+        if (displayButton && displayButton.visible)
+            displayButton.forceActiveFocus()
     }
     function closeInformation() {
         infoOpen = false
         readingOpen = false
-        articleReader.close()
-        infoDrawer.close()
-        restoreHelpFocus()
-    }
-    onDockInfoChanged: {
-        if (infoOpen && !readingOpen) {
-            if (dockInfo) infoDrawer.close()
-            else infoDrawer.open()
-        }
     }
     Shortcut { sequence: "Ctrl+K"; onActivated: { expertWorkspace.search(""); commandPalette.open() } }
     Dialog {
@@ -235,7 +433,6 @@ ApplicationWindow {
                     model: computeResources.methods(computeMethodQuery.text)
                     UiLabel { required property var modelData; text: modelData.id + " · " + modelData.memory + " · sparse: " + modelData.sparse + " · device: " + modelData.devices.join(", ") + " · limits: " + JSON.stringify(modelData.limits); Layout.fillWidth: true; wrapMode: Text.WrapAnywhere }
                 }
-                UiButton { text: "Bu ne işe yarar?"; helpContext: "compute.resources"; onClicked: window.openInformation(this, "", "compute.resources") }
                 UiLabel { text: "Dask: isteğe bağlı, bu kurulumda runtime doğrulanmadı. Remote çalıştırma ve GPU yürütme bu panelden başlatılamaz. Yerel veri otomatik gönderilmez."; Layout.fillWidth: true; wrapMode: Text.WordWrap }
             }
         }
@@ -260,11 +457,18 @@ ApplicationWindow {
                 spacing: Theme.md
                 UiLabel { text: qsTr("Tema"); Layout.fillWidth: true; wrapMode: Text.Wrap }
                 UiCombo { id: displayTheme; objectName: "displayTheme"; accessibleLabel: qsTr("Tema"); model: [qsTr("Koyu"), qsTr("Açık")]; currentIndex: preferences && preferences.theme === "light" ? 1 : 0; Layout.fillWidth: true; onActivated: preferences.setTheme(currentIndex === 1 ? "light" : "dark") }
-                UiLabel { text: qsTr("Yazı boyutu"); Layout.fillWidth: true; wrapMode: Text.Wrap }
-                UiCombo { objectName: "displayTextScale"; accessibleLabel: qsTr("Yazı boyutu"); model: ["100%", "125%", "150%", "200%"]; currentIndex: preferences ? [1, 1.25, 1.5, 2].indexOf(preferences.textScale) : 0; Layout.fillWidth: true; onActivated: preferences.setTextScale([1, 1.25, 1.5, 2][currentIndex]) }
                 UiLabel { text: qsTr("Arayüz dili"); Layout.fillWidth: true; wrapMode: Text.Wrap }
-                UiCombo { objectName: "displayLocale"; accessibleLabel: qsTr("Arayüz dili"); model: ["Türkçe", "English"]; currentIndex: preferences && preferences.locale === "en" ? 1 : 0; Layout.fillWidth: true; onActivated: preferences.setLocale(currentIndex === 1 ? "en" : "tr") }
-                UiLabel { objectName: "localeBoundaryNotice"; text: qsTr("Temel arayüz İngilizceye çevrilmiştir; ayrıntılı yardım ve bazı analiz metinleri Türkçedir. Dil ve görünüm değişikliği dosyanın sayı/tarih okuma ayarlarını değiştirmez."); Layout.fillWidth: true; wrapMode: Text.Wrap }
+                UiCombo {
+                    id: displayLocale
+                    objectName: "displayLocale"
+                    accessibleLabel: qsTr("Arayüz dili")
+                    model: ["Türkçe", "English", "Azərbaycan", "Türkmençe", "Қазақша", "Oʻzbekcha", "Русский", "Español"]
+                    readonly property var localeCodes: ["tr", "en", "az", "tk", "kk", "uz", "ru", "es"]
+                    currentIndex: Math.max(0, localeCodes.indexOf(preferences ? preferences.locale : "tr"))
+                    Layout.fillWidth: true
+                    onActivated: preferences.setLocale(localeCodes[currentIndex])
+                }
+                UiLabel { objectName: "localeBoundaryNotice"; text: qsTr("Menü, tablo, içe aktarma, kalite, grafik, hazırlık, istatistik, rapor ve proje metinleri seçilen dile çevrilir. Uzman analiz formları ve öğrenme yazıları Türkçe kalır. Dil, dosyanın sayı ve tarih okuma ayarlarını değiştirmez."); Layout.fillWidth: true; wrapMode: Text.Wrap }
                 UiButton { objectName: "displayClose"; text: qsTr("Kapat"); onClicked: displayDialog.close() }
             }
         }
@@ -281,16 +485,11 @@ ApplicationWindow {
             unsavedDialog.open()
             return
         }
-        lessonLab.close()
-        learningExample.close()
         if (bridge && !bridge.closed) {
             event.accepted = false
             bridge.shutdown()
         }
     }
-    Shortcut { sequence: "F1"; onActivated: window.openInformation(window.activeFocusItem || helpButton, "", window.focusedHelpContext()) }
-    Shortcut { sequence: "Escape"; enabled: window.infoOpen && window.dockInfo; onActivated: window.closeInformation() }
-
     header: Rectangle {
         color: Theme.chrome
         implicitHeight: headerBody.implicitHeight + 2 * Theme.lg
@@ -306,6 +505,7 @@ ApplicationWindow {
                 spacing: Theme.xl
                 UiIconButton {
                     objectName: "navigationToggle"
+                    visible: !window.quietHeader
                     symbol: "sidebar"
                     accessibleLabel: window.compactNavigation ? qsTr("Gezinme menüsünü genişlet") : qsTr("Gezinme menüsünü daralt")
                     onClicked: window.navigationMode = window.compactNavigation ? 0 : 1
@@ -322,44 +522,64 @@ ApplicationWindow {
                     visible: window.width >= 1000 * Theme.scale
                     Layout.fillWidth: true
                     Layout.minimumWidth: 0
-                    text: projects.context
+                    text: (window.selectedSection === 1 || window.gorsellestirOpen || window.hazirlaOpen || window.istatistikOpen || window.modelOpen || window.raporlaOpen) ? window.veriContextLine : projects.context
                     color: Theme.secondary
                     wrapMode: Text.WordWrap
+                    elide: Text.ElideMiddle
                 }
                 RowLayout {
                     spacing: Theme.sm
                     UiIconButton {
                         objectName: "commandSearchButton"
+                        visible: !window.quietHeader
                         symbol: "search"
                         accessibleLabel: qsTr("Yöntem ve amaç ara (Ctrl+K)")
                         onClicked: { expertWorkspace.search(""); commandPalette.open() }
                     }
-                    UiLabel { objectName: "levelLabel"; visible: window.width >= 1000 * Theme.scale; text: window.advanced ? qsTr("Gelişmiş çalışma") : qsTr("Başlangıç · adım adım"); color: Theme.secondary; font.pixelSize: Theme.small }
-                    UiIconButton {
-                        id: headerBeginner
-                        objectName: "beginnerButton"
-                        symbol: "sprout"
-                        accessibleLabel: qsTranslate("Shell", "Beginner")
-                        checked: !window.advanced
-                        onClicked: preferences.setView("beginner")
+                    UiButton {
+                        objectName: "headerBack"
+                        text: qsTr("Geri")
+                        quiet: true
+                        onClicked: {
+                            if (window.selectedSection === 1)
+                                window.navigate(0, null)
+                            else if (window.selectedSection > 0)
+                                window.openVeri(null)
+                            else
+                                window.navigate(0, null)
+                        }
                     }
-                    UiIconButton {
-                        objectName: "advancedButton"
-                        tone: "violet"
-                        symbol: "sliders"
-                        accessibleLabel: qsTranslate("Shell", "Advanced")
-                        checked: window.advanced
-                        onClicked: preferences.setView("advanced")
+                    UiButton {
+                        objectName: "headerOpenProject"
+                        visible: !window.quietHeader
+                        text: qsTr("Aç")
+                        quiet: true
+                        onClicked: {
+                            window.navigate(0, null)
+                            Qt.callLater(function() {
+                                let button = window.findVisibleItem(window.contentItem, "openProjectButton")
+                                if (button) button.clicked()
+                            })
+                        }
+                    }
+                    UiButton {
+                        objectName: "headerSaveProject"
+                        text: qsTr("Kaydet")
+                        quiet: true
+                        enabled: projects.opened && !projects.readOnly
+                        onClicked: projects.request("save")
                     }
                     UiIconButton {
                         id: displayButton
                         objectName: "displayButton"
+                        visible: !window.quietHeader
                         symbol: "settings"
                         accessibleLabel: qsTr("Görünüm ve dil")
                         onClicked: displayDialog.open()
                     }
                     UiIconButton {
                         objectName: "closeButton"
+                        visible: !window.quietHeader
                         symbol: "close"
                         accessibleLabel: qsTr("Uygulamayı kapat")
                         onClicked: window.close()
@@ -368,7 +588,7 @@ ApplicationWindow {
             }
             UiLabel {
                 visible: window.width < 1000 * Theme.scale
-                text: projects.context
+                text: (window.selectedSection === 1 || window.gorsellestirOpen || window.hazirlaOpen || window.istatistikOpen || window.modelOpen || window.raporlaOpen) ? window.veriContextLine : projects.context
                 color: Theme.secondary
                 Layout.fillWidth: true
                 Layout.minimumWidth: 0
@@ -403,13 +623,41 @@ ApplicationWindow {
                 objectName: "workspaceStatus"
                 Layout.fillWidth: true
                 Layout.minimumWidth: 0
-                text: projects.busy ? qsTr("Proje işlemi sürüyor…") : projects.dirty ? qsTr("Kaydedilmemiş değişiklikler") : projects.opened ? qsTr("Proje açık") : qsTr("Proje açık değil")
+                text: projects.busy ? qsTr("Proje işlemi sürüyor…") : (projects.opened && projects.dirty) ? qsTr("Kaydedilmemiş değişiklikler") : projects.opened ? qsTr("Proje açık") : qsTr("Proje açık değil")
                 font.pixelSize: Theme.small
-                color: projects.dirty ? Theme.warning : Theme.secondary
+                color: projects.opened && projects.dirty ? Theme.warning : Theme.secondary
                 elide: Text.ElideRight
             }
+            UiButton {
+                objectName: "statusSaveProject"
+                visible: projects.opened && projects.dirty && !projects.readOnly && !projects.busy
+                text: qsTr("Kaydet")
+                primary: true
+                onClicked: projects.request("save")
+            }
             UiLabel {
-                visible: window.width >= 1000 * Theme.scale
+                objectName: "datasetPageScope"
+                visible: (window.showTable || window.inceleOpen || window.gorsellestirOpen || window.hazirlaOpen || window.istatistikOpen) && window.veriScopeLine.length > 0
+                text: window.veriScopeLine
+                font.pixelSize: Theme.small
+                color: Theme.secondary
+                elide: Text.ElideRight
+                Layout.fillWidth: true
+                Layout.minimumWidth: 0
+            }
+            UiLabel {
+                objectName: "datasetScopeStatus"
+                visible: window.width >= 1100 * Theme.scale
+                         && (window.inceleOpen || window.gorsellestirOpen || window.hazirlaOpen || window.istatistikOpen)
+                         && !window.showTable
+                text: qsTr("Sayfa en fazla 200 satır.")
+                font.pixelSize: Theme.small
+                color: Theme.secondary
+                elide: Text.ElideRight
+                Layout.maximumWidth: window.width * 0.28
+            }
+            UiLabel {
+                visible: window.width >= 1000 * Theme.scale && !window.showTable
                 text: qsTr("Yardım F1 · Yöntem ara Ctrl+K")
                 font.pixelSize: Theme.small
                 color: Theme.secondary
@@ -440,46 +688,138 @@ ApplicationWindow {
                 ColumnLayout {
                     width: parent.width
                     spacing: Theme.sm
-                    UiLabel {
-                        visible: !window.compactNavigation
-                        text: qsTr("ÇALIŞMA ALANI")
-                        color: Theme.muted
-                        font.pixelSize: Theme.small
-                        font.letterSpacing: 1
-                        Layout.leftMargin: Theme.md
-                        Layout.topMargin: Theme.md
-                        Layout.bottomMargin: Theme.sm
-                    }
-                    Repeater {
-                        model: window.sections
-                        UiNavigationButton {
-                            id: navButton
-                            required property int index
-                            required property string modelData
-                            objectName: "nav" + index
-                            compact: window.compactNavigation
-                            Layout.fillWidth: true
-                            symbol: ["home", "table", "prepare", "chart", "compare", "model", "report", "book"][index]
-                            tone: window.sectionTones[index]
-                            symbolColor: index === 6 ? Theme.reportTone : Theme.toneColor(tone)
-                            text: modelData
-                            checked: window.selectedSection === index
-                            Accessible.description: modelData
-                            onClicked: window.navigate(index, this)
-                            Keys.onDownPressed: nextItemInFocusChain().forceActiveFocus()
-                            Keys.onUpPressed: nextItemInFocusChain(false).forceActiveFocus()
-                            Shortcut { sequence: "Ctrl+" + (navButton.index + 1); onActivated: window.navigate(navButton.index, navButton) }
+                    ModuleRail {
+                        compact: window.compactNavigation
+                        currentSection: window.selectedSection
+                        currentKey: window.moduleKey
+                        modelInstalled: window.modelInstalled
+                        Layout.fillWidth: true
+                        onModuleChosen: function(section, key, origin) {
+                            if (key === "veri")
+                                window.openVeri(origin)
+                            else if (key === "incele")
+                                window.openIncele(origin)
+                            else if (key === "model")
+                                window.openModel(origin)
+                            else
+                                window.navigate(section, origin)
                         }
                     }
                 }
             }
         }
-        ScrollView {
-            id: workspace
-            objectName: "workspace"
-            enabled: !startupError || window.selectedSection === 7
+        SplitView {
             Layout.fillWidth: true
             Layout.fillHeight: true
+            orientation: Qt.Horizontal
+            handle: Rectangle {
+                implicitWidth: 8
+                color: Theme.border
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: 2
+                    height: 28
+                    radius: 1
+                    color: Theme.controlBorder
+                }
+            }
+        Item {
+            id: centerPane
+            objectName: "workspace"
+            visible: window.centerOpen
+            SplitView.fillWidth: window.centerOpen
+            SplitView.minimumWidth: window.centerOpen ? 280 : 0
+            SplitView.preferredWidth: window.centerOpen ? 640 : 0
+            SplitView.maximumWidth: window.centerOpen ? 100000 : 0
+            ColumnLayout {
+                anchors.fill: parent
+                anchors.margins: Theme.lg
+                spacing: Theme.lg
+                UiCombo {
+                    objectName: "dataTool"
+                    visible: false
+                    accessibleLabel: qsTr("Veri aracı")
+                    model: [qsTr("Tablo"), qsTr("İçe aktar"), qsTr("Kalite")]
+                    currentIndex: window.dataPane === "import" ? 1 : window.dataPane === "quality" ? 2 : 0
+                    Layout.fillWidth: true
+                    onActivated: window.openDataPane(currentIndex === 1 ? "import" : currentIndex === 2 ? "quality" : "rows")
+                }
+                DataEmptyCard {
+                    visible: window.veriEmpty
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                }
+                ColumnLayout {
+                    id: tableHost
+                    visible: window.showTable || window.inceleOpen
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    spacing: Theme.sm
+                    InspectScanStrip {
+                        id: inspectScanStrip
+                        visible: window.inceleOpen
+                        Layout.fillWidth: true
+                        selectedBlock: inspectWorkspacePanel.selectedBlock
+                        onCardChosen: function(block) { inspectWorkspacePanel.selectedBlock = block }
+                    }
+                    Item {
+                        id: tableBody
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        Layout.minimumHeight: 160
+                    }
+                }
+                VisualizeWorkspace {
+                    id: visualizeWorkspace
+                    visible: window.gorsellestirOpen
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    chartControls: deferredChartPanel.item
+                    onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                }
+                PrepareWorkspace {
+                    id: prepareWorkspace
+                    visible: window.hazirlaOpen
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    catalogControls: deferredOperationsPanel.item
+                    onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                }
+                StatisticsWorkspace {
+                    id: statisticsWorkspace
+                    visible: window.istatistikOpen
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    catalogControls: deferredStatisticsPanel.item
+                    onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                }
+                ModelWorkspace {
+                    id: modelWorkspace
+                    visible: window.modelOpen
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    catalogControls: deferredModelCatalogPanel.item
+                    onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                }
+                ReportWorkspace {
+                    id: reportWorkspace
+                    visible: window.raporlaOpen
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    catalogControls: deferredReportCatalogPanel.item
+                    onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                }
+            }
+        }
+        ScrollView {
+            id: workspace
+            objectName: "toolDock"
+            enabled: !startupError || window.selectedSection === 7
+            visible: window.dockOpen
+            SplitView.fillWidth: window.dockOpen && !window.centerOpen
+            SplitView.preferredWidth: !window.dockOpen ? 0 : window.centerOpen ? Math.min(420, Math.round(window.width * 0.34)) : Math.max(280, window.width)
+            SplitView.minimumWidth: window.dockOpen ? 280 : 0
+            SplitView.maximumWidth: !window.dockOpen ? 0 : window.centerOpen ? Math.max(280, Math.round(window.width * 0.5)) : 100000
             clip: true
             contentWidth: availableWidth
             ColumnLayout {
@@ -487,32 +827,22 @@ ApplicationWindow {
                 spacing: Theme.xl
                 Item { Layout.preferredHeight: Theme.xs }
                 GridLayout {
+                    visible: !window.slimToolDock
                     columns: workspace.availableWidth < 650 * Theme.scale ? 1 : 2
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
                     UiLabel {
                         Layout.fillWidth: true
-                        text: window.sections[window.selectedSection]
+                        text: window.moduleKey === "incele" ? qsTr("İncele") : window.moduleKey === "gorsellestir" ? qsTr("Grafik") : window.sections[window.selectedSection]
                         color: window.sectionAccent
                         font.pixelSize: Theme.heading
                         font.bold: true
                         wrapMode: Text.WrapAnywhere
                     }
-                    UiButton {
-                        id: helpButton
-                        objectName: "helpButton"
-                        visible: true
-                        quiet: true
-                        tone: "mint"
-                        text: qsTranslate("Shell", "What is this for?")
-                        glyph: "?"
-                        multiline: true
-                        Layout.maximumWidth: workspace.availableWidth < 650 * Theme.scale ? workspace.availableWidth - 2 * Theme.xl : workspace.availableWidth * 0.5
-                        onClicked: window.openInformation(this)
-                    }
                 }
                 UiLabel {
+                    visible: !window.slimToolDock
                     text: window.descriptions[window.selectedSection]
                     color: Theme.secondary
                     Layout.fillWidth: true
@@ -529,93 +859,153 @@ ApplicationWindow {
                     heading: qsTranslate("Shell", "Display preferences")
                     detail: preferences ? preferences.errorText : ""
                 }
-                GuidePanel {
-                    id: homeGuide
-                    compactHome: window.selectedSection === 0
-                    Layout.fillWidth:true
-                    Layout.leftMargin:Theme.xl
-                    Layout.rightMargin:Theme.xl
-                    visible:guide.active && window.selectedSection!==0 && window.selectedSection!==7
-                    onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
-                }
-                Connections { target:guide; function onNavigate(section,tab) { window.selectedSection=section; if(section===1) dataTabs.currentIndex=tab } }
-                Connections { target:launchRequests; function onNavigate(section,tab) { window.selectedSection=section; if(section===1) dataTabs.currentIndex=tab } }
-                JourneyGuide {
-                    visible: !window.advanced && window.selectedSection > 0 && window.selectedSection < 7
-                    section: window.selectedSection
+                UiButton {
+                    objectName: "dockClose"
+                    visible: !window.slimToolDock
+                    text: qsTr("Kapat")
+                    quiet: true
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    onLearnRequested: function(articleId, origin) { window.selectedSection=7; window.openReading(origin, articleId) }
-                    onNavigate: function(section) {
-                        window.navigate(section, null)
-                        if (section === 0) Qt.callLater(function() {
-                            let target=window.findVisibleItem(window.contentItem, projects.opened ? "saveProjectButton" : "newProjectButton")
-                            if (target) target.forceActiveFocus()
-                        })
-                    }
+                    onClicked: window.dockDismissed = true
                 }
+                UiCombo {
+                    objectName: "chartToolPicker"
+                    visible: window.selectedSection === 3 && !window.slimToolDock
+                    accessibleLabel: qsTr("Grafik aracı")
+                    model: [qsTr("Grafik"), qsTr("Pano")]
+                    currentIndex: window.chartTool
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    onActivated: window.chartTool = currentIndex
+                }
+                UiCombo {
+                    objectName: "chartToolPickerSlim"
+                    visible: window.gorsellestirOpen
+                    accessibleLabel: qsTr("Grafik aracı")
+                    model: [qsTr("Grafik"), qsTr("Pano")]
+                    currentIndex: window.chartTool
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    onActivated: window.chartTool = currentIndex
+                }
+                UiCombo {
+                    objectName: "examineToolPicker"
+                    visible: window.selectedSection === 4
+                    accessibleLabel: qsTr("İnceleme aracı")
+                    model: [qsTr("İstatistik"), qsTr("Boyut"), qsTr("Sağkalım"), qsTr("Nedensel"), qsTr("Bayes"), qsTr("Deney"), qsTr("Yeniden örnekleme"), qsTr("Modeller")]
+                    currentIndex: window.examineTool
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    onActivated: window.examineTool = currentIndex
+                }
+                UiCombo {
+                    objectName: "prepareToolPicker"
+                    visible: window.selectedSection === 2
+                    accessibleLabel: qsTr("Hazırlık aracı")
+                    model: [qsTr("İşlemler"), qsTr("İş akışı"), qsTr("Tarif")]
+                    currentIndex: window.prepareTool
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    onActivated: window.prepareTool = currentIndex
+                }
+                UiCombo {
+                    objectName: "reportToolPicker"
+                    visible: window.selectedSection === 6
+                    accessibleLabel: qsTr("Rapor aracı")
+                    model: [qsTr("Rapor"), qsTr("Yeniden üretilebilirlik"), qsTr("Kod"), qsTr("Ortam"), qsTr("Eklentiler"), qsTr("Paylaşım")]
+                    currentIndex: window.reportTool
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    onActivated: window.reportTool = currentIndex
+                }
+                Connections { target:launchRequests; function onNavigate(section,tab) { window.selectedSection=section; if(section===1) dataTabs.currentIndex=tab } }
                 UiButton {
                     objectName: "expertToolsEntry"
-                    visible: !window.advanced && window.selectedSection > 0 && window.selectedSection < 7
-                    text: qsTr("Daha fazla araç · Gelişmiş görünüme geç")
+                    visible: false
                     quiet: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
                     onClicked: preferences.setView("advanced")
                 }
+                UiLabel {
+                    objectName: "reportWithoutModel"
+                    visible: window.selectedSection === 6 && !window.modelInstalled
+                    text: "Model modülü kurulu değil. Kayıtlı istatistik bulguları rapora gelir. Model metriği uydurulmaz."
+                    color: Theme.warning
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    wrapMode: Text.Wrap
+                }
+                WorkspacePanel {
+                    id: deferredReportCatalogPanel
+                    objectName: "deferredReportCatalogPanel"
+                    requested: window.raporlaOpen
+                    sourceComponent: ReportCatalogPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
                 WorkspacePanel {
                     objectName: "deferredReportBuilderPanel"
-                    requested: window.selectedSection===6
+                    requested: window.selectedSection===6 && (window.advanced || window.reportTool===0)
+                    visible: requested && (!window.raporlaOpen || window.advanced)
                     sourceComponent: ReportBuilderPanel {
                         onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredReportPanel"
-                    requested: window.selectedSection===6
+                    requested: window.selectedSection===6 && (window.advanced || window.reportTool===0)
+                    visible: requested && (!window.raporlaOpen || window.advanced)
                     sourceComponent: ReportPanel {
                         onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredReproPanel"
-                    requested: window.advanced && window.selectedSection===6
+                    requested: window.selectedSection===6 && (window.advanced || window.reportTool===1)
                     sourceComponent: ReproPanel {
                         onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredCodePanel"
-                    requested: window.advanced && window.selectedSection===6
+                    requested: window.selectedSection===6 && (window.advanced || window.reportTool===2)
                     sourceComponent: CodePanel {
                         onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredEnvironmentPanel"
-                    requested: window.advanced && window.selectedSection===6
+                    requested: window.selectedSection===6 && (window.advanced || window.reportTool===3)
                     sourceComponent: EnvironmentPanel {
                         onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredPluginsPanel"
-                    requested: window.advanced && window.selectedSection===6
+                    requested: window.selectedSection===6 && (window.advanced || window.reportTool===4)
                     sourceComponent: PluginsPanel {
                         onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredPrivacyPanel"
-                    requested: window.selectedSection===6
+                    requested: window.selectedSection===6 && (window.advanced || window.reportTool===0)
+                    visible: requested && (!window.raporlaOpen || window.advanced)
                     sourceComponent: PrivacyPanel {
                         onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredSharingPanel"
-                    requested: window.advanced && window.selectedSection===6
+                    requested: window.selectedSection===6 && (window.advanced || window.reportTool===5)
                     sourceComponent: SharingPanel {
                         onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
                     }
@@ -637,18 +1027,15 @@ ApplicationWindow {
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.selectedSection === 1
+                    visible: false
                     columnSpacing: Theme.sm
                     rowSpacing: Theme.sm
                     Repeater {
                         id: dataHeadings
                         model: [
+                            {id:"rows", title:"Veri tablosu", detail:"Ana yüzey: kayıtları satır satır incele; sütun seç, sırala, filtrele."},
                             {id:"import", title:"Veriyi projeye aktar", detail:"Dosyanı seç, önizle ve projenle birlikte sakla."},
-                            {id:"profile", title:"Veri profili", detail:"Sütun başlıklarını ve veri türlerini birlikte gör."},
-                            {id:"values", title:"Sütun değerleri", detail:"Bir sütundaki değerleri ve tekrarlarını incele."},
-                            {id:"describe", title:"Özet istatistikler", detail:"Sayısal sütunların dağılımını ve temel ölçülerini gör."},
-                            {id:"rows", title:"Veri tablosu", detail:"Kayıtlarını satır satır incele."},
-                            {id:"quality", title:"Veri kalitesi", detail:"Eksik ve şüpheli kayıtları değerlendir."}
+                            {id:"quality", title:"İncele", detail:"Tarama şeridi ve kalite bulguları İncele modülündedir."}
                         ]
                         ColumnLayout {
                             id: entry
@@ -718,64 +1105,86 @@ ApplicationWindow {
                     onCurrentIndexChanged: {
                         if (currentIndex === 1) window.dataPane = "import"
                         else if (currentIndex === 2) window.dataPane = "quality"
-                        else if (currentIndex === 0 && (!window.dataPane || window.dataPane === "import" || window.dataPane === "quality")) window.dataPane = "profile"
+                        else if (currentIndex === 0 && (!window.dataPane || window.dataPane === "import" || window.dataPane === "quality")) window.dataPane = "rows"
                     }
                 }
                 Connections { target: imports; function onChanged() { if (imports.busy) dataTabs.currentIndex = 1 } }
                 DatasetPanel {
                     id: datasetViewPanel
-                    parent: dataSections.body(window.dataPane)
-                    pane: window.dataPane
-                    onShowValues: window.openDataPane("values")
-                    Layout.fillWidth: true
-                    visible: window.selectedSection === 1 && dataTabs.currentIndex === 0 && window.dataPane !== ""
+                    parent: tableBody
+                    pane: "rows"
+                    autoLoad: window.selectedSection === 1
+                    inspectMode: window.inceleOpen
+                    onShowValues: {
+                        window.openIncele(null)
+                        inspectWorkspacePanel.selectedBlock = 1
+                    }
+                    anchors.fill: parent
+                    visible: window.showTable || window.inceleOpen
                     onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                 }
-                QualityPanel {
-                    parent: dataSections.body("quality")
+                InspectWorkspacePanel {
+                    id: inspectWorkspacePanel
                     Layout.fillWidth: true
-                    visible: window.selectedSection === 1 && dataTabs.currentIndex === 2
+                    Layout.fillHeight: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.inceleOpen
                     onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    onPrepareRequested: {
+                        window.navigate(2, null)
+                        window.prepareTool = 0
+                        window.dockDismissed = false
+                    }
+                }
+                DataWorkspacePanel {
+                    id: dataWorkspacePanel
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.selectedSection === 1 && window.dataPane !== "quality" && dataView.datasets.length > 0
                 }
                 ImportPanel {
-                    parent: dataSections.body("import")
                     onProjectRequested: { window.selectedSection = 0; Qt.callLater(function() { let control = window.findVisibleItem(window.contentItem, "newProjectButton"); if (control) control.forceActiveFocus() }) }
                     id: importPanel
                     Layout.fillWidth: true
-                    visible: window.selectedSection === 1 && dataTabs.currentIndex === 1
+                    visible: false
                     onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                 }
                 WorkspacePanel {
+                    id: deferredChartPanel
                     objectName: "deferredChartPanel"
-                    requested: window.selectedSection === 3
+                    requested: window.selectedSection === 3 && (window.advanced || window.chartTool === 0)
                     sourceComponent: ChartPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredDashboardPanel"
-                    requested: window.advanced && window.selectedSection === 3
+                    requested: window.selectedSection === 3 && (window.advanced || window.chartTool === 1)
                     sourceComponent: DashboardPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
                 }
                 WorkspacePanel {
+                    id: deferredOperationsPanel
                     objectName: "deferredOperationsPanel"
-                    requested: window.selectedSection === 2
-                    sourceComponent: OperationsPanel {
+                    requested: window.selectedSection === 2 && (window.advanced || window.prepareTool === 0)
+                    sourceComponent: PrepareCatalogPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredWorkflowPanel"
-                    requested: window.advanced && window.selectedSection === 2
+                    requested: window.selectedSection === 2 && (window.advanced || window.prepareTool === 1)
                     sourceComponent: WorkflowPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredRecipePanel"
-                    requested: window.advanced && window.selectedSection === 2
+                    requested: window.selectedSection === 2 && (window.advanced || window.prepareTool === 2)
                     sourceComponent: RecipePanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
@@ -787,11 +1196,12 @@ ApplicationWindow {
                     active: visited
                     Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) dimensionTools.visited = true } }
                     Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
-                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) dimensionTools.visited = true } }
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.selectedSection === 4 && (window.advanced || window.examineTool === 1)) dimensionTools.visited = true } }
+                    Connections { target: window; function onExamineToolChanged() { if (window.selectedSection === 4 && window.examineTool === 1) dimensionTools.visited = true } }
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.advanced && window.selectedSection === 4 && !survivalTools.expanded && !causalTools.expanded && !bayesTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded
+                    visible: window.selectedSection === 4 && ((window.advanced && !survivalTools.expanded && !causalTools.expanded && !bayesTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded) || (!window.advanced && window.examineTool === 1))
                     sourceComponent: DimensionsPanel { onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) } }
                 }
                 Loader {
@@ -801,11 +1211,12 @@ ApplicationWindow {
                     active: visited
                     Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) survivalTools.visited = true } }
                     Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
-                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) survivalTools.visited = true } }
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.selectedSection === 4 && (window.advanced || window.examineTool === 2)) survivalTools.visited = true } }
+                    Connections { target: window; function onExamineToolChanged() { if (window.examineTool === 2) survivalTools.visited = true } }
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !causalTools.expanded && !bayesTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded
+                    visible: window.selectedSection === 4 && ((window.advanced && !dimensionTools.expanded && !causalTools.expanded && !bayesTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded) || (!window.advanced && window.examineTool === 2))
                     sourceComponent: SurvivalPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
@@ -817,11 +1228,12 @@ ApplicationWindow {
                     active: visited
                     Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) causalTools.visited = true } }
                     Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
-                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) causalTools.visited = true } }
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.selectedSection === 4 && (window.advanced || window.examineTool === 3)) causalTools.visited = true } }
+                    Connections { target: window; function onExamineToolChanged() { if (window.examineTool === 3) causalTools.visited = true } }
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !survivalTools.expanded && !bayesTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded
+                    visible: window.selectedSection === 4 && ((window.advanced && !dimensionTools.expanded && !survivalTools.expanded && !bayesTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded) || (!window.advanced && window.examineTool === 3))
                     sourceComponent: CausalPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
@@ -833,11 +1245,12 @@ ApplicationWindow {
                     active: visited
                     Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) bayesTools.visited = true } }
                     Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
-                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) bayesTools.visited = true } }
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.selectedSection === 4 && (window.advanced || window.examineTool === 4)) bayesTools.visited = true } }
+                    Connections { target: window; function onExamineToolChanged() { if (window.examineTool === 4) bayesTools.visited = true } }
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded
+                    visible: window.selectedSection === 4 && ((window.advanced && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded) || (!window.advanced && window.examineTool === 4))
                     sourceComponent: BayesPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
@@ -849,11 +1262,12 @@ ApplicationWindow {
                     active: visited
                     Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) experimentTools.visited = true } }
                     Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
-                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) experimentTools.visited = true } }
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.selectedSection === 4 && (window.advanced || window.examineTool === 5)) experimentTools.visited = true } }
+                    Connections { target: window; function onExamineToolChanged() { if (window.examineTool === 5) experimentTools.visited = true } }
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !bayesTools.expanded
+                    visible: window.selectedSection === 4 && ((window.advanced && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !bayesTools.expanded) || (!window.advanced && window.examineTool === 5))
                     sourceComponent: ExperimentPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
@@ -865,11 +1279,12 @@ ApplicationWindow {
                     active: visited
                     Connections { target: window; function onAdvancedChanged() { if (window.advanced && window.selectedSection === 4) resamplingTools.visited = true } }
                     Component.onCompleted: if (window.advanced && window.selectedSection === 4) visited = true
-                    Connections { target: window; function onSelectedSectionChanged() { if (window.advanced && window.selectedSection === 4) resamplingTools.visited = true } }
+                    Connections { target: window; function onSelectedSectionChanged() { if (window.selectedSection === 4 && (window.advanced || window.examineTool === 6)) resamplingTools.visited = true } }
+                    Connections { target: window; function onExamineToolChanged() { if (window.examineTool === 6) resamplingTools.visited = true } }
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !experimentTools.expanded && !bayesTools.expanded
+                    visible: window.selectedSection === 4 && ((window.advanced && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !experimentTools.expanded && !bayesTools.expanded) || (!window.advanced && window.examineTool === 6))
                     sourceComponent: ResamplingPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
@@ -884,23 +1299,27 @@ ApplicationWindow {
                     Connections {
                         target: window
                         function onSelectedSectionChanged() {
-                            if (window.advanced && window.selectedSection === 4) statisticalModels.visited = true
+                            if (window.selectedSection === 4 && (window.advanced || window.examineTool === 7)) statisticalModels.visited = true
+                        }
+                        function onExamineToolChanged() {
+                            if (window.examineTool === 7) statisticalModels.visited = true
                         }
                     }
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.advanced && window.selectedSection === 4 && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !resamplingTools.expanded && !experimentTools.expanded && !bayesTools.expanded
+                    visible: window.selectedSection === 4 && ((window.advanced && !dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !resamplingTools.expanded && !experimentTools.expanded && !bayesTools.expanded) || (!window.advanced && window.examineTool === 7))
                     sourceComponent: StatisticalModelsPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
                 }
-                StatisticsPanel {
-                    Layout.fillWidth: true
-                    Layout.leftMargin: Theme.xl
-                    Layout.rightMargin: Theme.xl
-                    visible: window.selectedSection === 4 && (!window.advanced || (!dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded && !bayesTools.expanded))
-                    onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                WorkspacePanel {
+                    id: deferredStatisticsPanel
+                    objectName: "deferredStatisticsPanel"
+                    requested: window.selectedSection === 4 && ((!window.advanced && window.examineTool === 0) || (window.advanced && (!dimensionTools.expanded && !survivalTools.expanded && !causalTools.expanded && !statisticalModels.expanded && !resamplingTools.expanded && !experimentTools.expanded && !bayesTools.expanded)))
+                    sourceComponent: StatisticsCatalogPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
                 }
                 ResultPanel {
                     Layout.fillWidth: true
@@ -910,137 +1329,76 @@ ApplicationWindow {
                     visible: window.advanced || (window.selectedSection === 4 && !!expertWorkspace.selected.id)
                     onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                 }
+                WorkspacePanel {
+                    id: deferredModelCatalogPanel
+                    objectName: "deferredModelCatalogPanel"
+                    requested: window.modelOpen
+                    sourceComponent: ModelCatalogPanel {
+                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    }
+                }
                 UiCombo {
                     id:modelPath
                     objectName:"modelPath"
-                    visible:window.selectedSection===5
+                    visible: window.selectedSection === 5 && window.modelInstalled && !window.modelOpen
                     model:["Kayıt bazlı modelleme","Zaman serisi — geçmişten geleceğe","Yerel metin incelemesi"]
                     Layout.fillWidth:true;Layout.leftMargin:Theme.xl;Layout.rightMargin:Theme.xl
                     Accessible.name:"Modelleme yolu"
                 }
+                UiLabel {
+                    objectName: "modelLeakageNotice"
+                    visible: window.selectedSection === 5 && window.modelInstalled && !window.modelOpen && (operations.modelLeakage.text || "").length > 0
+                    text: operations.modelLeakage.text || ""
+                    color: operations.modelLeakage.warning ? Theme.warning : Theme.secondary
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    wrapMode: Text.Wrap
+                }
                 WorkspacePanel {
                     objectName: "deferredTextPanel"
-                    requested: window.selectedSection===5&&modelPath.currentIndex===2
+                    requested: window.selectedSection === 5 && window.modelInstalled && !window.modelOpen && modelPath.currentIndex === 2
                     sourceComponent: TextPanel {
                         onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredTimeSeriesPanel"
-                    requested: window.selectedSection===5&&modelPath.currentIndex===1
+                    requested: window.selectedSection === 5 && window.modelInstalled && !window.modelOpen && modelPath.currentIndex === 1
                     sourceComponent: TimeSeriesPanel {
                         onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredScenarioPanel"
-                    requested: window.advanced && window.selectedSection === 5 && modelPath.currentIndex === 0
+                    requested: window.advanced && window.modelInstalled && window.selectedSection === 5 && !window.modelOpen && modelPath.currentIndex === 0
                     sourceComponent: ScenarioPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredMonitoringPanel"
-                    requested: window.advanced && window.selectedSection === 5 && modelPath.currentIndex === 0
+                    requested: window.advanced && window.modelInstalled && window.selectedSection === 5 && !window.modelOpen && modelPath.currentIndex === 0
                     sourceComponent: MonitoringPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
                 }
                 WorkspacePanel {
                     objectName: "deferredPreparationPanel"
-                    requested: window.selectedSection === 5 && modelPath.currentIndex === 0
+                    requested: window.selectedSection === 5 && window.modelInstalled && !window.modelOpen && modelPath.currentIndex === 0
                     sourceComponent: PreparationPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
                     }
                 }
                 StateNotice { objectName: "availabilityNotice"; visible: false; heading: "Henüz mevcut değil" }
-                ScienceRoadmap {
-                    Layout.fillWidth:true
-                    Layout.leftMargin:Theme.xl
-                    Layout.rightMargin:Theme.xl
-                    visible:window.selectedSection===0 && !window.advanced
-                    onNavigate:function(section,tab,origin){
-                        if(origin && origin.expertRoute) preferences.setView("advanced")
-                        window.navigate(section,window.findVisibleItem(window.contentItem,"nav"+section))
-                        if(section===1){ window.openDataPane(tab<0 ? "" : origin && origin.route ? origin.route : tab===1?"import":"profile") }
-                        const route=origin&&origin.route?origin.route:""
-                        if(section===2&&route)Qt.callLater(function(){
-                            let kind=window.findVisibleItem(window.contentItem,"operationKind")
-                            if(!kind||!kind.enabled)return
-                            kind.currentIndex=route==="clean"?3:4
-                            kind.activated(kind.currentIndex)
-                            kind.forceActiveFocus()
-                            if(route==="join")Qt.callLater(function(){
-                                let method=window.findVisibleItem(window.contentItem,"transformMethod")
-                                if(method&&method.enabled){method.currentIndex=8;method.activated(8);method.forceActiveFocus()}
-                            })
-                        })
-                        if(section===5&&route)Qt.callLater(function(){
-                            if(route==="scenario" || route==="monitoring"){
-                                modelPath.currentIndex=0
-                                Qt.callLater(function(){let control=window.findVisibleItem(window.contentItem,route+"Expanded");if(control){control.checked=true;control.forceActiveFocus()}})
-                                return
-                            }
-                            let clusterIds=["model.kmeans","model.dbscan","model.agglomerative","model.gmm","model.optics","model.hdbscan"]
-                            let anomalyIds=["model.isolation-forest","model.iqr","model.lof","model.one-class-svm","model.robust-covariance"]
-                            if(clusterIds.indexOf(route)>=0||anomalyIds.indexOf(route)>=0){
-                                modelPath.currentIndex=0
-                                let purpose=window.findVisibleItem(window.contentItem,"preparationPurpose")
-                                let clustering=clusterIds.indexOf(route)>=0
-                                if(purpose&&purpose.enabled){purpose.currentIndex=clustering?2:3;purpose.activated(purpose.currentIndex)}
-                                Qt.callLater(function(){let choice=window.findVisibleItem(window.contentItem,"unsupervisedMethod");if(choice){choice.currentIndex=(clustering?clusterIds:anomalyIds).indexOf(route);choice.forceActiveFocus()}})
-                                return
-                            }
-
-                            modelPath.currentIndex=route==="timeseries"?1:route==="text"?2:0
-                            if(route==="timeseries"||route==="text")return
-                            if(route==="classification"||route==="clustering"||route==="anomaly"){
-                                let purpose=window.findVisibleItem(window.contentItem,"preparationPurpose")
-                                if(purpose&&purpose.enabled){purpose.currentIndex=route==="classification"?1:route==="clustering"?2:3;purpose.activated(purpose.currentIndex);purpose.forceActiveFocus()}
-                                return
-                            }
-                            let name=route==="validation"?"validationSettings":route==="regression"?"regressionUnit":"preparationSettings"
-                            let control=window.findVisibleItem(window.contentItem,name)
-                            if(control&&control.enabled)control.forceActiveFocus()
-                        })
-                        if(section===0)Qt.callLater(function(){
-                            let button=window.findVisibleItem(window.contentItem,"newProjectButton")
-                            if(button)button.forceActiveFocus()
-                        })
-                    }
-                }
-
-                UiLabel {
-                    objectName: "journeyProjectHeading"
-                    visible: window.selectedSection === 0 && !window.advanced
-                    text: qsTr("Kendi yolculuğunu başlat")
-                    font.pixelSize: Theme.heading; font.bold: true
-                    Layout.fillWidth: true; Layout.leftMargin: Theme.xl; Layout.rightMargin: Theme.xl
-                    wrapMode: Text.Wrap
-                }
-                UiLabel {
-                    visible: window.selectedSection === 0 && !window.advanced
-                    text: qsTr("Yeni bir proje oluştur veya kayıtlı çalışmanı aç. Veriyi ekledikten sonra haritadaki adımlara istediğin sırada dönebilirsin; kaydetmek çalışmanı korur.")
-                    color: Theme.secondary; wrapMode: Text.Wrap
-                    Layout.fillWidth: true; Layout.leftMargin: Theme.xl; Layout.rightMargin: Theme.xl
-                }
                 ProjectPanel {
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: window.selectedSection === 0
+                    visible: window.selectedSection === 0 || (window.selectedSection === 1 && !projects.opened)
                     onHelpRequested: function(origin) { window.openInformation(origin, "", "project") }
                 }
 
-                LearningCenter {
-                    objectName: "learningCenter"
-                    visible: window.selectedSection === 7
-                    Layout.fillWidth: true
-                    Layout.leftMargin: Theme.xl
-                    Layout.rightMargin: Theme.xl
-                    library: learning
-                    onArticleRequested: function(articleId, origin) { window.openReading(origin, articleId) }
-                }
                 // Results and errors remain visible in either view, even if trial controls are collapsed.
                 ColumnLayout {
                     Layout.fillWidth: true
@@ -1127,15 +1485,22 @@ ApplicationWindow {
                 Item { Layout.preferredHeight: Theme.xl }
             }
         }
-        InfoPanel {
-            id: dockPanel
-            objectName: "dockedInformation"
+        }
+        ContextSidePanel {
+            id: contextPanel
+            objectName: "contextSidePanelHost"
             Layout.fillHeight: true
-            Layout.preferredWidth: 320 * Theme.scale
-            visible: window.dockInfo && window.infoOpen && !window.readingOpen
-            heading: window.sections[window.selectedSection]
-            detail: window.descriptions[window.selectedSection]
-            onCloseRequested: window.closeInformation()
+            Layout.preferredWidth: Math.min(300 * Theme.scale, Math.max(220, window.width * 0.22))
+            visible: window.contextPanelOpen && !(window.dockInfo && window.infoOpen && !window.readingOpen)
+            uxStage: window.uxStage
+            stageTitle: window.uxStageInfo.title
+            stageQuestion: window.uxStageQuestions[window.uxStage] || ""
+            onCloseRequested: window.contextPanelOpen = false
+            onLearnRequested: function(origin) { window.openInformation(origin) }
+            onColumnChosen: function(columnId) {
+                if (window.selectedSection !== 1) window.navigate(1, null)
+                if (!window.dataPane || window.dataPane === "import") window.openDataPane("rows")
+            }
         }
     }
     Dialog {
@@ -1155,64 +1520,25 @@ ApplicationWindow {
         }
     }
     Connections { target: projects; function onSaveFinished(success) { if (window.closeAfterSave) { window.closeAfterSave = false; if (success) { unsavedDialog.close(); window.close() } } } }
-    Shortcut { objectName: "saveProjectShortcut"; sequence: "Ctrl+S"; enabled: !startupError; onActivated: projects.request("save") }
-    Shortcut { objectName: "openProjectShortcut"; sequence: "Ctrl+O"; enabled: !startupError; onActivated: { window.selectedSection = 0; window.findVisibleItem(window.contentItem, "openProjectButton").clicked() } }
-    LaboratoryWindow { id: lessonLab; library: learning; lab: learningLab; onArticleRequested: function(articleId, origin) { window.openReading(origin, articleId); window.requestActivate() } }
-    Connections { target: learningLab; function onOpened() { lessonLab.show(); lessonLab.requestActivate() } }
-    ExampleWindow {
-        id: learningExample
-        library: learning.exampleLibrary
-        onClosing: { window.requestActivate(); window.restoreHelpFocus() }
-    }
-    Connections { target: learning; function onExampleRequested() { learningExample.show(); learningExample.requestActivate() } }
-    Dialog {
-        id: articleReader
-        objectName: "learningReader"
-        parent: Overlay.overlay
-        anchors.centerIn: parent
-        width: Math.min(850 * Theme.scale, window.width - 32)
-        height: Math.min(820 * Theme.scale, window.height - 48)
-        modal: true
-        focus: true
-        padding: Theme.lg
-        closePolicy: Popup.CloseOnEscape
-        background: Rectangle { color: Theme.surface; radius: Theme.radius; border.color: Theme.learningTone }
-        onClosed: if (window.readingOpen) window.closeInformation()
-        header: RowLayout {
-            spacing: Theme.md
-            UiLabel { text: qsTr("Öğren · ") + learning.article.category; color: Theme.learningTone; font.bold: true; Layout.fillWidth: true; Layout.leftMargin: Theme.lg; wrapMode: Text.WordWrap }
-            UiIconButton { objectName: "learningReaderClose"; symbol: "close"; accessibleLabel: qsTr("Okuma penceresini kapat"); Layout.rightMargin: Theme.md; onClicked: window.closeInformation() }
-        }
-        contentItem: ScrollView {
-            id: readerScroll
-            clip: true
-            contentWidth: availableWidth
-            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ArticleView { width: readerScroll.availableWidth; library: learning; readingMode: true }
-        }
-        onOpened: { readerScroll.contentItem.contentY = 0; readerScroll.forceActiveFocus() }
-        Connections { target: learning; function onChanged() { if (window.readingOpen) readerScroll.contentItem.contentY = 0 } }
-    }
-    Drawer {
-        id: infoDrawer
-        objectName: "informationDrawer"
-        edge: Qt.RightEdge
-        y: window.header.height
-        width: Math.min(400 * Theme.scale, window.width - 32)
-        height: window.height - y
-        modal: true
-        focus: true
-        dim: false
-        interactive: true
-        dragMargin: 0
-        closePolicy: Popup.CloseOnEscape
-        padding: 0
-        onClosed: { if (!window.dockInfo && window.infoOpen) window.closeInformation() }
-        InfoPanel {
-            anchors.fill: parent
-            heading: window.sections[window.selectedSection]
-            detail: window.descriptions[window.selectedSection]
-            onCloseRequested: window.closeInformation()
+    Connections {
+        target: projects
+        function onChanged() {
+            if (projects.opened && !window.sawProject) {
+                window.sawProject = true
+                if (window.selectedSection === 0) {
+                    window.selectedSection = 1
+                    window.openVeri(null)
+                }
+            }
+            if (!projects.opened)
+                window.sawProject = false
         }
     }
+    Shortcut { sequence: "Ctrl+1"; enabled: !startupError; onActivated: window.navigate(0, null) }
+    Shortcut { sequence: "Ctrl+2"; enabled: !startupError; onActivated: window.openVeri(null) }
+    Shortcut { sequence: "Ctrl+3"; enabled: !startupError; onActivated: window.navigate(2, null) }
+    Shortcut { sequence: "Ctrl+4"; enabled: !startupError; onActivated: window.navigate(3, null) }
+    Shortcut { sequence: "Ctrl+5"; enabled: !startupError; onActivated: window.navigate(4, null) }
+    Shortcut { sequence: "Ctrl+6"; enabled: !startupError; onActivated: window.openModel(null) }
+    Shortcut { sequence: "Ctrl+7"; enabled: !startupError; onActivated: window.navigate(6, null) }
 }

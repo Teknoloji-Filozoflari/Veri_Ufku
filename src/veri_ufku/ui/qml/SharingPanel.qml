@@ -10,7 +10,7 @@ ColumnLayout {
     ColumnLayout {
         visible:expanded.checked;Layout.fillWidth:true
         UiLabel { text:"Yerel dosya aktarımı; otomatik yayınlama veya ekip sunucusu yok. Tek yazıcı kilidi korunur; ağ klasöründeki SQLite ortak çok kullanıcı veritabanı değildir. Full copy yalnız taranabilir mevcut mantıksal proje; opaque binary/model artifact varsa kapalıdır. Tam kopyanın native proje doğrulaması daha fazla RAM ister; varsayılan bütçe yetmezse önceki sonuç korunur. Ayarlar üzerinden daha yüksek bütçeyi açıkça seçin.";wrapMode:Text.WordWrap;Layout.fillWidth:true }
-        UiButton { objectName:"sharingHelp";text:"Review, diff ve redaction yardımı";helpContext:"share.bundle";onClicked:helpRequested(this,"share.bundle") }
+        UiButton { visible: false; objectName:"sharingHelp";text:"Review, diff ve redaction yardımı";helpContext:"share.bundle";onClicked:helpRequested(this,"share.bundle") }
         UiCombo { id:mode;objectName:"sharingMode";accessibleLabel:"Paylaşım inclusion modu";model:["metadata-only","redacted-sample","full-copy"];Layout.fillWidth:true }
         UiButton { text:"Seçili mod tarifini yükle";onClicked:recipe.text=sharing.template(mode.currentText) }
         UiLabel { text:"Redacted örnek: version DatasetVersion, ilk1..1000satır; keep_numeric açık ColumnId listesi. Bütün metin/kategori ve seçilmeyen sayısallar maskelenir. SourceRecordId/RowId ve ColumnId korunur. sensitive_terms yalnız geçici taramada kullanılır, pakete yazılmaz. Bu örnek özgün dataset diye yeniden etiketlenmez.";wrapMode:Text.WordWrap;Layout.fillWidth:true }

@@ -13,7 +13,7 @@ ColumnLayout {
     Connections { target:lifecycle;function onLifecycleChanged(){panel.refresh()} }
     UiLabel { text:"Yerel experiment / model registry";font.bold:true;Layout.fillWidth:true }
     UiLabel { text:"Run eğitim/değerlendirme kaydıdır; model version güvenli artifact üreten run kimliğidir. Aynı dataset farklı split aynı protokol değildir. Eski kayıtların bilinmeyen hash ve erişim zamanları türetilmez. Test defteri proje geneli; dış kullanım bilinmez.";wrapMode:Text.Wrap;Layout.fillWidth:true }
-    UiButton { text:"Run, sürüm ve reproducibility yardımı";helpContext:"experiment.registry";onClicked:panel.helpRequested(this,helpContext) }
+    UiButton { visible: false; text:"Run, sürüm ve reproducibility yardımı";helpContext:"experiment.registry";onClicked:panel.helpRequested(this,helpContext) }
     UiTextField { id:query;objectName:"experimentQuery";Accessible.name:"Run kimliği veya yöntem ara";placeholderText:"Run ara";Layout.fillWidth:true;onTextEdited:panel.refresh() }
     UiCombo { id:status;objectName:"experimentStatusFilter";accessibleLabel:"Run durum filtresi";model:["all","completed","canceled","failed","pending","running","budget_exhausted"];Layout.fillWidth:true;onActivated:panel.refresh() }
     UiTextField { id:tag;Accessible.name:"Tam tag filtresi";placeholderText:"Tam tag";Layout.fillWidth:true;onTextEdited:panel.refresh() }

@@ -41,6 +41,6 @@ ColumnLayout {
  UiButton {objectName:"specialRun";text:"Özel hedef development hesabını başlat";enabled:streams.canStreamRun;onClicked:{try{var t=specialTask.currentText;streams.startSpecial(JSON.stringify({task:t,features:[feature.currentValue],targets:t==="multilabel"||t==="multioutput"?[target.currentValue,specialTarget2.currentValue]:[target.currentValue],role:specialRole.currentValue,order:t==="ordinal"?JSON.parse(ordinalOrder.text):[],transductive:transductive.checked,seed:62}))}catch(e){specialError.text="Ordinal sıra JSON listesini kontrol edin"}}Layout.fillWidth:true}
  UiLabel {id:specialError;text:"";Layout.fillWidth:true;wrapMode:Text.Wrap}
  UiLabel {objectName:"specialSummary";text:panel.result.schema==="SpecialTargetRun/v1"?"DEVELOPMENT · "+JSON.stringify(panel.result.metrics||{})+"\n"+((panel.result.analysis||{}).fit_scope||"")+"\n"+(panel.result.warnings||[]).join("\n"):"";Layout.fillWidth:true;wrapMode:Text.Wrap}
- UiButton {objectName:"streamHelp";text:"Bu ne işe yarar?";helpContext:"model.stream";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
+ UiButton { visible: false;objectName:"streamHelp";text:"Bu ne işe yarar?";helpContext:"model.stream";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
  }
 }

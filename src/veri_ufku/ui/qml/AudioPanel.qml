@@ -60,6 +60,6 @@ ColumnLayout {
         UiButton {objectName:"audioPredict";text:"Yeni ses snapshot'ında classification prediction";enabled:!audioAnalysis.busy&&!!panel.result.model_kind;onClicked:audioAnalysis.predictData();Layout.fillWidth:true}
         UiLabel {objectName:"audioPrediction";text:(audioAnalysis.predictionReport.predictions||[]).length?"Yeni segment prediction: "+audioAnalysis.predictionReport.predictions.length+" · fit yok · model önerisi (ilk8)\n"+(audioAnalysis.predictionReport.predictions||[]).slice(0,8).map(function(v){return v.segment_id+" → "+v.label}).join("\n"):"";Layout.fillWidth:true;wrapMode:Text.Wrap}
         UiLabel {text:"Ses/transkript loglanmaz. Transcription çıktısı model önerisidir, human ground truth değil.";Layout.fillWidth:true;wrapMode:Text.Wrap}
-        UiButton {objectName:"audioHelp";text:"MFCC, resampling, WER/CER ve speaker leakage öğren";helpContext:"model.audio";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
+        UiButton { visible: false;objectName:"audioHelp";text:"MFCC, resampling, WER/CER ve speaker leakage öğren";helpContext:"model.audio";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
     }
 }

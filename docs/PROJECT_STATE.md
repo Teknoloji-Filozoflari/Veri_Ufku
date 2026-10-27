@@ -1,5 +1,125 @@
 # Veri_Ufku — aktif görev hafızası
 
+## UX V2 (aktif — yerel `ux-v2`)
+
+2026-10-25: Açık kullanıcı talimatı ile UX0–UX10 arayüz/akış görevi başladı.
+Teknik Faz72+ başlatılmadı. Push yok; untracked `docs/PRODUCT_DIRECTION_JASP_ORANGE.md`
+korunur ve commit’e karıştırılmaz.
+
+**UX0 teknik teslim:** salt okunur denetim. [UX_V2_AUDIT.md](UX_V2_AUDIT.md),
+[kanıt](evidence/UX_V2.md). H1/H3 doğrulandı; H2/H4 kısmen. Verilerim eksik;
+eksik-etki ve üç yöntemli aykırı birleşik aşama kısmi. Taban: docs/artifacts/learning/
+usability/Ruff/format PASS; `veri-ufku --smoke-test` GUI_SMOKE PASS; odaklı UI
+26 pytest PASS. Tam suite/wheel/fiziksel/AT/minHW/offline/remoteCI/longheap
+çalıştırılmadı veya bilinen açık. Resmî kabul ayrı.
+
+**UX1 teknik teslim:** [UX_WORKSPACE_V2.md](UX_WORKSPACE_V2.md) bölge yerleşimi,
+aşama şeridi, durum tabloları, mevcut ekran eşlemesi; DESIGN_SYSTEM/UI_DESIGN_BRIEF
+bağı. Kod yok. Kullanıcıya bırakılan: gerçek yeni başlayanlarla gösterim.
+
+**UX2 teknik teslim:** Sol `StageStrip` (10 aşama), açılır `ContextSidePanel`
+(sütunlar / Bu adımı öğren), üst bağlam düğmesi, alt durum (aşama + veri kapsamı).
+Mevcut 8 bölüm nav ve ekranlar korundu; proje/veri sözleşmesi değişmedi.
+Test: `test_ux2_shell_gui` + odaklı UI; smoke/Ruff/docs/learning/usability PASS.
+
+**UX3 teknik teslim:** Tablo merkeze (rows ilk accordion; aşama2→rows; otomatik sayfa);
+başlıkta tür/rol/açıklama; sayfa≠tam veri uyarısı; sütun seçimi korunur; filtre
+sürüm üretmez. 23 odaklı GUI PASS.
+
+**UX4 teknik teslim:** Çevrimdışı `assets/examples/catalog.json`; Verilerim =
+XDG `library-index.json` + dosya kopyası (ikinci ProjectStore yok). Import panelinde
+Örnek/Verilerim; silme onayı; girdi silinince mevcut proje bozulmaz (test).
+Karar: şema göçüsü yok.
+
+**UX5 teknik teslim:** `ux_v2_stages.json` (taslak aşama+sözlük), `UxContentController`,
+FirstRunTour (atlanabilir), bağlam paneli «Bu adımı öğren» metinleri. Kritik uyarı
+sonuç yanında kalır sözleşmesi.
+
+**UX6 teknik teslim:** `missing_drop_impact` + QualityPanel etki önizlemesi; karar
+uygulanmaz; sürüm/kaynak korunur (test).
+
+**UX7 teknik teslim:** Grafik yorum alanı; brushing→ortak RowId işaretleri; grafik
+veri sürümü değiştirmez.
+
+**UX8 teknik teslim:** IQR / dayanıklı z / klasik z aday listesi; birleşik RowId;
+karar yok (Hazırla Önizle+Uygula).
+
+**UX9 teknik teslim:** Gerekçeli yöntem adayları (`modeling/candidates.py`,
+ValidationPanel çerçevesi); status=aday; auto_fit=false; ön işleme
+`training_fold` sızıntı testi; mevcut preparation/validation yolları; final test
+ayrı onay.
+
+**UX10 teknik teslim:** Rapor UX bağlamı (`exports/ux_report_context.py`,
+ReportBuilder append); Bölüm11 e2e parçaları otomatik; UX+prep/validation/report
+81 pytest PASS; smoke GUI_SMOKE PASS; docs/learning/usability/artifacts/Ruff PASS.
+Tam pytest `--all-extras` denemesi çok sayıda F ile yarıda (PASS iddia edilmez).
+1366 ekran görüntüsü bu oturumda alınmadı (offscreen smoke + UX2 kabuk testleri).
+Resmî kabul / insan gösterimi / AT / minHW / offline / remoteCI / longheap açık.
+UX0–UX10 teknik zincir tamam; Faz72+ başlatılmadı.
+
+**UX-Veri teknik teslim (2026-10-27, `ux-v2`):** Veri mockup fidelity
+(yerleşim A). Üst şerit yalnız bağlam + Geri·Kaydet. Boş: seyrek kahraman,
+CTA `Verilerim`/`Örnek`; hint/footer/browseSource gizli (objectName kalır);
+önizleme/gate yalnız kaynak doluyken; drop yok; `createDefaultForImport`
+klasör sormaz. Yüklü: salt okunur tablo + tür·rol menü; seçim şeridi sakin;
+alt `N satır · M sütun · sürüm` (sayfa aralığı Veri’de yok); sağ «Veri»+sağlık,
+2×5 kısa çip (`cyanSurface`), Geri + geniş İçe aktar. Dock kabuk Kapat gizli.
+İkinci registry yok. `test_data_workspace_gui` + offscreen smoke. Tam
+suite/wheel/fiziksel/AT/minHW/offline/remoteCI iddia edilmez. Faz72 yok;
+commit/push yok.
+
+**UX-İncele tarama teknik teslim (2026-10-27, `ux-v2`):** İncele merkez
+şerit+tablo; `InspectWorkspacePanel` 5 çip; describe/values/profile Veri’den
+İncele’ye; `operations.inspectDraft` bellek taslağı (sürüm yok) → Hazırla
+önseçim+origin; tablo başlığı eksik rozeti; scope etiketi; puan yok. İkinci
+kuyruk/API yok. `test_inspect_workspace_gui` + odaklı quality/ux3/dataset/veri;
+Ruff; offscreen smoke. Tam suite/wheel/fiziksel/AT/minHW/offline/remoteCI/
+Faz72 iddia edilmez; commit/push yok.
+
+**UX-Görselleştir keşif teknik teslim (2026-10-27, `ux-v2`):** Merkez
+`VisualizeWorkspace` (Grafik|Çıktı|Tablo, 6 amaç kartı, tuval, Python kapalı);
+sağ `ChartPanel` Değişkenler+debounce create; chartCreate kaldırıldı; 12 blok
+eşlemesi (Graph/Text dürüst ayrı panel). Yeni grafik motoru yok.
+`test_visualize_workspace_gui` + charts_gui; Ruff; offscreen smoke. Tam
+suite/wheel/fiziksel/AT/minHW/offline/remoteCI/Faz72 iddia edilmez; commit/push
+yok.
+
+**UX-Hazırla önizleme A teknik teslim (2026-10-27, `ux-v2`):** Merkez
+`PrepareWorkspace` (etki rozetleri, salt okunur sürüm zinciri, önce/sonra,
+İptal·Önizle·Uygula); sağ `PrepareCatalogPanel` 10 blok + Gelen taslaklar
+(`inspectDraft`); Mod 1/2 UI (LEARNED uyarı; train-only motor yok;
+`prepare_scope_mode` apply notu). Cleaning API genişletilmez. `test_prepare_workspace_gui`
++ cleaning_gui; Ruff; offscreen smoke. Tam suite/wheel/fiziksel/AT/minHW/
+offline/remoteCI/Faz72 iddia edilmez; commit/push yok.
+
+**UX-İstatistik soru odaklı A teknik teslim (2026-10-27, `ux-v2`):** Merkez
+`StatisticsWorkspace` (öneri, n/p/etki/CI, grafik alanı, varsayım,
+Sıfırla·Önizle·Kaydet); sağ `StatisticsCatalogPanel` 8 blok + `StatisticsPanel`
+catalogMode debounce önkontrol; assumptions→tam create; kaydet=`analysis_store`.
+Blok 1/8 desteklenmiyor; 6/7 examineTool köprüsü. Yeni motor/Bootstrap yok.
+`test_statistics_workspace_gui` + statistics_gui; Ruff; offscreen smoke. Tam
+suite/wheel/fiziksel/AT/minHW/offline/remoteCI/Faz72 iddia edilmez; commit/push
+yok.
+
+**UX-Model yerleşim A teknik teslim (2026-10-27, `ux-v2`):** Merkez
+`ModelWorkspace` (Özet|Katsayılar|Artıklar|Tanılama, rozetler, eğitim/test
+şeridi — held-out skor yok); sağ `ModelCatalogPanel` 10 çip (OLS…AIC/BIC) +
+Y/X/param + Sıfırla·Eğit ve kaydet → Faz40 `statistics` models +
+`analysis_store`; DatasetVersion yazılmaz. ML `modelPath` Layout A’da gizli;
+İstatistik StatisticalModelsPanel korunur. `test_model_workspace_gui` +
+offscreen smoke. Tam suite/wheel/fiziksel/AT/minHW/offline/remoteCI/Faz72
+iddia edilmez; commit/push yok.
+
+**UX-Raporla yerleşim A teknik teslim (2026-10-27, `ux-v2`):** Merkez
+`ReportWorkspace` (Önizleme|HTML|PDF, freshness/STALE, LIMITATIONS);
+sağ `ReportCatalogPanel` 8 çip + ayarlar + HTML/PDF dışa aktar;
+`composeLayout` → `reportBuilder.run`/`exportReport`; birleştirme-only,
+DatasetVersion yazılmaz. Legacy builder Loader gizli kalır.
+`test_report_workspace_gui` + smoke. Tam suite/wheel/fiziksel/AT/minHW/
+offline/remoteCI/Faz72 iddia edilmez; commit/push yok.
+
+---
+
 2026-10-21 kullanıcı README yenileme ve GitHub gönderimini açıkça istedi.
 README ürün amacı/hedef kullanıcı/başlangıç-Öğren-gelişmiş akışı, gerçek ekranlar,
 kurulum, yöntem kapsamı ve deneysel sınırlarla yenilendi. Önceki uzun README

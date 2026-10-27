@@ -56,6 +56,6 @@ ColumnLayout {
         UiLabel {visible:(neuralTraining.predictionReport.class_labels||[]).length>0;text:"Softmax çıktısı kalibre olasılık garantisi değildir. Sınıf sırası: "+(neuralTraining.predictionReport.class_labels||[]).join(", ");Layout.fillWidth:true;wrapMode:Text.Wrap}
         UiCheckBox {id:technical;objectName:"neuralTechnical";text:"Tensor şeması, kaynak kimlikleri ve teknik tahmin kaydını göster";Layout.fillWidth:true}
         UiLabel {visible:technical.checked;text:JSON.stringify(panel.report.tensor_schema||{})+"\n"+JSON.stringify(neuralTraining.predictionReport);Layout.fillWidth:true;wrapMode:Text.Wrap}
-        UiButton {objectName:"neuralHelp";text:"Tensor, epoch ve güvenli resume öğren";helpContext:"model.neural";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
+        UiButton { visible: false;objectName:"neuralHelp";text:"Tensor, epoch ve güvenli resume öğren";helpContext:"model.neural";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
     }
 }

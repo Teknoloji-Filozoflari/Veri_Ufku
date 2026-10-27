@@ -56,6 +56,8 @@ class OperationsController(QObject):
         self._message = "Kaynak korunur. Önizleme tüm veriyi hesaplar; tablolar ilk200 kaydı gösterir."
         self._error = ""
         self._state = "idle"
+        self._inspect_draft = {}
+        self._prepare_scope_mode = "mod1"
         self.cancel_time = None
         self.timer = QTimer(self)
         self.timer.setInterval(25)
@@ -96,6 +98,39 @@ class OperationsController(QObject):
         notify=changed,
     )
     history = Property("QVariantList", lambda self: self.history_rows(), notify=changed)
+    inspectDraft = Property(
+        "QVariantMap",
+        lambda self: dict(self._inspect_draft or {}),
+        notify=changed,
+    )
+    hasInspectDraft = Property(
+        bool,
+        lambda self: bool(self._inspect_draft),
+        notify=changed,
+    )
+
+    @Slot("QVariantMap")
+    def setInspectDraft(self, draft):
+        """UI-only draft from İncele; does not write ProjectStore or versions."""
+        payload = dict(draft or {})
+        if not payload:
+            self._inspect_draft = {}
+        else:
+            self._inspect_draft = payload
+        self.changed.emit()
+
+    @Slot()
+    def clearInspectDraft(self):
+        if not self._inspect_draft:
+            return
+        self._inspect_draft = {}
+        self.changed.emit()
+
+    @Slot(str)
+    def setPrepareScopeMode(self, mode):
+        """UI note only; cleaning learned_scope stays none|dataset (no train-only)."""
+        self._prepare_scope_mode = mode if mode in ("mod1", "mod2") else "mod1"
+
     resultStatuses = Property(
         "QVariantList",
         lambda self: [
@@ -125,6 +160,15 @@ class OperationsController(QObject):
         ],
         notify=changed,
     )
+    modelLeakage = Property(
+        "QVariantMap", lambda self: self.model_leakage(), notify=changed
+    )
+
+    def model_leakage(self):
+        from veri_ufku.ui.model_leakage import model_leakage_notice
+
+        version = (self.data.dataset() or {}).get("version_id", "")
+        return model_leakage_notice(self.projects.draft, version)
 
     def native_columns(self, d):
         if not d or not self.projects.store:
@@ -451,7 +495,7 @@ class OperationsController(QObject):
         return [
             dict(
                 id=v["version_id"],
-                label=f"{i + 1}. {next((o.get('spec', {}).get('kind', o.get('capability_id', 'metadata')) for o in self.projects.draft['operations'] if o.get('output_version_id') == v['version_id']), 'Kaynak / metadata')} · {v['version_id'][-8:]}",
+                label=f"{i + 1}. {next((('İncele · ' if (o.get('spec') or {}).get('parameters', {}).get('inspect_origin') else '') + o.get('spec', {}).get('kind', o.get('capability_id', 'metadata')) for o in self.projects.draft['operations'] if o.get('output_version_id') == v['version_id']), 'Kaynak / metadata')} · {v['version_id'][-8:]}",
                 current=v["version_id"] == d["version_id"],
                 onBranch=v["version_id"] in chain,
                 parent=next(iter(v.get("parent_version_ids", [])), ""),
@@ -677,7 +721,19 @@ class OperationsController(QObject):
     def apply(self):
         if not self.canApply:
             return self.fail(ProjectError("Geçerli önizleme yok; yeniden önizleyin."))
-        self.submit(copy.deepcopy(self.projects.draft), self.preview)
+        result = copy.deepcopy(self.preview)
+        if result is not None:
+            spec = result.setdefault("spec", {})
+            parameters = dict(spec.get("parameters") or {})
+            if self._inspect_draft:
+                origin = self._inspect_draft.get("origin") or ""
+                if origin:
+                    parameters["inspect_origin"] = origin
+            if self._prepare_scope_mode == "mod2":
+                parameters["prepare_scope_mode"] = "mod2"
+            spec["parameters"] = parameters
+        self.submit(copy.deepcopy(self.projects.draft), result)
+        self.clearInspectDraft()
 
     def submit(self, state, result=None):
         self.publication_commit = self.projects.store.commit_id

@@ -53,6 +53,108 @@ class ExportController(QObject):
         self._error = project_error_text(error)
         self.changed.emit()
 
+    statisticsReport = Property(
+        str, lambda self: self.statistics_report(), notify=changed
+    )
+
+    def statistics_report(self):
+        from veri_ufku.exports.report_statistics import statistics_report_text
+
+        if not self.data.dataset():
+            return "Veri yok. İstatistik sonucu uydurulmaz."
+        try:
+            analyses = self.report_context().get("analyses") or []
+        except (KeyError, TypeError, ProjectError):
+            return "Kayıtlı istatistik okunamadı. Sonuç uydurulmaz."
+        return statistics_report_text(analyses)
+
+    operationPython = Property(
+        str, lambda self: self.operation_python(), notify=changed
+    )
+
+    def operation_python(self):
+        from veri_ufku.exports.operation_python import operation_history_python
+
+        if not self.data.dataset():
+            return "Veri yok. Python dökümü uydurulmaz."
+        try:
+            operations = self.report_context().get("operations") or []
+        except (KeyError, TypeError, ProjectError):
+            return "İşlem geçmişi okunamadı. Döküm uydurulmaz."
+        return operation_history_python(operations)
+
+    reportEnvironment = Property(
+        str, lambda self: self.report_environment(), notify=changed
+    )
+
+    def report_environment(self):
+        from veri_ufku.exports.environment_text import current_environment_text
+
+        return current_environment_text()
+
+    sourceNote = Property(str, lambda self: self.source_note(), notify=changed)
+
+    def source_note(self):
+        from veri_ufku.exports.source_note import source_note
+
+        if not self.data.dataset():
+            return "Veri yok. Kaynak uydurulmaz."
+        try:
+            sources = self.report_context().get("sources") or []
+        except (KeyError, TypeError, ProjectError):
+            return "Kaynak kaydı okunamadı. Kaynak uydurulmaz."
+        return source_note(sources)
+
+    reportSeed = Property(str, lambda self: self.report_seed(), notify=changed)
+
+    def report_seed(self):
+        from veri_ufku.exports.seed_text import seed_text
+
+        if not self.data.dataset():
+            return "Veri yok. Tohum uydurulmaz."
+        try:
+            context = self.report_context()
+        except (KeyError, TypeError, ProjectError):
+            return "Tohum kaydı okunamadı. Tohum uydurulmaz."
+        return seed_text(
+            context.get("project_seed"),
+            context.get("operations") or [],
+            context.get("result_seeds") or [],
+        )
+
+    @Slot(bool, int, result=str)
+    def reportPrivacy(self, include, table_rows):
+        from veri_ufku.exports.query import scoped
+        from veri_ufku.exports.report_privacy import column_findings, privacy_note
+
+        if not self.data.dataset():
+            return "Veri yok. Kişisel sütun uydurulmaz."
+        rows = table_rows if type(table_rows) is int and 1 <= table_rows <= 200 else 20
+        try:
+            request = self.request()
+            spec = ReportSpec(
+                "html",
+                scope="view",
+                view=self.data.view.data(),
+                table_rows=rows,
+                include_personal=bool(include),
+            )
+            query, _schema, _view = scoped(request, spec)
+            names = [c["name"] for c in request["columns"]][:20]
+            frame = (
+                query.select(names).head(rows).collect(engine="streaming")
+                if names
+                else None
+            )
+            values = (
+                {name: frame.get_column(name).to_list() for name in names}
+                if frame is not None
+                else {}
+            )
+        except (KeyError, TypeError, ProjectError, ValueError, OSError):
+            return "Kişisel sütun önizlemesi okunamadı. Sütun uydurulmaz."
+        return privacy_note(column_findings(names, values), bool(include))
+
     def request(self):
         d = self.data.dataset()
         if not d or not self.projects.store:
@@ -231,6 +333,12 @@ class ExportController(QObject):
                 if "chart" in r and r["chart"]["dataset_version"] == d["version_id"]
             ],
             lineage_context_version=1,
+            project_seed=state.get("seed"),
+            result_seeds=[
+                {"id": r.get("id", ""), "seed": r.get("seed")}
+                for r in records
+                if set(r.get("dataset_version_ids") or []) & ancestors
+            ],
             environment=dict(
                 application="Veri_Ufku0.1.0 experimental",
                 chart_backend="Matplotlib Agg",
@@ -241,7 +349,7 @@ class ExportController(QObject):
 
     @Slot(str, str, str)
     def create(self, kind, parameters_json, destination):
-        if kind not in ("data", "report") or self.busy or self.projects.busy:
+        if kind not in ("data", "report", "package") or self.busy or self.projects.busy:
             return self.fail(
                 ProjectError("Devam eden işi bekleyin; veri veya rapor seçin.")
             )
@@ -249,11 +357,33 @@ class ExportController(QObject):
             request = self.request()
             parameters = json.loads(parameters_json)
             parameters["view"] = self.data.view.data()
-            spec = (
-                ExportSpec(**parameters) if kind == "data" else ReportSpec(**parameters)
-            )
+            if kind == "package":
+                fields = {
+                    "format": "html",
+                    "title": parameters.get("title")
+                    or "Veri_Ufku veri inceleme raporu",
+                    "purpose": parameters.get("purpose") or "Dosyamı anlamak istiyorum",
+                    "scope": parameters.get("scope") or "view",
+                    "view": parameters["view"],
+                    "table_rows": parameters.get("table_rows") or 100,
+                    "include_personal": parameters.get("include_personal") is True,
+                    "license_note": parameters.get("license_note") or "",
+                }
+                mode = parameters.get("share_mode") or "ozet"
+                if mode not in ("ozet", "orneklem"):
+                    raise ProjectError(
+                        "Paylaşım özet veya örneklem olmalı. Tam kopya bu pakette yok."
+                    )
+                spec = ReportSpec(**fields)
+                parameters = {**fields, "format": "zip", "share_mode": mode}
+            else:
+                spec = (
+                    ExportSpec(**parameters)
+                    if kind == "data"
+                    else ReportSpec(**parameters)
+                )
             spec.validate(request["columns"])
-            if kind == "report":
+            if kind in ("report", "package"):
                 request["report_context"] = copy.deepcopy(self.report_context())
             url = QUrl(destination)
             target = url.toLocalFile() if url.isLocalFile() else destination

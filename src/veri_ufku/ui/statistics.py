@@ -96,6 +96,7 @@ class StatisticsController(QObject):
         ),
         notify=changed,
     )
+    advice = Property("QVariantMap", lambda self: self.advice_card(), notify=changed)
     current = Property(
         bool,
         lambda self: bool(
@@ -209,6 +210,14 @@ class StatisticsController(QObject):
         self._model_prediction = {}
         self.revision += 1
         self.changed.emit()
+
+    def advice_card(self):
+        from veri_ufku.ui.statistics_advice import statistics_advice
+
+        result = self.result or {}
+        if result.get("spec") and result.get("used_rows") is not None:
+            return statistics_advice(result)
+        return statistics_advice(self.preflight_result)
 
     def fail(self, error):
         self._error = project_error_text(error)

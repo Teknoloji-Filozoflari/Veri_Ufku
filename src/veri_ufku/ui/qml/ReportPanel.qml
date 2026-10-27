@@ -14,11 +14,12 @@ ColumnLayout {
     property string pendingKind:"data"
     property string pendingFormat:"csv"
     function describe(){ description=exports.describe(formats[format.currentIndex],scope.currentIndex===0 ? "view":"full",safe.checked,nullMarker.text) }
-    function parameters(){return pendingKind==="data" ? {format:pendingFormat,scope:scope.currentIndex===0 ? "view":"full",spreadsheet_safe:safe.checked,accept_loss:loss.checked,null_marker:nullMarker.text}:{format:pendingFormat,title:title.text,purpose:purpose.text,scope:scope.currentIndex===0 ? "view":"full",table_rows:rows.value} }
+    property string shareMode: "ozet"
+    function parameters(){return pendingKind==="data" ? {format:pendingFormat,scope:scope.currentIndex===0 ? "view":"full",spreadsheet_safe:safe.checked,accept_loss:loss.checked,null_marker:nullMarker.text}:{format:pendingFormat,title:title.text,purpose:purpose.text,scope:scope.currentIndex===0 ? "view":"full",table_rows:rows.value,include_personal:includePersonal.checked,share_mode:panel.shareMode,license_note:licenseNote.text} }
     function choose(kind,fmt){pendingKind=kind;pendingFormat=fmt;target.nameFilters=[fmt.toUpperCase()+" (*."+fmt+")"];target.defaultSuffix=fmt;if(outputPath.text.trim()) exports.create(kind,JSON.stringify(panel.parameters()),outputPath.text.trim()); else target.open()}
     UiLabel { text:"Yeni çıktı dosyası yolu (boşsa dosya seçicisi açılır)"; Layout.fillWidth:true;wrapMode:Text.Wrap }
     UiTextField { id:outputPath;objectName:"reportOutputPath";Accessible.name:"Yeni rapor veya veri dosyası yolu";Layout.fillWidth:true }
-    UiLabel { text:"Verini ve bulgularını kaydet"; font.pixelSize:Theme.heading; font.bold:true; Layout.fillWidth:true; wrapMode:Text.Wrap }
+    UiLabel { text: qsTr("Verini ve bulgularını kaydet"); font.pixelSize:Theme.heading; font.bold:true; Layout.fillWidth:true; wrapMode:Text.Wrap }
     UiCombo { accessibleLabel: "Verini ve bulgularını kaydet"; model:dataView.datasets; textRole:"label"; valueRole:"id"; Layout.fillWidth:true; onActivated:{loss.checked=false;dataView.selectDataset(currentValue);panel.describe()} }
     UiLabel { text:dataView.viewSummary; Layout.fillWidth:true; wrapMode:Text.Wrap }
     UiLabel { text:"Kapsam"; Layout.fillWidth:true }
@@ -34,17 +35,102 @@ ColumnLayout {
     UiTextField { id:nullMarker; objectName:"exportNullMarker"; text:"\\N"; maximumLength:32; onEditingFinished:panel.describe(); visible:format.currentIndex===0; Layout.fillWidth:true; Accessible.name:"CSV null işareti" }
     UiCheckBox { id:loss; Layout.minimumWidth:0; contentItem:Text { text:loss.text; font:loss.font; color:Theme.text; wrapMode:Text.WordWrap; leftPadding:loss.indicator.width+loss.spacing; verticalAlignment:Text.AlignVCenter } objectName:"exportAcceptLoss"; text:"Format tür kayıplarını ve seçili korumanın metin etkisini okudum"; visible:format.currentIndex!==3; Layout.fillWidth:true }
     UiButton { objectName:"exportData"; helpContext:"export"; text:"Veriyi yeni dosyaya aktar"; primary:true; enabled:!projects.busy && dataView.datasets.length>0 && (format.currentIndex===3 || loss.checked); onClicked:panel.choose("data",panel.formats[format.currentIndex]); Layout.fillWidth:true; multiline:true }
-    UiButton { tone: "mint"; text:"Export yardımı"; helpContext:"export"; onClicked:panel.helpRequested(this,"export"); Layout.fillWidth:true }
+    UiButton { visible: false; tone: "mint"; text:"Export yardımı"; helpContext:"export"; onClicked:panel.helpRequested(this,"export"); Layout.fillWidth:true }
     UiLabel { text:"Yerel rapor"; font.pixelSize:Theme.subheading; Layout.fillWidth:true }
+    property string privacyText: "Dışa aktarmadan önce kişisel sütun önizlemesini çalıştırın. Değer yazılmaz."
+    property bool privacySeen: false
+    UiButton {
+        objectName: "reportPrivacyPreview"
+        text: "Kişisel sütun önizlemesi"
+        enabled: !projects.busy
+        onClicked: {
+            panel.privacyText = exports.reportPrivacy(includePersonal.checked, rows.value)
+            panel.privacySeen = true
+        }
+        Layout.fillWidth: true
+        multiline: true
+    }
+    UiLabel {
+        objectName: "reportPrivacyText"
+        text: panel.privacyText
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+        color: Theme.secondary
+    }
+    UiCheckBox {
+        id: includePersonal
+        objectName: "reportIncludePersonal"
+        text: "Kişisel sütunları rapora dahil et"
+        Layout.fillWidth: true
+        onClicked: { panel.privacySeen = false; privacyAck.checked = false }
+    }
+    UiCheckBox {
+        id: privacyAck
+        objectName: "reportPrivacyAck"
+        text: "Bu önizlemeyi okudum"
+        enabled: panel.privacySeen
+        Layout.fillWidth: true
+    }
+    UiLabel {
+        objectName: "reportStatisticsFindings"
+        text: exports.statisticsReport
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+        color: Theme.secondary
+    }
+    UiLabel {
+        objectName: "reportOperationPython"
+        text: exports.operationPython
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+        color: Theme.secondary
+    }
+    UiLabel {
+        objectName: "reportEnvironment"
+        text: exports.reportEnvironment
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+        color: Theme.secondary
+    }
+    UiLabel {
+        objectName: "reportSeed"
+        text: exports.reportSeed
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+        color: Theme.secondary
+    }
+    UiLabel {
+        objectName: "reportSourceLicense"
+        text: exports.sourceNote
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+        color: Theme.secondary
+    }
+    UiTextField {
+        id: licenseNote
+        objectName: "reportLicenseNote"
+        placeholderText: "Lisans notu"
+        maximumLength: 500
+        Layout.fillWidth: true
+        Accessible.name: "Lisans notu"
+    }
     UiTextField { id:title; objectName:"reportTitle"; text:"Veri_Ufku veri inceleme raporu"; maximumLength:200; Layout.fillWidth:true; Accessible.name:"Rapor başlığı" }
     UiTextArea { id:purpose; objectName:"reportPurpose"; text:qsTr("Dosyamı anlamak istiyorum"); wrapMode:TextEdit.Wrap; Layout.fillWidth:true; Accessible.name:"Raporun amacı" }
-    UiLabel { text:"Rapor; kaynak/köken, sürüm/filtre, kaydedilmiş profil/kalite, temizleme geçmişi, tablo örneği ve bu sürümün grafikleriyle hazırlanır. Grafik kaydedilmediyse güncel grafik de eklenir. Eski bulgular kendi sürümüyle görünür; eksik bölümler sonuç uydurmaz. HTML/PDF font ve resimleri yereldir."; Layout.fillWidth:true; wrapMode:Text.Wrap }
+    UiLabel { text:"Rapor; kaynak/köken, sürüm/filtre, kaydedilmiş profil/kalite, temizleme geçmişi, tablo örneği ve bu sürümün grafikleriyle hazırlanır. Grafik kaydedilmediyse güncel grafik de eklenir. Eski bulgular kendi sürümüyle görünür; eksik bölümler sonuç uydurmaz. HTML/PDF font ve resimleri yereldir. Yerel paket ham satır kopyalamaz."; Layout.fillWidth:true; wrapMode:Text.Wrap }
     UiSpinBox { id:rows; objectName:"reportTableRows"; from:1; to:200; value:100; editable:true; Accessible.name:"Raporda gösterilecek azami tablo kaydı" }
+    UiCombo {
+        objectName: "reportShareMode"
+        accessibleLabel: "Paylaşım biçimi"
+        model: ["Özet (hücre yok)", "Örneklem (rapor tablosu)"]
+        Layout.fillWidth: true
+        onActivated: panel.shareMode = currentIndex === 0 ? "ozet" : "orneklem"
+    }
     Flow { Layout.fillWidth:true; spacing:Theme.sm
-        UiButton { objectName:"reportHTML"; text:"HTML raporu kaydet"; enabled:!projects.busy && dataView.datasets.length>0; onClicked:panel.choose("report","html") }
-        UiButton { objectName:"reportPDF"; text:"PDF raporu kaydet"; enabled:!projects.busy && dataView.datasets.length>0; onClicked:panel.choose("report","pdf") }
+        UiButton { objectName:"reportHTML"; text:"HTML raporu kaydet"; enabled:!projects.busy && dataView.datasets.length>0 && privacyAck.checked; onClicked:panel.choose("report","html") }
+        UiButton { objectName:"reportPDF"; text:"PDF raporu kaydet"; enabled:!projects.busy && dataView.datasets.length>0 && privacyAck.checked; onClicked:panel.choose("report","pdf") }
+        UiButton { objectName:"reportPackage"; text:"Yerel paket kaydet"; enabled:!projects.busy && dataView.datasets.length>0 && privacyAck.checked; onClicked:panel.choose("package","zip") }
         UiButton { text:qsTr("İptal"); enabled:exports.busy; onClicked:exports.cancel() }
-        UiButton { tone: "mint"; text:qsTr("Bu ne işe yarar?"); helpContext:"report"; onClicked:panel.helpRequested(this,"report") }
+        UiButton { visible: false; tone: "mint"; text:qsTr("Bu ne işe yarar?"); helpContext:"report"; onClicked:panel.helpRequested(this,"report") }
     }
     StateNotice { Layout.fillWidth:true; kind:exports.errorText ? "error":exports.busy ? "loading":"info"; heading:"Çıktı durumu"; detail:exports.errorText||exports.message }
     UiLabel { objectName:"exportReceipt"; text:exports.receipt.dataset_version ? "Sürüm: "+exports.receipt.dataset_version+"\nKayıt: "+(exports.receipt.verified_rows===undefined ? exports.receipt.rows:exports.receipt.verified_rows)+" · Format: "+exports.receipt.format+"\nDosya: "+exports.receipt.published.path+"\nKoruma eklenen metin: "+(exports.receipt.spreadsheet_escaped||0)+" · Metne aktarılan sayı: "+(exports.receipt.numeric_to_text||0):""; Layout.fillWidth:true; wrapMode:Text.Wrap }

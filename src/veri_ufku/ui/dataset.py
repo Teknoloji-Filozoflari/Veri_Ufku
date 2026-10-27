@@ -71,16 +71,47 @@ class DatasetTableModel(QAbstractTableModel):
         if role == self.SourceIdRole:
             return self.result["source_record_ids"][index.row()]
 
+    @staticmethod
+    def _type_badge(value):
+        kind = str(value or "").lower()
+        if "int" in kind:
+            return "tam sayı"
+        if "decimal" in kind or "float" in kind or "double" in kind:
+            return "ondalık"
+        if "bool" in kind:
+            return "mantıksal"
+        if "date" in kind or "time" in kind:
+            return "tarih"
+        if kind:
+            return "metin"
+        return ""
+
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         count = self.columnCount() if orientation == Qt.Horizontal else self.rowCount()
         if not 0 <= section < count:
             return None
         if role == Qt.DisplayRole and self.result:
-            return (
-                self.result["columns"][section]["name"]
-                if orientation == Qt.Horizontal
-                else str(self.result["offset"] + section + 1)
+            if orientation != Qt.Horizontal:
+                return str(self.result["offset"] + section + 1)
+            column = self.result["columns"][section]
+            type_badge = self._type_badge(
+                column.get("type") or column.get("physical_type", "")
             )
+            parts = [column["name"], type_badge]
+            role_label = column.get("role_label") or ""
+            if role_label:
+                # Keep badge short for the table header chips.
+                short = {
+                    "Kimlik": "kimlik",
+                    "Kategori": "kategori",
+                    "Ölçüm": "ölçüm",
+                    "Tarih / zaman": "tarih",
+                    "Metin": "metin",
+                    "Sıralı kategori": "sıralı",
+                    "Analizde dışarıda": "dışarıda",
+                }.get(role_label, role_label.lower())
+                parts.append(short)
+            return " · ".join(part for part in parts if part)
 
     def flags(self, index):
         return (
@@ -167,6 +198,10 @@ class DatasetController(QObject):
         self.total = 0
         self.revision = 0
         self.quality_result = None
+        self.missing_impact = None
+        self.outlier_candidates = None
+        self.chart_marked_ids = []
+        self.chart_notes = {}
         self.profile_result = None
         self.inventory_result = None
         self.describe_result = None
@@ -315,11 +350,27 @@ class DatasetController(QObject):
         d = self.dataset()
         if not d:
             return []
+        roles = dict(
+            identifier="Kimlik",
+            category="Kategori",
+            measurement="Ölçüm",
+            time="Tarih / zaman",
+            text="Metin",
+            ordinal="Sıralı kategori",
+            ignored="Analizde dışarıda",
+        )
         return [
             dict(
                 c,
                 physical_type=self.suggestions.get(c["id"], {}).get(
                     "physical_type", c["type"]
+                ),
+                role=roles.get(
+                    (d.get("semantic_metadata", {}).get(c["id"], {}) or {}).get("role"),
+                    "Rol henüz onaylanmadı",
+                ),
+                description=(d.get("semantic_metadata", {}).get(c["id"], {}) or {}).get(
+                    "description", ""
                 ),
                 hidden=c["id"] in self.view.hidden,
                 selected=c["id"] == self.column_id,
@@ -557,6 +608,132 @@ class DatasetController(QObject):
         self.projects.changed.emit()
         self._message = "Kalite raporu taslağa eklendi; Projeyi kaydet ile kalıcı olur."
         self.changed.emit()
+
+    missingImpact = Property(
+        "QVariantMap", lambda self: self.missing_impact or {}, notify=changed
+    )
+    outlierCandidates = Property(
+        "QVariantMap", lambda self: self.outlier_candidates or {}, notify=changed
+    )
+    chartMarkedIds = Property(
+        "QVariantList", lambda self: list(self.chart_marked_ids), notify=changed
+    )
+
+    @Slot(str, str)
+    def previewMissingDrop(self, column_id, compare_column_id=""):
+        """Read-only impact preview; never mutates dataset or source."""
+        from veri_ufku.analytics.dataset import missing_drop_impact
+
+        self._error = ""
+        try:
+            d = self.dataset()
+            if not d:
+                raise ProjectError("Önce dataset içe aktarın.")
+            columns = {c["id"]: c["name"] for c in d["import_metadata"]["columns"]}
+            if column_id not in columns:
+                raise ProjectError("Etki önizlemesi için sütun seçin.")
+            compare_name = columns.get(compare_column_id) if compare_column_id else None
+            path = str(self.projects.store.path(d["snapshot_uri"]))
+            impact = missing_drop_impact(path, columns[column_id], compare_name)
+            impact["dataset_version"] = d["version_id"]
+            impact["column_id"] = column_id
+            self.missing_impact = impact
+            self._message = (
+                f"Eksik silme etki önizlemesi: {impact['missing_n']} / {impact['total_n']} "
+                f"satır (%{impact['lost_ratio'] * 100:.2f}) kaybolurdu. Uygulanmadı."
+            )
+        except (OSError, ValueError, ProjectError) as error:
+            self.missing_impact = None
+            return self.fail(error)
+        self.changed.emit()
+
+    @Slot(str)
+    def computeOutlierCandidates(self, column_id):
+        from veri_ufku.analytics.outliers import candidate_methods
+
+        self._error = ""
+        try:
+            d = self.dataset()
+            if not d:
+                raise ProjectError("Önce dataset içe aktarın.")
+            columns = {c["id"]: c["name"] for c in d["import_metadata"]["columns"]}
+            if column_id not in columns:
+                raise ProjectError("Aykırı aday için sayısal sütun seçin.")
+            path = str(self.projects.store.path(d["snapshot_uri"]))
+            result = candidate_methods(path, columns[column_id])
+            result["dataset_version"] = d["version_id"]
+            result["column_id"] = column_id
+            # Merge chart-marked RowIds into the shared candidate universe.
+            marked = [row for row in self.chart_marked_ids if row]
+            result["chart_marked_row_ids"] = marked
+            result["same_as_chart"] = (
+                set(marked).issubset(set(result["union_row_ids"])) or not marked
+            )
+            self.outlier_candidates = result
+            self._selected_ids = list(result["union_row_ids"][:200])
+            self._selection = (
+                f"Aykırı inceleme adayları: birleşik {len(result['union_row_ids'])} RowId; "
+                "karar yok, veri değişmedi."
+            )
+            self._message = self._selection + " " + result["disclaimer"]
+        except (OSError, ValueError, ProjectError) as error:
+            self.outlier_candidates = None
+            return self.fail(error)
+        self.changed.emit()
+
+    @Slot("QVariantList")
+    def markChartRows(self, row_ids):
+        """Stage-5 chart marks feed the shared candidate RowId set (no mutation)."""
+        self.chart_marked_ids = [str(row) for row in (row_ids or [])][:5000]
+        if self.outlier_candidates:
+            self.outlier_candidates = dict(
+                self.outlier_candidates,
+                chart_marked_row_ids=list(self.chart_marked_ids),
+            )
+        self._message = (
+            f"Grafikte {len(self.chart_marked_ids)} RowId işaretlendi; "
+            "aday kümesiyle aynı kimlik uzayı kullanılır. Veri sürümü değişmedi."
+        )
+        self.changed.emit()
+
+    @Slot(str, str)
+    def saveChartNote(self, chart_key, note):
+        key = str(chart_key or "")[:200]
+        text = str(note or "")[:4000]
+        if not key:
+            return
+        self.chart_notes[key] = text
+        self._message = "Grafik yorumu oturumda saklandı; veri sürümü değişmedi."
+        self.changed.emit()
+
+    @Slot(str, result=str)
+    def chartNote(self, chart_key):
+        return self.chart_notes.get(str(chart_key or ""), "")
+
+    @Slot(str, result="QVariantMap")
+    def uxReportContext(self, model_candidates_json=""):
+        """UX10: grafik notu / aykırı / model bağlamını rapor bağlanabilir özet."""
+        import json
+
+        from veri_ufku.exports.ux_report_context import build_context
+
+        d = self.dataset()
+        models = {}
+        raw = (model_candidates_json or "").strip()
+        if raw:
+            try:
+                models = json.loads(raw)
+            except (TypeError, ValueError, json.JSONDecodeError):
+                models = {}
+        return build_context(
+            dataset_version=(d or {}).get("version_id", ""),
+            row_count=(d or {}).get("import_metadata", {}).get("row_count"),
+            column_count=len((d or {}).get("import_metadata", {}).get("columns") or []),
+            chart_notes=self.chart_notes,
+            outlier_candidates=self.outlier_candidates or {},
+            model_candidates=models if isinstance(models, dict) else {},
+            scope_note=self._view_summary() if d else "",
+        )
 
     @Slot(bool, str, int)
     def computeProfile(self, sample=True, target="dataset", ddof=1):
@@ -967,10 +1144,36 @@ class DatasetController(QObject):
                 self._error = value
             elif self.action == "page":
                 self.page_cache.put(self.cache_key, value)
+                roles = dict(
+                    identifier="Kimlik",
+                    category="Kategori",
+                    measurement="Ölçüm",
+                    time="Tarih / zaman",
+                    text="Metin",
+                    ordinal="Sıralı kategori",
+                    ignored="Analizde dışarıda",
+                )
+                dataset = self.dataset() or {}
+                semantics = dataset.get("semantic_metadata", {})
+                annotated = []
+                for column in value["columns"]:
+                    meta = semantics.get(column["id"], {})
+                    annotated.append(
+                        dict(
+                            column,
+                            role_label=roles.get(meta.get("role"), ""),
+                            description=meta.get("description", ""),
+                        )
+                    )
+                value = dict(value, columns=annotated)
                 self.model.replace(value)
                 self.total = value["total"]
                 self.suggestions = copy.deepcopy(value["suggestions"])
-                self._message = f"Sayfa: {value['offset'] + 1 if value['rows'] else 0}–{value['offset'] + len(value['rows'])}; model en fazla200 kayıt taşır."
+                self._message = (
+                    f"Sayfa: {value['offset'] + 1 if value['rows'] else 0}–"
+                    f"{value['offset'] + len(value['rows'])} / {value['total']} "
+                    f"(görünen sayfa; tam veri değil). Model en fazla200 kayıt taşır."
+                )
             elif self.action == "quality":
                 self.quality_result = value
                 self._message = f"Kalite taraması: {value['scope']} · {value['used_n']}/{value['population_n']} kayıt; veri değiştirilmedi."

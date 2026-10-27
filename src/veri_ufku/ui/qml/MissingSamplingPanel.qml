@@ -73,11 +73,11 @@ ColumnLayout {
     UiCheckBox { id:design;objectName:"missingDesign";text:"Bağımsızlık / örnekleme / PSU tasarımını inceledim";Layout.fillWidth:true;onClicked:statistics.invalidate() }
     Flow { Layout.fillWidth:true;spacing:Theme.sm
         UiButton { objectName:"missingPreflight";text:"Önkontrolü çalıştır";enabled:!statistics.busy&&!projects.busy;onClicked:{approval.checked=false;statistics.create(JSON.stringify(panel.spec()),true)} }
-        UiButton { text:"Eksiklik varsayımlarını öğren";objectName:"missingHelpAssumptions";helpContext:"missing.assumptions";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Temsil ve örnekleme";objectName:"missingHelpRepresentation";helpContext:"sampling.representation";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Örneklem yanlılığı";objectName:"missingHelpBias";helpContext:"sampling.bias";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Ağırlık türleri";objectName:"missingHelpWeights";helpContext:"weights.types";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Çoklu imputasyon";objectName:"missingHelpMultiple";helpContext:"missing.multiple";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Eksiklik varsayımlarını öğren";objectName:"missingHelpAssumptions";helpContext:"missing.assumptions";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Temsil ve örnekleme";objectName:"missingHelpRepresentation";helpContext:"sampling.representation";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Örneklem yanlılığı";objectName:"missingHelpBias";helpContext:"sampling.bias";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Ağırlık türleri";objectName:"missingHelpWeights";helpContext:"weights.types";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Çoklu imputasyon";objectName:"missingHelpMultiple";helpContext:"missing.multiple";onClicked:panel.helpRequested(this,helpContext) }
     }
     StateNotice { Layout.fillWidth:true;heading:"İleri hesap durumu";kind:statistics.errorText?"error":statistics.busy?"loading":"info";detail:statistics.errorText||statistics.message }
     Repeater { model:statistics.preflightCurrent?(statistics.preflightResult.warnings||[]):[];UiLabel { required property string modelData;text:modelData;wrapMode:Text.Wrap;Layout.fillWidth:true;color:Theme.warning } }

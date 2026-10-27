@@ -71,6 +71,6 @@ ColumnLayout {
         UiCheckBox {id:ids;objectName:"recommendationExportIDs";text:"Kaynak user/item/record kimliklerini açıkça export et; hassas kimlik içerebilir";Layout.fillWidth:true}
         UiButton {objectName:"recommendationExport";text:"Öneri listesini yeni yerel JSON'a yaz";enabled:!recommendationAnalysis.busy&&!!recommendationAnalysis.predictionReport.schema;onClicked:recommendationAnalysis.exportList(destination.text,ids.checked);Layout.fillWidth:true}
         UiLabel {text:"Varsayılan export kimlikleri her dosyada farklı salted pseudonym ile maskeler; anonimlik garantisi değildir. Skor click probability değildir. Offline ranking gerçek kullanıcı faydasını kanıtlamaz. Gerçek kullanıcıya otomatik gönderim veya ağ bağlantısı yok.";color:Theme.warning;Layout.fillWidth:true;wrapMode:Text.Wrap}
-        UiButton {objectName:"recommendationHelp";text:"Implicit feedback, top-K, negative sample ve cold start öğren";helpContext:"model.recommendation";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
+        UiButton { visible: false;objectName:"recommendationHelp";text:"Implicit feedback, top-K, negative sample ve cold start öğren";helpContext:"model.recommendation";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
     }
 }

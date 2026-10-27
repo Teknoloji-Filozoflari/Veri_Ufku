@@ -20,5 +20,5 @@ ColumnLayout {
     UiLabel { text: "Tam tablo için satır sınırı · aşılırsa yalnız maliyet gösterilir"; wrapMode: Text.Wrap; Layout.fillWidth: true }
     UiSpinBox { Accessible.name: "Array tablo satır sınırı"; property string helpContext: "array-chunks"; from: 1; to: 10000000; editable: true; value: imports.settings.max_rows || 10000000; onValueModified: imports.setOption("max_rows", value); Layout.fillWidth: true }
     UiLabel { text: imports.formatMetadata; visible: text.length > 0; textFormat: Text.PlainText; wrapMode: Text.Wrap; Layout.fillWidth: true }
-    UiButton { text: "Boyut, kesit ve maliyet ne demek?"; property string helpContext: "array-dimensions"; onClicked: panel.helpRequested(this, helpContext); Layout.fillWidth: true }
+    UiButton { visible: false; text: "Boyut, kesit ve maliyet ne demek?"; property string helpContext: "array-dimensions"; onClicked: panel.helpRequested(this, helpContext); Layout.fillWidth: true }
 }

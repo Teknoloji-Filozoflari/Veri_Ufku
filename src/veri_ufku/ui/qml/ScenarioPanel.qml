@@ -40,7 +40,7 @@ ColumnLayout {
             Layout.fillWidth: true; spacing: Theme.sm
             UiButton { objectName: "scenarioRun"; text: "Senaryoyu açıkça hesapla ve kaydet"; helpContext: "scenario.monte-carlo"; enabled: !scenarios.busy; onClicked: scenarios.run(recipe.text) }
             UiButton { objectName: "scenarioCancel"; text: "İptal"; enabled: scenarios.busy; onClicked: scenarios.cancel() }
-            UiButton { text: "Bu ne işe yarar?"; helpContext: "scenario.linear"; onClicked: helpRequested(this,"scenario.linear") }
+            UiButton { visible: false; text: "Bu ne işe yarar?"; helpContext: "scenario.linear"; onClicked: helpRequested(this,"scenario.linear") }
         }
         UiCombo { id: model; objectName: "scenarioModel"; accessibleLabel: "Senaryoya bağlanabilir frozen model"; model: scenarios.models; textRole: "label"; valueRole: "id"; Layout.fillWidth: true }
         UiButton { objectName: "scenarioModelTemplate"; text: "Seçili modelle what-if/optimize tarifi hazırla"; helpContext: "scenario.model-optimize"; enabled: !!model.currentValue && (method.currentText === "what-if" || method.currentText === "model-optimize"); onClicked: recipe.text=scenarios.modelTemplate(method.currentText, model.currentValue) }

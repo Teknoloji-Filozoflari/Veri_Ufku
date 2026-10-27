@@ -15,7 +15,7 @@ ColumnLayout {
     UiCheckBox {id:expanded;objectName:"temporalExpanded";text:"Faz53 gelişmiş temporal modüller";onToggled:timeSeries.invalidate()}
     ColumnLayout {visible:expanded.checked;Layout.fillWidth:true
         UiLabel {text:"Regular panel; max4000rows/8series/1000periods/200fits. Global, hierarchy ve whole-series clustering aynı calendar ister. Resample ayrı açık hazırlık işlemidir. Random tabular split yok; source ve RowId korunur.";wrapMode:Text.Wrap;Layout.fillWidth:true}
-        UiButton {objectName:"temporalHelp";text:"Differencing, exogenous ve ufuk yardımı";helpContext:"temporal.advanced";onClicked:panel.helpRequested(this,helpContext)}
+        UiButton { visible: false;objectName:"temporalHelp";text:"Differencing, exogenous ve ufuk yardımı";helpContext:"temporal.advanced";onClicked:panel.helpRequested(this,helpContext)}
         UiCombo {id:task;objectName:"temporalTask";accessibleLabel:"Temporal amaç";model:["Forecast/backtest","Development diagnostics","Whole-series classification","Whole-series clustering"];Layout.fillWidth:true;onActivated:timeSeries.invalidate()}
         UiCombo {id:method;objectName:"temporalMethod";accessibleLabel:"Temporal forecast yöntemi";model:["ARIMA","SARIMA","SARIMAX","VAR","Global lag Ridge","Croston demand","Naive","Seasonal naive"];Layout.fillWidth:true;onActivated:timeSeries.invalidate()}
         UiLabel {text:"p,d,q ve seasonal P,D,Q: p/q/P/Q≤2,d/D≤1; seasonal period yukarıda2–24. Difference0/1 yalnız VAR için; stationarity varsayımı kullanıcı gerekçesidir. ADF/KPSS tek başına durağanlık kanıtı değildir.";wrapMode:Text.Wrap;Layout.fillWidth:true}

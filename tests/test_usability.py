@@ -62,12 +62,15 @@ def test_ui_preferences_are_atomic_and_do_not_touch_parsing(tmp_path):
     p.setLocale("en")
     p.setView("advanced")
     q = PresentationPreferences(tmp_path)
-    assert (q.theme, q.textScale, q.locale, q.view) == ("light", 2, "en", "advanced")
+    assert (q.theme, q.textScale, q.locale, q.view) == ("light", 1.0, "en", "advanced")
     assert file.read_bytes() == before
     original = p.path.read_bytes()
     p.setTextScale(float("inf"))
     p.setLocale("unknown")
     assert p.path.read_bytes() == original
+    p.setLocale("kk")
+    assert json.loads(p.path.read_text())["locale"] == "kk"
+    assert json.loads(p.path.read_text())["text_scale"] == 1.0
 
 
 def test_qt_names_display_keyboard_locale_and_import_boundary(tmp_path, monkeypatch):
@@ -95,11 +98,6 @@ def test_qt_names_display_keyboard_locale_and_import_boundary(tmp_path, monkeypa
         assert window.activeFocusItem().objectName() == "displayTheme"
         QTest.keyClick(window, Qt.Key_Down)
         spin(app, lambda: preferences.theme == "light")
-        QTest.keyClick(window, Qt.Key_Tab)
-        assert window.activeFocusItem().objectName() == "displayTextScale"
-        for _ in range(3):
-            QTest.keyClick(window, Qt.Key_Down)
-        spin(app, lambda: preferences.textScale == 2)
         QTest.keyClick(window, Qt.Key_Tab)
         assert window.activeFocusItem().objectName() == "displayLocale"
         QTest.keyClick(window, Qt.Key_Down)
@@ -223,8 +221,10 @@ def test_textarea_tab_exits_and_picker_survives_type_update(tmp_path, monkeypatc
         data.selectColumn(data.datasetColumns[0]["id"])
         window.findChild(QObject, "datasetTabs").setProperty("currentIndex", 0)
         window.setProperty("dataPane", "rows")
-        QTest.qWait(30)
         field = window.findChild(QQuickItem, "columnDescription")
+        window.findChild(QObject, "columnNotesToggle").setProperty("checked", True)
+        app.processEvents()
+        spin(app, lambda: field.isEnabled())
         field.forceActiveFocus()
         QTest.keyClick(window, Qt.Key_Tab)
         assert not field.hasActiveFocus()

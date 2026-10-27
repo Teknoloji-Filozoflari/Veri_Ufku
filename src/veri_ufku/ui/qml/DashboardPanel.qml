@@ -40,7 +40,7 @@ ColumnLayout {
         UiLabel { text: "Önce soruyu belirleyin. Widget'lar kayıtlı veri sürümünü kullanır; filtre ve seçim kapsamı her kartta gösterilir."; Layout.fillWidth:true; wrapMode:Text.Wrap }
         Flow { Layout.fillWidth:true; spacing:Theme.sm
             UiButton { objectName:"dashboardNew"; text:"Yeni görünüm"; enabled:!dashboard.busy && !projects.busy; onClicked:{dashboard.newView();panel.updateFigure()} }
-            UiButton { objectName:"dashboardHelp"; helpContext:"dashboard.canvas"; text:"Bu ne işe yarar?"; onClicked:panel.helpRequested(this,helpContext) }
+            UiButton { visible: false; objectName:"dashboardHelp"; helpContext:"dashboard.canvas"; text:"Bu ne işe yarar?"; onClicked:panel.helpRequested(this,helpContext) }
         }
         UiTextField { Accessible.name:placeholderText; id: viewName; objectName:"dashboardName"; placeholderText:"Dashboard sorusu / görünüm adı"; text:dashboard.viewSpec.name; Layout.fillWidth:true; onEditingFinished:dashboard.rename(text) }
         RowLayout { Layout.fillWidth:true
@@ -67,7 +67,7 @@ ColumnLayout {
         Flow { Layout.fillWidth:true; spacing:Theme.sm
             UiButton { objectName:"dashboardAddFilter"; text:"Filtre ekle"; enabled:!dashboard.busy && !projects.busy; onClicked:dashboard.addFilter(filterScope.currentIndex===1?panel.value(inspector):"",panel.value(dataset),panel.value(filterColumn),["eq","gte","lte","contains","is-null"][filterOp.currentIndex],filterValue.text) }
             UiButton { text:"Filtreleri temizle"; enabled:!dashboard.busy && !projects.busy; onClicked:dashboard.clearFilters() }
-            UiButton { text:"Filtre kapsamını öğren"; helpContext:"dashboard.filters"; onClicked:panel.helpRequested(this,helpContext) }
+            UiButton { visible: false; text:"Filtre kapsamını öğren"; helpContext:"dashboard.filters"; onClicked:panel.helpRequested(this,helpContext) }
         }
         UiLabel { text:"Eşleme kaynakları otomatik seçilmez: üstteki veri sürümü ve filtre sütunu → aşağıdaki hedef. Eşlenmeyen global filtreler kartta açıklanır. Seçim aktarımı yalnız açık anahtar eşlemesiyle yapılır."; Layout.fillWidth:true; wrapMode:Text.Wrap }
         RowLayout { Layout.fillWidth:true
@@ -98,7 +98,7 @@ ColumnLayout {
             UiCombo { id:periodColumn; objectName:"dashboardKpiPeriodColumn"; accessibleLabel:"Önceki dönem filtre sütunu"; model:column.model; textRole:"name"; valueRole:"id"; Layout.fillWidth:true }
             UiTextField { Accessible.name:placeholderText; id:periodValue; objectName:"dashboardKpiPeriodValue"; placeholderText:"Önceki dönem eşit filtre değeri"; Layout.fillWidth:true }
             UiButton { objectName:"dashboardApplyWidget"; text:"Widget ayarlarını uygula"; enabled:!dashboard.busy && !projects.busy; onClicked:dashboard.updateWidget(panel.value(inspector),JSON.stringify({title:widgetTitle.text,text:widgetNote.text,grid:[gridRow.value,gridCol.value,gridHeight.value,gridWidth.value],aggregation:aggregate.currentText,denominator_mode:denominatorMode.currentText,denominator:denominatorText.text,denominator_column:denominatorMode.currentIndex===3?panel.value(denominatorColumn):"",previous_period:periodText.text,previous_filters:periodText.text==="none"?[]:[{column_id:panel.value(periodColumn),operator:"eq",value:periodValue.text,scope:"local",dataset_version:panel.selectedWidget().dataset_version}]})) }
-            UiButton { text:"KPI tanımını öğren"; helpContext:"dashboard.kpi"; onClicked:panel.helpRequested(this,helpContext) }
+            UiButton { visible: false; text:"KPI tanımını öğren"; helpContext:"dashboard.kpi"; onClicked:panel.helpRequested(this,helpContext) }
         }
         Flow { Layout.fillWidth:true; spacing:Theme.sm
             UiButton { objectName:"dashboardEvaluate"; text:"Dashboard hesapla"; enabled:projects.opened && !dashboard.busy && !projects.busy; onClicked:dashboard.evaluate() }
@@ -171,7 +171,7 @@ ColumnLayout {
             UiTextField { Accessible.name:placeholderText; id:destination; objectName:"figureDestination"; placeholderText:"Yeni figure çıktı dosyası"; Layout.fillWidth:true }
             Flow { Layout.fillWidth:true; spacing:Theme.sm
                 UiButton { objectName:"figureExport"; text:"Figure / dashboard dışa aktar"; enabled:dashboard.current && !dashboard.busy && !projects.busy; onClicked:dashboard.export(destination.text,format.currentText) }
-                UiButton { text:"Okunabilir figürü öğren"; helpContext:"figure.compose"; onClicked:panel.helpRequested(this,helpContext) }
+                UiButton { visible: false; text:"Okunabilir figürü öğren"; helpContext:"figure.compose"; onClicked:panel.helpRequested(this,helpContext) }
             }
         }
     }

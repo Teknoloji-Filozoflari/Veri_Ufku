@@ -56,6 +56,6 @@ ColumnLayout {
         UiCheckBox { id:recordIds;objectName:"uncertaintyRecordIds";text:"Önizlemede kaynak satır kimliklerini göster";Layout.fillWidth:true }
         Repeater { model:(panel.evaluation.prediction_records||[]).slice(0,20);UiLabel { required property var modelData;text:"Gerçek="+modelData.actual+" · Tahmin="+modelData.predicted+(modelData.prediction_set?" · Prediction set={"+modelData.prediction_set.join(", ")+"}":"")+(typeof modelData.lower==="number"?" · Predictive interval=["+modelData.lower.toFixed(4)+", "+modelData.upper.toFixed(4)+"]":"")+(recordIds.checked?" · RowId="+modelData.row_id:"");Layout.fillWidth:true;wrapMode:Text.Wrap } }
         UiLabel { text:"İlk20 kayıt önizlemesi; metrikler bölümün tüm kayıtlarında. Calibrator/threshold/q model paketinde, yeni dosya tahmini yalnız transform/predict. Final test, iptal ve kayıt açma aşağıdaki mevcut ortak kontrollerdedir.";Layout.fillWidth:true;wrapMode:Text.Wrap }
-        UiButton { objectName:"uncertaintyHelp";text:"Olasılık, maliyet, coverage ve belirsizlik türlerini öğren";helpContext:"model.uncertainty";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; objectName:"uncertaintyHelp";text:"Olasılık, maliyet, coverage ve belirsizlik türlerini öğren";helpContext:"model.uncertainty";onClicked:panel.helpRequested(this,helpContext) }
     }
 }

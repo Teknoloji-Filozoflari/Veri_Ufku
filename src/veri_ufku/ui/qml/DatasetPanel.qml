@@ -8,13 +8,53 @@ ColumnLayout {
     objectName: "datasetPanel"
     property alias contractExpanded: contractToggle.checked
     property string pane: "profile"
+    property bool autoLoad: false
+    property bool inspectMode: false
     property string helpContext: "dataset.profile"
+    property bool autoPageRequested: false
     signal helpRequested(var origin, string context)
     signal showValues()
     spacing: Theme.md
-    UiLabel { text: qsTr("Verini tanı"); font.pixelSize: Theme.heading; font.bold: true; wrapMode: Text.Wrap; Layout.fillWidth: true }
+    function missingCountFor(name) {
+        let findings = (dataView.qualityResult && dataView.qualityResult.findings) || []
+        for (let i = 0; i < findings.length; i++)
+            if (findings[i].code === "missing" && findings[i].column === name)
+                return findings[i].count || 0
+        let inv = (dataView.inventoryResult && dataView.inventoryResult.columns) || []
+        for (let j = 0; j < inv.length; j++)
+            if (inv[j].name === name)
+                return (inv[j]["null"] || 0) + (inv[j].nan || 0)
+        return 0
+    }
+    function requestAutoPage() {
+        if (!panel.autoLoad || panel.autoPageRequested || panel.pane !== "rows" || !panel.visible)
+            return
+        if (!dataView || dataView.datasets.length === 0 || dataView.pageRowCount > 0)
+            return
+        if (dataView.busy || projects.busy)
+            return
+        panel.autoPageRequested = true
+        Qt.callLater(function() {
+            if (panel.autoLoad && panel.pane === "rows" && !dataView.busy && !projects.busy && dataView.pageRowCount === 0)
+                dataView.refresh()
+        })
+    }
+    onPaneChanged: {
+        if (panel.pane !== "rows") panel.autoPageRequested = false
+        else panel.requestAutoPage()
+    }
+    onVisibleChanged: if (panel.visible) panel.requestAutoPage()
+    onAutoLoadChanged: if (panel.autoLoad) panel.requestAutoPage()
+    Connections {
+        target: projects
+        function onChanged() {
+            if (!projects.busy && !dataView.busy)
+                panel.requestAutoPage()
+        }
+    }
+    UiLabel { text: qsTr("Verini tanı"); font.pixelSize: Theme.heading; font.bold: true; wrapMode: Text.Wrap; Layout.fillWidth: true; visible: panel.pane !== "rows" }
     UiCombo { accessibleLabel: qsTr("Veri kümesi");
-        visible: panel.pane !== "profile" || dataView.datasets.length > 1
+        visible: panel.pane !== "rows" && (panel.pane !== "profile" || dataView.datasets.length > 1) || (panel.pane === "rows" && dataView.datasets.length > 1)
         id: datasetPicker
         objectName: "datasetPicker"
         model: dataView.datasets
@@ -34,19 +74,30 @@ ColumnLayout {
     ColumnLayout {
         visible: panel.pane === "rows"
         Layout.fillWidth: true
-    UiLabel { objectName: "dataReadHeading"; text: qsTr("Veriyi oku ve incele"); font.pixelSize: Theme.subheading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.Wrap }
-    UiLabel { text: qsTr("Önce kayıtları gözden geçir. Ardından bir sütun seçerek eksik değerleri, farklı değerleri ve uygun sayısal özetleri hesapla."); Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
+        Layout.fillHeight: true
+    UiLabel { objectName: "dataReadHeading"; visible: false; text: qsTr("Veriyi oku ve incele"); font.pixelSize: Theme.subheading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.Wrap }
+    UiLabel { visible: false; text: qsTr("Önce kayıtları gözden geçir. Ardından bir sütun seçerek eksik değerleri, farklı değerleri ve uygun sayısal özetleri hesapla."); Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
     GridLayout {
+        visible: false
         columns: panel.width > 600 * Theme.scale ? 2 : 1
         Layout.fillWidth: true
         UiButton { tone: "cyan"; objectName: "loadDatasetButton"; text: qsTr("Tabloyu aç / yenile"); enabled: !projects.busy && dataView.datasets.length > 0; onClicked: dataView.refresh(); Layout.fillWidth: true; multiline: true }
-        UiButton { tone: "mint"; text: qsTr("Veri profili ne işe yarar?"); onClicked: panel.helpRequested(this, "dataset.profile"); Layout.fillWidth: true; multiline: true }
+        UiButton { visible: false; tone: "mint"; text: qsTr("Veri profili ne işe yarar?"); onClicked: panel.helpRequested(this, "dataset.profile"); Layout.fillWidth: true; multiline: true }
     }
-    UiLabel { text: dataView.viewSummary; Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
-    UiLabel { text: qsTr("Tablo salt okunurdur. Arama sütun adlarını arar; gizleme veriyi silmez. Filtre ve sıralama tüm veriye uygulanır. Tablo filtresi profil kapsamından ayrı seçilir."); Layout.fillWidth: true; wrapMode: Text.Wrap }
-    UiCheckBox { id: tableTools; objectName: "datasetToolsToggle"; text: qsTr("Sütunlar, sıralama ve filtreler"); Layout.fillWidth: true }
+    UiLabel {
+        objectName: "datasetPageNote"
+        visible: false
+        text: qsTr("Görünen sayfa tüm veri değildir. Sayfalama en fazla 200 satır taşır; filtre/sıralama görünüm dönüşümüdür, yeni veri sürümü üretmez.")
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+        color: Theme.warning
+        font.bold: true
+    }
+    UiLabel { visible: false; text: dataView.viewSummary; Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
+    UiLabel { visible: false; text: qsTr("Tablo salt okunurdur. Arama sütun adlarını arar; gizleme veriyi silmez. Filtre ve sıralama tüm veriye uygulanır. Tablo filtresi profil kapsamından ayrı seçilir. Sütun seçimi diğer ekranlarda korunur."); Layout.fillWidth: true; wrapMode: Text.Wrap }
+    UiCheckBox { id: tableTools; objectName: "datasetToolsToggle"; visible: false; text: qsTr("Sütunlar, sıralama ve filtreler"); checked: false; Layout.fillWidth: true }
     ColumnLayout {
-        visible: tableTools.checked
+        visible: false
         Layout.fillWidth: true
         spacing: Theme.sm
     UiTextField { Accessible.name: qsTr("Sütun ara"); objectName: "datasetColumnSearch"; placeholderText: qsTr("Sütun ara"); onTextEdited: dataView.searchColumns(text); Layout.fillWidth: true; Layout.minimumWidth: 0 }
@@ -82,7 +133,8 @@ ColumnLayout {
     UiButton { tone: "cyan"; objectName: "datasetClearFilters"; text: qsTr("Tüm filtreleri kaldır"); enabled: !projects.busy; onClicked: dataView.clearFilters(); Layout.fillWidth: true }
     }
     UiLabel { text: dataView.errorText; visible: text.length > 0; color: Theme.error; Layout.fillWidth: true; wrapMode: Text.Wrap }
-    UiLabel { text: dataView.message; Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
+    UiLabel { text: dataView.message; visible: dataView.busy && text.length > 0; Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
+    ColumnHeaderMenu { id: columnHeaderMenu }
     HorizontalHeaderView {
         objectName: "datasetHeader"
         Layout.fillWidth: true
@@ -92,17 +144,53 @@ ColumnLayout {
         activeFocusOnTab: false
         keyNavigationEnabled: false
         delegate: Rectangle {
+            id: headerCell
             required property var display
-            implicitWidth: 180 * Theme.scale
-            implicitHeight: 40 * Theme.scale
+            required property int column
+            readonly property var parts: String(display === undefined ? "" : display).split(" · ")
+            readonly property string columnName: parts.length > 0 ? parts[0] : ""
+            readonly property string typeBadge: parts.length > 1 ? parts[1] : ""
+            readonly property string roleBadge: parts.length > 2 ? parts[2] : ""
+            implicitWidth: 120
+            implicitHeight: headerContent.implicitHeight + 10
             color: Theme.raised
-            UiLabel {
-                anchors.fill: parent
-                anchors.margins: Theme.sm
-                text: parent.display
-                font.bold: true
-                elide: Text.ElideRight
-                verticalAlignment: Text.AlignVCenter
+            ColumnLayout {
+                id: headerContent
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.margins: 4
+                spacing: 2
+                UiLabel {
+                    objectName: "datasetHeaderMark"
+                    Layout.fillWidth: true
+                    text: headerCell.columnName
+                    font.bold: true
+                    font.pixelSize: Theme.small
+                    elide: Text.ElideRight
+                    maximumLineCount: 1
+                }
+                UiLabel {
+                    visible: headerCell.typeBadge.length > 0 || headerCell.roleBadge.length > 0
+                    Layout.fillWidth: true
+                    text: {
+                        let bits = []
+                        if (headerCell.typeBadge) bits.push(headerCell.typeBadge)
+                        if (headerCell.roleBadge) bits.push(headerCell.roleBadge)
+                        if (panel.inspectMode) {
+                            let miss = panel.missingCountFor(headerCell.columnName)
+                            if (miss > 0) bits.push(miss + qsTr(" eksik"))
+                        }
+                        return bits.join(" · ")
+                    }
+                    color: Theme.secondary
+                    font.pixelSize: Theme.small
+                    elide: Text.ElideRight
+                    maximumLineCount: 1
+                }
+            }
+            TapHandler {
+                onTapped: columnHeaderMenu.openFor(parent.column)
             }
             Rectangle { anchors.right: parent.right; width: 1; height: parent.height; color: Theme.border }
         }
@@ -137,12 +225,20 @@ ColumnLayout {
             function onColumnsChanged() { table.clearColumnWidths(); table.forceLayout() }
         }
         Layout.fillWidth: true
-        Layout.preferredHeight: 360 * Theme.scale
+        Layout.fillHeight: true
+        Layout.minimumHeight: 160
         clip: true
         reuseItems: true
         model: dataView.tableModel
-        columnWidthProvider: function(column) { let explicit = explicitColumnWidth(column); return explicit >= 0 ? Math.max(72 * Theme.scale, explicit) : 180 * Theme.scale }
-        rowHeightProvider: function(row) { return 34 * Theme.scale }
+        columnWidthProvider: function(column) {
+            let explicit = explicitColumnWidth(column)
+            if (explicit >= 0)
+                return Math.max(72, explicit)
+            let count = Math.max(1, table.columns)
+            return Math.max(72, Math.floor(table.width / count))
+        }
+        rowHeightProvider: function(row) { return 24 }
+        onWidthChanged: if (columns > 0) forceLayout()
         ScrollBar.horizontal: ScrollBar {}
         ScrollBar.vertical: ScrollBar {}
         delegate: Rectangle {
@@ -151,11 +247,11 @@ ColumnLayout {
             required property string sourceRecordId
             required property int row
             required property bool missing
-            implicitWidth: 180 * Theme.scale
-            implicitHeight: 34 * Theme.scale
+            implicitWidth: 72
+            implicitHeight: 24
             color: dataView.selectedRowIds.indexOf(rowId) >= 0 ? Theme.cyanSurface : hover.hovered ? Theme.hover : row % 2 ? Theme.alternateRow : Theme.surface
             Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 1; color: Theme.border; opacity: 0.45 }
-            UiLabel { anchors.fill: parent; anchors.margins: Theme.sm; text: parent.missing ? qsTr("∅ eksik") : parent.display; color: parent.missing ? Theme.muted : Theme.text; font.italic: parent.missing; elide: Text.ElideRight; verticalAlignment: Text.AlignVCenter }
+            UiLabel { anchors.fill: parent; anchors.leftMargin: 6; anchors.rightMargin: 6; text: parent.missing ? qsTr("∅ eksik") : parent.display; color: parent.missing ? Theme.muted : Theme.text; font.italic: parent.missing; elide: Text.ElideRight; verticalAlignment: Text.AlignVCenter }
             TapHandler { onTapped: { table.keyboardRow = parent.row; dataView.selectRow(parent.row); table.forceActiveFocus() } }
             HoverHandler { id: hover }
             ToolTip.visible: hover.hovered
@@ -163,20 +259,42 @@ ColumnLayout {
         }
     }
     Flow {
+        visible: false
         Layout.fillWidth: true
         spacing: Theme.sm
         UiButton { objectName: "datasetCopySelection"; text: qsTr("Görünen seçimi kopyala (JSON)"); enabled: dataView.selectedRowIds.length > 0; onClicked: dataView.copyVisibleSelection(); width: Math.min(implicitWidth, parent.width) }
         UiButton { objectName: "datasetResetWidths"; text: qsTr("Sütun genişliklerini sıfırla"); onClicked: { table.clearColumnWidths(); table.forceLayout() } width: Math.min(implicitWidth, parent.width) }
     }
-    UiLabel { text: qsTr("Başlık kenarını sürükleyerek sütunu boyutlandırın. ∅ eksik değerdir; kopyalama yalnız bu sayfadaki görünen metni içerir."); color: Theme.secondary; font.pixelSize: Theme.small; Layout.fillWidth: true; wrapMode: Text.Wrap }
-    GridLayout {
+    UiLabel { visible: false; text: qsTr("Başlık kenarını sürükleyerek sütunu boyutlandırın. ∅ eksik değerdir; kopyalama yalnız bu sayfadaki görünen metni içerir."); color: Theme.secondary; font.pixelSize: Theme.small; Layout.fillWidth: true; wrapMode: Text.Wrap }
+    RowLayout {
+        visible: dataView.totalRows > 200 || dataView.busy
         Layout.fillWidth: true
-        columns: panel.width > 600 * Theme.scale ? 3 : 1
-        UiButton { tone: "cyan"; objectName: "datasetPreviousPage"; text: qsTr("Önceki 200"); enabled: !projects.busy && dataView.pageOffset > 0; onClicked: dataView.goPage(Math.max(0, dataView.pageOffset - 200)); Layout.fillWidth: true }
-        UiButton { tone: "cyan"; objectName: "datasetNextPage"; text: qsTr("Sonraki 200"); enabled: !projects.busy && dataView.pageOffset + 200 < dataView.totalRows; onClicked: dataView.goPage(dataView.pageOffset + 200); Layout.fillWidth: true }
-        UiButton { tone: "cyan"; objectName: "datasetCancel"; text: qsTr("Sorgu / profili iptal et"); enabled: dataView.busy; onClicked: dataView.cancel(); Layout.fillWidth: true; multiline: true }
+        spacing: Theme.sm
+        UiButton { tone: "cyan"; objectName: "datasetPreviousPage"; visible: dataView.totalRows > 200; text: qsTr("Önceki 200"); enabled: !projects.busy && dataView.pageOffset > 0; onClicked: dataView.goPage(Math.max(0, dataView.pageOffset - 200)); multiline: false }
+        UiButton { tone: "cyan"; objectName: "datasetNextPage"; visible: dataView.totalRows > 200; text: qsTr("Sonraki 200"); enabled: !projects.busy && dataView.pageOffset + 200 < dataView.totalRows; onClicked: dataView.goPage(dataView.pageOffset + 200); multiline: false }
+        UiButton { tone: "cyan"; objectName: "datasetCancel"; visible: dataView.busy; text: qsTr("İptal"); enabled: dataView.busy; onClicked: dataView.cancel(); multiline: false }
     }
-    UiLabel { text: dataView.selectionText; Layout.fillWidth: true; wrapMode: Text.WrapAnywhere }
+    UiLabel {
+        visible: panel.pane === "rows" && dataView.selectedRowIds.length > 0
+        text: dataView.selectionText
+        Layout.fillWidth: true
+        wrapMode: Text.WrapAnywhere
+        color: Theme.secondary
+        font.pixelSize: Theme.small
     }
-    ColumnDetails { id: columnDetail; visible: panel.pane === "rows"; Layout.fillWidth: true; onHelpRequested: function(origin, context) { panel.helpRequested(origin, context) } }
+    }
+    UiCheckBox {
+        id: columnNotesToggle
+        objectName: "columnNotesToggle"
+        text: qsTr("Sütun ayrıntısı")
+        checked: false
+        visible: false
+        Layout.fillWidth: true
+    }
+    ColumnDetails {
+        id: columnDetail
+        visible: panel.pane === "rows" && columnNotesToggle.checked
+        Layout.fillWidth: true
+        onHelpRequested: function(origin, context) { panel.helpRequested(origin, context) }
+    }
 }

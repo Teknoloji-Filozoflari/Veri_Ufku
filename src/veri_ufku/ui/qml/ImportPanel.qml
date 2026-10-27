@@ -32,6 +32,18 @@ ColumnLayout {
     UiLabel { Layout.minimumWidth: 0; wrapMode: Text.Wrap; text: qsTr("Veri içe aktar"); font.pixelSize: Theme.heading; font.bold: true; Layout.fillWidth: true }
     UiLabel { visible: !projects.opened; text: qsTr("Dosyanı aktarmak için önce bir proje oluştur veya aç."); Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
     UiButton { objectName: "importProjectButton"; visible: !projects.opened; text: qsTr("Proje oluştur / aç"); tone: "cyan"; onClicked: panel.projectRequested() }
+    UiCheckBox {
+        id: libraryToggle
+        objectName: "importLibraryToggle"
+        text: qsTr("Örnek katalog ve Verilerim")
+        Layout.fillWidth: true
+    }
+    Loader {
+        active: libraryToggle.checked
+        visible: active
+        Layout.fillWidth: true
+        sourceComponent: Component { DataLibraryPanel { onHelpRequested: function(origin, context) { panel.helpRequested(origin, context) } } }
+    }
     UiLabel { text: qsTr("Dosyanı seç veya aşağıya bırak. Uygulama dosya biçimini algılar ve önizlemeyi hazırlar. Kaynak dosyan değişmez."); Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
     UiButton { objectName: "chooseCsvButton"; text: qsTr("Dosya seç"); tone: "cyan"; enabled: !imports.busy && !projects.busy; onClicked: picker.open() }
     UiButton { objectName: "chooseDatasetFolder"; text: "Dataset klasörü seç"; property string helpContext: "import-partition"; enabled: !imports.busy && !projects.busy; onClicked: datasetPicker.open() }
@@ -59,7 +71,7 @@ ColumnLayout {
         UiLabel { text: qsTr("Dosya yolu (dosya seçicisine alternatif)"); Layout.fillWidth: true; wrapMode: Text.Wrap }
         UiTextField { id: pathInput; objectName: "importPathInput"; Accessible.name: qsTr("Yerel veri dosyası yolu"); placeholderText: "/home/…/veri.csv"; Layout.fillWidth: true; enabled: !projects.busy; onAccepted: imports.choose(text) }
         UiButton { objectName: "importPathOpen"; text: qsTr("Bu dosyayı önizle"); enabled: !projects.busy && pathInput.text.length > 0; onClicked: imports.choose(pathInput.text) }
-        UiCombo { accessibleLabel: qsTr("Dosya biçimi"); objectName: "importFormat"; Accessible.name: qsTr("Dosya biçimi"); visible: ["postgresql", "mysql", "mariadb", "duckdb", "http", "s3", "tile", "geocoding"].indexOf(imports.formatId) < 0; model: imports.formats; currentIndex: model.indexOf(imports.formatId); enabled: !imports.busy; onActivated: imports.setFormat(currentText); Layout.fillWidth: true }
+        UiCombo { accessibleLabel: qsTr("Dosya biçimi"); objectName: "importFormat"; Accessible.name: qsTr("Dosya biçimi"); visible: ["postgresql", "mysql", "mariadb", "duckdb", "http", "s3", "tile", "geocoding"].indexOf(imports.formatId) < 0; model: imports.formats; currentIndex: model.indexOf(imports.formatId); enabled: !imports.busy; onActivated: if (activeFocus && currentText !== imports.formatId) imports.setFormat(currentText); Layout.fillWidth: true }
         GeoImportOptions { visible: ["geojson","geopackage","shapefile","geoparquet","geotiff","tile"].indexOf(imports.formatId)>=0; Layout.fillWidth:true; onHelpRequested:function(origin,context){panel.helpRequested(origin,context)} }
         StructuredOptions { visible: imports.formatId !== "csv" && imports.formatId !== "tsv" && ["postgresql", "mysql", "mariadb", "duckdb", "http", "s3", "tile", "geocoding"].indexOf(imports.formatId) < 0; Layout.fillWidth: true; onHelpRequested: function(origin, context) { panel.helpRequested(origin, context) } }
         UiLabel { visible: imports.formatId === "csv" || imports.formatId === "tsv"; text: qsTr("Türler dosyanın tamamında algılanır. Başında sıfır olan kodlar ve karışık değerler metin olarak korunur. Ayar veya tür değiştiğinde yeniden önizleyin."); Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }

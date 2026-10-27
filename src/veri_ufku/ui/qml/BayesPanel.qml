@@ -54,7 +54,7 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth:true
             UiCombo {id:methodChoice;objectName:"bayesMethod";Layout.fillWidth:true;model:statistics.methods("bayes");textRole:"label";valueRole:"id";accessibleLabel:"Bayes model şablonu";onActivated:panel.invalidate()}
-            UiButton {objectName:"bayesHelp";text:"Bu ne işe yarar?";helpContext:"bayes";onClicked:panel.helpRequested(this,"statistics."+panel.method.split("_").join("-"))}
+            UiButton { visible: false;objectName:"bayesHelp";text:"Bu ne işe yarar?";helpContext:"bayes";onClicked:panel.helpRequested(this,"statistics."+panel.method.split("_").join("-"))}
         }
         UiLabel {text:"Yerel CPU NUTS; serbest probabilistic script çalıştırılmaz. Optional backend yoksa hesap açık hata verir, temel uygulama çalışır. Özel model kodu ileri kod alanının ayrı kapsamıdır. Birim/ölçek seçimini açıkça doğrulayın.";Layout.fillWidth:true;wrapMode:Text.WordWrap}
         GridLayout {

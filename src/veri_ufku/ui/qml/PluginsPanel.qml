@@ -10,7 +10,7 @@ ColumnLayout {
     ColumnLayout {
         visible:expanded.checked;Layout.fillWidth:true
         UiLabel { text:"Manifest incelemek kod çalıştırmaz. Yalnız güvendiğiniz Python eklentisini açıkça çalıştırın. Ayrı process güvenli OS sandbox değildir: eklenti aynı kullanıcının dosya, ağ ve keyring haklarına erişebilir; manifest izinleri işletim sistemi tarafından kısıtlanmaz. Kötü niyetli koddan kaynak/proje koruma garantisi yoktur.";wrapMode:Text.WordWrap;Layout.fillWidth:true }
-        UiButton { objectName:"pluginsHelp";text:"Eklenti yeteneği, trusted code ve bağımlılık yardımı";helpContext:"plugin.sdk";onClicked:helpRequested(this,"plugin.sdk") }
+        UiButton { visible: false; objectName:"pluginsHelp";text:"Eklenti yeteneği, trusted code ve bağımlılık yardımı";helpContext:"plugin.sdk";onClicked:helpRequested(this,"plugin.sdk") }
         UiTextField { id:manifest;objectName:"pluginsManifest";Accessible.name:"Kullanıcının seçtiği yerel plugin manifest.json";placeholderText:"/tam/yol/ornek/manifest.json";Layout.fillWidth:true }
         UiButton { objectName:"pluginsInspect";text:"Yalnız manifest / kod hash / ortam uyumluluğunu incele";enabled:!plugins.busy;onClicked:{trusted.checked=false;network.checked=false;plugins.inspectManifest(manifest.text)} }
         ScrollView { id:inspection;Layout.fillWidth:true;Layout.preferredHeight:260;contentWidth:availableWidth

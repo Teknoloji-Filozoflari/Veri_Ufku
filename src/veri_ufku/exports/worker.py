@@ -48,6 +48,8 @@ def process_entry(
         )
         if kind == "data":
             from veri_ufku.exports.data import export
+        elif kind == "package":
+            from veri_ufku.exports.local_package import export
         else:
             os.environ["QT_QPA_PLATFORM"] = "offscreen"
             from veri_ufku.exports.reports import export

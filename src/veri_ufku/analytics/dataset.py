@@ -626,3 +626,35 @@ def profile(request, spec, workspace, control=None, unique_offset=0, unique_quer
     finally:
         db.close()
         path.unlink(missing_ok=True)
+
+
+def missing_drop_impact(path, column_name, numeric_compare=None):
+    """Preview row loss if rows with null in column_name were dropped. Read-only."""
+    frame = pl.scan_parquet(path).collect(engine="streaming")
+    if column_name not in frame.columns:
+        raise ProjectError("Etki önizlemesi için sütun bulunamadı.")
+    total = frame.height
+    missing_mask = frame[column_name].is_null()
+    lost = int(missing_mask.sum())
+    kept = total - lost
+    result = dict(
+        column=column_name,
+        total_n=total,
+        missing_n=lost,
+        remaining_n=kept,
+        lost_ratio=(lost / total) if total else 0.0,
+        applied=False,
+        note="Karar uygulanmadı; yalnız etki önizlemesi.",
+    )
+    if numeric_compare and numeric_compare in frame.columns:
+        series = frame[numeric_compare]
+        if series.dtype.is_numeric():
+            before = series.drop_nulls()
+            after = frame.filter(~missing_mask)[numeric_compare].drop_nulls()
+            if before.len() and after.len():
+                result["compare_column"] = numeric_compare
+                result["mean_before"] = float(before.mean())
+                result["mean_after"] = float(after.mean())
+                result["median_before"] = float(before.median())
+                result["median_after"] = float(after.median())
+    return result

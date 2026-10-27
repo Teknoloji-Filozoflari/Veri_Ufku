@@ -24,7 +24,7 @@ ColumnLayout {
     }
     UiLabel { text:"Zaman serisi — geçmişten geleceğe tahmin";font.pixelSize:Theme.heading;Layout.fillWidth:true;wrapMode:Text.Wrap }
     UiLabel { text:"Bu yol tarih sırasını korur. Her grup ayrı seri ve ayrı kesim tarihine sahiptir; rastgele regresyon bölmesi kullanılmaz. Kaynak kayıtlar değişmez. En fazla 20 grup / 100.000 kayıt.";Layout.fillWidth:true;wrapMode:Text.Wrap }
-    UiButton { objectName:"timeSeriesHelp";property string helpContext:"model.time-series";text:"Sıklık ve doğrulama yardımı";onClicked:panel.helpRequested(this,"model.time-series") }
+    UiButton { visible: false; objectName:"timeSeriesHelp";property string helpContext:"model.time-series";text:"Sıklık ve doğrulama yardımı";onClicked:panel.helpRequested(this,"model.time-series") }
     UiLabel { text:signalOptions.enabledMode?"Sinyal: sayısal zaman ve ana kanal; kayıt/grup isteğe bağlı":"Tarih (Date/Datetime) ve sayısal ölçüm" }
     UiCombo { id:dateChoice;objectName:"timeSeriesDate";model:timeSeries.columns;textRole:"name";valueRole:"id";Layout.fillWidth:true;Accessible.name:"Zaman serisi tarih sütunu";onActivated:timeSeries.invalidate() }
     UiCombo { id:measureChoice;objectName:"timeSeriesMeasurement";model:timeSeries.columns;textRole:"name";valueRole:"id";Layout.fillWidth:true;Accessible.name:"Zaman serisi ölçüm";onActivated:timeSeries.invalidate() }
@@ -44,10 +44,10 @@ ColumnLayout {
     UiTextField { id:folds;objectName:"timeSeriesFolds";text:"3";maximumLength:1;Layout.fillWidth:true;Accessible.name:"Rolling-origin fold sayısı";onTextChanged:timeSeries.invalidate() }
     UiLabel { text:"Mevsim dönemi: 0 kapalı; 2–366 gözlemde bir tekrar. Günlükte haftalık tekrar için 7; aylıkta yıllık tekrar için 12. Otomatik mevsim varsayımı yok.";Layout.fillWidth:true;wrapMode:Text.Wrap }
     UiTextField { id:season;objectName:"timeSeriesSeason";text:"0";maximumLength:3;Layout.fillWidth:true;Accessible.name:"Mevsim dönemi";onTextChanged:timeSeries.invalidate() }
-    UiButton { objectName:"timeSeriesSeasonHelp";property string helpContext:"timeseries.seasonality";text:"Mevsimsellik yardımı";onClicked:panel.helpRequested(this,"timeseries.seasonality") }
+    UiButton { visible: false; objectName:"timeSeriesSeasonHelp";property string helpContext:"timeseries.seasonality";text:"Mevsimsellik yardımı";onClicked:panel.helpRequested(this,"timeseries.seasonality") }
     UiLabel { text:"Geçmiş hareketli ortalama penceresi (2–60): önce lag 1, sonra geçmiş pencere. Merkezli pencere/gelecekle doldurma yok. Grafik mevcut hedefi özelliğe katmaz.";Layout.fillWidth:true;wrapMode:Text.Wrap }
     UiTextField { id:windowSize;objectName:"timeSeriesWindow";text:"3";maximumLength:2;Layout.fillWidth:true;Accessible.name:"Geçmiş hareketli ortalama penceresi";onTextChanged:timeSeries.invalidate() }
-    UiButton { objectName:"timeSeriesLagHelp";property string helpContext:"timeseries.lag";text:"Lag ve pencere yardımı";onClicked:panel.helpRequested(this,"timeseries.lag") }
+    UiButton { visible: false; objectName:"timeSeriesLagHelp";property string helpContext:"timeseries.lag";text:"Lag ve pencere yardımı";onClicked:panel.helpRequested(this,"timeseries.lag") }
     UiCombo { accessibleLabel: "Zaman serisi modeli"; id:modelChoice;objectName:"timeSeriesModel";model:["ExponentialSmoothing — düzey","ExponentialSmoothing — toplamsal trend","ExponentialSmoothing — toplamsal trend ve mevsim","Yalnız baseline"];Layout.fillWidth:true;onActivated:timeSeries.invalidate() }
     UiLabel { text:"İlk fold eğitimi en az max(12, 3 × mevsim dönemi, pencere + 1) dönem. Toplam geçmiş ayrıca fold × ufuk ve final aralığını kapsamalı. Naive son değeri, seasonal-naive son mevsimi tekrarlar. Model yalnız rolling-origin MAE ile seçilir; eşitlikte baseline önce gelir. Gelişmiş model her zaman daha iyi değildir.";Layout.fillWidth:true;wrapMode:Text.Wrap }
     }
@@ -79,7 +79,7 @@ ColumnLayout {
     }
     UiLabel { visible:!signalOptions.enabledMode;text:timeSeries.report.advanced?"Advanced final tüm saklı test dönemlerini frozen origin/model ile değerlendirir. Out-of-source future covariate dosyası/model persistence bu dilimde kapalı. Test defteri kalıcıdır; sonradan seçim keşifseldir.":"Final test gerçek değerleri açar ve kullanım kalıcı kaydedilir. Testten sonra ayar/model değiştirmek keşifseldir; yeni koşu önceki kullanımı silmez. Gelecek tahminleri son kaynak tarihinin ötesine uzanır; model yalnız geliştirme geçmişine fit olur, final gerçeklerini kullanmaz.";Layout.fillWidth:true;wrapMode:Text.Wrap }
     UiButton { objectName:"timeSeriesFinal";visible:!signalOptions.enabledMode;text:"Kullanımı kaydet ve saklı final testi aç";multiline:true;Layout.fillWidth:true;enabled:timeSeries.current&&timeSeries.report.mode==="development"&&(!timeSeries.report.advanced||timeSeries.report.advanced.spec.task==="forecast")&&!timeSeries.busy&&!projects.busy&&!projects.readOnly;onClicked:timeSeries.finalTest() }
-    UiButton { objectName:"timeSeriesValidationHelp";property string helpContext:"timeseries.validation";text:"Ufuk ve geçmişten geleceğe doğrulama";onClicked:panel.helpRequested(this,"timeseries.validation") }
+    UiButton { visible: false; objectName:"timeSeriesValidationHelp";property string helpContext:"timeseries.validation";text:"Ufuk ve geçmişten geleceğe doğrulama";onClicked:panel.helpRequested(this,"timeseries.validation") }
     UiCombo { accessibleLabel: "Kayıtlı zaman analizi"; id:saved;objectName:"timeSeriesSaved";model:timeSeries.savedRuns;textRole:"label";valueRole:"id";Layout.fillWidth:true }
     UiButton { objectName:"timeSeriesOpen";text:"Kayıtlı zaman serisi sonucunu aç";enabled:saved.currentIndex>=0&&!timeSeries.busy&&!projects.busy;onClicked:timeSeries.openSaved(saved.currentValue) }
 }

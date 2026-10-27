@@ -68,5 +68,5 @@ ColumnLayout {
         UiLabel { text:recipes.changeReport.schema==="DelayedPerformance/v1"?"Eşleşen: "+recipes.changeReport.matched+" · ölçülen: "+recipes.changeReport.scored+" · geçersiz: "+recipes.changeReport.invalid+" · hedefsiz tahmin: "+recipes.changeReport.unmatched_predictions+" · tahminsiz hedef: "+recipes.changeReport.unmatched_targets+"\n"+(recipes.changeReport.metrics?Object.keys(recipes.changeReport.metrics).map(k=>k+": "+panel.format(recipes.changeReport.metrics[k])).join(" · "):"Geçerli hedef yok; başarı metriği yok."):"";Layout.fillWidth:true;wrapMode:Text.Wrap }
     }
     UiButton { text:"Etki/izleme raporunu aktar";enabled:recipes.current&&!projects.busy;onClicked:report.open() }
-    UiButton { text:qsTr("Bu ne işe yarar?");tone:"mint";helpContext:"workflow.recipe";onClicked:panel.helpRequested(this,helpContext) }
+    UiButton { visible: false; text:qsTr("Bu ne işe yarar?");tone:"mint";helpContext:"workflow.recipe";onClicked:panel.helpRequested(this,helpContext) }
 }

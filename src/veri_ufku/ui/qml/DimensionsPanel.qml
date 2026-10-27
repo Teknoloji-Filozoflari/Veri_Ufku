@@ -45,7 +45,7 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth:true
             UiCombo {id:methodChoice;objectName:"dimensionMethod";model:statistics.methods("dimensions");textRole:"label";valueRole:"id";accessibleLabel:"Boyut/selection yöntemi";Layout.fillWidth:true;onActivated:panel.invalidate()}
-            UiButton {objectName:"dimensionHelp";text:"Bu ne işe yarar?";helpContext:"dimensions";onClicked:panel.helpRequested(this,"statistics."+panel.method.split("_").join("-"))}
+            UiButton { visible: false;objectName:"dimensionHelp";text:"Bu ne işe yarar?";helpContext:"dimensions";onClicked:panel.helpRequested(this,"statistics."+panel.method.split("_").join("-"))}
         }
         UiLabel {objectName:"dimensionAvailability";text:panel.available?"Yerel backend mevcut; amaç/fit/transform sınırları aşağıda":"KAPALI · "+(methodChoice.currentIndex>=0?methodChoice.model[methodChoice.currentIndex].reason:"");color:Theme.warning;Layout.fillWidth:true;wrapMode:Text.WordWrap}
         UiLabel {text:"Model girdisi: nested CV / development fit. Kompresyon: açık full-fit, CV hazır sayılmaz. Görsel keşif: target/test etiketi yok. t-SNE ve optional UMAP yalnız görsel; uzaklık/küme/boşluk gerçek sınıf değildir. Sayısal independent kapsam; metin/encoded/grup/zaman pipeline genişletmesi ayrı.";Layout.fillWidth:true;wrapMode:Text.WordWrap}

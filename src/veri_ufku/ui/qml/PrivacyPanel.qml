@@ -10,7 +10,7 @@ ColumnLayout {
     ColumnLayout {
         visible:expanded.checked;Layout.fillWidth:true
         UiLabel { text:"Tarama yalnız aday üretir. Her kolon için insan kararı kaydedin. Hash ve pseudonym anonimlik garantisi değildir; nadir kombinasyonlar ve dış veri yeniden tanımlayabilir. Kaynak, geçmiş snapshot, model ve rapor değişmez.";wrapMode:Text.WordWrap;Layout.fillWidth:true }
-        UiButton { objectName:"privacyHelp";text:"PII, şifreleme ve privacy budget yardımı";helpContext:"privacy.scan";onClicked:helpRequested(this,"privacy.scan") }
+        UiButton { visible: false; objectName:"privacyHelp";text:"PII, şifreleme ve privacy budget yardımı";helpContext:"privacy.scan";onClicked:helpRequested(this,"privacy.scan") }
         UiCombo { id:dataset;objectName:"privacyDataset";accessibleLabel:"Taranacak dataset sürümü";model:privacy.datasets;textRole:"label";valueRole:"id";Layout.fillWidth:true }
         UiButton { objectName:"privacyScan";text:"Yerel PII adaylarını tara";enabled:!privacy.busy && !!dataset.currentValue;onClicked:privacy.scan(dataset.currentValue) }
         UiLabel { text:"JSON kuralları: classification pii/not-pii/uncertain; strategy mask/drop/pseudonym/keep. Keep yalnız gerekçeli not-pii kararıyla. Eksik kolonlar dışa aktarılmaz; iç satır kimlikleri export edilmez. Reviewer yerel beyandır, doğrulanmış kimlik değildir.";wrapMode:Text.WordWrap;Layout.fillWidth:true }

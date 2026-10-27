@@ -153,6 +153,30 @@ class WorkspaceController(QObject):
     navigate = Signal(int, str)
     restorePreset = Signal(str)
     selectMethod = Signal(str, str)
+    modelModule = Property(
+        "QVariantMap", lambda self: self.model_module(), notify=changed
+    )
+    dataAdapters = Property(
+        "QVariantList", lambda self: self.data_adapters(), notify=changed
+    )
+    dataSpecialAdapters = Property(
+        "QVariantList", lambda self: self.data_special_adapters(), notify=changed
+    )
+
+    def model_module(self):
+        from veri_ufku.ui.model_module import model_module_status
+
+        return model_module_status()
+
+    def data_adapters(self):
+        from veri_ufku.ui.data_workspace import core_adapters
+
+        return core_adapters()
+
+    def data_special_adapters(self):
+        from veri_ufku.ui.data_workspace import special_adapters
+
+        return special_adapters()
 
     def __init__(self, projects, statistics, charts, controllers=(), parent=None):
         super().__init__(parent)

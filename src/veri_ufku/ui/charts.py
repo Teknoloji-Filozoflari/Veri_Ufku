@@ -94,6 +94,24 @@ class ChartController(QObject):
         notify=changed,
     )
     methodSummary = Property(str, lambda self: self.method_summary(), notify=changed)
+    pythonSnippet = Property(str, lambda self: self.python_snippet(), notify=changed)
+    explanation = Property(
+        "QVariantMap", lambda self: self.chart_explanation(), notify=changed
+    )
+
+    def python_snippet(self):
+        from veri_ufku.ui.chart_python import chart_python_snippet
+
+        result = self.result or {}
+        spec = dict(result.get("spec") or {})
+        if result.get("used_n") is not None:
+            spec["used_n"] = result["used_n"]
+        return chart_python_snippet(spec, self.column_rows())
+
+    def chart_explanation(self):
+        from veri_ufku.ui.chart_explain import chart_explanation
+
+        return chart_explanation(self.result)
 
     def method_summary(self):
         if not self.result:
@@ -449,6 +467,10 @@ class ChartController(QObject):
                 self.selection = value
                 if "page_row_ids" in value:
                     self.data.selectChartRows(value["page_row_ids"], value["count"])
+                    if hasattr(self.data, "markChartRows"):
+                        self.data.markChartRows(
+                            value.get("row_ids") or value["page_row_ids"]
+                        )
                 self._message = f"Seçim: {value['count']} RowId; {len(value['point_ids'])} görünür nokta. Örneklenmemiş kayıtlar nokta seçimiyle seçilmez."
             elif keep:
                 if self.result_workspace:

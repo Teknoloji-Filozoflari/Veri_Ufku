@@ -21,6 +21,18 @@ ColumnLayout {
     spacing: Theme.md
     function readableFormula(value) { operations.transformColumns.forEach(c=>{value=value.split('col("'+c.id+'")').join('['+c.name+']')}); return value }
     function invalidate() { operations.discardPreview() }
+    function setMethodKind(name) {
+        let idx = kinds.indexOf(name)
+        if (idx < 0)
+            return
+        method.currentIndex = idx
+        selected = []
+        groups = []
+        metrics = []
+        keyPairs = []
+        mapping = []
+        root.invalidate()
+    }
     function toggle(values, id, checked) { let result = values.filter(v => v !== id); if (checked) result.push(id); return result }
     function output(name, type) { return {id: operations.newColumnId(), name: name, original_name: name, type: type} }
     function descriptor(type) {
@@ -140,5 +152,5 @@ ColumnLayout {
     }
     UiLabel { text:"En fazla üretilecek kayıt (bütçe; aşılırsa eski veri korunur)"; visible:["aggregate","pivot","unpivot","append","join"].indexOf(root.kind)>=0; Layout.fillWidth:true; wrapMode:Text.WordWrap }
     UiSpinBox { Accessible.name: "En fazla üretilecek kayıt (bütçe; aşılırsa eski veri korunur)"; id:maxRows; objectName:"transformMaxRows"; from:1; to:10000000; value:1000000; editable:true; visible:["aggregate","pivot","unpivot","append","join"].indexOf(root.kind)>=0; onValueModified:root.invalidate() }
-    UiButton { text:"Yöntem ve küçük örnek"; property string helpContext:"transform.methods"; onClicked:root.helpRequested(this, "transform."+root.kind.replace(/_/g,"-")) }
+    UiButton { visible: false; text:"Yöntem ve küçük örnek"; property string helpContext:"transform.methods"; onClicked:root.helpRequested(this, "transform."+root.kind.replace(/_/g,"-")) }
 }
