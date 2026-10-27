@@ -17,17 +17,35 @@ def test_ux3_stage_opens_table_and_keeps_column_selection(tmp_path, monkeypatch)
         )
 
     try:
-        stage = item("uxStage2")
+        stage = item("moduleVeri")
         stage.clicked.emit()
         spin(app, lambda: window.property("dataPane") == "rows")
         assert window.property("selectedSection") == 1
+        assert window.property("dataPane") == "rows"
+        assert item("toolDock").property("visible")
+        assert item("dataWorkspacePanel").property("visible")
         assert item("datasetPageScope").property("visible")
-        assert item("datasetToolsToggle").property("checked")
+        assert not item("datasetToolsToggle").property("checked")
         spin(app, lambda: not data.busy and data.model.rowCount() > 0)
         assert data.model.rowCount() <= 200
         assert data.dataset()["version_id"] == version_before
         header = data.model.headerData(0, Qt.Orientation.Horizontal)
         assert " · " in str(header)
+        item("moduleIncele").clicked.emit()
+        spin(app, lambda: window.property("inceleOpen"))
+        assert window.property("selectedSection") == 1
+        assert window.property("inceleOpen")
+        assert item("datasetTable").property("visible")
+        assert item("toolDock").property("visible")
+        assert item("toolDock").property("width") >= 280
+        panel = item("inspectWorkspacePanel")
+        assert panel is not None and panel.property("visible")
+        assert item("inspectScanStrip") is not None
+        scope = item("inspectScopeLabel").property("text")
+        assert "tarama" in scope.lower() or "kapsam" in scope.lower()
+        assert data.dataset()["version_id"] == version_before
+        item("moduleVeri").clicked.emit()
+        spin(app, lambda: window.property("dataPane") == "rows")
 
         first = data.columns[0]["id"]
         data.selectColumn(first)
@@ -46,14 +64,9 @@ def test_ux3_stage_opens_table_and_keeps_column_selection(tmp_path, monkeypatch)
         teardown(app, window)
 
 
-def test_ux3_data_section_still_starts_with_accordion(tmp_path, monkeypatch):
+def test_ux3_data_heading_stays_available(tmp_path, monkeypatch):
     app, window, *_ = setup(tmp_path, monkeypatch)
     try:
-        visual_item(window.contentItem(), "roadmapOpen_0").clicked.emit()
-        assert (
-            window.property("selectedSection") == 1
-            and window.property("dataPane") == ""
-        )
         heading = visual_item(window.contentItem(), "dataHeading_rows")
         assert heading is not None
         assert heading.property("text") == "Veri tablosu"

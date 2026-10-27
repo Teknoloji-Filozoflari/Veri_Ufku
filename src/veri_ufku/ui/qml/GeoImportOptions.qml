@@ -15,5 +15,5 @@ ColumnLayout {
  UiSpinBox {objectName:"geoRasterBand";Accessible.name:"GeoTIFF band";visible:imports.formatId==="geotiff"||imports.formatId==="tile";from:1;to:1024;value:imports.settings.geo_band||1;onValueModified:imports.setOption("geo_band",value);Layout.fillWidth:true}
  UiTextField {objectName:"geoRasterWindow";Accessible.name:"Raster window col row width height";visible:imports.formatId==="geotiff"||imports.formatId==="tile";text:JSON.stringify(imports.settings.geo_window||[]);placeholderText:"[0,0,128,128]";onEditingFinished:imports.setOption("geo_window",text);Layout.fillWidth:true}
  UiLabel {objectName:"geoSourceMetadata";text:JSON.stringify(imports.choices.geospatial||{},null,2);textFormat:Text.PlainText;wrapMode:Text.WrapAnywhere;Layout.fillWidth:true}
- UiButton {text:"CRS ve projeksiyon ne demek?";property string helpContext:"geo-crs";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
+ UiButton { visible: false;text:"CRS ve projeksiyon ne demek?";property string helpContext:"geo-crs";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
 }

@@ -45,7 +45,17 @@ def test_every_method_real_qml_preflight_spawn_save_and_reopen(
         engine = app._veri_ufku_resources[0]
         controller = engine._statistics_resources
         window.setProperty("selectedSection", 4)
+        window.setProperty("examineTool", 0)
+        spin(app, lambda: window.property("istatistikOpen"))
         assert not window.findChild(QObject, "availabilityNotice").property("visible")
+        panel = window.findChild(QObject, "statisticsPanel")
+        if panel is not None:
+            panel.setProperty("liveEnabled", False)
+            panel.setProperty("liveArmed", False)
+        chip = window.findChild(QObject, "statisticsCatalogChip_3")
+        if chip is not None:
+            chip.clicked.emit()
+            app.processEvents()
         cols = {c["name"]: i for i, c in enumerate(controller.columns)}
 
         def field(name, property, value):

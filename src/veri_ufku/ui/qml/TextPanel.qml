@@ -32,10 +32,10 @@ ColumnLayout {
     UiLabel { text:"Etiketli metin: Model → Kayıt bazlı modelleme → Kategori hedefi → Metin TF-IDF seçimini aç. Aynı dil/token ayarlarını seç; önce uygunluk planı, sonra mevcut sınıflandırma ve final test akışını kullan. Vocab/IDF her eğitim fold'unda öğrenilir; ham boş belgeler sıfır vektördür, tümü boş eğitim kontrollü reddedilir.";Layout.fillWidth:true;wrapMode:Text.Wrap }
     NLPPanel { id:nlp; Layout.fillWidth:true; onHelpRequested:function(origin,context){panel.helpRequested(origin,context)} }
     Flow { Layout.fillWidth:true;spacing:Theme.sm
-        UiButton { text:"Token ve n-gram";helpContext:"text.tokens";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Durak sözcük ve dil";helpContext:"text.language";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"TF-IDF";helpContext:"text.tfidf";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Benzerlik";helpContext:"text.similarity";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Token ve n-gram";helpContext:"text.tokens";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Durak sözcük ve dil";helpContext:"text.language";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"TF-IDF";helpContext:"text.tfidf";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Benzerlik";helpContext:"text.similarity";onClicked:panel.helpRequested(this,helpContext) }
     }
     UiCombo { accessibleLabel: "Kayıtlı metin analizi"; id:saved;model:textAnalysis.savedRuns;textRole:"label";valueRole:"id";Layout.fillWidth:true }
     UiButton { text:"Kayıtlı metin özetini aç";enabled:saved.currentIndex>=0&&!textAnalysis.busy&&!projects.busy;onClicked:textAnalysis.openSaved(saved.currentValue) }

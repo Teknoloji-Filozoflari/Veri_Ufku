@@ -70,10 +70,10 @@ ColumnLayout {
     UiButton { objectName:"lifecycleRetrain";text:"Yeniden eğit — yeni veri için hazırlık ve değerlendirme ayarlarını aç";Layout.fillWidth:true;multiline:true;enabled:!projects.busy&&!lifecycle.busy;onClicked:panel.retrainRequested() }
     UiLabel { text:"Yeniden eğitim yeni bir plan/koşu oluşturur; mevcut model değişmez. Hedef, split ve seed seçilip eğitim ayrıca başlatılır.";Layout.fillWidth:true;wrapMode:Text.Wrap }
     Flow { Layout.fillWidth:true;spacing:Theme.sm
-        UiButton { text:"Model kartı";tone:"mint";helpContext:"model.card";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Özellik önemi";tone:"mint";helpContext:"model.importance";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Bilinmeyen kategori";tone:"mint";helpContext:"model.unknown-category";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Yeni veri";tone:"mint";helpContext:"model.new-data";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Tahmin belirsizliği";tone:"mint";helpContext:"model.uncertainty";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Model kartı";tone:"mint";helpContext:"model.card";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Özellik önemi";tone:"mint";helpContext:"model.importance";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Bilinmeyen kategori";tone:"mint";helpContext:"model.unknown-category";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Yeni veri";tone:"mint";helpContext:"model.new-data";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Tahmin belirsizliği";tone:"mint";helpContext:"model.uncertainty";onClicked:panel.helpRequested(this,helpContext) }
     }
 }

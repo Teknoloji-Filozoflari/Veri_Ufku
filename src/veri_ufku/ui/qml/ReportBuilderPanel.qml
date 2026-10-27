@@ -43,7 +43,7 @@ ColumnLayout {
                     recipe.text = reportBuilder.appendUxContext(recipe.text, JSON.stringify(ctx))
                 }
             }
-            UiButton { objectName: "reportBuilderHelp"; text: "Bilimsel rapor yardımı"; helpContext: "report.builder"; onClicked: helpRequested(this,"report.builder") }
+            UiButton { visible: false; objectName: "reportBuilderHelp"; text: "Bilimsel rapor yardımı"; helpContext: "report.builder"; onClicked: helpRequested(this,"report.builder") }
         }
         UiCombo { id: dataset; objectName: "reportBuilderDataset"; accessibleLabel: "Rapora bağlanacak dataset sürümü"; model: reportBuilder.datasets; textRole: "label"; valueRole: "id"; Layout.fillWidth: true }
         UiLabel { text: dataset.currentIndex>=0 && reportBuilder.datasets[dataset.currentIndex] ? JSON.stringify(reportBuilder.datasets[dataset.currentIndex].columns) : "Dataset yok"; textFormat: Text.PlainText; wrapMode: Text.WrapAnywhere; Layout.fillWidth: true }

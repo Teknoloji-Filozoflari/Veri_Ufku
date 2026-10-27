@@ -10,7 +10,7 @@ ColumnLayout {
     ColumnLayout {
         visible:expanded.checked;Layout.fillWidth:true
         UiLabel { text:"Core CPU kurulumu ve optional extras ayrı profillerdir. Sürüm eşleşmesi native backend/GPU çalışma kanıtı değildir. Uyumsuz stack'ler ayrı worker ortamı gerektirir; bu sürüm otomatik environment kurmaz veya tüm modelleri tek Python'a sığmış saymaz.";wrapMode:Text.WordWrap;Layout.fillWidth:true }
-        UiButton { objectName:"environmentHelp";text:"Paket, environment ve rollback yardımı";helpContext:"environment.inspect";onClicked:helpRequested(this,"environment.inspect") }
+        UiButton { visible: false; objectName:"environmentHelp";text:"Paket, environment ve rollback yardımı";helpContext:"environment.inspect";onClicked:helpRequested(this,"environment.inspect") }
         UiButton { objectName:"environmentRefresh";text:"Yerel core/extras, artifact backend, QML/plugin, driver ve cache durumunu oku";enabled:!environment.busy;onClicked:environment.refresh() }
         ScrollView { id:report;Layout.fillWidth:true;Layout.preferredHeight:320;contentWidth:availableWidth
             UiLabel { objectName:"environmentReport";width:report.availableWidth;text:environment.reportText;textFormat:Text.PlainText;wrapMode:Text.WrapAnywhere }

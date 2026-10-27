@@ -78,6 +78,6 @@ ColumnLayout {
         UiButton { objectName:"explanationOpen";text:"Kayıtlı açıklamayı aç — fit/ağ yok";enabled:!lifecycle.busy&&!projects.busy&&saved.currentIndex>=0;Layout.fillWidth:true;onClicked:lifecycle.openExplanation(saved.currentValue||"") }
         UiTextField { id:output;objectName:"explanationExportPath";Accessible.name:"Masked explanation JSON export yeni mutlak dosya yolu";text:"";Layout.fillWidth:true }
         UiButton { objectName:"explanationExport";text:"Maskeli safe JSON export — hassas alanlar/kimlikler çıkmaz";multiline:true;enabled:!!panel.result.schema&&!lifecycle.busy&&!projects.busy;Layout.fillWidth:true;onClicked:lifecycle.exportExplanation(output.text) }
-        UiButton { objectName:"explanationHelp";text:"Explanation/causation, correlated feature, subgroup ve fairness öğren";helpContext:"model.explanation";Layout.fillWidth:true;onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; objectName:"explanationHelp";text:"Explanation/causation, correlated feature, subgroup ve fairness öğren";helpContext:"model.explanation";Layout.fillWidth:true;onClicked:panel.helpRequested(this,helpContext) }
     }
 }

@@ -100,8 +100,8 @@ ColumnLayout {
     NeuralPanel { Layout.fillWidth:true;protocol:panel.spec();protocolBlocked:!!panel.protocolBlock;onHelpRequested:function(origin,context){panel.helpRequested(origin,context)} }
     SearchPanel { Layout.fillWidth:true;protocol:panel.spec();protocolBlocked:!!panel.protocolBlock;onHelpRequested:function(origin,context){panel.helpRequested(origin,context)} }
     Flow { Layout.fillWidth:true;spacing:Theme.sm
-        UiButton { text:qsTr("Bu ne işe yarar?");helpContext:"model.validation";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Test kullanımını öğren";helpContext:"model.test-use";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:qsTr("Bu ne işe yarar?");helpContext:"model.validation";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Test kullanımını öğren";helpContext:"model.test-use";onClicked:panel.helpRequested(this,helpContext) }
         UiButton { objectName:"validationCancel";text:qsTr("İptal");visible:validation.busy;enabled:validation.cancelable;onClicked:validation.cancel() }
     }
     StateNotice { Layout.fillWidth:true;kind:validation.errorText?"error":validation.busy?"loading":"info";heading:"Değerlendirme durumu";detail:validation.errorText||validation.message }

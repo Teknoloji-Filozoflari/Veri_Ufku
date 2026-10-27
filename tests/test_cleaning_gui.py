@@ -33,7 +33,11 @@ def test_cleaning_qml_methods_copy_leakage_and_atomic_errors(tmp_path, monkeypat
         engine = app._veri_ufku_resources[0]
         data, ops = engine._dataset_resources, engine._operations_resources
         window.setProperty("selectedSection", 2)
+        window.setProperty("prepareTool", 0)
+        spin(app, lambda: window.property("hazirlaOpen"))
+        spin(app, lambda: window.findChild(QObject, "operationKind") is not None)
         window.findChild(QObject, "operationKind").setProperty("currentIndex", 3)
+        app.processEvents()
 
         def field(name, prop, value):
             obj = window.findChild(QObject, name)

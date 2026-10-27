@@ -47,7 +47,7 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth:true
             UiCombo {id:methodChoice;objectName:"survivalMethod";model:statistics.methods("survival");textRole:"label";valueRole:"id";accessibleLabel:"Sağkalım yöntem/backend";Layout.fillWidth:true;onActivated:panel.invalidate()}
-            UiButton {objectName:"survivalHelp";text:"Bu ne işe yarar?";helpContext:"survival";onClicked:panel.helpRequested(this,"statistics."+panel.method.split("_").join("-"))}
+            UiButton { visible: false;objectName:"survivalHelp";text:"Bu ne işe yarar?";helpContext:"survival";onClicked:panel.helpRequested(this,"statistics."+panel.method.split("_").join("-"))}
         }
         UiLabel {text:"Censored0 bilinen son takip: null/kayıp veri değildir. Event1 gerçekleşti; competing risks tüm cause kodları ayrı. HR event probability değildir;1−KM her cause için incidence değildir. Statik baseline covariate/tek unit satırı; tam veri sürümü.";wrapMode:Text.WordWrap;Layout.fillWidth:true}
         UiLabel {objectName:"survivalSupport";text:"Backend desteği: KM/log-rank/Cox right + left truncation; AFT log-normal yalnız right; CIF competing_right, entry yok. Interval/left censoring KAPALI. Time-dependent covariate SurvivalCountingProcess/v1 şema doğrulaması ayrı; fit/prediction KAPALI. IPCW Brier/time-AUC KAPALI. Delayed-entry/strata C-index ve delayed-entry survival prediction KAPALI.";wrapMode:Text.WordWrap;Layout.fillWidth:true;color:Theme.warning}

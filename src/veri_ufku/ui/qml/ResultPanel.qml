@@ -38,9 +38,9 @@ ColumnLayout {
             Layout.fillWidth: true; spacing: Theme.sm
             UiButton { visible: panel.expert; text: "Sekmeyi kaydet / kaldır"; onClicked: expertWorkspace.pin(panel.result.id) }
             UiButton { visible: panel.expert; text: "Karşılaştırmaya ekle / kaldır"; onClicked: expertWorkspace.compare(panel.result.id) }
-            UiButton { text: "Nasıl hesaplandı?"; onClicked: panel.helpRequested(this, panel.result.readonly ? "expert-workspace" : panel.result.capability) }
-            UiButton { text: "Nasıl yorumlarım?"; onClicked: panel.helpRequested(this, panel.result.readonly ? "expert-workspace" : panel.result.capability) }
-            UiButton { text: "Örnekle öğren"; onClicked: panel.helpRequested(this, "expert-workspace") }
+            UiButton { visible: false; text: "Nasıl hesaplandı?"; onClicked: panel.helpRequested(this, panel.result.readonly ? "expert-workspace" : panel.result.capability) }
+            UiButton { visible: false; text: "Nasıl yorumlarım?"; onClicked: panel.helpRequested(this, panel.result.readonly ? "expert-workspace" : panel.result.capability) }
+            UiButton { visible: false; text: "Örnekle öğren"; onClicked: panel.helpRequested(this, "expert-workspace") }
         }
         Repeater {
             model: panel.result.artifacts || []

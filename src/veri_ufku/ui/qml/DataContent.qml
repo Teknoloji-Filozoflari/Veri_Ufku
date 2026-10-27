@@ -42,6 +42,6 @@ Frame {
                 }
             }
         }
-        UiButton { text: "Veri içeriğini nasıl yorumlarım?"; tone: "mint"; Layout.fillWidth: true; multiline: true; onClicked: panel.helpRequested(this, "dataset.profile") }
+        UiButton { visible: false; text: "Veri içeriğini nasıl yorumlarım?"; tone: "mint"; Layout.fillWidth: true; multiline: true; onClicked: panel.helpRequested(this, "dataset.profile") }
     }
 }

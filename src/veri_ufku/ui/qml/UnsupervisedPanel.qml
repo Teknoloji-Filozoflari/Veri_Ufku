@@ -81,7 +81,7 @@ ColumnLayout {
     UiTextField { id:fpCost;objectName:"explorationFPCost";Accessible.name:"False positive maliyeti";visible:noveltyChoice.visible;text:"1";Layout.fillWidth:true;onTextChanged:unsupervised.invalidate() }
     UiTextField { id:fnCost;objectName:"explorationFNCost";Accessible.name:"False negative maliyeti";visible:noveltyChoice.visible;text:"1";Layout.fillWidth:true;onTextChanged:unsupervised.invalidate() }
     UiLabel { text:"LOF outlier negative_outlier_factor_ kullanır; novelty score_samples yalnız eğitimde olmayan kayıtlara uygulanır. Skorlar yöntemler arasında aynı ölçekte değildir; büyük değer daha sıra dışıdır. Novelty eğitim kayıtları skorlanmaz. Contamination eşik varsayımıdır; SVM nu gerçek anomali oranı değildir. Robust covariance tam rank ve elliptical dağılım gerektirir.";visible:noveltyChoice.visible;Layout.fillWidth:true;wrapMode:Text.Wrap }
-    UiButton { objectName:"explorationHelp";text:"Yoğunluk, soft membership, novelty ve stabiliteyi öğren";helpContext:"exploration";onClicked:panel.helpRequested(this,"exploration") }
+    UiButton { visible: false; objectName:"explorationHelp";text:"Yoğunluk, soft membership, novelty ve stabiliteyi öğren";helpContext:"exploration";onClicked:panel.helpRequested(this,"exploration") }
     UiButton { objectName:"explorationPreflight";text:"Hesap maliyetini önkontrol et";enabled:!unsupervised.busy;onClicked:unsupervised.preflight(JSON.stringify(panel.spec())) }
     UiLabel { objectName:"explorationCost";text:JSON.stringify(unsupervised.costPreview);Layout.fillWidth:true;wrapMode:Text.Wrap }
     UiLabel { text:"Ölçümleri açıkça seçin (en fazla 20). Bu başlangıç yolu sayısal ölçümler içindir; kimlik, nominal/ordinal kategori, tarih ve metin desteklenmez. Kategoriyi 1/2/3 diye kodlamak geçerli uzaklık oluşturmaz. One-hot da ağırlık/boyut etkisini değiştirir; karma kategori uzaklığı bu fazda sunulmaz. Eksik/NaN/inf seçili ölçümler reddedilir; sessiz doldurma veya kayıt dışlama yapılmaz.";Layout.fillWidth:true;wrapMode:Text.Wrap;color:Theme.secondary }
@@ -107,11 +107,11 @@ ColumnLayout {
     UiTextField { id:multiplier;objectName:"unsupervisedMultiplier";visible:panel.method==="iqr";text:"1.5";maximumLength:16;Layout.fillWidth:true;onTextChanged:unsupervised.invalidate();Accessible.name:"IQR çarpanı" }
     UiButton { objectName:"unsupervisedRun";text:panel.clustering?"Kümeleri hesapla":"Anomali adaylarını hesapla";primary:true;tone:"violet";Layout.fillWidth:true;multiline:true;enabled:!projects.busy&&!projects.readOnly&&panel.chosenFeatures.length>0;onClicked:unsupervised.create(JSON.stringify(panel.spec())) }
     Flow { Layout.fillWidth:true;spacing:Theme.sm
-        UiButton { text:"Küme nedir?";helpContext:"unsupervised.cluster";tone:"mint";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Uzaklık ve ölçek";helpContext:"unsupervised.distance";tone:"mint";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Gürültü noktası";helpContext:"unsupervised.noise";tone:"mint";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Anomali skoru";helpContext:"unsupervised.score";tone:"mint";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Etiketsiz değerlendirme";helpContext:"unsupervised.evaluation";tone:"mint";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Küme nedir?";helpContext:"unsupervised.cluster";tone:"mint";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Uzaklık ve ölçek";helpContext:"unsupervised.distance";tone:"mint";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Gürültü noktası";helpContext:"unsupervised.noise";tone:"mint";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Anomali skoru";helpContext:"unsupervised.score";tone:"mint";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Etiketsiz değerlendirme";helpContext:"unsupervised.evaluation";tone:"mint";onClicked:panel.helpRequested(this,helpContext) }
         UiButton { text:qsTr("İptal");visible:unsupervised.busy;onClicked:unsupervised.cancel() }
     }
     StateNotice { Layout.fillWidth:true;kind:unsupervised.errorText?"error":unsupervised.busy?"loading":"info";heading:"Etiketsiz analiz durumu";detail:unsupervised.errorText||unsupervised.message }

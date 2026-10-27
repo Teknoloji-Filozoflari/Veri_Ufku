@@ -13,7 +13,10 @@ from PySide6.QtCore import (
     Slot,
 )
 
+from veri_ufku.config import SUPPORTED_LOCALES
 from veri_ufku.ui.controller import tr
+
+_HISTORICAL_SCALES = {1.0, 1.25, 1.5, 2.0}
 
 
 class PresentationPreferences(QObject):
@@ -29,6 +32,7 @@ class PresentationPreferences(QObject):
         self._locale = locale
         self._error = ""
         self._writable = True
+        normalize_scale = False
         try:
             if self.path.exists():
                 if self.path.stat().st_size > 4096:
@@ -52,13 +56,15 @@ class PresentationPreferences(QObject):
                         raise ValueError("Invalid preferences")
                 if version == 4:
                     fields.update({"theme", "text_scale", "locale"})
-                    if data.get("theme") not in {"dark", "light"} or data.get(
-                        "locale"
-                    ) not in {"tr", "en"}:
+                    if (
+                        data.get("theme") not in {"dark", "light"}
+                        or data.get("locale") not in SUPPORTED_LOCALES
+                    ):
                         raise ValueError("Invalid display preference")
-                    if type(data.get("text_scale")) not in {int, float} or data[
-                        "text_scale"
-                    ] not in {1.0, 1.25, 1.5, 2.0}:
+                    if (
+                        type(data.get("text_scale")) not in {int, float}
+                        or data["text_scale"] not in _HISTORICAL_SCALES
+                    ):
                         raise ValueError("Invalid text size")
                 if set(data) != fields or data["view"] not in {"beginner", "advanced"}:
                     raise ValueError("Invalid preferences")
@@ -67,13 +73,19 @@ class PresentationPreferences(QObject):
                 self._view = data["view"]
                 if version == 4:
                     self._theme = data["theme"]
-                    self._text_scale = data["text_scale"]
+                    # Text size is no longer a user option. Historical values stay valid
+                    # on disk until the next save, and the running scale is always 1.
+                    self._text_scale = 1.0
                     self._locale = data["locale"]
+                    normalize_scale = data["text_scale"] != 1.0
         except (OSError, ValueError, TypeError):
             self._writable = False
             self._error = tr(
                 "Display preferences could not be read. The existing file was preserved."
             )
+        else:
+            if normalize_scale:
+                self._save(text_scale=1.0)
 
     @Property(str, notify=changed)
     def view(self):
@@ -143,10 +155,11 @@ class PresentationPreferences(QObject):
 
     @Slot(float)
     def setTextScale(self, value):
-        if value in {1.0, 1.25, 1.5, 2.0}:
-            self._save(text_scale=value)
+        # Larger sizes are ignored so a stored or called scale cannot grow the UI.
+        if value in _HISTORICAL_SCALES and self._text_scale != 1.0:
+            self._save(text_scale=1.0)
 
     @Slot(str)
     def setLocale(self, value):
-        if value in {"tr", "en"}:
+        if value in SUPPORTED_LOCALES:
             self._save(locale=value)

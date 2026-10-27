@@ -11,8 +11,14 @@ import polars as pl
 
 from veri_ufku.analytics.contracts import ViewSpec
 from veri_ufku.analytics.dataset import checked
+from veri_ufku.exports.environment_text import current_environment_text
 from veri_ufku.exports.files import publish
+from veri_ufku.exports.operation_python import operation_history_python
 from veri_ufku.exports.query import scoped
+from veri_ufku.exports.report_privacy import column_findings, privacy_note
+from veri_ufku.exports.report_statistics import finding_text, split_report_analyses
+from veri_ufku.exports.seed_text import seed_text
+from veri_ufku.exports.source_note import source_license_text
 from veri_ufku.importers.delimited import Control, hash_artifact
 from veri_ufku.storage.project_model import ProjectError
 
@@ -27,6 +33,8 @@ class ReportSpec:
     scope: str = "view"
     view: dict = field(default_factory=dict)
     table_rows: int = 100
+    include_personal: bool = False
+    license_note: str = ""
 
     def validate(self, columns):
         if self.format not in ("html", "pdf") or self.scope not in ("full", "view"):
@@ -42,6 +50,10 @@ class ReportSpec:
             )
         if type(self.table_rows) is not int or not 1 <= self.table_rows <= 200:
             raise ProjectError("Rapor tablo örneği 1–200 kayıt olmalı.")
+        if type(self.include_personal) is not bool:
+            raise ProjectError("Kişisel sütun kararı açık olmalı.")
+        if not isinstance(self.license_note, str) or len(self.license_note) > 500:
+            raise ProjectError("Lisans notu en fazla 500 karakter olmalı.")
         ViewSpec.from_dict(self.view).validate(columns)
 
 
@@ -68,6 +80,15 @@ def build(request, spec, control):
     frame = frame.with_columns(
         pl.col(n).cast(pl.String) for n in columns if schema[n].is_temporal()
     )
+    findings = column_findings(
+        columns, {name: frame.get_column(name).to_list() for name in columns}
+    )
+    privacy = privacy_note(findings, spec.include_personal)
+    if not spec.include_personal:
+        blocked = {item["name"] for item in findings}
+        columns = [name for name in columns if name not in blocked]
+        if columns:
+            frame = frame.select(columns)
     sections = []
 
     def section(title, content):
@@ -92,7 +113,9 @@ def build(request, spec, control):
     )
     section(
         "Kaynak ve köken (provenance)",
-        described(context.get("sources", []))
+        "<pre>"
+        + text(source_license_text(context.get("sources"), spec.license_note))
+        + "</pre>"
         + described(context.get("dataset_provenance", {})),
     )
     quality = context.get("quality", [])
@@ -133,10 +156,21 @@ def build(request, spec, control):
     operations = context.get("operations", [])
     section(
         "Temizleme ve işlem geçmişi",
-        "<p>Seçilen sürümün işlem zinciri aşağıdadır; geri alınan farklı dallar güncel veriye uygulanmış sayılmaz.</p>"
-        + described(operations)
-        if operations
-        else "<p>Bu veri sürümüne uygulanmış kayıtlı işlem yok.</p>",
+        "<p>Seçilen sürümün işlem zinciri salt okunur Python dökümüdür. Bu metin çalıştırılmaz. Parametre değerleri yazılmaz.</p><pre>"
+        + text(operation_history_python(operations))
+        + "</pre>",
+    )
+    section(
+        "Rastgelelik tohumu",
+        "<pre>"
+        + text(
+            seed_text(
+                context.get("project_seed"),
+                operations,
+                context.get("result_seeds") or [],
+            )
+        )
+        + "</pre>",
     )
     profiles = context.get("profiles", [])
     section(
@@ -169,31 +203,38 @@ def build(request, spec, control):
         if profiles
         else "<p>Kaydedilmiş profil özeti yok. Rapor sayısal özet uydurmaz.</p>",
     )
-    table = (
+    caption = (
         "<p>"
+        + text(privacy)
+        + "</p><p>"
         + text(
             f"İlk {frame.height}/{count} kayıt, ilk {len(columns)}/{len(request['columns'])} sütun (gizli sütunlar dahil); hücre metni ilk 500 karakter. Bu tablo açık görüntü örneğidir."
         )
-        + "</p><table><thead><tr>"
-        + "".join("<th>" + text(n) + "</th>" for n in columns)
-        + "</tr></thead><tbody>"
+        + "</p>"
     )
-    for row in frame.iter_rows():
-        table += (
-            "<tr>"
-            + "".join(
-                "<td>"
-                + text(
-                    "∅ (null)"
-                    if v is None
-                    else str(v)[:500] + ("…" if len(str(v)) > 500 else "")
+    if columns:
+        table = caption + "<table><thead><tr>"
+        table += "".join("<th>" + text(n) + "</th>" for n in columns)
+        table += "</tr></thead><tbody>"
+        for row in frame.iter_rows():
+            table += (
+                "<tr>"
+                + "".join(
+                    "<td>"
+                    + text(
+                        "∅ (null)"
+                        if v is None
+                        else str(v)[:500] + ("…" if len(str(v)) > 500 else "")
+                    )
+                    + "</td>"
+                    for v in row
                 )
-                + "</td>"
-                for v in row
+                + "</tr>"
             )
-            + "</tr>"
-        )
-    section("Veri tablosu", table + "</tbody></table>")
+        table += "</tbody></table>"
+    else:
+        table = caption + "<p>Gösterilecek kişisel olmayan sütun kalmadı.</p>"
+    section("Veri tablosu", table)
     logo = (ASSETS / "branding/icon-128.png").read_bytes()
     logo_uri = "data:image/png;base64," + base64.b64encode(logo).decode()
     images = {logo_uri: logo}
@@ -230,24 +271,33 @@ def build(request, spec, control):
         if charts
         else "<p>Grafik eklenmedi; rapor için grafik zorunlu değildir.</p>",
     )
-    section(
-        "İstatistiksel analizler",
-        "".join(
-            "<h3>"
-            + text(a["spec"]["question"])
-            + "</h3>"
-            + described({k: v for k, v in a.items() if k != "artifact_uris"})
-            for a in context.get("analyses", [])
+    findings, skipped = split_report_analyses(context.get("analyses", []))
+    blocks = [
+        "<h3>" + text(item["question"]) + "</h3><p>" + text(finding_text(item)) + "</p>"
+        for item in findings
+    ]
+    if not findings:
+        blocks.insert(
+            0, "<p>Kaydedilmiş istatistiksel analiz yok; sonuç uydurulmaz.</p>"
         )
-        or "<p>Kaydedilmiş istatistiksel analiz yok; sonuç uydurulmaz.</p>",
-    )
+    if skipped:
+        blocks.append(
+            "<p>"
+            + text(
+                f"Model kaydı {skipped} adet istatistik bölümüne yazılmadı. "
+                "Model metriği uydurulmaz."
+            )
+            + "</p>"
+        )
+    section("İstatistiksel analizler", "".join(blocks))
     limitations = "Bu sürüm deneysel veri inceleme/temizlik/grafik/istatistik/rapor aracıdır. Bu eski rapor şablonu model kartı içermez; model sonuçlarını bilimsel rapor oluşturucuda açıkça bağlayın. Korelasyon nedensellik değildir. Küçük p kesinlik veya pratik önem göstermez. Tablolar sınırlı görüntü örneğidir; grafik örnekleme/gruplama ve null politikaları kendi kayıtlarında görünür. Kalite/profil/analiz bulgusunun veri sürümü farklıysa güncel kanıt sayılmaz. Genel veri bağımlı temizleme gelecekte model doğrulamasında sızıntı incelemesi gerektirir. "
     section(
         "Yöntemler ve sınırlamalar",
         '<p class="warning">'
         + text(limitations)
-        + "</p>"
-        + described(context.get("environment", {})),
+        + "</p><pre>"
+        + text(current_environment_text())
+        + "</pre>",
     )
     font = base64.b64encode((ASSETS / "fonts/DejaVuSans.ttf").read_bytes()).decode()
     css = (

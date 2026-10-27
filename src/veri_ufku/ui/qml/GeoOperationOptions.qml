@@ -20,5 +20,5 @@ ColumnLayout {
  UiTextArea {id:params;objectName:"geoOperationParameters";Accessible.name:"Mekânsal işlem parametre JSON";Layout.fillWidth:true;implicitHeight:160;onTextChanged:operations.discardPreview()}
  UiLabel {text:"Preview kaynak değiştirmez; Uygula yeni sürüm üretir, undo eski geometriyi getirir. Repair tür/split değişebilir. Metre işlemleri uygun projected CRS ister; derece/Web Mercator reddi. Spatial block kolonunu model GROUP olarak seç; random split bağımlılığı çözmez, komşu blocklar hâlâ bağımlı olabilir.";Layout.fillWidth:true;wrapMode:Text.Wrap;color:Theme.warning}
  UiLabel {objectName:"geoOperationDiagnostics";text:JSON.stringify(operations.previewResult.diagnostics||{},null,2);textFormat:Text.PlainText;Layout.fillWidth:true;wrapMode:Text.WrapAnywhere}
- UiButton {text:"CRS, matching ve sızıntı yardımı";property string helpContext:"geo-leakage";Layout.fillWidth:true;onClicked:panel.helpRequested(this,helpContext)}
+ UiButton { visible: false;text:"CRS, matching ve sızıntı yardımı";property string helpContext:"geo-leakage";Layout.fillWidth:true;onClicked:panel.helpRequested(this,helpContext)}
 }

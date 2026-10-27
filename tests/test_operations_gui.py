@@ -17,10 +17,24 @@ def test_qml_apply_undo_redo_reopen_stale_history(tmp_path, monkeypatch):
         spin(app, lambda: not data.busy)
         data.saveProfile()
         window.setProperty("selectedSection", 2)
+        window.setProperty("prepareTool", 0)
+        spin(app, lambda: window.property("hazirlaOpen"))
+        spin(app, lambda: window.findChild(QObject, "operationKind") is not None)
+        chip = window.findChild(QObject, "prepareCatalogChip_1")
+        if chip is not None:
+            chip.clicked.emit()
+            app.processEvents()
+        kind = window.findChild(QObject, "operationKind")
+        kind.setProperty("currentIndex", 0)
+        app.processEvents()
+        assert kind.property("currentIndex") == 0
+        window.findChild(QObject, "operationColumn").setProperty("currentIndex", 0)
         window.findChild(QObject, "operationName").setProperty("text", "renamed")
+        app.processEvents()
         window.findChild(QObject, "operationPreview").clicked.emit()
         spin(app, lambda: not ops.busy)
-        assert not ops.errorText and ops.canApply
+        assert not ops.errorText and ops.canApply, ops.errorText
+        assert (ops.previewResult.get("spec") or {}).get("kind") == "rename"
         assert ops.before.rowCount() == ops.after.rowCount() == 200
         assert ops.previewResult["impact"]["population_n"] == 450
         assert len(projects.draft["datasets"]) == 1

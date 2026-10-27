@@ -1,5 +1,7 @@
 # Veri_Ufku — ortak tasarım sistemi v0.2
 
+2026-10-25 son kullanıcı kabuğu: yazı ölçeği sabit 1. Açık yüzey beyaz, ana eylem tek mavi (`Theme.action`). Kategori rengi yalnız modül rayı ikonunda. Koyu tema durur. Aşama şeridi ve yazı boyutu seçeneği varsayılan ekranda yoktur.
+
 Faz00 önerisi Faz02 QML kabuğunda, ardından Faz04–13 veri/işlem/grafik/rapor ekranlarında uygulanmıştır. Ortak UiLabel düz metin gösterir: kullanıcı başlığı, dosya adı ve hücre metni HTML/resim kaynağı olarak yorumlanmaz. [Brief](UI_DESIGN_BRIEF.md), [UX](UX.md), [referans kısıtları](UI_REFERENCES.md). Üç tasarım aynı sistemde [SVG prototip](prototypes/triptych.svg).
 
 ## Başlangıç yolculuğu — güncel düzen
@@ -12,17 +14,11 @@ ve compute budget sınırlarını değiştirmez. [Ekran ve kanıt](evidence/UI_J
 
 ## Ortak yapı ve tokenlar — 2026-10-17
 
-Tek kaynak `src/veri_ufku/ui/qml/Theme.qml`. Açık/koyu tema ve %100/125/150/200
-uygulama yazı boyutu mevcut Preferences ile atomik saklanır; OS DPI bağımsızdır.
-Aşağıdaki eski revizyon bölümleri tarihsel kullanıcı talepleri/kanıtlarıdır.
-Güncel UI/UX talimatı ve [teknik kanıt](evidence/UI_RENEWAL.md) bunların yerine geçer.
+Tek kaynak `src/veri_ufku/ui/qml/Theme.qml`. Açık/koyu tema Preferences ile saklanır. Çalışan yazı ölçeği 1’dir; dosyada kalan %125/%150/%200 uygulanmaz. OS DPI ayrıdır. Aşağıdaki eski revizyon bölümleri tarihsel kullanıcı talepleri/kanıtlarıdır.
 
-Üst şerit proje/kayıt durumu, yöntem araması, rehber ve görüntü ayarlarını taşır.
-Sol amaç navigasyonu212px; dar pencerede68px simge rayı, kullanıcı ayrıca
-daraltabilir. Aktif amaç metin/ikon/seçim çizgisiyle belirlenir. Merkez kayar;
-alt durum satırı proje/iş/RAM ve klavye ipuçları taşır. Yardım kapanınca odak geri
-döner. Sekiz bölüm korunur; bağımsız ağır formlar ilk ziyarette yüklenir ve
-sonraki gezinmelerde form değerlerini korur. Modül arama listesi sanallaştırılmıştır.
+Üst şerit proje/veri bağlamı, aç, kaydet, arama, tema ve dil taşır. Sol ray altı modül (Veri, Grafik, İncele, Hazırla, Model, Rapor); dar pencerede simge rayı. Ortada tablo, sağda seçilen aracın formu. Alt satır satır/sütun, sürüm, kayıt ve iş durumunu gösterir. Yardım kapanınca odak geri döner. Ağır formlar ilk ziyarette yüklenir. Öğren varsayılan rayda yoktur.
+
+Aşağıdaki renk tablosu 2026-10-17 yenilemesinin kaydıdır. Güncel açık yüzey, mavi ana eylem ve koyu tema değerleri `Theme.qml` içindedir.
 
 | Token | Koyu | Açık |
 |---|---|---|
@@ -78,6 +74,34 @@ ProjectPanel mevcut Frame/UiButton/Theme tokenlarını kullanır; Flow düğmele
 ## Faz05 uygulama bağı
 
 Faz05 ImportPanel Theme tokenları ve UiButton, CSV TableView/QAbstractTableModel kullanır. Dar alanda ayar formu tek sütundur, başlık/düğmeler sarılır; sütun türleri sanal ListView ve preview hücreleri yalnız görünür TableView delegate ile üretilir. Kesilmiş hücre değerleri hover tooltip ile tam gösterilir. Aynı yardım/focus scroll sözleşmesi korunur; gerçek render [Faz05](evidence/PHASE05.md), native/assistive teknoloji kabulü değildir.
+
+## UX-Veri (2026-10-27)
+
+Veri üst şeridi yalnız `Veri_Ufku` + bağlam + çerçeveli Geri·Kaydet (arama/ayar/kapat gizli). Boş kart seyrek kahraman: «Verinle çalışmaya başla» + Dosya seç · Verilerim · Örnek; proje adı / klasör+Gözat / kaynak; ipucu/kart-footer/ikinci kaynak Gözat gizli (objectName kalır). Önizleme/gelişmiş/İçe aktar yalnız kaynak seçilince. Drop yok. Yüklü tablo salt okunur; başlık ad + tür·rol (`ColumnHeaderMenu`); satır seçim şeridi yalnız seçimde. Alt durum: `N satır · M sütun · sürüm …` (sayfa aralığı / «Sayfa en fazla 200» Veri tablosunda zayıf/gizli). Sağ «Veri»+sağlık, 2×5 kısa çip (`cyanSurface` seçili), Geri + geniş İçe aktar. Dock kabuk başlığı/Kapat gizli. Theme dosyası yok.
+
+## UX-İncele tarama (2026-10-27)
+
+İncele (`moduleKey=incele`, `dataPane=quality`): merkezde `InspectScanStrip` + salt okunur `DatasetPanel` (başlıkta `N eksik` rozeti); sağda `InspectWorkspacePanel` — «İncele»+sağlık, tek sütun 5 çip, altta Taramayı çalıştır / İptal / Raporu proje taslağına ekle. Describe/değerler/profil Veri accordion’dan çıktı; blok 1–2’de. Kalite puanı yok; örneklem «tam veri» yazılmaz. Bulgu → `operations.inspectDraft` (bellek; sürüm yok) → Hazırla önseçim + köken. `QualityPanel` blok 4’te yeniden kullanılır. Özel tür: Loader. Theme dosyası yok.
+
+## UX-Görselleştir keşif (2026-10-27)
+
+Görselleştir (`moduleKey=gorsellestir`, `chartTool=0`): merkez `VisualizeWorkspace` — `Grafik|Çıktı|Tablo`; 6 amaç kartı; tuval + kapsam rozeti; Python popup varsayılan kapalı. Sağ `ChartPanel` — Değişkenler X/Y/Grup/Facet, ayarlar, debounce `create` (Grafiği oluştur yok). Çıktı: `chart_explain` + özet; Tablo: aynı `DatasetPanel`. İleri grafikler yalnız `advanced`. Ağ/metin ayrı panel; sahte çizim yok. Theme dosyası yok.
+
+## UX-Hazırla önizleme A (2026-10-27)
+
+Hazırla (`moduleKey=hazirla`, `prepareTool=0`): merkez `PrepareWorkspace` — etki rozetleri, salt okunur sürüm zinciri, önce/sonra `OperationTable`, alt İptal·Önizle·Uygula. Sağ `PrepareCatalogPanel` — Gelen taslaklar (`inspectDraft`) + tek sütun 10 blok (sütun temizliği…uygulama); parametre gövdesi mevcut `CleaningOptions`/`TransformationOptions`/rename-drop-filter. Mod 1 varsayılan; Mod 2 yalnız LEARNED için UI uyarısı (train-only motor yok; `prepare_scope_mode=mod2` apply notu). Yeni cleaning API yok. Theme dosyası yok.
+
+## UX-İstatistik soru odaklı A (2026-10-27)
+
+İstatistik (`moduleKey=istatistik`, `examineTool=0`): merkez `StatisticsWorkspace` — öneri kartı (`statistics.advice`), sonuç özeti (n/p/etki/CI), grafik alanı (mevcut charts), varsayım onayı, alt Sıfırla·Önizle·Uygula ve kaydet. Sağ `StatisticsCatalogPanel` — 8 çip; `StatisticsPanel` catalogMode + debounce önkontrol; assumptions→tam create. Blok 1/8 dürüst «desteklenmiyor»; 6→Modeller, 7→Yeniden örnekleme köprüsü. Yeni motor/Bootstrap yok. Theme dosyası yok.
+
+## UX-Model yerleşim A (2026-10-27)
+
+Model (`moduleKey=model`, `modelInstalled`, dataset var): merkez `ModelWorkspace` — Özet|Katsayılar|Artıklar|Tanılama; rozetler (katsayı/SE/t|z/p/VIF/AIC·BIC); eğitim/test n şeridi (held-out skor uydurulmaz); diagnostic Image. Sağ `ModelCatalogPanel` — 10 çip (OLS…AIC/BIC), Y/X/param, Sıfırla·Eğit ve kaydet → `statistics` path `models` + `analysis_store`. ML `modelPath` Layout A’da gizli. İstatistik `StatisticalModelsPanel` korunur. Theme dosyası yok.
+
+## UX-Raporla yerleşim A (2026-10-27)
+
+Raporla (`moduleKey=raporla`, `reportTool=0`, proje açık): merkez `ReportWorkspace` — Önizleme|HTML|PDF; freshness (STALE); LIMITATIONS bandı. Sağ `ReportCatalogPanel` — 8 çip (özet…Ekler), başlık/protokol, oluştur+inceleme, HTML/PDF dışa aktar → `reportBuilder.composeLayout` / `run` / `exportReport`. Legacy `ReportBuilderPanel` Layout A’da gizli (Loader kalır). Yeni motor/DOCX/LLM yok. Theme dosyası yok.
 
 Faz06 StructuredOptions mevcut ColumnLayout/Theme tokenlarını ve kapsama bağlı alan görünürlüğünü kullanır. Yeni formatlar aynı Veri ekranının dosya/önizleme/kaydet akışında; native ayarlarda Türkçe davranış etiketleri, kendi kaynak ve sınırlı örnek açıklamaları vardır. Başsız dar/geniş render kanıtı [Faz06](evidence/PHASE06.md#e06-gui).
 

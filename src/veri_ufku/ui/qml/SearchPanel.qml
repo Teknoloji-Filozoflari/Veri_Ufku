@@ -71,6 +71,6 @@ ColumnLayout {
         UiLabel { text:"Bu ayrı eylem mevcut model pipeline'ını kullanır; CV skoru tuning sonrası keşifseldir. Yeni arama final test kullanım geçmişini sıfırlamaz. Final test yalnız aşağıdaki mevcut onaylı defter yolundan açılır; eski model korunur.";Layout.fillWidth:true;wrapMode:Text.Wrap }
         UiTextField { id:exportPath;objectName:"searchExportPath";Accessible.name:"Trial history safe JSON export yeni mutlak yol";placeholderText:"/tam/yol/search-history.json";Layout.fillWidth:true }
         UiButton { objectName:"searchExport";text:"Trial history safe JSON export — mevcut dosya değişmez";multiline:true;Layout.fillWidth:true;enabled:!modelSearch.busy&&!!panel.active.status;onClicked:modelSearch.exportHistory(exportPath.text) }
-        UiButton { objectName:"searchHelp";text:"Hyperparameter, nested CV, trial ve budget öğren";helpContext:"model.search";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; objectName:"searchHelp";text:"Hyperparameter, nested CV, trial ve budget öğren";helpContext:"model.search";onClicked:panel.helpRequested(this,helpContext) }
     }
 }

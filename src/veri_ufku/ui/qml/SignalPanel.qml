@@ -53,7 +53,7 @@ ColumnLayout {
         UiTextField {id:validation;objectName:"signalValidation";text:"[]";Accessible.name:"Validation recording typed token list JSON";Layout.fillWidth:true;onTextEdited:timeSeries.invalidate()}
         UiTextField {id:seed;objectName:"signalSeed";text:"54";Accessible.name:"Sinyal classifier seed";Layout.fillWidth:true;onTextEdited:timeSeries.invalidate()}
         UiLabel {text:"Split tüm kayıtlar üzerinde window üretiminden önce: seçilen her kişi/cihaz/oturum kimliği iki tarafta ayrık. Aynı kaydın overlap pencereleri asla iki tarafa dağılmaz. Train-only scaler/LogisticRegression; window n bağımsız kişi n değildir. Validation final test diye sunulmaz; tuning ve yeni dosyada fitted prediction kapalı.";wrapMode:Text.Wrap;Layout.fillWidth:true}
-        UiButton {objectName:"signalHelp";property string helpContext:"signal.sampling";text:"Sample rate, spektrum ve filtre yardımı";onClicked:panel.helpRequested(this,"signal.sampling")}
+        UiButton { visible: false;objectName:"signalHelp";property string helpContext:"signal.sampling";text:"Sample rate, spektrum ve filtre yardımı";onClicked:panel.helpRequested(this,"signal.sampling")}
         UiButton {objectName:"signalRun";text:"Sinyali doğrula ve hesapla";primary:true;Layout.fillWidth:true;enabled:!timeSeries.busy&&!projects.busy&&!projects.readOnly;onClicked:{try{timeSeries.create(JSON.stringify(panel.parent.spec()))}catch(e){error.text="JSON ve sayısal alanları kontrol edin"}}}
         UiLabel {id:error;text:"";color:Theme.warning;Layout.fillWidth:true;wrapMode:Text.Wrap}
     }

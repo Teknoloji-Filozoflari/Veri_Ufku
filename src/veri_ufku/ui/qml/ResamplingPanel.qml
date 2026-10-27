@@ -35,8 +35,8 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth:true
             UiCombo {id:methodChoice;objectName:"resamplingMethod";Layout.fillWidth:true;model:statistics.methods("resampling");textRole:"label";valueRole:"id";accessibleLabel:"Faz41 yöntem";onActivated:panel.invalidate()}
-            UiButton {objectName:"resamplingHelp";text:"Yöntem yardımı";helpContext:panel.methodHelp;onClicked:panel.helpRequested(this,helpContext)}
-            UiButton {text:"Resampling nedir?";helpContext:"resampling";onClicked:panel.helpRequested(this,helpContext)}
+            UiButton { visible: false;objectName:"resamplingHelp";text:"Yöntem yardımı";helpContext:panel.methodHelp;onClicked:panel.helpRequested(this,helpContext)}
+            UiButton { visible: false;text:"Resampling nedir?";helpContext:"resampling";onClicked:panel.helpRequested(this,helpContext)}
         }
         UiCombo {id:x;objectName:"resamplingX";Layout.fillWidth:true;model:statistics.columns;textRole:"name";valueRole:"id";accessibleLabel:panel.family?"Ham p-değeri sütunu":"Ölçüm / paired önce sütunu";onActivated:panel.invalidate()}
         GridLayout {

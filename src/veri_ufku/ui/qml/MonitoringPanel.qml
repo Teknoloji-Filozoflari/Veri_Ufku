@@ -59,7 +59,7 @@ ColumnLayout {
             Layout.fillWidth: true; spacing: Theme.sm
             UiButton { objectName: "monitoringRun"; text: "Batch izlemeyi açıkça çalıştır ve kaydet"; helpContext: "model.monitor.batch"; enabled: !monitoring.busy; onClicked: monitoring.run(recipe.text) }
             UiButton { objectName: "monitoringCancel"; text: "İptal"; enabled: monitoring.busy; onClicked: monitoring.cancel() }
-            UiButton { text: "Bu ne işe yarar?"; helpContext: "model.monitor.batch"; onClicked: helpRequested(this, "model.monitor.batch") }
+            UiButton { visible: false; text: "Bu ne işe yarar?"; helpContext: "model.monitor.batch"; onClicked: helpRequested(this, "model.monitor.batch") }
         }
         UiCombo { id: champion; objectName: "monitoringChampion"; accessibleLabel: "Yerel champion model kaydı"; model: monitoring.models; textRole: "label"; valueRole: "id"; Layout.fillWidth: true }
         UiLabel { text: "Model kayıt kimliği: " + (champion.currentValue || "") + " · Yeni eğitim mevcut model formunda kullanıcı başlatmalı. Seçmek dış deploy yapmaz; shadow sonuçları modeli otomatik değiştirmez."; Layout.fillWidth: true; wrapMode: Text.WordWrap }

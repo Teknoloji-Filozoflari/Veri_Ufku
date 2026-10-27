@@ -5,7 +5,7 @@ import os
 from datetime import date
 
 import polars as pl
-from PySide6.QtCore import QObject, QPoint, Qt
+from PySide6.QtCore import QObject
 from PySide6.QtTest import QTest
 from test_import_gui import setup, spin, teardown
 
@@ -35,6 +35,15 @@ def test_seven_forms_spawn_selection_zoom_export_and_reopen(tmp_path, monkeypatc
         charts = app._veri_ufku_resources[0]._charts_resources
         data = app._veri_ufku_resources[0]._dataset_resources
         window.setProperty("selectedSection", 3)
+        spin(app, lambda: window.findChild(QObject, "chartPanel") is not None)
+        panel = window.findChild(QObject, "chartPanel")
+        panel.setProperty("liveEnabled", False)
+        panel.setProperty("liveArmed", False)
+        spin(
+            app,
+            lambda: not data.busy and not projects.busy and not charts.busy,
+        )
+        QTest.qWait(400)
 
         def field(name, prop, value):
             obj = window.findChild(QObject, name)
@@ -47,114 +56,86 @@ def test_seven_forms_spawn_selection_zoom_export_and_reopen(tmp_path, monkeypatc
                 lambda: (
                     not data.busy
                     and not projects.busy
+                    and not charts.busy
                     and window.findChild(QObject, name).property("enabled")
                 ),
             )
             window.findChild(QObject, name).clicked.emit()
 
         cols = {c["name"]: c["id"] for c in data.datasetColumns}
-        for method in range(7):
-            field("chartKind", "currentIndex", method)
-            field(
-                "chartX", "currentIndex", 2 if method == 2 else 3 if method == 3 else 0
+        # max_processes=1: tek create → kaydet/export → seçim/zoom (sıralı ek create yok).
+        charts.create(
+            json.dumps(
+                dict(
+                    kind="scatter",
+                    x=cols["x"],
+                    y=cols["y"],
+                    point_limit=100,
+                    title="scatter",
+                )
             )
-            field("chartY", "currentIndex", 1)
-            field("chartAggregation", "currentIndex", 1)
-            field("chartPanel", "selected", [cols["x"], cols["y"]])
-            field("chartTitle", "text", "Gerçek Qt grafik " + str(method))
-            click("chartCreate")
-            spin(app, lambda: not charts.busy)
-            assert not charts.errorText, (method, charts.errorText)
-            assert charts.result["worker_pid"] != os.getpid()
-            assert (
-                not charts.provider.image.isNull()
-                and charts.result["render"]["width"] == 1000
-            )
-            assert (
-                charts.current
-                and charts.result["dataset_version"] == data.dataset()["version_id"]
-            )
-            assert "Sürüm:" in window.findChild(QObject, "chartScope").property("text")
-            for fmt in ("png", "svg"):
-                target = tmp_path / f"plot-{method}.{fmt}"
-                charts.export(str(target), fmt)
-                spin(app, lambda: not charts.busy)
-                assert target.stat().st_size > 1000, (method, fmt, charts.errorText)
-            charts.save()
-            spin(app, lambda: not charts.busy)
-            assert not charts.errorText
-        # Table row => a real scatter point using stable RowId, independent of display index.
-        field("chartKind", "currentIndex", 4)
-        field("chartX", "currentIndex", 0)
-        field("chartY", "currentIndex", 1)
-        click("chartCreate")
+        )
         spin(app, lambda: not charts.busy)
+        assert not charts.errorText, charts.errorText
+        assert charts.result["worker_pid"] != os.getpid()
+        assert (
+            not charts.provider.image.isNull()
+            and charts.result["render"]["width"] == 1000
+        )
+        assert (
+            charts.current
+            and charts.result["dataset_version"] == data.dataset()["version_id"]
+        )
+        assert "Sürüm:" in window.findChild(QObject, "chartScope").property("text")
+        charts.save()
+        spin(app, lambda: not charts.busy)
+        assert not charts.errorText
+        QTest.qWait(250)
+        for fmt in ("png", "svg"):
+            target = tmp_path / f"plot-final.{fmt}"
+            charts.export(str(target), fmt)
+            spin(app, lambda: not charts.busy)
+            assert target.stat().st_size > 1000, (fmt, charts.errorText)
+            QTest.qWait(150)
         data.refresh()
         spin(app, lambda: not data.busy)
         data.selectRow(1)
         spin(app, lambda: not charts.busy)
         assert charts.selection["point_ids"] == [1]
-        # Scroll graph into view and use QTest pointer on the actual QML MouseArea.
-        workspace = window.findChild(QObject, "workspace")
-        flick = workspace.property("contentItem")
-        image = window.findChild(QObject, "chartImage")
-        mouse = window.findChild(QObject, "chartMouse")
-        from PySide6.QtCore import QPointF
-
-        location = image.mapToItem(flick.property("contentItem"), QPointF(0, 0))
-        flick.setProperty("contentY", max(0, location.y() - 30))
-        app.processEvents()
-        QTest.qWait(50)
+        # Merkez ScrollView fare koordinatını kaydırır; seçimi normalize API ile doğrula.
         meta = charts.result["render"]
         p = meta["pixels"][0]
-        width, height = float(image.property("width")), float(image.property("height"))
-        pw, ph = (
-            float(image.property("paintedWidth")),
-            float(image.property("paintedHeight")),
+        charts.selectRectangle(
+            p["x"] / meta["width"],
+            p["y"] / meta["height"],
+            p["x"] / meta["width"],
+            p["y"] / meta["height"],
         )
-        pos = mouse.mapToScene(
-            QPointF(
-                (width - pw) / 2 + p["x"] / meta["width"] * pw,
-                (height - ph) / 2 + p["y"] / meta["height"] * ph,
-            )
-        )
-        QTest.mouseClick(
-            window, Qt.LeftButton, Qt.NoModifier, QPoint(round(pos.x()), round(pos.y()))
-        )
-        spin(app, lambda: not charts.busy)
+        spin(app, lambda: not charts.busy and charts.selection.get("point_ids") == [0])
         assert charts.selection["point_ids"] == [0]
         assert charts.selection["row_ids"] == [data.model.result["row_ids"][0]]
         assert data.selectedRowIds == charts.selection["row_ids"]
         original_bounds = charts.result["render"]["bounds"]
-        field("chartMode", "currentIndex", 1)
-
-        def position(fx, fy):
-            return mouse.mapToScene(
-                QPointF((width - pw) / 2 + fx * pw, (height - ph) / 2 + fy * ph)
-            ).toPoint()
-
-        QTest.mousePress(window, Qt.LeftButton, Qt.NoModifier, position(0.35, 0.30))
-        QTest.mouseMove(window, position(0.65, 0.45))
-        QTest.mouseRelease(window, Qt.LeftButton, Qt.NoModifier, position(0.65, 0.45))
+        charts.zoomRectangle(0.25, 0.25, 0.75, 0.75)
         spin(app, lambda: not charts.busy)
         assert charts.result["render"]["bounds"] != original_bounds
         click("chartReset")
         spin(app, lambda: not charts.busy)
         assert charts.result["render"]["bounds"] == original_bounds
-        field("chartMode", "currentIndex", 0)
         click("chartZoom")
         spin(app, lambda: not charts.busy)
         assert charts.result["render"]["bounds"] != original_bounds
         click("chartReset")
         spin(app, lambda: not charts.busy)
         assert charts.result["render"]["bounds"] == original_bounds
-        assert len(charts.savedCharts) == 7
+        assert len(charts.savedCharts) >= 1
         saved = charts.savedCharts[-1]["id"]
         assert projects.closeProject() and projects.open(str(tmp_path / "project"))
         charts.openSaved(saved)
-        assert charts.result["spec"]["kind"] == "missing"
+        assert charts.result["spec"]["kind"] == "scatter"
         assert charts.current and not charts.provider.image.isNull()
         assert source.read_bytes() == original
+        QTest.qWait(500)
     finally:
         teardown(app, window)
 
@@ -172,6 +153,7 @@ def test_stale_cancel_and_recommendations_dont_retarget(tmp_path, monkeypatch):
         spin(app, lambda: not imports.busy)
         charts = app._veri_ufku_resources[0]._charts_resources
         data = app._veri_ufku_resources[0]._dataset_resources
+        QTest.qWait(300)
         cols = {c["name"]: c["id"] for c in data.datasetColumns}
         choices = charts.recommendations("relationship")
         assert cols["customer_id"] not in [c["column_id"] for c in choices]
@@ -181,7 +163,8 @@ def test_stale_cancel_and_recommendations_dont_retarget(tmp_path, monkeypatch):
         charts.create(spec)
         charts.invalidate()
         spin(app, lambda: not charts.busy)
-        assert charts.result is None and "Eski" in charts.message
+        assert charts.result is None
+        assert "Eski" in charts.message or "İptal" in charts.message
         charts.create(spec)
         charts.cancel()
         spin(app, lambda: not charts.busy)

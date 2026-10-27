@@ -14,6 +14,10 @@ def test_quality_qml_scan_save_reopen(tmp_path, monkeypatch):
     try:
         window.setProperty("selectedSection", 1)
         window.findChild(QObject, "datasetTabs").setProperty("currentIndex", 2)
+        spin(app, lambda: window.property("inceleOpen"))
+        panel = window.findChild(QObject, "inspectWorkspacePanel")
+        panel.setProperty("selectedBlock", 4)
+        app.processEvents()
         window.findChild(QObject, "qualityRuleColumn").setProperty("currentIndex", 1)
         window.findChild(QObject, "qualityRuleKind").setProperty("currentIndex", 2)
         window.findChild(QObject, "qualityRuleValue").setProperty("text", "0")

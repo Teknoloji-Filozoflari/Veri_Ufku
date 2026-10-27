@@ -496,7 +496,7 @@
             <source>Bu ne işe yarar?</source>
             <translation>What is this for?</translation>
         </message>
-    </context>
+    <message><source>Veri kalitesi merkezi</source><translation>Data quality center</translation></message><message><source>Tarama salt okunurdur. Evrensel kalite puanı üretilmez. Adaylar hata veya silme kararı değildir. Eksiklik nedeni veriden tek başına belirlenemez.</source><translation>The scan is read only. It does not produce a universal quality score. Candidates are not errors or delete decisions. The data alone cannot explain why a value is missing.</translation></message></context>
     <context>
         <name>OperationsPanel</name>
         <message>
@@ -552,7 +552,7 @@
             <source>Seçim: </source>
             <translation>Selection: </translation>
         </message>
-    </context>
+    <message><source>İstatistik özeti ve grafik</source><translation>Summary and chart</translation></message></context>
     <context>
         <name>GuidePanel</name>
         <message>
@@ -614,7 +614,7 @@
             <source>Bu ne işe yarar?</source>
             <translation>What is this for?</translation>
         </message>
-    </context>
+    <message><source>Verini ve bulgularını kaydet</source><translation>Save your data and findings</translation></message></context>
     <context>
         <name>StatisticsPanel</name>
         <message>
@@ -629,7 +629,7 @@
             <source>Bu ne işe yarar?</source>
             <translation>What is this for?</translation>
         </message>
-    </context>
+    <message><source>İstatistiksel analiz — sorundan sonuca</source><translation>Statistical analysis, from question to result</translation></message><message><source>p-değeri hipotezin doğru olma olasılığı değildir. Küçük p kesinlik veya pratik önem göstermez; gözlemsel ilişki nedensellik değildir.</source><translation>A p-value is not the probability that the hypothesis is true. A small p does not show certainty or practical importance; an observed association is not causation.</translation></message></context>
     <context>
         <name>PreparationPanel</name>
         <message>
@@ -644,7 +644,7 @@
             <source>Bu ne işe yarar?</source>
             <translation>What is this for?</translation>
         </message>
-    </context>
+    <message><source>Modelleme için veri hazırlığı</source><translation>Prepare data for modeling</translation></message><message><source>Bu ekran genel temizlikten ayrı bir hazırlama planı üretir. Tüm veri üzerinde fit, eğitim veya değerlendirme yapılmaz. Rapor sızıntısızlık garantisi vermez. Aşağıdaki yöntem önerileri adaydır; plan kaydı model fit etmez.</source><translation>This screen builds a preparation plan separate from general cleaning. It does not fit, train, or evaluate on the full data. The report is not a leakage guarantee. Method suggestions below are candidates; saving the plan does not fit a model.</translation></message></context>
     <context>
         <name>FolderPicker</name>
         <message>
@@ -794,8 +794,8 @@
             <translation>Choose data file</translation>
         </message>
         <message>
-            <source>Temel arayüz İngilizceye çevrilmiştir; ayrıntılı yardım ve bazı analiz metinleri Türkçedir. Dil ve görünüm değişikliği dosyanın sayı/tarih okuma ayarlarını değiştirmez.</source>
-            <translation>The core interface is translated into English; detailed help and some analysis text remain in Turkish. Language and display changes do not change number/date parsing settings for your file.</translation>
+            <source>Menü, tablo, içe aktarma, kalite, grafik, hazırlık, istatistik, rapor ve proje metinleri seçilen dile çevrilir. Uzman analiz formları ve öğrenme yazıları Türkçe kalır. Dil, dosyanın sayı ve tarih okuma ayarlarını değiştirmez.</source>
+            <translation>Menu, table, import, quality, chart, preparation, statistics, report and project text follow the selected language. Specialist analysis forms and learning text stay in Turkish. Language does not change how numbers and dates in your file are read.</translation>
         </message>
         <message>
             <source>Projenizi açın veya yeni bir çalışma başlatın.</source>
@@ -845,7 +845,7 @@
             <source>ÇALIŞMA ALANI</source>
             <translation>WORKSPACE</translation>
         </message>
-    </context>
+    <message><source>ARAÇLAR</source><translation>TOOLS</translation></message><message><source>Veri</source><translation>Data</translation></message><message><source>Grafik</source><translation>Chart</translation></message><message><source>İncele</source><translation>Explore</translation></message><message><source>Hazırla</source><translation>Prepare</translation></message><message><source>Model</source><translation>Model</translation></message><message><source>Rapor</source><translation>Report</translation></message><message><source>Aç</source><translation>Open</translation></message><message><source>Dosya aç</source><translation>Open a file</translation></message><message><source>Örnek veri</source><translation>Sample data</translation></message><message><source>Verinle çalışmaya başla</source><translation>Start with your data</translation></message><message><source>Dosya aç, yeni bir proje kur veya paketteki örnek veriyle başla.</source><translation>Open a file, create a project, or start from a bundled sample.</translation></message><message><source>Veri aracı</source><translation>Data tool</translation></message><message><source>Tablo</source><translation>Table</translation></message><message><source>İçe aktar</source><translation>Import</translation></message><message><source>Kalite</source><translation>Quality</translation></message><message><source>Grafik aracı</source><translation>Chart tool</translation></message><message><source>Pano</source><translation>Dashboard</translation></message><message><source>İnceleme aracı</source><translation>Explore tool</translation></message><message><source>İstatistik</source><translation>Statistics</translation></message><message><source>Boyut</source><translation>Dimensions</translation></message><message><source>Sağkalım</source><translation>Survival</translation></message><message><source>Nedensel</source><translation>Causal</translation></message><message><source>Bayes</source><translation>Bayes</translation></message><message><source>Deney</source><translation>Experiment</translation></message><message><source>Yeniden örnekleme</source><translation>Resampling</translation></message><message><source>Modeller</source><translation>Models</translation></message><message><source>Hazırlık aracı</source><translation>Prepare tool</translation></message><message><source>İşlemler</source><translation>Operations</translation></message><message><source>İş akışı</source><translation>Workflow</translation></message><message><source>Tarif</source><translation>Recipe</translation></message><message><source>Rapor aracı</source><translation>Report tool</translation></message><message><source>Yeniden üretilebilirlik</source><translation>Reproducibility</translation></message><message><source>Kod</source><translation>Code</translation></message><message><source>Ortam</source><translation>Environment</translation></message><message><source>Eklentiler</source><translation>Plugins</translation></message><message><source>Paylaşım</source><translation>Sharing</translation></message></context>
     <context>
         <name>UnsupervisedPanel</name>
         <message>
@@ -936,4 +936,4 @@
             <translation>Apply report title</translation>
         </message>
     </context>
-</TS>
+<context><name>DataLibraryPanel</name><message><source>Örnek proje klasörü seç</source><translation>Choose a folder for the sample project</translation></message><message><source>Verilerim’e dosya ekle</source><translation>Add a file to My data</translation></message><message><source>Örnek veri (çevrimdışı)</source><translation>Sample data (offline)</translation></message><message><source>Paketle gelen küçük örnekler. İnternet kullanılmaz; yeni proje olarak açılır.</source><translation>Small samples shipped with the app. No internet is used; each opens as a new project.</translation></message><message><source>Lisans</source><translation>License</translation></message><message><source>Sentetik</source><translation>Synthetic</translation></message><message><source>Gerçek</source><translation>Real</translation></message><message><source>Sütunlar</source><translation>Columns</translation></message><message><source>Yeni proje olarak aç</source><translation>Open as a new project</translation></message><message><source>Verilerim</source><translation>My data</translation></message><message><source>Yerel kütüphane. Disk: </source><translation>Local library. Disk: </translation></message><message><source>. Kayıt silinince mevcut projeler bozulmaz; proje kendi veri sürümünü tutar.</source><translation>. Deleting an entry does not change open projects; a project keeps its own data version.</translation></message><message><source>Kayıt adı</source><translation>Entry name</translation></message><message><source>Açıklama</source><translation>Description</translation></message><message><source>Etiketler (virgülle)</source><translation>Tags (comma separated)</translation></message><message><source>Verilerim kayıt adı</source><translation>My data entry name</translation></message><message><source>Verilerim açıklama</source><translation>My data description</translation></message><message><source>Verilerim etiketleri</source><translation>My data tags</translation></message><message><source>Dosyadan Verilerim’e ekle</source><translation>Add a file to My data</translation></message><message><source>Önizlenen dosyayı kaydet</source><translation>Save the previewed file</translation></message><message><source>Bu projeye ekle</source><translation>Add to this project</translation></message><message><source>Sil…</source><translation>Delete…</translation></message><message><source>Silmeyi onayla? Yalnız Verilerim kopyası gider; açık projeler aynı kalır.</source><translation>Confirm delete? Only the My data copy is removed; open projects stay as they are.</translation></message><message><source>Evet, sil</source><translation>Yes, delete</translation></message></context></TS>

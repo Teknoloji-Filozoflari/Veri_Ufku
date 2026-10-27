@@ -8,6 +8,7 @@ ColumnLayout {
     signal helpRequested(var origin, string context)
     property var kinds: ["fill", "missing_rows", "missing_columns", "dedup", "trim", "map_categories", "convert", "ordered_fill", "outlier"]
     property string kind: kinds[method.currentIndex]
+    readonly property int fillMethodIndex: fillMethod.currentIndex
     property var selected: []
     property var groups: []
     property var mapping: []
@@ -25,6 +26,47 @@ ColumnLayout {
     property string helpContext: kind === "fill" ? ["clean.fill.constant", "clean.fill.mean", "clean.fill.median", "clean.fill.mode"][fillMethod.currentIndex] : kind === "ordered_fill" ? ["clean.ordered-fill.forward", "clean.ordered-fill.backward"][direction.currentIndex] : ({fill: "clean.fill", missing_rows: "clean.missing-rows", missing_columns: "clean.missing-columns", dedup: "clean.dedup", trim: "clean.trim", map_categories: "clean.map-categories", convert: "clean.convert", ordered_fill: "clean.ordered-fill", outlier: "clean.outlier"})[kind]
     spacing: Theme.md
     function invalidate() { operations.discardPreview() }
+    function setMethodKind(name) {
+        let idx = kinds.indexOf(name)
+        if (idx < 0)
+            return
+        method.currentIndex = idx
+        root.selected = []
+        root.groups = []
+        allColumns.checked = false
+        multi.checked = false
+        root.invalidate()
+    }
+    function setFillConstant() {
+        setMethodKind("fill")
+        fillMethod.currentIndex = 0
+        root.invalidate()
+    }
+    function applyInspectDraft(draft) {
+        if (!draft || !draft.kind)
+            return
+        let idx = kinds.indexOf(draft.kind)
+        if (idx < 0)
+            idx = 0
+        method.currentIndex = idx
+        let ids = draft.column_ids || []
+        if (ids.length) {
+            multi.checked = false
+            allColumns.checked = false
+            let cols = dataView.datasetColumns || []
+            for (let i = 0; i < cols.length; i++)
+                if (cols[i].id === ids[0]) {
+                    column.currentIndex = i
+                    break
+                }
+        }
+        if (draft.kind === "fill") {
+            let methods = ["constant", "mean", "median", "mode"]
+            let mi = methods.indexOf(draft.method || "median")
+            fillMethod.currentIndex = mi >= 0 ? mi : 2
+        }
+        root.invalidate()
+    }
     function preview() {
         let ids = (root.kind === "dedup" && allColumns.checked) ? dataView.datasetColumns.map(c => c.id) : (root.kind !== "outlier" && multi.checked) ? selected : [column.currentValue || ""]
         let missing = missingMode.currentIndex === 0 ? "null" : "null_nan"
@@ -45,6 +87,8 @@ ColumnLayout {
         } else if (kind === "outlier") {
             p = {action: outlierAction.currentIndex === 0 ? "mark" : "filter", multiplier: multiplier.text, flag_name: flagName.text, flag_column_id: operations.newColumnId()}
         }
+        if (operations.hasInspectDraft && operations.inspectDraft.origin)
+            p.inspect_origin = operations.inspectDraft.origin
         operations.previewCleaning(kind, JSON.stringify(ids), JSON.stringify(p), destination.currentIndex === 0 ? "chain" : "copy")
     }
     UiCombo { accessibleLabel: "Temizlik yöntemi"; id: method; objectName: "cleaningMethod"; Layout.fillWidth: true; model: ["Eksik değer doldur", "Eksik satır kaldır", "Eksik sütun kaldır", "Tekrar kaldır", "Metin kırp", "Kategori eşle", "Tür / tarih dönüştür", "Grup içinde ileri / geri doldur", "Aykırı adayı işaretle / filtrele"]; enabled: !operations.busy; onActivated: { root.selected = []; root.groups = []; allColumns.checked = false; multi.checked = false; root.invalidate() } }
@@ -120,5 +164,5 @@ ColumnLayout {
         UiTextField { id: multiplier; text: "1.5"; Accessible.name: "IQR çarpanı"; Layout.fillWidth: true; onTextEdited: root.invalidate() }
         UiTextField { id: flagName; text: "Aykırı_adayı"; Accessible.name: "Aday sütunu adı"; visible: outlierAction.currentIndex === 0; Layout.fillWidth: true; onTextEdited: root.invalidate() }
     }
-    UiButton { tone: "mint"; text: "Yöntem ne işe yarar?"; onClicked: root.helpRequested(this, root.helpContext) }
+    UiButton { visible: false; tone: "mint"; text: "Yöntem ne işe yarar?"; onClicked: root.helpRequested(this, root.helpContext) }
 }

@@ -22,7 +22,7 @@ def create_application():
     from PySide6.QtQml import QQmlApplicationEngine
     from PySide6.QtQuickControls2 import QQuickStyle
 
-    from veri_ufku.config import AppPaths, Settings, load_settings
+    from veri_ufku.config import SUPPORTED_LOCALES, AppPaths, Settings, load_settings
     from veri_ufku.domain.contracts import AppError
     from veri_ufku.jobs.manager import JobManager
     from veri_ufku.logging_setup import EventLog
@@ -89,33 +89,45 @@ def create_application():
             log.event("startup_failed", error=error)
         startup_error = "Configuration is invalid. Check local settings."
     preferences = PresentationPreferences(paths.config, locale=settings.locale)
-    translator = QTranslator(app)
-    if not translator.load(str(root_dir / "learning/i18n/tr.qm")):
-        raise RuntimeError("Bundled Turkish translation is missing")
-    if preferences.locale == "tr":
-        app.installTranslator(translator)
-    english = QTranslator(app)
-    if not english.load(str(root_dir / "learning/i18n/en.qm")):
-        raise RuntimeError("Bundled core English translation is missing")
-    if preferences.locale == "en":
-        app.installTranslator(english)
-    QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+    locale_names = {
+        "tr": "tr_TR",
+        "en": "en_GB",
+        "az": "az_AZ",
+        "tk": "tk_TM",
+        "kk": "kk_KZ",
+        "uz": "uz_Latn_UZ",
+        "ru": "ru_RU",
+        "es": "es_ES",
+    }
+    translators = {}
+    for code in sorted(SUPPORTED_LOCALES):
+        bundled = QTranslator(app)
+        if not bundled.load(str(root_dir / "learning/i18n" / f"{code}.qm")):
+            raise RuntimeError(f"Bundled translation is missing: {code}")
+        translators[code] = bundled
+    active_code = preferences.locale if preferences.locale in translators else "tr"
+
+    def apply_locale(code):
+        for bundled in translators.values():
+            app.removeTranslator(bundled)
+        app.installTranslator(translators[code])
+        QLocale.setDefault(QLocale(locale_names[code]))
+
+    apply_locale(active_code)
     engine = QQmlApplicationEngine()
-    current_locale = preferences.locale
+    current_locale = active_code
 
     def update_locale():
         nonlocal current_locale
-        if preferences.locale == current_locale:
+        code = preferences.locale if preferences.locale in translators else "tr"
+        if code == current_locale:
             return
-        current_locale = preferences.locale
-        app.removeTranslator(translator)
-        app.removeTranslator(english)
-        app.installTranslator(translator if preferences.locale == "tr" else english)
-        QLocale.setDefault(QLocale("tr_TR" if preferences.locale == "tr" else "en_GB"))
+        current_locale = code
+        apply_locale(code)
         engine.retranslate()
 
     preferences.changed.connect(update_locale)
-    engine._english_translation = english
+    engine._english_translation = translators["en"]
     folders = FolderController(engine)
     engine._folders_resources = folders
     engine.rootContext().setContextProperty("folders", folders)
@@ -502,8 +514,8 @@ def create_application():
         cleaned = True
         app.aboutToQuit.disconnect(cleanup)
         preferences.changed.disconnect(update_locale)
-        app.removeTranslator(translator)
-        app.removeTranslator(english)
+        for bundled in translators.values():
+            app.removeTranslator(bundled)
         window.hide()
         supervisor.shutdown()
         if controller:
@@ -548,15 +560,15 @@ def create_application():
             manager.shutdown()
         if log:
             log.close()
-        translator.deleteLater()
-        english.deleteLater()
+        for bundled in translators.values():
+            bundled.deleteLater()
 
     app.aboutToQuit.connect(cleanup)
     # Retain Python/Qt objects until the event loop ends.
     app._veri_ufku_resources = (
         engine,
         controller,
-        translator,
+        translators,
         manager,
         log,
         learning,

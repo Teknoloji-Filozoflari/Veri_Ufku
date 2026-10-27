@@ -19,8 +19,8 @@ ColumnLayout {
     function restore(){let s=preparation.report.spec;if(!s)return;purposeChoice.currentIndex=purposes.indexOf(s.purpose);family.currentIndex=families.indexOf(s.family);index(source,s.source_version);index(target,s.target);index(group,s.group);index(time,s.time);chosenFeatures=s.features;historyChoice.currentIndex=["review","raw","relocate"].indexOf(s.history_action);numericFill.currentIndex=["median","mean","none","knn","iterative"].indexOf(s.numeric_imputation);missingFlag.checked=!!s.missing_indicator;neighbors.value=s.imputation_neighbors||5;iterations.value=s.imputation_iterations||10;imputationSeed.value=s.imputation_seed===undefined?42:s.imputation_seed;categoryFill.currentIndex=s.categorical_imputation==="most_frequent"?0:1;encoding.currentIndex=s.encoding==="onehot"?0:1;scaling.currentIndex=["auto","none","standard"].indexOf(s.scaling);dates.checked=s.date_features;selection.checked=s.selection==="variance";allowIds.checked=s.allow_identifiers;context.text=s.prediction_context;historyNote.text=s.history_note;nonfinite.checked=s.invalid_numeric==="as_missing";approximate.checked=s.precision==="approximate";useText.checked=!!s.text;if(s.text){index(textColumn,s.text.column);textOptions.restore(s.text)}settings.checked=false}
     Connections { target:preparation; function onChanged(){if(panel.lastSource!==preparation.sourceVersion){panel.lastSource=preparation.sourceVersion;panel.chosenFeatures=preparation.columns.filter(c=>!c.identifier_candidate&&c.role!=="ignored").map(c=>c.id)}} }
     Component.onCompleted:{lastSource=preparation.sourceVersion;chosenFeatures=preparation.columns.filter(c=>!c.identifier_candidate&&c.role!=="ignored").map(c=>c.id);if(preparation.current&&preparation.report.spec)restore()}
-    UiLabel { text:"Modelleme için veri hazırlığı"; font.pixelSize:Theme.heading;font.bold:true;Layout.fillWidth:true;wrapMode:Text.Wrap }
-    UiLabel { text:"Bu ekran genel temizlikten ayrı bir hazırlama planı üretir. Tüm veri üzerinde fit, eğitim veya değerlendirme yapılmaz. Rapor sızıntısızlık garantisi vermez. Aşağıdaki yöntem önerileri adaydır; plan kaydı model fit etmez.";color:Theme.warning;Layout.fillWidth:true;wrapMode:Text.Wrap }
+    UiLabel { text: qsTr("Modelleme için veri hazırlığı"); font.pixelSize:Theme.heading;font.bold:true;Layout.fillWidth:true;wrapMode:Text.Wrap }
+    UiLabel { text: qsTr("Bu ekran genel temizlikten ayrı bir hazırlama planı üretir. Tüm veri üzerinde fit, eğitim veya değerlendirme yapılmaz. Rapor sızıntısızlık garantisi vermez. Aşağıdaki yöntem önerileri adaydır; plan kaydı model fit etmez.");color:Theme.warning;Layout.fillWidth:true;wrapMode:Text.Wrap }
     UiLabel {
         objectName: "preparationCandidateHint"
         text: qsTr("Yöntem önerileri adaydır; otomatik fit yok. Gerekçe ve train/validation/test planı değerlendirme panelinde görünür. Ön işleme yalnız eğitim fold'unda öğrenilir.")
@@ -54,7 +54,7 @@ ColumnLayout {
             UiCombo { accessibleLabel: "Serbest metin alanı"; id:textColumn;objectName:"preparationTextColumn";model:preparation.columns;textRole:"name";valueRole:"id";Layout.fillWidth:true;onActivated:preparation.invalidate() }
             TextOptions { id:textOptions;Layout.fillWidth:true;onEdited:preparation.invalidate() }
             UiLabel { text:"Bu yol tek metin özelliği kullanır; hedef/grup/zaman giriş değildir. İnceleme vocab'ı alınmaz; vocab ve IDF her fit'te yalnız train'den öğrenilir. Boş metin sıfır vektör; tümü boş train reddedilir. Güvenli paket/yeni dosya tahmini henüz desteklenmez; mevcut sınıflandırma/defter/metrik akışı kullanılır.";Layout.fillWidth:true;wrapMode:Text.Wrap }
-            UiButton { text:"TF-IDF ve eğitim fold'u yardımı";helpContext:"text.tfidf";onClicked:panel.helpRequested(this,helpContext) }
+            UiButton { visible: false; text:"TF-IDF ve eğitim fold'u yardımı";helpContext:"text.tfidf";onClicked:panel.helpRequested(this,helpContext) }
         }
         UiLabel { text:"Kategorik encoding — kategorileri modele uygun temsil etme";Layout.fillWidth:true;wrapMode:Text.Wrap }
         UiCombo { accessibleLabel: "Kategori kodlama yöntemi"; id:encoding;objectName:"preparationEncoding";model:["One-hot — sözlük yalnız eğitim katında öğrenilecek","Ordinal — yalnız açık semantik sıraya sahip kategoriler"];Layout.fillWidth:true;onActivated:preparation.invalidate() }
@@ -62,7 +62,7 @@ ColumnLayout {
         UiCombo { accessibleLabel: "Sayısal ölçekleme"; id:scaling;objectName:"preparationScaling";model:["Aileye göre: ağaçta yok; doğrusal/uzaklıkta standardizasyon","Scaling yok (açık seçim)","Standardizasyon (açık seçim; ağaçta genellikle gereksiz)"];Layout.fillWidth:true;onActivated:preparation.invalidate() }
         UiLabel { text:"İmputasyon — eksik özelliği eğitimde öğrenilen değerle doldurma";Layout.fillWidth:true;wrapMode:Text.Wrap }
         UiCombo { accessibleLabel: "Sayısal eksik doldurma"; id:numericFill;objectName:"preparationNumericFill";model:["Sayısal: eğitim katı medyanı","Sayısal: eğitim katı ortalaması","Sayısal doldurma yok","KNN — yalnız eğitim katı, ham birim uzaklığı","Iterative — yalnız eğitim katı, tek doldurma"];Layout.fillWidth:true;onActivated:preparation.invalidate() }
-        UiButton { text:"Eğitim katında imputasyon";helpContext:"model.imputation";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Eğitim katında imputasyon";helpContext:"model.imputation";onClicked:panel.helpRequested(this,helpContext) }
         UiCheckBox { id:missingFlag;objectName:"preparationMissingIndicator";text:"Özgün eksik hücre göstergesini özellik olarak ekle";Layout.fillWidth:true;onClicked:preparation.invalidate() }
         UiLabel { text:"KNN ham ölçüm birimi uzaklıklarını kullanır; birimleri inceleyin. Iterative tek doldurmadır; MI çıkarımı Karşılaştır alanında ayrıdır. Tam veri fit edilmez.";wrapMode:Text.Wrap;Layout.fillWidth:true }
         RowLayout {
@@ -80,8 +80,8 @@ ColumnLayout {
         UiButton { objectName:"preparationScan";text:"Uygunluk raporu ve plan oluştur";tone:"violet";primary:true;Layout.fillWidth:true;multiline:true;enabled:!projects.busy&&preparation.columns.length>0;onClicked:{preparation.create(JSON.stringify(panel.spec()));settings.checked=false} }
     }
     Flow { Layout.fillWidth:true;spacing:Theme.sm
-        UiButton { text:qsTr("Bu ne işe yarar?");tone:"mint";helpContext:"model.prepare";onClicked:panel.helpRequested(this,helpContext) }
-        UiButton { text:"Geçmiş ve eğitim katını öğren";tone:"mint";helpContext:"model.history";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:qsTr("Bu ne işe yarar?");tone:"mint";helpContext:"model.prepare";onClicked:panel.helpRequested(this,helpContext) }
+        UiButton { visible: false; text:"Geçmiş ve eğitim katını öğren";tone:"mint";helpContext:"model.history";onClicked:panel.helpRequested(this,helpContext) }
         UiButton { text:qsTr("İptal");visible:preparation.busy;onClicked:preparation.cancel() }
     }
     StateNotice { Layout.fillWidth:true;kind:preparation.errorText?"error":preparation.busy?"loading":"info";heading:"Hazırlama durumu";detail:preparation.errorText||preparation.message }

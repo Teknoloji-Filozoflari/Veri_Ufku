@@ -122,6 +122,7 @@ class ProjectController(QObject):
         self.draft = new_state()
         self.saved = copy.deepcopy(self.draft)
         self._error = ""
+        self._create_name = None
         self._message = "Metadata açılışı kaynak veriyi yeniden işlemez."
         self._recent = []
         self._recent_names = {}
@@ -179,6 +180,60 @@ class ProjectController(QObject):
         if not value:
             raise ProjectError("Proje yolu boş olamaz.")
         return Path(value).expanduser().absolute()
+
+    @Slot(str, str)
+    def createInFolder(self, folder, preferred=""):
+        """Create under an explicit parent folder without dirtying the empty draft."""
+        label = (preferred or "").strip() or self.name
+        if label in {"", "Adsız proje", "Yeni proje"}:
+            label = "Yeni proje"
+        self._create_name = label
+        self.request("create", self.newProjectPath(folder))
+        if self.future is None:
+            self._create_name = None
+
+    @Slot(str)
+    @Slot(str, str)
+    def createDefaultForImport(self, source, preferred=""):
+        """Open a project under Documents/Veri_Ufku and return; no folder dialog."""
+        label = (preferred or "").strip()
+        if label in {"", "Adsız proje", "Yeni proje"}:
+            label = self.name
+        if label in {"", "Adsız proje", "Yeni proje"}:
+            stem = ""
+            if source:
+                try:
+                    stem = Path(self.local(source)).stem
+                except (OSError, ValueError):
+                    stem = ""
+            label = stem or "Yeni proje"
+        docs = QStandardPaths.writableLocation(QStandardPaths.DocumentsLocation)
+        parent = (
+            Path(docs) / "Veri_Ufku" if docs else AppPaths.discover().data / "projects"
+        )
+        try:
+            parent.mkdir(parents=True, exist_ok=True)
+        except OSError as error:
+            self._error = project_error_text(error)
+            self.changed.emit()
+            return
+        safe = "".join("_" if c in "/\\\0:" else c for c in label).strip(" .")[:80]
+        safe = safe or "Yeni_Proje"
+        chosen = ""
+        for index in range(1, 1001):
+            candidate = parent / (safe if index == 1 else f"{safe}_{index}")
+            if not candidate.exists() and not candidate.is_symlink():
+                chosen = str(candidate)
+                break
+        if not chosen:
+            self._error = "Varsayılan proje klasörü dolu."
+            self.changed.emit()
+            return
+        # Name lives only on the create payload. The empty draft stays clean.
+        self._create_name = label
+        self.request("create", chosen)
+        if self.future is None:
+            self._create_name = None
 
     @Slot(str, result=str)
     def newProjectPath(self, folder):
@@ -309,6 +364,10 @@ class ProjectController(QObject):
     @Property(str, notify=changed)
     def name(self):
         return self.draft["name"]
+
+    @Property(str, notify=changed)
+    def path(self):
+        return str(self.store.root) if self.store else ""
 
     @Property(str, notify=changed)
     def seedText(self):
@@ -552,9 +611,6 @@ class ProjectController(QObject):
         self._statuses = {s["id"]: "unavailable" for s in self.draft["sources"]}
         self._refresh_pending = True
         self.changed.emit()
-        if not self.busy:
-            self._refresh_pending = False
-            self.request("refresh")
 
     def _scheduled(self):
         if not self._closing and self.store and not self.busy:
@@ -566,8 +622,10 @@ class ProjectController(QObject):
     @Slot(str, str, str, bool)
     def request(self, action, value="", source_id="", portable=False):
         if self._closing:
+            self._create_name = None
             return
         if self.busy:
+            self._create_name = None
             self._error = "Proje işlemi devam ediyor. Tamamlanmasını bekleyin."
             self.changed.emit()
             return
@@ -582,6 +640,9 @@ class ProjectController(QObject):
             )
             self._action = action
             self._submitted = copy.deepcopy(self.draft)
+            if action == "create" and getattr(self, "_create_name", None):
+                self._submitted["name"] = self._create_name
+                self._create_name = None
             self.future = self.executor.submit(
                 project_task,
                 action,
@@ -595,6 +656,7 @@ class ProjectController(QObject):
             self._error = ""
             self._message = "Proje işlemi sürüyor… Kaynak dosyana yazılmıyor."
         except (OSError, ValueError) as error:
+            self._create_name = None
             self._error = project_error_text(error)
         self.changed.emit()
 

@@ -50,8 +50,8 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth:true
             UiCombo { id:methodChoice; objectName:"modelsMethod"; Layout.fillWidth:true; model:statistics.methods("models"); textRole:"label";valueRole:"id";accessibleLabel:"Model ve alt aşama";onActivated:panel.changedConfig() }
-            UiButton { text:"Bu ne işe yarar?"; helpContext:"statistical-models";onClicked:panel.helpRequested(this,helpContext) }
-            UiButton { objectName:"modelsMethodHelp";text:"Yöntem yardımı"; helpContext:panel.methodHelp;onClicked:panel.helpRequested(this,helpContext) }
+            UiButton { visible: false; text:"Bu ne işe yarar?"; helpContext:"statistical-models";onClicked:panel.helpRequested(this,helpContext) }
+            UiButton { visible: false; objectName:"modelsMethodHelp";text:"Yöntem yardımı"; helpContext:panel.methodHelp;onClicked:panel.helpRequested(this,helpContext) }
         }
         UiCombo { id:response; objectName:"modelsResponse";Layout.fillWidth:true;model:statistics.columns;textRole:"name";valueRole:"id";accessibleLabel:"Response / yanıt sütunu";onActivated:panel.changedConfig() }
         UiLabel { text: panel.method==="repeated"?"Within faktörleri: en fazla300 hücre /100 kişi; tam dengeli kişi × faktör grid; between effects / GG-HF correction yok.":"Predictors · Kategori ise baseline açıkça yazın; sayısal kategoriler de açık seçim ister."; Layout.fillWidth:true;wrapMode:Text.WordWrap }

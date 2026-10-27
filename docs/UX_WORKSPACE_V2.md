@@ -80,7 +80,14 @@ Aşama kimlikleri (sabit): `goal`, `load`, `columns`, `summary`, `missing`,
 
 | Durum | Üst / merkez / sağ / alt | Kullanıcı eylemi |
 |---|---|---|
-| Boş veri | StateNotice boş; Tablo ve analiz disabled; aşama 0–1 vurgulu | Dosya / Verilerim / örnek |
+| Boş veri (Veri) | Üst yalnız Geri·Kaydet; seyrek kahraman (kısa CTA); proje·klasör·kaynak; dock kapalı; ipucu/çift Gözat/kart-footer zorunlu değil | Dosya / Verilerim / Örnek → kaynak seçilince önizleme·İçe aktar |
+| Yüklü veri (Veri) | Tablo (ad + tür·rol); sağ «Veri»+sağlık, 2×5 kısa çip; alt sakin `N satır · M sütun · sürüm` (sayfa aralığı zorunlu değil) | Çip → blok; sonraki satır; Geri + İçe aktar |
+| İncele (yüklü) | Merkez şerit+tablo; sağ 5 çip; alt tarama kapsamı (used_n/population_n); dock Kapat gizli | Tarama → bulgu → Hazırla’ya taşı (taslak, sürüm yok) |
+| Görselleştir | Merkez Grafik\|Çıktı\|Tablo + 6 amaç kartı; sağ Değişkenler; canlı create; Python kapalı | Amaç → atama → tuval/çıktı; sürüm değişmez |
+| Hazırla (yüklü, işlemler) | Merkez rozet+zincir+önce/sonra; sağ 10 çip+parametre; alt İptal·Önizle·Uygula; dock Kapat gizli | Önizle (sürüm yok) → Uygula (yeni sürüm); İncele taslağı onaylı; Mod 1/2 dürüst |
+| İstatistik (yüklü, examineTool=0) | Merkez öneri+özet+grafik; sağ 8 çip+değişken/parametre; alt Sıfırla·Önizle·Kaydet; dock Kapat gizli | Canlı önkontrol; varsayım→tam analiz; kaydet=analysis_store; sürüm yazılmaz |
+| Model (yüklü, modelInstalled) | Merkez özet+sekme/tuval; sağ 10 çip+Y/X/param; alt Sıfırla·Eğit ve kaydet; dock Kapat gizli | Önkontrol→varsayım→fit+kaydet (analysis_store); sürüm yazılmaz; held-out skor yok |
+| Raporla (proje açık, reportTool=0) | Merkez Önizleme\|HTML\|PDF; sağ 8 çip+ayarlar; HTML/PDF dışa aktar; dock Kapat gizli | Bölüm seç→compose→oluştur; birleştirme-only; STALE+LIMITATIONS |
 | Yükleniyor | Busy; iptal görünür; seçim korunur | İptal veya bekle |
 | Hata | StateNotice hata; son sağlam sonuç korunur | Yeniden dene / ayarı düzelt |
 | Çok büyük veri | Otomatik canlı yenileme kapalı; maliyet + Çalıştır; sayfalı tablo | Çalıştır veya örneklem açık seçimi |
@@ -95,14 +102,17 @@ Ağ: açılış, proje açma, arama, panel görüntüleme ağ isteği başlatmaz
 |---|---|---|
 | Üst çubuk | `Main.qml` header (proje, arama, seviye) | Sürüm/dirty vurgusu güçlendir |
 | Sol 8 sekme | `sections` 0–7 + JourneyGuide | 10 aşamalı şeride genişlet; gelişmiş paneller erişimi korunur |
-| Tablo | `DatasetPanel` rows | Merkeze al; proje açılışında varsayılan |
-| Profil/değer/özet | `DatasetOverview`, `ValueInspection`, `ColumnNotes` | Aşama 2–3 |
-| Kalite/eksik | `QualityPanel`, `MissingSamplingPanel` | Aşama 4 etki önizlemesi ekle |
-| Grafik | `ChartPanel` | Aşama 5; yorum alanı + aday kümesi |
+| Tablo | `DatasetPanel` rows | Yüklü Veri’de merkez; İncele’de de merkez (inspectMode + eksik rozeti); boşta `DataEmptyCard` |
+| Veri sağ panel | `DataWorkspacePanel` (10 çip, 2 sütun) | Yüklüyken «Veri»+sağlık; İlk bakış çipi 8; describe/values Veri’de yok |
+| İncele tarama | `InspectScanStrip` + `InspectWorkspacePanel` | 5 çip; blok1 ValueInspection; blok2 DatasetOverview; 3–4 kalite; 5 özel tür Loader |
+| Profil/değer/özet | `DatasetOverview`, `ValueInspection` | İncele blok 1–2 (Veri accordion’dan taşındı) |
+| Kalite/eksik | `QualityPanel` (blok 4) + eksik bulgu kartları | Aşama missing etki önizlemesi; Hazırla köprüsü `inspectDraft` |
+| Grafik | `VisualizeWorkspace` + `ChartPanel` (Değişkenler) | Amaç kartları; canlı create; Çıktı=explain; Tablo=DatasetPanel |
 | Aykırı | quality IQR + CleaningOptions + unsupervised | Aşama 6 birleşik yüzey |
-| Hazırla | `OperationsPanel`, `CleaningOptions` | Aşama 7 (karar burada) |
-| Model | `PreparationPanel`, `ValidationPanel`, sınıflandırma/regresyon | Aşama 8 aday gerekçeleri |
-| Rapor | `ReportPanel`, `ReportBuilderPanel` | Aşama 9 |
+| Hazırla | `PrepareWorkspace` + `PrepareCatalogPanel` → `OperationsPanel`/`CleaningOptions` | Yerleşim A; 10 blok; Mod 1/2 UI; train-only motor yok |
+| İstatistik | `StatisticsWorkspace` + `StatisticsCatalogPanel` → `StatisticsPanel` | Yerleşim A; 8 blok; canlı önkontrol+varsayım; Bootstrap yok |
+| Model | `ModelWorkspace` + `ModelCatalogPanel` (Faz40 models); ML `modelPath` Layout A dışı | 10 çip; Eğit ve kaydet → analysis_store |
+| Rapor | `ReportWorkspace` + `ReportCatalogPanel`; legacy builder gizli | 8 çip; HTML/PDF dışa aktar |
 | Öğren | `LearningCenter`, InfoPanel/F1 | Sağ “Bu adımı öğren” |
 | Verilerim | — | UX4b yeni; ProjectStore genişletmesi |
 | Örnek katalog | `learning.exampleLibrary` sandbox | UX4a ürün katalog kartları |

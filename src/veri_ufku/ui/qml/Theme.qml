@@ -3,23 +3,27 @@ import QtQuick
 
 QtObject {
     readonly property bool dark: !preferences || preferences.theme !== "light"
-    readonly property real scale: preferences ? preferences.textScale : 1
-    readonly property color background: dark ? "#11161F" : "#F3F5F8"
+    readonly property real scale: 1
+    readonly property color background: dark ? "#10151C" : "#F5F7FA"
     readonly property color surface: dark ? "#1B2330" : "#FFFFFF"
-    readonly property color text: dark ? "#F4F1EC" : "#182230"
-    readonly property color secondary: dark ? "#BAC3CF" : "#40516A"
-    readonly property color accent: dark ? "#F6A35D" : "#9B4200"
-    readonly property color accentText: dark ? "#24170E" : "#FFFFFF"
-    readonly property color border: dark ? "#344155" : "#CBD3DF"
+    readonly property color text: dark ? "#F4F7FB" : "#1C2838"
+    readonly property color secondary: dark ? "#B7C3D4" : "#4E5E74"
+    readonly property color accent: dark ? "#9DC4FF" : "#1F4E79"
+    readonly property color accentText: dark ? "#0C1B33" : "#FFFFFF"
+    readonly property color action: accent
+    readonly property color actionText: accentText
+    readonly property color actionHover: dark ? "#C5DCFF" : "#173E61"
+    readonly property color actionPressed: dark ? "#7EB0F5" : "#14324F"
+    readonly property color border: dark ? "#344155" : "#D5DEE8"
     readonly property color chrome: dark ? "#171E29" : "#FFFFFF"
-    readonly property color raised: dark ? "#253145" : "#EAF0F6"
+    readonly property color raised: dark ? "#253145" : "#E7EEF6"
     readonly property color field: dark ? "#131C29" : "#FFFFFF"
-    readonly property color hover: dark ? "#2D3D52" : "#DEE8F3"
-    readonly property color alternateRow: dark ? "#1E2938" : "#F4F7FA"
-    readonly property color accentSoft: dark ? "#3A2B23" : "#FFEAD9"
-    readonly property color accentHover: dark ? "#FFB575" : "#853700"
-    readonly property color accentPressed: dark ? "#E6934D" : "#703000"
-    readonly property color controlBorder: dark ? "#7D88A2" : "#65738A"
+    readonly property color hover: dark ? "#2D3D52" : "#E3EBF4"
+    readonly property color alternateRow: dark ? "#1E2938" : "#F4F7FB"
+    readonly property color accentSoft: dark ? "#1A2C44" : "#E7F0FA"
+    readonly property color accentHover: actionHover
+    readonly property color accentPressed: actionPressed
+    readonly property color controlBorder: dark ? "#7D88A2" : "#6A7C92"
     readonly property color muted: dark ? "#919CAD" : "#54657A"
     readonly property color dataTone: dark ? "#94C9DF" : "#18536D"
     readonly property color prepareTone: dark ? "#C3A6EF" : "#66379D"

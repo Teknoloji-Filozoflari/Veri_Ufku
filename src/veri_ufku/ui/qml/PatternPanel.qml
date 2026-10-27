@@ -67,6 +67,6 @@ ColumnLayout {
         Repeater {model:panel.analysis.traces||[];UiLabel {required property var modelData;text:"Case "+panel.label(modelData.case)+" · "+modelData.activities.join(" → ")+"\n"+modelData.completion+" · fitting="+(modelData.fitting===true?"true":modelData.fitting===false?"false":"unknown")+" · ihlaller="+JSON.stringify(modelData.violations);Layout.fillWidth:true;wrapMode:Text.Wrap}}
         UiCombo {id:saved;objectName:"patternSaved";accessibleLabel:"Kalıcı pattern kayıtları";model:patterns.savedRuns;textRole:"label";valueRole:"id";Layout.fillWidth:true}
         UiButton {objectName:"patternOpen";text:"Kalıcı keşif snapshot'ını aç";enabled:!patterns.busy&&saved.currentIndex>=0;onClicked:patterns.openRun(saved.currentValue);Layout.fillWidth:true}
-        UiButton {objectName:"patternHelp";text:"Support/lift, retention paydası, case ve trace öğren";helpContext:"model.pattern";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
+        UiButton { visible: false;objectName:"patternHelp";text:"Support/lift, retention paydası, case ve trace öğren";helpContext:"model.pattern";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
     }
 }

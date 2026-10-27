@@ -7,7 +7,13 @@ from PySide6.QtCore import Property, Signal, Slot
 
 from veri_ufku.domain.json import parse
 from veri_ufku.exports.report_builder import public_report
-from veri_ufku.exports.report_contracts import KINDS, recipe, redact, template
+from veri_ufku.exports.report_contracts import (
+    KINDS,
+    LIMITATIONS,
+    recipe,
+    redact,
+    template,
+)
 from veri_ufku.exports.report_worker import worker
 from veri_ufku.importers.delimited import Control
 from veri_ufku.storage import report_builder_store as storage
@@ -51,6 +57,7 @@ class ReportBuilderController(MonitoringController):
         notify=builderChanged,
     )
     kinds = Property("QVariantList", lambda s: list(KINDS), constant=True)
+    limitations = Property("QVariantList", lambda s: list(LIMITATIONS), constant=True)
     preview = Property(
         str, lambda s: dump(s.result) if s.result else s._review, notify=builderChanged
     )
@@ -77,6 +84,185 @@ class ReportBuilderController(MonitoringController):
     @Slot(str, result=str)
     def template(self, name):
         return dump(template(name))
+
+    def _record_for(self, *want):
+        for r in self.projects.draft["results"]:
+            found = storage.result_value(r)
+            if not found:
+                continue
+            kind, _ = found
+            if kind in want:
+                return r["id"]
+        return ""
+
+    @Slot(str, str, str, result=str)
+    def composeLayout(self, title, protocol, sections_json):
+        """Layout A: selected journey sections → recipe; no recompute."""
+        try:
+            selected = parse(sections_json) if sections_json else []
+            if not isinstance(selected, list):
+                selected = []
+            indexes = {int(x) for x in selected}
+            raw = template("scientific")
+            if isinstance(title, str) and title.strip():
+                raw["title"] = title.strip()[:200]
+            if protocol in ("exploratory", "confirmatory"):
+                raw["protocol"] = protocol
+            blocks = []
+            if 1 in indexes:
+                blocks.append(
+                    dict(
+                        kind="section",
+                        title="Rapor özeti",
+                        text="Bu rapor seçilen immutable kayıtlardan birleştirilir; analiz/model yeniden hesaplanmaz.",
+                    )
+                )
+                blocks.append(
+                    dict(
+                        kind="note",
+                        title="Protokol",
+                        text=raw["protocol_note"],
+                    )
+                )
+            if 2 in indexes:
+                datasets = self.projects.draft.get("datasets") or []
+                if datasets:
+                    d = datasets[-1]
+                    cols = [c["id"] for c in d["import_metadata"]["columns"][:16]]
+                    blocks.append(
+                        dict(
+                            kind="dictionary",
+                            title="Veri sözlüğü",
+                            version=d["version_id"],
+                            columns=cols or [d["import_metadata"]["columns"][0]["id"]],
+                        )
+                    )
+                else:
+                    blocks.append(
+                        dict(
+                            kind="note",
+                            title="Veri",
+                            text="Bu sürümde bağlı dataset yok; veri bölümü boş bırakıldı.",
+                        )
+                    )
+            if 3 in indexes:
+                rid = self._record_for("quality", "profile")
+                if rid:
+                    blocks.append(
+                        dict(kind="result", title="İncele bulguları", record=rid)
+                    )
+                else:
+                    blocks.append(
+                        dict(
+                            kind="note",
+                            title="İncele",
+                            text="Bağlı kalite/profil kaydı yok; bulgu uydurulmaz.",
+                        )
+                    )
+            if 4 in indexes:
+                rid = self._record_for("analysis")  # charts may be under different keys
+                # Prefer chart-capable: scan capability_id
+                chart_id = ""
+                for r in self.projects.draft["results"]:
+                    cap = str(r.get("capability_id") or "")
+                    if "chart" in cap or cap.startswith("charts."):
+                        if storage.result_value(r):
+                            chart_id = r["id"]
+                            break
+                if chart_id:
+                    blocks.append(
+                        dict(
+                            kind="chart",
+                            title="Görselleştir",
+                            record=chart_id,
+                            caption="Kayıtlı grafik; örnekleme/filtre bağlamı korunur.",
+                        )
+                    )
+                elif rid:
+                    blocks.append(
+                        dict(kind="result", title="Görselleştir (kayıt)", record=rid)
+                    )
+                else:
+                    blocks.append(
+                        dict(
+                            kind="note",
+                            title="Görselleştir",
+                            text="Bağlı grafik kaydı yok; çizim uydurulmaz.",
+                        )
+                    )
+            if 5 in indexes:
+                prep_id = ""
+                for r in self.projects.draft["results"]:
+                    cap = str(r.get("capability_id") or "")
+                    if "clean" in cap or "prepar" in cap or "operation" in cap:
+                        if storage.result_value(r):
+                            prep_id = r["id"]
+                            break
+                if prep_id:
+                    blocks.append(dict(kind="result", title="Hazırla", record=prep_id))
+                else:
+                    blocks.append(
+                        dict(
+                            kind="note",
+                            title="Hazırla",
+                            text="Bağlı hazırlama/temizlik kaydı yok.",
+                        )
+                    )
+            if 6 in indexes:
+                rid = self._record_for("analysis")
+                if rid:
+                    blocks.append(dict(kind="result", title="İstatistik", record=rid))
+                else:
+                    blocks.append(
+                        dict(
+                            kind="note",
+                            title="İstatistik",
+                            text="Bağlı analiz kaydı yok; p/etki uydurulmaz.",
+                        )
+                    )
+            if 7 in indexes:
+                model_id = ""
+                for r in self.projects.draft["results"]:
+                    cap = str(r.get("capability_id") or "")
+                    found = storage.result_value(r)
+                    if not found:
+                        continue
+                    kind, _ = found
+                    if (
+                        kind in ("baseline", "analysis")
+                        or "model" in cap
+                        or cap.startswith("statistics.")
+                    ):
+                        model_id = r["id"]
+                        break
+                if model_id:
+                    blocks.append(dict(kind="result", title="Model", record=model_id))
+                else:
+                    blocks.append(
+                        dict(
+                            kind="note",
+                            title="Model",
+                            text="Bağlı model kaydı yok; katsayı uydurulmaz.",
+                        )
+                    )
+            if 8 in indexes:
+                blocks.append(
+                    dict(
+                        kind="assumption",
+                        title="Sınırlamalar",
+                        text=" · ".join(LIMITATIONS[:4]),
+                    )
+                )
+                blocks.append(
+                    dict(kind="bibliography", title="Kaynakça", references=[])
+                )
+            if not blocks:
+                blocks = raw["blocks"]
+            raw["blocks"] = blocks[:32]
+            return dump(recipe(raw))
+        except (ValueError, TypeError, KeyError, ProjectError, StopIteration) as e:
+            self.fail(e)
+            return self.template("scientific")
 
     @Slot(str, int, str, str, result=str)
     def editText(self, text, index, title, body):

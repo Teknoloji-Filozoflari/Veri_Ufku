@@ -33,6 +33,6 @@ ColumnLayout {
         UiCombo {id:saved;objectName:"codeSaved";accessibleLabel:"Kalıcı hash-only code run";model:codeBridge.savedRuns;textRole:"label";valueRole:"id";Layout.fillWidth:true}
         UiButton {objectName:"codeOpenRecord";text:"Seçili hash kaydını aç (çalıştırmaz)";enabled:!codeBridge.busy&&saved.currentIndex>=0;onClicked:codeBridge.openRecord(saved.currentValue);Layout.fillWidth:true}
         StateNotice {heading:"Kod köprüsü durumu";detail:codeBridge.errorText||codeBridge.message;kind:codeBridge.errorText?"error":codeBridge.busy?"loading":"info";Layout.fillWidth:true}
-        UiButton {objectName:"codeHelp";text:"Bu ne işe yarar?";helpContext:"code.bridge";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
+        UiButton { visible: false;objectName:"codeHelp";text:"Bu ne işe yarar?";helpContext:"code.bridge";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
     }
 }

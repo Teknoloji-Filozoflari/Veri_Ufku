@@ -53,8 +53,8 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth:true
             UiCombo {id:methodChoice;objectName:"experimentMethod";Layout.fillWidth:true;model:statistics.methods("experiments");textRole:"label";valueRole:"id";accessibleLabel:"Faz42 yöntem";onActivated:panel.invalidate()}
-            UiButton {objectName:"experimentHelp";text:"Yöntem yardımı";helpContext:panel.methodHelp;onClicked:panel.helpRequested(this,helpContext)}
-            UiButton {text:"Deney planı nedir?";helpContext:"experiment-plan";onClicked:panel.helpRequested(this,helpContext)}
+            UiButton { visible: false;objectName:"experimentHelp";text:"Yöntem yardımı";helpContext:panel.methodHelp;onClicked:panel.helpRequested(this,helpContext)}
+            UiButton { visible: false;text:"Deney planı nedir?";helpContext:"experiment-plan";onClicked:panel.helpRequested(this,helpContext)}
         }
         UiTextField {Accessible.name:placeholderText;id:question;objectName:"experimentQuestion";Layout.fillWidth:true;placeholderText:"Deney sorusu";text:"Önceden belirlenen deney sorusu";onTextEdited:panel.invalidate()}
         UiTextField {Accessible.name:placeholderText;id:hypothesis;objectName:"experimentHypothesis";Layout.fillWidth:true;placeholderText:"Önceden belirlenen hipotez";text:"H0: tedavi−kontrol birincil metrik farkı0";onTextEdited:panel.invalidate()}

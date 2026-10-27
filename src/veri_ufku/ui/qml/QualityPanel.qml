@@ -14,8 +14,8 @@ ColumnLayout {
     function columnLabel(id) { for(let c of dataView.datasetColumns) if(c.id===id) return c.name; return "Sütun artık seçili dataset içinde değil" }
     function findingLabel(code) { return ({missing:"Eksik değer",nonfinite:"NaN / sonsuz",whitespace:"Boş metin / boşluk",conversion:"Tip dönüşümü",invalid_date:"Geçersiz tarih",rule:"Kural ihlali",uniqueness:"Benzersizlik ihlali",duplicates_full:"Tam satır tekrarı",duplicates_selected:"Seçili sütun tekrarı",constant:"Sabit sütun",category_similarity:"Benzer kategori adayları",outlier:"Aykırı gözlem adayı"})[code] || code }
     spacing: Theme.md
-    UiLabel { text: "Veri kalitesi merkezi"; font.pixelSize: Theme.heading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.Wrap }
-    UiLabel { text: "Tarama salt okunurdur. Evrensel kalite puanı üretilmez. Adaylar hata veya silme kararı değildir. Eksiklik nedeni veriden tek başına belirlenemez."; Layout.fillWidth: true; wrapMode: Text.Wrap }
+    UiLabel { text: qsTr("Veri kalitesi merkezi"); font.pixelSize: Theme.heading; font.bold: true; Layout.fillWidth: true; wrapMode: Text.Wrap }
+    UiLabel { text: qsTr("Tarama salt okunurdur. Evrensel kalite puanı üretilmez. Adaylar hata veya silme kararı değildir. Eksiklik nedeni veriden tek başına belirlenemez."); Layout.fillWidth: true; wrapMode: Text.Wrap }
     UiCombo { accessibleLabel: "Tarama salt okunurdur. Evrensel kalite puanı üretilmez. Adaylar hata veya silme kararı değildir. Eksiklik nedeni veriden tek başına belirlenemez.";
         model: dataView.datasets; textRole: "label"; valueRole: "id"
         currentIndex: { let ds = dataView.datasets; for (let i=0;i<ds.length;i++) if(ds[i].id===dataView.selectedDataset) return i; return -1 }
@@ -60,7 +60,7 @@ ColumnLayout {
         UiButton { objectName: "qualityScanButton"; text: "Kaliteyi tara"; primary: true; enabled: !projects.busy && dataView.datasets.length>0; onClicked: dataView.computeQuality(amount.currentIndex===0,target.currentIndex===0 ? "dataset":"view",["inspect","clean","model"][purpose.currentIndex],JSON.stringify(panel.duplicates),JSON.stringify(panel.rules)) }
         UiButton { text: qsTr("İptal"); enabled: dataView.busy; onClicked: dataView.cancel() }
         UiButton { objectName: "qualitySaveButton"; text: "Raporu proje taslağına ekle"; enabled: !projects.busy && !projects.readOnly && !!dataView.qualityResult.dataset_version; onClicked: dataView.saveQuality() }
-        UiButton { tone: "mint"; text: qsTr("Bu ne işe yarar?"); helpContext: "dataset.quality"; onClicked: panel.helpRequested(this,"dataset.quality") }
+        UiButton { visible: false; tone: "mint"; text: qsTr("Bu ne işe yarar?"); helpContext: "dataset.quality"; onClicked: panel.helpRequested(this,"dataset.quality") }
     }
     StateNotice { Layout.fillWidth: true; kind: dataView.errorText ? "error" : dataView.busy ? "loading":"info"; heading: "Kalite taraması"; detail: dataView.errorText || dataView.message }
     UiLabel {
@@ -112,7 +112,7 @@ ColumnLayout {
                 UiLabel { text: modelData.count+" / "+modelData.denominator+" kayıt (%"+(modelData.ratio*100).toFixed(2)+") · "+modelData.scope+"\n"+modelData.reason; Layout.fillWidth: true; wrapMode: Text.Wrap; textFormat: Text.PlainText }
                 Repeater { model: modelData.examples; UiLabel { required property var modelData; text: modelData.values+(preferences.view === "advanced" ? "\nRowId: "+modelData.row_id : ""); Layout.fillWidth: true; wrapMode: Text.Wrap; textFormat: Text.PlainText } }
                 UiLabel { text: "Seçenekler: "+modelData.options.join("; ")+"\nÖneri: "+modelData.recommendation.reason+"\nÖnkoşul: "+modelData.recommendation.precondition+"\nEtki: "+modelData.recommendation.impact+"\nBu bulgu otomatik düzeltme başlatmaz. Hazırla ekranında uygun temizliği kendiniz seçip önizleyebilirsiniz; her bulgu bir düzeltme gerektirmez."+(preferences.view === "advanced" ? "\nÖneri kimliği: "+modelData.recommendation.operation_id : ""); Layout.fillWidth: true; wrapMode: Text.Wrap; textFormat: Text.PlainText }
-                UiButton { tone: "mint"; text: "Bulgu yardımı"; onClicked: panel.helpRequested(this,modelData.learning_id) }
+                UiButton { visible: false; tone: "mint"; text: "Bulgu yardımı"; onClicked: panel.helpRequested(this,modelData.learning_id) }
             }
         }
     }

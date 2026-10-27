@@ -74,6 +74,6 @@ ColumnLayout {
             UiCheckBox {id:terms;objectName:"visionTerms";text:"Kaynak/model lisansı ve servis koşullarını inceledim; indirmeyi açıkça başlatıyorum";Layout.fillWidth:true}
             UiButton {objectName:"visionDownload";text:"Optional doğrulanmış modeli indir";enabled:terms.checked&&!visionAnalysis.busy;onClicked:visionAnalysis.downloadModel(url.text,sha.text,Number(bytes.text),terms.checked);Layout.fillWidth:true}
         }
-        UiButton {objectName:"visionHelp";text:"BBox/mask, IoU ve duplicate leakage öğren";helpContext:"model.vision";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
+        UiButton { visible: false;objectName:"visionHelp";text:"BBox/mask, IoU ve duplicate leakage öğren";helpContext:"model.vision";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
     }
 }

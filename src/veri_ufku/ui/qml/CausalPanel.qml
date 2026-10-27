@@ -50,7 +50,7 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth:true
             UiCombo {id:methodChoice;objectName:"causalMethod";model:statistics.methods("causal");textRole:"label";valueRole:"id";accessibleLabel:"Nedensel yöntem / alt aşama";Layout.fillWidth:true;onActivated:panel.invalidate()}
-            UiButton {objectName:"causalHelp";text:"Bu ne işe yarar?";helpContext:"causal";onClicked:panel.helpRequested(this,"statistics."+panel.method.split("_").join("-"))}
+            UiButton { visible: false;objectName:"causalHelp";text:"Bu ne işe yarar?";helpContext:"causal";onClicked:panel.helpRequested(this,"statistics."+panel.method.split("_").join("-"))}
         }
         UiLabel {text:"Önce44.1 randomize/adjustment/IPW/AIPW;44.2matching;44.3DiD;44.4IV. Tam seçili sürüm, eksiksiz sayısal alanlar ve dönem sütunu gerekir. Gözlemsel ilişki nedensellik kanıtı değildir; feature importance neden sıralaması değildir.";Layout.fillWidth:true;wrapMode:Text.WordWrap}
         GridLayout {

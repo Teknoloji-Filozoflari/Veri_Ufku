@@ -71,6 +71,21 @@ class DatasetTableModel(QAbstractTableModel):
         if role == self.SourceIdRole:
             return self.result["source_record_ids"][index.row()]
 
+    @staticmethod
+    def _type_badge(value):
+        kind = str(value or "").lower()
+        if "int" in kind:
+            return "tam sayı"
+        if "decimal" in kind or "float" in kind or "double" in kind:
+            return "ondalık"
+        if "bool" in kind:
+            return "mantıksal"
+        if "date" in kind or "time" in kind:
+            return "tarih"
+        if kind:
+            return "metin"
+        return ""
+
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         count = self.columnCount() if orientation == Qt.Horizontal else self.rowCount()
         if not 0 <= section < count:
@@ -79,16 +94,23 @@ class DatasetTableModel(QAbstractTableModel):
             if orientation != Qt.Horizontal:
                 return str(self.result["offset"] + section + 1)
             column = self.result["columns"][section]
-            parts = [
-                column["name"],
-                column.get("type") or column.get("physical_type", ""),
-            ]
+            type_badge = self._type_badge(
+                column.get("type") or column.get("physical_type", "")
+            )
+            parts = [column["name"], type_badge]
             role_label = column.get("role_label") or ""
             if role_label:
-                parts.append(role_label)
-            description = (column.get("description") or "").strip()
-            if description:
-                parts.append(description[:48] + ("…" if len(description) > 48 else ""))
+                # Keep badge short for the table header chips.
+                short = {
+                    "Kimlik": "kimlik",
+                    "Kategori": "kategori",
+                    "Ölçüm": "ölçüm",
+                    "Tarih / zaman": "tarih",
+                    "Metin": "metin",
+                    "Sıralı kategori": "sıralı",
+                    "Analizde dışarıda": "dışarıda",
+                }.get(role_label, role_label.lower())
+                parts.append(short)
             return " · ".join(part for part in parts if part)
 
     def flags(self, index):

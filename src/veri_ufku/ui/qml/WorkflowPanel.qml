@@ -118,6 +118,6 @@ ColumnLayout {
         UiButton {objectName:"workflowOpen";text:"Geçmiş run aç (çalıştırmaz)";enabled:!workflowRunner.busy&&saved.currentIndex>=0;onClicked:workflowRunner.openRecord(saved.currentValue);Layout.fillWidth:true}
         StateNotice {heading:"DAG durumu";detail:workflowRunner.errorText||workflowRunner.message;kind:workflowRunner.errorText?"error":workflowRunner.busy?"loading":"info";Layout.fillWidth:true}
         UiLabel {text:"Local schedule mevcut değil. Uygulama kapalıyken iş yok; CLI'yi kullanıcı başlatır. Sistem scheduler entegrasyonu kurulu/başarılı sayılmaz. GUI ve CLI aynı engine'i kullanır; aynı proje için tek writer gerekir.";wrapMode:Text.Wrap;Layout.fillWidth:true}
-        UiButton {objectName:"workflowHelp";text:"DAG, dependency, cache ve batch öğren";helpContext:"workflow.source";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
+        UiButton { visible: false;objectName:"workflowHelp";text:"DAG, dependency, cache ve batch öğren";helpContext:"workflow.source";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
     }
 }

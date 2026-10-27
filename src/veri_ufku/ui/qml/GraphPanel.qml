@@ -74,6 +74,6 @@ ColumnLayout {
         UiCheckBox {id:exportConsent;objectName:"graphExportConsent";text:"Tam graph kimlik ve kaynak kayıt bağlarını açıkça export edeceğim; hassas veri içerebilir";Layout.fillWidth:true}
         UiButton {objectName:"graphExport";text:"Tam graph'ı yeni yerel dosyaya yaz";enabled:exportConsent.checked&&!graphs.busy&&panel.result.status==="completed";onClicked:graphs.exportGraph(destination.text,exportFormat.currentText);Layout.fillWidth:true}
         UiLabel {text:"Export görünüm filtresini/sample'ı uygulamaz; tam graph, multi-edge ID ve kaynak kökeni korunur. Integer/string kimlik ayrımı JSON'da korunur; XML için string ID gerekir, tip kaybı varsa reddedilir. Link prediction ve network embedding burada unavailable: negative edge, temporal split/unseen-node ve training scope ayrı doğrulanmadan başarı iddiası yok. Community clustering, embedding eğitimi değildir.";Layout.fillWidth:true;wrapMode:Text.Wrap}
-        UiButton {objectName:"graphHelp";text:"Node/edge, centrality/community ve graph leakage öğren";helpContext:"model.graph";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
+        UiButton { visible: false;objectName:"graphHelp";text:"Node/edge, centrality/community ve graph leakage öğren";helpContext:"model.graph";onClicked:panel.helpRequested(this,helpContext);Layout.fillWidth:true}
     }
 }
