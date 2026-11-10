@@ -226,7 +226,7 @@ ColumnLayout {
             onClicked: root.runReset()
         }
         UiButton {
-            objectName: "statisticsPreflight"
+            objectName: window.istatistikOpen ? "statisticsPreflight" : ""
             text: qsTr("Önizle")
             tone: "violet"
             enabled: !projects.busy && dataView.datasets.length > 0 && !statistics.busy

@@ -446,11 +446,11 @@ ColumnLayout {
             UiCombo { accessibleLabel: "Çoklu karşılaştırma düzeltmesi"; id: correction; objectName: "statisticsCorrection"; model: ["Holm — aile hata kontrolü", "Bonferroni — aile hata kontrolü", "Benjamini–Hochberg — FDR, bağımsız/pozitif bağımlı testler", "Düzeltme yok (açık seçim)"]; Layout.fillWidth: true; onActivated: panel.bumpLive() }
             UiLabel { text: "Düzeltme bu çalıştırmanın grup çiftlerine uygulanır; ayrı çalıştırmalar otomatik birleşmez. Normalite tek başına yöntemi seçmez. Dağılım/uç değer grafikleri İncele alanındadır. Bootstrap bu sürümde sunulmuyor."; Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.secondary }
             Flow {
-                visible: !panel.catalogMode
                 Layout.fillWidth: true
                 spacing: Theme.sm
                 UiButton {
-                    objectName: panel.catalogMode ? "" : "statisticsPreflight"
+                    // catalogMode merkez StatisticsWorkspace ile paylaşır; boş projede dock sözleşmesi.
+                    objectName: "statisticsPreflight"
                     text: "Önkontrolü çalıştır"
                     tone: "violet"
                     enabled: !projects.busy && dataView.datasets.length > 0
