@@ -143,7 +143,8 @@ def test_primary_button_text_is_readable_in_fixed_dark_theme(tmp_path, monkeypat
         button = window.findChild(QObject, "cpuButton")
         button.setProperty("primary", True)
         label = button.property("contentItem")
-        expected = "#24170e"
+        # Theme.accentText / actionText (koyu): birincil düğme etiketi okunaklı kontrast.
+        expected = "#0c1b33"
         app.processEvents()
         assert label.property("color").isValid()
         assert label.property("color").name() == expected
@@ -206,7 +207,8 @@ def test_bad_configuration_is_visible_and_never_logged_verbatim(tmp_path):
         "from PySide6.QtCore import QObject; "
         "app, window, bridge = create_application(); "
         "assert bridge is None; "
-        'assert not window.findChild(QObject,"workspace").property("enabled"); '
+        # UX v2: merkez objectName=workspace; startup kilidi toolDock.enabled üzerindedir.
+        'assert not window.findChild(QObject,"toolDock").property("enabled"); '
         'assert not window.findChild(QObject,"newProjectButton").property("enabled"); '
         'window.setProperty("selectedSection",3); app.processEvents(); '
         'assert not window.findChild(QObject,"chartCreate").property("enabled"); '
@@ -217,7 +219,7 @@ def test_bad_configuration_is_visible_and_never_logged_verbatim(tmp_path):
         'assert not window.findChild(QObject,"saveProjectShortcut").property("enabled"); '
         'print(window.findChild(QObject,"errorLabel").property("text")); '
         'window.setProperty("selectedSection",7); '
-        'assert window.findChild(QObject,"workspace").property("enabled"); '
+        'assert window.findChild(QObject,"toolDock").property("enabled"); '
         "app._veri_ufku_resources[-1]()"
     )
     completed = subprocess.run(
