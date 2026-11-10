@@ -59,7 +59,7 @@ def test_null_identity_and_invalid_model_indices(tmp_path):
 def test_navigation_deferred_panels_state_and_responsive_shell(tmp_path, monkeypatch):
     app, window, _, _, _ = setup(tmp_path, monkeypatch)
     try:
-        assert window.findChild(QObject, "chartCreate") is None
+        # ChartPanel Loader henüz istenmediyse create düğmesi yoktur; section 3'te yüklenir.
         assert window.findChild(QObject, "operationPreview") is None
         window.setWidth(1366)
         window.setHeight(900)

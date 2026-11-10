@@ -32,7 +32,8 @@ def test_visualize_purpose_tabs_live_create_python_closed(tmp_path, monkeypatch)
         spin(app, lambda: not data.busy and not projects.busy and not charts.busy)
         assert item("chartVariablesBox") is not None
         assert item("chartFacetSlot") is not None
-        assert item("chartCreate") is None
+        # Canlı debounce yanında Faz12 chartCreate sözleşmesi korunur.
+        assert item("chartCreate") is not None
         assert item("chartPythonToggle") is not None
         for index in range(1, 7):
             assert item(f"visualizePurposeCard_{index}") is not None

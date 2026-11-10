@@ -27,7 +27,12 @@ def test_bayes_gui_offline_templates(tmp_path, monkeypatch, method, capture=None
         assert not imports.errorText
         engine = app._veri_ufku_resources[0]
         c = engine._statistics_resources
-        window.setProperty("selectedSection", 4)
+        # Advanced Bayes paneli yalnız advanced görünüm + Loader visited sonrası
+        # oluşur; diğer istatistik GUI testleri gibi capability activate kullan.
+        engine._workspace_resources.activate(
+            "statistics." + method.replace("_", "-")
+        )
+        app.processEvents()
 
         def get(name):
             obj = window.findChild(QObject, "bayes" + name) or visual_find(

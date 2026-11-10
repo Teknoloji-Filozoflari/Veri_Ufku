@@ -509,6 +509,15 @@ ColumnLayout {
     Flow {
         Layout.fillWidth: true
         spacing: Theme.sm
+        // Faz12+ GUI sözleşmesi: açık oluşturma düğmesi (canlı debounce yanında korunur).
+        UiButton {
+            objectName: "chartCreate"
+            tone: "cyan"
+            text: qsTr("Grafiği oluştur")
+            primary: true
+            enabled: !projects.busy && dataView.datasets.length > 0
+            onClicked: panel.create()
+        }
         UiButton {
             objectName: "chartCancel"
             text: qsTr("İptal")

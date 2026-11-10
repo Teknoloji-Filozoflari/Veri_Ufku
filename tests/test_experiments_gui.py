@@ -47,7 +47,11 @@ def test_experiment_desktop_plan_calculate_export_reopen_help(
         assert not imports.errorText
         engine = app._veri_ufku_resources[0]
         c = engine._statistics_resources
-        window.setProperty("selectedSection", 4)
+        # Deney paneli advanced Loader; beginner StatisticsWorkspace altında yok.
+        engine._workspace_resources.activate(
+            "statistics." + method.replace("_", "-")
+        )
+        app.processEvents()
 
         def get(name):
             item = window.findChild(QObject, "experiment" + name) or visual_find(
@@ -164,7 +168,8 @@ def test_observational_not_randomized_and_peeking_gui(tmp_path, monkeypatch):
         spin(app, lambda: not imports.busy)
         engine = app._veri_ufku_resources[0]
         c = engine._statistics_resources
-        window.setProperty("selectedSection", 4)
+        engine._workspace_resources.activate("statistics.experiment-mean")
+        app.processEvents()
 
         def get(name):
             return window.findChild(QObject, "experiment" + name) or visual_find(
