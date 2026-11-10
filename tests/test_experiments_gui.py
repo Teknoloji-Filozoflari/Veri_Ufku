@@ -48,9 +48,7 @@ def test_experiment_desktop_plan_calculate_export_reopen_help(
         engine = app._veri_ufku_resources[0]
         c = engine._statistics_resources
         # Deney paneli advanced Loader; beginner StatisticsWorkspace altında yok.
-        engine._workspace_resources.activate(
-            "statistics." + method.replace("_", "-")
-        )
+        engine._workspace_resources.activate("statistics." + method.replace("_", "-"))
         app.processEvents()
 
         def get(name):

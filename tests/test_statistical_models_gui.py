@@ -43,9 +43,7 @@ def test_substage_real_gui_fit_diagnostic_prediction_save_reopen_help(
         engine = app._veri_ufku_resources[0]
         controller = engine._statistics_resources
         # Faz40 model paneli advanced Loader; beginner StatisticsWorkspace altında yok.
-        engine._workspace_resources.activate(
-            "statistics." + method.replace("_", "-")
-        )
+        engine._workspace_resources.activate("statistics." + method.replace("_", "-"))
         app.processEvents()
 
         def obj(name):

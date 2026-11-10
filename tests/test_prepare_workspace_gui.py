@@ -100,7 +100,11 @@ def test_prepare_workspace_shell_preview_apply_mod2_inspect(tmp_path, monkeypatc
                 "kind": "outlier",
                 "column_ids": [fill_col],
                 "method": "mark",
-                "parameters": {"action": "mark", "multiplier": "1.5", "flag_name": "Aykırı_adayı"},
+                "parameters": {
+                    "action": "mark",
+                    "multiplier": "1.5",
+                    "flag_name": "Aykırı_adayı",
+                },
                 "rationale": "test",
                 "expected_impact": "aday",
                 "origin": "İncele / Kalite / Aykırı",

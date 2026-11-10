@@ -65,9 +65,7 @@ def test_resampling_qml_unit_fit_save_reopen_export_help(
         engine = app._veri_ufku_resources[0]
         controller = engine._statistics_resources
         # Resampling paneli advanced Loader; beginner istatistik alanında yok.
-        engine._workspace_resources.activate(
-            "statistics." + method.replace("_", "-")
-        )
+        engine._workspace_resources.activate("statistics." + method.replace("_", "-"))
         app.processEvents()
 
         def get(name):

@@ -29,9 +29,7 @@ def test_bayes_gui_offline_templates(tmp_path, monkeypatch, method, capture=None
         c = engine._statistics_resources
         # Advanced Bayes paneli yalnız advanced görünüm + Loader visited sonrası
         # oluşur; diğer istatistik GUI testleri gibi capability activate kullan.
-        engine._workspace_resources.activate(
-            "statistics." + method.replace("_", "-")
-        )
+        engine._workspace_resources.activate("statistics." + method.replace("_", "-"))
         app.processEvents()
 
         def get(name):
