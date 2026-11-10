@@ -164,6 +164,9 @@ def test_article_markup_is_rendered_as_plain_text(tmp_path, monkeypatch):
         window.requestActivate()
         app.processEvents()
         QTest.qWait(50)
+        # UX v2 varsayılan bölüm Veri(1); home makalesi için Ana sayfaya geç.
+        window.setProperty("selectedSection", 0)
+        app.processEvents()
         window.findChild(QQuickItem, "beginnerButton").forceActiveFocus()
         QTest.keyClick(window, Qt.Key_F1)
         spin(app, lambda: window.property("infoOpen"))

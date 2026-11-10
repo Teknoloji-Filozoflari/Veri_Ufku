@@ -1017,10 +1017,27 @@ ApplicationWindow {
                     onActivated: window.reportTool = currentIndex
                 }
                 Connections { target:launchRequests; function onNavigate(section,tab) { window.selectedSection=section; if(section===1) dataTabs.currentIndex=tab } }
+                JourneyGuide {
+                    visible: !window.advanced && window.selectedSection > 0 && window.selectedSection < 7
+                    section: window.selectedSection
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    onLearnRequested: function(articleId, origin) { window.selectedSection=7; window.openReading(origin, articleId) }
+                    onNavigate: function(section) {
+                        window.navigate(section, null)
+                        if (section === 0) Qt.callLater(function() {
+                            let target=window.findVisibleItem(window.contentItem, projects.opened ? "saveProjectButton" : "newProjectButton")
+                            if (target) target.forceActiveFocus()
+                        })
+                    }
+                }
                 UiButton {
                     objectName: "expertToolsEntry"
-                    visible: false
+                    visible: !window.advanced && window.selectedSection > 0 && window.selectedSection < 7
+                    text: qsTr("Gelişmiş araçlara geç")
                     quiet: true
+                    Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
                     onClicked: preferences.setView("advanced")
@@ -1490,10 +1507,32 @@ ApplicationWindow {
                     visible: window.selectedSection === 0 && !window.advanced
                     onNavigate: function(section, tab, origin) {
                         if (origin && origin.expertRoute) preferences.setView("advanced")
-                        window.navigate(section, null)
+                        window.navigate(section, window.findVisibleItem(window.contentItem, "nav" + section))
                         if (section === 1) {
                             window.openDataPane(tab < 0 ? "" : origin && origin.route ? origin.route : tab === 1 ? "import" : "rows")
                         }
+                        const route = origin && origin.route ? origin.route : ""
+                        if (section === 2 && route) Qt.callLater(function() {
+                            let catalog = deferredOperationsPanel.item
+                            if (catalog && catalog.selectBlock) {
+                                let block = route === "join" ? 5 : route === "transform" ? 4 : 1
+                                catalog.selectBlock(block)
+                            }
+                            let kind = window.findVisibleItem(window.contentItem, "operationKind")
+                            if (kind && kind.enabled) kind.forceActiveFocus()
+                            if (route === "join") Qt.callLater(function() {
+                                let method = window.findVisibleItem(window.contentItem, "transformMethod")
+                                if (method && method.enabled) method.forceActiveFocus()
+                            })
+                        })
+                        if (section === 5 && route) Qt.callLater(function() {
+                            if (route === "scenario" || route === "monitoring") {
+                                Qt.callLater(function() {
+                                    let control = window.findVisibleItem(window.contentItem, route + "Expanded")
+                                    if (control) { control.checked = true; control.forceActiveFocus() }
+                                })
+                            }
+                        })
                         if (section === 0) Qt.callLater(function() {
                             let button = window.findVisibleItem(window.contentItem, "newProjectButton")
                             if (button) button.forceActiveFocus()
