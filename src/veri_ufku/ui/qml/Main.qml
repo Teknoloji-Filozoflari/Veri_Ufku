@@ -1753,11 +1753,13 @@ ApplicationWindow {
             onCloseRequested: window.closeInformation()
         }
     }
+    // DESIGN_SYSTEM: Ctrl+1..8 → sections[0..7]; Model kısayolu bölüm 5'e iner (kurulu değilse ekran durumu).
     Shortcut { sequence: "Ctrl+1"; enabled: !startupError; onActivated: window.navigate(0, null) }
     Shortcut { sequence: "Ctrl+2"; enabled: !startupError; onActivated: window.openVeri(null) }
     Shortcut { sequence: "Ctrl+3"; enabled: !startupError; onActivated: window.navigate(2, null) }
     Shortcut { sequence: "Ctrl+4"; enabled: !startupError; onActivated: window.navigate(3, null) }
     Shortcut { sequence: "Ctrl+5"; enabled: !startupError; onActivated: window.navigate(4, null) }
-    Shortcut { sequence: "Ctrl+6"; enabled: !startupError; onActivated: window.openModel(null) }
+    Shortcut { sequence: "Ctrl+6"; enabled: !startupError; onActivated: window.navigate(5, null) }
     Shortcut { sequence: "Ctrl+7"; enabled: !startupError; onActivated: window.navigate(6, null) }
+    Shortcut { sequence: "Ctrl+8"; enabled: !startupError; onActivated: window.navigate(7, null) }
 }

@@ -268,7 +268,8 @@ ColumnLayout {
         visible: !advancedMode.checked
         Layout.fillWidth: true
         UiLabel {
-            objectName: panel.catalogMode ? "" : "statisticsAssumption"
+            // Katalog (boş proje dahil) ve klasik panel aynı dürüstlük sözleşmesini taşır.
+            objectName: "statisticsAssumption"
             visible: !panel.catalogMode || panel.selectedCatalogBlock === 3 || panel.selectedCatalogBlock === 5
             text: "Veri değişmez. Varsayım sonuçla birlikte durur. İki grup ortalaması için varsayılan Welch t-testidir. Mann-Whitney aynı soruyu yanıtlamaz; sıralara göre dağılım karşılaştırmasıdır. İlişki nedensellik değildir. p değeri yoksa sonuç uydurulmaz."
             Layout.fillWidth: true
@@ -499,15 +500,16 @@ ColumnLayout {
             onClicked: panel.runFull()
         }
         ColumnLayout {
-            objectName: panel.catalogMode ? "" : "statisticsAdvice"
-            visible: !panel.catalogMode && (statistics.advice.question || "").length > 0
+            objectName: "statisticsAdvice"
+            // Katalogda öneri kartı (blok 5) boş önkontrolde de "uydurulmaz" metnini gösterir.
+            visible: (statistics.advice.question || "").length > 0 && (!panel.catalogMode || panel.selectedCatalogBlock === 5)
             Layout.fillWidth: true
             spacing: Theme.sm
-            UiLabel { objectName: panel.catalogMode ? "" : "statisticsAdviceQuestion"; text: statistics.advice.question || ""; Layout.fillWidth: true; wrapMode: Text.Wrap; font.bold: true }
-            UiLabel { objectName: panel.catalogMode ? "" : "statisticsAdviceStructure"; text: statistics.advice.structure || ""; visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.Wrap }
-            UiLabel { objectName: panel.catalogMode ? "" : "statisticsAdviceSuggestion"; text: statistics.advice.suggestion || ""; visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.Wrap }
-            UiLabel { objectName: panel.catalogMode ? "" : "statisticsAdviceAssumption"; text: statistics.advice.assumption || ""; visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.warning }
-            UiLabel { objectName: panel.catalogMode ? "" : "statisticsAdviceSelection"; text: statistics.advice.selection || ""; visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.Wrap }
+            UiLabel { objectName: "statisticsAdviceQuestion"; text: statistics.advice.question || ""; Layout.fillWidth: true; wrapMode: Text.Wrap; font.bold: true }
+            UiLabel { objectName: "statisticsAdviceStructure"; text: statistics.advice.structure || ""; visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.Wrap }
+            UiLabel { objectName: "statisticsAdviceSuggestion"; text: statistics.advice.suggestion || ""; visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.Wrap }
+            UiLabel { objectName: "statisticsAdviceAssumption"; text: statistics.advice.assumption || ""; visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.warning }
+            UiLabel { objectName: "statisticsAdviceSelection"; text: statistics.advice.selection || ""; visible: text.length > 0; Layout.fillWidth: true; wrapMode: Text.Wrap }
         }
         UiButton { text: qsTr("İptal"); visible: statistics.busy && !settings.checked && !panel.catalogMode; onClicked: statistics.cancel() }
         ColumnLayout {
