@@ -42,7 +42,9 @@ def test_substage_real_gui_fit_diagnostic_prediction_save_reopen_help(
         assert not imports.errorText
         engine = app._veri_ufku_resources[0]
         controller = engine._statistics_resources
-        window.setProperty("selectedSection", 4)
+        # Faz40 model paneli advanced Loader; beginner StatisticsWorkspace altında yok.
+        engine._workspace_resources.activate("statistics." + method.replace("_", "-"))
+        app.processEvents()
 
         def obj(name):
             result = window.findChild(QObject, "models" + name) or visual_find(
@@ -164,7 +166,8 @@ def test_gui_baseline_interaction_cluster_prediction_and_stale_filter(
         spin(app, lambda: not imports.busy)
         engine = app._veri_ufku_resources[0]
         controller = engine._statistics_resources
-        window.setProperty("selectedSection", 4)
+        engine._workspace_resources.activate("statistics.ols")
+        app.processEvents()
 
         def get(name):
             c = window.findChild(QObject, "models" + name) or visual_find(

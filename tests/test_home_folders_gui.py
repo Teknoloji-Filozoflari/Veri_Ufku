@@ -87,6 +87,8 @@ def test_folder_picker_create_search_hidden_navigation_open_recent_names(
         projects.request("save")
         spin(app, lambda: not projects.busy)
         assert projects.recentProjects[0]["name"] == "Çalışma projem"
+        # UX: proje açılınca Veri'ye geçilir; son projeler Başlangıç panelinde yan yana.
+        window.setProperty("selectedSection", 0)
         app.processEvents()
         recent = [
             visual_item(window.contentItem(), "recentProject_" + r["name"])

@@ -98,18 +98,21 @@ def test_model_workspace_shell_fit_save_unsupported(tmp_path, monkeypatch):
         assert not controller.errorText, controller.errorText
         spin(
             app,
-            lambda: any(
-                "analysis" in r or (isinstance(r, dict) and "models" in str(r))
-                for r in projects.draft.get("results", [])
-            )
-            or controller.current,
+            lambda: (
+                any(
+                    "analysis" in r or (isinstance(r, dict) and "models" in str(r))
+                    for r in projects.draft.get("results", [])
+                )
+                or controller.current
+            ),
         )
         assert data.dataset()["version_id"] == version_before
         assert projects.draft["datasets"] == before["datasets"]
         assert item("modelLayerStrip") is not None
-        assert "held-out" in (item("modelTestN").property("text") or "").lower() or "yok" in (
-            item("modelTestN").property("text") or ""
-        ).lower()
+        assert (
+            "held-out" in (item("modelTestN").property("text") or "").lower()
+            or "yok" in (item("modelTestN").property("text") or "").lower()
+        )
 
         item("modelBlockChip_7").clicked.emit()
         app.processEvents()
@@ -144,6 +147,8 @@ def test_model_block7_no_fake_formula(tmp_path, monkeypatch):
         item("modelBlockChip_7").clicked.emit()
         app.processEvents()
         assert not item("modelPrimaryAction").property("enabled")
-        assert "desteklenmiyor" in (item("modelBlock7Note").property("text") or "").lower()
+        assert (
+            "desteklenmiyor" in (item("modelBlock7Note").property("text") or "").lower()
+        )
     finally:
         teardown(app, window)

@@ -202,12 +202,12 @@ ColumnLayout {
         onHelpRequested: function(origin, context) { root.helpRequested(origin, context) }
     }
     Flow {
-        visible: !root.prepareShell
+        // prepareShell merkez düğmeleri kopyalar; objectName sözleşmesi boş projede de korunur.
         Layout.fillWidth: true
         spacing: Theme.sm
-        UiButton { tone: "violet"; objectName: root.prepareShell ? "" : "operationPreview"; text: "Önizle"; enabled: !projects.busy && !projects.readOnly && dataView.datasets.length > 0; primary: !operations.canApply; onClicked: root.runPreview() }
-        UiButton { tone: "violet"; objectName: root.prepareShell ? "" : "operationApply"; text: "Uygula ve projeye kaydet"; enabled: operations.canApply; primary: true; onClicked: root.runApply() }
-        UiButton { tone: "violet"; objectName: root.prepareShell ? "" : "operationCancel"; text: qsTr("İptal"); enabled: operations.busy && operations.state !== "publishing"; onClicked: root.runCancel() }
+        UiButton { tone: "violet"; objectName: "operationPreview"; text: "Önizle"; enabled: !projects.busy && !projects.readOnly && dataView.datasets.length > 0; primary: !operations.canApply; onClicked: root.runPreview() }
+        UiButton { tone: "violet"; objectName: "operationApply"; text: "Uygula ve projeye kaydet"; enabled: operations.canApply; primary: true; onClicked: root.runApply() }
+        UiButton { tone: "violet"; objectName: "operationCancel"; text: qsTr("İptal"); enabled: operations.busy && operations.state !== "publishing"; onClicked: root.runCancel() }
         UiButton { visible: false; tone: "mint"; text: qsTr("Bu ne işe yarar?"); property string helpContext: "operation-preview"; onClicked: root.helpRequested(this, helpContext) }
     }
     UiLabel {

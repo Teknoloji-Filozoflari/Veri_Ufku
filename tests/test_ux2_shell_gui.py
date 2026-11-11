@@ -23,7 +23,8 @@ def test_workspace_shell_modules_dock_and_narrow_center(tmp_path, monkeypatch):
         spin(app, lambda: window.property("selectedSection") == 1)
         assert window.property("veriEmpty")
         assert item("dataEmptyCard") is not None
-        assert not item("toolDock").property("visible")
+        # UX v2: boş Veri'de de import/başlık araç paneli erişilebilir kalır (dockRequested§1).
+        assert item("toolDock").property("visible")
         assert item("moduleOgren") is None
         for name in (
             "moduleIncele",
@@ -57,7 +58,8 @@ def test_workspace_shell_modules_dock_and_narrow_center(tmp_path, monkeypatch):
             (2, "operationPreview"),
             (3, "chartCreate"),
             (5, "preparationScan"),
-            (6, "deferredReportBuilderPanel"),
+            # Beginner Raporla → katalog; builder yalnız advanced/activate.
+            (6, "deferredReportCatalogPanel"),
         ):
             window.setProperty("selectedSection", section)
             spin(

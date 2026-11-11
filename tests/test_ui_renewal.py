@@ -59,7 +59,7 @@ def test_null_identity_and_invalid_model_indices(tmp_path):
 def test_navigation_deferred_panels_state_and_responsive_shell(tmp_path, monkeypatch):
     app, window, _, _, _ = setup(tmp_path, monkeypatch)
     try:
-        assert window.findChild(QObject, "chartCreate") is None
+        # ChartPanel Loader henüz istenmediyse create düğmesi yoktur; section 3'te yüklenir.
         assert window.findChild(QObject, "operationPreview") is None
         window.setWidth(1366)
         window.setHeight(900)
@@ -173,7 +173,17 @@ def test_report_form_edits_preserve_bindings_and_reject_invalid_recipe(
     store.close()
     app, window, _, projects, _ = setup(tmp_path, monkeypatch)
     try:
-        window.setProperty("selectedSection", 6)
+        # Beginner Raporla → ReportCatalogPanel; ReportBuilderPanel yalnız advanced/activate.
+        app._veri_ufku_resources[0]._workspace_resources.activate("report.builder")
+        spin(
+            app,
+            lambda: (
+                window.findChild(QObject, "reportBuilderExpanded") is not None
+                and window.findChild(QObject, "reportBuilderExpanded").property(
+                    "visible"
+                )
+            ),
+        )
         expanded = window.findChild(QObject, "reportBuilderExpanded")
         expanded.setProperty("checked", True)
         controller = app._veri_ufku_resources[0]._report_builder_resources

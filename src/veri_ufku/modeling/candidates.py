@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 
-def suggest_candidates(purpose: str, *, has_group: bool = False, has_time: bool = False):
+def suggest_candidates(
+    purpose: str, *, has_group: bool = False, has_time: bool = False
+):
     """Hedef/soru türüne göre aday yöntemler (status=aday; otomatik fit yok)."""
     purpose = (purpose or "").strip().lower()
     structure = (

@@ -194,14 +194,15 @@ ColumnLayout {
         spacing: Theme.sm
         UiButton {
             tone: "violet"
-            objectName: "operationCancel"
+            // Merkez açıkken ad burada; aksi halde dock OperationsPanel taşır.
+            objectName: root.visible ? "operationCancel" : ""
             text: qsTr("İptal")
             enabled: operations.busy && operations.state !== "publishing"
             onClicked: root.runCancel()
         }
         UiButton {
             tone: "violet"
-            objectName: "operationPreview"
+            objectName: root.visible ? "operationPreview" : ""
             text: qsTr("Önizle")
             enabled: !projects.busy && !projects.readOnly && dataView.datasets.length > 0 && !operations.busy
             primary: !operations.canApply
@@ -209,7 +210,7 @@ ColumnLayout {
         }
         UiButton {
             tone: "violet"
-            objectName: "operationApply"
+            objectName: root.visible ? "operationApply" : ""
             text: qsTr("Uygula ve kaydet")
             enabled: operations.canApply
             primary: true

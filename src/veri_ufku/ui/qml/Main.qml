@@ -48,12 +48,10 @@ ApplicationWindow {
             return true
         if (selectedSection >= 2 && selectedSection <= 6)
             return true
-        if (selectedSection !== 1)
-            return false
-        if (dataPane === "quality")
+        // Veri bölümünde araç paneli (başlıklar/import) boş durumda da erişilebilir kalır.
+        if (selectedSection === 1)
             return true
-        let sets = dataView && dataView.datasets ? dataView.datasets.length : 0
-        return sets > 0
+        return false
     }
     readonly property bool dockOpen: dockRequested && !dockDismissed
     readonly property bool inceleOpen: {
@@ -292,6 +290,7 @@ ApplicationWindow {
     function navigate(index, origin) {
         selectedSection = index
         window.syncUxStageFromSection()
+        if (infoOpen) learning.openContext(learning.screenContexts[index])
         if (origin) origin.forceActiveFocus()
         if (workspace.contentItem)
             workspace.contentItem.contentY = 0
@@ -311,10 +310,31 @@ ApplicationWindow {
             dockDismissed = false
         window.syncUxStageFromSection()
     }
-    function openReading(origin, articleId) {}
-    function openInformation(origin, articleId, context) {}
+    function openReading(origin, articleId) {
+        helpOrigin = origin
+        helpOriginName = origin ? origin.objectName : ""
+        learning.openArticle(articleId)
+        readingOpen = true
+        infoOpen = true
+        articleReader.open()
+    }
+    function openInformation(origin, articleId, context) {
+        if (readingOpen) closeInformation()
+        helpOrigin = origin || helpButton
+        helpOriginName = helpOrigin ? helpOrigin.objectName : ""
+        if (articleId) learning.openArticle(articleId)
+        else learning.openContext(context || learning.screenContexts[selectedSection])
+        infoOpen = true
+        if (!dockInfo) infoDrawer.open()
+        else dockPanel.focusFirst()
+    }
     function focusedHelpContext() {
-        return ""
+        let item = activeFocusItem
+        while (item) {
+            if (item.helpContext) return item.helpContext
+            item = item.parent
+        }
+        return learning.screenContexts[selectedSection]
     }
     function findVisibleItem(item, name) {
         if (!item || !item.visible) return null
@@ -326,13 +346,27 @@ ApplicationWindow {
         return null
     }
     function restoreHelpFocus() {
-        if (displayButton && displayButton.visible)
-            displayButton.forceActiveFocus()
+        let origin = helpOriginName ? findVisibleItem(window.contentItem, helpOriginName) : helpOrigin
+        if (!origin && helpOriginName) origin = findVisibleItem(window.header, helpOriginName) || findVisibleItem(window.footer, helpOriginName)
+        if (!origin && selectedSection === 7) origin = findVisibleItem(window.contentItem, "learningSearch")
+        if (!origin || !origin.visible || !origin.enabled) origin = helpButton.visible ? helpButton : displayButton
+        if (origin) origin.forceActiveFocus()
     }
     function closeInformation() {
         infoOpen = false
         readingOpen = false
+        articleReader.close()
+        infoDrawer.close()
+        restoreHelpFocus()
     }
+    onDockInfoChanged: {
+        if (infoOpen && !readingOpen) {
+            if (dockInfo) infoDrawer.close()
+            else infoDrawer.open()
+        }
+    }
+    Shortcut { sequence: "F1"; onActivated: window.openInformation(window.activeFocusItem || helpButton, "", window.focusedHelpContext()) }
+    Shortcut { sequence: "Escape"; enabled: window.infoOpen && window.dockInfo; onActivated: window.closeInformation() }
     Shortcut { sequence: "Ctrl+K"; onActivated: { expertWorkspace.search(""); commandPalette.open() } }
     Dialog {
         id: commandPalette
@@ -536,6 +570,24 @@ ApplicationWindow {
                         accessibleLabel: qsTr("Yöntem ve amaç ara (Ctrl+K)")
                         onClicked: { expertWorkspace.search(""); commandPalette.open() }
                     }
+                    UiIconButton {
+                        id: headerBeginner
+                        objectName: "beginnerButton"
+                        visible: true
+                        symbol: "sprout"
+                        accessibleLabel: qsTranslate("Shell", "Beginner")
+                        checked: !window.advanced
+                        onClicked: preferences.setView("beginner")
+                    }
+                    UiIconButton {
+                        objectName: "advancedButton"
+                        visible: true
+                        tone: "violet"
+                        symbol: "sliders"
+                        accessibleLabel: qsTranslate("Shell", "Advanced")
+                        checked: window.advanced
+                        onClicked: preferences.setView("advanced")
+                    }
                     UiButton {
                         objectName: "headerBack"
                         text: qsTr("Geri")
@@ -569,6 +621,16 @@ ApplicationWindow {
                         enabled: projects.opened && !projects.readOnly
                         onClicked: projects.request("save")
                     }
+                    UiButton {
+                        id: helpButton
+                        objectName: "helpButton"
+                        visible: true
+                        quiet: true
+                        tone: "mint"
+                        text: qsTranslate("Shell", "What is this for?")
+                        glyph: "?"
+                        onClicked: window.openInformation(this)
+                    }
                     UiIconButton {
                         id: displayButton
                         objectName: "displayButton"
@@ -579,7 +641,7 @@ ApplicationWindow {
                     }
                     UiIconButton {
                         objectName: "closeButton"
-                        visible: !window.quietHeader
+                        visible: true
                         symbol: "close"
                         accessibleLabel: qsTr("Uygulamayı kapat")
                         onClicked: window.close()
@@ -703,6 +765,36 @@ ApplicationWindow {
                                 window.openModel(origin)
                             else
                                 window.navigate(section, origin)
+                        }
+                    }
+                    UiLabel {
+                        visible: !window.compactNavigation
+                        text: window.advanced ? qsTr("ÇALIŞMA ALANI") : qsTr("BÖLÜMLER")
+                        color: Theme.muted
+                        font.pixelSize: Theme.small
+                        font.letterSpacing: 1
+                        Layout.leftMargin: Theme.md
+                        Layout.topMargin: Theme.md
+                        Layout.bottomMargin: Theme.sm
+                    }
+                    Repeater {
+                        model: window.sections
+                        UiNavigationButton {
+                            id: navButton
+                            required property int index
+                            required property string modelData
+                            objectName: "nav" + index
+                            compact: window.compactNavigation
+                            Layout.fillWidth: true
+                            symbol: ["home", "table", "prepare", "chart", "compare", "model", "report", "book"][index]
+                            tone: window.sectionTones[index]
+                            symbolColor: index === 6 ? Theme.reportTone : Theme.toneColor(tone)
+                            text: modelData
+                            checked: window.selectedSection === index
+                            Accessible.description: modelData
+                            onClicked: window.navigate(index, this)
+                            Keys.onDownPressed: nextItemInFocusChain().forceActiveFocus()
+                            Keys.onUpPressed: nextItemInFocusChain(false).forceActiveFocus()
                         }
                     }
                 }
@@ -925,10 +1017,27 @@ ApplicationWindow {
                     onActivated: window.reportTool = currentIndex
                 }
                 Connections { target:launchRequests; function onNavigate(section,tab) { window.selectedSection=section; if(section===1) dataTabs.currentIndex=tab } }
+                JourneyGuide {
+                    visible: !window.advanced && window.selectedSection > 0 && window.selectedSection < 7
+                    section: window.selectedSection
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    onLearnRequested: function(articleId, origin) { window.selectedSection=7; window.openReading(origin, articleId) }
+                    onNavigate: function(section) {
+                        window.navigate(section, null)
+                        if (section === 0) Qt.callLater(function() {
+                            let target=window.findVisibleItem(window.contentItem, projects.opened ? "saveProjectButton" : "newProjectButton")
+                            if (target) target.forceActiveFocus()
+                        })
+                    }
+                }
                 UiButton {
                     objectName: "expertToolsEntry"
-                    visible: false
+                    visible: !window.advanced && window.selectedSection > 0 && window.selectedSection < 7
+                    text: qsTr("Gelişmiş araçlara geç")
                     quiet: true
+                    Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
                     onClicked: preferences.setView("advanced")
@@ -1027,7 +1136,7 @@ ApplicationWindow {
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
-                    visible: false
+                    visible: window.selectedSection === 1
                     columnSpacing: Theme.sm
                     rowSpacing: Theme.sm
                     Repeater {
@@ -1391,12 +1500,80 @@ ApplicationWindow {
                     }
                 }
                 StateNotice { objectName: "availabilityNotice"; visible: false; heading: "Henüz mevcut değil" }
+                ScienceRoadmap {
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    visible: window.selectedSection === 0 && !window.advanced
+                    onNavigate: function(section, tab, origin) {
+                        if (origin && origin.expertRoute) preferences.setView("advanced")
+                        window.navigate(section, window.findVisibleItem(window.contentItem, "nav" + section))
+                        if (section === 1) {
+                            window.openDataPane(tab < 0 ? "" : origin && origin.route ? origin.route : tab === 1 ? "import" : "rows")
+                        }
+                        const route = origin && origin.route ? origin.route : ""
+                        if (section === 2 && route) Qt.callLater(function() {
+                            let catalog = deferredOperationsPanel.item
+                            if (catalog && catalog.selectBlock) {
+                                let block = route === "join" ? 5 : route === "transform" ? 4 : 1
+                                catalog.selectBlock(block)
+                            }
+                            let kind = window.findVisibleItem(window.contentItem, "operationKind")
+                            if (kind && kind.enabled) kind.forceActiveFocus()
+                            if (route === "join") Qt.callLater(function() {
+                                let method = window.findVisibleItem(window.contentItem, "transformMethod")
+                                if (method && method.enabled) method.forceActiveFocus()
+                            })
+                        })
+                        if (section === 5 && route) Qt.callLater(function() {
+                            if (route === "scenario" || route === "monitoring") {
+                                Qt.callLater(function() {
+                                    let control = window.findVisibleItem(window.contentItem, route + "Expanded")
+                                    if (control) { control.checked = true; control.forceActiveFocus() }
+                                })
+                            }
+                        })
+                        if (section === 0) Qt.callLater(function() {
+                            let button = window.findVisibleItem(window.contentItem, "newProjectButton")
+                            if (button) button.forceActiveFocus()
+                        })
+                    }
+                }
+                UiLabel {
+                    objectName: "journeyProjectHeading"
+                    visible: window.selectedSection === 0 && !window.advanced
+                    text: qsTr("Kendi yolculuğunu başlat")
+                    font.pixelSize: Theme.heading
+                    font.bold: true
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    wrapMode: Text.Wrap
+                }
+                UiLabel {
+                    visible: window.selectedSection === 0 && !window.advanced
+                    text: qsTr("Yeni bir proje oluştur veya kayıtlı çalışmanı aç. Veriyi ekledikten sonra haritadaki adımlara istediğin sırada dönebilirsin; kaydetmek çalışmanı korur.")
+                    color: Theme.secondary
+                    wrapMode: Text.Wrap
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                }
                 ProjectPanel {
                     Layout.fillWidth: true
                     Layout.leftMargin: Theme.xl
                     Layout.rightMargin: Theme.xl
                     visible: window.selectedSection === 0 || (window.selectedSection === 1 && !projects.opened)
                     onHelpRequested: function(origin) { window.openInformation(origin, "", "project") }
+                }
+                LearningCenter {
+                    objectName: "learningCenter"
+                    visible: window.selectedSection === 7
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Theme.xl
+                    Layout.rightMargin: Theme.xl
+                    library: learning
+                    onArticleRequested: function(articleId, origin) { window.openReading(origin, articleId) }
                 }
 
                 // Results and errors remain visible in either view, even if trial controls are collapsed.
@@ -1502,6 +1679,16 @@ ApplicationWindow {
                 if (!window.dataPane || window.dataPane === "import") window.openDataPane("rows")
             }
         }
+        InfoPanel {
+            id: dockPanel
+            objectName: "dockedInformation"
+            Layout.fillHeight: true
+            Layout.preferredWidth: 320 * Theme.scale
+            visible: window.dockInfo && window.infoOpen && !window.readingOpen
+            heading: window.sections[window.selectedSection]
+            detail: window.descriptions[window.selectedSection]
+            onCloseRequested: window.closeInformation()
+        }
     }
     Dialog {
         id: unsavedDialog
@@ -1534,11 +1721,84 @@ ApplicationWindow {
                 window.sawProject = false
         }
     }
+    Shortcut { objectName: "saveProjectShortcut"; sequence: "Ctrl+S"; enabled: !startupError; onActivated: projects.request("save") }
+    Shortcut { objectName: "openProjectShortcut"; sequence: "Ctrl+O"; enabled: !startupError; onActivated: { window.selectedSection = 0; window.findVisibleItem(window.contentItem, "openProjectButton").clicked() } }
+    LaboratoryWindow { id: lessonLab; library: learning; lab: learningLab; onArticleRequested: function(articleId, origin) { window.openReading(origin, articleId); window.requestActivate() } }
+    Connections { target: learningLab; function onOpened() { lessonLab.show(); lessonLab.requestActivate() } }
+    ExampleWindow {
+        id: learningExample
+        library: learning.exampleLibrary
+        onClosing: { window.requestActivate(); window.restoreHelpFocus() }
+    }
+    Connections { target: learning; function onExampleRequested() { learningExample.show(); learningExample.requestActivate() } }
+    Dialog {
+        id: articleReader
+        objectName: "learningReader"
+        parent: Overlay.overlay
+        anchors.centerIn: parent
+        width: Math.min(850 * Theme.scale, window.width - 32)
+        height: Math.min(820 * Theme.scale, window.height - 48)
+        modal: true
+        focus: true
+        padding: Theme.lg
+        closePolicy: Popup.CloseOnEscape
+        background: Rectangle { color: Theme.surface; radius: Theme.radius; border.color: Theme.learningTone }
+        onClosed: if (window.readingOpen) window.closeInformation()
+        header: RowLayout {
+            spacing: Theme.md
+            UiLabel { text: qsTr("Öğren · ") + learning.article.category; color: Theme.learningTone; font.bold: true; Layout.fillWidth: true; Layout.leftMargin: Theme.lg; wrapMode: Text.WordWrap }
+            UiIconButton { objectName: "learningReaderClose"; symbol: "close"; accessibleLabel: qsTr("Okuma penceresini kapat"); Layout.rightMargin: Theme.md; onClicked: window.closeInformation() }
+        }
+        contentItem: ScrollView {
+            id: readerScroll
+            clip: true
+            contentWidth: availableWidth
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ArticleView { width: readerScroll.availableWidth; library: learning; readingMode: true }
+        }
+        onOpened: { readerScroll.contentItem.contentY = 0; readerScroll.forceActiveFocus() }
+        Connections { target: learning; function onChanged() { if (window.readingOpen) readerScroll.contentItem.contentY = 0 } }
+    }
+    FirstRunTour {
+        id: firstRunTour
+        parent: Overlay.overlay
+        Component.onCompleted: if (uxContent.tourOpen) Qt.callLater(function() { firstRunTour.open() })
+    }
+    Connections {
+        target: uxContent
+        function onChanged() {
+            if (uxContent.tourOpen && !firstRunTour.opened) firstRunTour.open()
+        }
+    }
+    Drawer {
+        id: infoDrawer
+        objectName: "informationDrawer"
+        edge: Qt.RightEdge
+        y: window.header.height
+        width: Math.min(400 * Theme.scale, window.width - 32)
+        height: window.height - y
+        modal: true
+        focus: true
+        dim: false
+        interactive: true
+        dragMargin: 0
+        closePolicy: Popup.CloseOnEscape
+        padding: 0
+        onClosed: { if (!window.dockInfo && window.infoOpen) window.closeInformation() }
+        InfoPanel {
+            anchors.fill: parent
+            heading: window.sections[window.selectedSection]
+            detail: window.descriptions[window.selectedSection]
+            onCloseRequested: window.closeInformation()
+        }
+    }
+    // DESIGN_SYSTEM: Ctrl+1..8 → sections[0..7]; Model kısayolu bölüm 5'e iner (kurulu değilse ekran durumu).
     Shortcut { sequence: "Ctrl+1"; enabled: !startupError; onActivated: window.navigate(0, null) }
     Shortcut { sequence: "Ctrl+2"; enabled: !startupError; onActivated: window.openVeri(null) }
     Shortcut { sequence: "Ctrl+3"; enabled: !startupError; onActivated: window.navigate(2, null) }
     Shortcut { sequence: "Ctrl+4"; enabled: !startupError; onActivated: window.navigate(3, null) }
     Shortcut { sequence: "Ctrl+5"; enabled: !startupError; onActivated: window.navigate(4, null) }
-    Shortcut { sequence: "Ctrl+6"; enabled: !startupError; onActivated: window.openModel(null) }
+    Shortcut { sequence: "Ctrl+6"; enabled: !startupError; onActivated: window.navigate(5, null) }
     Shortcut { sequence: "Ctrl+7"; enabled: !startupError; onActivated: window.navigate(6, null) }
+    Shortcut { sequence: "Ctrl+8"; enabled: !startupError; onActivated: window.navigate(7, null) }
 }

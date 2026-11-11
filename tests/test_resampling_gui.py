@@ -64,7 +64,9 @@ def test_resampling_qml_unit_fit_save_reopen_export_help(
         assert not imports.errorText
         engine = app._veri_ufku_resources[0]
         controller = engine._statistics_resources
-        window.setProperty("selectedSection", 4)
+        # Resampling paneli advanced Loader; beginner istatistik alanında yok.
+        engine._workspace_resources.activate("statistics." + method.replace("_", "-"))
+        app.processEvents()
 
         def get(name):
             c = window.findChild(QObject, "resampling" + name) or visual_find(
@@ -211,7 +213,8 @@ def test_gui_rejects_dependent_row_sampling_and_cancels_without_publish(
         spin(app, lambda: not imports.busy)
         engine = app._veri_ufku_resources[0]
         c = engine._statistics_resources
-        window.setProperty("selectedSection", 4)
+        engine._workspace_resources.activate("statistics.bootstrap-percentile")
+        app.processEvents()
 
         def get(name):
             return window.findChild(QObject, "resampling" + name) or visual_find(
