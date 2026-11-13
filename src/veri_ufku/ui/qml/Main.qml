@@ -736,6 +736,9 @@ ApplicationWindow {
 
     RowLayout {
         anchors.fill: parent
+        // The finding drawer is a layout row, not an overlay: workspace content
+        // keeps its own space and the drawer never covers a control.
+        anchors.bottomMargin: findingDrawer.height
         spacing: 0
         Rectangle {
             objectName: "navigationRail"
@@ -1058,6 +1061,13 @@ ApplicationWindow {
                     requested: window.raporlaOpen
                     sourceComponent: ReportCatalogPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                        onOpenTool: function(tool, advanced) {
+                            if (advanced)
+                                preferences.setView("advanced")
+                            window.selectedSection = 6
+                            window.reportTool = tool
+                        }
+                        onOpenDrawer: function() { findingDrawer.expanded = true }
                     }
                 }
                 WorkspacePanel {
@@ -1801,4 +1811,28 @@ ApplicationWindow {
     Shortcut { sequence: "Ctrl+6"; enabled: !startupError; onActivated: window.navigate(5, null) }
     Shortcut { sequence: "Ctrl+7"; enabled: !startupError; onActivated: window.navigate(6, null) }
     Shortcut { sequence: "Ctrl+8"; enabled: !startupError; onActivated: window.navigate(7, null) }
+
+    // Bulgu defteri omurgası: her aşamada erişilebilir kalıcı yüzey (alta çekmece).
+    FindingDrawer {
+        id: findingDrawer
+        objectName: "findingDrawerHost"
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        z: 20
+        Connections {
+            target: findings
+            function onDrawerRequested(stage) {
+                findingDrawer.stage = stage
+                findingDrawer.expanded = true
+            }
+        }
+    }
+    Connections {
+        target: findings
+        function onChanged() {
+            if (findings.count > 0 && !findingDrawer.expanded)
+                findingDrawer.expanded = false
+        }
+    }
 }

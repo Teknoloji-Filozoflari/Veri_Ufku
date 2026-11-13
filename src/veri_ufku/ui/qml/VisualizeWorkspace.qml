@@ -246,7 +246,7 @@ ColumnLayout {
                         ScrollView {
                             Layout.fillWidth: true
                             Layout.fillHeight: true
-                            TextArea {
+                            UiTextArea {
                                 id: pythonBody
                                 objectName: "chartPython"
                                 readOnly: true
@@ -386,6 +386,15 @@ ColumnLayout {
                     enabled: !!charts.explanation.ready && !!charts.chartResult.dataset_version
                     Layout.fillWidth: true
                     onClicked: root.saveFinding()
+                }
+                UiButton {
+                    objectName: "findingAddGorsellestir"
+                    text: qsTr("Bulgu defterine ekle")
+                    tone: "mint"
+                    quiet: true
+                    enabled: findings.available
+                    Layout.fillWidth: true
+                    onClicked: findings.openFor("gorsellestir")
                 }
                 UiButton {
                     objectName: "chartPythonToggleOutput"

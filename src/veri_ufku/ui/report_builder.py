@@ -109,6 +109,12 @@ class ReportBuilderController(MonitoringController):
             if protocol in ("exploratory", "confirmatory"):
                 raw["protocol"] = protocol
             blocks = []
+            # Every recorded finding travels with the report; none is dropped.
+            findings = [f["id"] for f in (self.projects.draft.get("findings") or [])]
+            if findings:
+                blocks.append(
+                    dict(kind="findings", title="Bulgular", findings=findings)
+                )
             if 1 in indexes:
                 blocks.append(
                     dict(
@@ -418,6 +424,7 @@ class ReportBuilderController(MonitoringController):
                 "md": "report.md",
                 "html": "report.html",
                 "pdf": "report.pdf",
+                "docx": "report.docx",
                 "zip": "report-package.zip",
             }[fmt]
             import threading

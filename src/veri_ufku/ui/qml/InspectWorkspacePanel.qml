@@ -525,5 +525,13 @@ ColumnLayout {
                     dataView.computeQuality(true, "dataset", "inspect", "[]", "[]")
             }
         }
+        UiButton {
+            objectName: "findingAddIncele"
+            text: qsTr("Bulgu defterine ekle")
+            quiet: true
+            Layout.fillWidth: true
+            enabled: findings.available
+            onClicked: findings.openFor("incele")
+        }
     }
 }

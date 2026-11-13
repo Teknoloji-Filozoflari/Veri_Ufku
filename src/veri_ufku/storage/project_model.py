@@ -6,7 +6,7 @@ import re
 import uuid
 from pathlib import PurePosixPath
 
-SCHEMA_VERSION = 7
+SCHEMA_VERSION = 8
 MAX_MANIFEST = 4 * 1024 * 1024
 MAX_ARTIFACT = 4 * 1024**3
 
@@ -102,6 +102,7 @@ def new_state(name="Adsız proje"):
         datasets=[],
         operations=[],
         results=[],
+        findings=[],
         help_preferences={"depth": 0},
         seed=None,
     )
@@ -119,7 +120,7 @@ def validate_state(state):
     for key in ("import_settings", "help_preferences"):
         if not isinstance(state[key], dict):
             raise ProjectError("Proje ayarları geçersiz.")
-    for key in ("sources", "datasets", "operations", "results"):
+    for key in ("sources", "datasets", "operations", "results", "findings"):
         if not isinstance(state[key], list) or len(state[key]) > 10000:
             raise ProjectError("Proje kayıt sayısı geçersiz.")
     seen = set()
@@ -609,6 +610,10 @@ def validate_state(state):
                 raise ProjectError(
                     "Model hazırlığı kayıtlı işlem geçmişiyle uyuşmuyor."
                 )
+    from veri_ufku.storage.finding_store import validate as validate_finding
+
+    for finding in state["findings"]:
+        validate_finding(finding, set(by_version))
     if len(encode(state)) > MAX_MANIFEST // 2:
         raise ProjectError("Proje durum boyutu sınırı aşıldı.")
 
@@ -617,7 +622,17 @@ def _validate_manifest(manifest):
     if not isinstance(manifest, dict):
         raise ProjectError("Manifest nesne olmalı.")
     version = manifest.get("format_version")
-    if type(version) is not int or version not in (0, 1, 2, 3, 4, 5, 6, SCHEMA_VERSION):
+    if type(version) is not int or version not in (
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        SCHEMA_VERSION,
+    ):
         raise ProjectError(
             "Bilinmeyen proje şema sürümü. Uyumlu bir Veri_Ufku sürümüyle açın; proje değiştirilmedi."
         )
@@ -648,6 +663,10 @@ def _validate_manifest(manifest):
     state = manifest["state"]
     if version == 0:
         state = dict(state, help_preferences={"depth": 0}, seed=None)
+    if version < 8:
+        # The finding notebook arrived with schema 8; older projects open read-only
+        # compatible and are republished at the current version on the next save.
+        state = dict(state, findings=[])
     validate_state(state)
     if version < 2 and any(
         set(d) - {"dataset_id", "version_id", "source_id", "snapshot_uri"}
@@ -677,6 +696,8 @@ def _validate_manifest(manifest):
         )
     ):
         raise ProjectError("Çoklu girdi/yeni adaptör proje şema7 gerektirir.")
+    if version < 8 and state.get("findings"):
+        raise ProjectError("Bulgu defteri proje şema8 gerektirir.")
     artifacts = manifest["artifacts"]
     if not isinstance(artifacts, dict) or len(artifacts) > 10000:
         raise ProjectError("Artifact listesi geçersiz.")

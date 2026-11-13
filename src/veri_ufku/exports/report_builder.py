@@ -125,6 +125,47 @@ def calculate(request, spec, workspace, control=None):
             )
         elif kind == "bibliography":
             b["references"] = block["references"]
+        elif kind == "findings":
+            from veri_ufku.storage.finding_store import STAGE_LABELS
+
+            sections = []
+            for ident in block["findings"]:
+                finding = request["findings"].get(ident)
+                if not finding:
+                    raise ProjectError("Bulgu defteri kaydı rapor için bulunamadı.")
+                issue = next(
+                    (
+                        i
+                        for i in request["stale"]
+                        if i.get("kind") == "finding_stale" and i.get("id") == ident
+                    ),
+                    None,
+                )
+                lines = [
+                    "Soru: " + finding["question"],
+                    "Yöntem: " + finding["method"],
+                    "Sonuç: " + finding["result"],
+                ]
+                if finding["interpretation"]:
+                    lines.append("Yorum: " + finding["interpretation"])
+                if finding["decision"]:
+                    lines.append("Seçim gerekçesi: " + finding["decision"])
+                lines.append("Aşama: " + STAGE_LABELS[finding["stage"]])
+                lines.append(
+                    "Güncellik: "
+                    + (
+                        "güncel değil — " + str(issue.get("current", ""))
+                        if issue
+                        else "güncel"
+                    )
+                )
+                sections.append("\n".join(lines))
+            b["findings"] = list(block["findings"])
+            b["text"] = "\n\n".join(sections)
+            b["evidence"] = (
+                "Kullanıcı bulguları; sonuç kayıtlı çalışmadan okundu, "
+                "doğrulanmış hesap veya nedensel etki değildir."
+            )
         elif kind in ("dictionary", "table"):
             ref = request["sources"][block["version"]]
             columns = {c["id"]: c for c in ref["columns"]}
@@ -358,6 +399,9 @@ def calculate(request, spec, workspace, control=None):
     images = {name: raw for name, raw in files.items() if name.endswith(".png")}
     value["pdf_pages"] = write_pdf(doc, images, work / "report.pdf", control)
     files["report.pdf"] = (work / "report.pdf").read_bytes()
+    from veri_ufku.exports.docx import document as docx_document
+
+    files["report.docx"] = docx_document(value)
     for name, raw in images.items():
         doc = doc.replace(
             'src="' + name + '"',
@@ -466,8 +510,10 @@ def render(value, files):
                 + "</table>"
             )
         for k, item in b.items():
-            if k in ("title", "kind", "image", "attachments", "references") or (
-                b["kind"] == "table" and k == "data"
+            if (
+                k in ("title", "kind", "image", "attachments", "references")
+                or (b["kind"] == "table" and k == "data")
+                or (b["kind"] == "findings" and k == "findings")
             ):
                 continue
             text = (

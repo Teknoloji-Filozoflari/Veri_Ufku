@@ -3,6 +3,19 @@
 2026-10-13 Europe/Istanbul; ana kayıt REQUIREMENTS_MATRIX.md; hafıza PROJECT_STATE.md.
 Bu belge yeni faz yetkisi vermez.
 
+## Şema hizalama (2026-11-13 · şema PDF'i tek doğruluk kaynağı)
+
+Açık kullanıcı talimatı: `veri_ufku_sema_gelistirme_promtu.md` v1.0. Kapsam yalnız Faz A → B → C.
+
+| Faz | Teknik teslim | Resmî / kapsam |
+|---|---|---|
+| A Sözleşme | **Teknik tamamlandı:** `docs/SCHEMA_CONTRACT.md` (61 alt başlık · 53 var/6 eksik/1 yok + çelişkiler), `docs/SCHEMA_MAP.md`, ADR076/077/078; kod değişmedi | sürüyor; resmî kabul ayrı |
+| B Bulgu defteri | **Teknik tamamlandı:** `storage/finding_store.py`, `ui/findings.py`, `FindingDrawer.qml` (alta çekmece), 7 aşama eylemi, "güncel değil" işareti, rapora %100 akış; 12 yeni test | sürüyor; resmî kabul ayrı |
+| C Raporla hizalama | **Teknik tamamlandı:** yedi işlev birincil + kaynak-aşama ikincil; DOCX dışa aktarımı (`exports/docx.py`); 2 yeni GUI test | sürüyor; resmî kabul ayrı |
+| D–J | **Başlatılmadı** — yalnız açık kullanıcı talimatıyla | B-01, B-04 … B-10 karar bekliyor |
+
+[Kanıt](evidence/SCHEMA_ABC.md) · [Sözleşme](SCHEMA_CONTRACT.md) · [Harita](SCHEMA_MAP.md)
+
 ## UX V2 (arayüz/akış — teknik Faz’dan bağımsız)
 
 Açık kullanıcı talimatı: Project store `veri-ufku-gelistirme-promptu.md`. Yerel dal `ux-v2`; push yok.

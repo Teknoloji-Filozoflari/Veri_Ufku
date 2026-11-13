@@ -45,6 +45,22 @@ def freshness(state, spec):
     for b in spec["blocks"]:
         if "version" in b:
             check_version(b["version"])
+        if "findings" in b:
+            for ident in b["findings"]:
+                finding = next(
+                    (f for f in state.get("findings") or [] if f["id"] == ident),
+                    None,
+                )
+                if not finding:
+                    issues.append(dict(kind="finding_missing", id=ident))
+                    continue
+                from veri_ufku.storage.finding_store import stale as finding_stale
+
+                is_stale, reason = finding_stale(state, finding)
+                if is_stale:
+                    issues.append(dict(kind="finding_stale", id=ident, current=reason))
+                for version in finding["dataset_version_ids"]:
+                    check_version(version)
         if "record" not in b:
             continue
         r = records[b["record"]]
@@ -77,6 +93,7 @@ def request_for(store, state, parameters):
     selected = {}
     sources = {}
     artifacts = {}
+    findings = {}
     for b in spec["blocks"]:
         if "version" in b:
             v = b["version"]
@@ -86,6 +103,16 @@ def request_for(store, state, parameters):
                 raise ProjectError("Rapor dataset/ColumnId bağı projede yok.")
             sources[v] = copy.deepcopy(all_refs[v])
             sources[v]["dataset"] = copy.deepcopy(datasets[v])
+        if "findings" in b:
+            for ident in b["findings"]:
+                finding = next(
+                    (f for f in state.get("findings") or [] if f["id"] == ident), None
+                )
+                if not finding:
+                    raise ProjectError(
+                        "Rapor bulgu defteri kaydı ister; kayıt projede yok."
+                    )
+                findings[ident] = copy.deepcopy(finding)
         if "record" not in b:
             continue
         ident = b["record"]
@@ -149,6 +176,7 @@ def request_for(store, state, parameters):
         spec=spec,
         sources=sources,
         records=selected,
+        findings=findings,
         artifacts=artifacts,
         masked_names=masked_names,
         stale=freshness(state, spec),
@@ -262,6 +290,7 @@ def publish(store, state, value, control=None):
             "report.md",
             "report.html",
             "report.pdf",
+            "report.docx",
             "manifest.json",
             "report-package.zip",
         }
@@ -368,6 +397,7 @@ def export_file(store, state, ident, name, destination, review_hash, control=Non
         "report.md",
         "report.html",
         "report.pdf",
+        "report.docx",
         "report-package.zip",
     ):
         raise ProjectError("Rapor formatı desteklenmiyor.")

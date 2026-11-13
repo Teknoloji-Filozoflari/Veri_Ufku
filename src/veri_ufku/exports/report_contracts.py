@@ -18,6 +18,7 @@ KINDS = (
     "uncertainty",
     "diagnostic",
     "result",
+    "findings",
     "bibliography",
 )
 RECORD_KINDS = (
@@ -31,7 +32,7 @@ RECORD_KINDS = (
     "time_series",
     "neural",
 )
-FORMATS = ("md", "html", "pdf", "zip")
+FORMATS = ("md", "html", "pdf", "docx", "zip")
 LIMITATIONS = [
     "Bulgular seçilen immutable kayıtların değerleridir; bu rapor analiz/modeli yeniden hesaplamaz.",
     "Keşifsel/doğrulayıcı sınıfı kullanıcı beyanıdır; confirmatory seçmek tasarımın geçerliliğini kanıtlamaz.",
@@ -40,7 +41,7 @@ LIMITATIONS = [
     "Redaction desen ve açık ColumnId seçimine dayanır; anonimlik veya bütün serbest metindeki sırları bulma garantisi değildir.",
     "Statik grafikte örnekleme/filtre/caption bağlamı korunur; kaynak değişimi eski raporu güncel kanıt yapmaz.",
     "Markdown/HTML/PDF bağımsız dosyada attachment bağlantıları yalnız paketle aynı dizine açıldığında çalışır; ZIP taşınabilir tam teslimdir.",
-    "PDF yerel A4 Türkçe font kullanır; HTML/Markdown/PDF düzenleri birebir aynı değildir. DOCX/local LLM/remote service desteklenmiyor.",
+    "PDF yerel A4 Türkçe font kullanır; HTML/Markdown/PDF düzenleri birebir aynı değildir. DOCX yerel ve bağımlılıksız üretilir; local LLM/remote service desteklenmiyor.",
 ]
 
 
@@ -95,6 +96,7 @@ def recipe(raw):
                 "caption",
                 "code_column",
                 "references",
+                "findings",
             }
         ):
             raise ProjectError("Rapor blok alanları geçersiz.")
@@ -153,6 +155,17 @@ def recipe(raw):
                     raise ProjectError(
                         "Kaynakça yalnız credentials/query/fragment içermeyen HTTPS atfı; ağ açılmaz."
                     )
+        elif kind == "findings":
+            allowed.add("findings")
+            ids = b.get("findings")
+            if (
+                not isinstance(ids, list)
+                or not 1 <= len(ids) <= 500
+                or len(set(ids)) != len(ids)
+            ):
+                raise ProjectError("Bulgular bölümü 1..500 bulgu kimliği ister.")
+            for ident in ids:
+                entity_id(ident, "finding")
         else:
             allowed.add("record")
             entity_id(b.get("record"), "result")

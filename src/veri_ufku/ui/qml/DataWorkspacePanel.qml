@@ -588,5 +588,13 @@ ColumnLayout {
                 }
             }
         }
+        UiButton {
+            objectName: "findingAddVeri"
+            text: qsTr("Bulgu defterine ekle")
+            quiet: true
+            Layout.fillWidth: true
+            enabled: findings.available
+            onClicked: findings.openFor("veri")
+        }
     }
 }

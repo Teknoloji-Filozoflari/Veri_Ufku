@@ -3469,7 +3469,7 @@ CAPABILITIES["report.builder"] = Capability(
     help_links=("scientific-report",),
     assumptions=(
         "No analysis recompute; recorded metrics only; manual narrative is not evidence",
-        "Offline bounded export; explicit redaction preview; DOCX/LLM unsupported",
+        "Offline bounded export; explicit redaction preview; DOCX is local and dependency-free; LLM/remote unsupported",
     ),
     limits=(("report_bytes", 33554432), ("blocks", 32), ("table_rows", 100)),
     evidence_refs=("docs/evidence/PHASE70.md",),

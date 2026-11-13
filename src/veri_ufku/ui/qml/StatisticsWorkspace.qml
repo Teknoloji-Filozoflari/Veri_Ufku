@@ -251,5 +251,12 @@ ColumnLayout {
             enabled: statistics.current && !projects.busy && !projects.readOnly
             onClicked: root.runSave()
         }
+        UiButton {
+            objectName: "findingAddIstatistik"
+            text: qsTr("Bulgu defterine ekle")
+            quiet: true
+            enabled: findings.available
+            onClicked: findings.openFor("istatistik")
+        }
     }
 }

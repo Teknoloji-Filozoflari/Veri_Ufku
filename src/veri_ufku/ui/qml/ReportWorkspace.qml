@@ -142,4 +142,13 @@ ColumnLayout {
         heading: qsTr("Rapor durumu")
         detail: reportBuilder.errorText || (reportBuilder.busy ? qsTr("Rapor işleniyor…") : qsTr("Hazır"))
     }
+
+    UiButton {
+        objectName: "findingAddRaporla"
+        text: qsTr("Bulgu defterine ekle")
+        quiet: true
+        Layout.fillWidth: true
+        enabled: findings.available
+        onClicked: findings.openFor("raporla")
+    }
 }

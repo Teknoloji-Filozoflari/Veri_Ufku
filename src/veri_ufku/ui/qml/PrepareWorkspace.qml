@@ -216,5 +216,12 @@ ColumnLayout {
             primary: true
             onClicked: root.runApply()
         }
+        UiButton {
+            objectName: "findingAddHazirla"
+            text: qsTr("Bulgu defterine ekle")
+            quiet: true
+            enabled: findings.available
+            onClicked: findings.openFor("hazirla")
+        }
     }
 }

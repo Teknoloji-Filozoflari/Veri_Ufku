@@ -70,7 +70,7 @@ def test_old_schema_fixture_open_migrate_retains_backup(tmp_path, version):
             to_version=SCHEMA_VERSION,
             original_commit=manifest["commit_id"],
         )
-        assert writer.state == manifest["state"]
+        assert writer.state == dict(manifest["state"], findings=[])
     assert (commit / "manifest.json").read_bytes() == raw
     with sqlite3.connect(root / "metadata.sqlite") as db:
         assert db.execute(

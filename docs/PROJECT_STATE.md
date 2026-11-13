@@ -1,5 +1,41 @@
 # Veri_Ufku — aktif görev hafızası
 
+## Şema hizalama Faz A → B → C (aktif · 2026-11-13)
+
+2026-11-13: Açık kullanıcı talimatı ile `veri_ufku_sema_gelistirme_promtu.md` v1.0 uygulandı.
+Kapsam yalnız **Faz A → B → C**; D–J başlatılmadı. Kullanıcı kararları: bulgu defteri **alta
+çekmece** (B-02), Raporla **yedi iş birincil sekme** (B-03), git için **yerel commit + push**
+yetkisi verildi.
+
+**Faz A (kod değiştirmez):** `docs/SCHEMA_CONTRACT.md` (61 alt başlık: 53 var · 6 eksik · 1 yok
++ 10 çelişki), `docs/SCHEMA_MAP.md` (alt başlık ↔ modül ↔ QML ↔ test), ADR076 (şema tek kaynak),
+ADR077 (Bulgu defteri omurgası), ADR078 (Mod 1 / Mod 2). Şema tek doğruluk kaynağı ilan edildi.
+
+**Faz B (Bulgu defteri omurgası):** `storage/finding_store.py` (soru · yöntem · sonuç · yorum ·
+seçim gerekçesi; veri sürümü + kapsam + parametre bağı), `ui/findings.py` denetleyici,
+`FindingDrawer.qml` **alta çekmece** ve yedi aşama yüzeyine "Bulgu defterine ekle" eylemi.
+Bulgu tek kayıt sisteminde `ProjectStore` durumunda saklanır (proje şema sürümü 7→8, eski
+projeler şema8'de boş defterle açılır). Veri sürümü türetildiğinde veya çalışma alanı sürümü
+değiştiğinde bulgu **"güncel değil"** işaretlenir; hiçbir bulgu sessizce güncellenmez. Rapor
+tarifine `findings` blok türü eklendi: defterdeki kayıtların tamamı raporun "Bulgular"
+bölümüne gerekçesiyle taşınır, kayıt projede yoksa dışa aktarım hata verir.
+
+**Faz C (Raporla hizalama):** `ReportCatalogPanel.qml` yedi işleve göre yeniden düzenlendi
+(Bulgu defteri · Rapor yapısı · Rapor öncesi kontrol · Dışa aktar · Yeniden üretim · Gizlilik
+ve paylaşım · İleri çıktılar). Kaynak-aşamaya göre 8 bölüm "Rapor yapısı" işlevinde ikincil
+kaldı. **Word (DOCX) dışa aktarımı** eklendi: bağımlılıksız yerel OOXML üreticisi
+(`exports/docx.py`), paket bütünlüğü ve `word/document.xml` varlığı testli. "İleri çıktılar"
+modülü kurulu değil; soluk görünür ve "Modül: indir" der, indirme otomatik başlamaz.
+
+**Doğrulama:** check_docs · check_artifacts · check_learning · check_usability · ruff check ·
+ruff format · `veri-ufku --smoke-test` (`GUI_SMOKE PASS`) — hepsi PASS. Odaklı yeni testler:
+`test_finding_store.py` 9, `test_findings_gui.py` 3, `test_report_functions_gui.py` 2; geniş
+regresyon 188 passed / 2 failed (iki test HEAD'de de düşüyor, önceden mevcut). Bu oturumda
+ayrıca HEAD'de kırmızı olan `scripts/check_usability.py` kapısı düzeltildi (ham `TextArea` →
+paylaşılan `UiTextArea`). Tam suite, kurulu tekerlek smoke, fiziksel masaüstü, AT, insan
+kabulü, minimum donanım, offline kurulum, uzak CI ve longheap koşuları **çalıştırılmadı**.
+[Kanıt](evidence/SCHEMA_ABC.md).
+
 ## UX V2 (aktif — yerel `ux-v2`)
 
 2026-10-25: Açık kullanıcı talimatı ile UX0–UX10 arayüz/akış görevi başladı.

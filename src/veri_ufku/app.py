@@ -382,6 +382,11 @@ def create_application():
     engine.rootContext().setContextProperty("launchRequests", launch)
     engine._projects_resources = projects
     engine.rootContext().setContextProperty("projects", projects)
+    from veri_ufku.ui.findings import FindingsController
+
+    findings = FindingsController(projects, data_view, engine)
+    engine._findings_resources = findings
+    engine.rootContext().setContextProperty("findings", findings)
     engine._learning_resources = learning
     engine.rootContext().setContextProperty("learning", learning)
     engine.rootContext().setContextProperty("preferences", preferences)

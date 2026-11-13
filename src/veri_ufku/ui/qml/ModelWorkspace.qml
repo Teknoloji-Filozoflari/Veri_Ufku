@@ -324,4 +324,12 @@ ColumnLayout {
         font.pixelSize: Theme.small
         text: qsTr("Model yeni veri sürümü üretmez; kaynak dosya değişmez. Eğit ve kaydet sonucu analysis_store’a yazar.")
     }
+    UiButton {
+        objectName: "findingAddModel"
+        text: qsTr("Bulgu defterine ekle")
+        quiet: true
+        Layout.fillWidth: true
+        enabled: findings.available
+        onClicked: findings.openFor("model")
+    }
 }
