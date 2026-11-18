@@ -26,6 +26,16 @@ ColumnLayout {
     ]
 
     readonly property var learnedKinds: ["missing_rows", "missing_columns", "dedup", "ordered_fill", "outlier"]
+    // Model modülü kurulu değilse Mod 2 gizlenir; Mod 1 her zaman kullanılabilir.
+    readonly property bool mod2Available: !!(expertWorkspace && expertWorkspace.modelModule && expertWorkspace.modelModule.installed)
+    readonly property var scopeOptions: {
+        let list = [{ id: 0, label: qsTr("Mod 1 — Tüm veriye uygula (yeni veri sürümü)") }]
+        if (root.mod2Available)
+            list.push({ id: 1, label: qsTr("Mod 2 — Model için planla (yeni sürüm oluşmaz)") })
+        return list
+    }
+    onScopeOptionsChanged: if (!root.mod2Available && root.prepareScopeMode === 1)
+        root.prepareScopeMode = 0
 
     function statusColor(status) {
         return status === "done" ? Theme.learningTone : status === "pending" ? Theme.warning : Theme.muted
@@ -124,7 +134,10 @@ ColumnLayout {
     function runApply() {
         operations.setPrepareScopeMode(root.prepareScopeMode === 1 ? "mod2" : "mod1")
         markTouched(10)
-        ops.runApply()
+        if (root.prepareScopeMode === 1)
+            ops.planForModel()
+        else
+            ops.runApply()
     }
     function runCancel() {
         ops.runCancel()
@@ -215,23 +228,38 @@ ColumnLayout {
         ColumnLayout {
             width: parent.width
             spacing: Theme.sm
-            UiLabel { text: qsTr("Kapsam modu"); font.bold: true; Layout.fillWidth: true }
+            UiLabel { text: qsTr("Öğrenilen dönüşüm kapsamı"); font.bold: true; Layout.fillWidth: true }
             UiCombo {
                 id: scopeMode
                 objectName: "prepareScopeModeCombo"
-                accessibleLabel: qsTr("Kapsam modu")
+                accessibleLabel: qsTr("Öğrenilen dönüşüm kapsamı")
                 Layout.fillWidth: true
-                model: [qsTr("Mod 1 — veri kümesi öğrenimi (varsayılan)"), qsTr("Mod 2 — eğitim-katı uyarısı (uygulama yok)")]
+                model: root.scopeOptions
                 currentIndex: root.prepareScopeMode
                 onActivated: root.prepareScopeMode = currentIndex
             }
             UiLabel {
                 objectName: "prepareMod2Warning"
-                visible: root.showMod2Warning
+                visible: root.prepareScopeMode === 1
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
                 color: Theme.warning
-                text: qsTr("Eğitim-katı öğrenimi Model/Preparation training_fold sözleşmesine bağlanır; bu ekranda train-only uygulama yok. Apply yine mevcut cleaning yoludur; leakage bayrağı korunur.")
+                text: qsTr("Mod 2: dönüşüm tüm veriye uygulanmaz ve yeni veri sürümü oluşmaz. Plan kaydedilir; Model aşamasında yalnız eğitim katında öğrenilir, test verisine bilgi sıkmaz. Mod 1 ve Mod 2 birbirini dışlar.")
+            }
+            UiLabel {
+                objectName: "prepareMod2Unavailable"
+                visible: !root.mod2Available
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                color: Theme.secondary
+                text: qsTr("Model modülü kurulu değil; Mod 2 gizlenir. Yalnız Mod 1 (tüm veriye uygula) kullanılabilir.")
+            }
+            UiLabel {
+                objectName: "prepareMod2Plans"
+                visible: root.prepareScopeMode === 1 && (ops.mod2Plans || []).length > 0
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                text: qsTr("Bekleyen Mod 2 planları: ") + (ops.mod2Plans || []).map(p => p.label).join(" · ")
             }
             UiLabel {
                 visible: root.selectedBlock === 9 || operations.leakageHistory.length > 0

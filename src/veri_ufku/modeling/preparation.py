@@ -12,6 +12,7 @@ from veri_ufku.importers.delimited import Control
 from veri_ufku.modeling.contracts import PreparationSpec, identifier
 from veri_ufku.modeling.history import ancestors, audit
 from veri_ufku.modeling.plan import blueprint
+from veri_ufku.modeling.plans import pending_plans
 from veri_ufku.storage.project_model import ProjectError, uid
 
 MAX_ROWS = 100000
@@ -413,7 +414,18 @@ def calculate(request, parameters, workspace, control=None):
             "prediction_context",
             "Tahmin anında hangi bilgilerin mevcut olduğu belirtilmedi; hedef türevleri ve zaman yapısını bağlamıyla inceleyin.",
         )
-    plan = blueprint(spec, columns, semantics, history)
+    pending = pending_plans(request["history_state"], request["version_id"])
+    for entry in pending:
+        for operation in entry["operations"]:
+            for ident in operation["column_ids"]:
+                if ident not in spec.features:
+                    risk(
+                        "mod2_unselected_column",
+                        "Mod 2 planı seçili olmayan bir kolonu hedefliyor; "
+                        "plan bu koşuda uygulanmayacak.",
+                        ident,
+                    )
+    plan = blueprint(spec, columns, semantics, history, pending)
     plan["version_id"] = "ml-pipeline:" + uid()
     selected = set(spec.features) | {
         v for v in (spec.target, spec.group, spec.time) if v

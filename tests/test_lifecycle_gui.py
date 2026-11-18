@@ -5,7 +5,21 @@ import os
 import polars as pl
 from PySide6.QtCore import QObject, QUrl
 from test_import_gui import spin, teardown
+from test_learning_gui import visual_item
 from test_validation_gui import imported
+
+
+def item(window, name):
+    """Görsel ağacı da kapsayan nesne araması (Repeater delegeleri QObject ağacında değil)."""
+    return window.findChild(QObject, name) or visual_item(window.contentItem(), name)
+
+
+def open_model_entry(window, app, index):
+    """Model kataloğundan ilgili alt başlığı açar (M-10 ileri yollar vb.)."""
+    chip = item(window, f"modelBlockChip_{index}")
+    assert chip is not None, index
+    chip.clicked.emit()
+    app.processEvents()
 
 
 def test_qml_pipeline_package_roundtrip_new_data_no_overwrite_help(
@@ -21,7 +35,8 @@ def test_qml_pipeline_package_roundtrip_new_data_no_overwrite_help(
         assert not c.errorText, c.errorText
         record = next(r for r in projects.draft["results"] if "baseline" in r)
         assert record["baseline"]["model_package_uri"]
-        panel = window.findChild(QObject, "lifecyclePanel")
+        open_model_entry(window, app, 10)
+        panel = item(window, "lifecyclePanel")
         assert panel is not None and panel.property("visible")
         window.findChild(QObject, "lifecycleOpenSaved").clicked.emit()
         spin(app, lambda: not lifecycle.busy)

@@ -84,17 +84,18 @@ ApplicationWindow {
     }
     readonly property bool statisticsWorkspaceDock: istatistikOpen
     readonly property bool modelInstalled: expertWorkspace.modelModule.installed === true
+    readonly property bool modelStageOpen: selectedSection === 5 && modelInstalled
     readonly property bool modelOpen: {
         if (selectedSection !== 5 || !modelInstalled)
             return false
         let sets = dataView && dataView.datasets ? dataView.datasets.length : 0
         return sets > 0
     }
-    readonly property bool modelWorkspaceDock: modelOpen
+    readonly property bool modelWorkspaceDock: modelStageOpen
     readonly property bool raporlaOpen: selectedSection === 6 && reportTool === 0 && projects.opened
     readonly property bool reportWorkspaceDock: raporlaOpen
     readonly property bool slimToolDock: veriWorkspaceDock || inspectWorkspaceDock || visualizeWorkspaceDock || prepareWorkspaceDock || statisticsWorkspaceDock || modelWorkspaceDock || reportWorkspaceDock
-    readonly property bool quietHeader: selectedSection === 1 || gorsellestirOpen || hazirlaOpen || istatistikOpen || modelOpen || raporlaOpen
+    readonly property bool quietHeader: selectedSection === 1 || gorsellestirOpen || hazirlaOpen || istatistikOpen || modelStageOpen || raporlaOpen
     readonly property string moduleKey: {
         if (selectedSection === 0)
             return ""
@@ -140,7 +141,7 @@ ApplicationWindow {
         let sets = dataView && dataView.datasets ? dataView.datasets.length : 0
         return sets > 0
     }
-    readonly property bool centerOpen: showTable || window.veriEmpty || window.inceleOpen || window.gorsellestirOpen || window.hazirlaOpen || window.istatistikOpen || window.modelOpen || window.raporlaOpen
+    readonly property bool centerOpen: showTable || window.veriEmpty || window.inceleOpen || window.gorsellestirOpen || window.hazirlaOpen || window.istatistikOpen || window.modelStageOpen || window.raporlaOpen
     readonly property string veriContextLine: {
         if (selectedSection !== 1 && !gorsellestirOpen && !hazirlaOpen && !istatistikOpen && !modelOpen && !raporlaOpen)
             return projects.context
@@ -890,11 +891,12 @@ ApplicationWindow {
                 }
                 ModelWorkspace {
                     id: modelWorkspace
-                    visible: window.modelOpen
+                    visible: window.modelStageOpen
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     catalogControls: deferredModelCatalogPanel.item
                     onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                    onSectionRequested: function(section) { window.selectedSection = section }
                 }
                 ReportWorkspace {
                     id: reportWorkspace
@@ -1451,62 +1453,10 @@ ApplicationWindow {
                 WorkspacePanel {
                     id: deferredModelCatalogPanel
                     objectName: "deferredModelCatalogPanel"
-                    requested: window.modelOpen
+                    requested: window.modelStageOpen
                     sourceComponent: ModelCatalogPanel {
                         onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
-                    }
-                }
-                UiCombo {
-                    id:modelPath
-                    objectName:"modelPath"
-                    visible: window.selectedSection === 5 && window.modelInstalled && !window.modelOpen
-                    model:["Kayıt bazlı modelleme","Zaman serisi — geçmişten geleceğe","Yerel metin incelemesi"]
-                    Layout.fillWidth:true;Layout.leftMargin:Theme.xl;Layout.rightMargin:Theme.xl
-                    Accessible.name:"Modelleme yolu"
-                }
-                UiLabel {
-                    objectName: "modelLeakageNotice"
-                    visible: window.selectedSection === 5 && window.modelInstalled && !window.modelOpen && (operations.modelLeakage.text || "").length > 0
-                    text: operations.modelLeakage.text || ""
-                    color: operations.modelLeakage.warning ? Theme.warning : Theme.secondary
-                    Layout.fillWidth: true
-                    Layout.leftMargin: Theme.xl
-                    Layout.rightMargin: Theme.xl
-                    wrapMode: Text.Wrap
-                }
-                WorkspacePanel {
-                    objectName: "deferredTextPanel"
-                    requested: window.selectedSection === 5 && window.modelInstalled && !window.modelOpen && modelPath.currentIndex === 2
-                    sourceComponent: TextPanel {
-                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
-                    }
-                }
-                WorkspacePanel {
-                    objectName: "deferredTimeSeriesPanel"
-                    requested: window.selectedSection === 5 && window.modelInstalled && !window.modelOpen && modelPath.currentIndex === 1
-                    sourceComponent: TimeSeriesPanel {
-                        onHelpRequested:function(origin,context){window.openInformation(origin,"",context)}
-                    }
-                }
-                WorkspacePanel {
-                    objectName: "deferredScenarioPanel"
-                    requested: window.advanced && window.modelInstalled && window.selectedSection === 5 && !window.modelOpen && modelPath.currentIndex === 0
-                    sourceComponent: ScenarioPanel {
-                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
-                    }
-                }
-                WorkspacePanel {
-                    objectName: "deferredMonitoringPanel"
-                    requested: window.advanced && window.modelInstalled && window.selectedSection === 5 && !window.modelOpen && modelPath.currentIndex === 0
-                    sourceComponent: MonitoringPanel {
-                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
-                    }
-                }
-                WorkspacePanel {
-                    objectName: "deferredPreparationPanel"
-                    requested: window.selectedSection === 5 && window.modelInstalled && !window.modelOpen && modelPath.currentIndex === 0
-                    sourceComponent: PreparationPanel {
-                        onHelpRequested: function(origin, context) { window.openInformation(origin, "", context) }
+                        onSectionRequested: function(section) { window.selectedSection = section }
                     }
                 }
                 StateNotice { objectName: "availabilityNotice"; visible: false; heading: "Henüz mevcut değil" }

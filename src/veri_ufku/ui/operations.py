@@ -12,11 +12,25 @@ from pathlib import Path
 from PySide6.QtCore import Property, QObject, QTimer, Signal, Slot
 
 from veri_ufku.jobs.admission import start_controller
+from veri_ufku.modeling.plans import create_plan, pending_plans, plan_key, plan_steps
 from veri_ufku.operations.contracts import activate, active_datasets, build, move
 from veri_ufku.operations.worker import process_entry
+from veri_ufku.storage import plan_store
 from veri_ufku.storage.project_model import ProjectError, decode, uid
 from veri_ufku.ui.dataset import DatasetTableModel
 from veri_ufku.ui.projects import project_error_text
+
+MOD2_LEARNED_METHODS = ("mean", "median", "mode")
+MOD1_CONFLICT = (
+    "Bu dönüşüm Mod 1 ile tüm veriye uygulanmış; Mod 1 ve Mod 2 birbirini dışlar."
+)
+MOD2_CONFLICT = "Bu dönüşüm Mod 2 için planlandı; Mod 1 ve Mod 2 birbirini dışlar."
+MOD2_DUPLICATE = "Bu dönüşüm zaten Mod 2 için planlandı."
+MOD2_NOT_LEARNED = "Mod 2 yalnız öğrenilen dönüşümleri kapsar; bu işlem Mod 1 ile tüm veriye uygulanmalıdır."
+MOD2_SAVED = (
+    "Mod 2 planı kaydedildi; yeni veri sürümü oluşmadı. "
+    "Dönüşüm Model aşamasında yalnız eğitim katında öğrenilecek."
+)
 
 
 def publish(store, state, result=None):
@@ -53,11 +67,14 @@ class OperationsController(QObject):
         self.preview = None
         self.binding = None
         self.signature = None
+        # İşçi başlatılana kadar süre ölçümü yapılamaz.
+        self.started = None
         self._message = "Kaynak korunur. Önizleme tüm veriyi hesaplar; tablolar ilk200 kaydı gösterir."
         self._error = ""
         self._state = "idle"
         self._inspect_draft = {}
         self._prepare_scope_mode = "mod1"
+        self._pending_message = ""
         self.cancel_time = None
         self.timer = QTimer(self)
         self.timer.setInterval(25)
@@ -128,8 +145,229 @@ class OperationsController(QObject):
 
     @Slot(str)
     def setPrepareScopeMode(self, mode):
-        """UI note only; cleaning learned_scope stays none|dataset (no train-only)."""
+        """Kapsam modu: Mod 1 tüm veriye uygular, Mod 2 yalnız planlar."""
         self._prepare_scope_mode = mode if mode in ("mod1", "mod2") else "mod1"
+        self.changed.emit()
+
+    scopeMode = Property(str, lambda self: self._prepare_scope_mode, notify=changed)
+
+    def preview_operation(self):
+        """Geçerli önizlemeden Mod 1/Mod 2 karşılaştırma anahtarı üretir."""
+        spec = (self.preview or {}).get("spec") or {}
+        parameters = spec.get("parameters") or {}
+        return dict(
+            kind=spec.get("kind", ""),
+            method=parameters.get("method", ""),
+            column_ids=list(spec.get("column_ids") or []),
+        )
+
+    def mod2_record(self, operation):
+        """Aynı dönüşümü içeren bekleyen Mod 2 planı; yoksa None."""
+        version = (self.data.dataset() or {}).get("version_id", "")
+        if not version or not self.projects.draft:
+            return None
+        key = plan_key(operation)
+        for entry in pending_plans(self.projects.draft, version):
+            for planned in entry["operations"]:
+                if plan_key(planned) == key:
+                    return entry
+        return None
+
+    def applied_dataset_scope(self, operation):
+        """Aynı dönüşüm tüm veriye uygulanmış mı; Mod 1 kaydı aranır."""
+        from veri_ufku.modeling.history import ancestors
+
+        state = self.projects.draft
+        version = (self.data.dataset() or {}).get("version_id", "")
+        if not version or not state:
+            return None
+        history = ancestors(state, version)
+        key = plan_key(operation)
+        for record in state.get("operations", []):
+            spec = record.get("spec") or {}
+            parameters = spec.get("parameters") or {}
+            if (
+                spec.get("kind") != "fill"
+                or spec.get("learned_scope") != "dataset"
+                or record.get("output_version_id") not in history
+            ):
+                continue
+            candidate = dict(
+                kind="fill",
+                method=parameters.get("method", ""),
+                column_ids=list(spec.get("column_ids") or []),
+            )
+            if plan_key(candidate) == key:
+                return record
+        return None
+
+    mod2Plans = Property("QVariantList", lambda self: self.mod2_rows(), notify=changed)
+    canPlan = Property(bool, lambda self: self.can_plan(), notify=changed)
+
+    def can_plan(self):
+        """Mod 2 planı şu an oluşturulabilir mi: geçerli önizleme ve dışlama yok."""
+        if self.busy or self.projects.busy or self.projects.readOnly:
+            return False
+        try:
+            operation = self.mod2_candidate()
+        except ProjectError:
+            return False
+        if self.applied_dataset_scope(operation):
+            return False
+        return self.mod2_record(operation) is None
+
+    def mod2_rows(self):
+        """Bekleyen ve geçmiş Mod 2 planlarının özeti ve uygulanabilirlik durumu."""
+        state = self.projects.draft
+        version = (self.data.dataset() or {}).get("version_id", "")
+        if not state or not version:
+            return []
+        from veri_ufku.modeling.history import ancestors
+
+        history = ancestors(state, version)
+        rows = []
+        for record in state.get("results", []):
+            plan = record.get("mod2_plan")
+            if not isinstance(plan, dict):
+                continue
+            names = {c["id"]: c["name"] for c in plan.get("columns", [])}
+            operations = [
+                dict(
+                    kind=step["kind"],
+                    method=step["method"],
+                    columns=[names.get(c, c) for c in step["column_ids"]],
+                )
+                for step in plan_steps(record)
+            ]
+            if plan.get("status") != "planned":
+                can_plan, reason = False, "Plan uygulandı veya iptal edildi."
+            elif plan.get("dataset_version") not in history:
+                can_plan, reason = (
+                    False,
+                    "Planın veri sürümü bu datasetin geçmişinde değil.",
+                )
+            else:
+                can_plan, reason = True, ""
+            rows.append(
+                dict(
+                    id=record["id"],
+                    label=" · ".join(
+                        f"{o['method']}: {', '.join(o['columns'])}" for o in operations
+                    ),
+                    status=plan.get("status", ""),
+                    learn_scope=plan.get("learn_scope", ""),
+                    dataset_version=plan.get("dataset_version", ""),
+                    operations=operations,
+                    canPlan=can_plan,
+                    planBlockReason=reason,
+                )
+            )
+        return rows
+
+    @Slot()
+    def planForModel(self):
+        """Mod 2 planı: dönüşüm yalnız eğitim katında öğrenilecek; veri sürümü yok."""
+        try:
+            if self.busy or self.projects.busy or self.projects.readOnly:
+                raise ProjectError("Devam eden işi bekleyin; proje yazılabilir olmalı.")
+            operation = self.mod2_candidate()
+            if self.applied_dataset_scope(operation):
+                raise ProjectError(MOD1_CONFLICT)
+            if self.mod2_record(operation):
+                raise ProjectError(MOD2_DUPLICATE)
+            plan = self.build_mod2_plan(operation)
+            self.submit_plan(plan)
+        except (ProjectError, ValueError, OSError, KeyError, TypeError) as error:
+            self.fail(error)
+
+    def mod2_candidate(self):
+        """Yalnız öğrenilen doldurma Mod 2 kapsamındadır."""
+        if not self.preview or not self.canApply:
+            raise ProjectError("Geçerli önizleme yok; yeniden önizleyin.")
+        operation = self.preview_operation()
+        if (
+            operation["kind"] != "fill"
+            or operation["method"] not in MOD2_LEARNED_METHODS
+            or not operation["column_ids"]
+        ):
+            raise ProjectError(MOD2_NOT_LEARNED)
+        return operation
+
+    def build_mod2_plan(self, operation):
+        """Mod 2 plan yükünü üretir; gizli değer ve yeni veri sürümü yok."""
+        dataset = self.data.dataset() or {}
+        columns = {
+            c["id"]: c for c in dataset.get("import_metadata", {}).get("columns", [])
+        }
+        selected = []
+        for ident in operation["column_ids"]:
+            column = columns.get(ident)
+            if not column:
+                raise ProjectError("Mod 2 planı kolonu projede yok.")
+            selected.append(
+                dict(id=column["id"], name=column["name"], type=column["type"])
+            )
+        version = dataset["version_id"]
+        return create_plan(
+            dataset_version=version,
+            origin_version=version,
+            operations=[
+                dict(
+                    kind="fill",
+                    method=operation["method"],
+                    column_ids=list(operation["column_ids"]),
+                    parameters=dict(
+                        missing=(
+                            (self.preview.get("spec") or {}).get("parameters") or {}
+                        ).get("missing", "null"),
+                        tie_policy=(
+                            (self.preview.get("spec") or {}).get("parameters") or {}
+                        ).get("tie_policy", "reject"),
+                    ),
+                )
+            ],
+            columns=selected,
+            reason=(
+                "Model aşamasında yalnız eğitim katında öğrenilecek; "
+                "test/doğrulama verisine bilgi sıkmaz."
+            ),
+        )
+
+    def submit_plan(self, plan):
+        """Planı proje durumuna atomik yazar; dataset/operation kaydı üretmez."""
+        state = copy.deepcopy(self.projects.draft)
+        self.publication_commit = self.projects.store.commit_id
+        self.future = self.projects.executor.submit(
+            plan_store.publish, self.projects.store, state, plan
+        )
+        self._pending_message = MOD2_SAVED
+        self.projects.dataset_active = True
+        self._state = "publishing"
+        self._message = MOD2_SAVED
+        self.projects.changed.emit()
+        self.changed.emit()
+
+    @Slot(str)
+    def removePlan(self, plan_id):
+        """Mod 2 planını iptal eder; veri sürümü ve dönüşüm geçmişi korunur."""
+        try:
+            if self.busy or self.projects.busy or self.projects.readOnly:
+                raise ProjectError("Devam eden işi bekleyin; proje yazılabilir olmalı.")
+            state = copy.deepcopy(self.projects.draft)
+            self.publication_commit = self.projects.store.commit_id
+            self.future = self.projects.executor.submit(
+                plan_store.remove, self.projects.store, state, plan_id
+            )
+            self._pending_message = (
+                "Mod 2 planı iptal edildi; veri sürümü ve dönüşüm geçmişi korundu."
+            )
+            self.projects.dataset_active = True
+            self._state = "publishing"
+            self._message = self._pending_message
+            self.projects.changed.emit()
+            self.changed.emit()
+        except (ProjectError, ValueError, OSError, KeyError, TypeError) as error:
+            self.fail(error)
 
     resultStatuses = Property(
         "QVariantList",
@@ -661,6 +899,10 @@ class OperationsController(QObject):
                     {"name": name} if kind == "rename" else {},
                 )
             self.binding = self.current_binding()
+            # İşçi başlatılırken bağlama imzası da tazelenir. Aksi hâlde işin
+            # sonundaki projects.changed, veri değişmediği hâlde, imza farkını
+            # görüp yeni başlayan işi iptal ederdi.
+            self.signature = self.binding
             self.cache.mkdir(parents=True, exist_ok=True)
             self.workspace = tempfile.mkdtemp(prefix="operation-", dir=self.cache)
             ctx = mp.get_context("spawn")
@@ -721,6 +963,10 @@ class OperationsController(QObject):
     def apply(self):
         if not self.canApply:
             return self.fail(ProjectError("Geçerli önizleme yok; yeniden önizleyin."))
+        if self._prepare_scope_mode == "mod2":
+            return self.planForModel()
+        if self.mod2_record(self.preview_operation()):
+            return self.fail(ProjectError(MOD2_CONFLICT))
         result = copy.deepcopy(self.preview)
         if result is not None:
             spec = result.setdefault("spec", {})
@@ -737,6 +983,7 @@ class OperationsController(QObject):
 
     def submit(self, state, result=None):
         self.publication_commit = self.projects.store.commit_id
+        self._pending_message = ""
         self.future = self.projects.executor.submit(
             publish, self.projects.store, state, result
         )
@@ -795,9 +1042,10 @@ class OperationsController(QObject):
                     )
                     self.data.dataset_id = output["dataset_id"]
                 self._state = "succeeded"
-                self._message = (
+                self._message = self._pending_message or (
                     "İşlem/geçmiş kaydedildi. Eski sonuçların sürüm bağları korunur."
                 )
+                self._pending_message = ""
             except Exception as error:
                 if self.projects.store.commit_id != self.publication_commit:
                     self.projects.draft = copy.deepcopy(self.projects.store.state)
@@ -810,7 +1058,10 @@ class OperationsController(QObject):
             return
         if not self.process:
             return
-        if time.monotonic() - self.started > self.budget.max_wall_seconds:
+        if (
+            self.started is not None
+            and time.monotonic() - self.started > self.budget.max_wall_seconds
+        ):
             self.cancel()
         if (
             self.cancel_time

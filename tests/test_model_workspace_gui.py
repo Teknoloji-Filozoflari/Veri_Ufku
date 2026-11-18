@@ -1,4 +1,4 @@
-"""Model yerleşim A: merkez+10 çip, OLS fit/kaydet, sürüm değişmez, unsupported notu."""
+"""Model yerleşimi: katalog + tahmin yolları; çıkarım yüzeyi İstatistik aşamasında."""
 
 import copy
 
@@ -8,7 +8,11 @@ from test_import_gui import setup, spin, teardown
 from test_learning_gui import visual_item
 
 
-def test_model_workspace_shell_fit_save_unsupported(tmp_path, monkeypatch):
+def item(window, name):
+    return window.findChild(QObject, name) or visual_item(window.contentItem(), name)
+
+
+def test_model_workspace_shows_prediction_paths_only(tmp_path, monkeypatch):
     app, window, _, projects, imports = setup(tmp_path, monkeypatch)
     source = tmp_path / "model-ws.parquet"
     pl.DataFrame(
@@ -19,123 +23,61 @@ def test_model_workspace_shell_fit_save_unsupported(tmp_path, monkeypatch):
     ).write_parquet(source)
     original = source.read_bytes()
 
-    def item(name):
-        return window.findChild(QObject, name) or visual_item(
-            window.contentItem(), name
-        )
-
     try:
         imports.choose(str(source))
         spin(app, lambda: not imports.busy)
         imports.importData()
         spin(app, lambda: not imports.busy)
         assert not imports.errorText
-        engine = app._veri_ufku_resources[0]
-        controller = engine._statistics_resources
-        data = engine._dataset_resources
+        data = app._veri_ufku_resources[0]._dataset_resources
         version_before = data.dataset()["version_id"]
         before = copy.deepcopy(projects.draft)
 
         assert window.property("modelInstalled")
         window.setProperty("selectedSection", 5)
-        spin(app, lambda: window.property("modelOpen"))
+        spin(app, lambda: window.property("modelStageOpen"))
         assert window.property("centerOpen")
-        assert item("modelWorkspace") is not None
-        assert item("modelWorkspace").property("visible")
-        panel = item("modelCatalogPanel")
+        assert item(window, "modelWorkspace") is not None
+        assert item(window, "modelWorkspace").property("visible")
+        panel = item(window, "modelCatalogPanel")
         assert panel is not None and panel.property("visible")
-        assert item("modelCatalogTitle").property("text") == "Model"
+        assert item(window, "modelCatalogTitle").property("text") == "Model"
         for index in range(1, 11):
-            assert item(f"modelBlockChip_{index}") is not None
-        assert item("modelPrimaryAction") is not None
-        assert item("modelPrimaryCancel") is not None
-        assert item("modelPath") is None or not item("modelPath").property("visible")
+            assert item(window, f"modelBlockChip_{index}") is not None
 
-        item("modelBlockChip_1").clicked.emit()
+        # Model aşaması tahmin yoludur: çıkarım formu burada değildir.
+        assert item(window, "modelResponse") is None
+        assert item(window, "modelPreflight") is None
+        assert item(window, "modelPrimaryAction") is None
+
+        # Tahmin yolları katalog üzerinden açılır.
+        item(window, "modelBlockChip_3").clicked.emit()
         app.processEvents()
-        assert panel.property("selectedBlock") == 1
-
-        cols = {c["name"]: i for i, c in enumerate(controller.columns)}
-
-        def field(name, prop, value):
-            obj = item("model" + name)
-            assert obj is not None, name
-            assert obj.setProperty(prop, value)
-
-        field("Response", "currentIndex", cols["y"])
-        x_id = next(c["id"] for c in controller.columns if c["name"] == "x")
-        from PySide6.QtCore import Q_ARG, QMetaObject, Qt
-
-        assert QMetaObject.invokeMethod(
-            panel,
-            "updateFeature",
-            Qt.ConnectionType.DirectConnection,
-            Q_ARG("QVariant", x_id),
-            Q_ARG("QVariant", "selected"),
-            Q_ARG("QVariant", True),
-        )
+        assert panel.property("selectedBlock") == 3
+        assert item(window, "regressionPanel").property("visible")
+        item(window, "modelBlockChip_4").clicked.emit()
         app.processEvents()
-        field("Question", "text", "y ~ x")
-        field("Hypothesis", "text", "β≠0")
-        field("Unit", "text", "birim")
-        field("Observation", "text", "satır")
-        field("Measurement", "checked", True)
-        field("Independent", "checked", True)
-        app.processEvents()
+        assert item(window, "classificationPanel").property("visible")
 
-        item("modelPreflight").clicked.emit()
-        spin(app, lambda: not controller.busy)
-        assert not controller.errorText, controller.errorText
-        assert controller.preflightCurrent
-        assert data.dataset()["version_id"] == version_before
-
-        field("Assumptions", "checked", True)
-        app.processEvents()
-        action = item("modelPrimaryAction")
-        assert action.property("enabled")
-        action.clicked.emit()
-        spin(app, lambda: not controller.busy and controller.current)
-        assert not controller.errorText, controller.errorText
-        spin(
-            app,
-            lambda: (
-                any(
-                    "analysis" in r or (isinstance(r, dict) and "models" in str(r))
-                    for r in projects.draft.get("results", [])
-                )
-                or controller.current
-            ),
-        )
+        # Model aşaması veri sürümü üretmez ve kaynak dosyayı değiştirmez.
         assert data.dataset()["version_id"] == version_before
         assert projects.draft["datasets"] == before["datasets"]
-        assert item("modelLayerStrip") is not None
+        assert item(window, "modelLayerStrip") is not None
         assert (
-            "held-out" in (item("modelTestN").property("text") or "").lower()
-            or "yok" in (item("modelTestN").property("text") or "").lower()
+            "held-out" in (item(window, "modelTestN").property("text") or "").lower()
+            or "yok" in (item(window, "modelTestN").property("text") or "").lower()
         )
-
-        item("modelBlockChip_7").clicked.emit()
-        app.processEvents()
-        note = item("modelBlock7Note")
-        assert note is not None and note.property("visible")
-        assert "desteklenmiyor" in (note.property("text") or "").lower()
-
         assert source.read_bytes() == original
     finally:
         teardown(app, window)
 
 
-def test_model_block7_no_fake_formula(tmp_path, monkeypatch):
+def test_model_workspace_explains_inference_moved_to_statistics(tmp_path, monkeypatch):
     app, window, _, projects, imports = setup(tmp_path, monkeypatch)
     source = tmp_path / "model-b7.parquet"
     pl.DataFrame(dict(y=[1.0, 2.0, 3.0, 4.0], x=[1.0, 2.0, 3.0, 4.0])).write_parquet(
         source
     )
-
-    def item(name):
-        return window.findChild(QObject, name) or visual_item(
-            window.contentItem(), name
-        )
 
     try:
         imports.choose(str(source))
@@ -143,12 +85,17 @@ def test_model_block7_no_fake_formula(tmp_path, monkeypatch):
         imports.importData()
         spin(app, lambda: not imports.busy)
         window.setProperty("selectedSection", 5)
-        spin(app, lambda: window.property("modelOpen"))
-        item("modelBlockChip_7").clicked.emit()
-        app.processEvents()
-        assert not item("modelPrimaryAction").property("enabled")
-        assert (
-            "desteklenmiyor" in (item("modelBlock7Note").property("text") or "").lower()
-        )
+        spin(app, lambda: window.property("modelStageOpen"))
+        note = item(window, "modelCatalogInferenceNote")
+        assert note is not None
+        assert "İstatistik" in (note.property("text") or "")
+        pointer = item(window, "modelCatalogOpenStatistics")
+        assert pointer is not None
+        pointer.clicked.emit()
+        spin(app, lambda: window.property("selectedSection") == 4)
+        # Açıklayıcı regresyon yalnız İstatistik aşamasında üretilir.
+        window.setProperty("examineTool", 7)
+        spin(app, lambda: item(window, "statisticalModelsPanel") is not None)
+        assert item(window, "modelsResponse") is not None
     finally:
         teardown(app, window)

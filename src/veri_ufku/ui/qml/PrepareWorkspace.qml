@@ -211,8 +211,12 @@ ColumnLayout {
         UiButton {
             tone: "violet"
             objectName: root.visible ? "operationApply" : ""
-            text: qsTr("Uygula ve kaydet")
-            enabled: operations.canApply
+            text: root.catalogControls && root.catalogControls.prepareScopeMode === 1
+                ? qsTr("Model için planla")
+                : qsTr("Uygula ve kaydet")
+            enabled: root.catalogControls && root.catalogControls.prepareScopeMode === 1
+                ? operations.canPlan === true
+                : operations.canApply
             primary: true
             onClicked: root.runApply()
         }

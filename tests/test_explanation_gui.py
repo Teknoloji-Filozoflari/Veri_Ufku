@@ -47,7 +47,7 @@ def setup(tmp_path, monkeypatch, purpose="regression", family=False):
     app, window, projects, prep, c, source = imported(
         tmp_path, monkeypatch, purpose=purpose
     )
-    panel = window.findChild(QObject, "validationPanel")
+    panel = window.findChild(QObject, "validationProtocol")
     protocol = (
         panel.spec().toVariant() if hasattr(panel.spec(), "toVariant") else panel.spec()
     )

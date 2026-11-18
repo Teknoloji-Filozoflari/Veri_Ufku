@@ -307,6 +307,11 @@ def create_application():
     engine.rootContext().setContextProperty("neuralTraining", neural)
     engine._preparation_resources = preparation
     engine.rootContext().setContextProperty("preparation", preparation)
+    from veri_ufku.ui.model_paths import ModelPathsController
+
+    model_paths = ModelPathsController(projects, preparation, data_view, engine)
+    engine._model_paths_resources = model_paths
+    engine.rootContext().setContextProperty("modelPaths", model_paths)
     unsupervised = UnsupervisedController(
         data_view, projects, paths.cache / "unsupervised", settings.budget, engine
     )

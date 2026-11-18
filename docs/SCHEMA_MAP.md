@@ -82,16 +82,16 @@ Yollar depo köküne görelidir. `—` = karşılığı yok.
 
 | # | Alt başlık | Python modülü | QML | Test | Durum |
 |---|---|---|---|---|---|
-| M-01 | Hedef ve plan | `src/veri_ufku/modeling/plan.py`, `src/veri_ufku/modeling/contracts.py`, `src/veri_ufku/storage/preparation_store.py` | `PreparationPanel.qml` | `tests/test_preparation.py` | var |
-| M-02 | Hazırla'dan devralınanlar | `src/veri_ufku/modeling/history.py`, `src/veri_ufku/modeling/families.py` | `PreparationPanel.qml` | `tests/test_preparation.py`, `tests/test_model_leakage.py` | eksik |
-| M-03 | Regresyon (tahmin) | `src/veri_ufku/modeling/regression.py`, `src/veri_ufku/modeling/baseline.py` | `RegressionPanel.qml` | `tests/test_regression.py` | var |
-| M-04 | Sınıflandırma | `src/veri_ufku/modeling/classification.py` | `ClassificationPanel.qml` | `tests/test_classification.py` | var |
-| M-05 | Kümeleme | `src/veri_ufku/modeling/unsupervised.py`, `src/veri_ufku/modeling/unsupervised_contracts.py` | `UnsupervisedPanel.qml` | `tests/test_unsupervised.py` | var |
+| M-01 | Hedef ve plan | `src/veri_ufku/modeling/plan.py`, `src/veri_ufku/modeling/contracts.py`, `src/veri_ufku/storage/preparation_store.py`, `src/veri_ufku/ui/model_paths.py` | `PreparationPanel.qml` (ModelWorkspace içinde), `ValidationProtocol.qml` | `tests/test_preparation.py`, `tests/test_model_catalog_gui.py` | var |
+| M-02 | Hazırla'dan devralınanlar | `src/veri_ufku/modeling/plans.py`, `src/veri_ufku/modeling/plan.py`, `src/veri_ufku/storage/plan_store.py`, `src/veri_ufku/ui/model_paths.py` | `ModelPathsPanel.qml` | `tests/test_mod2_plan.py`, `tests/test_model_catalog_gui.py` | var |
+| M-03 | Regresyon (tahmin) | `src/veri_ufku/modeling/regression.py`, `src/veri_ufku/modeling/baseline.py`, `src/veri_ufku/modeling/families.py` | `RegressionPanel.qml` | `tests/test_regression.py`, `tests/test_model_family_paths.py` | var |
+| M-04 | Sınıflandırma | `src/veri_ufku/modeling/classification.py`, `src/veri_ufku/modeling/families.py` | `ClassificationPanel.qml` | `tests/test_classification.py`, `tests/test_model_family_paths.py` | var |
+| M-05 | Kümeleme | `src/veri_ufku/modeling/unsupervised.py`, `src/veri_ufku/modeling/unsupervised_contracts.py` | `UnsupervisedPanel.qml` | `tests/test_unsupervised.py`, `tests/test_model_family_paths.py` | var |
 | M-06 | Boyut azaltma | `src/veri_ufku/statistics/dimensions.py`, `src/veri_ufku/statistics/dimension_contracts.py` | `DimensionsPanel.qml` | `tests/test_dimensions.py` | var |
-| M-07 | Doğrulama ve karşılaştırma | `src/veri_ufku/modeling/validation.py`, `src/veri_ufku/modeling/search.py`, `src/veri_ufku/storage/validation_store.py` | `ValidationPanel.qml`, `SearchPanel.qml` | `tests/test_validation.py`, `tests/test_search.py` | var |
+| M-07 | Doğrulama ve karşılaştırma | `src/veri_ufku/modeling/validation.py`, `src/veri_ufku/modeling/search.py`, `src/veri_ufku/modeling/families.py`, `src/veri_ufku/storage/validation_store.py` | `ValidationProtocol.qml`, `ValidationPanel.qml`, `ModelFamiliesPanel.qml`, `SearchPanel.qml` | `tests/test_validation.py`, `tests/test_search.py`, `tests/test_model_families_gui.py` | var |
 | M-08 | Yorumlama | `src/veri_ufku/modeling/explanation.py`, `src/veri_ufku/storage/explanation_store.py` | `ExplanationPanel.qml` | `tests/test_explanation.py` | var |
 | M-09 | Özel veri türü yolları | `src/veri_ufku/modeling/time_series.py`, `streams.py`, `graphs.py`, `audio.py`, `vision.py`, `src/veri_ufku/analytics/nlp.py` | `TimeSeriesPanel.qml`, `StreamPanel.qml`, `GraphPanel.qml`, `AudioPanel.qml`, `VisionPanel.qml`, `TextPanel.qml` | `tests/test_time_series.py`, `tests/test_streams.py`, `tests/test_graphs.py`, `tests/test_audio.py`, `tests/test_vision.py`, `tests/test_text.py` | var |
-| M-10 | İleri yollar | `src/veri_ufku/modeling/neural.py`, `monitoring.py`, `scenarios.py`, `patterns.py`, `lifecycle.py`, `uncertainty.py` | `NeuralPanel.qml`, `MonitoringPanel.qml`, `ScenarioPanel.qml`, `PatternPanel.qml` | `tests/test_neural.py`, `tests/test_monitoring.py`, `tests/test_scenarios.py`, `tests/test_patterns.py`, `tests/test_lifecycle.py` | var |
+| M-10 | İleri yollar | `src/veri_ufku/modeling/neural.py`, `monitoring.py`, `scenarios.py`, `patterns.py`, `lifecycle.py`, `uncertainty.py` | `NeuralPanel.qml`, `MonitoringPanel.qml`, `ScenarioPanel.qml`, `PatternPanel.qml`, `LifecyclePanel.qml` | `tests/test_neural.py`, `tests/test_monitoring.py`, `tests/test_scenarios.py`, `tests/test_patterns.py`, `tests/test_lifecycle.py` | var |
 
 ## Raporla
 
@@ -114,7 +114,7 @@ Mevcut katalog panelleri şema kutularıyla birebir değildir. Faz G/C'de bu far
 | `PrepareCatalogPanel.qml` | 10 (Sütun temizliği · Aykırı · Kalite · Yeni sütun · Birleştirme/şekil · Özel tür · Öğrenilen · Diğer · Uygunluk · Uygulama) | 9 (Eksik veri · Aykırı değerler · Sütun temizliği · Kalite düzeltmeleri · Yeni sütun üret · Tablo birleştirme ve şekil · Özel veri türleri · Öğrenilen dönüşümler · Uygula ve kayıt) | G (açık, bu oturumda uygulanmadı) |
 | `ReportCatalogPanel.qml` | 8 kaynak-aşama bölümü (Faz C sonrası: "Rapor yapısı" işlevi içinde ikincil) | 7 işlev birincil (Bulgu defteri · Rapor yapısı · Rapor öncesi kontrol · Dışa aktar · Yeniden üretim · Gizlilik ve paylaşım · İleri çıktılar) | C — **tamamlandı** |
 | `StatisticsCatalogPanel.qml` | 8 | 8 (adlar birebir) | I (yalnız bayat metin) |
-| `ModelCatalogPanel.qml` | 10 | 10 | D (ad/adet birebir, yüzey derinliği farklı) |
+| `ModelCatalogPanel.qml` | 10 (Faz D sonrası: şemanın on alt başlığı birebir) | 10 (ad/adet birebir) | D — **tamamlandı** |
 | `DataWorkspacePanel.qml` | 10 | 10 | G |
 | `InspectWorkspacePanel.qml` | 5 | 5 | G |
 

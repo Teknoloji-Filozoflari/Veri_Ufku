@@ -209,7 +209,7 @@ def validate_saved(record, versions):
         or result["status"] != ("blocked" if result["blockers"] else "review_required")
     ):
         raise ProjectError("Hazırlık sayımları veya risk durumu tutarsız.")
-    from veri_ufku.modeling.plan import blueprint
+    from veri_ufku.modeling.plan import blueprint, strip_mod2
 
     expected = blueprint(
         spec,
@@ -217,6 +217,13 @@ def validate_saved(record, versions):
         dataset.get("semantic_metadata", {}),
         result["history"],
     )
-    if {k: v for k, v in result["plan"].items() if k != "version_id"} != expected:
+    saved = {k: v for k, v in result["plan"].items() if k != "version_id"}
+    if strip_mod2(saved) != strip_mod2(expected):
         raise ProjectError("Plan adımları veya kolon eşlemesi tarifle uyuşmuyor.")
+    if any(
+        not isinstance(saved.get(k, []), list)
+        or any(not isinstance(v, str) for v in saved.get(k, []))
+        for k in ("mod2_plans", "mod2_notes")
+    ):
+        raise ProjectError("Mod 2 plan alanları geçersiz.")
     entity_id(result["plan"]["version_id"], "ml-pipeline")

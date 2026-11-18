@@ -1,12 +1,43 @@
 """A serializable blueprint: names known structurally; category vocabulary deferred."""
 
+import copy
+
 import polars as pl
 
+from veri_ufku.modeling.plans import strategy_of
 from veri_ufku.operations.types import dtype_of
 from veri_ufku.storage.project_model import ProjectError
 
+TRAINING_DEPENDENCY = (
+    "Requires a validated split/fold protocol in Phase16; no training performed"
+)
+MOD2_DEPENDENCY = "Mod 2 plan adımları yalnız eğitim katında öğrenilir; test/doğrulama verisine bilgi sıkmaz."
+MOD2_REASON = (
+    "Mod 2 planı: doldurma istatistiği yalnız eğitim katında öğrenilecek; "
+    "test/doğrulama verisine bilgi sıkmaz."
+)
 
-def blueprint(spec, columns, semantics, history):
+
+def strip_mod2(plan):
+    """Mod 2 türevli adım ve alanları çıkarır; kayıt sözleşmesi karşılaştırması için."""
+    value = copy.deepcopy(plan)
+    value["steps"] = [
+        s
+        for s in value.get("steps", [])
+        if "mod2_plan_id" not in (s.get("parameters") or {})
+    ]
+    value.pop("mod2_plans", None)
+    value.pop("mod2_notes", None)
+    dependency = str(value.get("training_dependency", ""))
+    value["training_dependency"] = (
+        dependency.replace("; " + MOD2_DEPENDENCY, "")
+        .replace(MOD2_DEPENDENCY, "")
+        .strip()
+    )
+    return value
+
+
+def blueprint(spec, columns, semantics, history, mod2_plans=()):
     steps = []
     lineage = []
 
@@ -265,6 +296,71 @@ def blueprint(spec, columns, semantics, history):
                     entry for entry in lineage if entry["input_column_id"] == item
                 )
                 step_line["output_names"].append(name)
+    mod2_notes = []
+    mod2_ids = []
+    for entry in mod2_plans or ():
+        plan = entry.get("plan") if isinstance(entry, dict) else None
+        if not isinstance(plan, dict):
+            continue
+        mod2_ids.append(str(entry.get("id", "")))
+        for operation in plan.get("operations", []):
+            if operation.get("kind") != "fill" or operation.get("method") not in (
+                "mean",
+                "median",
+                "mode",
+            ):
+                continue
+            strategy = strategy_of(operation["method"])
+            for ident in operation["column_ids"]:
+                column = next((c for c in columns if c["id"] == ident), None)
+                if column is None or ident not in spec.features:
+                    mod2_notes.append(
+                        f"{ident}: Mod 2 planı seçili olmayan bir kolonu hedefliyor; "
+                        "plan bu koşuda uygulanmayacak."
+                    )
+                    continue
+                if any(
+                    ident in s["input_column_ids"] and s["kind"].startswith("impute_")
+                    for s in steps
+                ):
+                    mod2_notes.append(
+                        f"{column['name']}: kolon zaten spec'te dolduruluyor; "
+                        "Mod 2 adımı eklenmedi"
+                    )
+                    continue
+                role = semantics.get(ident, {}).get("role", "")
+                categorical = (
+                    role in ("category", "ordinal")
+                    or not dtype_of(column["type"]).is_numeric()
+                )
+                line = next(
+                    (item for item in lineage if item["input_column_id"] == ident),
+                    None,
+                )
+                step(
+                    "impute_category" if categorical else "impute_numeric",
+                    [ident],
+                    list(line["output_names"]) if line else [],
+                    True,
+                    MOD2_REASON,
+                    strategy=strategy,
+                    all_missing="error",
+                    mod2_plan_id=str(entry.get("id", "")),
+                )
+                inserted = steps.pop()
+                before = next(
+                    (
+                        i
+                        for i, s in enumerate(steps)
+                        if ident in s["input_column_ids"]
+                        and (
+                            s["kind"].startswith("encode_")
+                            or s["kind"] in ("standard_scale", "no_scaling")
+                        )
+                    ),
+                    len(steps),
+                )
+                steps.insert(before, inserted)
     if spec.selection == "variance":
         step(
             "select_variance",
@@ -330,7 +426,11 @@ def blueprint(spec, columns, semantics, history):
         estimator_family=spec.family,
         steps=steps,
         column_lineage=lineage,
-        training_dependency="Requires a validated split/fold protocol in Phase16; no training performed",
+        training_dependency=(
+            TRAINING_DEPENDENCY + ("; " + MOD2_DEPENDENCY if mod2_ids else "")
+        ),
         category_vocabulary=None,
         feature_selection_mask=None,
+        mod2_plans=mod2_ids,
+        mod2_notes=mod2_notes,
     )

@@ -54,7 +54,7 @@ def imported(tmp_path, monkeypatch, template="mlp", classification=False):
     )
     spin(app, lambda: not prep.busy)
     assert not prep.errorText and not prep.result["blockers"]
-    panel = window.findChild(QObject, "validationPanel")
+    panel = window.findChild(QObject, "validationProtocol")
     panel.setProperty(
         "availability",
         {c: dict(offset_seconds=0, note="known before") for c in features},

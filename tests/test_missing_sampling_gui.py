@@ -278,7 +278,7 @@ def test_preparation_qml_phase33_parameters_and_plan_reopen(
         assert not controller.errorText
         validation = engine._validation_resources
         ids = [c["id"] for c in controller.columns if c["name"] in ("x", "z")]
-        vp = window.findChild(QObject, "validationPanel")
+        vp = window.findChild(QObject, "validationProtocol")
         vp.setProperty(
             "availability",
             {i: dict(offset_seconds=0, note="Ölçüm öncesi mevcut") for i in ids},

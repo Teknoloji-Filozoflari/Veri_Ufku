@@ -36,7 +36,7 @@ def imported(tmp_path, monkeypatch, structure="independent", purpose="regression
     spin(app, lambda: not p.busy)
     assert not p.errorText and not p.result["blockers"]
     window.setProperty("selectedSection", 5)
-    panel = window.findChild(QObject, "validationPanel")
+    panel = window.findChild(QObject, "validationProtocol")
     panel.setProperty(
         "availability",
         {

@@ -5,6 +5,12 @@ import os
 import polars as pl
 from PySide6.QtCore import QObject
 from test_import_gui import setup, spin, teardown
+from test_learning_gui import visual_item
+
+
+def item(window, name):
+    """Model kataloğu çipleri Repeater delegesi olduğu için ağaç araması yetmez."""
+    return window.findChild(QObject, name) or visual_item(window.contentItem(), name)
 
 
 def imported(tmp_path, monkeypatch):
@@ -27,6 +33,7 @@ def imported(tmp_path, monkeypatch):
     data.selectDataset(projects.draft["datasets"][-1]["dataset_id"])
     spin(app, lambda: not data.busy)
     window.setProperty("selectedSection", 5)
+    spin(app, lambda: window.property("modelStageOpen"))
     return app, window, projects, engine, source
 
 
@@ -37,7 +44,10 @@ def test_text_qml_private_preview_save_reopen_cancel_help(
     c = engine._text_resources
     before = source.read_bytes()
     try:
-        window.findChild(QObject, "modelPath").setProperty("currentIndex", 2)
+        # Metin yolu Model aşamasındaki 9. alt başlıkta (M-09) açılır.
+        item(window, "modelBlockChip_9").clicked.emit()
+        app.processEvents()
+        spin(app, lambda: item(window, "textPanel") is not None)
         assert window.findChild(QObject, "textPanel").property("visible")
         window.findChild(QObject, "textRun").clicked.emit()
         spin(app, lambda: not c.busy)
@@ -94,7 +104,7 @@ def test_labeled_text_qml_uses_existing_classification_and_final_defter(
         spin(app, lambda: not prep.busy)
         assert not prep.errorText and not prep.report["blockers"], prep.errorText
         assert prep.result["spec"]["text"]
-        panel = window.findChild(QObject, "validationPanel")
+        panel = window.findChild(QObject, "validationProtocol")
         feature = prep.result["spec"]["features"][0]
         panel.setProperty(
             "availability", {feature: dict(offset_seconds=0, note="Metin bilinir")}

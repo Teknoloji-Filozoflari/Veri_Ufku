@@ -1,10 +1,11 @@
 # Veri_Ufku — aktif görev hafızası
 
-## Şema hizalama Faz A → B → C (aktif · 2026-11-13)
+## Şema hizalama Faz A → B → C → D → E (aktif · 2026-11-13)
 
 2026-11-13: Açık kullanıcı talimatı ile `veri_ufku_sema_gelistirme_promtu.md` v1.0 uygulandı.
-Kapsam yalnız **Faz A → B → C**; D–J başlatılmadı. Kullanıcı kararları: bulgu defteri **alta
-çekmece** (B-02), Raporla **yedi iş birincil sekme** (B-03), git için **yerel commit + push**
+Kapsam **Faz A → B → C → D → E**; F–J başlatılmadı. Kullanıcı kararları: bulgu defteri **alta
+çekmece** (B-02), Raporla **yedi iş birincil sekme** (B-03), Mod 2 çıktısı **hibrit** (B-04),
+Model alt paketleri **temel + keşif çekirdek** (B-06), git için **yerel commit + push**
 yetkisi verildi.
 
 **Faz A (kod değiştirmez):** `docs/SCHEMA_CONTRACT.md` (61 alt başlık: 53 var · 6 eksik · 1 yok
@@ -35,6 +36,36 @@ ayrıca HEAD'de kırmızı olan `scripts/check_usability.py` kapısı düzeltild
 paylaşılan `UiTextArea`). Tam suite, kurulu tekerlek smoke, fiziksel masaüstü, AT, insan
 kabulü, minimum donanım, offline kurulum, uzak CI ve longheap koşuları **çalıştırılmadı**.
 [Kanıt](evidence/SCHEMA_ABC.md).
+
+**Faz D (Model aşaması tahmin yoluna):** Şema Model aşamasını tahmin yolu olarak tanımlar;
+uygulamada Model kataloğu yalnız çıkarım (OLS/WLS/GLM) formunu gösteriyordu, tahmin
+panelleri veri varken hiç görünmüyordu. `ModelCatalogPanel.qml` şemanın **on alt başlığı
+birebir** listeler (ad · modül etiketi · çekirdek/opsiyonel katman · kayıt durumu);
+`ModelWorkspace.qml` seçilen alt başlığın yüzeyini merkezde gösterir; doğrulama protokolü
+`ValidationProtocol.qml` bileşenine ayrıldı; `ModelPathsPanel.qml` + `ui/model_paths.py`
+M-02 "Hazırla'dan devralınanlar" yüzeyini kurdu; boyut azartma Model altına taşındı;
+eski `modelPath` rotası ve `deferredPreparationPanel` kaldırıldı. Kararlar: ADR081
+(Model = tahmin), ADR080 (alt paket katmanları). Testler: `test_model_catalog_gui` (4) ·
+`test_model_workspace_gui` (2, yeniden yazıldı) · `test_model_family_paths` (5).
+
+**Faz E (Mod 2 gerçek plan/pipeline):** `setPrepareScopeMode()` yalnız UI notuydu; Mod 2
+seçiliyken "Uygula" tüm veriye uyguluyor ve yeni veri sürümü üretiyordu. `modeling/plans.py`
+(`Mod2Plan/v1` sözleşmesi) ve `storage/plan_store.py` (ikinci depo yok) eklendi; plan adımları
+hazırlık planına `learned_scope=training_fold` ile eklenir; Mod 2 artık **yeni veri sürümü
+üretmez**; Mod 1/Mod 2 birbirini dışlar; Model modülü kurulu değilse Mod 2 gizlenir. Tarif
+açma B-04'ün form yarısıdır (`recipeOpened`). Karar: ADR079. Testler: `test_mod2_plan`
+(işçi testi) — Mod 2 sürüm üretmez · Mod 1/Mod 2 dışlaması · eğitim katında fit (gizli test
+seti ile sızıntı doğrulaması) · plan iptali.
+
+**Doğrulama (Faz D → E):** kapılar ve test sonuçları [Kanıt](evidence/SCHEMA_DE.md) dosyasında.
+Bu oturumda kapılar ilk kez gerçekten çalıştırıldı ve üç kusur bulundu: (1) ürün hatası —
+`start_preview` bağlama imzasını tazelemediği için iş, kendi `projects.changed` yayını
+tarafından iptal ediliyordu (önizleme hiç tamamlanmıyordu; 13 Kasım oturumunun "EOF"
+belirsizliğinin nedeni); (2) `test_mod2_plan.py`nin `QCoreApplication` kurması oturumu
+zehirliyor ve sonraki GUI testlerini kırıyordu; (3) üç test beklentisi gerçek sözleşmeyle
+uyuşmuyordu. Üçü de düzeltildi; odaklı Faz D→E koşusu 15/15 PASS.
+Resmî kabul ayrıdır: fiziksel masaüstü, AT, insan kabulü, minimum donanım, offline kurulum,
+uzak CI ve longheap koşuları çalıştırılmadı.
 
 ## UX V2 (aktif — yerel `ux-v2`)
 

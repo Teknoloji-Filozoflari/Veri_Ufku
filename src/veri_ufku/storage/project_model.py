@@ -349,6 +349,11 @@ def validate_state(state):
     for record in state["results"]:
         if "unsupervised" in record:
             validate_record(record, by_version)
+    from veri_ufku.modeling.plans import validate_record as validate_mod2_record
+
+    for record in state["results"]:
+        if "mod2_plan" in record:
+            validate_mod2_record(record, by_version)
     from veri_ufku.storage.time_series_store import (
         validate_journal as validate_series_journal,
     )

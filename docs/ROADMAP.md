@@ -5,16 +5,18 @@ Bu belge yeni faz yetkisi vermez.
 
 ## Şema hizalama (2026-11-13 · şema PDF'i tek doğruluk kaynağı)
 
-Açık kullanıcı talimatı: `veri_ufku_sema_gelistirme_promtu.md` v1.0. Kapsam yalnız Faz A → B → C.
+Açık kullanıcı talimatı: `veri_ufku_sema_gelistirme_promtu.md` v1.0. Kapsam Faz A → B → C → D → E.
 
 | Faz | Teknik teslim | Resmî / kapsam |
 |---|---|---|
 | A Sözleşme | **Teknik tamamlandı:** `docs/SCHEMA_CONTRACT.md` (61 alt başlık · 53 var/6 eksik/1 yok + çelişkiler), `docs/SCHEMA_MAP.md`, ADR076/077/078; kod değişmedi | sürüyor; resmî kabul ayrı |
 | B Bulgu defteri | **Teknik tamamlandı:** `storage/finding_store.py`, `ui/findings.py`, `FindingDrawer.qml` (alta çekmece), 7 aşama eylemi, "güncel değil" işareti, rapora %100 akış; 12 yeni test | sürüyor; resmî kabul ayrı |
 | C Raporla hizalama | **Teknik tamamlandı:** yedi işlev birincil + kaynak-aşama ikincil; DOCX dışa aktarımı (`exports/docx.py`); 2 yeni GUI test | sürüyor; resmî kabul ayrı |
-| D–J | **Başlatılmadı** — yalnız açık kullanıcı talimatıyla | B-01, B-04 … B-10 karar bekliyor |
+| D Model = tahmin | **Teknik tamamlandı:** `ModelCatalogPanel.qml` şemanın on alt başlığı birebir; `ModelWorkspace.qml` yeniden yazıldı; `ValidationProtocol.qml` ayrıştı; `ModelPathsPanel.qml` + `ui/model_paths.py` (M-02); boyut azaltma Model altına taşındı; ADR080/081 | sürüyor; resmî kabul ayrı |
+| E Mod 2 = gerçek plan | **Teknik tamamlandı:** `modeling/plans.py` (`Mod2Plan/v1`), `storage/plan_store.py` (ikinci depo yok), `learned_scope=training_fold` ile eğitim-katı fit; Mod 1/Mod 2 dışlaması; Mod 2 yeni veri sürümü üretmez; ADR079 | sürüyor; resmî kabul ayrı |
+| F–J | **Başlatılmadı** — yalnız açık kullanıcı talimatıyla | B-01, B-05, B-07, B-08, B-09 karar bekliyor |
 
-[Kanıt](evidence/SCHEMA_ABC.md) · [Sözleşme](SCHEMA_CONTRACT.md) · [Harita](SCHEMA_MAP.md)
+[Kanıt A→C](evidence/SCHEMA_ABC.md) · [Kanıt D→E](evidence/SCHEMA_DE.md) · [Sözleşme](SCHEMA_CONTRACT.md) · [Harita](SCHEMA_MAP.md)
 
 ## UX V2 (arayüz/akış — teknik Faz’dan bağımsız)
 

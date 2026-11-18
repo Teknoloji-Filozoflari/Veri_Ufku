@@ -66,7 +66,6 @@ ColumnLayout {
         UiLabel { objectName:"lifecycleOutput";text:lifecycle.outputReport.output?"Yeni çıktı: "+lifecycle.outputReport.output+(lifecycle.outputReport.details.preview?"\nTahmin edilen: "+(lifecycle.outputReport.details.predicted_rows||0)+" · tahmin dışında bırakılan: "+((lifecycle.outputReport.details.dropped_row_ids||[]).length)+"\nKaynak satırları ve sırası korundu.":"\nDoğrulanmış model paketi kaydedildi."):"";Layout.fillWidth:true;wrapMode:Text.Wrap }
     }
     ExperimentRegistryPanel { Layout.fillWidth:true;onHelpRequested:function(origin,context){panel.helpRequested(origin,context)} }
-    ExplanationPanel { Layout.fillWidth:true;onHelpRequested:function(origin,context){panel.helpRequested(origin,context)} }
     UiButton { objectName:"lifecycleRetrain";text:"Yeniden eğit — yeni veri için hazırlık ve değerlendirme ayarlarını aç";Layout.fillWidth:true;multiline:true;enabled:!projects.busy&&!lifecycle.busy;onClicked:panel.retrainRequested() }
     UiLabel { text:"Yeniden eğitim yeni bir plan/koşu oluşturur; mevcut model değişmez. Hedef, split ve seed seçilip eğitim ayrıca başlatılır.";Layout.fillWidth:true;wrapMode:Text.Wrap }
     Flow { Layout.fillWidth:true;spacing:Theme.sm

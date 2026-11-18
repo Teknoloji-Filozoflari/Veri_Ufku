@@ -4,9 +4,23 @@ import json
 
 from PySide6.QtCore import QObject, QUrl
 from test_import_gui import spin, teardown
+from test_learning_gui import visual_item
 from test_validation_gui import imported
 
 CAPTURE = None
+
+
+def item(window, name):
+    """Görsel ağacı da kapsayan nesne araması (Repeater delegeleri QObject ağacında değil)."""
+    return window.findChild(QObject, name) or visual_item(window.contentItem(), name)
+
+
+def open_model_entry(window, app, index):
+    """Model kataloğundan ilgili alt başlığı açar (M-10 ileri yollar vb.)."""
+    chip = item(window, f"modelBlockChip_{index}")
+    assert chip is not None, index
+    chip.clicked.emit()
+    app.processEvents()
 
 
 def test_real_registry_qml_revision_compare_export_and_final_history(
@@ -23,7 +37,8 @@ def test_real_registry_qml_revision_compare_export_and_final_history(
         row = lifecycle.experimentRuns[0]
         run_id = row["run_id"]
         assert row["code_hash"] and row["data_access_at"]
-        panel = window.findChild(QObject, "experimentRegistryPanel")
+        open_model_entry(window, app, 10)
+        panel = item(window, "experimentRegistryPanel")
         assert panel is not None and panel.property("visible")
         panel.setProperty("selected", [run_id])
         window.findChild(QObject, "experimentCompare").clicked.emit()

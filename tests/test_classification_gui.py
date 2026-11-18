@@ -42,7 +42,7 @@ def imported(tmp_path, monkeypatch, multiclass=False):
     spin(app, lambda: not p.busy)
     assert not p.errorText and not p.result["blockers"]
     window.setProperty("selectedSection", 5)
-    panel = window.findChild(QObject, "validationPanel")
+    panel = window.findChild(QObject, "validationProtocol")
     panel.setProperty(
         "availability", {cols["x"]: dict(offset_seconds=0, note="Önceden mevcut")}
     )
@@ -138,7 +138,7 @@ def test_actual_qml_category_models_threshold_final_history_help(
 def test_category_invalid_and_canceled_choices_not_success(tmp_path, monkeypatch):
     app, window, projects, p, c, source = imported(tmp_path, monkeypatch)
     try:
-        panel = window.findChild(QObject, "validationPanel")
+        panel = window.findChild(QObject, "validationProtocol")
         c.createClassification(
             json.dumps(
                 dict(

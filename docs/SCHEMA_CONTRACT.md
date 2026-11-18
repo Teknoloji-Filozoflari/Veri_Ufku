@@ -98,7 +98,7 @@ Aşama dağılımı:
 | H-05 | Yeni sütun üret | Çekirdek | `var` | Güvenli formülle hesaplanan sütun, metin bölme, tarih parçası, oran/fark, aralıklara bölme gerçek (`operations/formula.py`, `operations/relational.py`). |
 | H-06 | Tablo birleştirme ve şekil | Çekirdek | `var` | Append/join/pivot/unpivot gerçek; anahtar benzersizliği, eşleşmeyen satır raporu ve çoktan çoğa uyarısı uygulanır. |
 | H-07 | Özel veri türleri | Modül | `yok` | Hazırla'da özel tür dönüşüm paneli **bilinçli olarak boş bırakılmış**; yalnız "bu sürümde yok" notu var. Görüntü/ses/metin/zaman/mekânsal dönüşümleri ayrı modül yollarında değil, tür panellerinde dağınık durumda. |
-| H-08 | Öğrenilen dönüşümler | Çekirdek | `eksik` | **Mod 1 gerçek**: öğrenilen doldurma/tür dönüşümleri tüm veriye uygulanır ve yeni sürüm üretir. **Mod 2 yalnız uyarı metni**: train-only fit yok, öğrenilen dönüşüm Model aşamasında tüketilmiyor (bkz. Ç-05). |
+| H-08 | Öğrenilen dönüşümler | Çekirdek | `var` | **Mod 1 gerçek**: öğrenilen doldurma/tür dönüşümleri tüm veriye uygulanır ve yeni sürüm üretir. **Mod 2 gerçek (Faz E)**: Mod 2 seçiliyken "Uygula" yeni veri sürümü üretmez; dönüşüm plan olarak saklanır ve Model aşamasında eğitim katında öğrenilir. Mod 1 ve Mod 2 birbirini dışlar; Model modülü kurulu değilse Mod 2 gizlenir. |
 | H-09 | Uygula ve kayıt | Çekirdek | `var` | Önizleme → "Uygula ve kaydet" yeni veri sürümü ve işlem geçmişi üretir; geri alma önceki sürüme dönüş, sürüm zinciri silinmez (`ui/operations.py`). |
 
 ## İstatistik (8 alt başlık)
@@ -118,8 +118,8 @@ Aşama dağılımı:
 
 | # | Alt başlık | Çekirdek/Modül | Durum | Gerekçe |
 |---|---|---|---|---|
-| M-01 | Hedef ve plan | Modül | `var` | Amaç, hedef sütun, özellik seçimi ve sızıntı kontrolü içeren blueprint planı projeye kaydedilir; bilinçli olarak fit edilmez (`modeling/plan.py`). |
-| M-02 | Hazırla'dan devralınanlar | Modül | `eksik` | Taşıma **plan seviyesinde** üretiliyor; ancak aile adaptörü yalnız 8 adım türünü kabul ediyor, taşınmış `outlier_iqr_mark` / `impute_joint` / `missing_indicator` adımları "sessiz atlama yok" hatası veriyor. Sızıntı sertifikası `leakage_certified=False` kalıyor. |
+| M-01 | Hedef ve plan | Modül | `var` | Amaç, hedef sütun, özellik seçimi ve sızıntı kontrolü içeren blueprint planı projeye kaydedilir; bilinçli olarak fit edilmez (`modeling/plan.py`). Faz D'de yüzey Model aşamasının M-01 bloğuna taşındı; değerlendirme protokolü ayrı `ValidationProtocol.qml` bileşeninde yaşar. |
+| M-02 | Hazırla'dan devralınanlar | Modül | `var` | Faz E: Mod 2 tarifleri `modeling/plans.py` sözleşmesiyle sonuç kaydı olarak saklanır, `ModelPathsPanel.qml` altında listelenir ve planın adımları model hazırlık planına `learned_scope=training_fold` ile eklenir. Adımlar eğitim katında fit edilir, test verisine bilgi sıkmaz (ADR079). |
 | M-03 | Regresyon (tahmin) | Modül | `var` | CV protokolü ve aile adaptörleriyle bounded eğitim/ölçüm/leaderboard çalışır (`modeling/regression.py`). |
 | M-04 | Sınıflandırma | Modül | `var` | Sınıf metrikleri, olasılık, eşik seçimi ve karışıklık matrisi üretilir. |
 | M-05 | Kümeleme | Modül | `var` | kmeans/dbscan/agglomerative/gmm/optics/hdbscan + anomali tespiti; silhouette ve karşılaştırma çalışır. |
@@ -151,14 +151,15 @@ Bunlar **kod yolundan şemaya doğru düzeltilecek** sapmalardır. Sıra, güven
 |---|---|---|---|---|
 | Ç-01 | Kaynak adaptörleri ve özel kaynaklar yüzeyi | Veri aşaması kutularında görünür, kurulu değilse "Modül: indir" | Gerçek bağlayıcı yüzey "Gelişmiş → Connector" altında; Veri bloğu yalnız "bu ekranda indirme/kurulum yok" notu basıyor | Faz F'te "Modül: indir" kutusu + manifest sözleşmesi ile hizalanacak |
 | Ç-02 | İleri istatistik bayat metni | İleri istatistik Modül altında gerçek bir yol | Bayes/nedensel/sağkalım gerçek çalışır, katalog "bu sürümde desteklenmiyor (Faz40+)" diyor | Faz A sonrası metin düzeltmesi; Faz I'de kapsam genişletmesi |
-| Ç-03 | Boyut azartma konumu | Model modülü altında | `statistics/dimensions.py`, Main.qml'de İstatistik bölümüne bağlı | Faz D'de Model alt başlığına taşınacak; önce envanter notu güncellenecek |
+| Ç-03 | Boyut azartma konumu | Model modülü altında | Kod `statistics/dimensions.py`; Faz D'de yüzey Model aşamasının M-06 bloğuna taşındı (`DimensionsPanel.qml` ModelWorkspace içinde) | **Faz D'de kapandı:** yüzey Model altında; kod İstatistik modülünde kalıyor |
 | Ç-04 | Regresyon adı çakışması | İstatistik "Regresyon (çıkarım)" · Model "Regresyon (tahmin)" | Katalog notu çıkarımı "Model aracı"na yönlendiriyor, oysa çıkarım kodu `statistics/models.py`'de | Faz D açıklamayı "açıklayıcı/tahmin" ayrımıyla netleştirecek |
-| Ç-05 | Mod 2 karşılığı | Mod 2 "model için planla" gerçek bir plan | Hazırla'da yalnız uyarı metni; train-only fit ve tarif yok | Faz E kapsamında gerçek plan/pipeline |
+| Ç-05 | Mod 2 karşılığı | Mod 2 "model için planla" gerçek bir plan | Faz E'de gerçek: tarif saklanır, eğitim katında fit edilir | **Faz E'de kapandı:** Mod 2 artık uyarı metni değil; tarif kaydı + eğitim-katı fit |
 | Ç-06 | Sağlamlık erişim yolu | İstatistik alt başlığı içinde | Yeniden örnekleme ayrı araç altında (`examineTool=6`) | Faz I'de katalog metni erişim yoluna göre düzeltilecek |
 | Ç-07 | Hazırla'da özel türler | Modül altında ayrı kutu | Kutu bilinçli olarak boş; davranış dağınık | Faz G/F kapsamında modül sözleşmesiyle açılacak |
 | Ç-08 | Hazırla katalog bloğu sayısı | 9 alt başlık | `PrepareCatalogPanel` 10 blok ("Diğer" ve "Uygunluk" şemada yok) | Faz G'de 9 şema kutusuna birebir döndürülecek; ek bloklar gerekçeyle kaydedilecek |
 | Ç-09 | Raporla düzeni | 7 işlev birincil | Kaynak-aşamaya göre 8 bölüm birincil | **Faz C'de kapandı:** yedi işlev birincil listedir; kaynak-aşama bölümleri "Rapor yapısı" işlevinin içinde ikincil kaldı |
 | Ç-10 | Bulgu defteri yüzeyi | Her aşamada görünür kalıcı yüzey | Yok | **Faz B'de kapandı:** alta çekmece (`FindingDrawer.qml`), çalışma alanı satırı olarak yerleşir ve hiçbir denetimi örtmez |
+| Ç-11 | Model aşamasının yönü | Model = tahmin (regresyon/sınıflandırma/kümeleme) | Model kataloğu çıkarım (OLS/WLS/GLM) formunu gösteriyordu; tahmin panelleri veri varken erişilemezdi | **Faz D'de kapandı:** Model aşaması tahmin yoludur, çıkarım İstatistik aşamasındadır (ADR081) |
 
 ## Belirsizlik listesi — karar durumu
 
@@ -170,9 +171,9 @@ olanlar "bekliyor" durumunda, kod yazılmadan önce karara bağlanır.
 | B-01 | "İleri seçenek" rengi | **Bekliyor.** Göstergede var, hiçbir kutuda kullanılmıyor. Önerilen varsayılan: şema rozetleriyle uyumlu kalsın diye kullanılmaya devam eder, ayrı renk tanımlanmaz. |
 | B-02 | Bulgu defteri yüzeyi | **Karar verildi (2026-11-13): alta çekmece.** Her aşamada erişilebilir kalıcı yüzey; panel/çekmece ayrımı ADR077'de bağlandı. |
 | B-03 | Raporla düzeni | **Karar verildi (2026-11-13): yedi iş birincil sekme.** Kaynak-aşamaya göre bölüm ikincil sekmede kalır. |
-| B-04 | Mod 2 çıktısı | **Bekliyor.** Önerilen varsayılan: saklanan bir "tarif" (pipeline) olarak durur, Model aşamasında bir form olarak açılır. Faz E başlamadan karara bağlanmalı. |
+| B-04 | Mod 2 çıktısı | **Karar verildi (2026-11-13): hibrit.** Saklanan tarif + Model aşamasında açılıp düzenlenebilen form (ADR079). |
 | B-05 | "Dizi ve coğrafya" | **Bekliyor.** Önerilen varsayılan: "Tür modülleri: mekânsal" içinde kalır, ayrı modül değil. G-11 kodu zaten bu ayrımı uyguluyor. |
-| B-06 | Model alt paketleri | **Bekliyor.** Önerilen varsayılan: temel + keşif çekirdek kurulumda; yorum ve ileri yollar isteğe bağlı. Faz D başlamadan karara bağlanmalı. |
+| B-06 | Model alt paketleri | **Karar verildi (2026-11-13): temel + keşif çekirdek.** Yorum ve ileri yollar isteğe bağlı modül; ortamda yoksa yol kapalı ve gerekçesi görünür (ADR080). |
 | B-07 | "çizelge" / "kagi" | **Bekliyor.** Önerilen varsayılan: "çizelge" = basamaklı grafik, "kagi" = "kama" (Kagi çizimi). İkisi de çizim motorunda yok; Faz H kapsamında eklenmeli. |
 | B-08 | Zamanlanmış rapor | **Bekliyor.** Önerilen varsayılan: gerçek zamanlayıcı yok, "bir sonraki açılışta yenile" yaklaşımı. R-07 kapsamında. |
 | B-09 | Korelasyonun yeri | **Bekliyor.** Önerilen varsayılan: İncele'de tarama özeti kalır, ayrıntılı keşif Görselleştir'de (kod zaten böyle). |
